@@ -10,7 +10,7 @@ C++ Standard | C++17
 
 Item | Version
 -|-
-OS | MacOS
+OS | Mac OS
 Toolchain | CLion 2022.3.1 with CMake
 C++ Standard | C++17
 
@@ -20,11 +20,11 @@ No additional instructions required.
 
 # Team Members
 
-Name | Mobile | Email | Development OS | Development Subsystem
--:|:-:|:-|-|
-Atin Sakkeer Hussain | 82648845 | atin.s@u.nus.edu | MacOS | QPS
-Tanishq Sharma | 81613051 | tanishq.sharma@u.nus.edu | Windows 10 | QPS
-Jai Lal Lulla | 89474057 | jai.lulla@u.nus.edu | MacOS | PKB
-Yi Zhang | - | - | Windows 10 | SPA
-Wang Mo | - | - | MacOS | SPA
-Shawn Tan | - | - | Windows 10 | QPS
+| Name  | Email | Development OS  | Development Subsystem |
+| ------------- | ------------- | ------------- | ------------- |
+| Atin Sakkeer Hussain  | atin.s@u.nus.edu  | Mac OS  | QPS  |
+| Tanishq Sharma  | tanishq.sharma@u.nus.edu  | Windows 10  | QPS  |
+| Jai Lal Lulla  | jai.lulla@u.nus.edu  | Mac OS  | PKB  |
+| Yi Zhang  | -  | Windows 10  | SPA  |
+| Wang Mo  | -  | Mac OS  | SPA  |
+| Shawn Tan  | -  | Windows 10  | QPS  |
