@@ -3,4 +3,9 @@
 
 #endif //SPA_TOKENIZER_H
 
-int tokenize();
+#include "Token.h"
+
+class Tokenizer {
+public:
+    std::vector<Token> tokenize();
+};
