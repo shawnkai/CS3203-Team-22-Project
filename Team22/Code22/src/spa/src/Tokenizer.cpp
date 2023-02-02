@@ -3,6 +3,7 @@
  * read x;
  * }
  */
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -49,7 +50,7 @@ private:
     }
 
 public:
-    Tokenizer(const char* fileName) {
+    explicit Tokenizer(const char* fileName) {
         inputSimpleProgram.open(fileName);
         currLineNum = 0;
     }
