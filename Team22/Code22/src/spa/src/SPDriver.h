@@ -9,8 +9,9 @@
 #include <string>
 #include "Tokenizer.h"
 
+
 class SPDriver {
 public:
     SPDriver();
-    void parseSimpleProgram(const char* fileName);
+    //void parseSimpleProgram(const char* fileName);
 };

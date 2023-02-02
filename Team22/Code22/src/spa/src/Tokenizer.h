@@ -8,5 +8,5 @@
 class Tokenizer {
 public:
     explicit Tokenizer(const char* fileName);
-    std::vector<Token> tokenize();
+    static std::vector<Token> tokenize(const char* fileName);
 };

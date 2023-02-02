@@ -3,7 +3,7 @@
  * read x;
  * }
  */
-#pragma once
+//#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -13,17 +13,15 @@
 
 class Tokenizer {
 private:
-    std::ifstream inputSimpleProgram;
-    std::vector<Token> tokens;
     std::map<std::string, TokenType> keyWordsMap;
-    int currLineNum;
+    //static int currLineNum;
 
     void insertPredefined() {
         keyWordsMap["procedure"] = PROCEDURE;
         keyWordsMap["read"] = READ;
     }
 
-    bool isLegalLetter(char c) {
+    static bool isLegalLetter(char c) {
         if (c >= 'A' && c <= 'Z') {
             return true;
         }
@@ -33,33 +31,43 @@ private:
         return false;
     }
 
-    bool isWhiteSpace(char c) {
+    static bool isWhiteSpace(char c) {
         return c == ' ';
     }
 
-    bool isStatementTerminal(char c) {
+    static bool isStatementTerminal(char c) {
         return c == ';';
     }
 
-    bool isCurlyBracket(char c) {
+    static bool isCurlyBracket(char c) {
         return c == '{' || c == '}';
     }
 
-    bool isRoundBracket(char c) {
+    static bool isRoundBracket(char c) {
         return c == '(' || c == ')';
     }
 
 public:
-    explicit Tokenizer(const char* fileName) {
-        inputSimpleProgram.open(fileName);
-        currLineNum = 0;
-    }
 
-    ~Tokenizer() {
-        inputSimpleProgram.close();
-    }
+//    static std::ifstream inputSimpleProgram;
+//    static std::vector<Token> tokens;
 
-    std::vector<Token> tokenize() {
+//    explicit Tokenizer(const char* fileName) {
+//        inputSimpleProgram.open(fileName);
+//    }
+//
+//    ~Tokenizer() {
+//        inputSimpleProgram.close();
+//    }
+
+    std::vector<Token> tokenize(const char* fileName) {
+        std::ifstream inputSimpleProgram("/Users/diwuyi/CLionProjects/spa-cp/Team22/Code22/src/spa/src/SPtestFile_DoNotRemove.txt");
+        std::vector<Token> tokens;
+        //inputSimpleProgram.open(fileName);
+        if (!inputSimpleProgram.is_open()) {
+            std::cout << "testFile not opened" << std::endl;
+        }
+        int currLineNum = 0;
         std::string currLine;
         // getline require pass by reference
         while (std::getline(inputSimpleProgram, currLine)) {
@@ -76,14 +84,14 @@ public:
                         ++ charPos;
                     }
                     if (candidateToken == "procedure") {
-                        tokens.push_back(Token{PROCEDURE, "procedure", currLineNum});
+                        tokens.push_back(Token(PROCEDURE, "procedure", currLineNum));
                     }
                     else if (candidateToken == "read") {
-                        tokens.push_back(Token{READ, "read", currLineNum});
+                        tokens.push_back(Token(READ, "read", currLineNum));
                     }
                     else {
-                        tokens.push_back(Token{NAME_IDENTIFIER, candidateToken,
-                                               currLineNum});
+                        tokens.push_back(Token(NAME_IDENTIFIER, candidateToken,
+                                               currLineNum));
                     }
                 }
                 if (isWhiteSpace(charToProcess)) {
@@ -96,10 +104,10 @@ public:
                 if (isCurlyBracket(charToProcess)) {
                     charPos ++;
                     if (charToProcess == '{') {
-                        tokens.push_back(Token{LEFT_CURLY_BRACKET, "{", currLineNum});
+                        tokens.push_back(Token(LEFT_CURLY_BRACKET, "{", currLineNum));
                     }
                     else {
-                        tokens.push_back(Token{RIGHT_CURLY_BRACKET, "}", currLineNum});
+                        tokens.push_back(Token(RIGHT_CURLY_BRACKET, "}", currLineNum));
                     }
                 }
             }
@@ -107,3 +115,20 @@ public:
         return tokens;
     }
 };
+
+//int main() {
+//    const char* fileTest = "SPtestFile_DoNotRemove.txt";
+//    std::cout << "received file name" << fileTest << std::endl;
+//    std::ifstream test("/Users/diwuyi/CLionProjects/spa-cp/Team22/Code22/src/spa/src/SPtestFile_DoNotRemove.txt");
+//    if (test.is_open()) {
+//        std::cout << "file opened" << std::endl;
+//    }
+//    Tokenizer tokenizer;
+//    const std::vector<Token> tokens = tokenizer.tokenize(fileTest);
+//    std::cout << "execution of tokenizer done" << std::endl;
+//    //driver.parseSimpleProgram(fileTest);
+//    for (Token token: tokens) {
+//            std::cout << "Token" << ToString(token) << std::endl;
+//        }
+//    return 0;
+//};
