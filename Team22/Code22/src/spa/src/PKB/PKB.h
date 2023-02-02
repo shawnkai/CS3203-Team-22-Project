@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "Result.h"
+
 using namespace std;
 typedef short PROC;
 
@@ -14,12 +16,14 @@ class VarTable;  // no need to #include "VarTable.h" as all I need is pointer
 
 class PKB {
 public:
+
 	static VarTable* varTable; 
 	static int setProcToAST(PROC p, TNode* r);
 	static TNode* getRootAST (PROC p);
 
-    static void addDesignAbstraction();
-    static void addDesignEntity();
-    static string getDesignEntity(); // string -> Result
-    static string getDesignAbstraction(); // string -> Result
+    void addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails);
+    void addDesignEntity(string designEntity, string occurrenceLine);
+    Result getDesignAbstraction(string abstractionType, tuple<string, string> query); // string -> Result
+    Result getDesignEntity(string entityType); // string -> Result
+    Result getDesignEntity(string entityType, string occurrenceLine);
 };
