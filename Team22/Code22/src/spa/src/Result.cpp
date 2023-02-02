@@ -8,7 +8,7 @@
 
 using namespace std;
 
-inline Result::Result(vector<string> result) {
+Result::Result(vector<string> result) {
     this->result = result;
 }
 

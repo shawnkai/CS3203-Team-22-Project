@@ -17,7 +17,7 @@ class Result {
     vector<string> result;
 
 public:
-    inline explicit Result(vector<string> result);
+    explicit Result(vector<string> result); // inline giving error
 
     string toString();
     vector<string> getResult();
