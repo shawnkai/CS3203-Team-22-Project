@@ -18,6 +18,8 @@ public:
     void addToDatabase(DesignEntity designEntityToBeStored) override;
     bool isPresentInDatabase(DesignEntity designEntityToBeStored) override;
     void updateEntityInDatabase(DesignEntity designEntityToBeStored) override;
+    bool isPresentInDatabase(string entityName) override;
+    Result getFromDatabase(string entityName) override;
 };
 
 #endif //SPA_VARIABLEDATABASE_H
