@@ -18,7 +18,13 @@ protected:
 public:
     explicit DesignEntity(string entityType);
 
+    DesignEntity();
+
     string getType();
+
+    virtual string toString() {
+        return "";
+    }
 };
 
 class StmtEntity : DesignEntity {
@@ -28,6 +34,8 @@ public:
     StmtEntity(string type,  int lineNumber);
 
     int getLine();
+
+    string toString() override;
 };
 
 class ReadEntity : StmtEntity {
@@ -68,6 +76,8 @@ public:
     NamedEntity(string type, string synonym);
 
     string getSynonym();
+
+    string toString() override;
 };
 
 class ProcedureEntity : NamedEntity {

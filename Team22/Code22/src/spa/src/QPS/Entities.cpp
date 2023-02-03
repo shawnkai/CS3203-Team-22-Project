@@ -2,7 +2,9 @@
 // Created by Atin Sakkeer Hussain on 01/02/2023.
 //
 
-#include "Entities.h"
+#include "QPS/Entities.h"
+
+#include <utility>
 
 // Design Entity
 DesignEntity::DesignEntity(string entityType) {
@@ -13,13 +15,19 @@ string DesignEntity::getType() {
     return this->entityType;
 }
 
+DesignEntity::DesignEntity() {}
+
 //Stmt Entity and its children
-StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(type) {
+StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(type)) {
     this->lineNumber = lineNumber;
 }
 
 int StmtEntity::getLine() {
     return this->lineNumber;
+}
+
+string StmtEntity::toString() {
+    return to_string(this->getLine());
 }
 
 ReadEntity::ReadEntity(int lineNumber) : StmtEntity("read", lineNumber) {}
@@ -31,14 +39,19 @@ IfEntity::IfEntity(int lineNumber) : StmtEntity("if", lineNumber) {}
 
 
 // Named Entities and its children
-NamedEntity::NamedEntity(string type, string synonym) : DesignEntity(type) {
-    this->synonym = synonym;
+NamedEntity::NamedEntity(string type, string synonym) : DesignEntity(std::move(type)) {
+    this->synonym = std::move(synonym);
 }
 
 string NamedEntity::getSynonym() {
     return this->synonym;
 }
 
-ProcedureEntity::ProcedureEntity(string synonym) : NamedEntity("procedure", synonym) {}
-VariableEntity::VariableEntity(string synonym) : NamedEntity("variable", synonym) {}
-ConstantEntity::ConstantEntity(string synonym) : NamedEntity("constant", synonym) {}
+string NamedEntity::toString() {
+    return this->getSynonym();
+}
+
+ProcedureEntity::ProcedureEntity(string synonym) : NamedEntity("procedure", std::move(synonym)) {}
+VariableEntity::VariableEntity(string synonym) : NamedEntity("variable", std::move(synonym)) {}
+ConstantEntity::ConstantEntity(string synonym) : NamedEntity("constant", std::move(synonym)) {}
+
