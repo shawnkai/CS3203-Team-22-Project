@@ -15,7 +15,7 @@ Result::Result(string entityType, string entityName, vector<string> result) {
 }
 
 string Result::toString() {
-    string resultString = entityType + ": " + entityName + ": ";
+    string resultString = (this->entityType) + ": " + (this->entityName) + ": ";
 
     for (auto item: this->result) {
         resultString += (item + ", ");
