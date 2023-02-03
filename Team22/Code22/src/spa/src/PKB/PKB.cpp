@@ -7,6 +7,9 @@ using namespace std;
 
 #include "PKB.h"
 #include "TNode.h"
+#include "DesignEntities/DesignEntitiesFactory.h"
+#include "DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
+#include "DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
 
 int PKB::setProcToAST(PROC p, TNode* r) {
 	return 0;
@@ -17,26 +20,40 @@ TNode* PKB::getRootAST (PROC p){
 }
 
 void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
-
+    // To be implemented
 }
 
-void PKB::addDesignEntity(string designEntity, string occurrenceLine) {
-
+void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
+    // To be implemented
+    DesignEntity de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
+    de.addToDatabase();
 }
 
 Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
+    // To be implemented
+
+    // Demo Code
     vector<string> sampleVector(5, "");
     Result queryResult(sampleVector);
     return queryResult;
 }
 
-Result PKB::getDesignEntity(string entityType) {
+Result PKB::getDesignEntity(string entityType, string entity) {
+    // To be implemented
+
+    vector<string> result;
+
+
+    // Demo Code
     vector<string> sampleVector(5, "");
     Result queryResult(sampleVector);
     return queryResult;
 }
 
-Result PKB::getDesignEntity(string entityType, string occurrenceLine) {
+Result PKB::getDesignEntity(string entityType, string entity, string occurrenceLine) {
+    // To be implemented
+
+    // Demo Code
     vector<string> sampleVector(5, "");
     Result queryResult(sampleVector);
     return queryResult;

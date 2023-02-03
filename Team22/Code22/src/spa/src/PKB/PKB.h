@@ -22,8 +22,8 @@ public:
 	static TNode* getRootAST (PROC p);
 
     void addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails);
-    void addDesignEntity(string designEntity, string occurrenceLine);
+    void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query); // string -> Result
-    Result getDesignEntity(string entityType); // string -> Result
-    Result getDesignEntity(string entityType, string occurrenceLine);
+    Result getDesignEntity(string entityType, string entity); // string -> Result
+    Result getDesignEntity(string entityType, string entity, string occurrenceLine);
 };
