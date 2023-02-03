@@ -19,12 +19,12 @@ public:
     string nameOfEntity;
     vector<string> occurrenceOfEntity;
 
-    virtual void addAdditionalOccurrence(string occurrence);
+    virtual void addAdditionalOccurrence(string occurrence) = 0;
 //    virtual void addToDatabase(DesignEntity designEntityCreated);
-    virtual void addToDatabase();
-    virtual string getNameOfEntity();
-    virtual vector<string> getOccurrenceOfEntity();
-    virtual string getTypeOfEntity();
+    virtual void addToDatabase() = 0;
+    virtual string getNameOfEntity() = 0;
+    virtual vector<string> getOccurrenceOfEntity() = 0;
+    virtual string getTypeOfEntity() = 0;
 };
 
 #endif //SPA_DESIGNENTITY_H
