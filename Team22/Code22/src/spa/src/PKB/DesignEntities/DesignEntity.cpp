@@ -6,4 +6,3 @@
 #include "DesignEntity.h"
 
 using namespace std;
-
