@@ -2,6 +2,8 @@
 // Created by Jai Lulla  on 3/2/23.
 //
 
+#pragma once
+
 #ifndef SPA_VARIABLE_H
 #define SPA_VARIABLE_H
 
