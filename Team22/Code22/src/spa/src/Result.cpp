@@ -35,3 +35,9 @@ string Result::getQueryEntityType() {
 vector<string> Result::getQueryResult() {
     return this->result;
 }
+
+bool Result::areEqual(Result otherResult) {
+    return (this->entityName == otherResult.entityName)
+    && (this->entityType == otherResult.entityType)
+    && (this->result == otherResult.result);
+}

@@ -25,6 +25,7 @@ public:
     string getQueryEntityName();
     string getQueryEntityType();
     vector<string> getQueryResult();
+    bool areEqual(Result otherResult); // For testing purposes
 };
 
 #endif //SPA_RESULT_H
