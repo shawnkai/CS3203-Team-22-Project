@@ -34,27 +34,23 @@ Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> q
 
     // Demo Code
     vector<string> sampleVector(5, "");
-    Result queryResult(sampleVector);
+    Result queryResult("sample", "sample", sampleVector);
     return queryResult;
 }
 
-Result PKB::getDesignEntity(string entityType, string entity) {
+Result PKB::getDesignEntity(string entityType, string entityName) {
     // To be implemented
+    DesignEntityDatabase db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
+    Result queryResult = db.getFromDatabase(entityName);
 
-    vector<string> result;
-
-
-    // Demo Code
-    vector<string> sampleVector(5, "");
-    Result queryResult(sampleVector);
     return queryResult;
 }
 
-Result PKB::getDesignEntity(string entityType, string entity, string occurrenceLine) {
+Result PKB::getDesignEntity(string entityType, string entityName, string occurrenceLine) {
     // To be implemented
 
     // Demo Code
     vector<string> sampleVector(5, "");
-    Result queryResult(sampleVector);
+    Result queryResult("sample", "sample", sampleVector);
     return queryResult;
 }
