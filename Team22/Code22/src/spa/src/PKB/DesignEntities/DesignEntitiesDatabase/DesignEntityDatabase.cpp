@@ -7,4 +7,3 @@
 #include "DesignEntityDatabase.h"
 
 using namespace std;
-
