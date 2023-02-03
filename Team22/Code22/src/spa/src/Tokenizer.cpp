@@ -67,11 +67,15 @@ public:
         if (!inputSimpleProgram.is_open()) {
             std::cout << "testFile not opened" << std::endl;
         }
-        int currLineNum = 0;
+        int currLineNum = 1;
         std::string currLine;
         // getline require pass by reference
         while (std::getline(inputSimpleProgram, currLine)) {
-            ++ currLineNum;
+            if (currLine.find("while") != std::string::npos
+            || currLine.find("if") != std::string::npos
+            || currLine.find(';') != std::string::npos) {
+                currLineNum++;
+            }
             int charPos = 0;
             while (charPos < currLine.length()) {
                 std::string candidateToken;

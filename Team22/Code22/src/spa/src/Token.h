@@ -12,7 +12,7 @@ enum TokenType {
     READ,
     INTEGER, // 1, 2, 0, ...
     OPERATOR, // >, >=, <, <=, =, ... (not for now)
-    STATEMENT_TERMINAL,
+    STATEMENT_TERMINAL, // ;
     LEFT_ROUND_BRACKET,
     RIGHT_ROUND_BRACKET,
     LEFT_CURLY_BRACKET,
