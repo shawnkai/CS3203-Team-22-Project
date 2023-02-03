@@ -23,7 +23,7 @@ std::string stringId;
 int stmtNumber;
 std::vector<std::unique_ptr<TNode>> children;
 
-explicit TNode(const TokenType type, std::string stringId = "",
+explicit TNode(TokenType type = UNKNOWN, std::string stringId = "",
                int stmtNumber = 0,
                std::vector<std::unique_ptr<TNode>> children = {}) :
                nodeType(type), stringId(std::move(stringId)), stmtNumber(stmtNumber), children(std::move(children)) {};
