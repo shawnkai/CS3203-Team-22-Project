@@ -13,6 +13,7 @@ enum TokenType {
     INTEGER, // 1, 2, 0, ...
     OPERATOR, // >, >=, <, <=, =, ... (not for now)
     STATEMENT_TERMINAL, // ;
+    STATEMENT_LIST,
     LEFT_ROUND_BRACKET,
     RIGHT_ROUND_BRACKET,
     LEFT_CURLY_BRACKET,
