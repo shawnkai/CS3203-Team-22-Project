@@ -25,6 +25,6 @@ No additional instructions required.
 | Atin Sakkeer Hussain  | atin.s@u.nus.edu  | Mac OS  | QPS  |
 | Tanishq Sharma  | tanishq.sharma@u.nus.edu  | Windows 10  | QPS  |
 | Jai Lal Lulla  | jai.lulla@u.nus.edu  | Mac OS  | PKB  |
-| Yi Zhang  | -  | Windows 10  | SPA  |
-| Wang Mo  | -  | Mac OS  | SPA  |
+| Yi Zhang  | -  | Mac OS  | SPA  |
+| Wang Mo  | -  | Windows 10  | SPA  |
 | Shawn Tan  | -  | Windows 10  | QPS  |
