@@ -11,7 +11,6 @@
 #include "DesignEntityDatabase.h"
 #include "VariableDatabase.h"
 
-
 using namespace std;
 
 class DesignEntitiesDatabaseFactory {
@@ -19,6 +18,7 @@ public:
     static inline DesignEntityDatabase variableEntitiesDatabase = VariableDatabase();
 
     static DesignEntityDatabase getEntityDatabase(DesignEntity designEntity);
+    static DesignEntityDatabase getEntityDatabase(string designEntityType);
 };
 
 #endif //SPA_DESIGNENTITIESDATABASEFACTORY_H
