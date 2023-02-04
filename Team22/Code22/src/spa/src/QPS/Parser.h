@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <regex>
+#include <tuple>
 
 using namespace std;
 
@@ -29,11 +30,13 @@ public:
 	bool containsModifiesExpression(string query);
 	bool containsUsesExpression(string query);
 
+    void addToSynonymTable(string type, string name);
 	void extractDeclarations(string query);
 
 	ModifiesExpression extractModifiesExpression(string query);
 	UsesExpression extractUsesExpression(string query);
 
+    vector<tuple<string, string>> getSynonymTable();
 };
 
 

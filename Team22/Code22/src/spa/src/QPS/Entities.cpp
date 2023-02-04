@@ -42,7 +42,7 @@ PrintEntity::PrintEntity() : StmtEntity("print") {}
 AssignEntity::AssignEntity(int lineNumber) : StmtEntity("assign", lineNumber) {}
 AssignEntity::AssignEntity() : StmtEntity("assign") {}
 CallEntity::CallEntity(int lineNumber) : StmtEntity("call", lineNumber) {}
-CallEntity::CallEntity() : StmtEntity("read") {}
+CallEntity::CallEntity() : StmtEntity("call") {}
 WhileEntity::WhileEntity(int lineNumber) : StmtEntity("while", lineNumber) {}
 WhileEntity::WhileEntity() : StmtEntity("while") {}
 IfEntity::IfEntity(int lineNumber) : StmtEntity("if", lineNumber) {}

@@ -14,17 +14,13 @@
 using namespace std;
 
 class Expression {
-    virtual Result evaluate(){
-        vector<string> empty;
-        Result emptyResult(empty);
-        return emptyResult;
-    };
+    virtual Result evaluate();
 
     protected:
         vector<DesignEntity> entities;
 
     public:
-        explicit Expression();
+        explicit Expression(vector<DesignEntity> entities);
 };
 
 
@@ -33,7 +29,7 @@ private:
     vector<Expression> conditions;
 
 public:
-    explicit SelectExpression(vector<Expression> conditions);
+    explicit SelectExpression(vector<DesignEntity> entities, vector<Expression> conditions);
 
     Result evaluate() override;
 
@@ -42,27 +38,20 @@ public:
 
 //Modifies Expression Classes
 class ModifiesExpression : public Expression {
-
 public:
-    explicit ModifiesExpression(NamedEntity target);
+    ModifiesExpression(NamedEntity target);
 };
 
 class ModifiesSExpression : public ModifiesExpression {
-private: 
-    StmtEntity modifier;
-
 public:
-    explicit ModifiesSExpression(StmtEntity modifier);
+    explicit ModifiesSExpression(StmtEntity modifier, NamedEntity target);
 
     Result evaluate() override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
-private:
-    NamedEntity modifier;
-
 public:
-    explicit ModifiesPExpression(NamedEntity modifier);
+    explicit ModifiesPExpression(NamedEntity modifier, NamedEntity target);
 
     Result evaluate() override;
 };
@@ -75,21 +64,16 @@ public:
 };
 
 class UsesSExpression : public UsesExpression {
-private:
-    StmtEntity user;
 
 public:
-    explicit UsesSExpression(StmtEntity user);
+    explicit UsesSExpression(StmtEntity user, DesignEntity target);
 
     Result evaluate() override;
 };
 
 class UsesPExpression : public UsesExpression {
-private:
-    NamedEntity user;
-
 public:
-    explicit UsesPExpression(NamedEntity user);
+    explicit UsesPExpression(NamedEntity user, DesignEntity target);
 
     Result evaluate() override;
 };
