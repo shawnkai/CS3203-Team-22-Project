@@ -8,27 +8,27 @@
 
 using namespace std;
 
-void VariableDatabase::addToDatabase(DesignEntity designEntityToBeStored) {
+void VariableDatabase::addToDatabase(DesignEntity* designEntityToBeStored) {
     // First find the variable if it exists in db, if not, add.
     // If it does exist, then just retrieve and add to the vector<string> occurrence list
 
     if (this->isPresentInDatabase(designEntityToBeStored)) {
         this->updateEntityInDatabase(designEntityToBeStored);
     } else {
-        (this->database).insert(make_pair(designEntityToBeStored.getNameOfEntity(), designEntityToBeStored));
+        (this->database).insert(make_pair((designEntityToBeStored->getNameOfEntity()), designEntityToBeStored));
     }
 }
 
-bool VariableDatabase::isPresentInDatabase(DesignEntity designEntityToBeStored) {
-    return this->isPresentInDatabase(designEntityToBeStored.getNameOfEntity());
+bool VariableDatabase::isPresentInDatabase(DesignEntity* designEntityToBeStored) {
+    return this->isPresentInDatabase(designEntityToBeStored->getNameOfEntity());
 }
 
-void VariableDatabase::updateEntityInDatabase(DesignEntity designEntityToBeStored) {
+void VariableDatabase::updateEntityInDatabase(DesignEntity* designEntityToBeStored) {
     // insert new set of value
 //    (this->database)[designEntityToBeStored.getNameOfEntity()];
 
-    auto iterator = (this->database).find(designEntityToBeStored.getNameOfEntity());
-    (iterator->second).addAdditionalOccurrence(designEntityToBeStored.getOccurrenceOfEntity()[0]);
+    auto iterator = (this->database).find(designEntityToBeStored->getNameOfEntity());
+    (iterator->second)->addAdditionalOccurrence(designEntityToBeStored->getOccurrenceOfEntity()[0]);
 
 //    vector<string> toBeUpdated = (iterator->second).getOccurrenceOfEntity();
 //    toBeUpdated.push_back(designEntityToBeStored.getOccurrenceOfEntity()[0]);
@@ -49,9 +49,9 @@ Result VariableDatabase::getFromDatabase(string entityName) {
         // and let it parse
 
         return Result(
-                (iterator->second).getTypeOfEntity(),
-                (iterator->second).getNameOfEntity(),
-                (iterator->second).getOccurrenceOfEntity());
+                (iterator->second)->getTypeOfEntity(),
+                (iterator->second)->getNameOfEntity(),
+                (iterator->second)->getOccurrenceOfEntity());
     }
 
     // Return None, as it was not found in Database

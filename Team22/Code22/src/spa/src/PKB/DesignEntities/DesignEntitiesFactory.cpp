@@ -9,13 +9,14 @@
 
 using namespace std;
 
-DesignEntity DesignEntitiesFactory::createDesignEntity(string designEntity, tuple<string, string> entityDetails) {
+DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tuple<string, string> entityDetails) {
+    // Suggestion: Better make all capital
     transform(designEntity.begin(), designEntity.end(), designEntity.begin(), ::tolower);
 
     if (designEntity == "procedure") {
 
     } else if (designEntity == "variable") {
-        return Variable(entityDetails);
+        return new Variable(entityDetails);
     } else if (designEntity == "constant") {
 
     } else if (designEntity == "statement") {
@@ -35,5 +36,5 @@ DesignEntity DesignEntitiesFactory::createDesignEntity(string designEntity, tupl
     }
 
     // Just to pass build - temp
-    return Variable(entityDetails);
+    return new Variable(entityDetails);
 }

@@ -14,7 +14,7 @@ using namespace std;
 
 class DesignEntitiesFactory {
 public:
-    static DesignEntity createDesignEntity(string designEntity, tuple<string, string> entityDetails);
+    static DesignEntity* createDesignEntity(string designEntity, tuple<string, string> entityDetails);
 };
 
 #endif //SPA_DESIGNENTITIESFACTORY_H

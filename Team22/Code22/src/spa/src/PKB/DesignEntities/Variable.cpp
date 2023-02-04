@@ -22,8 +22,8 @@ void Variable::addAdditionalOccurrence(string occurrence) {
 void Variable::addToDatabase() {
     // call storage/database factory and add, let storage check if there,
     // and update or add
-    DesignEntityDatabase database = DesignEntitiesDatabaseFactory::getEntityDatabase(*this);
-    database.addToDatabase(*this);
+    DesignEntityDatabase* database = DesignEntitiesDatabaseFactory::getEntityDatabase(this);
+    database->addToDatabase(this);
 }
 
 string Variable::getNameOfEntity() {

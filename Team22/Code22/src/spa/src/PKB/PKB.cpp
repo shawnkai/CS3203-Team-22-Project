@@ -25,8 +25,8 @@ void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> a
 
 void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
     // To be implemented
-    DesignEntity de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
-    de.addToDatabase();
+    DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
+    de->addToDatabase();
 }
 
 Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
@@ -40,8 +40,8 @@ Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> q
 
 Result PKB::getDesignEntity(string entityType, string entityName) {
     // To be implemented
-    DesignEntityDatabase db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
-    Result queryResult = db.getFromDatabase(entityName);
+    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
+    Result queryResult = db->getFromDatabase(entityName);
 
     return queryResult;
 }
