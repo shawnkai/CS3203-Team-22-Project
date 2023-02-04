@@ -19,11 +19,11 @@ class DesignEntityDatabase {
 public:
     unordered_map<string, DesignEntity*> database;
 
-    virtual void addToDatabase(DesignEntity* designEntityToBeStored) = 0;
-    virtual bool isPresentInDatabase(DesignEntity* designEntityToBeStored) = 0;
-    virtual void updateEntityInDatabase(DesignEntity* designEntityToBeStored) = 0;
-    virtual bool isPresentInDatabase(string entityName) = 0;
-    virtual Result getFromDatabase(string entityName) = 0;
+    virtual void addToDatabase(DesignEntity* designEntityToBeStored);
+    virtual bool isPresentInDatabase(DesignEntity* designEntityToBeStored);
+    virtual void updateEntityInDatabase(DesignEntity* designEntityToBeStored);
+    virtual bool isPresentInDatabase(string entityName);
+    virtual Result getFromDatabase(string entityName) ;
 };
 
 #endif //SPA_DESIGNENTITYDATABASE_H
