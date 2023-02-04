@@ -6,32 +6,33 @@
 
 #include "DesignEntitiesFactory.h"
 #include "Variable.h"
+#include "Procedure.h"
 
 using namespace std;
 
 DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tuple<string, string> entityDetails) {
     // Suggestion: Better make all capital
-    transform(designEntity.begin(), designEntity.end(), designEntity.begin(), ::tolower);
+    transform(designEntity.begin(), designEntity.end(), designEntity.begin(), ::toupper);
 
-    if (designEntity == "procedure") {
-
-    } else if (designEntity == "variable") {
+    if (designEntity == "PROCEDURE") {
+        return new Procedure(entityDetails);
+    } else if (designEntity == "VARIABLE") {
         return new Variable(entityDetails);
-    } else if (designEntity == "constant") {
+    } else if (designEntity == "CONSTANT") {
 
-    } else if (designEntity == "statement") {
+    } else if (designEntity == "STATEMENT") {
 
-    } else if (designEntity == "read") {
+    } else if (designEntity == "READ") {
 
-    } else if (designEntity == "print") {
+    } else if (designEntity == "PRINT") {
 
-    } else if (designEntity == "assign") {
+    } else if (designEntity == "ASSIGN") {
 
-    } else if (designEntity == "call") {
+    } else if (designEntity == "CALL") {
 
-    } else if (designEntity == "while") {
+    } else if (designEntity == "WHILE") {
 
-    } else if (designEntity == "if") {
+    } else if (designEntity == "IF") {
 
     }
 
