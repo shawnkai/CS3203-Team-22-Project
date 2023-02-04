@@ -21,7 +21,7 @@ public:
 	static int setProcToAST(PROC p, TNode* r);
 	static TNode* getRootAST (PROC p);
 
-    void addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails);
+    void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query); // string -> Result
     Result getDesignEntity(string entityType, string entityName); // string -> Result

@@ -19,7 +19,7 @@ TNode* PKB::getRootAST (PROC p){
 	return nullptr;
 }
 
-void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
+void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
     // To be implemented
 }
 
