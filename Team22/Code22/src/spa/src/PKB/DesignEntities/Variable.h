@@ -17,10 +17,6 @@ class Variable: public DesignEntity {
 public:
     explicit Variable(tuple<string, string> entityDetails);
 
-    void addAdditionalOccurrence(string occurrence) override;
-    void addToDatabase() override;
-    string getNameOfEntity() override;
-    vector<string> getOccurrenceOfEntity() override;
     string getTypeOfEntity() override;
 };
 
