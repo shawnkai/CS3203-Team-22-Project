@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "DesignEntitiesDatabaseFactory.h"
-#include "../Variable.h"
 
 using namespace std;
 
@@ -15,6 +14,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(DesignEnt
 
     if (designEntity->getTypeOfEntity() == "VARIABLE") {
         return variableEntitiesDatabase;
+    } else if(designEntity->getTypeOfEntity() == "PROCEDURE") {
+        return procedureEntitiesDatabase;
     }
 
     // TEMP: For building purposes
@@ -24,6 +25,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(DesignEnt
 DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string designEntityType) {
     if (designEntityType == "VARIABLE") {
         return variableEntitiesDatabase;
+    } else if(designEntityType == "PROCEDURE") {
+        return procedureEntitiesDatabase;
     }
 
     // TEMP: For building purposes

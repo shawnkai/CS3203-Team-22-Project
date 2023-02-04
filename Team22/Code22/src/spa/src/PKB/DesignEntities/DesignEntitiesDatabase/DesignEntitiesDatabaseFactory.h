@@ -10,12 +10,14 @@
 
 #include "DesignEntityDatabase.h"
 #include "VariableDatabase.h"
+#include "ProcedureDatabase.h"
 
 using namespace std;
 
 class DesignEntitiesDatabaseFactory {
 public:
     static inline DesignEntityDatabase* variableEntitiesDatabase = new VariableDatabase();
+    static inline DesignEntityDatabase* procedureEntitiesDatabase = new ProcedureDatabase();
 
     static DesignEntityDatabase* getEntityDatabase(DesignEntity* designEntity);
     static DesignEntityDatabase* getEntityDatabase(string designEntityType);
