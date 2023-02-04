@@ -26,7 +26,7 @@ protected:
 public:
 	QueryParser();
 
-	Expression parse(string query);
+	SelectExpression parse(string query);
 
 	bool isDeclaration(string query);
 	bool containsModifiesExpression(string query);

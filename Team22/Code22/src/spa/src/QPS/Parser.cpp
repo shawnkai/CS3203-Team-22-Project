@@ -12,20 +12,27 @@ QueryParser::QueryParser() {
 }
 
 
-Expression QueryParser::parse(string query) {
-    vector<DesignEntity> des;
+SelectExpression QueryParser::parse(string query) {
+	vector<Expression> conditions;
+
 	if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
-		Expression ep(des);
+		SelectExpression ep({}, conditions);
 		return ep;
 	} else {
-		vector<Expression> conditions;
+		smatch sm;
+		regex RETURNVALUEREGEX = regex("Select (\w+)");
+		regex_search(query, sm, RETURNVALUEREGEX);
+		
+		DesignEntity arg = this->synonymTable[sm.str(1)];
+
 		if (this->containsModifiesExpression(query)) {
 			conditions.push_back(this->extractModifiesExpression(query));
 		} else if (this->containsUsesExpression(query)) {
 			conditions.push_back(this->extractUsesExpression(query));
 		}
-		return SelectExpression(des, conditions);
+
+		return SelectExpression({arg}, conditions);
 	}
 }
 
@@ -35,13 +42,13 @@ bool QueryParser::isDeclaration(string query) {
 }
 
 bool QueryParser::containsModifiesExpression(string query) {
-	regex CONTAINSMODIFIESREGEX = regex("Modifies\\(\"(\\w+)\", (\\w+)\\)");
-	return false;
+	regex CONTAINSMODIFIESREGEX = regex("Modifies\\s?\\(\"?(\\w+)\"?, \"?(\\w+)\"?\\)");
+	return distance(sregex_iterator(query.begin(), query.end(), CONTAINSMODIFIESREGEX), std::sregex_iterator()) > 0;
 }
 
 bool QueryParser::containsUsesExpression(string query) {
-	regex CONTAINSUSESREGEX = regex("Uses\\(\"(\\w+)\", (\\w+)\\)");
-	return false;
+	regex CONTAINSUSESREGEX = regex("Uses\\s?\\(\"?(\\w+)\"?, \"?(\\w+)\"?\\)");
+	return distance(sregex_iterator(query.begin(), query.end(), CONTAINSUSESREGEX), std::sregex_iterator()) > 0;
 }
 
 // Returns true if s is a number else false
@@ -54,14 +61,13 @@ bool isNumber(string s)
 	return true;
 }
 
-
 ModifiesExpression QueryParser::extractModifiesExpression(string query) {
-	regex MODIFIESREGEX = regex("Modifies\\(\"(\\w+)\", \"(\\w+)\")");
+	regex MODIFIESREGEX = regex("Modifies\\s?\\(\"?(\\w+)\"?, \"?(\\w+)\"?\\)");
 	smatch sm;
 	regex_search(query, sm, MODIFIESREGEX);
 
-	string arg1 = sm[0].str();
-	string arg2 = sm[1].str();
+	string arg1 = sm.str(1);
+	string arg2 = sm.str(2);
 
 	if (isNumber(arg1)) {
 		return ModifiesSExpression(StmtEntity(arg1), NamedEntity(this->synonymTable[arg2].getType(), arg2));
@@ -72,12 +78,12 @@ ModifiesExpression QueryParser::extractModifiesExpression(string query) {
 
 
 UsesExpression QueryParser::extractUsesExpression(string query) {
-	regex USESREGEX = regex("Uses\(\"(\\w+)\", \"(\\w+)\"\)");
+	regex USESREGEX = regex("Uses\\s?\\(\"?(\\w+)\"?, \"?(\\w+)\"?\\)");
 	smatch sm;
 	regex_search(query, sm, USESREGEX);
 
-	string arg1 = sm[0].str();
-	string arg2 = sm[1].str();
+	string arg1 = sm.str(1);
+	string arg2 = sm.str(2);
 
 	if (isNumber(arg1)) {
 		return UsesSExpression(StmtEntity(arg1),  NamedEntity(this->synonymTable[arg2].getType(), arg2));
