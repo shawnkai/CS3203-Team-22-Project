@@ -13,13 +13,17 @@ QueryParser::QueryParser() {
 Expression QueryParser::parse(string query) {
 	if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
+		Expression ep;
+		return ep;
 	} else {
-		vector<ModifiesExpression> modifiesExpressions = this->extractModifiesExpressions(query);
-		vector<UsesExpression> usesExpressions = this->extractUsesExpressions(query);
-
+		vector<Expression> conditions;
+		if (this->containsModifiesExpression(query)) {
+			conditions.push_back(this->extractModifiesExpression(query));
+		} else if (this->containsUsesExpression(query)) {
+			conditions.push_back(this->extractUsesExpression(query));
+		}
+		return SelectExpression(conditions);
 	}
-	Expression ep;
-	return ep;
 }
 
 bool QueryParser::isDeclaration(string query) {
@@ -27,18 +31,31 @@ bool QueryParser::isDeclaration(string query) {
 	return regex_match(query, ISDECLARATIONREGEX);
 }
 
+bool QueryParser::containsModifiesExpression(string query) {
+	regex CONTAINSMODIFIESREGEX = regex("Modifies\\(\"(\\w+)\", (\\w+)\\)");
+	return false;
+}
 
-vector<ModifiesExpression> QueryParser::extractModifiesExpressions(string query) {
-	regex MODIFIESREGEX = regex("");
-	vector<ModifiesExpression> empty;
-	return empty;
+bool QueryParser::containsUsesExpression(string query) {
+	regex CONTAINSUSESREGEX = regex("Uses\\(\"(\\w+)\", (\\w+)\\)");
+	return false;
 }
 
 
-vector<UsesExpression> QueryParser::extractUsesExpressions(string query) {
-	regex USESREGEX = regex("");
+ModifiesExpression QueryParser::extractModifiesExpression(string query) {
+	regex MODIFIESREGEX = regex("Modifies\\(\"(\\w+)\", \"(\\w+)\")");
+    NamedEntity ne("", "");
+    ModifiesExpression exp(ne);
+	return exp;
+}
+
+
+UsesExpression QueryParser::extractUsesExpression(string query) {
+	regex USESREGEX = regex("Uses\(\"(\\w+)\", \"(\\w+)\"\)");
 	vector<UsesExpression> empty;
-	return empty;
+	NamedEntity ne("", "");
+	UsesExpression exp(ne);
+	return exp;
 }
 
 void QueryParser::extractDeclarations(string query) {

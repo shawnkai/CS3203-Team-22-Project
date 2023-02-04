@@ -26,11 +26,13 @@ public:
 	Expression parse(string query);
 
 	bool isDeclaration(string query);
+	bool containsModifiesExpression(string query);
+	bool containsUsesExpression(string query);
 
 	void extractDeclarations(string query);
 
-	vector<ModifiesExpression> extractModifiesExpressions(string query);
-	vector<UsesExpression> extractUsesExpressions(string query);
+	ModifiesExpression extractModifiesExpression(string query);
+	UsesExpression extractUsesExpression(string query);
 
 };
 

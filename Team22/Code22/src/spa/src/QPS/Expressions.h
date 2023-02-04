@@ -28,7 +28,7 @@ class Expression {
 };
 
 
-class SelectExpression : Expression {
+class SelectExpression : public Expression {
 private:
     vector<Expression> conditions;
 
@@ -41,13 +41,13 @@ public:
 
 
 //Modifies Expression Classes
-class ModifiesExpression : Expression {
+class ModifiesExpression : public Expression {
 
 public:
     explicit ModifiesExpression(NamedEntity target);
 };
 
-class ModifiesSExpression : ModifiesExpression {
+class ModifiesSExpression : public ModifiesExpression {
 private: 
     StmtEntity modifier;
 
@@ -57,7 +57,7 @@ public:
     Result evaluate() override;
 };
 
-class ModifiesPExpression : ModifiesExpression {
+class ModifiesPExpression : public ModifiesExpression {
 private:
     NamedEntity modifier;
 
@@ -69,12 +69,12 @@ public:
 
 
 //Uses expression classes
-class UsesExpression : Expression {
+class UsesExpression : public Expression {
 public:
     explicit UsesExpression(DesignEntity target);
 };
 
-class UsesSExpression : UsesExpression {
+class UsesSExpression : public UsesExpression {
 private:
     StmtEntity user;
 
@@ -84,7 +84,7 @@ public:
     Result evaluate() override;
 };
 
-class UsesPExpression : UsesExpression {
+class UsesPExpression : public UsesExpression {
 private:
     NamedEntity user;
 
