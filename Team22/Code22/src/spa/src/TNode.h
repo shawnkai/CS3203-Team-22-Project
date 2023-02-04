@@ -21,10 +21,20 @@ public:
 TokenType nodeType;
 std::string stringId;
 int stmtNumber;
-std::vector<std::unique_ptr<TNode>> children;
+std::vector<TNode> children;
 
-explicit TNode(TokenType type = UNKNOWN, std::string stringId = "",
+explicit TNode(TokenType type = UNKNOWN, const std::string& stringId = "",
                int stmtNumber = 0,
-               std::vector<std::unique_ptr<TNode>> children = {}) :
-               nodeType(type), stringId(std::move(stringId)), stmtNumber(stmtNumber), children(std::move(children)) {};
+               const std::vector<TNode>& children = std::vector<TNode>(0)) :
+               nodeType(type), stringId(stringId), stmtNumber(stmtNumber), children(children) {};
+
 };
+
+inline std::string ToString(const TNode& t) {
+    std::string childrenName;
+    for (auto const& child : t.children) {
+        childrenName += child.stringId;
+    }
+    return ToString(t.nodeType) + t.stringId + std::to_string(t.stmtNumber) + " with children: "
+    + childrenName;
+}

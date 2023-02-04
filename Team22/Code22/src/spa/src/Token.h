@@ -27,6 +27,7 @@ inline const char* ToString(TokenType t) {
         case PROCEDURE: return "PROCEDURE";
         case READ: return "READ";
         case STATEMENT_TERMINAL: return "STATEMENT_TERMINAL";
+        case STATEMENT_LIST: return "STATEMENT_LIST";
         case LEFT_CURLY_BRACKET: return "LEFT_CURLY_BRACKET";
         case RIGHT_CURLY_BRACKET: return "RIGHT_CURLY_BRACKET";
         default: return "UNKNOWN_TOKEN_TYPE";
