@@ -15,9 +15,10 @@
 using namespace std;
 
 class DesignEntitiesDatabaseFactory {
-public:
     static inline DesignEntityDatabase* variableEntitiesDatabase = new VariableDatabase();
     static inline DesignEntityDatabase* procedureEntitiesDatabase = new ProcedureDatabase();
+
+public:
 
     static DesignEntityDatabase* getEntityDatabase(DesignEntity* designEntity);
     static DesignEntityDatabase* getEntityDatabase(string designEntityType);

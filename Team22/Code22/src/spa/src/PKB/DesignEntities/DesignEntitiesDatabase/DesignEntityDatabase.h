@@ -16,8 +16,9 @@
 using namespace std;
 
 class DesignEntityDatabase {
-public:
     unordered_map<string, DesignEntity*> database;
+
+public:
 
     virtual void addToDatabase(DesignEntity* designEntityToBeStored);
     virtual bool isPresentInDatabase(DesignEntity* designEntityToBeStored);

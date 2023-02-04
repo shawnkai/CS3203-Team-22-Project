@@ -15,9 +15,17 @@ using namespace std;
 // occurrence of the entity, else create a new one, and then push that into table
 
 class DesignEntity {
-public:
     string nameOfEntity;
     vector<string> occurrenceOfEntity;
+
+public:
+    // Make these private, and create a super constructor that derived
+    // Entities can call upon
+
+//    string nameOfEntity;
+//    vector<string> occurrenceOfEntity;
+
+    explicit DesignEntity(tuple<string, string> entityDetails);
 
     virtual void addAdditionalOccurrence(string occurrence);
 //    virtual void addToDatabase(DesignEntity designEntityCreated);

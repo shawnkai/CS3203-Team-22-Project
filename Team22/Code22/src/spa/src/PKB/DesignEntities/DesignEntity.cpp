@@ -10,6 +10,11 @@
 
 using namespace std;
 
+DesignEntity::DesignEntity(tuple<string, string> entityDetails) {
+    this->nameOfEntity = get<0>(entityDetails);
+    (this->occurrenceOfEntity).push_back(get<1>(entityDetails));
+}
+
 void DesignEntity::addAdditionalOccurrence(string occurrence) {
     (this->occurrenceOfEntity).push_back(occurrence);
 }
