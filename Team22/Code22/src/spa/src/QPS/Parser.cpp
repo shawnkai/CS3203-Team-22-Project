@@ -44,20 +44,47 @@ bool QueryParser::containsUsesExpression(string query) {
 	return false;
 }
 
+// Returns true if s is a number else false
+bool isNumber(string s)
+{
+	for (int i = 0; i < s.length(); i++)
+		if (isdigit(s[i]) == false)
+			return false;
+
+	return true;
+}
+
 
 ModifiesExpression QueryParser::extractModifiesExpression(string query) {
-	regex MODIFIESREGEX = regex("Modifies\\(\"(\\w+)\", \"(\\w+)\"\\)");
-    NamedEntity ne("", "");
-    ModifiesExpression exp(ne);
-	return exp;
+	regex MODIFIESREGEX = regex("Modifies\\(\"(\\w+)\", \"(\\w+)\")");
+	smatch sm;
+	regex_search(query, sm, MODIFIESREGEX);
+
+	string arg1 = sm[0].str();
+	string arg2 = sm[1].str();
+
+	if (isNumber(arg1)) {
+		return ModifiesSExpression(StmtEntity(arg1), NamedEntity(this->synonymTable[arg2].getType(), arg2));
+	} else {
+		return ModifiesPExpression(NamedEntity(this->synonymTable[arg1].getType(), arg1),  NamedEntity(this->synonymTable[arg2].getType(), arg2));
+	}
 }
 
 
 UsesExpression QueryParser::extractUsesExpression(string query) {
-	regex USESREGEX = regex("Uses\\(\"(\\w+)\", \"(\\w+)\"\\)");
-	DesignEntity de(" ");
-	UsesExpression exp(de);
-	return exp;
+	regex USESREGEX = regex("Uses\(\"(\\w+)\", \"(\\w+)\"\)");
+	smatch sm;
+	regex_search(query, sm, USESREGEX);
+
+	string arg1 = sm[0].str();
+	string arg2 = sm[1].str();
+
+	if (isNumber(arg1)) {
+		return UsesSExpression(StmtEntity(arg1),  NamedEntity(this->synonymTable[arg2].getType(), arg2));
+	}
+	else {
+		return UsesPExpression( NamedEntity(this->synonymTable[arg1].getType(), arg1),  NamedEntity(this->synonymTable[arg2].getType(), arg2));
+	}
 }
 
 void QueryParser::addToSynonymTable(string type, string name) {

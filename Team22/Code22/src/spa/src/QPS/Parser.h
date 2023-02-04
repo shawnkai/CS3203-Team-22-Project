@@ -16,6 +16,8 @@
 
 using namespace std;
 
+bool isNumber(string s);
+
 class QueryParser {
 
 protected:
