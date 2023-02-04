@@ -11,7 +11,6 @@
 using namespace std;
 
 DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tuple<string, string> entityDetails) {
-    // Suggestion: Better make all capital
     transform(designEntity.begin(), designEntity.end(), designEntity.begin(), ::toupper);
 
     if (designEntity == "PROCEDURE") {
@@ -36,6 +35,6 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
 
     }
 
-    // Just to pass build - temp
+    // TEMP: Just to pass build
     return new Variable(entityDetails);
 }

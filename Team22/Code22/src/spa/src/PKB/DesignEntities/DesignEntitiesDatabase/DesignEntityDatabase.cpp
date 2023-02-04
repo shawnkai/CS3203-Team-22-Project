@@ -29,6 +29,8 @@ void DesignEntityDatabase::updateEntityInDatabase(DesignEntity* designEntityToBe
 
     auto iterator = (this->database).find(designEntityToBeStored->getNameOfEntity());
     (iterator->second)->addAdditionalOccurrence(designEntityToBeStored->getOccurrenceOfEntity()[0]);
+    // Should the above line only copy the 0th index or copy the entire vector,
+    // by indexing through it?
 
 //    vector<string> toBeUpdated = (iterator->second).getOccurrenceOfEntity();
 //    toBeUpdated.push_back(designEntityToBeStored.getOccurrenceOfEntity()[0]);
@@ -54,7 +56,7 @@ Result DesignEntityDatabase::getFromDatabase(string entityName) {
                 (iterator->second)->getOccurrenceOfEntity());
     }
 
-    // Return None, as it was not found in Database
+    // Return None, as it was not found in Database (or throw an error)?
     vector<string> none{"None"};
     return Result("none", "none", none);
 }
