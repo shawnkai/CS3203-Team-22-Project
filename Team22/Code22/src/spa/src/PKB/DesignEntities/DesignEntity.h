@@ -19,11 +19,6 @@ class DesignEntity {
     vector<string> occurrenceOfEntity;
 
 public:
-    // Make these private, and create a super constructor that derived
-    // Entities can call upon
-
-//    string nameOfEntity;
-//    vector<string> occurrenceOfEntity;
 
     explicit DesignEntity(tuple<string, string> entityDetails);
 
