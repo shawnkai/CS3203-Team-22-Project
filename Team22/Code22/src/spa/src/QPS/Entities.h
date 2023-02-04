@@ -27,49 +27,57 @@ public:
     }
 };
 
-class StmtEntity : DesignEntity {
+class StmtEntity : public DesignEntity {
 protected:
-    int lineNumber;
+    int lineNumber = -1;
 public:
     StmtEntity(string type,  int lineNumber);
+    StmtEntity(string type);
+    StmtEntity();
 
     int getLine();
 
     string toString() override;
 };
 
-class ReadEntity : StmtEntity {
+class ReadEntity : public StmtEntity {
 public:
     explicit ReadEntity(int lineNumber);
+    ReadEntity();
 };
 
-class PrintEntity : StmtEntity {
+class PrintEntity : public StmtEntity {
 public:
     explicit PrintEntity(int lineNumber);
+    PrintEntity();
 };
 
-class AssignEntity : StmtEntity {
+class AssignEntity : public StmtEntity {
 public:
     explicit AssignEntity(int lineNumber);
+    AssignEntity();
 };
 
-class CallEntity : StmtEntity {
+class CallEntity : public StmtEntity {
 public:
     explicit CallEntity(int lineNumber);
+    CallEntity();
 };
 
-class WhileEntity : StmtEntity {
+class WhileEntity : public StmtEntity {
 public:
     explicit WhileEntity(int lineNumber);
+    WhileEntity();
 };
 
-class IfEntity : StmtEntity {
+class IfEntity : public StmtEntity {
 public:
     explicit IfEntity(int lineNumber);
+    IfEntity();
 };
 
 
-class NamedEntity : DesignEntity {
+class NamedEntity : public DesignEntity {
 protected:
     string synonym;
 public:
@@ -80,17 +88,17 @@ public:
     string toString() override;
 };
 
-class ProcedureEntity : NamedEntity {
+class ProcedureEntity : public NamedEntity {
 public:
     explicit ProcedureEntity(string synonym);
 };
 
-class VariableEntity : NamedEntity {
+class VariableEntity : public NamedEntity {
 public:
     explicit VariableEntity(string synonym);
 };
 
-class ConstantEntity : NamedEntity {
+class ConstantEntity : public NamedEntity {
 public:
     explicit ConstantEntity(string synonym);
 };

@@ -22,6 +22,11 @@ StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(typ
     this->lineNumber = lineNumber;
 }
 
+StmtEntity::StmtEntity(string type) : DesignEntity(std::move(type)) {}
+
+StmtEntity::StmtEntity() : DesignEntity("statement") {}
+
+
 int StmtEntity::getLine() {
     return this->lineNumber;
 }
@@ -31,11 +36,17 @@ string StmtEntity::toString() {
 }
 
 ReadEntity::ReadEntity(int lineNumber) : StmtEntity("read", lineNumber) {}
+ReadEntity::ReadEntity() : StmtEntity("read") {}
 PrintEntity::PrintEntity(int lineNumber) : StmtEntity("print", lineNumber) {}
+PrintEntity::PrintEntity() : StmtEntity("print") {}
 AssignEntity::AssignEntity(int lineNumber) : StmtEntity("assign", lineNumber) {}
+AssignEntity::AssignEntity() : StmtEntity("assign") {}
 CallEntity::CallEntity(int lineNumber) : StmtEntity("call", lineNumber) {}
+CallEntity::CallEntity() : StmtEntity("read") {}
 WhileEntity::WhileEntity(int lineNumber) : StmtEntity("while", lineNumber) {}
+WhileEntity::WhileEntity() : StmtEntity("while") {}
 IfEntity::IfEntity(int lineNumber) : StmtEntity("if", lineNumber) {}
+IfEntity::IfEntity() : StmtEntity("if") {}
 
 
 // Named Entities and its children

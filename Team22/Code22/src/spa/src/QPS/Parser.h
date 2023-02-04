@@ -7,4 +7,32 @@
 
 #include "QPS/Expressions.h"
 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <regex>
+
+using namespace std;
+
+class QueryParser {
+
+protected:
+	map<string, DesignEntity> synonymTable;
+
+public:
+	QueryParser();
+
+	Expression parse(string query);
+
+	bool isDeclaration(string query);
+
+	void extractDeclarations(string query);
+
+	vector<ModifiesExpression> extractModifiesExpressions(string query);
+	vector<UsesExpression> extractUsesExpressions(string query);
+
+};
+
+
 #endif //SPA_PARSER_H

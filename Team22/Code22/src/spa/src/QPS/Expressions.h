@@ -14,7 +14,11 @@
 using namespace std;
 
 class Expression {
-    virtual Result evaluate() = 0;
+    virtual Result evaluate(){
+        vector<string> empty;
+        Result emptyResult(empty);
+        return emptyResult;
+    };
 
     protected:
         vector<DesignEntity> entities;
