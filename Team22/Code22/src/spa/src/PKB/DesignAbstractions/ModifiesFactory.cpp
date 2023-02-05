@@ -8,6 +8,7 @@
 #include "ModifiesFactory.h"
 #include "ReadModifies.h"
 #include "StatementModifies.h"
+#include "ProcedureModifies.h"
 
 using namespace std;
 
@@ -24,6 +25,8 @@ DesignAbstraction* ModifiesFactory::createModifiesAbstraction(tuple<string, stri
         return new ReadModifies(abstractionDetails);
     } else if (modifiesAbstractionType == "STATEMENT") {
         return new StatementModifies(abstractionDetails);
+    } else if (modifiesAbstractionType == "PROCEDURE") {
+        return new ProcedureModifies(abstractionDetails);
     }
 
     // TEMP: to pass build

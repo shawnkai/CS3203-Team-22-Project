@@ -13,6 +13,7 @@
 #include "AssignmentModifiesDatabase.h"
 #include "ReadModifiesDatabase.h"
 #include "StatementModifiesDatabase.h"
+#include "ProcedureModifiesDatabase.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ class ModifiesDatabaseFactory {
     static inline DesignAbstractionDatabase* assignmentModifiesDatabase = new AssignmentModifiesDatabase();
     static inline DesignAbstractionDatabase* readModifiesDatabase = new ReadModifiesDatabase();
     static inline DesignAbstractionDatabase* statementModifiesDatabase = new StatementModifiesDatabase();
+    static inline DesignAbstractionDatabase* procedureModifiesDatabase = new ProcedureModifiesDatabase();
     // Add more of these
 
 public:
