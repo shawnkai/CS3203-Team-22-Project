@@ -1,7 +1,7 @@
 #include "TestWrapper.h"
 
 #include <vector>
-//#include <Tokenizer.h>
+#include <Tokenizer.h>
 #include <TNode.h>
 #include <DesignExtractor.h>
 #include <SPDriver.h>
@@ -27,27 +27,31 @@ TestWrapper::TestWrapper() {
 void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
   // ...rest of your code...
-    /*const std::vector<Token> tokens = Tokenizer::tokenize("SPtestFile_DoNotRemove.txt");
-    for (Token token : tokens) {
-        std::cout << "Token" << ToString(token) << std::endl;
-    }*/
-	vector<Token> testList;
-    Token t1 = Token(TokenType::PROCEDURE, "procedure", 0);
-    Token t2 = Token(TokenType::NAME_IDENTIFIER, "main", 0);
-    Token t3 = Token(TokenType::LEFT_CURLY_BRACKET, "{", 0);
-    Token t4 = Token(TokenType::READ, "read", 1);
-    Token t5 = Token(TokenType::NAME_IDENTIFIER, "x", 1);
-    Token t6 = Token(TokenType::STATEMENT_TERMINAL, ";", 1);
-	Token t7 = Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2);
-    testList.push_back(t1);
-    testList.push_back(t2);
-    testList.push_back(t3);
-    testList.push_back(t4);
-    testList.push_back(t5);
-    testList.push_back(t6);
-    testList.push_back(t7);
-    Parser testParser = Parser(testList);
+    //Stubbing for testing parser in isolation
+//	vector<Token> testList;
+//    Token t1 = Token(TokenType::PROCEDURE, "procedure", 0);
+//    Token t2 = Token(TokenType::NAME_IDENTIFIER, "main", 0);
+//    Token t3 = Token(TokenType::LEFT_CURLY_BRACKET, "{", 0);
+//    Token t4 = Token(TokenType::READ, "read", 1);
+//    Token t5 = Token(TokenType::NAME_IDENTIFIER, "x", 1);
+//    Token t6 = Token(TokenType::STATEMENT_TERMINAL, ";", 1);
+//	Token t7 = Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2);
+//    testList.push_back(t1);
+//    testList.push_back(t2);
+//    testList.push_back(t3);
+//    testList.push_back(t4);
+//    testList.push_back(t5);
+//    testList.push_back(t6);
+//    testList.push_back(t7);
 
+    Tokenizer tokenizer = Tokenizer();
+    auto tokenList = tokenizer.tokenize("Sample_source.txt");
+    std::cout << "execution of tokenizer done" << std::endl;
+    //driver.parseSimpleProgram(fileTest);
+    for (Token token: tokenList) {
+            std::cout << "Token" << ToString(token) << std::endl;
+        }
+    Parser testParser = Parser(tokenList);
     TNode result = testParser.Parse();
     if (result.children.empty()) {
         cout << "Null pointer returned, use debug mode to find out why" << endl;
@@ -65,36 +69,11 @@ void TestWrapper::parse(std::string filename) {
             }
         }
     }
-	/*TNode var;
-	var.nodeType = TokenType::NAME_IDENTIFIER;
-	var.stringId = "x";
-	var.stmtNumber = 2;
-	var.children = std::vector<TNode>(0);
-
-	TNode read;
-	read.nodeType = TokenType::READ;
-	read.stringId = "read";
-	read.stmtNumber = 2;
-	read.children = std::vector<TNode>{ var };
-
-	TNode stmtlist;
-	stmtlist.nodeType = TokenType::STATEMENT_LIST;
-	stmtlist.stringId = "stmtlist";
-	stmtlist.stmtNumber = 1;
-	stmtlist.children = std::vector<TNode>{ read };
-
-	TNode root;
-	root.nodeType = TokenType::PROCEDURE;
-	root.stringId = "main";
-	root.stmtNumber = 0;
-	root.children = std::vector<TNode>{ stmtlist };
-
-	DesignExtractor designextractor;
-	designextractor.extractAbstraction(root);*/
-
-	SPDriver spdriver;
-	spdriver.parseSimpleProgram();
-
+//  SPDriver class not in use for now
+//	SPDriver spdriver;
+//	spdriver.parseSimpleProgram();
+    DesignExtractor designExtractor;
+    designExtractor.extractAbstraction(result);
 }
 
 // method to evaluating a query

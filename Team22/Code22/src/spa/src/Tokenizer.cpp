@@ -10,18 +10,11 @@
 #include <string>
 #include <map>
 #include "Token.h"
+#include "Tokenizer.h"
 
-class Tokenizer {
-private:
-    std::map<std::string, TokenType> keyWordsMap;
-    //static int currLineNum;
+Tokenizer::Tokenizer() {}
 
-    void insertPredefined() {
-        keyWordsMap["procedure"] = PROCEDURE;
-        keyWordsMap["read"] = READ;
-    }
-
-    static bool isLegalLetter(char c) {
+bool Tokenizer::isLegalLetter(char c) {
         if (c >= 'A' && c <= 'Z') {
             return true;
         }
@@ -29,25 +22,24 @@ private:
             return true;
         }
         return false;
-    }
+}
 
-    static bool isWhiteSpace(char c) {
+bool Tokenizer::isWhiteSpace(char c) {
         return c == ' ';
-    }
+}
 
-    static bool isStatementTerminal(char c) {
+bool Tokenizer::isStatementTerminal(char c) {
         return c == ';';
-    }
+}
 
-    static bool isCurlyBracket(char c) {
+bool Tokenizer::isCurlyBracket(char c) {
         return c == '{' || c == '}';
-    }
+}
 
-    static bool isRoundBracket(char c) {
+bool Tokenizer::isRoundBracket(char c) {
         return c == '(' || c == ')';
-    }
+}
 
-public:
 
 //    static std::ifstream inputSimpleProgram;
 //    static std::vector<Token> tokens;
@@ -60,7 +52,7 @@ public:
 //        inputSimpleProgram.close();
 //    }
 
-    std::vector<Token> tokenize(const char* fileName) {
+std::vector<Token> Tokenizer::tokenize(const char* fileName) {
         std::ifstream inputSimpleProgram("/Users/diwuyi/CLionProjects/spa-cp/Team22/Code22/src/spa/src/SPtestFile_DoNotRemove.txt");
         std::vector<Token> tokens;
         //inputSimpleProgram.open(fileName);
@@ -117,8 +109,8 @@ public:
             }
         }
         return tokens;
-    }
-};
+}
+
 
 //int main() {
 //    const char* fileTest = "SPtestFile_DoNotRemove.txt";
