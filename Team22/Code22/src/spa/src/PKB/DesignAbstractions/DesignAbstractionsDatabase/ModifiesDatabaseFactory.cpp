@@ -15,9 +15,10 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
         return assignmentModifiesDatabase;
     } else if (entityTypeBeingAbstracted == "READ") {
         return readModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "STATEMENT") {
+        return statementModifiesDatabase;
     }
     // add others as they are implemented
-
 
     // Temp: to pass build
     return nullptr;

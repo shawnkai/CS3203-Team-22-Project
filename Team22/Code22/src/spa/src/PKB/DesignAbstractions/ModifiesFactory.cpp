@@ -7,18 +7,23 @@
 #include "AssignmentModifies.h"
 #include "ModifiesFactory.h"
 #include "ReadModifies.h"
+#include "StatementModifies.h"
 
 using namespace std;
 
 DesignAbstraction* ModifiesFactory::createModifiesAbstraction(tuple<string, string, string> abstractionDetails) {
     // To be implemented
     // Design choice, pass 1st param as type of modifies? -> think
-    // Make get<0> into var and upper case it -> do
 
-    if (get<0>(abstractionDetails) == "ASSIGNMENT") {
+    string modifiesAbstractionType = get<0>(abstractionDetails);
+    transform(modifiesAbstractionType.begin(), modifiesAbstractionType.end(), modifiesAbstractionType.begin(), ::toupper);
+
+    if (modifiesAbstractionType == "ASSIGNMENT") {
         return new AssignmentModifies(abstractionDetails);
-    } else if (get<0>(abstractionDetails) == "READ") {
+    } else if (modifiesAbstractionType == "READ") {
         return new ReadModifies(abstractionDetails);
+    } else if (modifiesAbstractionType == "STATEMENT") {
+        return new StatementModifies(abstractionDetails);
     }
 
     // TEMP: to pass build
