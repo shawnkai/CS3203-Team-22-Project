@@ -13,14 +13,16 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(DesignEnt
 }
 
 DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string designEntityType) {
-    // Make string toupper
+    transform(designEntityType.begin(), designEntityType.end(), designEntityType.begin(), ::toupper);
 
     if (designEntityType == "VARIABLE") {
         return variableEntitiesDatabase;
     } else if (designEntityType == "PROCEDURE") {
         return procedureEntitiesDatabase;
+    } else if (designEntityType == "STATEMENT") {
+        return statementEntitiesDatabase;
     }
 
     // TEMP: For building purposes
-    return variableEntitiesDatabase;
+    return nullptr;
 }

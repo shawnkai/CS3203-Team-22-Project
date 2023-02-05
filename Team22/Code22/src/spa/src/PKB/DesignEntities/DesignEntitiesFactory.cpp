@@ -7,6 +7,7 @@
 #include "DesignEntitiesFactory.h"
 #include "Variable.h"
 #include "Procedure.h"
+#include "Statement.h"
 
 using namespace std;
 
@@ -20,7 +21,7 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
     } else if (designEntity == "CONSTANT") {
 
     } else if (designEntity == "STATEMENT") {
-
+        return new Statement(entityDetails);
     } else if (designEntity == "READ") {
 
     } else if (designEntity == "PRINT") {
@@ -36,5 +37,5 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
     }
 
     // TEMP: Just to pass build
-    return new Variable(entityDetails);
+    return nullptr;
 }

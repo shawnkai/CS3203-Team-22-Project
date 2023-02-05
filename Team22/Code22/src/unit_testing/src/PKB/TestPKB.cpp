@@ -187,12 +187,36 @@ TEST_CASE("PKB Test 13: DesignAbstraction : Modifies-ProcedureCall : Same Type, 
         pkbTest13.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "v", "1"));
         Result pkbResult13 = pkbTest13.getDesignAbstraction("MODIFIES", make_pair("PROCEDURECALL", "v"));
 
-        cout << pkbResult13.toString() << endl;
-
         Result expectedResult13("MODIFIES:PROCEDURECALL", "v", vector<string>{"1"});
 
-        cout << expectedResult13.toString() << endl;
-
         REQUIRE(pkbResult13.areEqual(expectedResult13));
+    }
+}
+
+//TEST_CASE("PKB Test 14: DesignAbstraction : Modifies : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+//    SECTION("") {
+//        PKB pkbTest14 = PKB();
+//        pkbTest14.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "v", "1"));
+//        Result pkbResult14 = pkbTest14.getDesignAbstraction("MODIFIES", make_pair("PROCEDURECALL", "v"));
+//
+//        cout << pkbResult14.toString() << endl;
+//
+//        Result expectedResult14("MODIFIES:PROCEDURECALL", "v", vector<string>{"1"});
+//
+//        cout << expectedResult14.toString() << endl;
+//
+//        REQUIRE(pkbResult14.areEqual(expectedResult14));
+//    }
+//}
+
+TEST_CASE("PKB Test 15: Design Entity : Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest15 = PKB();
+        pkbTest15.addDesignEntity("STATEMENT", make_tuple("a1", "1"));
+        Result pkbResult15 = pkbTest15.getDesignEntity("STATEMENT", "a1");
+
+        Result expectedResult15("STATEMENT", "a1", vector<string>{"1"});
+
+        REQUIRE(pkbResult15.areEqual(expectedResult15));
     }
 }
