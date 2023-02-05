@@ -9,7 +9,7 @@
 using namespace std;
 
 DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string entityTypeBeingAbstracted) {
-    // make string toupper
+    transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
 
     if (entityTypeBeingAbstracted == "ASSIGNMENT") {
         return assignmentModifiesDatabase;
