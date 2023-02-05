@@ -232,3 +232,27 @@ TEST_CASE("PKB Test 16: Design Entity : Read Statement : Same Type, Same Entity 
         REQUIRE(pkbResult16.areEqual(expectedResult16));
     }
 }
+
+TEST_CASE("PKB Test 17: Design Entity : Variable : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest17 = PKB();
+        pkbTest17.addDesignEntity("VARIABLE", make_tuple("a17", "1"));
+        Result pkbResult17 = pkbTest17.getDesignEntity("VARIABLE", "a17");
+
+        Result expectedResult17("VARIABLE", "a17", vector<string>{"1"});
+
+        REQUIRE(pkbResult17.areEqual(expectedResult17));
+    }
+}
+
+TEST_CASE("PKB Test 18: Design Entity : Procedure : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest18 = PKB();
+        pkbTest18.addDesignEntity("PROCEDURE", make_tuple("a18", "1"));
+        Result pkbResult18 = pkbTest18.getDesignEntity("PROCEDURE", "a18");
+
+        Result expectedResult18("PROCEDURE", "a18", vector<string>{"1"});
+
+        REQUIRE(pkbResult18.areEqual(expectedResult18));
+    }
+}
