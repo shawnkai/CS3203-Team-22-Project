@@ -21,6 +21,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return procedureEntitiesDatabase;
     } else if (designEntityType == "STATEMENT") {
         return statementEntitiesDatabase;
+    } else if (designEntityType == "READ") {
+        return readStatementEntitiesDatabase;
     }
 
     // TEMP: For building purposes

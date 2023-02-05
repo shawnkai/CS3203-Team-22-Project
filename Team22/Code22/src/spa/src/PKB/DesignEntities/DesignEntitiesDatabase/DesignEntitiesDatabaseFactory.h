@@ -12,6 +12,7 @@
 #include "VariableDatabase.h"
 #include "ProcedureDatabase.h"
 #include "StatementDatabase.h"
+#include "ReadStatementDatabase.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ class DesignEntitiesDatabaseFactory {
     static inline DesignEntityDatabase* variableEntitiesDatabase = new VariableDatabase();
     static inline DesignEntityDatabase* procedureEntitiesDatabase = new ProcedureDatabase();
     static inline DesignEntityDatabase* statementEntitiesDatabase = new StatementDatabase();
+    static inline DesignEntityDatabase* readStatementEntitiesDatabase = new ReadStatementDatabase();
+    // Add more as implemented
 
 public:
 

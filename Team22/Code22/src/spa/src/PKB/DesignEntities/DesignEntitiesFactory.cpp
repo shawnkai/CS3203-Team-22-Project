@@ -8,6 +8,7 @@
 #include "Variable.h"
 #include "Procedure.h"
 #include "Statement.h"
+#include "ReadStatement.h"
 
 using namespace std;
 
@@ -23,7 +24,7 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
     } else if (designEntity == "STATEMENT") {
         return new Statement(entityDetails);
     } else if (designEntity == "READ") {
-
+        return new ReadStatement(entityDetails);
     } else if (designEntity == "PRINT") {
 
     } else if (designEntity == "ASSIGN") {

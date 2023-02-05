@@ -212,11 +212,23 @@ TEST_CASE("PKB Test 13: DesignAbstraction : Modifies-ProcedureCall : Same Type, 
 TEST_CASE("PKB Test 15: Design Entity : Statement : Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
         PKB pkbTest15 = PKB();
-        pkbTest15.addDesignEntity("STATEMENT", make_tuple("a1", "1"));
-        Result pkbResult15 = pkbTest15.getDesignEntity("STATEMENT", "a1");
+        pkbTest15.addDesignEntity("STATEMENT", make_tuple("a15", "1"));
+        Result pkbResult15 = pkbTest15.getDesignEntity("STATEMENT", "a15");
 
-        Result expectedResult15("STATEMENT", "a1", vector<string>{"1"});
+        Result expectedResult15("STATEMENT", "a15", vector<string>{"1"});
 
         REQUIRE(pkbResult15.areEqual(expectedResult15));
+    }
+}
+
+TEST_CASE("PKB Test 16: Design Entity : Read Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest16 = PKB();
+        pkbTest16.addDesignEntity("READ", make_tuple("a16", "1"));
+        Result pkbResult16 = pkbTest16.getDesignEntity("READ", "a16");
+
+        Result expectedResult16("READ", "a16", vector<string>{"1"});
+
+        REQUIRE(pkbResult16.areEqual(expectedResult16));
     }
 }
