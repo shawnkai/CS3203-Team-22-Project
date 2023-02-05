@@ -39,7 +39,6 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
     // Make string toupper
 
     if (designAbstractionType == "MODIFIES") {
-        // Caused Error
          return getModifiesDatabase(entityTypeBeingAbstracted);
     }
 
@@ -49,9 +48,6 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
 
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabase(string entityTypeBeingExtracted) {
     return ModifiesDatabaseFactory::getModifiesDatabase(entityTypeBeingExtracted);
-
-    // Temp: To pass build
-    return nullptr;
 }
 
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(string entityTypeBeingExtracted) {
