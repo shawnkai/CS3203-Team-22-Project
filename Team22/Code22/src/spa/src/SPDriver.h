@@ -14,6 +14,6 @@
 class SPDriver {
 public:
     SPDriver();
-    void parseSimpleProgram();
-    //void parseSimpleProgram(const char* fileName);
+    //void parseSimpleProgram();
+    void parseSimpleProgram(const char* fileName);
 };

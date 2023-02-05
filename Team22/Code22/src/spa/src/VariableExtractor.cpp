@@ -15,6 +15,9 @@ using namespace std;
 
 class VariableExtractor {
 public:
+	VariableExtractor() {
+
+	};
 	void extractEntity(TNode root) {
 		if (root.nodeType == UNKNOWN) {
 			auto result = std::make_tuple("NULL");

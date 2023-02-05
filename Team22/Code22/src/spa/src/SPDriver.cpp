@@ -9,20 +9,20 @@
 
 SPDriver::SPDriver() {}
 
-//void SPDriver::parseSimpleProgram(const char* fileName) {
-//    try {
-//        //Tokenizer spTokenizer(fileName);
-//        const std::vector<Token> tokens = Tokenizer::tokenize(fileName);
-//        for (Token token: tokens) {
-//            std::cout << "Token" << ToString(token) << std::endl;
-//        }
-//    }
-//    catch (std::logic_error &error) {
-//        exit(1);
-//    }
-//}
+void SPDriver::parseSimpleProgram(const char* fileName) {
+    try {
+        //Tokenizer spTokenizer(fileName);
+        const std::vector<Token> tokens = Tokenizer::tokenize(fileName);
+        for (Token token: tokens) {
+           std::cout << "Token" << ToString(token) << std::endl;
+        }
+    }
+    catch (std::logic_error &error) {
+        exit(1);
+    }
+}
 
-void SPDriver::parseSimpleProgram() {
+/*void SPDriver::parseSimpleProgram() {
 	try {
 		TNode var;
 		var.nodeType = TokenType::NAME_IDENTIFIER;
@@ -54,4 +54,4 @@ void SPDriver::parseSimpleProgram() {
 	catch (std::logic_error& error) {
 		        exit(1);
 		    }
-}
+}*/
