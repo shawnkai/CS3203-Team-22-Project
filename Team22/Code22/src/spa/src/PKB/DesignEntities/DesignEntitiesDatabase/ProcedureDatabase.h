@@ -2,6 +2,8 @@
 // Created by Jai Lulla  on 4/2/23.
 //
 
+#pragma once
+
 #ifndef SPA_PROCEDUREDATABASE_H
 #define SPA_PROCEDUREDATABASE_H
 
