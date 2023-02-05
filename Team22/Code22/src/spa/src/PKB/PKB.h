@@ -17,9 +17,7 @@ class VarTable;  // no need to #include "VarTable.h" as all I need is pointer
 class PKB {
 public:
 
-	static VarTable* varTable; 
-	static int setProcToAST(PROC p, TNode* r);
-	static TNode* getRootAST (PROC p);
+	static VarTable* varTable;
 
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
