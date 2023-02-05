@@ -19,9 +19,11 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
         return statementModifiesDatabase;
     } else if (entityTypeBeingAbstracted == "PROCEDURE") {
         return procedureModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURECALL") {
+        return procedureCallModifiesDatabase;
     }
-    // add others as they are implemented
+    // add others as they are implemented (possibly wildcard?)
 
-    // Temp: to pass build
+    // Temp: to pass build or throw error if not found
     return nullptr;
 }

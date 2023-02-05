@@ -14,6 +14,7 @@
 #include "ReadModifiesDatabase.h"
 #include "StatementModifiesDatabase.h"
 #include "ProcedureModifiesDatabase.h"
+#include "ProcedureCallModifiesDatabase.h"
 
 using namespace std;
 
@@ -22,7 +23,8 @@ class ModifiesDatabaseFactory {
     static inline DesignAbstractionDatabase* readModifiesDatabase = new ReadModifiesDatabase();
     static inline DesignAbstractionDatabase* statementModifiesDatabase = new StatementModifiesDatabase();
     static inline DesignAbstractionDatabase* procedureModifiesDatabase = new ProcedureModifiesDatabase();
-    // Add more of these
+    static inline DesignAbstractionDatabase* procedureCallModifiesDatabase = new ProcedureCallModifiesDatabase();
+    // Add more of these (possibly wildcard?)
 
 public:
     static DesignAbstractionDatabase* getModifiesDatabase(string entityTypeBeingAbstracted);
