@@ -13,6 +13,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(DesignEnt
 }
 
 DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string designEntityType) {
+    // Make string toupper
+
     if (designEntityType == "VARIABLE") {
         return variableEntitiesDatabase;
     } else if (designEntityType == "PROCEDURE") {

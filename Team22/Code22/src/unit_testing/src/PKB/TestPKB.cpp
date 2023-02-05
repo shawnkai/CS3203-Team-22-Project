@@ -13,6 +13,8 @@ TEST_CASE("Trial PKB Test") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignEntity("VARIABLE", make_tuple("a", "1"));
+
+//        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("procedure", "v [name]", "1 [line no]"));
 //        pkbTest.addDesignEntity("PROCEDURE", make_tuple("a", "2"));
 
         Result pkbResult = pkbTest.getDesignEntity("VARIABLE", "a");
@@ -31,7 +33,7 @@ TEST_CASE("Trial PKB Test") {
 }
 
 // Need to section below, as some code is being carried forward unintentionally
-TEST_CASE("PKB Test 1: Same Type, Same Entity Name, Same Occurrence") {
+TEST_CASE("PKB Test 1: Design Entity : Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
         PKB pkbTest1 = PKB();
         pkbTest1.addDesignEntity("VARIABLE", make_tuple("a1", "1"));
@@ -43,7 +45,7 @@ TEST_CASE("PKB Test 1: Same Type, Same Entity Name, Same Occurrence") {
     }
 }
 
-TEST_CASE("PKB Test 2: Same Type, Different Entity Name, Same Occurrence") {
+TEST_CASE("PKB Test 2: Design Entity : Same Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
         PKB pkbTest2 = PKB();
         pkbTest2.addDesignEntity("VARIABLE", make_tuple("b2", "1"));
@@ -55,7 +57,7 @@ TEST_CASE("PKB Test 2: Same Type, Different Entity Name, Same Occurrence") {
     }
 }
 
-TEST_CASE("PKB Test 3: Same Type, Different Entity Name, Different Occurrence") {
+TEST_CASE("PKB Test 3: Design Entity : Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
         PKB pkbTest3 = PKB();
         pkbTest3.addDesignEntity("VARIABLE", make_tuple("b3", "2"));
@@ -67,7 +69,7 @@ TEST_CASE("PKB Test 3: Same Type, Different Entity Name, Different Occurrence") 
     }
 }
 
-TEST_CASE("PKB Test 4: Different Type, Same Entity Name, Same Occurrence") {
+TEST_CASE("PKB Test 4: Design Entity : Different Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
         PKB pkbTest4 = PKB();
         pkbTest4.addDesignEntity("PROCEDURE", make_tuple("a4", "1"));
@@ -79,7 +81,7 @@ TEST_CASE("PKB Test 4: Different Type, Same Entity Name, Same Occurrence") {
     }
 }
 
-TEST_CASE("PKB Test 5: Different Type, Different Entity Name, Same Occurrence") {
+TEST_CASE("PKB Test 5: Design Entity : Different Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
         PKB pkbTest5 = PKB();
         pkbTest5.addDesignEntity("PROCEDURE", make_tuple("a5", "1"));
@@ -91,7 +93,7 @@ TEST_CASE("PKB Test 5: Different Type, Different Entity Name, Same Occurrence") 
     }
 }
 
-TEST_CASE("PKB Test 6: Different Type, Different Entity Name, Different Occurrence") {
+TEST_CASE("PKB Test 6: Design Entity : Different Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
         PKB pkbTest6 = PKB();
         pkbTest6.addDesignEntity("PROCEDURE", make_tuple("a6", "1"));
@@ -103,7 +105,7 @@ TEST_CASE("PKB Test 6: Different Type, Different Entity Name, Different Occurren
     }
 }
 
-TEST_CASE("PKB Test 7: Same Type, Same Entity Name, Different Occurrence") {
+TEST_CASE("PKB Test 7: Design Entity : Same Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
         PKB pkbTest7 = PKB();
         pkbTest7.addDesignEntity("VARIABLE", make_tuple("a7", "2"));
@@ -115,7 +117,7 @@ TEST_CASE("PKB Test 7: Same Type, Same Entity Name, Different Occurrence") {
     }
 }
 
-TEST_CASE("PKB Test 8: Different Type, Same Entity Name, Different Occurrence") {
+TEST_CASE("PKB Test 8: Design Entity : Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
         PKB pkbTest8 = PKB();
         pkbTest8.addDesignEntity("VARIABLE", make_tuple("a8", "2"));
@@ -124,5 +126,21 @@ TEST_CASE("PKB Test 8: Different Type, Same Entity Name, Different Occurrence") 
         Result unexpectedResult8("PROCEDURE", "a8", vector<string>{"1"});
 
         REQUIRE(!pkbResult8.areEqual(unexpectedResult8));
+    }
+}
+
+TEST_CASE("PKB Test 9: DesignAbstraction : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest9 = PKB();
+        pkbTest9.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "v", "1"));
+        Result pkbResult9 = pkbTest9.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "v"));
+
+        cout << pkbResult9.toString() << endl;
+
+        Result expectedResult9("MODIFIES:ASSIGNMENT", "v", vector<string>{"1"});
+
+        cout << expectedResult9.toString() << endl;
+
+        REQUIRE(pkbResult9.areEqual(expectedResult9));
     }
 }

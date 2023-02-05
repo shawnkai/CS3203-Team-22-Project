@@ -10,7 +10,7 @@ using namespace std;
 
 Procedure::Procedure(tuple<string, string> entityDetails)
 : DesignEntity(entityDetails) {
-    
+
 }
 
 string Procedure::getTypeOfEntity() {
