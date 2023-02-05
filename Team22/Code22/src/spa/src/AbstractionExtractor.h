@@ -15,5 +15,6 @@ using namespace std;
 
 class AbstractionExtractor {
 public:
+	AbstractionExtractor() {};
 	void extractAbstraction(TNode root);
 };

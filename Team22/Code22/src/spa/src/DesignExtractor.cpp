@@ -7,31 +7,33 @@
 
 using namespace std;
 
+#include "DesignExtractor.h"
 
-#include "PKB.h"
+/*#include "PKB.h"
 #include "AbstractionExtractor.h"
 #include "EntityExtractor.h"
-#include "TNode.h"
+#include "TNode.h"*/
 
 /*int DesignExtractor() {
 	return 0;
 }*/
 
-class DesignExtractor {
+//class DesignExtractor {
 	//AbstractionExtractor abstractionExtractor;
 	//EntityExtractor entityExtractor;
-public:
-	DesignExtractor() {
+//public:
+	//DesignExtractor() {
 
-	};
-	void extractAbstraction(TNode root) {
-		AbstractionExtractor abstractionExtractor;
-		abstractionExtractor.extractAbstraction(root);
-	}
+	//};
 
-	void extractEntity(TNode root) {
-		EntityExtractor entityExtractor;
-		entityExtractor.extractEntity(root);
-	}
-
+void DesignExtractor::extractAbstraction(TNode root) {
+	AbstractionExtractor abstractionExtractor;
+	abstractionExtractor.extractAbstraction(root);
 };
+
+void DesignExtractor::extractEntity(TNode root) {
+	EntityExtractor entityExtractor;
+	entityExtractor.extractEntity(root);
+};
+
+//};

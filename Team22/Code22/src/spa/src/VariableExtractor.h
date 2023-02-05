@@ -12,5 +12,6 @@ using namespace std;
 
 class VariableExtractor {
 public:
+	VariableExtractor() {};
 	void extractEntity(TNode root);
 };

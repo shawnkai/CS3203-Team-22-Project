@@ -14,5 +14,6 @@ using namespace std;
 
 class EntityExtractor {
 public:
+	EntityExtractor() {};
 	void extractEntity(TNode root);
 };

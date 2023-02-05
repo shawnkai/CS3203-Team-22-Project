@@ -6,20 +6,22 @@
 
 
 using namespace std;
-#include "VariableExtractor.h"
+
+#include "EntityExtractor.h"
+/*#include "VariableExtractor.h"
 #include "PKB.h"
-#include "TNode.h"
+#include "TNode.h"*/
 
 
-class EntityExtractor {
+//class EntityExtractor {
 	//VariableExtractor variableExtractor;
-public:
-	EntityExtractor() {
+//public:
+	//EntityExtractor() {
 
-	};
+	//};
 
-	void extractEntity(TNode root) {
-		VariableExtractor variableExtractor;
-		return variableExtractor.extractEntity(root);
-	}
+void EntityExtractor::extractEntity(TNode root) {
+	VariableExtractor variableExtractor;
+	return variableExtractor.extractEntity(root);
 };
+//};

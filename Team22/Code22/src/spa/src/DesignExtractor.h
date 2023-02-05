@@ -19,7 +19,8 @@ using namespace std;
 
 class DesignExtractor {
 public:
-	void extractAbstraction(TNode root);
+	DesignExtractor() {};
+	void extractAbstraction(TNode root);//DesignExtractor::
 	void extractEntity(TNode root);
 };
 #endif //SPA_DESIGNEXTRACTOR_H

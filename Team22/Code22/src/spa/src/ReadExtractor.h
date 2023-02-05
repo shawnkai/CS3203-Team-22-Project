@@ -13,5 +13,6 @@ using namespace std;
 
 class ReadExtractor {
 public:
+	ReadExtractor() {};
 	void extractAbstraction(TNode root);
 };

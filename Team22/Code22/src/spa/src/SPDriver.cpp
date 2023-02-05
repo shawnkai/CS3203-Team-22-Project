@@ -9,7 +9,7 @@
 
 SPDriver::SPDriver() {}
 
-void SPDriver::parseSimpleProgram(const char* fileName) {
+/*void SPDriver::parseSimpleProgram(const char* fileName) {
     try {
         //Tokenizer spTokenizer(fileName);
         const std::vector<Token> tokens = Tokenizer::tokenize(fileName);
@@ -20,9 +20,9 @@ void SPDriver::parseSimpleProgram(const char* fileName) {
     catch (std::logic_error &error) {
         exit(1);
     }
-}
+}*/
 
-/*void SPDriver::parseSimpleProgram() {
+void SPDriver::parseSimpleProgram() {
 	try {
 		TNode var;
 		var.nodeType = TokenType::NAME_IDENTIFIER;
@@ -50,8 +50,10 @@ void SPDriver::parseSimpleProgram(const char* fileName) {
 
 		DesignExtractor designextractor;
 		designextractor.extractAbstraction(root);
+
+		designextractor.extractEntity(root);
 	}
 	catch (std::logic_error& error) {
 		        exit(1);
 		    }
-}*/
+}

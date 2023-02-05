@@ -6,19 +6,20 @@
 
 using namespace std;
 
-#include "PKB.h"
+/*#include "PKB.h"
 #include "ReadExtractor.h"
-#include "TNode.h"
+#include "TNode.h"*/
+#include "AbstractionExtractor.h"
 
-class AbstractionExtractor {
+//class AbstractionExtractor {
 	//ReadExtractor readExtractor;
-public:
-	AbstractionExtractor() {
+//public:
+//AbstractionExtractor() {
 
-	};
+//};
 
-	void extractAbstraction(TNode root) {
-		ReadExtractor readExtractor;
-		return readExtractor.extractAbstraction(root);
-	}
-};
+void AbstractionExtractor::extractAbstraction(TNode root) {
+	ReadExtractor readExtractor;
+	return readExtractor.extractAbstraction(root);
+}
+//};
