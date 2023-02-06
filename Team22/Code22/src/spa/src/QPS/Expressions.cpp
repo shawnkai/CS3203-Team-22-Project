@@ -31,10 +31,10 @@ string SelectExpression::toString() {
 
 Result SelectExpression::evaluate() {
     if (this->conditions.empty()) {
-        return pkb.getDesignEntity(entities[0]->getType());
+        return Result("", "", vector<string>());
     }
     vector<string> empty;
-    Result emptyResult(empty);
+    Result emptyResult("", "", empty);
     return emptyResult;
 }
 
@@ -78,17 +78,17 @@ string UsesPExpression::toString() {
 }
 
 Result ModifiesSExpression::evaluate() {
-    return Result(vector<string>());
+    return Result("", "", vector<string>());
 }
 
 Result ModifiesPExpression::evaluate() {
-    return Result(vector<string>());
+    return Result("", "", vector<string>());
 }
 
 Result UsesSExpression::evaluate() {
-    return Result(vector<string>());
+    return Result("", "", vector<string>());
 }
 
 Result UsesPExpression::evaluate() {
-    return Result(vector<string>());
+    return Result("", "", vector<string>());
 }

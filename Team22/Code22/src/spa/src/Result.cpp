@@ -8,12 +8,14 @@
 
 using namespace std;
 
-Result::Result(vector<string> result) {
+Result::Result(string entityType, string entityName, vector<string> result) {
+    this->entityType = entityType;
+    this->entityName = entityName;
     this->result = result;
 }
 
 string Result::toString() {
-    string resultString = "";
+    string resultString = (this->entityType) + ": " + (this->entityName) + ": ";
 
     for (auto item: this->result) {
         resultString += (item + ", ");
@@ -22,6 +24,20 @@ string Result::toString() {
     return resultString;
 }
 
-vector<string> Result::getResult() {
+string Result::getQueryEntityName() {
+    return this->entityName;
+}
+
+string Result::getQueryEntityType() {
+    return this->entityType;
+}
+
+vector<string> Result::getQueryResult() {
     return this->result;
+}
+
+bool Result::areEqual(Result otherResult) {
+    return (this->entityName == otherResult.entityName)
+    && (this->entityType == otherResult.entityType)
+    && (this->result == otherResult.result);
 }

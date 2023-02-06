@@ -14,13 +14,18 @@
 using namespace std;
 
 class Result {
+    string entityType;
+    string entityName;
     vector<string> result;
 
 public:
-    explicit Result(vector<string> result); // inline giving error
+    explicit Result(string entityType, string entityName, vector<string> result); // inline giving error
 
     string toString();
-    vector<string> getResult();
+    string getQueryEntityName();
+    string getQueryEntityType();
+    vector<string> getQueryResult();
+    bool areEqual(Result otherResult); // For testing purposes
 };
 
 #endif //SPA_RESULT_H
