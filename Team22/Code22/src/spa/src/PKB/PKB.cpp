@@ -45,6 +45,16 @@ Result PKB::getDesignEntity(string entityType, string entityName) {
     return queryResult;
 }
 
+vector<Result> PKB::getAllDesignEntity(string entityType) {
+    // To be implemented
+    vector<Result> queryResult;
+
+    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
+    queryResult = db->getAllFromDatabase();
+
+    return queryResult;
+}
+
 Result PKB::getDesignEntity(string entityType, string entityName, string occurrenceLine) {
     // To be implemented
 

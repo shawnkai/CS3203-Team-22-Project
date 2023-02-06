@@ -256,3 +256,47 @@ TEST_CASE("PKB Test 18: Design Entity : Procedure : Same Type, Same Entity Name,
         REQUIRE(pkbResult18.areEqual(expectedResult18));
     }
 }
+
+//TEST_CASE("PKB Test 19: Design Entity : All Variables : Same Type, Same Entity Name, Same Occurrence") {
+//    SECTION("") {
+//        PKB pkbTest19 = PKB();
+//        pkbTest19.addDesignEntity("VARIABLE", make_tuple("a19", "1"));
+//        pkbTest19.addDesignEntity("VARIABLE", make_tuple("a19_a", "1"));
+//        pkbTest19.addDesignEntity("VARIABLE", make_tuple("a19_b", "1"));
+//        pkbTest19.addDesignEntity("VARIABLE", make_tuple("a19_c", "1"));
+//
+//        // To verify, right items are being fetched
+////        pkbTest19.addDesignEntity("PROCEDURE", make_tuple("a19_d", "1"));
+//
+//        vector<Result> pkbResult19 = pkbTest19.getAllDesignEntity("VARIABLE");
+//
+//        Result expectedResult19("VARIABLE", "a19", vector<string>{"1"});
+//        Result expectedResult19_a("VARIABLE", "a19_a", vector<string>{"1"});
+//        Result expectedResult19_b("VARIABLE", "a19_b", vector<string>{"1"});
+//        Result expectedResult19_c("VARIABLE", "a19_c", vector<string>{"1"});
+//
+//        // Something to do with order while testing hmm.
+//        vector<Result> expectedVectorResult19;
+//        expectedVectorResult19.push_back(expectedResult19_c);
+//        expectedVectorResult19.push_back(expectedResult19_b);
+//        expectedVectorResult19.push_back(expectedResult19_a);
+//        expectedVectorResult19.push_back(expectedResult19);
+//
+//        bool hasPassed = true;
+//
+//        for (int i = 0; i < pkbResult19.size(); i++) {
+//
+//            cout << pkbResult19[i].toString() << endl;
+//            cout << expectedVectorResult19[i].toString() << endl;
+//
+//            if (pkbResult19[i].areEqual(expectedVectorResult19[i])) {
+//                continue;
+//            }
+//            hasPassed = false;
+//            break;
+//        }
+//
+//        REQUIRE(true);
+//    }
+//}
+

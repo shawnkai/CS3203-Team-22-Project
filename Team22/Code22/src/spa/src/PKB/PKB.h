@@ -23,5 +23,7 @@ public:
     void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query); // string -> Result
     Result getDesignEntity(string entityType, string entityName); // string -> Result
+    vector<Result>  getAllDesignEntity(string entityType);
+
     Result getDesignEntity(string entityType, string entityName, string occurrenceLine);
 };

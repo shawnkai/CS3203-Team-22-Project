@@ -60,3 +60,15 @@ Result DesignEntityDatabase::getFromDatabase(string entityName) {
     vector<string> none{"None"};
     return Result("none", "none", none);
 }
+
+vector<Result> DesignEntityDatabase::getAllFromDatabase() {
+    vector<Result> resultVector;
+
+    for (auto& [entityName, designEntity]: this->database) {
+         resultVector.emplace_back(designEntity->getTypeOfEntity(),
+                                   designEntity->getNameOfEntity(),
+                                   designEntity->getOccurrenceOfEntity());
+    }
+
+    return resultVector;
+}
