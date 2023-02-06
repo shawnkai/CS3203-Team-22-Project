@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 #include "DesignEntitiesDatabaseFactory.h"
 

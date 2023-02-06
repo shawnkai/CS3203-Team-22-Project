@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 #include "AssignmentModifies.h"
 #include "ModifiesFactory.h"

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 #include "DesignEntitiesFactory.h"
 #include "Variable.h"

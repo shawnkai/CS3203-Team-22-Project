@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 #include "ModifiesDatabaseFactory.h"
 

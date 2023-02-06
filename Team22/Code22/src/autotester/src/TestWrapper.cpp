@@ -7,6 +7,7 @@
 #include <SPDriver.h>
 #include <Parser.h>
 #include <queue>
+#include <PKB/PKB.h>
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -27,22 +28,6 @@ TestWrapper::TestWrapper() {
 void TestWrapper::parse(std::string filename) {
 	// call your parser to do the parsing
   // ...rest of your code...
-    //Stubbing for testing parser in isolation
-//	vector<Token> testList;
-//    Token t1 = Token(TokenType::PROCEDURE, "procedure", 0);
-//    Token t2 = Token(TokenType::NAME_IDENTIFIER, "main", 0);
-//    Token t3 = Token(TokenType::LEFT_CURLY_BRACKET, "{", 0);
-//    Token t4 = Token(TokenType::READ, "read", 1);
-//    Token t5 = Token(TokenType::NAME_IDENTIFIER, "x", 1);
-//    Token t6 = Token(TokenType::STATEMENT_TERMINAL, ";", 1);
-//	Token t7 = Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2);
-//    testList.push_back(t1);
-//    testList.push_back(t2);
-//    testList.push_back(t3);
-//    testList.push_back(t4);
-//    testList.push_back(t5);
-//    testList.push_back(t6);
-//    testList.push_back(t7);
 
     Tokenizer tokenizer = Tokenizer();
     auto tokenList = tokenizer.tokenize("Sample_source.txt");
@@ -74,6 +59,14 @@ void TestWrapper::parse(std::string filename) {
 //	spdriver.parseSimpleProgram();
     DesignExtractor designExtractor;
     designExtractor.extractAbstraction(result);
+    designExtractor.extractEntity(result);
+
+    PKB pkbinstance = PKB();
+    
+    cout << pkbinstance.getDesignEntity("VARIABLE", "x").toString() << endl;
+    cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "x")).toString() << endl;
+    cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("READ", "x")).toString() << endl;
+
 }
 
 // method to evaluating a query

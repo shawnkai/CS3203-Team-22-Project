@@ -52,6 +52,8 @@ void VariableExtractor::extractEntity(TNode root) {
 					result1 = result1 + variableInRead + std::to_string(lineNumOfVariable);//deletelater
 					auto tuple1 = std::make_tuple(result1);
 					cout << result1;
+					PKB pkbinstance = PKB();
+					pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableInRead, std::to_string(lineNumOfVariable)));
 					//return result1;
 
 				}

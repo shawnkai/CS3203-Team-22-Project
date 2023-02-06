@@ -75,6 +75,10 @@ void ReadExtractor::extractAbstraction(TNode root) {
 					result1 = result1 + variableInRead + std::to_string(lineNumOfVariable);//deletelater
 					auto tuple1 = std::make_tuple(result1);
 					cout << result1;
+					PKB pkbinstance = PKB();
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableInRead, procedureName));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("READ", variableInRead, std::to_string(lineNumOfVariable)));
+
 					//return result1;
 
 				}

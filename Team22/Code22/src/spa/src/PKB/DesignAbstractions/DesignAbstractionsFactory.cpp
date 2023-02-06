@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 #include "DesignAbstractionsFactory.h"
 #include "ModifiesFactory.h"
