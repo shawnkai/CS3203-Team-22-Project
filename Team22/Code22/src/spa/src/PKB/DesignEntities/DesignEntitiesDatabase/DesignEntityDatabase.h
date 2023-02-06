@@ -24,7 +24,8 @@ public:
     virtual bool isPresentInDatabase(DesignEntity* designEntityToBeStored);
     virtual void updateEntityInDatabase(DesignEntity* designEntityToBeStored);
     virtual bool isPresentInDatabase(string entityName);
-    virtual Result getFromDatabase(string entityName) ;
+    virtual Result getFromDatabase(string entityName);
+    virtual vector<Result> getAllFromDatabase();
 };
 
 #endif //SPA_DESIGNENTITYDATABASE_H
