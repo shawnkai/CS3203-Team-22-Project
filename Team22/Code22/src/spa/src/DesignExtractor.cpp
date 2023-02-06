@@ -13,6 +13,7 @@ using namespace std;
 #include "AbstractionExtractor.h"
 #include "EntityExtractor.h"
 #include "TNode.h"*/
+#include "PKB/PKB.h"
 
 /*int DesignExtractor() {
 	return 0;

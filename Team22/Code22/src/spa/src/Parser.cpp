@@ -6,7 +6,6 @@
 #include <sstream>
 
 using namespace std;
-
 #include "Parser.h"
 #include "TNode.h"
 
