@@ -27,9 +27,17 @@ string SelectExpression::toString() {
     return res;
 }
 
-Result SelectExpression::evaluate(PKB pkb) {
+string SelectExpression::evaluate(PKB pkb) {
     if (this->conditions.empty()) {
-        return pkb.getDesignEntity(this->entities[0]->getType(), this->entities[0]->toString());
+        auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
+        string answer;
+        for (auto res : results) {
+            answer += res.getQueryEntityName();
+            answer += ", ";
+        }
+        answer.pop_back();
+        answer.pop_back();
+        return answer;
     } else {
         Expression *exp = this->conditions[0];
         return exp->evaluate(pkb);
@@ -75,18 +83,34 @@ string UsesPExpression::toString() {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-Result ModifiesSExpression::evaluate(PKB pkb) {
-    return pkb.getDesignAbstraction("MODIFIES", make_tuple(this->entities[0]->getType(), this->entities[0]->toString()));
+string ModifiesSExpression::evaluate(PKB pkb) {
+    if (this->entities[0]->getType() == "ident") {
+        return pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString())).toString();
+    } else {
+        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        vector<Result> results;
+        for (auto var : vars) {
+            results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+        }
+        string result;
+        for (auto res: results) {
+            result += res.getQueryEntityName() + ", ";
+        }
+        result.pop_back();
+        result.pop_back();
+        return result;
+    }
+
 }
 
-Result ModifiesPExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>());
+string ModifiesPExpression::evaluate(PKB pkb) {
+    return Result("", "", vector<string>()).toString();
 }
 
-Result UsesSExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>());
+string UsesSExpression::evaluate(PKB pkb) {
+    return Result("", "", vector<string>()).toString();
 }
 
-Result UsesPExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>());
+string UsesPExpression::evaluate(PKB pkb) {
+    return Result("", "", vector<string>()).toString();
 }

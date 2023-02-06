@@ -9,5 +9,5 @@ QueryEvaluator::QueryEvaluator(PKB pkb) {
 }
 
 string QueryEvaluator::evaluate(Expression *expression) {
-    return expression->evaluate(this->pkb).toString();
+    return expression->evaluate(this->pkb);
 }

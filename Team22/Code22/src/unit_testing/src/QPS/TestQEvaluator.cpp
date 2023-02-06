@@ -18,18 +18,42 @@ using namespace std;
 TEST_CASE("Test Select Statement Evaluation") {
     PKB pkb;
 
-    pkb.addDesignEntity("VARIABLE", make_tuple("v", "1"));
+    pkb.addDesignEntity("PROCEDURE", make_tuple("main", "1"));
+    pkb.addDesignEntity("VARIABLE", make_tuple("v", "2"));
     pkb.addDesignEntity("VARIABLE", make_tuple("a", "2"));
+
 
     QueryEvaluator queryEvaluator(pkb);
     QueryParser queryParser;
 
-    string declaration = "variable v;";
-    string query = "Select v";
+    string declaration = "variable v; procedure p;";
+    string query1 = "Select v";
+    string query2 = "Select p";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp1 = queryParser.parse(query1);
+    SelectExpression *exp2 = queryParser.parse(query2);
+
+    REQUIRE(queryEvaluator.evaluate(exp1) == "a, v");
+    REQUIRE(queryEvaluator.evaluate(exp2) == "main");
+}
+
+TEST_CASE("Test Select such that Modifies Evaluation") {
+    PKB pkb;
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(1, v)";
 
     queryParser.parse(declaration);
 
     SelectExpression *exp = queryParser.parse(query);
 
-    ::printf("%s\n", queryEvaluator.evaluate(exp).c_str());
+    REQUIRE(queryEvaluator.evaluate(exp) == "x");
 }
