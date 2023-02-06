@@ -10,7 +10,7 @@
 #include <vector>
 #include <tuple>
 
-#include "PKB.h"
+#include "PKB/PKB.h"
 #include "AbstractionExtractor.h"
 #include "EntityExtractor.h"
 #include "TNode.h"

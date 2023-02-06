@@ -8,7 +8,7 @@
 
 #include "TNode.h"
 #include "VariableExtractor.h"
-#include "PKB.h"
+#include "PKB/PKB.h"
 
 using namespace std;
 

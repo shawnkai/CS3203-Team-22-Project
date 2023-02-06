@@ -7,7 +7,7 @@
 #include <tuple>
 
 #include "TNode.h"
-#include "PKB.h"
+#include "PKB/PKB.h"
 
 using namespace std;
 
