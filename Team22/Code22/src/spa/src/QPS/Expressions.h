@@ -14,22 +14,26 @@
 using namespace std;
 
 class Expression {
-    virtual Result evaluate();
+    virtual Result evaluate() = 0;
 
     protected:
-        vector<DesignEntity> entities;
+        vector<DesignEntity*> entities;
 
     public:
-        explicit Expression(vector<DesignEntity> entities);
+        explicit Expression(vector<DesignEntity*> entities);
+
+        virtual string toString() = 0;
 };
 
 
 class SelectExpression : public Expression {
 private:
-    vector<Expression> conditions;
+    vector<Expression*> conditions;
 
 public:
-    explicit SelectExpression(vector<DesignEntity> entities, vector<Expression> conditions);
+    explicit SelectExpression(vector<DesignEntity*> entities, vector<Expression*> conditions);
+
+    string toString() override;
 
     Result evaluate() override;
 
@@ -39,19 +43,23 @@ public:
 //Modifies Expression Classes
 class ModifiesExpression : public Expression {
 public:
-    ModifiesExpression(NamedEntity target);
+    ModifiesExpression(NamedEntity* target);
 };
 
 class ModifiesSExpression : public ModifiesExpression {
 public:
-    explicit ModifiesSExpression(StmtEntity modifier, NamedEntity target);
+    explicit ModifiesSExpression(StmtEntity* modifier, NamedEntity* target);
+
+    string toString() override;
 
     Result evaluate() override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
 public:
-    explicit ModifiesPExpression(NamedEntity modifier, NamedEntity target);
+    explicit ModifiesPExpression(NamedEntity* modifier, NamedEntity* target);
+
+    string toString() override;
 
     Result evaluate() override;
 };
@@ -60,20 +68,24 @@ public:
 //Uses expression classes
 class UsesExpression : public Expression {
 public:
-    explicit UsesExpression(DesignEntity target);
+    explicit UsesExpression(DesignEntity* target);
 };
 
 class UsesSExpression : public UsesExpression {
 
 public:
-    explicit UsesSExpression(StmtEntity user, DesignEntity target);
+    explicit UsesSExpression(StmtEntity* user, DesignEntity* target);
+
+    string toString() override;
 
     Result evaluate() override;
 };
 
 class UsesPExpression : public UsesExpression {
 public:
-    explicit UsesPExpression(NamedEntity user, DesignEntity target);
+    explicit UsesPExpression(NamedEntity* user, DesignEntity* target);
+
+    string toString() override;
 
     Result evaluate() override;
 };

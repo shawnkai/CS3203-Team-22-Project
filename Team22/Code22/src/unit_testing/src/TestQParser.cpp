@@ -16,7 +16,7 @@ TEST_CASE("Test Declaration Extraction") {
 
     REQUIRE(queryParser.isDeclaration(declaration));
 
-    queryParser.extractDeclarations(declaration);
+    queryParser.parse(declaration);
 
     vector<tuple<string, string>> result = queryParser.getSynonymTable();
 
@@ -31,4 +31,64 @@ TEST_CASE("Test Declaration Extraction") {
     }
 
     REQUIRE(actualTable == expectedTable);
+}
+
+TEST_CASE("Test Select Statement Extraction") {
+    QueryParser queryParser;
+    string declaration = "variable v;";
+    string query = "Select v";
+
+    queryParser.parse(declaration);
+
+    SelectExpression actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult.toString() == query);
+}
+
+TEST_CASE("Test Select such that Modifies Statement Extraction") {
+    QueryParser queryParser;
+    string declaration = "variable v;";
+    string query = "Select v such that Modifies(1, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult.toString() == query);
+}
+
+TEST_CASE("Test Select such that Modifies Statement Extraction 2") {
+    QueryParser queryParser;
+    string declaration = "variable v; procedure p;";
+    string query = "Select p such that Modifies(p, \"x\")";
+
+    queryParser.parse(declaration);
+
+    SelectExpression actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult.toString() == query);
+}
+
+TEST_CASE("Test Select such that Uses Statement Extraction") {
+    QueryParser queryParser;
+    string declaration = "variable v;";
+    string query = "Select v such that Uses(1, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult.toString() == query);
+}
+
+TEST_CASE("Test Select such that Uses Statement Extraction 2") {
+    QueryParser queryParser;
+    string declaration = "variable v; procedure p;";
+    string query = "Select p such that Uses(p, \"x\")";
+
+    queryParser.parse(declaration);
+
+    SelectExpression actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult.toString() == query);
 }

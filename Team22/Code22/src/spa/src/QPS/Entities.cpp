@@ -24,6 +24,10 @@ StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(typ
 
 StmtEntity::StmtEntity(string type) : DesignEntity(std::move(type)) {}
 
+StmtEntity::StmtEntity(int lineNumber) : DesignEntity("statement") {
+    this->lineNumber = lineNumber;
+}
+
 StmtEntity::StmtEntity() : DesignEntity("statement") {}
 
 
@@ -59,6 +63,9 @@ string NamedEntity::getSynonym() {
 }
 
 string NamedEntity::toString() {
+    if (this->getType() == "ident") {
+        return "\"" + this->getSynonym() + "\"";
+    }
     return this->getSynonym();
 }
 

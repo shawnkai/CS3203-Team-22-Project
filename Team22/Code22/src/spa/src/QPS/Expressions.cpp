@@ -9,23 +9,29 @@
 
 PKB pkb;
 
-Expression::Expression(vector<DesignEntity> entities) {
+Expression::Expression(vector<DesignEntity*> entities) {
     this->entities = std::move(entities);
 }
 
-Result Expression::evaluate() {
-    vector<string> empty;
-    Result emptyResult(empty);
-    return emptyResult;
+SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<Expression*> conditions) : Expression(std::move(entities)){
+    this->conditions = std::move(conditions);
 }
 
-SelectExpression::SelectExpression(vector<DesignEntity> entities, vector<Expression> conditions) : Expression(entities){
-    this->conditions = std::move(conditions);
+string SelectExpression::toString() {
+    string res = "Select " + this->entities[0]->toString();
+
+    if (not conditions.empty()) {
+        res += " such that";
+        for (Expression* e : this->conditions) {
+            res += " " + e->toString();
+        }
+    }
+    return res;
 }
 
 Result SelectExpression::evaluate() {
     if (this->conditions.empty()) {
-        return pkb.getDesignEntity(entities[0].getType());
+        return pkb.getDesignEntity(entities[0]->getType());
     }
     vector<string> empty;
     Result emptyResult(empty);
@@ -33,27 +39,42 @@ Result SelectExpression::evaluate() {
 }
 
 
-ModifiesExpression::ModifiesExpression(NamedEntity target) : Expression({std::move(target)}) {}
+ModifiesExpression::ModifiesExpression(NamedEntity *target) : Expression({target}) {}
 
 
-ModifiesSExpression::ModifiesSExpression(StmtEntity modifier, NamedEntity target) : ModifiesExpression(std::move(target)) {
-    this->entities.push_back(std::move(modifier));
+ModifiesSExpression::ModifiesSExpression(StmtEntity *modifier, NamedEntity *target) : ModifiesExpression(target) {
+    this->entities.push_back(modifier);
 }
 
-ModifiesPExpression::ModifiesPExpression(NamedEntity modifier, NamedEntity target) : ModifiesExpression(std::move(target)) {
-    this->entities.push_back(std::move(modifier));
+string ModifiesSExpression::toString() {
+    return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-
-UsesExpression::UsesExpression(DesignEntity target) : Expression({std::move(target)}) {}
-
-
-UsesSExpression::UsesSExpression(StmtEntity user, DesignEntity target) : UsesExpression(target) {
-    this->entities.push_back(std::move(user));
+ModifiesPExpression::ModifiesPExpression(NamedEntity *modifier, NamedEntity *target) : ModifiesExpression(target) {
+    this->entities.push_back(modifier);
 }
 
-UsesPExpression::UsesPExpression(NamedEntity user, DesignEntity target) : UsesExpression(target) {
-    this->entities.push_back(std::move(user));
+string ModifiesPExpression::toString() {
+    return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
+}
+
+UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {}
+
+
+UsesSExpression::UsesSExpression(StmtEntity* user, DesignEntity* target) : UsesExpression(target) {
+    this->entities.push_back(user);
+}
+
+string UsesSExpression::toString() {
+    return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
+}
+
+UsesPExpression::UsesPExpression(NamedEntity* user, DesignEntity* target) : UsesExpression(target) {
+    this->entities.push_back(user);
+}
+
+string UsesPExpression::toString() {
+    return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
 Result ModifiesSExpression::evaluate() {

@@ -33,6 +33,7 @@ protected:
 public:
     StmtEntity(string type,  int lineNumber);
     StmtEntity(string type);
+    StmtEntity(int lineNumber);
     StmtEntity();
 
     int getLine();

@@ -21,22 +21,22 @@ bool isNumber(string s);
 class QueryParser {
 
 protected:
-	map<string, DesignEntity> synonymTable;
+	map<string, DesignEntity*> synonymTable;
 
 public:
 	QueryParser();
 
-	SelectExpression parse(string query);
+	SelectExpression parse(const string& query);
 
-	bool isDeclaration(string query);
+	bool isDeclaration(const string& query);
 	bool containsModifiesExpression(string query);
 	bool containsUsesExpression(string query);
 
-    void addToSynonymTable(string type, string name);
+    void addToSynonymTable(string type, const string& name);
 	void extractDeclarations(string query);
 
-	ModifiesExpression extractModifiesExpression(string query);
-	UsesExpression extractUsesExpression(string query);
+	ModifiesExpression* extractModifiesExpression(const string& query);
+	UsesExpression* extractUsesExpression(const string& query);
 
     vector<tuple<string, string>> getSynonymTable();
 };
