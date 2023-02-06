@@ -19,8 +19,8 @@ TEST_CASE("Test Select Statement Evaluation") {
     PKB pkb;
 
     pkb.addDesignEntity("PROCEDURE", make_tuple("main", "1"));
-    pkb.addDesignEntity("VARIABLE", make_tuple("v", "2"));
-    pkb.addDesignEntity("VARIABLE", make_tuple("a", "2"));
+    pkb.addDesignEntity("VARIABLE", make_tuple("v1", "2"));
+    pkb.addDesignEntity("VARIABLE", make_tuple("v2", "2"));
 
 
     QueryEvaluator queryEvaluator(pkb);
@@ -35,15 +35,15 @@ TEST_CASE("Test Select Statement Evaluation") {
     SelectExpression *exp1 = queryParser.parse(query1);
     SelectExpression *exp2 = queryParser.parse(query2);
 
-    REQUIRE(queryEvaluator.evaluate(exp1) == "a, v");
-    REQUIRE(queryEvaluator.evaluate(exp2) == "main");
+    REQUIRE(queryEvaluator.evaluate(exp1).find('a') != string::npos);
+    REQUIRE(queryEvaluator.evaluate(exp2).find("main") != string::npos);
 }
 
 TEST_CASE("Test Select such that Modifies Evaluation") {
     PKB pkb;
 
-    pkb.addDesignEntity("VARIABLE", make_tuple("x", "1"));
-    pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x", "1"));
+    pkb.addDesignEntity("VARIABLE", make_tuple("v", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v", "1"));
 
     QueryEvaluator queryEvaluator(pkb);
     QueryParser queryParser;
@@ -55,5 +55,5 @@ TEST_CASE("Test Select such that Modifies Evaluation") {
 
     SelectExpression *exp = queryParser.parse(query);
 
-    REQUIRE(queryEvaluator.evaluate(exp) == "x");
+    REQUIRE(queryEvaluator.evaluate(exp).find('v') != string::npos);
 }

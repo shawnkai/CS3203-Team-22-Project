@@ -8,6 +8,8 @@
 #include <Parser.h>
 #include <queue>
 #include <PKB/PKB.h>
+#include "QPS/Parser.h"
+#include "QPS/Evaluator.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -30,7 +32,7 @@ void TestWrapper::parse(std::string filename) {
   // ...rest of your code...
 
     Tokenizer tokenizer = Tokenizer();
-    auto tokenList = tokenizer.tokenize("Sample_source.txt");
+    auto tokenList = tokenizer.tokenize(filename.c_str());
     std::cout << "execution of tokenizer done" << std::endl;
     //driver.parseSimpleProgram(fileTest);
     for (Token token: tokenList) {
@@ -69,6 +71,11 @@ void TestWrapper::parse(std::string filename) {
 
 }
 
+QueryParser parser;
+PKB pkb;
+
+QueryEvaluator evaluator(pkb);
+
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 // call your evaluator to evaluate the query here
@@ -76,6 +83,12 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
 
   // store the answers to the query in the results list (it is initially empty)
   // each result must be a string.
+      size_t ind = query.find_last_of(';');
+      string declaration = query.substr(0, ind + 1);
+      string queryToExecute = query.substr(ind + 1, query.size() - ind);
 
+      parser.parse(declaration);
 
+      auto exp = parser.parse(queryToExecute);
+      results.push_back(evaluator.evaluate(exp));
 }

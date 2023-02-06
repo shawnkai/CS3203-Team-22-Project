@@ -18,7 +18,7 @@ SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<Expres
 string SelectExpression::toString() {
     string res = "Select " + this->entities[0]->toString();
 
-    if (not conditions.empty()) {
+    if (!conditions.empty()) {
         res += " such that";
         for (Expression* e : this->conditions) {
             res += " " + e->toString();
