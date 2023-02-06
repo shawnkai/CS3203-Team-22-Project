@@ -40,9 +40,9 @@ TEST_CASE("Test Select Statement Extraction") {
 
     queryParser.parse(declaration);
 
-    SelectExpression actualResult = queryParser.parse(query);
+    SelectExpression *actualResult = queryParser.parse(query);
 
-    REQUIRE(actualResult.toString() == query);
+    REQUIRE(actualResult->toString() == query);
 }
 
 TEST_CASE("Test Select such that Modifies Statement Extraction") {
@@ -52,9 +52,9 @@ TEST_CASE("Test Select such that Modifies Statement Extraction") {
 
     queryParser.parse(declaration);
 
-    SelectExpression actualResult = queryParser.parse(query);
+    SelectExpression *actualResult = queryParser.parse(query);
 
-    REQUIRE(actualResult.toString() == query);
+    REQUIRE(actualResult->toString() == query);
 }
 
 TEST_CASE("Test Select such that Modifies Statement Extraction 2") {
@@ -64,9 +64,9 @@ TEST_CASE("Test Select such that Modifies Statement Extraction 2") {
 
     queryParser.parse(declaration);
 
-    SelectExpression actualResult = queryParser.parse(query);
+    SelectExpression *actualResult = queryParser.parse(query);
 
-    REQUIRE(actualResult.toString() == query);
+    REQUIRE(actualResult->toString() == query);
 }
 
 TEST_CASE("Test Select such that Uses Statement Extraction") {
@@ -76,9 +76,9 @@ TEST_CASE("Test Select such that Uses Statement Extraction") {
 
     queryParser.parse(declaration);
 
-    SelectExpression actualResult = queryParser.parse(query);
+    SelectExpression *actualResult = queryParser.parse(query);
 
-    REQUIRE(actualResult.toString() == query);
+    REQUIRE(actualResult->toString() == query);
 }
 
 TEST_CASE("Test Select such that Uses Statement Extraction 2") {
@@ -88,7 +88,7 @@ TEST_CASE("Test Select such that Uses Statement Extraction 2") {
 
     queryParser.parse(declaration);
 
-    SelectExpression actualResult = queryParser.parse(query);
+    SelectExpression *actualResult = queryParser.parse(query);
 
-    REQUIRE(actualResult.toString() == query);
+    REQUIRE(actualResult->toString() == query);
 }

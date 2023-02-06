@@ -7,8 +7,6 @@
 #include <utility>
 #include "PKB/PKB.h"
 
-PKB pkb;
-
 Expression::Expression(vector<DesignEntity*> entities) {
     this->entities = std::move(entities);
 }
@@ -29,13 +27,13 @@ string SelectExpression::toString() {
     return res;
 }
 
-Result SelectExpression::evaluate() {
+Result SelectExpression::evaluate(PKB pkb) {
     if (this->conditions.empty()) {
-        return Result("", "", vector<string>());
+        return pkb.getDesignEntity(this->entities[0]->getType(), this->entities[0]->toString());
+    } else {
+        Expression *exp = this->conditions[0];
+        return exp->evaluate(pkb);
     }
-    vector<string> empty;
-    Result emptyResult("", "", empty);
-    return emptyResult;
 }
 
 
@@ -77,18 +75,18 @@ string UsesPExpression::toString() {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-Result ModifiesSExpression::evaluate() {
+Result ModifiesSExpression::evaluate(PKB pkb) {
+    return pkb.getDesignAbstraction("MODIFIES", make_tuple(this->entities[0]->getType(), this->entities[0]->toString()));
+}
+
+Result ModifiesPExpression::evaluate(PKB pkb) {
     return Result("", "", vector<string>());
 }
 
-Result ModifiesPExpression::evaluate() {
+Result UsesSExpression::evaluate(PKB pkb) {
     return Result("", "", vector<string>());
 }
 
-Result UsesSExpression::evaluate() {
-    return Result("", "", vector<string>());
-}
-
-Result UsesPExpression::evaluate() {
+Result UsesPExpression::evaluate(PKB pkb) {
     return Result("", "", vector<string>());
 }

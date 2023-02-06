@@ -12,13 +12,12 @@ QueryParser::QueryParser() {
 }
 
 
-SelectExpression QueryParser::parse(const string& query) {
+SelectExpression* QueryParser::parse(const string& query) {
 	vector<Expression*> conditions;
 
 	if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
-		SelectExpression ep({}, conditions);
-		return ep;
+		return new SelectExpression({}, conditions);
 	} else {
 		smatch sm;
 		regex RETURNVALUEREGEX = regex("Select (\\w+)");
@@ -32,7 +31,7 @@ SelectExpression QueryParser::parse(const string& query) {
 			conditions.push_back(this->extractUsesExpression(query));
 		}
 
-		return SelectExpression({arg}, conditions);
+		return new SelectExpression({arg}, conditions);
 	}
 }
 

@@ -9,18 +9,19 @@
 #include <utility>
 #include <vector>
 #include "QPS/Entities.h"
+#include "PKB/PKB.h"
 #include "Result.h"
 
 using namespace std;
 
 class Expression {
-    virtual Result evaluate() = 0;
-
     protected:
         vector<DesignEntity*> entities;
 
     public:
         explicit Expression(vector<DesignEntity*> entities);
+
+        virtual Result evaluate(PKB pkb) = 0;
 
         virtual string toString() = 0;
 };
@@ -35,7 +36,7 @@ public:
 
     string toString() override;
 
-    Result evaluate() override;
+    Result evaluate(PKB pkb) override;
 
 };
 
@@ -52,7 +53,7 @@ public:
 
     string toString() override;
 
-    Result evaluate() override;
+    Result evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -61,7 +62,7 @@ public:
 
     string toString() override;
 
-    Result evaluate() override;
+    Result evaluate(PKB pkb) override;
 };
 
 
@@ -78,7 +79,7 @@ public:
 
     string toString() override;
 
-    Result evaluate() override;
+    Result evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -87,7 +88,7 @@ public:
 
     string toString() override;
 
-    Result evaluate() override;
+    Result evaluate(PKB pkb) override;
 };
 
 

@@ -24,11 +24,11 @@ StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(typ
 
 StmtEntity::StmtEntity(string type) : DesignEntity(std::move(type)) {}
 
-StmtEntity::StmtEntity(int lineNumber) : DesignEntity("statement") {
+StmtEntity::StmtEntity(int lineNumber) : DesignEntity("STATEMENT") {
     this->lineNumber = lineNumber;
 }
 
-StmtEntity::StmtEntity() : DesignEntity("statement") {}
+StmtEntity::StmtEntity() : DesignEntity("STATEMENT") {}
 
 
 int StmtEntity::getLine() {
@@ -39,18 +39,18 @@ string StmtEntity::toString() {
     return to_string(this->getLine());
 }
 
-ReadEntity::ReadEntity(int lineNumber) : StmtEntity("read", lineNumber) {}
-ReadEntity::ReadEntity() : StmtEntity("read") {}
-PrintEntity::PrintEntity(int lineNumber) : StmtEntity("print", lineNumber) {}
-PrintEntity::PrintEntity() : StmtEntity("print") {}
-AssignEntity::AssignEntity(int lineNumber) : StmtEntity("assign", lineNumber) {}
-AssignEntity::AssignEntity() : StmtEntity("assign") {}
-CallEntity::CallEntity(int lineNumber) : StmtEntity("call", lineNumber) {}
-CallEntity::CallEntity() : StmtEntity("call") {}
-WhileEntity::WhileEntity(int lineNumber) : StmtEntity("while", lineNumber) {}
-WhileEntity::WhileEntity() : StmtEntity("while") {}
-IfEntity::IfEntity(int lineNumber) : StmtEntity("if", lineNumber) {}
-IfEntity::IfEntity() : StmtEntity("if") {}
+ReadEntity::ReadEntity(int lineNumber) : StmtEntity("READ", lineNumber) {}
+ReadEntity::ReadEntity() : StmtEntity("READ") {}
+PrintEntity::PrintEntity(int lineNumber) : StmtEntity("PRINT", lineNumber) {}
+PrintEntity::PrintEntity() : StmtEntity("PRINT") {}
+AssignEntity::AssignEntity(int lineNumber) : StmtEntity("ASSIGN", lineNumber) {}
+AssignEntity::AssignEntity() : StmtEntity("ASSIGN") {}
+CallEntity::CallEntity(int lineNumber) : StmtEntity("CALL", lineNumber) {}
+CallEntity::CallEntity() : StmtEntity("CALL") {}
+WhileEntity::WhileEntity(int lineNumber) : StmtEntity("WHILE", lineNumber) {}
+WhileEntity::WhileEntity() : StmtEntity("WHILE") {}
+IfEntity::IfEntity(int lineNumber) : StmtEntity("IF", lineNumber) {}
+IfEntity::IfEntity() : StmtEntity("IF") {}
 
 
 // Named Entities and its children
@@ -69,7 +69,7 @@ string NamedEntity::toString() {
     return this->getSynonym();
 }
 
-ProcedureEntity::ProcedureEntity(string synonym) : NamedEntity("procedure", std::move(synonym)) {}
-VariableEntity::VariableEntity(string synonym) : NamedEntity("variable", std::move(synonym)) {}
-ConstantEntity::ConstantEntity(string synonym) : NamedEntity("constant", std::move(synonym)) {}
+ProcedureEntity::ProcedureEntity(string synonym) : NamedEntity("PROCEDURE", std::move(synonym)) {}
+VariableEntity::VariableEntity(string synonym) : NamedEntity("VARIABLE", std::move(synonym)) {}
+ConstantEntity::ConstantEntity(string synonym) : NamedEntity("CONSTANT", std::move(synonym)) {}
 
