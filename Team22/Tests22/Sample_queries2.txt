@@ -1,0 +1,10 @@
+1 - comment
+variable v;
+Select v
+x
+5000
+2 - comment
+variable v;
+Select v such Modifies(1, v)
+x
+5000
