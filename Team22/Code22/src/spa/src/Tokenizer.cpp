@@ -53,7 +53,7 @@ bool Tokenizer::isRoundBracket(char c) {
 //    }
 
 std::vector<Token> Tokenizer::tokenize(const char* fileName) {
-        std::ifstream inputSimpleProgram("/Users/diwuyi/CLionProjects/spa-cp/Team22/Code22/src/spa/src/SPtestFile_DoNotRemove.txt");
+        std::ifstream inputSimpleProgram(fileName);
         std::vector<Token> tokens;
         //inputSimpleProgram.open(fileName);
         if (!inputSimpleProgram.is_open()) {
