@@ -114,7 +114,27 @@ string ModifiesSExpression::evaluate(PKB pkb) {
 }
 
 string ModifiesPExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>()).toString();
+    if (this->entities[0]->getType() == "ident") {
+        Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
+        if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
+            return res.toString();
+        } else {
+            return "";
+        }
+    } else {
+        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        vector<Result> results;
+        for (auto var : vars) {
+            results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+        }
+        string result;
+        for (auto res: results) {
+            if (res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
+                result += res.getQueryEntityName() + ",";
+            }
+        }
+        return result;
+    }
 }
 
 string UsesSExpression::evaluate(PKB pkb) {
