@@ -85,7 +85,12 @@ string UsesPExpression::toString() {
 
 string ModifiesSExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
-        return pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString())).toString();
+        Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
+        if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
+            return res.toString();
+        } else {
+            return "";
+        }
     } else {
         auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
         vector<Result> results;
@@ -94,7 +99,16 @@ string ModifiesSExpression::evaluate(PKB pkb) {
         }
         string result;
         for (auto res: results) {
-            result += res.getQueryEntityName() + ", ";
+            bool found = false;
+            for (const auto& s: res.getQueryResult()) {
+                if (s == to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                result += res.getQueryEntityName() + ", ";
+            }
         }
         result.pop_back();
         result.pop_back();
