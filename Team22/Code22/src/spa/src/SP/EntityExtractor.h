@@ -7,12 +7,13 @@
 #include <tuple>
 
 #include "TNode.h"
-#include "PKB/PKB.h"
+#include "VariableExtractor.h"
+#include "../PKB/PKB.h"
 
 using namespace std;
 
-class ReadExtractor {
+class EntityExtractor {
 public:
-	ReadExtractor() {};
-	void extractAbstraction(TNode root);
+	EntityExtractor() {};
+	void extractEntity(TNode root);
 };
