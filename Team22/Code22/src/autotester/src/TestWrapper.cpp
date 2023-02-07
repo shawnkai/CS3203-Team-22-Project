@@ -90,5 +90,17 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
       parser.parse(declaration);
 
       auto exp = parser.parse(queryToExecute);
-      results.push_back(evaluator.evaluate(exp));
+      string exp_res = evaluator.evaluate(exp);
+      string res_to_add;
+      for (auto c : exp_res) {
+          if (c == ',') {
+              results.push_back(res_to_add);
+              res_to_add.clear();
+          } else if (c != ' ') {
+              res_to_add.push_back(c);
+          }
+      }
+      if (!res_to_add.empty()) {
+          results.push_back(res_to_add);
+      }
 }

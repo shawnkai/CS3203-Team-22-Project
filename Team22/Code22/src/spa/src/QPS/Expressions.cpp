@@ -33,10 +33,8 @@ string SelectExpression::evaluate(PKB pkb) {
         string answer;
         for (auto res : results) {
             answer += res.getQueryEntityName();
-            answer += ", ";
+            answer += ",";
         }
-        answer.pop_back();
-        answer.pop_back();
         return answer;
     } else {
         Expression *exp = this->conditions[0];
@@ -107,11 +105,9 @@ string ModifiesSExpression::evaluate(PKB pkb) {
                 }
             }
             if (found) {
-                result += res.getQueryEntityName() + ", ";
+                result += res.getQueryEntityName() + ",";
             }
         }
-        result.pop_back();
-        result.pop_back();
         return result;
     }
 
