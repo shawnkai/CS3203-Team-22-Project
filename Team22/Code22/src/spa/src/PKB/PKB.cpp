@@ -19,8 +19,8 @@ using namespace std;
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
- * @param designAbstraction The type of abstraction that is to be added.
- * @param abstractionDetails A tuple, which takes in 3 strings. which contains the details about the abstraction.
+ * @param designAbstraction The type of Abstraction that is to be added.
+ * @param abstractionDetails A tuple, which takes in 3 strings. which contains the details about the Abstraction.
  */
 void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
     // To be implemented -> Done [05/02/2023]
@@ -31,8 +31,8 @@ void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, s
 /**
  * This method allows to add a Design Entity to the Program Knowledge Base.
  *
- * @param designEntity The type of entity that is to be added.
- * @param entityDetails A tuple, which takes in 2 strings, which contains the details about the entity.
+ * @param designEntity The type of Design Entity that is to be added.
+ * @param entityDetails A tuple, which takes in 2 strings, which contains the details about the Design Entity.
  */
 void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
     // To be implemented -> Done [05/02/2023]
@@ -45,7 +45,7 @@ void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetai
  * be accessed by the Result methods to be acted upon further.
  *
  * @param abstractionType Type of Abstraction to obtain.
- * @param query Query contains the eneity type being abstracted along with the entity name.
+ * @param query Query contains the Design Entity type being abstracted along with the Entity Name.
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
@@ -62,7 +62,7 @@ Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> q
  * accessed by the Result methods to be acted upon further.
  *
  * @param entityType Type of Entity to obtain.
- * @param entityName The name of the entity to be extracted.
+ * @param entityName The name of the Design Entity to be extracted.
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result PKB::getDesignEntity(string entityType, string entityName) {
@@ -77,8 +77,8 @@ Result PKB::getDesignEntity(string entityType, string entityName) {
  * Returns a vector<Result>, containing all the Design Entity Details of that
  * Design Entity Type.
  *
- * @param entityType Type of Entity to obtain.
- * @return A vector<Result> with each Result Object containing the details of that entity type.
+ * @param entityType The type of Design Entity to obtain.
+ * @return A vector<Result> with each Result Object containing the details of that Design Entity type.
  */
 vector<Result> PKB::getAllDesignEntity(string entityType) {
     // To be implemented
