@@ -10,15 +10,32 @@
 
 using namespace std;
 
+/**
+ * Creates a Design Entity with the given details,
+ *
+ * @param entityDetails This encompasses the details of the Entity to be created.
+ */
 DesignEntity::DesignEntity(tuple<string, string> entityDetails) {
     this->nameOfEntity = get<0>(entityDetails);
     (this->occurrenceOfEntity).push_back(get<1>(entityDetails));
 }
 
+/**
+ * If the Database finds out that the Entity is already stored in the
+ * Database, it calls this method, to append additional occurrences.
+ *
+ * @param occurrence The occurrence to be appended.
+ */
 void DesignEntity::addAdditionalOccurrence(string occurrence) {
     (this->occurrenceOfEntity).push_back(occurrence);
 }
 
+/**
+ * Adds the Design Entity to the Database. If the Design Entity is already
+ * present in the Database, the Database manages it, and calls the
+ * addAdditionalOccurrence(string occurrence) to append
+ * additional occurrences.
+ */
 void DesignEntity::addToDatabase() {
     // call storage/database factory and add, let storage check if there,
     // and update or add
@@ -26,10 +43,21 @@ void DesignEntity::addToDatabase() {
     database->addToDatabase(this);
 }
 
+/**
+ * Returns the name of the Entity.
+ *
+ * @return The name of the Entity.
+ */
 string DesignEntity::getNameOfEntity() {
     return this->nameOfEntity;
 }
 
+/**
+ * Returns a vector<string>, that contains the occurrences of
+ * this Entity.
+ *
+ * @return A vector<string> encompassing the occurrences of the Entity.
+ */
 vector<string> DesignEntity::getOccurrenceOfEntity() {
     return this->occurrenceOfEntity;
 }
