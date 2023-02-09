@@ -300,3 +300,15 @@ TEST_CASE("PKB Test 18: Design Entity : Procedure : Same Type, Same Entity Name,
 //    }
 //}
 
+TEST_CASE("PKB Test 20: Design Entity: Constant : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest20 = PKB();
+        pkbTest20.addDesignEntity("CONSTANT", make_tuple("a20", "1"));
+        pkbTest20.addDesignEntity("VARIABLE", make_tuple("a20", "2"));
+        Result pkbResult20 = pkbTest20.getDesignEntity("CONSTANT", "a20");
+
+        Result expectedResult20("CONSTANT", "a20", vector<string>{"1"});
+
+        REQUIRE(pkbResult20.areEqual(expectedResult20));
+    }
+}
