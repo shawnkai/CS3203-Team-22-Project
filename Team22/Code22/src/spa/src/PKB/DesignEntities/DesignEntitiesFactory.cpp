@@ -11,6 +11,7 @@
 #include "Statement.h"
 #include "ReadStatement.h"
 #include "Constant.h"
+#include "PrintStatement.h"
 
 using namespace std;
 
@@ -28,7 +29,7 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
     } else if (designEntity == "READ") {
         return new ReadStatement(entityDetails);
     } else if (designEntity == "PRINT") {
-
+        return new PrintStatement(entityDetails);
     } else if (designEntity == "ASSIGN") {
 
     } else if (designEntity == "CALL") {
