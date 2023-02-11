@@ -6,10 +6,18 @@
 #include <algorithm> // For Windows
 
 #include "DesignAbstractionsFactory.h"
-#include "ModifiesFactory.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/ModifiesFactory.h"
 
 using namespace std;
 
+/**
+ * Returns a DesignAbstraction Pointer Object, which is created by passing
+ * in the relevant arguments.
+ *
+ * @param designAbstraction The type of Abstraction to be created.
+ * @param abstractionDetails The details that the Abstraction Carries.
+ * @return DesignAbstraction* Pointer Object, which stores the Abstraction Details passed, provided they are relevant.
+ */
 DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
         string designAbstraction, tuple<string, string, string> abstractionDetails) {
     transform(designAbstraction.begin(), designAbstraction.end(), designAbstraction.begin(), ::toupper);

@@ -5,12 +5,12 @@
 #include <iostream>
 #include <algorithm> // For Windows
 
-#include "AssignmentModifies.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/AssignmentModifies.h"
 #include "ModifiesFactory.h"
-#include "ReadModifies.h"
-#include "StatementModifies.h"
-#include "ProcedureModifies.h"
-#include "ProcedureCallModifies.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/ReadModifies.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/StatementModifies.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/ProcedureModifies.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/ProcedureCallModifies.h"
 
 using namespace std;
 
