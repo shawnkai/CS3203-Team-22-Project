@@ -5,8 +5,8 @@
 #include <iostream>
 #include <algorithm> // For Windows
 
-#include "PKB/DesignAbstractions/ModifiesAbstraction/AssignmentModifies.h"
 #include "ModifiesFactory.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/AssignmentModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/ReadModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/StatementModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/ProcedureModifies.h"
