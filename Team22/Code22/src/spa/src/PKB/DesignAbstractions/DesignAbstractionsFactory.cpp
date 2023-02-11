@@ -7,6 +7,7 @@
 
 #include "DesignAbstractionsFactory.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/ModifiesFactory.h"
+#include "PKB/DesignAbstractions/UsesAbstraction/UsesFactory.h"
 
 using namespace std;
 
@@ -24,6 +25,8 @@ DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
 
     if (designAbstraction == "MODIFIES") {
         return ModifiesFactory::createModifiesAbstraction(abstractionDetails);
+    } else if (designAbstraction == "USES") {
+        return UsesFactory::createUsesAbstraction(abstractionDetails);
     }
 
     // To be implemented concretely
