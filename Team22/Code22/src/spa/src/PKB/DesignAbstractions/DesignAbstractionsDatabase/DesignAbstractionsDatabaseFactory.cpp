@@ -6,7 +6,7 @@
 #include <regex>
 
 #include "DesignAbstractionsDatabaseFactory.h"
-#include "ModifiesDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ModifiesAbstractionDatabase/ModifiesDatabaseFactory.h"
 
 using namespace std;
 

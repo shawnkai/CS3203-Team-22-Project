@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-#include "DesignAbstractionDatabase.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
 
 using namespace std;
 
