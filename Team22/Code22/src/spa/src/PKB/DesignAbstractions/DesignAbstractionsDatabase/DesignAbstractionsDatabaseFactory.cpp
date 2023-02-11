@@ -7,6 +7,7 @@
 
 #include "DesignAbstractionsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ModifiesAbstractionDatabase/ModifiesDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/UsesAbstractionDatabase/UsesDatabaseFactory.h"
 
 using namespace std;
 
@@ -27,6 +28,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
 
     if (regex_match(designAbstraction->getTypeOfAbstraction(), regex("MODIFIES:[0-9A-Za-z]+"))) {
         return getModifiesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
+    } else if (regex_match(designAbstraction->getTypeOfAbstraction(), regex("USES:[0-9A-Za-z]+"))) {
+        return getUsesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
     }
 
 
@@ -40,6 +43,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
 
     if (designAbstractionType == "MODIFIES") {
          return getModifiesDatabase(entityTypeBeingAbstracted);
+    } else if (designAbstractionType == "USES") {
+        return getUsesDatabase(entityTypeBeingAbstracted);
     }
 
     // Temp: To pass build
@@ -51,8 +56,7 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabas
 }
 
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(string entityTypeBeingExtracted) {
-    // Temp: To pass build
-    return nullptr;
+    return UsesDatabaseFactory::getUsesDatabase(entityTypeBeingExtracted);
 }
 
 //DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(string designAbstractionType) {

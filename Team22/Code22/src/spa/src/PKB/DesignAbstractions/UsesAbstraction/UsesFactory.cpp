@@ -6,6 +6,7 @@
 #include <algorithm> // For Windows
 
 #include "UsesFactory.h"
+#include "AssignmentUses.h"
 
 using namespace std;
 
@@ -14,7 +15,7 @@ DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, stri
     transform(usesAbstractionType.begin(), usesAbstractionType.end(), usesAbstractionType.begin(), ::toupper);
 
     if (usesAbstractionType == "ASSIGNMENT") {
-        
+        return new AssignmentUses(abstractionDetails);
     }
 
     // Temp: to pass build
