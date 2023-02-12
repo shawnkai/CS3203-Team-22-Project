@@ -26,7 +26,6 @@ TNode Parser::parseProcedure() {
     node.nodeType = TokenType::PROCEDURE;
     node.stringId = currToken.value;
     node.stmtNumber = currToken.lineNumber;
-
     if (currToken.type != TokenType::NAME_IDENTIFIER) {
         cerr << "Expecting function name for a procedure, got something else" << endl;
         return static_cast<TNode>(static_cast<TokenType>(NULL));
@@ -73,7 +72,6 @@ TNode Parser::parseStatement() {
     if (currToken.type == TokenType::READ) {
         auto childNode = parseReadStatement();
         stmtNode.children.push_back(childNode);
-        //*node = stmtNode;
         return stmtNode;
     }
     return static_cast<TNode>(static_cast<TokenType>(NULL));
@@ -110,41 +108,3 @@ TNode Parser::parseReadStatement() {
     node.children.push_back(childNode);
     return node;
 }
-
-//int main() {
-//    vector<Token> testList;
-//    Token t1 = Token(TokenType::PROCEDURE, "procedure", 0);
-//    Token t2 = Token(TokenType::NAME_IDENTIFIER, "main", 0);
-//    Token t3 = Token(TokenType::LEFT_CURLY_BRACKET, "{", 0);
-//    Token t4 = Token(TokenType::READ, "read", 1);
-//    Token t5 = Token(TokenType::NAME_IDENTIFIER, "x", 1);
-//    Token t6 = Token(TokenType::STATEMENT_TERMINAL, ";", 1);
-//    Token t7 = Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2);
-//    testList.push_back(t1);
-//    testList.push_back(t2);
-//    testList.push_back(t3);
-//    testList.push_back(t4);
-//    testList.push_back(t5);
-//    testList.push_back(t6);
-//    testList.push_back(t7);
-//    Parser testParser = Parser(testList);
-//
-//    TNode result = testParser.Parse();
-//    if (result.children.empty()) {
-//        cout << "Null pointer returned, use debug mode to find out why" << endl;
-//    }
-//    std::queue<TNode> pendingToString;
-//    pendingToString.push(result);
-//    while (!pendingToString.empty()) {
-//        auto toProcess = pendingToString.front();
-//        pendingToString.pop();
-//        cout << ToString(toProcess) << endl;
-//        if (!toProcess.children.empty()) {
-//            auto childrenArr = (toProcess).children;
-//            for (TNode child: childrenArr) {
-//                pendingToString.push(child);
-//            }
-//        }
-//    }
-//    return 0;
-//};

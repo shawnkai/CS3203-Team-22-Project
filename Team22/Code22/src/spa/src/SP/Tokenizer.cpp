@@ -1,9 +1,4 @@
-/* example in mind:
- * procedure main {
- * read x;
- * }
- */
-//#pragma once
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -41,76 +36,63 @@ bool Tokenizer::isRoundBracket(char c) {
 }
 
 
-//    static std::ifstream inputSimpleProgram;
-//    static std::vector<Token> tokens;
-
-//    explicit Tokenizer(const char* fileName) {
-//        inputSimpleProgram.open(fileName);
-//    }
-//
-//    ~Tokenizer() {
-//        inputSimpleProgram.close();
-//    }
-
 std::vector<Token> Tokenizer::tokenize(const char* fileName) {
-        std::ifstream inputSimpleProgram(fileName);
-        std::vector<Token> tokens;
-        //inputSimpleProgram.open(fileName);
-        if (!inputSimpleProgram.is_open()) {
-            std::cout << "testFile not opened" << std::endl;
+    std::ifstream inputSimpleProgram(fileName);
+    std::vector<Token> tokens;
+    if (!inputSimpleProgram.is_open()) {
+        std::cout << "testFile not opened" << std::endl;
+    }
+    int currLineNum = 1;
+    std::string currLine;
+    // getline require pass by reference
+    while (std::getline(inputSimpleProgram, currLine)) {
+        if (currLine.find("while") != std::string::npos
+        || currLine.find("if") != std::string::npos
+        || currLine.find(';') != std::string::npos) {
+            currLineNum++;
         }
-        int currLineNum = 1;
-        std::string currLine;
-        // getline require pass by reference
-        while (std::getline(inputSimpleProgram, currLine)) {
-            if (currLine.find("while") != std::string::npos
-            || currLine.find("if") != std::string::npos
-            || currLine.find(';') != std::string::npos) {
-                currLineNum++;
-            }
-            int charPos = 0;
-            while (charPos < currLine.length()) {
-                std::string candidateToken;
-                char charToProcess = currLine[charPos];
-                if (isLegalLetter(charToProcess)) {
-                    candidateToken.push_back(charToProcess);
+        int charPos = 0;
+        while (charPos < currLine.length()) {
+            std::string candidateToken;
+            char charToProcess = currLine[charPos];
+            if (isLegalLetter(charToProcess)) {
+                candidateToken.push_back(charToProcess);
+                ++ charPos;
+                while (charPos < currLine.length() && isLegalLetter(currLine[charPos])) {
+                    candidateToken.push_back(currLine[charPos]);
                     ++ charPos;
-                    while (charPos < currLine.length() && isLegalLetter(currLine[charPos])) {
-                        candidateToken.push_back(currLine[charPos]);
-                        ++ charPos;
-                    }
-                    if (candidateToken == "procedure") {
-                        tokens.push_back(Token(PROCEDURE, "procedure", currLineNum));
-                    }
-                    else if (candidateToken == "read") {
-                        tokens.push_back(Token(READ, "read", currLineNum));
-                    }
-                    else {
-                        tokens.push_back(Token(NAME_IDENTIFIER, candidateToken,
+                }
+                if (candidateToken == "procedure") {
+                    tokens.push_back(Token(PROCEDURE, "procedure", currLineNum));
+                }
+                else if (candidateToken == "read") {
+                    tokens.push_back(Token(READ, "read", currLineNum));
+                }
+                else {
+                    tokens.push_back(Token(NAME_IDENTIFIER, candidateToken,
                                                currLineNum));
-                    }
                 }
-                if (isWhiteSpace(charToProcess)) {
-                    charPos ++;
+            }
+            if (isWhiteSpace(charToProcess)) {
+                charPos ++;
+            }
+            if (isStatementTerminal(charToProcess)) {
+                charPos ++;
+                tokens.push_back(Token(STATEMENT_TERMINAL, ";", currLineNum));
+            }
+            if (isCurlyBracket(charToProcess)) {
+                charPos ++;
+                if (charToProcess == '{') {
+                    tokens.push_back(Token(LEFT_CURLY_BRACKET, "{", currLineNum));
                 }
-                if (isStatementTerminal(charToProcess)) {
-                    charPos ++;
-                    tokens.push_back(Token(STATEMENT_TERMINAL, ";", currLineNum));
-                }
-                if (isCurlyBracket(charToProcess)) {
-                    charPos ++;
-                    if (charToProcess == '{') {
-                        tokens.push_back(Token(LEFT_CURLY_BRACKET, "{", currLineNum));
-                    }
-                    else {
-                        tokens.push_back(Token(RIGHT_CURLY_BRACKET, "}", currLineNum));
-                    }
+                else {
+                    tokens.push_back(Token(RIGHT_CURLY_BRACKET, "}", currLineNum));
                 }
             }
         }
-        return tokens;
+    }
+    return tokens;
 }
-
 
 //int main() {
 //    const char* fileTest = "SPtestFile_DoNotRemove.txt";

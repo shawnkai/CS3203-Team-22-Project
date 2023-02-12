@@ -7,11 +7,15 @@
 #include <utility>
 
 enum TokenType {
-    NAME_IDENTIFIER, // ost, wes... variable names
-    PROCEDURE, //read, (for now) if, while, assign ...
+    NAME_IDENTIFIER, // ost, wes... variable names and procedure name
+    PROCEDURE,
     READ,
+    PRINT,
+    ASSIGN,
+    WHILE,
+    IF,
     INTEGER, // 1, 2, 0, ...
-    OPERATOR, // >, >=, <, <=, =, ... (not for now)
+    OPERATOR, // >, >=, <, <=, =, ...
     STATEMENT_TERMINAL, // ;
     STATEMENT_LIST,
     LEFT_ROUND_BRACKET,
@@ -26,8 +30,16 @@ inline const char* ToString(TokenType t) {
         case NAME_IDENTIFIER: return "NAME_IDENTIFIER";
         case PROCEDURE: return "PROCEDURE";
         case READ: return "READ";
+        case PRINT: return "PRINT";
+        case ASSIGN: return "ASSIGN";
+        case WHILE: return "WHILE";
+        case IF: return "IF";
+        case INTEGER: return "INTEGER";
+        case OPERATOR: return "OPERATOR";
         case STATEMENT_TERMINAL: return "STATEMENT_TERMINAL";
         case STATEMENT_LIST: return "STATEMENT_LIST";
+        case LEFT_ROUND_BRACKET: return "LEFT_ROUND_BRACKET";
+        case RIGHT_ROUND_BRACKET: return "RIGHT_ROUND_BRACKET";
         case LEFT_CURLY_BRACKET: return "LEFT_CURLY_BRACKET";
         case RIGHT_CURLY_BRACKET: return "RIGHT_CURLY_BRACKET";
         default: return "UNKNOWN_TOKEN_TYPE";

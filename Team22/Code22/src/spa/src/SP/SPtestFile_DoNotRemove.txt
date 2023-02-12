@@ -1,3 +1,13 @@
 procedure main {
     read x;
+    i = 0;
+    while (i > 0) {
+        print(i);
+        if (x > y) then {
+            max = x;
+        } else {
+            max = y;
+        }
+    }
 }
+milestone1 example
