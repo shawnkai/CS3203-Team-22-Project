@@ -12,8 +12,18 @@ public:
 
 private:
     bool isLegalLetter(char c);
+    bool isLegalDigit(char c);
     bool isWhiteSpace(char c);
     bool isStatementTerminal(char c);
     bool isCurlyBracket(char c);
     bool isRoundBracket(char c);
+    bool isConditionalChar(char c);
+    bool isRelationalChar(char c);
+    bool isAssignmentChar(char c);
+    bool isRelationalExpression(std::string s);
+    bool isLegalArithmeticChar(char c);
+    std::vector<Token> handleKeyword(std::vector<Token> currentTokens, std::string candidateToken, std::string line,
+                                     int charPos, int lineNumber);
+    Token checkingAndGettingToken(char delimeter, TokenType type, std::string tokenId, std::string remainingLine,
+                                             int lineNumber);
 };

@@ -14,6 +14,7 @@ enum TokenType {
     ASSIGN,
     WHILE,
     IF,
+    CALL,
     INTEGER, // 1, 2, 0, ...
     OPERATOR, // >, >=, <, <=, =, ...
     STATEMENT_TERMINAL, // ;
@@ -34,6 +35,7 @@ inline const char* ToString(TokenType t) {
         case ASSIGN: return "ASSIGN";
         case WHILE: return "WHILE";
         case IF: return "IF";
+        case CALL: return "CALL";
         case INTEGER: return "INTEGER";
         case OPERATOR: return "OPERATOR";
         case STATEMENT_TERMINAL: return "STATEMENT_TERMINAL";
