@@ -23,8 +23,13 @@ variable v; read r;
 Select v such Modifies(r, v)
 z, y, x
 5000
-6 - Select the lines with Read
+6 - Select the lines with Read x
 read r;
-Select r
-2, 3, 4
+Select r such that Modifies(r, "x")
+2
+5000
+7 - Select the lines with Read z
+read r;
+Select r such that Modifies(r, "z")
+4
 5000

@@ -82,7 +82,9 @@ string UsesPExpression::toString() {
 
 vector<string> ModifiesSExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
-        Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
+        string varName = this->entities[0]->toString();
+        varName.erase(remove(varName.begin(), varName.end(), '\"'), varName.end());
+        Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
         if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
             return {res.toString()};
         } else {
@@ -114,9 +116,11 @@ vector<string> ModifiesSExpression::evaluate(PKB pkb) {
 
 vector<string> ModifiesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
-        Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
-        if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
-            return {res.toString()};
+        string varName = this->entities[0]->toString();
+        varName.erase(remove(varName.begin(), varName.end(), '\"'), varName.end());
+        Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
+        if (!res.getQueryResult().empty()) {
+            return res.getQueryResult();
         } else {
             return {""};
         }
