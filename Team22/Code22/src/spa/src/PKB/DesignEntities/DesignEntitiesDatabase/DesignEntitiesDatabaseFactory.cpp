@@ -34,6 +34,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return callStatementEntitiesDatabase;
     } else if (designEntityType == "WHILE") {
         return whileStatementEntitiesDatabase;
+    } else if (designEntityType == "IF") {
+        return ifStatementEntitiesDatabase;
     }
 
     // TEMP: For building purposes

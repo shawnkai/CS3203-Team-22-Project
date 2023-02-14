@@ -15,6 +15,7 @@
 #include "AssignStatement.h"
 #include "CallStatement.h"
 #include "WhileStatement.h"
+#include "IfStatement.h"
 
 using namespace std;
 
@@ -40,7 +41,7 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
     } else if (designEntity == "WHILE") {
         return new WhileStatement(entityDetails);
     } else if (designEntity == "IF") {
-
+        return new IfStatement(entityDetails);
     }
 
     // TEMP: Just to pass build
