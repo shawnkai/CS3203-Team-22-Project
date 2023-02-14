@@ -417,3 +417,19 @@ TEST_CASE("PKB Test 27: Design Entity: Assign Statement : Same Type, Same Entity
         REQUIRE(pkbResult27.areEqual(expectedResult27));
     }
 }
+
+TEST_CASE("PKB Test 28: Design Entity: Call Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest28 = PKB();
+        pkbTest28.addDesignEntity("CALL", make_tuple("a28", "1"));
+
+        // Adding extra to ensure right database is populated
+        pkbTest28.addDesignEntity("VARIABLE", make_tuple("a28", "1"));
+
+        Result pkbResult28 = pkbTest28.getDesignEntity("CALL", "a28");
+
+        Result expectedResult28("CALL", "a28", vector<string>{"1"});
+
+        REQUIRE(pkbResult28.areEqual(expectedResult28));
+    }
+}

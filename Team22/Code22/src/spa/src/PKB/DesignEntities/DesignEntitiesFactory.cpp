@@ -13,6 +13,7 @@
 #include "Constant.h"
 #include "PrintStatement.h"
 #include "AssignStatement.h"
+#include "CallStatement.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
     } else if (designEntity == "ASSIGN") {
         return new AssignStatement(entityDetails);
     } else if (designEntity == "CALL") {
-
+        return new CallStatement(entityDetails);
     } else if (designEntity == "WHILE") {
 
     } else if (designEntity == "IF") {

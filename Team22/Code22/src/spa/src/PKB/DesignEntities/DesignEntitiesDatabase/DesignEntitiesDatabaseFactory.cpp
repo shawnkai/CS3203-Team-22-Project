@@ -30,6 +30,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return printStatementEntitiesDatabase;
     } else if (designEntityType == "ASSIGN") {
         return assignStatementEntitiesDatabase;
+    } else if (designEntityType == "CALL") {
+        return callStatementEntitiesDatabase;
     }
 
     // TEMP: For building purposes
