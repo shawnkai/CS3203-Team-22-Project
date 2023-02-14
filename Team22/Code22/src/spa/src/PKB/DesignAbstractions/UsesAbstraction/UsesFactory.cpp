@@ -8,6 +8,7 @@
 #include "UsesFactory.h"
 #include "AssignmentUses.h"
 #include "PrintUses.h"
+#include "ProcedureUses.h"
 
 using namespace std;
 
@@ -19,6 +20,8 @@ DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, stri
         return new AssignmentUses(abstractionDetails);
     } else if (usesAbstractionType == "PRINT") {
         return new PrintUses(abstractionDetails);
+    } else if (usesAbstractionType == "PROCEDURE") {
+        return new ProcedureUses(abstractionDetails);
     }
 
     // Temp: to pass build

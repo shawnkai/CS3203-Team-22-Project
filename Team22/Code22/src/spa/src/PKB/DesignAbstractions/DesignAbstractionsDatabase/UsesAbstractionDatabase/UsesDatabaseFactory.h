@@ -12,12 +12,14 @@
 #include "UsesDatabase.h" // Check if this is needed
 #include "AssignmentUsesDatabase.h"
 #include "PrintUsesDatabase.h"
+#include "ProcedureUsesDatabase.h"
 
 using namespace std;
 
 class UsesDatabaseFactory {
     static inline DesignAbstractionDatabase* assignmentUsesDatabase = new AssignmentUsesDatabase();
     static inline DesignAbstractionDatabase* printUsesDatabase = new PrintUsesDatabase();
+    static inline DesignAbstractionDatabase* procedureUsesDatabase = new ProcedureUsesDatabase();
 
 public:
     static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingAbstracted);
