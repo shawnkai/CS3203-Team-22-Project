@@ -20,6 +20,8 @@ DesignAbstractionDatabase *UsesDatabaseFactory::getUsesDatabase(string entityTyp
         return procedureUsesDatabase;
     } else if (entityTypeBeingAbstracted == "STATEMENT") {
         return statementUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURECALL") {
+        return procedureCallUsesDatabase;
     }
 
     // Temp: to pass build or throw error if not found

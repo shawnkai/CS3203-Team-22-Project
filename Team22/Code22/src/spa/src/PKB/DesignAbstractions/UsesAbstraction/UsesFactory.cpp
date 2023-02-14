@@ -10,6 +10,7 @@
 #include "PrintUses.h"
 #include "ProcedureUses.h"
 #include "StatementUses.h"
+#include "ProcedureCallUses.h"
 
 using namespace std;
 
@@ -25,6 +26,8 @@ DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, stri
         return new ProcedureUses(abstractionDetails);
     } else if (usesAbstractionType == "STATEMENT") {
         return new StatementUses(abstractionDetails);
+    } else if (usesAbstractionType == "PROCEDURECALL") {
+        return new ProcedureCallUses(abstractionDetails);
     }
 
     // Temp: to pass build

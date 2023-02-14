@@ -387,3 +387,17 @@ TEST_CASE("PKB Test 25: DesignAbstraction : Uses-Statement : Same Type, Same Typ
         REQUIRE(pkbResult25.areEqual(expectedResult25));
     }
 }
+
+TEST_CASE("PKB Test 26: DesignAbstraction : Uses-ProcedureCall : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest26 = PKB();
+        pkbTest26.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "v", "1"));
+        pkbTest26.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "v", "1"));
+
+        Result pkbResult26 = pkbTest26.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "v"));
+
+        Result expectedResult26("USES:PROCEDURECALL", "v", vector<string>{"1"});
+
+        REQUIRE(pkbResult26.areEqual(expectedResult26));
+    }
+}

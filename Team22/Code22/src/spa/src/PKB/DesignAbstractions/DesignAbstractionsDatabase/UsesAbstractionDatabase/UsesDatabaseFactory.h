@@ -14,6 +14,7 @@
 #include "PrintUsesDatabase.h"
 #include "ProcedureUsesDatabase.h"
 #include "StatementUsesDatabase.h"
+#include "ProcedureCallUsesDatabase.h"
 
 using namespace std;
 
@@ -22,6 +23,7 @@ class UsesDatabaseFactory {
     static inline DesignAbstractionDatabase* printUsesDatabase = new PrintUsesDatabase();
     static inline DesignAbstractionDatabase* procedureUsesDatabase = new ProcedureUsesDatabase();
     static inline DesignAbstractionDatabase* statementUsesDatabase = new StatementUsesDatabase();
+    static inline DesignAbstractionDatabase* procedureCallUsesDatabase = new ProcedureCallUsesDatabase();
 
 public:
     static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingAbstracted);
