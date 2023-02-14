@@ -15,6 +15,7 @@
 #include "ReadStatementDatabase.h"
 #include "ConstantDatabase.h"
 #include "PrintStatementDatabase.h"
+#include "AssignStatementDatabase.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ class DesignEntitiesDatabaseFactory {
     static inline DesignEntityDatabase* readStatementEntitiesDatabase = new ReadStatementDatabase();
     static inline DesignEntityDatabase* constantEntitiesDatabase = new ConstantDatabase();
     static inline DesignEntityDatabase* printStatementEntitiesDatabase = new PrintStatementDatabase();
+    static inline DesignEntityDatabase* assignStatementEntitiesDatabase = new AssignStatementDatabase();
     // Add more as implemented
 
 public:

@@ -401,3 +401,19 @@ TEST_CASE("PKB Test 26: DesignAbstraction : Uses-ProcedureCall : Same Type, Same
         REQUIRE(pkbResult26.areEqual(expectedResult26));
     }
 }
+
+TEST_CASE("PKB Test 27: Design Entity: Assign Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest27 = PKB();
+        pkbTest27.addDesignEntity("ASSIGN", make_tuple("a27", "1"));
+
+        // Adding extra to ensure right database is populated
+        pkbTest27.addDesignEntity("VARIABLE", make_tuple("a27", "1"));
+
+        Result pkbResult27 = pkbTest27.getDesignEntity("ASSIGN", "a27");
+
+        Result expectedResult27("ASSIGN", "a27", vector<string>{"1"});
+
+        REQUIRE(pkbResult27.areEqual(expectedResult27));
+    }
+}

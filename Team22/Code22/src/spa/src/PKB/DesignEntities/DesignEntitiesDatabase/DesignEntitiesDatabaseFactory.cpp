@@ -28,6 +28,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return constantEntitiesDatabase;
     } else if (designEntityType == "PRINT") {
         return printStatementEntitiesDatabase;
+    } else if (designEntityType == "ASSIGN") {
+        return assignStatementEntitiesDatabase;
     }
 
     // TEMP: For building purposes
