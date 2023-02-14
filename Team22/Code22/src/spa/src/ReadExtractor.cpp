@@ -79,7 +79,7 @@ void ReadExtractor::extractAbstraction(TNode root) {
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableInRead, procedureName));
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("READ", variableInRead, std::to_string(lineNumOfVariable)));
                     pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableInRead, std::to_string(lineNumOfVariable)));
-
+                    pkbinstance.addDesignEntity("READ", make_tuple(std::to_string(lineNumOfVariable), variableInRead));
 					//return result1;
 
 				}

@@ -21,7 +21,7 @@ class Expression {
     public:
         explicit Expression(vector<DesignEntity*> entities);
 
-        virtual string evaluate(PKB pkb) = 0;
+        virtual vector<string> evaluate(PKB pkb) = 0;
 
         virtual string toString() = 0;
 };
@@ -36,7 +36,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 
 };
 
@@ -53,7 +53,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -62,7 +62,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 
@@ -79,7 +79,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -88,7 +88,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 

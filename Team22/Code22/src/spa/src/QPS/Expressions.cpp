@@ -27,13 +27,12 @@ string SelectExpression::toString() {
     return res;
 }
 
-string SelectExpression::evaluate(PKB pkb) {
+vector<string> SelectExpression::evaluate(PKB pkb) {
     if (this->conditions.empty()) {
         auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
-        string answer;
+        vector<string> answer;
         for (auto res : results) {
-            answer += res.getQueryEntityName();
-            answer += ",";
+            answer.push_back(res.getQueryEntityName());
         }
         return answer;
     } else {
@@ -81,13 +80,13 @@ string UsesPExpression::toString() {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-string ModifiesSExpression::evaluate(PKB pkb) {
+vector<string> ModifiesSExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
         if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
-            return res.toString();
+            return {res.toString()};
         } else {
-            return "";
+            return {""};
         }
     } else {
         auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
@@ -95,7 +94,7 @@ string ModifiesSExpression::evaluate(PKB pkb) {
         for (auto var : vars) {
             results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
         }
-        string result;
+        vector<string> result;
         for (auto res: results) {
             bool found = false;
             for (const auto& s: res.getQueryResult()) {
@@ -105,7 +104,7 @@ string ModifiesSExpression::evaluate(PKB pkb) {
                 }
             }
             if (found) {
-                result += res.getQueryEntityName() + ",";
+                result.push_back(res.getQueryEntityName());
             }
         }
         return result;
@@ -113,13 +112,13 @@ string ModifiesSExpression::evaluate(PKB pkb) {
 
 }
 
-string ModifiesPExpression::evaluate(PKB pkb) {
+vector<string> ModifiesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
         if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
-            return res.toString();
+            return {res.toString()};
         } else {
-            return "";
+            return {""};
         }
     } else {
         auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
@@ -127,20 +126,20 @@ string ModifiesPExpression::evaluate(PKB pkb) {
         for (auto var : vars) {
             results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
         }
-        string result;
+        vector<string> result;
         for (auto res: results) {
             if (res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
-                result += res.getQueryEntityName() + ",";
+                result.push_back(res.getQueryEntityName());
             }
         }
         return result;
     }
 }
 
-string UsesSExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>()).toString();
+vector<string> UsesSExpression::evaluate(PKB pkb) {
+    return {};
 }
 
-string UsesPExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>()).toString();
+vector<string> UsesPExpression::evaluate(PKB pkb) {
+    return {};
 }
