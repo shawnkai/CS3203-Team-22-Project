@@ -17,6 +17,7 @@
 #include "PrintStatementDatabase.h"
 #include "AssignStatementDatabase.h"
 #include "CallStatementDatabase.h"
+#include "WhileStatementDatabase.h"
 
 using namespace std;
 
@@ -29,6 +30,7 @@ class DesignEntitiesDatabaseFactory {
     static inline DesignEntityDatabase* printStatementEntitiesDatabase = new PrintStatementDatabase();
     static inline DesignEntityDatabase* assignStatementEntitiesDatabase = new AssignStatementDatabase();
     static inline DesignEntityDatabase* callStatementEntitiesDatabase = new CallStatementDatabase();
+    static inline DesignEntityDatabase* whileStatementEntitiesDatabase = new WhileStatementDatabase();
     // Add more as implemented
 
 public:
