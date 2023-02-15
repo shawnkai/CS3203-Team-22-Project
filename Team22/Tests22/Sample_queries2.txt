@@ -8,14 +8,14 @@ variable v;
 Select v such Modifies(2, v)
 x
 5000
-3 - Select the Variable that is Modified in Line 3
-variable v;
-Select v such Modifies(3, v)
-y
-5000
-4 - Select the Variable that is Modified in Line 4
+3 - Select the Variable that is Modified in Line 4
 variable v;
 Select v such Modifies(4, v)
+y
+5000
+4 - Select the Variable that is Modified in Line 5
+variable v;
+Select v such Modifies(5, v)
 z
 5000
 5 - Select the Variables that are Modified by Read
@@ -26,7 +26,7 @@ z, y, x
 6 - Select the lines with Read x
 read r;
 Select r such that Modifies(r, "x")
-2
+2, 3
 5000
 7 - Select the lines with Read z
 variable v; read r;

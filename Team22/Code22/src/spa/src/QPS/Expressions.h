@@ -96,10 +96,10 @@ private:
     string p1, p2;
 public:
     explicit PatternExpression(DesignEntity *entity, string p1, string p2);
-//
-//    string toString() override;
-//
-//    vector<string> evaluate(PKB pkb) override;
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
 };
 
 

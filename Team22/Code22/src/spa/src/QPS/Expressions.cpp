@@ -237,3 +237,11 @@ vector<string> UsesPExpression::evaluate(PKB pkb) {
         return result;
     }
 }
+
+string PatternExpression::toString() {
+    return "pattern " + this->entities[0]->toString() + "(" + this->p1 + "," + this->p2 + ")";
+}
+
+vector<string> PatternExpression::evaluate(PKB pkb) {
+    return {};
+}
