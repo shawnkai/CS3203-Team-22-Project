@@ -321,6 +321,7 @@ TNode Parser::parseConditionalExpr() {
             cout << "Expected ')' after a conditional expr but instead got: " << currToken.value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
+        ++ pos;
         return condNode;
     } else if (tokenList[pos].type == TokenType::LEFT_ROUND_BRACKET) {
         ++ pos;
@@ -408,7 +409,7 @@ TNode Parser::parseRelationalFactor() {
         ++ pos;
         node = parseExpression();
         if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-            cout << "Expected '(' for a relational expr but instead got: " << currToken.value << endl;
+            cout << "Expected ')' for a relational expr but instead got: " << currToken.value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ pos;
@@ -528,7 +529,31 @@ TNode Parser::parseReadStatement() {
 ////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "b", 2));
 ////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
 ////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
+//    //base test 4 if stmt
+//    tokens.push_back(Token(TokenType::IF, "if", 1));
+//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, "!", 1));
+//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, ">", 1));
+//    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
+//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+//    tokens.push_back(Token(TokenType::IF, "then", 1));
+//    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
+//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 2));
+//    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
+//    tokens.push_back(Token(TokenType::INTEGER, "1", 2));
+//    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
+//    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
+//    tokens.push_back(Token(TokenType::IF, "else", 1));
+//    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 2));
+//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 3));
+//    tokens.push_back(Token(TokenType::OPERATOR, "=", 3));
+//    tokens.push_back(Token(TokenType::INTEGER, "2", 3));
+//    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 3));
+//    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
+//    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
 //    for (Token token: tokens) {
 //            std::cout << "Token" << ToString(token) << std::endl;
 //    }
