@@ -35,15 +35,19 @@ TEST_CASE("Test Select Statement Evaluation") {
     SelectExpression *exp1 = queryParser.parse(query1);
     SelectExpression *exp2 = queryParser.parse(query2);
 
-    REQUIRE(queryEvaluator.evaluate(exp1).find('a') != string::npos);
-    REQUIRE(queryEvaluator.evaluate(exp2).find("main") != string::npos);
+    vector<string> res1 = queryEvaluator.evaluate(exp1);
+    vector<string> res2 = queryEvaluator.evaluate(exp2);
+
+    REQUIRE(count(res1.begin(), res1.end(), "v1"));
+    REQUIRE(count(res1.begin(), res1.end(), "v2"));
+    REQUIRE(count(res2.begin(), res2.end(), "main"));
 }
 
 TEST_CASE("Test Select such that Modifies Evaluation") {
     PKB pkb;
 
-    pkb.addDesignEntity("VARIABLE", make_tuple("v", "1"));
-    pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v", "1"));
+    pkb.addDesignEntity("VARIABLE", make_tuple("v3", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v3", "1"));
 
     QueryEvaluator queryEvaluator(pkb);
     QueryParser queryParser;
@@ -55,5 +59,50 @@ TEST_CASE("Test Select such that Modifies Evaluation") {
 
     SelectExpression *exp = queryParser.parse(query);
 
-    REQUIRE(queryEvaluator.evaluate(exp).find('v') != string::npos);
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(count(res.begin(), res.end(), "v3"));
+}
+
+TEST_CASE("Test Select such that Uses Evaluation") {
+    PKB pkb;
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("v4", "1"));
+    pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v4", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(1, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(count(res.begin(), res.end(), "v4"));
+}
+
+TEST_CASE("Test Select such that Uses and Modifies Evaluation") {
+    PKB pkb;
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("v5", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v5", "3"));
+    pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v5", "4"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(4, v) and Modifies(3, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(count(res.begin(), res.end(), "v5"));
 }
