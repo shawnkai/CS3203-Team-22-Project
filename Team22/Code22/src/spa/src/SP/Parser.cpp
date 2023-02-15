@@ -79,10 +79,11 @@ TNode Parser::parseStatement() {
     if (tokenList[checkerPos].type == TokenType::IF &&
     (tokenList[checkerPos].value == "then" || tokenList[checkerPos].value == "else")) {
         stmtNode.stringId = tokenList[checkerPos].value;
+        stmtNode.stmtNumber = tokenList[checkerPos].lineNumber;
     } else {
         stmtNode.stringId = "stmtList";
+        stmtNode.stmtNumber = currToken.lineNumber;
     }
-    stmtNode.stmtNumber = currToken.lineNumber;
     while (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET) {
         //currToken = tokenList[pos];
         if (tokenList[pos].type == TokenType::READ) {

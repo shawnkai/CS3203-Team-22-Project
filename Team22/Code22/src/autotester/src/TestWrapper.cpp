@@ -42,24 +42,30 @@ void TestWrapper::parse(std::string filename) {
     for (Token token: tokenList) {
             std::cout << "Token" << ToString(token) << std::endl;
         }
-//    Parser testParser = Parser(tokenList);
-//    TNode result = testParser.Parse();
-//    if (result.children.empty()) {
-//        cout << "Null pointer returned, use debug mode to find out why" << endl;
-//    }
-//    std::queue<TNode> pendingToString;
-//    pendingToString.push(result);
-//    while (!pendingToString.empty()) {
-//        auto toProcess = pendingToString.front();
-//        pendingToString.pop();
-//        cout << ToString(toProcess) << endl;
-//        if (!toProcess.children.empty()) {
-//            auto childrenArr = (toProcess).children;
-//            for (TNode child: childrenArr) {
-//                pendingToString.push(child);
-//            }
-//        }
-//    }
+    Parser testParser = Parser(tokenList);
+    TNode result;
+    try {
+        result = testParser.Parse();
+    } catch (std::invalid_argument& e) {
+        std::cerr << e.what() << endl;
+        return;
+    }
+    if (result.children.empty()) {
+        cout << "Null pointer returned, use debug mode to find out why" << endl;
+    }
+    std::queue<TNode> pendingToString;
+    pendingToString.push(result);
+    while (!pendingToString.empty()) {
+        auto toProcess = pendingToString.front();
+        pendingToString.pop();
+        cout << ToString(toProcess) << endl;
+        if (!toProcess.children.empty()) {
+            auto childrenArr = (toProcess).children;
+            for (TNode child: childrenArr) {
+                pendingToString.push(child);
+            }
+        }
+    }
 ////  SPDriver class not in use for now
 ////	SPDriver spdriver;
 ////	spdriver.parseSimpleProgram();
