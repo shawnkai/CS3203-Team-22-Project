@@ -1,4 +1,3 @@
-#pragma once
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -7,8 +6,6 @@
 #include <stdexcept>
 #include "Token.h"
 #include "Tokenizer.h"
-
-Tokenizer::Tokenizer() {}
 
 bool Tokenizer::isLegalLetter(char c) {
     if (c >= 'A' && c <= 'Z') {
@@ -117,15 +114,16 @@ std::vector<Token> Tokenizer::handleKeyword(std::vector<Token> currentTokens, st
         currentTokens.push_back(toAdd);
     }
     else if (candidateToken == "if") {
+        prevIfLineNumberRecorder = lineNumber;
         Token toAdd = checkingAndGettingToken(' ', IF, candidateToken, follows, lineNumber);
         currentTokens.push_back(toAdd);
     }
     else if (candidateToken == "then") {
-        Token toAdd = checkingAndGettingToken(' ', IF, candidateToken, follows, lineNumber);
+        Token toAdd = checkingAndGettingToken(' ', IF, candidateToken, follows, prevIfLineNumberRecorder);
         currentTokens.push_back(toAdd);
     }
     else if (candidateToken == "else") {
-        Token toAdd = checkingAndGettingToken(' ', IF, candidateToken, follows, lineNumber);
+        Token toAdd = checkingAndGettingToken(' ', IF, candidateToken, follows, prevIfLineNumberRecorder);
         currentTokens.push_back(toAdd);
     }
     else if (candidateToken == "call") {

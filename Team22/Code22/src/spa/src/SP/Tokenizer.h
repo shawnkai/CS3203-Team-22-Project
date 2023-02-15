@@ -7,10 +7,11 @@
 
 class Tokenizer {
 public:
-    explicit Tokenizer();
+    explicit Tokenizer() : prevIfLineNumberRecorder(0) {};
     std::vector<Token> tokenize(const char* fileName);
 
 private:
+    int prevIfLineNumberRecorder;
     bool isLegalLetter(char c);
     bool isLegalDigit(char c);
     bool isWhiteSpace(char c);
