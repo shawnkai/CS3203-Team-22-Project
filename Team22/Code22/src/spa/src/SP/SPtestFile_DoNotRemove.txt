@@ -1,13 +1,19 @@
-procedure computeCentroid {
+procedure computeCentroid { 0/1
       count = 0;
       cenX = 0;
       cenY = 0;
       call read;
-      while ((x != 0) && (y != 0)) {
+      while ((x != 0) && (y != 0)) { // while(2)
           count = count + 1;
           cenX = cenX + x;
           cenY = cenY + y;
           read call;
+          if (count == 0) then {
+              flag = 1;
+          } else {
+              cenX = cenX / count;
+              cenY = cenY / count;
+          }
       }
       if (count == 0) then {
           flag = 1;

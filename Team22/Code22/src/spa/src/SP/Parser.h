@@ -24,6 +24,13 @@ private:
     TNode parsePrintStatement();
     TNode parseAssignStatement();
     TNode parseWhileStatement();
+    TNode parseConditionalExpr();
+    TNode parseRelationalExpr();
+    TNode parseRelationalFactor();
     TNode parseIfStatement();
+    TNode parseExpression();
+    TNode parseTerm();
+    TNode parseFactor();
+    TNode constructVarNode(const Token& token);
 };
 
