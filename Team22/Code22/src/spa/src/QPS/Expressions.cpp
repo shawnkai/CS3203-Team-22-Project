@@ -138,9 +138,60 @@ string ModifiesPExpression::evaluate(PKB pkb) {
 }
 
 string UsesSExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>()).toString();
+    if (this->entities[0]->getType() == "ident") {
+        Result res = pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
+        if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
+            return res.toString();
+        }
+        else {
+            return "";
+        }
+    }
+    else {
+        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        vector<Result> results;
+        for (auto var : vars) {
+            results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+        }
+        string result;
+        for (auto res : results) {
+            bool found = false;
+            for (const auto& s : res.getQueryResult()) {
+                if (s == to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine())) {
+                    found = true;
+                    break;
+                }
+            }
+            if (found) {
+                result += res.getQueryEntityName() + ",";
+            }
+        }
+        return result;
+    }
 }
 
 string UsesPExpression::evaluate(PKB pkb) {
-    return Result("", "", vector<string>()).toString();
+    if (this->entities[0]->getType() == "ident") {
+        Result res = pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
+        if (!res.getQueryResult().empty() && count(res.getQueryResult().begin(), res.getQueryResult().end(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
+            return res.toString();
+        }
+        else {
+            return "";
+        }
+    }
+    else {
+        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        vector<Result> results;
+        for (auto var : vars) {
+            results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+        }
+        string result;
+        for (auto res : results) {
+            if (res.getQueryEntityType() == "USES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
+                result += res.getQueryEntityName() + ",";
+            }
+        }
+        return result;
+    }
 }
