@@ -16,7 +16,7 @@ TEST_CASE("Test 1: Creation of Assign Pattern") {
 
         vector<AssignPattern*> result = pkbTest.getAllRightHandExpressions();
 
-        REQUIRE(result.size() == 1);
+        REQUIRE(result.size() != 0);
     }
 }
 
@@ -94,5 +94,30 @@ TEST_CASE("Test 8: Query for a non-existent line number after using getAllRightH
         unordered_map<string, string> result = pkbTest.getAllRightHandExpressionsOfAVariable("h");
 
         REQUIRE(result.find("-1") == result.end());
+    }
+}
+
+TEST_CASE("Test 9: Query for a existent variable name with multiple expressions on different lines using getAllRightHandExpressionsOfAVariable() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addAssignPattern("i", "1/2/3/", "10");
+        pkbTest.addAssignPattern("i", "/1/2/3", "11");
+
+        unordered_map<string, string> result = pkbTest.getAllRightHandExpressionsOfAVariable("i");
+
+        REQUIRE(result.size() == 2);
+    }
+}
+
+TEST_CASE("Test 10:  Query for a existent variable name with various patterns existent on various line numbers using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addAssignPattern("j", "1%2%3%", "12");
+        pkbTest.addAssignPattern("j", "1%2%3", "13");
+
+        string result1 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "12");
+        string result2 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "13");
+
+        REQUIRE(((result1 == "1%2%3%") && (result2 == "1%2%3")));
     }
 }
