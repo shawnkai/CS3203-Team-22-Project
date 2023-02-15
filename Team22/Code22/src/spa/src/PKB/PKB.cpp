@@ -16,6 +16,9 @@ using namespace std;
 #include "DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
 #include "DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
 
+#include "Pattern/AssignPattern/AssignPatternFactory.h"
+#include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
+
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
@@ -97,4 +100,26 @@ Result PKB::getDesignEntity(string entityType, string entityName, string occurre
     vector<string> sampleVector(5, "");
     Result queryResult("sample", "sample", sampleVector);
     return queryResult;
+}
+
+void PKB::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
+    AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
+                                                                             patternLineNumber);
+    assignPattern->addToDatabase();
+}
+
+string
+PKB::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber) {
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    return assignPatternDatabase->getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(leftHandVariableName, patternLineNumber);
+}
+
+unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string leftHandVariableName) {
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    return assignPatternDatabase->getAllRightHandExpressionsOfAVariableFromDatabase(leftHandVariableName);
+}
+
+vector<AssignPattern*> PKB::getAllRightHandExpressions() {
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }

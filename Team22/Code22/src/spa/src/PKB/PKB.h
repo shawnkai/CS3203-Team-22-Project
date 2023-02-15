@@ -4,8 +4,10 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include "Result.h"
+#include "Pattern/AssignPattern/AssignPattern.h"
 
 using namespace std;
 typedef short PROC;
@@ -24,6 +26,10 @@ public:
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query); // string -> Result
     Result getDesignEntity(string entityType, string entityName); // string -> Result
     vector<Result>  getAllDesignEntity(string entityType);
-
     Result getDesignEntity(string entityType, string entityName, string occurrenceLine);
+
+    void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
+    string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber);
+    unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
+    vector<AssignPattern*> getAllRightHandExpressions();
 };
