@@ -93,15 +93,6 @@ vector<Result> PKB::getAllDesignEntity(string entityType) {
     return queryResult;
 }
 
-Result PKB::getDesignEntity(string entityType, string entityName, string occurrenceLine) {
-    // To be implemented
-
-    // Demo Code
-    vector<string> sampleVector(5, "");
-    Result queryResult("sample", "sample", sampleVector);
-    return queryResult;
-}
-
 void PKB::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
     AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
                                                                              patternLineNumber);
