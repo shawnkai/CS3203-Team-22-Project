@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -6,7 +6,6 @@
 using namespace std;
 
 #include "PKB.h"
-#include "TNode.h"
 
 #include "DesignAbstractions/DesignAbstractionsFactory.h"
 #include "DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
@@ -15,6 +14,9 @@ using namespace std;
 #include "DesignEntities/DesignEntitiesFactory.h"
 #include "DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
 #include "DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
+
+#include "Pattern/AssignPattern/AssignPatternFactory.h"
+#include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
 
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
@@ -90,11 +92,24 @@ vector<Result> PKB::getAllDesignEntity(string entityType) {
     return queryResult;
 }
 
-Result PKB::getDesignEntity(string entityType, string entityName, string occurrenceLine) {
-    // To be implemented
+void PKB::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
+    AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
+                                                                             patternLineNumber);
+    assignPattern->addToDatabase();
+}
 
-    // Demo Code
-    vector<string> sampleVector(5, "");
-    Result queryResult("sample", "sample", sampleVector);
-    return queryResult;
+string
+PKB::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber) {
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    return assignPatternDatabase->getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(leftHandVariableName, patternLineNumber);
+}
+
+unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string leftHandVariableName) {
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    return assignPatternDatabase->getAllRightHandExpressionsOfAVariableFromDatabase(leftHandVariableName);
+}
+
+vector<AssignPattern*> PKB::getAllRightHandExpressions() {
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
