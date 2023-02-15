@@ -335,13 +335,133 @@ TEST_CASE("PKB Test 21: Design Entity: Print Statement : Same Type, Same Entity 
 TEST_CASE("PKB Test 22: DesignAbstraction : Uses-Assignment : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
     SECTION("") {
         PKB pkbTest22 = PKB();
-        pkbTest22.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "v", "1"));
-        pkbTest22.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "v", "1"));
+        pkbTest22.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "v22", "1"));
+        pkbTest22.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "v22", "1"));
 
-        Result pkbResult22 = pkbTest22.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "v"));
+        Result pkbResult22 = pkbTest22.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "v22"));
 
-        Result expectedResult22("USES:ASSIGNMENT", "v", vector<string>{"1"});
+        Result expectedResult22("USES:ASSIGNMENT", "v22", vector<string>{"1"});
 
         REQUIRE(pkbResult22.areEqual(expectedResult22));
+    }
+}
+
+TEST_CASE("PKB Test 23: DesignAbstraction : Uses-Print : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest23 = PKB();
+        pkbTest23.addDesignAbstraction("USES", make_tuple("PRINT", "v", "1"));
+        pkbTest23.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "v", "1"));
+
+        Result pkbResult23 = pkbTest23.getDesignAbstraction("USES", make_pair("PRINT", "v"));
+
+        Result expectedResult23("USES:PRINT", "v", vector<string>{"1"});
+
+        REQUIRE(pkbResult23.areEqual(expectedResult23));
+    }
+}
+
+TEST_CASE("PKB Test 24: DesignAbstraction : Uses-Procedure : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest24 = PKB();
+        pkbTest24.addDesignAbstraction("USES", make_tuple("PROCEDURE", "v", "1"));
+        pkbTest24.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "v", "1"));
+
+        Result pkbResult24 = pkbTest24.getDesignAbstraction("USES", make_pair("PROCEDURE", "v"));
+
+        Result expectedResult24("USES:PROCEDURE", "v", vector<string>{"1"});
+
+        REQUIRE(pkbResult24.areEqual(expectedResult24));
+    }
+}
+
+TEST_CASE("PKB Test 25: DesignAbstraction : Uses-Statement : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest25 = PKB();
+        pkbTest25.addDesignAbstraction("USES", make_tuple("STATEMENT", "v", "1"));
+        pkbTest25.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "v", "1"));
+
+        Result pkbResult25 = pkbTest25.getDesignAbstraction("USES", make_pair("STATEMENT", "v"));
+
+        Result expectedResult25("USES:STATEMENT", "v", vector<string>{"1"});
+
+        REQUIRE(pkbResult25.areEqual(expectedResult25));
+    }
+}
+
+TEST_CASE("PKB Test 26: DesignAbstraction : Uses-ProcedureCall : Same Type, Same Type Being Abstracted, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest26 = PKB();
+        pkbTest26.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "v", "1"));
+        pkbTest26.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "v", "1"));
+
+        Result pkbResult26 = pkbTest26.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "v"));
+
+        Result expectedResult26("USES:PROCEDURECALL", "v", vector<string>{"1"});
+
+        REQUIRE(pkbResult26.areEqual(expectedResult26));
+    }
+}
+
+TEST_CASE("PKB Test 27: Design Entity: Assign Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest27 = PKB();
+        pkbTest27.addDesignEntity("ASSIGN", make_tuple("a27", "1"));
+
+        // Adding extra to ensure right database is populated
+        pkbTest27.addDesignEntity("VARIABLE", make_tuple("a27", "1"));
+
+        Result pkbResult27 = pkbTest27.getDesignEntity("ASSIGN", "a27");
+
+        Result expectedResult27("ASSIGN", "a27", vector<string>{"1"});
+
+        REQUIRE(pkbResult27.areEqual(expectedResult27));
+    }
+}
+
+TEST_CASE("PKB Test 28: Design Entity: Call Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest28 = PKB();
+        pkbTest28.addDesignEntity("CALL", make_tuple("a28", "1"));
+
+        // Adding extra to ensure right database is populated
+        pkbTest28.addDesignEntity("VARIABLE", make_tuple("a28", "1"));
+
+        Result pkbResult28 = pkbTest28.getDesignEntity("CALL", "a28");
+
+        Result expectedResult28("CALL", "a28", vector<string>{"1"});
+
+        REQUIRE(pkbResult28.areEqual(expectedResult28));
+    }
+}
+
+TEST_CASE("PKB Test 29: Design Entity: While Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest29 = PKB();
+        pkbTest29.addDesignEntity("WHILE", make_tuple("a29", "1"));
+
+        // Adding extra to ensure right database is populated
+        pkbTest29.addDesignEntity("VARIABLE", make_tuple("a29", "1"));
+
+        Result pkbResult29 = pkbTest29.getDesignEntity("WHILE", "a29");
+
+        Result expectedResult29("WHILE", "a29", vector<string>{"1"});
+
+        REQUIRE(pkbResult29.areEqual(expectedResult29));
+    }
+}
+
+TEST_CASE("PKB Test 30: Design Entity: If Statement : Same Type, Same Entity Name, Same Occurrence") {
+    SECTION("") {
+        PKB pkbTest30 = PKB();
+        pkbTest30.addDesignEntity("IF", make_tuple("a30", "1"));
+
+        // Adding extra to ensure right database is populated
+        pkbTest30.addDesignEntity("VARIABLE", make_tuple("a30", "1"));
+
+        Result pkbResult30 = pkbTest30.getDesignEntity("IF", "a30");
+
+        Result expectedResult30("IF", "a30", vector<string>{"1"});
+
+        REQUIRE(pkbResult30.areEqual(expectedResult30));
     }
 }

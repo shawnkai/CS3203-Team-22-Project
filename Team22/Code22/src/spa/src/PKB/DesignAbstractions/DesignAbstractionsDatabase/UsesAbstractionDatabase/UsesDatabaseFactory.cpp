@@ -14,6 +14,14 @@ DesignAbstractionDatabase *UsesDatabaseFactory::getUsesDatabase(string entityTyp
 
     if (entityTypeBeingAbstracted == "ASSIGNMENT") {
         return assignmentUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PRINT") {
+        return printUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURE") {
+        return procedureUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "STATEMENT") {
+        return statementUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURECALL") {
+        return procedureCallUsesDatabase;
     }
 
     // Temp: to pass build or throw error if not found
