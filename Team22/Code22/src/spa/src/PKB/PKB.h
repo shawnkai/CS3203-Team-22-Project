@@ -13,12 +13,12 @@ using namespace std;
 
 class PKB {
 public:
-
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
+    Result getDesignEntity(string entityType, string entityName);
+    vector<Result> getAllDesignEntity(string entityType);
+
     void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
-    Result getDesignAbstraction(string abstractionType, tuple<string, string> query); // string -> Result
-    Result getDesignEntity(string entityType, string entityName); // string -> Result
-    vector<Result>  getAllDesignEntity(string entityType);
+    Result getDesignAbstraction(string abstractionType, tuple<string, string> query);
 
     void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber);
