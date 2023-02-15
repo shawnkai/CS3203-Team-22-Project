@@ -34,8 +34,6 @@ string AssignPattern::getLeftHandVariableName() {
     return this->leftHandVariableName;
 }
 
-// Bug caught: Inverse Boolean Condition
-// Status: Fixed
 string AssignPattern::getRightHandExpressionByLineNumber(string patternLineNumber) {
     return this->isLineNumberPresent(patternLineNumber) ? (this->rightHandExpressionByLineNumber.find(patternLineNumber))->second : "";
 }
