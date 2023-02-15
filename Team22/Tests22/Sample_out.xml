@@ -1,56 +1,83 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>0.809000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>6.344000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select All Variables">1</id><querystr><![CDATA[variable v; Select v]]></querystr>
 <stuans>z,y,x</stuans>
 <correct>z,y,x</correct>
-<time_taken>1.030000</time_taken>
+<time_taken>5.122000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select the Variable that is Modified in Line 2">2</id><querystr><![CDATA[variable v; Select v such Modifies(2, v)]]></querystr>
 <stuans>x</stuans>
 <correct>x</correct>
-<time_taken>1.047000</time_taken>
+<time_taken>7.021000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select the Variable that is Modified in Line 3">3</id><querystr><![CDATA[variable v; Select v such Modifies(3, v)]]></querystr>
-<stuans>y</stuans>
+<stuans>x</stuans>
 <correct>y</correct>
-<time_taken>0.982000</time_taken>
-<passed/>
+<time_taken>7.743000</time_taken>
+<failed>
+<missing>y</missing>
+<additional>x</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select the Variable that is Modified in Line 4">4</id><querystr><![CDATA[variable v; Select v such Modifies(4, v)]]></querystr>
-<stuans>z</stuans>
+<stuans>y</stuans>
 <correct>z</correct>
-<time_taken>0.943000</time_taken>
-<passed/>
+<time_taken>6.935000</time_taken>
+<failed>
+<missing>z</missing>
+<additional>y</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select the Variables that are Modified by Read">5</id><querystr><![CDATA[variable v; read r; Select v such Modifies(r, v)]]></querystr>
-<stuans>z,y,x</stuans>
+<stuans>x,y,z</stuans>
 <correct>z,y,x</correct>
-<time_taken>0.964000</time_taken>
+<time_taken>7.116000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select the lines with Read x">6</id><querystr><![CDATA[read r; Select r such that Modifies(r, "x")]]></querystr>
-<stuans>2</stuans>
+<stuans>2,3</stuans>
 <correct>2</correct>
-<time_taken>0.938000</time_taken>
-<passed/>
+<time_taken>7.423000</time_taken>
+<failed>
+<missing></missing>
+<additional>3</additional>
+<summary>
+<expected>1</expected>
+<matched>1</matched>
+<missing>0</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 <query>
-<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select the lines with Read z">7</id><querystr><![CDATA[read r; Select r such that Modifies(r, "z")]]></querystr>
-<stuans>4</stuans>
-<correct>4</correct>
-<time_taken>0.931000</time_taken>
+<id ReturnTuple="1" Modifies="2" SuchThat="1" CondNum="4" RelNum="2" comment="Select the lines with Read z">7</id><querystr><![CDATA[variable v; read r; Select v such that Modifies(2, v) and Modifies(3, v)]]></querystr>
+<stuans>x</stuans>
+<correct>x</correct>
+<time_taken>9.546000</time_taken>
 <passed/>
 </query>
 </queries>

@@ -26,11 +26,16 @@ SelectExpression* QueryParser::parse(const string& query) {
 		DesignEntity *arg = this->synonymTable[sm.str(1)];
 
 		if (this->containsModifiesExpression(query)) {
-			conditions.push_back(this->extractModifiesExpression(query));
+            vector<ModifiesExpression*> modifiesConditions = this->extractModifiesExpression(query);
+			for (ModifiesExpression *e : modifiesConditions) {
+                conditions.push_back(e);
+            }
 		} else if (this->containsUsesExpression(query)) {
-			conditions.push_back(this->extractUsesExpression(query));
+            vector<UsesExpression*> usesConditions = this->extractUsesExpression(query);
+            for (UsesExpression *e : usesConditions) {
+                conditions.push_back(e);
+            }
 		}
-
 		return new SelectExpression({arg}, conditions);
 	}
 }
@@ -60,72 +65,86 @@ bool isNumber(string s)
 	return true;
 }
 
-ModifiesExpression* QueryParser::extractModifiesExpression(const string& query) {
+vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string& query) {
 	regex MODIFIESREGEX = regex(R"lit(Modifies\s?\(("?\w+"?), ("?\w+"?)\))lit");
 	smatch sm;
-	regex_search(query, sm, MODIFIESREGEX);
 
-	string arg1 = sm.str(1);
-	string arg2 = sm.str(2);
+    string::const_iterator searchStart(query.begin());
 
-	if (isNumber(arg1)) {
-        auto *a1 = new StmtEntity(stoi(arg1));
-        auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
-		return new ModifiesSExpression(a1, a2);;
-	} else {
-        NamedEntity *a1;
-        if (arg1.find('\"') != string::npos) {
-            arg1.erase(remove(arg1.begin(), arg1.end(), '\"'), arg1.end());
-            a1 = new NamedEntity("ident", arg1);
+    vector<ModifiesExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, MODIFIESREGEX)) {
+        string arg1 = sm.str(1);
+        string arg2 = sm.str(2);
+
+        if (isNumber(arg1)) {
+            auto *a1 = new StmtEntity(stoi(arg1));
+            auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
-            a1 = new NamedEntity(this->synonymTable[arg1]->getType(), arg1);
-        }
+            NamedEntity *a1;
+            if (arg1.find('\"') != string::npos) {
+                arg1.erase(remove(arg1.begin(), arg1.end(), '\"'), arg1.end());
+                a1 = new NamedEntity("ident", arg1);
+            } else {
+                a1 = new NamedEntity(this->synonymTable[arg1]->getType(), arg1);
+            }
 
-        NamedEntity *a2;
-        if (arg2.find('\"') != string::npos) {
-            arg2.erase(remove(arg2.begin(), arg2.end(), '\"'), arg2.end());
-            a2 = new NamedEntity("ident", arg2);
-        } else {
-            a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
-        }
+            NamedEntity *a2;
+            if (arg2.find('\"') != string::npos) {
+                arg2.erase(remove(arg2.begin(), arg2.end(), '\"'), arg2.end());
+                a2 = new NamedEntity("ident", arg2);
+            } else {
+                a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            }
 
-		return new ModifiesPExpression(a1,  a2);;
+            expressions.push_back(new ModifiesPExpression(a1,  a2));
+        }
+        searchStart = sm.suffix().first;
 	}
+    return expressions;
 }
 
 
-UsesExpression* QueryParser::extractUsesExpression(const string& query) {
+vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) {
 	regex USESREGEX = regex(R"lit(Uses\s?\(("?\w+"?), ("?\w+"?)\))lit");
 	smatch sm;
-	regex_search(query, sm, USESREGEX);
 
-	string arg1 = sm.str(1);
-	string arg2 = sm.str(2);
+    string::const_iterator searchStart(query.begin());
 
-	if (isNumber(arg1)) {
-        auto *a1 = new StmtEntity(stoi(arg1));
-        auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
-		return new UsesSExpression(a1,  a2);
-	}
-	else {
-        NamedEntity *a1;
-        if (arg1.find('\"') != string::npos) {
-            arg1.erase(remove(arg1.begin(), arg1.end(), '\"'), arg1.end());
-            a1 = new NamedEntity("ident", arg1);
-        } else {
-            a1 = new NamedEntity(this->synonymTable[arg1]->getType(), arg1);
+    vector<UsesExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, USESREGEX)) {
+        string arg1 = sm.str(1);
+        string arg2 = sm.str(2);
+
+        if (isNumber(arg1)) {
+            auto *a1 = new StmtEntity(stoi(arg1));
+            auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            expressions.push_back(new UsesSExpression(a1,  a2));
         }
+        else {
+            NamedEntity *a1;
+            if (arg1.find('\"') != string::npos) {
+                arg1.erase(remove(arg1.begin(), arg1.end(), '\"'), arg1.end());
+                a1 = new NamedEntity("ident", arg1);
+            } else {
+                a1 = new NamedEntity(this->synonymTable[arg1]->getType(), arg1);
+            }
 
-        NamedEntity *a2;
-        if (arg2.find('\"') != string::npos) {
-            arg2.erase(remove(arg2.begin(), arg2.end(), '\"'), arg2.end());
-            a2 = new NamedEntity("ident", arg2);
-        } else {
-            a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            NamedEntity *a2;
+            if (arg2.find('\"') != string::npos) {
+                arg2.erase(remove(arg2.begin(), arg2.end(), '\"'), arg2.end());
+                a2 = new NamedEntity("ident", arg2);
+            } else {
+                a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            }
+            expressions.push_back(new UsesPExpression(a1,  a2));
         }
+        searchStart = sm.suffix().first;
+    }
 
-		return new UsesPExpression(a1,  a2);
-	}
+    return expressions;
 }
 
 void QueryParser::addToSynonymTable(string type, const string& name) {

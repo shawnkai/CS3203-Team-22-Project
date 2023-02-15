@@ -6,6 +6,33 @@
 
 #include <utility>
 #include "PKB/PKB.h"
+#include <algorithm>
+
+// Utility Functions
+
+vector<string> findIntersection(vector<vector<string>>& all_vectors) {
+    vector<string> intersection;
+    if (all_vectors.empty()) {
+        return intersection;
+    }
+
+    sort(all_vectors.begin(), all_vectors.end());
+    for (const string& str : all_vectors[0]) {
+        bool present = true;
+        for (int i = 1; i < all_vectors.size(); i++) {
+            if (find(all_vectors[i].begin(), all_vectors[i].end(), str) == all_vectors[i].end()) {
+                present = false;
+                break;
+            }
+        }
+        if (present) {
+            intersection.push_back(str);
+        }
+    }
+    return intersection;
+}
+
+// Function Definitions
 
 Expression::Expression(vector<DesignEntity*> entities) {
     this->entities = std::move(entities);
@@ -36,8 +63,11 @@ vector<string> SelectExpression::evaluate(PKB pkb) {
         }
         return answer;
     } else {
-        Expression *exp = this->conditions[0];
-        return exp->evaluate(pkb);
+        vector<vector<string>> all_results;
+        for (Expression *exp : this->conditions) {
+            all_results.push_back(exp->evaluate(pkb));
+        }
+        return findIntersection(all_results);
     }
 }
 
@@ -80,6 +110,11 @@ string UsesPExpression::toString() {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
+PatternExpression::PatternExpression(DesignEntity *entity, string p1, string p2) : Expression({entity}) {
+    this->p1 = std::move(p1);
+    this->p2 = std::move(p2);
+}
+
 vector<string> ModifiesSExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         string varName = this->entities[0]->toString();
@@ -109,6 +144,7 @@ vector<string> ModifiesSExpression::evaluate(PKB pkb) {
                 result.push_back(res.getQueryEntityName());
             }
         }
+        sort(result.begin(), result.end());
         return result;
     }
 
@@ -120,7 +156,9 @@ vector<string> ModifiesPExpression::evaluate(PKB pkb) {
         varName.erase(remove(varName.begin(), varName.end(), '\"'), varName.end());
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
         if (!res.getQueryResult().empty()) {
-            return res.getQueryResult();
+            vector<string> ans = res.getQueryResult();
+            sort(ans.begin(), ans.end());
+            return ans;
         } else {
             return {""};
         }
@@ -136,6 +174,7 @@ vector<string> ModifiesPExpression::evaluate(PKB pkb) {
                 result.push_back(res.getQueryEntityName());
             }
         }
+        sort(result.begin(), result.end());
         return result;
     }
 }

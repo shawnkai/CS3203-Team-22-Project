@@ -29,7 +29,7 @@ Select r such that Modifies(r, "x")
 2
 5000
 7 - Select the lines with Read z
-read r;
-Select r such that Modifies(r, "z")
-4
+variable v; read r;
+Select v such that Modifies(2, v) and Modifies(3, v)
+x
 5000

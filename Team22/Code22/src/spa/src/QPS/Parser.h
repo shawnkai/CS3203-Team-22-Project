@@ -35,8 +35,8 @@ public:
     void addToSynonymTable(string type, const string& name);
 	void extractDeclarations(string query);
 
-	ModifiesExpression* extractModifiesExpression(const string& query);
-	UsesExpression* extractUsesExpression(const string& query);
+	vector<ModifiesExpression*> extractModifiesExpression(const string& query);
+	vector<UsesExpression*> extractUsesExpression(const string& query);
 
     vector<tuple<string, string>> getSynonymTable();
 };

@@ -1,5 +1,6 @@
 procedure main {
     read x;
+    read x;
     read y;
     read z;
 }
