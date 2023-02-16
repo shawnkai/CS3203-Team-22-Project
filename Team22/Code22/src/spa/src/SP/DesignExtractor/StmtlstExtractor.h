@@ -11,6 +11,7 @@
 #include "ReadPrintExtractor.h"
 #include "WhileExtractor.h"
 #include "IfExtractor.h"
+#include "AssignExtractor.h"
 
 using namespace std;
 

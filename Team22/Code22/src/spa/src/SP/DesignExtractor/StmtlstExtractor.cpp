@@ -53,7 +53,10 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode) {
 				ifExtractor1.extractAbstraction(childstmt);
 
 			}
-			else {}
+			else if (tokenType1 == "ASSIGN") {
+				AssignExtractor assignExtractor1;
+				assignExtractor1.extractAbstraction(childstmt);
+			}
 		}
 	}
 
