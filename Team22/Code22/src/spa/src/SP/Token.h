@@ -16,7 +16,7 @@ enum TokenType {
     IF,
     CALL,
     INTEGER, // 1, 2, 0, ...
-    OPERATOR, // >, >=, <, <=, =, ...
+    OPERATOR, // >, >=, <, <=, =, !=, ==, &&, ||, !, +, -, *, /, %
     STATEMENT_TERMINAL, // ;
     STATEMENT_LIST,
     LEFT_ROUND_BRACKET,
