@@ -17,7 +17,7 @@ TNode Parser::Parse() {
     ++pos;
     if (currToken.type != TokenType::PROCEDURE) {
         cout << "Expecting keyword procedure for a legal SIMPLE program" << endl;
-        return static_cast<TNode>(static_cast<TokenType>(NULL));
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     return parseProcedure();
 }
@@ -30,22 +30,22 @@ TNode Parser::parseProcedure() {
     node.stmtNumber = currToken.lineNumber;
     if (currToken.type != TokenType::NAME_IDENTIFIER) {
         cout << "Expecting function name for a procedure, got something else" << endl;
-        return static_cast<TNode>(static_cast<TokenType>(NULL));
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++pos;
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after a procedure name" << endl;
-        return static_cast<TNode>(static_cast<TokenType>(NULL));
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token nextToken = tokenList[pos];
     if (nextToken.type != TokenType::LEFT_CURLY_BRACKET) {
         cout << "Expecting '{' after procedure name declaration but got:" << nextToken.value <<endl;
-        return static_cast<TNode>(static_cast<TokenType>(NULL));
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++pos;
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
-        return static_cast<TNode>(static_cast<TokenType>(NULL));
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token stmtToken = tokenList[pos];
     // Recursion should happen in the stmtList node
@@ -70,7 +70,7 @@ TNode Parser::parseProcedure() {
 TNode Parser::parseStatement() {
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
-        return static_cast<TNode>(static_cast<TokenType>(NULL));
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token currToken = tokenList[pos];
     TNode stmtNode;
@@ -91,22 +91,25 @@ TNode Parser::parseStatement() {
             stmtNode.children.push_back(childNode);
             //return stmtNode;
         }
-        if (tokenList[pos].type == TokenType::PRINT) {
+        else if (tokenList[pos].type == TokenType::PRINT) {
             auto childNode = parsePrintStatement();
             stmtNode.children.push_back(childNode);
             //return stmtNode;
         }
-        if (tokenList[pos].type == TokenType::WHILE) {
+        else if (tokenList[pos].type == TokenType::WHILE) {
             auto childNode = parseWhileStatement();
             stmtNode.children.push_back(childNode);
         }
-        if (tokenList[pos].type == TokenType::IF) {
+        else if (tokenList[pos].type == TokenType::IF) {
             auto childNode = parseIfStatement();
             stmtNode.children.push_back(childNode);
         }
-        if (tokenList[pos].type == TokenType::NAME_IDENTIFIER) {
+        else if (tokenList[pos].type == TokenType::NAME_IDENTIFIER) {
             auto childNode = parseAssignStatement();
             stmtNode.children.push_back(childNode);
+        }
+        else {
+            throw std::invalid_argument("Illegal SIMPLE Source Programme: Unrecognized Token");
         }
     }
     return stmtNode;
