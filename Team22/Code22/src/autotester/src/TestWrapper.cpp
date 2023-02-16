@@ -35,7 +35,7 @@ void TestWrapper::parse(std::string filename) {
         tokenList = tokenizer.tokenize(filename.c_str());
     } catch (std::invalid_argument& e) {
         std::cerr << e.what() << endl;
-        return;
+        ::exit(1);
     }
     std::cout << "execution of tokenizer done" << std::endl;
     //driver.parseSimpleProgram(fileTest);
@@ -48,7 +48,7 @@ void TestWrapper::parse(std::string filename) {
         result = testParser.Parse();
     } catch (std::invalid_argument& e) {
         std::cerr << e.what() << endl;
-        return;
+        ::exit(1);
     }
     if (result.children.empty()) {
         cout << "Null pointer returned, use debug mode to find out why" << endl;
@@ -67,8 +67,8 @@ void TestWrapper::parse(std::string filename) {
         }
     }
     
-    DesignExtractor designExtractor;
-    designExtractor.extractAbstraction(result);
+//    DesignExtractor designExtractor;
+//    designExtractor.extractAbstraction(result);
 ////  SPDriver class not in use for now
 ////	SPDriver spdriver;
 ////	spdriver.parseSimpleProgram();

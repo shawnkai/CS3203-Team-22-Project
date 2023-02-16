@@ -42,6 +42,10 @@ bool Tokenizer::isConditionalChar(char c) {
     return c == '!' || c == '|' || c == '&';
 }
 
+bool Tokenizer::isConditionalExpression(std::string s) {
+    return s == "!" || s == "||" || s == "&&";
+}
+
 bool Tokenizer::isRelationalChar(char c) {
     return c == '>' || c == '<' || c == '=' || c == '!';
 }
@@ -188,15 +192,24 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
                 ++ charPos;
                 if (isConditionalChar(currLine[charPos])) {
                     candidateToken.push_back(currLine[charPos]);
+                    if (!(isConditionalExpression(candidateToken))) {
+                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+                    }
                     tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
                     ++ charPos;
                 }
                 else if (isAssignmentChar(currLine[charPos]) && charToProcess == '!') {
                     candidateToken.push_back(currLine[charPos]);
+                    if (!(isRelationalExpression(candidateToken))) {
+                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+                    }
                     tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
                     ++ charPos;
                 }
                 else {
+                    if (!(isConditionalExpression(candidateToken))) {
+                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+                    }
                     tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
                 }
                 continue;
@@ -206,6 +219,9 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
                 ++ charPos;
                 if (isRelationalChar(currLine[charPos])) {
                     candidateToken.push_back(currLine[charPos]);
+                    if (!(isRelationalExpression(candidateToken))) {
+                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+                    }
                     tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
                     ++ charPos;
                 }
@@ -257,7 +273,7 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
                 }
             }
             else {
-                throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token outside namespace");
+                throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token outside defined namespace");
             }
         }
     }

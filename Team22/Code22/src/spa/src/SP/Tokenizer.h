@@ -26,6 +26,7 @@ private:
     bool isCurlyBracket(char c);
     bool isRoundBracket(char c);
     bool isConditionalChar(char c);
+    bool isConditionalExpression(std::string s);
     bool isRelationalChar(char c);
     bool isAssignmentChar(char c);
     bool isRelationalExpression(std::string s);
