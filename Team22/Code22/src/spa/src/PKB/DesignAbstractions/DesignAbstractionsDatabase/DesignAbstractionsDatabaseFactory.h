@@ -20,6 +20,7 @@ class DesignAbstractionsDatabaseFactory {
     static DesignAbstractionDatabase* getFollowsDatabase();
     static DesignAbstractionDatabase* getFollowsStarDatabase();
     static DesignAbstractionDatabase* getParentDatabase();
+    static DesignAbstractionDatabase* getParentStarDatabase();
 
 public:
     static DesignAbstractionDatabase* getAbstractionDatabase(DesignAbstraction* designAbstraction);

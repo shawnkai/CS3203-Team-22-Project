@@ -11,6 +11,7 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsAbstractionDatabase/FollowsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsStarAbstractionDatabase/FollowsStarDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentAbstractionDatabase/ParentDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentStarAbstractionDatabase/ParentStarDatabaseFactory.h"
 
 using namespace std;
 
@@ -39,6 +40,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getFollowsStarDatabase();
     } else if (designAbstraction->getTypeOfAbstraction() == "PARENT") {
         return getParentDatabase();
+    } else if (designAbstraction->getTypeOfAbstraction() == "PARENTSTAR") {
+        return getParentStarDatabase();
     }
 
     // Temp: To pass build
@@ -59,6 +62,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getFollowsStarDatabase();
     } else if (designAbstractionType == "PARENT") {
         return getParentDatabase();
+    } else if (designAbstractionType == "PARENTSTAR") {
+        return getParentStarDatabase();
     }
 
     // Temp: To pass build
@@ -83,6 +88,10 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsStarData
 
 DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentDatabase() {
     return ParentDatabaseFactory::getParentDatabase();
+}
+
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatabase() {
+    return ParentStarDatabaseFactory::getParentStarDatabase();
 }
 
 //DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(string designAbstractionType) {
