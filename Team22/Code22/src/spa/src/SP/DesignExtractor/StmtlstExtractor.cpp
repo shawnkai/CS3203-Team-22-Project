@@ -29,7 +29,7 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode) {
 				cout << "1";
 				ReadPrintExtractor readPrintExtractor;
 				std::string variableName = readPrintExtractor.extractAbstraction(currentNode);
-				if ((tokenType1 == "READ") && (variableName != "")) {
+				/*if ((tokenType1 == "READ") && (variableName != "")) {
 					PKB pkbinstance = PKB();
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", variableName, std::to_string(whileLineNo)));
 
@@ -37,9 +37,9 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode) {
 				else if ((tokenType1 == "PRINT") && (variableName != "")) {
 					PKB pkbinstance = PKB();
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", variableName, std::to_string(whileLineNo)));
-					change to USES later
+					//change to USES later
 				}
-				else {}
+				else {}*/
 
 			}
 			else if (tokenType1 == "WHILE") {
