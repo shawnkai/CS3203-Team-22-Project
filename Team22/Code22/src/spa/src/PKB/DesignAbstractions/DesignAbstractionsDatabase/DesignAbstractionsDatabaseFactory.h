@@ -17,6 +17,7 @@ class DesignAbstractionsDatabaseFactory {
     // Implement the below as methods or their own Factory classes
     static DesignAbstractionDatabase* getModifiesDatabase(string entityTypeBeingExtracted);
     static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingExtracted);
+    static DesignAbstractionDatabase* getFollowsDatabase();
 
 public:
     static DesignAbstractionDatabase* getAbstractionDatabase(DesignAbstraction* designAbstraction);

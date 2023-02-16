@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class ModifiesDatabase: public DesignAbstractionDatabase{
+class ModifiesDatabase: public DesignAbstractionDatabase {
 public:
 
 };
