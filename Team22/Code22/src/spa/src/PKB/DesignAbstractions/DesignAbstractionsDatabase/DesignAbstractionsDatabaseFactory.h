@@ -19,6 +19,7 @@ class DesignAbstractionsDatabaseFactory {
     static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingExtracted);
     static DesignAbstractionDatabase* getFollowsDatabase();
     static DesignAbstractionDatabase* getFollowsStarDatabase();
+    static DesignAbstractionDatabase* getParentDatabase();
 
 public:
     static DesignAbstractionDatabase* getAbstractionDatabase(DesignAbstraction* designAbstraction);
