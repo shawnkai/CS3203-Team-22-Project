@@ -66,6 +66,9 @@ void TestWrapper::parse(std::string filename) {
             }
         }
     }
+    
+    DesignExtractor designExtractor;
+    designExtractor.extractAbstraction(result);
 ////  SPDriver class not in use for now
 ////	SPDriver spdriver;
 ////	spdriver.parseSimpleProgram();

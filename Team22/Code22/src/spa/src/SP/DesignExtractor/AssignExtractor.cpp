@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#include "ReadPrintExtractor.h"
+#include "AssignExtractor.h"
 /*#include "PKB.h"
 #include "TNode.h"*/
 //#include "Token.h"
@@ -43,14 +43,9 @@ std::vector<std::string> AssignExtractor::extractAbstraction(TNode currentNode) 
 			TNode currentNode1 = queue1.front();
 			std::string tokenType1 = ToString(currentNode1.nodeType);
 			if (tokenType1 == "NAME_IDENTIFIER") {
-				std::string nameOfVariable = childNode1.stringId;
-				if (firstTime == 0) {
-					firstTime = 1;
-					variableVector.push_back(nameOfVariable);
-				}
-				else {
-					variableVector.push_back(nameOfVariable);
-				}
+				std::string nameOfVariable = currentNode1.stringId;
+				variableVector.push_back(nameOfVariable);
+				cout << currentNode1.stringId << endl;
 
 			}
 			else if (tokenType1 == "OPERATOR") {

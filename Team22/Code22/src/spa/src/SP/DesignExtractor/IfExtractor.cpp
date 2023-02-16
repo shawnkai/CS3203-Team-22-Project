@@ -29,8 +29,8 @@ void IfExtractor::extractAbstraction(TNode currentNode) {
 		StmtlstExtractor stmtlstExtractor;
 		stmtlstExtractor.extractAbstraction(ifstmtlstNode);
 		TNode elsestmtlstNode = childNodes[1];
-		StmtlstExtractor stmtlstExtractor;
-		stmtlstExtractor.extractAbstraction(elsestmtlstNode);
+		StmtlstExtractor stmtlstExtractor2;
+		stmtlstExtractor2.extractAbstraction(elsestmtlstNode);
 	}
 
 };
