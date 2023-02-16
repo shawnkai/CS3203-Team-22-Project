@@ -10,8 +10,8 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "../DesignAbstraction.h"
-#include "../../../Result.h"
+#include "PKB/DesignAbstractions/DesignAbstraction.h"
+#include "Result.h"
 
 using namespace std;
 
@@ -26,6 +26,5 @@ public:
     virtual void addToDatabase(DesignAbstraction* designAbstractionToBeStored);
     virtual Result getFromDatabase(string entityName);
 };
-
 
 #endif //SPA_DESIGNABSTRACTIONDATABASE_H
