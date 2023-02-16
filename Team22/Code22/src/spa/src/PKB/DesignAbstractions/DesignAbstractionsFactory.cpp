@@ -9,6 +9,7 @@
 #include "PKB/DesignAbstractions/ModifiesAbstraction/ModifiesFactory.h"
 #include "PKB/DesignAbstractions/UsesAbstraction/UsesFactory.h"
 #include "PKB/DesignAbstractions/FollowsAbstraction/FollowsFactory.h"
+#include "PKB/DesignAbstractions/FollowsStarAbstraction/FollowsStarFactory.h"
 
 using namespace std;
 
@@ -30,6 +31,8 @@ DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
         return UsesFactory::createUsesAbstraction(abstractionDetails);
     } else if (designAbstraction == "FOLLOWS") {
         return FollowsFactory::createFollowsAbstraction(abstractionDetails);
+    } else if (designAbstraction == "FOLLOWSSTAR") {
+        return FollowsStarFactory::createFollowsStarAbstraction(abstractionDetails);
     }
 
     // To be implemented concretely

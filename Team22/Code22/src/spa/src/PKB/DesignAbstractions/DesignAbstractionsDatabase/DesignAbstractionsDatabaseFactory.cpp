@@ -9,6 +9,7 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ModifiesAbstractionDatabase/ModifiesDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/UsesAbstractionDatabase/UsesDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsAbstractionDatabase/FollowsDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsStarAbstractionDatabase/FollowsStarDatabaseFactory.h"
 
 using namespace std;
 
@@ -33,6 +34,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getUsesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
     } else if (designAbstraction->getTypeOfAbstraction() == "FOLLOWS") {
         return getFollowsDatabase();
+    } else if (designAbstraction->getTypeOfAbstraction() == "FOLLOWSSTAR") {
+        return getFollowsStarDatabase();
     }
 
     // Temp: To pass build
@@ -49,6 +52,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getUsesDatabase(entityTypeBeingAbstracted);
     } else if (designAbstractionType == "FOLLOWS") {
         return getFollowsDatabase();
+    } else if (designAbstractionType == "FOLLOWSSTAR") {
+        return getFollowsStarDatabase();
     }
 
     // Temp: To pass build
@@ -63,8 +68,12 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(st
     return UsesDatabaseFactory::getUsesDatabase(entityTypeBeingExtracted);
 }
 
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getFollowsDatabase() {
+DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsDatabase() {
     return FollowsDatabaseFactory::getFollowsDatabase();
+}
+
+DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsStarDatabase() {
+    return FollowsStarDatabaseFactory::getFollowsStarDatabase();
 }
 
 //DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(string designAbstractionType) {

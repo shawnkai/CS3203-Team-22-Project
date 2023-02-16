@@ -8,6 +8,6 @@
 
 using namespace std;
 
-DesignAbstractionDatabase *FollowsDatabaseFactory::getFollowsDatabase() {
+DesignAbstractionDatabase* FollowsDatabaseFactory::getFollowsDatabase() {
     return followsDatabase;
 }
