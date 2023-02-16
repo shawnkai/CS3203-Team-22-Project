@@ -49,9 +49,9 @@ TEST_CASE("Test 4: Procedure Design Entity, Query for Same Type, Different Entit
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignEntity("PROCEDURE", make_tuple("p4", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("PROCEDURE", "p4");
+        Result pkbResult = pkbTest.getDesignEntity("PROCEDURE", "p0");
 
-        Result expectedResult("PROCEDURE", "p0", vector<string>{"1"});
+        Result expectedResult("PROCEDURE", "p4", vector<string>{"1"});
 
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
@@ -93,7 +93,7 @@ TEST_CASE("Test 7: Procedure Design Entity, Query for Different Type, Different 
     }
 }
 
-TEST_CASE("Test 7: Procedure Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
+TEST_CASE("Test 8: Procedure Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignEntity("PROCEDURE", make_tuple("p8", "1"));
@@ -105,7 +105,7 @@ TEST_CASE("Test 7: Procedure Design Entity, Query for Different Type, Same Entit
     }
 }
 
-TEST_CASE("Test 8: Procedure Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
+TEST_CASE("Test 9: Procedure Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignEntity("PROCEDURE", make_tuple("p9", "1"));
