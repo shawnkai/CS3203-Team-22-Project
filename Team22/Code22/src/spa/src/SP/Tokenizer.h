@@ -4,6 +4,13 @@
 #endif //SPA_TOKENIZER_H
 #pragma once
 #include "Token.h"
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <string>
+#include <map>
+#include <stdexcept>
+#include "Token.h"
 
 class Tokenizer {
 public:

@@ -3,7 +3,7 @@
 #include <vector>
 #include "SP/Tokenizer.h"
 #include "SP/TNode.h"
-#include "SP/DesignExtractor.h"
+#include "SP/DesignExtractor/DesignExtractor.h"
 #include "SP/SPDriver.h"
 #include "SP/Parser.h"
 #include <queue>

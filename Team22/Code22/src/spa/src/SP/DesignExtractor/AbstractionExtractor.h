@@ -6,9 +6,9 @@
 #include <vector>
 #include <tuple>
 
-#include "../PKB/PKB.h"
-#include "ReadExtractor.h"
-#include "TNode.h"
+#include "../../PKB/PKB.h"
+#include "StmtlstExtractor.h"
+#include "../TNode.h"
 
 using namespace std;
 

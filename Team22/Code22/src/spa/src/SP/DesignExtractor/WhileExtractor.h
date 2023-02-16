@@ -6,13 +6,14 @@
 #include <vector>
 #include <tuple>
 
-#include "TNode.h"
-#include "../PKB/PKB.h"
+#include "../TNode.h"
+#include "../../PKB/PKB.h"
+#include "StmtlstExtractor.h"
 
 using namespace std;
 
-class ReadExtractor {
+class WhileExtractor {
 public:
-	ReadExtractor() {};
+	WhileExtractor() {};
 	void extractAbstraction(TNode root);
 };

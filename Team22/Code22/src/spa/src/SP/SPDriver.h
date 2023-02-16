@@ -9,7 +9,7 @@
 #include <string>
 #include "Tokenizer.h"
 #include "TNode.h"//added
-#include "DesignExtractor.h" //added
+#include "DesignExtractor/DesignExtractor.h" //added
 
 class SPDriver {
 public:
