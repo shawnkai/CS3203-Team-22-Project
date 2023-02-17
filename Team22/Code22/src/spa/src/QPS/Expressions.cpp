@@ -221,18 +221,37 @@ string PatternExpression::toString() {
 }
 
 vector<string> PatternExpression::evaluate(PKB pkb) {
-    auto key_values = pkb.getAllRightHandExpressionsOfAVariable(p1->getSynonym());
-    vector<string> result;
     string prefix_expr = p2;
     prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
     prefix_expr = regex_replace(prefix_expr, regex("\\+"), "\\+");
     prefix_expr = regex_replace(prefix_expr, regex("\\*"), "\\*");
     prefix_expr = regex_replace(prefix_expr, regex("_"), R"([\w\+\-\*/]*)");
     regex right_expr (prefix_expr);
-    for (const auto& pair : key_values) {
-        if (regex_match(pair.second, right_expr)) {
-            result.push_back(pair.first);
+
+    if (p1->getSynonym() == "_" || p1->getType() == "VARIABLE") {
+        auto key_values = pkb.getAllRightHandExpressions();
+        vector<string> results;
+        for (auto pattern : key_values) {
+            for (const auto& lineno_expression : pattern->getAllRightHandExpressions()) {
+                if (regex_match(lineno_expression.second, right_expr)) {
+                    if (p1->getSynonym() == "_") {
+                        results.push_back(lineno_expression.first);
+                    } else {
+                        results.push_back(pattern->getLeftHandVariableName());
+                    }
+                }
+            }
         }
+        return results;
+    } else {
+        auto key_values = pkb.getAllRightHandExpressionsOfAVariable(p1->getSynonym());
+        vector<string> result;
+
+        for (const auto& pair : key_values) {
+            if (regex_match(pair.second, right_expr)) {
+                result.push_back(pair.first);
+            }
+        }
+        return result;
     }
-    return result;
 }
