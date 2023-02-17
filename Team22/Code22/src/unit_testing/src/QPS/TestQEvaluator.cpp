@@ -106,3 +106,16 @@ TEST_CASE("Test Select such that Uses and Modifies Evaluation") {
 
     REQUIRE(count(res.begin(), res.end(), "v5"));
 }
+
+TEST_CASE("Test Select such that pattern") {
+    PKB pkb;
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("v7", "5"));
+    pkb.addAssignPattern("v7", "-+v7*v8v95", "5");
+
+    auto *exp = new PatternExpression(new AssignEntity(), "v7", "_*v8v9_");
+
+    vector<string> res = exp->evaluate(pkb);
+
+    REQUIRE(count(res.begin(), res.end(), "5"));
+}

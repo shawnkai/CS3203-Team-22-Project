@@ -7,6 +7,7 @@
 #include <utility>
 #include "PKB/PKB.h"
 #include <algorithm>
+#include <regex>
 
 // Utility Functions
 
@@ -243,5 +244,18 @@ string PatternExpression::toString() {
 }
 
 vector<string> PatternExpression::evaluate(PKB pkb) {
-    return {};
+    auto key_values = pkb.getAllRightHandExpressionsOfAVariable(p1);
+    vector<string> result;
+    string prefix_expr = p2;
+    prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
+    prefix_expr = regex_replace(prefix_expr, regex("\\+"), "\\+");
+    prefix_expr = regex_replace(prefix_expr, regex("\\*"), "\\*");
+    prefix_expr = regex_replace(prefix_expr, regex("_"), R"([\w\+\-\*/]*)");
+    regex right_expr (prefix_expr);
+    for (const auto& pair : key_values) {
+        if (regex_match(pair.second, right_expr)) {
+            result.push_back(pair.first);
+        }
+    }
+    return result;
 }
