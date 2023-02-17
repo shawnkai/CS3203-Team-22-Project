@@ -92,3 +92,19 @@ TEST_CASE("Test Select such that Uses Statement Extraction 2") {
 
     REQUIRE(actualResult->toString() == query);
 }
+
+TEST_CASE("Test Select such that pattern Statement Extraction") {
+    QueryParser queryParser;
+    string declaration = "assign a;";
+    string query = R"(Select a such that pattern a(_, _"x+y"_))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select -1 such that pattern a(_, _+xy_))";
+
+    ::printf("%s\n", actualResult->toString().c_str());
+
+    REQUIRE(actualResult->toString() == expected);
+}

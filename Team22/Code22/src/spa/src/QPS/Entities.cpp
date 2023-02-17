@@ -73,3 +73,4 @@ ProcedureEntity::ProcedureEntity(string synonym) : NamedEntity("PROCEDURE", std:
 VariableEntity::VariableEntity(string synonym) : NamedEntity("VARIABLE", std::move(synonym)) {}
 ConstantEntity::ConstantEntity(string synonym) : NamedEntity("CONSTANT", std::move(synonym)) {}
 
+WildCardEntity::WildCardEntity() : NamedEntity("WILDCARD", "_") {}

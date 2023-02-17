@@ -93,9 +93,10 @@ public:
 
 class PatternExpression : public Expression {
 private:
-    string p1, p2;
+    NamedEntity *p1;
+    string p2;
 public:
-    explicit PatternExpression(DesignEntity *entity, string p1, string p2);
+    explicit PatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
 
     string toString() override;
 
