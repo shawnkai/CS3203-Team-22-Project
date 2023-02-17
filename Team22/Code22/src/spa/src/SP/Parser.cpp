@@ -32,7 +32,7 @@ TNode Parser::parseProcedure() {
         cout << "Expecting function name for a procedure, got something else" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++pos;
+    ++ pos;
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after a procedure name" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
@@ -42,28 +42,27 @@ TNode Parser::parseProcedure() {
         cout << "Expecting '{' after procedure name declaration but got:" << nextToken.value <<endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++pos;
+    ++ pos;
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token stmtToken = tokenList[pos];
-    // Recursion should happen in the stmtList node
+    // Recursion happens in the stmtList node
     auto child = parseStatement();
-
-//    while (stmtToken.type != TokenType::RIGHT_CURLY_BRACKET) {
-//        auto childNode = parseStatement();
-//        if (childNode.children.size() < 1) {
-//            cout << "empty SIMPLE Programme with no statement received" << endl;
-//            return static_cast<TNode>(static_cast<TokenType>(NULL));
-//        }
-//        node.children.push_back(childNode);
-//        stmtToken = tokenList[pos];
-//    }
-//    ++ pos;
-
     node.children.push_back(child);
-    //++ pos;
+    if (pos >= tokenList.size()) {
+        cout << "SIMPLE source end unexpectedly without right curly bracket" << endl;
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
+    }
+    if (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET) {
+        cout << "Expected '}' at the end of a procedure but instead got: " << tokenList[pos].value << endl;
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
+    }
+     ++ pos;
+    if (pos != tokenList.size()) {
+        cout << "Dangling tokens outside a SIMPLE Source procedure are ignored" << endl;
+    }
     return node;
 }
 
@@ -85,16 +84,17 @@ TNode Parser::parseStatement() {
         stmtNode.stmtNumber = currToken.lineNumber;
     }
     while (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET) {
-        //currToken = tokenList[pos];
+        if (pos >= tokenList.size()) {
+            cout << "SIMPLE source procedure ends unexpectedly without right curly bracket" << endl;
+            throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
+        }
         if (tokenList[pos].type == TokenType::READ) {
             auto childNode = parseReadStatement();
             stmtNode.children.push_back(childNode);
-            //return stmtNode;
         }
         else if (tokenList[pos].type == TokenType::PRINT) {
             auto childNode = parsePrintStatement();
             stmtNode.children.push_back(childNode);
-            //return stmtNode;
         }
         else if (tokenList[pos].type == TokenType::WHILE) {
             auto childNode = parseWhileStatement();
@@ -126,7 +126,7 @@ TNode Parser::parseAssignStatement() {
     assignNode.children.push_back(lhs);
     Token assignOperator = tokenList[++ pos];
     if (assignOperator.type != TokenType::OPERATOR || assignOperator.value != "=") {
-        cout << "Expected '=' sign for the assignment statement but instead got: " << currToken.value << endl;
+        cout << "Expected '=' sign for the assignment statement but instead got: " << assignOperator.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     //rhs, expr Node
@@ -135,7 +135,7 @@ TNode Parser::parseAssignStatement() {
     assignNode.children.push_back(rhs);
     Token following = tokenList[pos];
     if (following.type != TokenType::STATEMENT_TERMINAL) {
-        cout << "Expected statement terminal ';' but instead got: " << currToken.value << endl;
+        cout << "Expected statement terminal ';' but instead got: " << following.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ pos;
@@ -194,6 +194,7 @@ TNode Parser::parseFactor() {
             cout << "Expected closing bracket ')' but instead got: " << currToken.value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
+        ++ pos;
         return node;
     }
     if (currToken.type == TokenType::NAME_IDENTIFIER) {
@@ -280,25 +281,25 @@ TNode Parser::parseWhileStatement() {
     }
     Token next = tokenList[++ pos];
     if (next.type != TokenType::LEFT_ROUND_BRACKET) {
-        cout << "Expected '(' after while keyword but instead got: " << currToken.value << endl;
+        cout << "Expected '(' after while keyword but instead got: " << next.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ pos;
     TNode condChild = parseConditionalExpr();
     if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-        cout << "Expected ')' after conditional expr in 'while' but instead got: " << currToken.value << endl;
+        cout << "Expected ')' after conditional expr in 'while' but instead got: " << tokenList[pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
 
     ++ pos;
     if (tokenList[pos].type != TokenType::LEFT_CURLY_BRACKET) {
-        cout << "Expected '{' after conditional expr in 'while' but instead got: " << currToken.value << endl;
+        cout << "Expected '{' after conditional expr in 'while' but instead got: " << tokenList[pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ pos;
     TNode whileBody = parseStatement();
     if (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET) {
-        cout << "Expected '}' after stmtList in 'while' but instead got: " << currToken.value << endl;
+        cout << "Expected '}' after stmtList in 'while' but instead got: " << tokenList[pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ pos;
@@ -316,22 +317,44 @@ TNode Parser::parseConditionalExpr() {
         condNode.stmtNumber = currToken.lineNumber;
         ++ pos;
         if (tokenList[pos].type != TokenType::LEFT_ROUND_BRACKET) {
-            cout << "Expected '(' after negation sign '!' but instead got: " << currToken.value << endl;
+            cout << "Expected '(' after negation sign '!' but instead got: " << tokenList[pos].value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ pos;
         condNode.children.push_back(parseConditionalExpr());
         if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-            cout << "Expected ')' after a conditional expr but instead got: " << currToken.value << endl;
+            cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ pos;
         return condNode;
     } else if (tokenList[pos].type == TokenType::LEFT_ROUND_BRACKET) {
+        // find matching right round bracket and check if it is && or || operator
+        // Token followingRightRoundBracket = Token(UNKNOWN, "unknown", -1);
+        int recorder = -1;
+        int stack = 0;
+        bool flag = false;
+        for (int i = pos; i < tokenList.size(); i++ ) {
+            Token underExamine = tokenList[i];
+            if (underExamine.type == TokenType::LEFT_ROUND_BRACKET) {
+                ++ stack;
+                flag = true;
+            } else if (underExamine.type == TokenType::RIGHT_ROUND_BRACKET) {
+                -- stack;
+            }
+            if (stack == 0 && flag) {
+                recorder = i + 1;
+                break;
+            }
+        }
+        // otherwise, return relational expression node
+        if(!(tokenList[recorder].value == "&&" || tokenList[recorder].value == "||")) {
+            return parseRelationalExpr();
+        }
         ++ pos;
         condNode = parseConditionalExpr();
         if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-            cout << "Expected ')' after a conditional expr but instead got: " << currToken.value << endl;
+            cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ pos;
@@ -342,21 +365,21 @@ TNode Parser::parseConditionalExpr() {
             andNode.stmtNumber = tokenList[pos].lineNumber;
             ++ pos;
             if (tokenList[pos].type != TokenType::LEFT_ROUND_BRACKET) {
-                cout << "Expected '(' after '&&' operator but instead got: " << currToken.value << endl;
+                cout << "Expected '(' after '&&' operator but instead got: " << tokenList[pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             andNode.children.push_back(condNode);
             ++ pos;
             andNode.children.push_back(parseConditionalExpr());
             if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-                cout << "Expected ')' after a conditional expr but instead got: " << currToken.value << endl;
+                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             ++ pos;
             return andNode;
         } else {
             if (tokenList[pos].value != "||") {
-                cout << "Expected '&&' or '||' operator but instead got: " << currToken.value << endl;
+                cout << "Expected '&&' or '||' operator but instead got: " << tokenList[pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             TNode orNode;
@@ -365,14 +388,14 @@ TNode Parser::parseConditionalExpr() {
             orNode.stmtNumber = tokenList[pos].lineNumber;
             ++ pos;
             if (tokenList[pos].type != TokenType::LEFT_ROUND_BRACKET) {
-                cout << "Expected ')' after a conditional expr but instead got: " << currToken.value << endl;
+                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             orNode.children.push_back(condNode);
             ++ pos;
             orNode.children.push_back(parseConditionalExpr());
             if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-                cout << "Expected ')' after a conditional expr but instead got: " << currToken.value << endl;
+                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             ++ pos;
@@ -406,17 +429,7 @@ TNode Parser::parseRelationalFactor() {
         node = constructVarNode(currToken);
         ++ pos;
     } else {
-        if (tokenList[pos].type != TokenType::LEFT_ROUND_BRACKET) {
-            cout << "Expected '(' for a relational expr but instead got: " << currToken.value << endl;
-            throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
-        }
-        ++ pos;
         node = parseExpression();
-        if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-            cout << "Expected ')' for a relational expr but instead got: " << currToken.value << endl;
-            throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
-        }
-        ++ pos;
     }
     return node;
 }
@@ -471,7 +484,7 @@ TNode Parser::parseReadStatement() {
     }
     Token pendingCheckTerminalToken = tokenList[checkerPos];
     if (pendingCheckTerminalToken.type != TokenType::STATEMENT_TERMINAL) {
-        cout << "Expected stmt terminal ';' after variable name, but got " << currToken.value << endl;
+        cout << "Expected stmt terminal ';' after variable name, but got " << pendingCheckTerminalToken.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token varNameToken = tokenList[++pos];
@@ -511,52 +524,78 @@ TNode Parser::parseReadStatement() {
 ////    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
 ////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 1));
 //    //base test 3 while stmt
-////    tokens.push_back(Token(TokenType::WHILE, "while", 1));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "x", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "!=", 1));
-////    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "&&", 1));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "!=", 1));
-////    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-////    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "centX", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "a", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "/", 2));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "b", 2));
-////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
-////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-//    //base test 4 if stmt
-//    tokens.push_back(Token(TokenType::IF, "if", 1));
+//    tokens.push_back(Token(TokenType::WHILE, "while", 1));
 //    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, "!", 1));
 //    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 1));
+//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "z", 1));
 //    tokens.push_back(Token(TokenType::OPERATOR, ">", 1));
+//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
 //    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, "+", 1));
+//    tokens.push_back(Token(TokenType::INTEGER, "2", 1));
+//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, "*", 1));
+//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+//    tokens.push_back(Token(TokenType::INTEGER, "3", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, "+", 1));
+//    tokens.push_back(Token(TokenType::INTEGER, "4", 1));
 //    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
 //    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-//    tokens.push_back(Token(TokenType::IF, "then", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, "||", 1));
+//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "z", 1));
+//    tokens.push_back(Token(TokenType::OPERATOR, "==", 1));
+//    tokens.push_back(Token(TokenType::INTEGER, "0", 1));
+//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
 //    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 2));
+//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "j", 2));
 //    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
-//    tokens.push_back(Token(TokenType::INTEGER, "1", 2));
+////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 2));
+////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "1", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "+", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "2", 2));
+////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "*", 2));
+////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "3", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "+", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "4", 2));
+////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "+", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "5", 2));
+////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "%", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "6", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "/", 2));
+//    tokens.push_back(Token(TokenType::INTEGER, "7", 2));
 //    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
 //    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-//    tokens.push_back(Token(TokenType::IF, "else", 1));
-//    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 2));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 3));
-//    tokens.push_back(Token(TokenType::OPERATOR, "=", 3));
-//    tokens.push_back(Token(TokenType::INTEGER, "2", 3));
-//    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 3));
-//    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
+//    //base test 4 if stmt
+////    tokens.push_back(Token(TokenType::IF, "if", 1));
+////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+////    tokens.push_back(Token(TokenType::OPERATOR, "!", 1));
+////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 1));
+////    tokens.push_back(Token(TokenType::OPERATOR, ">", 1));
+////    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
+////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+////    tokens.push_back(Token(TokenType::IF, "then", 1));
+////    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
+////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 2));
+////    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
+////    tokens.push_back(Token(TokenType::INTEGER, "1", 2));
+////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
+////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
+////    tokens.push_back(Token(TokenType::IF, "else", 1));
+////    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 2));
+////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 3));
+////    tokens.push_back(Token(TokenType::OPERATOR, "=", 3));
+////    tokens.push_back(Token(TokenType::INTEGER, "2", 3));
+////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 3));
+////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
 //    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
 //    for (Token token: tokens) {
 //            std::cout << "Token" << ToString(token) << std::endl;
