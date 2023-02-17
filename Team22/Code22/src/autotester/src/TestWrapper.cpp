@@ -1,11 +1,11 @@
 #include "TestWrapper.h"
 
 #include <vector>
-#include "SP/Tokenizer.h"
-#include "SP/TNode.h"
+#include "SP/Tokenizer/Tokenizer.h"
+#include "SP/Parser/TNode.h"
 #include "SP/DesignExtractor/DesignExtractor.h"
 #include "SP/SPDriver.h"
-#include "SP/Parser.h"
+#include "SP/Parser/Parser.h"
 #include <queue>
 #include <PKB/PKB.h>
 #include "QPS/Parser.h"

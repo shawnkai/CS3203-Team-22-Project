@@ -1,7 +1,7 @@
 //
 // Created by Yi Zhang on 14/2/23.
 //
-#include "SP/Tokenizer.h"
+#include "SP/Tokenizer/Tokenizer.h"
 #include <stdexcept>
 #include <iostream>
 #include <fstream>

@@ -2,7 +2,6 @@
 
 
 #include "PKB/PKB.h"
-#include "SP/TNode.h"
 #include "Parser.h"
 
 using namespace std;

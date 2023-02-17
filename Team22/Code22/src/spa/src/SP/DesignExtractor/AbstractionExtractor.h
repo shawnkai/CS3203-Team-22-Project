@@ -8,7 +8,7 @@
 
 #include "../../PKB/PKB.h"
 #include "StmtlstExtractor.h"
-#include "../TNode.h"
+#include "SP/Parser/TNode.h"
 
 using namespace std;
 

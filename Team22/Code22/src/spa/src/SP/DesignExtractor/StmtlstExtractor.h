@@ -6,7 +6,7 @@
 #include <vector>
 #include <tuple>
 
-#include "../TNode.h"
+#include "SP/Parser/TNode.h"
 #include "../../PKB/PKB.h"
 #include "ReadPrintExtractor.h"
 #include "WhileExtractor.h"

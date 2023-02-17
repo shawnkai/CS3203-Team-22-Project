@@ -13,7 +13,7 @@
 #include "../../PKB/PKB.h"
 #include "AbstractionExtractor.h"
 //#include "EntityExtractor.h"
-#include "../TNode.h"
+#include "SP/Parser/TNode.h"
 
 using namespace std;
 

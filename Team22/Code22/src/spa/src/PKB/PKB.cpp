@@ -6,7 +6,6 @@
 using namespace std;
 
 #include "PKB.h"
-#include "SP/TNode.h"
 
 #include "DesignAbstractions/DesignAbstractionsFactory.h"
 #include "DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
