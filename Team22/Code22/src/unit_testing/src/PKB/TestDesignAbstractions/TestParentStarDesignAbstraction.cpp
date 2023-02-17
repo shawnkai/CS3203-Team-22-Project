@@ -9,7 +9,7 @@
 
 using namespace std;
 
-TEST_CASE("Test 1: Creation of ParentStar Abstraction") {
+TEST_CASE("Test 1: Creation of ParentStar Design Abstraction") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a1", "a2"));
@@ -20,7 +20,7 @@ TEST_CASE("Test 1: Creation of ParentStar Abstraction") {
     }
 }
 
-TEST_CASE("Test 2: Retrieval of ParentStar Abstraction") {
+TEST_CASE("Test 2: Retrieval of ParentStar Design Abstraction") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a3", "a4"));
@@ -31,7 +31,7 @@ TEST_CASE("Test 2: Retrieval of ParentStar Abstraction") {
     }
 }
 
-TEST_CASE("Test 3: Retrieval of a non-existent ParentStar Abstraction") {
+TEST_CASE("Test 3: Retrieval of a non-existent ParentStar Design Abstraction") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a5", "a6"));
@@ -42,7 +42,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ParentStar Abstraction") {
     }
 }
 
-TEST_CASE("Test 4: Retrieval of a ParentStar Abstraction When Multiple Follows Abstractions Are Stored") {
+TEST_CASE("Test 4: Retrieval of a ParentStar Design Abstraction When Multiple ParentStar Design Abstractions Are Stored") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a7", "a8"));
@@ -51,5 +51,20 @@ TEST_CASE("Test 4: Retrieval of a ParentStar Abstraction When Multiple Follows A
         Result result = pkbTest.getDesignAbstraction("PARENTSTAR", make_pair("_", "a7"));
 
         REQUIRE(result.getQueryResult()[0] == "a8");
+    }
+}
+
+TEST_CASE("Test 5: Retrieval of an ParentStar Design Abstraction When Multiple Same ParentStar Design Abstractions Are Stored Including Duplicated Values") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a11", "a13"));
+
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a11", "a13"));
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a12", "a13"));
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a11", "a14"));
+
+        Result pkbResult = pkbTest.getDesignAbstraction("PARENTSTAR", make_pair("_", "a11"));
+
+        REQUIRE(pkbResult.toString() == "PARENTSTAR: a11: a13, a14, ");
     }
 }
