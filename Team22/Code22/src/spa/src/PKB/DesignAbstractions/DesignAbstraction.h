@@ -17,6 +17,8 @@ class DesignAbstraction {
     string entityName; // could be variable name (usually or stmt...)
     vector<string> entityOccurrences; // value to push in (stmtNo or procName...)
 
+    virtual bool isOccurrencePresent(string entityOccurrence);
+
 public:
     explicit DesignAbstraction(tuple<string, string, string> abstractionDetails);
 

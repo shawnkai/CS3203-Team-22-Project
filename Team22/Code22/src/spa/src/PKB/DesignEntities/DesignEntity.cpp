@@ -20,6 +20,11 @@ DesignEntity::DesignEntity(tuple<string, string> entityDetails) {
     (this->occurrenceOfEntity).push_back(get<1>(entityDetails));
 }
 
+bool DesignEntity::isOccurrencePresent(string occurrence) {
+    return (find(this->occurrenceOfEntity.begin(), this->occurrenceOfEntity.end(), occurrence))
+           != (this->occurrenceOfEntity.end());
+}
+
 /**
  * If the Database finds out that the Entity is already stored in the
  * Database, it calls this method, to append additional occurrences.
@@ -27,7 +32,9 @@ DesignEntity::DesignEntity(tuple<string, string> entityDetails) {
  * @param occurrence The occurrence to be appended.
  */
 void DesignEntity::addAdditionalOccurrence(string occurrence) {
-    (this->occurrenceOfEntity).push_back(occurrence);
+    if (!this->isOccurrencePresent(occurrence)) {
+        (this->occurrenceOfEntity).push_back(occurrence);
+    }
 }
 
 /**
