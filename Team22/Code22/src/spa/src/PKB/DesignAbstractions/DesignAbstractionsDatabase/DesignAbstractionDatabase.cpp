@@ -34,6 +34,8 @@ void DesignAbstractionDatabase::updateAbstractionInDatabase(DesignAbstraction *d
     (iterator->second)->addAdditionalOccurrence(designAbstractionToBeStored->getEntityOccurrence()[0]);
     // Should the above line only copy the 0th index or
     // copy the entire vector, by indexing through it?
+
+    // maybe delete the pointer object here
 }
 
 Result DesignAbstractionDatabase::getFromDatabase(string entityName) {
