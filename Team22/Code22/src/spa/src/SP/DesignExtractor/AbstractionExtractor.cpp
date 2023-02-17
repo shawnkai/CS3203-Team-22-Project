@@ -26,66 +26,26 @@ void AbstractionExtractor::extractAbstraction(TNode root) {
 	std::vector<std::tuple<int, int>> parentVector;
 
 
-	if (root.nodeType == UNKNOWN) {
-		//if (root.nodeType == "NULL") {
-		auto result = std::make_tuple("NULL");
-		//return result;
+	if (root.nodeType != PROCEDURE) {
+
 	}
 	else {
-		queue<TNode> queue1;
-		queue1.push(root);
 		std::string procedureName;
-		std::string result1;//deletelater
-		int procedureLineNo;
-		while (queue1.size() != 0) {
-			int size1 = queue1.size();
-			TNode currentNode = queue1.front();
-			TokenType tokenType;
-			tokenType = currentNode.nodeType;
-			std::string tokenType1 = ToString(tokenType);
-			//std::string tokenType1 = currentNode.nodeType;
-			if (tokenType1 == "PROCEDURE") {
-				procedureName = currentNode.stringId;
-				procedureLineNo = currentNode.stmtNumber;
-				result1 = procedureName + std::to_string(procedureLineNo);//deletelater
-				int noOfChildren = (currentNode.children).size();
-				for (int j = 0; j < noOfChildren; j++) {
-					std::vector<TNode> childNodes = currentNode.children;
-					queue1.push(childNodes[j]);
-				}
+		procedureName = root.stringId;
+		int noOfChildren = (root.children).size();
+		for (int j = 0; j < noOfChildren; j++) {
+			std::vector<TNode> childNodes = root.children;
+			TNode currentNode = childNodes[j];
+			if (currentNode.nodeType == STATEMENT_LIST) {
+				StmtlstExtractor stmtlstExtractor;
+				std::vector<int> ifContainer = std::vector<int>(0);
+				std::vector<int> whileContainer = std::vector<int>(0);
+				PKB pkbinstance = PKB();
+				int currentParent = 0;
+				stmtlstExtractor.extractAbstraction(currentNode, ifContainer, whileContainer, pkbinstance, currentParent);
 			}
-			else {
-				/*if ((tokenType1 == "READ") || (tokenType1 == "PRINT")) {
-					ReadPrintExtractor readPrintExtractor;
-					std::string variableName = readPrintExtractor.extractAbstraction(currentNode);
-					if ((tokenType1 == "READ") && (variableName != "")) {
-						PKB pkbinstance = PKB();
-						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableName, procedureName));
-					}
-					else if ((tokenType1 == "PRINT") && (variableName != "")) {
-						PKB pkbinstance = PKB();
-						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableName, procedureName));
-						//change to USES later
-					}
-
-				}*/
-				if (tokenType1 == "STATEMENT_LIST") {
-					StmtlstExtractor stmtlstExtractor;
-					stmtlstExtractor.extractAbstraction(currentNode);
-					//parentVector = stmtlstExtractor.extractAbstraction(currentNode, parentVector);
-					/*int noOfChildren = (currentNode.children).size();
-					for (int j = 0; j < noOfChildren; j++) {
-						std::vector<TNode> childNodes = currentNode.children;
-						queue1.push(childNodes[j]);
-					}*/
-				}
-				else {}
-
-			}
-			queue1.pop();
-
-
 			
 		}
+
 	}
 };

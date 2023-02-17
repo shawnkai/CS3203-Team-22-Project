@@ -14,5 +14,5 @@ using namespace std;
 class ReadPrintExtractor {
 public:
 	ReadPrintExtractor() {};
-	std::string extractAbstraction(TNode currentNode);
+	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
 };

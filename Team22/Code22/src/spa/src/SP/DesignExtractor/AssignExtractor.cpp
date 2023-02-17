@@ -14,38 +14,57 @@ using namespace std;
 #include "TNode.h"*/
 //#include "Token.h"
 
-//change TNode to TNode1, Tokentype to string
-/*class TNode1 {
-public:
-	std::string nodeType;
-	std::string stringId;
-	int stmtNumber;
-	std::vector<TNode1> children;
-
-	explicit TNode1(const std::string& type = "", const std::string& stringId = "",
-		int stmtNumber = 0,
-		const std::vector<TNode1>& children = std::vector<TNode1>(0)) :
-		nodeType(type), stringId(stringId), stmtNumber(stmtNumber), children(children) {};
-};*/
-
-
-std::vector<std::string> AssignExtractor::extractAbstraction(TNode currentNode) {
-	std::vector<std::string> variableVector;
+void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 
 	if (nodeType1 != "ASSIGN") {
-		return variableVector;
 	}
 	else {
 		queue<TNode> queue1;
+		int firstTime = 0;
 		queue1.push(currentNode);
 		while (queue1.size() != 0) {
 			TNode currentNode1 = queue1.front();
 			std::string tokenType1 = ToString(currentNode1.nodeType);
 			if (tokenType1 == "NAME_IDENTIFIER") {
 				std::string nameOfVariable = currentNode1.stringId;
-				variableVector.push_back(nameOfVariable);
+				int lineNumOfVariable = currentNode1.stmtNumber;
 				cout << currentNode1.stringId << endl;
+				if (firstTime == 0) {
+					firstTime = 1;
+					//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("ASSIGN", nameOfVariable, std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
+					if (whileContainers.size() != 0) {
+						for (int j = 0; j < whileContainers.size(); j++) {
+							cout << std::to_string(whileContainers[j]) << endl;
+							//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+						}
+					}
+					if (ifContainers.size() != 0) {
+						for (int i = 0; i < ifContainers.size(); i++) {
+							cout << std::to_string(ifContainers[i]) << endl;
+							//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
+						}
+					}
+
+				}
+				else {
+					//pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
+					if (whileContainers.size() != 0) {
+						for (int j = 0; j < whileContainers.size(); j++) {
+							cout << std::to_string(whileContainers[j]) << endl;
+							//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+						}
+					}
+					if (ifContainers.size() != 0) {
+						for (int i = 0; i < ifContainers.size(); i++) {
+							cout << std::to_string(ifContainers[i]) << endl;
+							//pkbinstance.addDesignAbstraction("USES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
+						}
+					}
+				}
 
 			}
 			else if (tokenType1 == "OPERATOR") {
@@ -64,37 +83,6 @@ std::vector<std::string> AssignExtractor::extractAbstraction(TNode currentNode) 
 			queue1.pop();
 		
 		}
-		return variableVector;
 
 	}
 };
-//};
-
-/*int main() {
-	TNode1 var;
-	var.nodeType = "NAME_IDENTIFIER";
-	var.stringId = "x";
-	var.stmtNumber = 2;
-	var.children = std::vector<TNode1>(0);
-
-	TNode1 read;
-	read.nodeType = "READ";
-	read.stringId = "read";
-	read.stmtNumber = 2;
-	read.children = std::vector<TNode1>{ var };
-
-	TNode1 stmtlist;
-	stmtlist.nodeType = "STATEMENT_LIST";
-	stmtlist.stringId = "stmtlist";
-	stmtlist.stmtNumber = 1;
-	stmtlist.children = std::vector<TNode1>{ read };
-
-	TNode1 root;
-	root.nodeType = "PROCEDURE";
-	root.stringId = "main";
-	root.stmtNumber = 0;
-	root.children = std::vector<TNode1>{ stmtlist };
-
-	ReadExtractor readExtractor;
-	readExtractor.extractAbstraction(root);
-};*/

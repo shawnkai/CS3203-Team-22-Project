@@ -33,4 +33,4 @@ TEST_CASE("TestCase2_TokenizeWhileStatementInProcedure_ShouldSuccess") {
 
 }
 
-TEST_CASE("TestCase")
+TEST_CASE("TestCase") {}
