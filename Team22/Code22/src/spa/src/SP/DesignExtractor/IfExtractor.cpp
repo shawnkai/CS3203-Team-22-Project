@@ -26,6 +26,8 @@ void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifConta
 		ifContainers.push_back(ifLineNo);
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];
+		ConditionExtractor conditionExtractor;
+		conditionExtractor.extractAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance);
 		TNode ifstmtlstNode = childNodes[1];
 		StmtlstExtractor stmtlstExtractor;
 		stmtlstExtractor.extractAbstraction(ifstmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo);

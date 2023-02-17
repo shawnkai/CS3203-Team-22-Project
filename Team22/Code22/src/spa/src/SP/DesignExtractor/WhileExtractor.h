@@ -9,6 +9,7 @@
 #include "../TNode.h"
 #include "../../PKB/PKB.h"
 #include "StmtlstExtractor.h"
+#include "ConditionExtractor.h"
 
 using namespace std;
 
