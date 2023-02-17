@@ -10,7 +10,7 @@ void PatternPrefixStringExtractor::extractPrefixString(TNode root, PKB instance)
     string stmtNumber = to_string(root.stmtNumber);
     string rhsString = handlePrefixGeneration(rhs, "");
     cout << lhsString << " " << rhsString << " " << endl;
-    
+    instance.addAssignPattern(lhsString, rhsString, stmtNumber);
 }
 
 string PatternPrefixStringExtractor::handlePrefixGeneration(TNode node, string result) {

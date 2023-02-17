@@ -7,7 +7,7 @@
 #include "SP/SPDriver.h"
 #include "SP/Parser/Parser.h"
 #include <queue>
-#include <PKB/PKB.h>
+#include "PKB/PKB.h"
 #include "QPS/Parser.h"
 #include "QPS/Evaluator.h"
 
@@ -31,18 +31,17 @@ void TestWrapper::parse(std::string filename) {
     // call your parser to do the parsing
     SPDriver driver;
     driver.parseSimpleProgram(filename);
-//    PKB pkbinstance = PKB();
-//
-//    cout << pkbinstance.getDesignEntity("VARIABLE", "x").toString() << endl;
-//    cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "x")).toString() << endl;
-//    cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("READ", "x")).toString() << endl;
+    PKB pkbinstance = PKB();
+    cout << pkbinstance.getDesignEntity("VARIABLE", "x").toString() << endl;
+    cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString() << endl;
+    cout << pkbinstance.getDesignAbstraction("USES", make_tuple("ASSIGNMENT", "a")).toString() << endl;
 
 }
 
-QueryParser parser;
-PKB pkb;
+//QueryParser parser;
+//PKB pkb;
 
-QueryEvaluator evaluator(pkb);
+//QueryEvaluator evaluator(pkb);
 
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
