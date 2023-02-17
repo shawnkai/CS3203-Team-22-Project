@@ -67,3 +67,19 @@ TEST_CASE("Test 5: Retrieval of an AssignmentModifies Design Abstraction When Mu
         REQUIRE(pkbResult.toString() == "MODIFIES:ASSIGNMENT: ma6: 1, ");
     }
 }
+
+TEST_CASE("Test 6: Retrieval of an AssignmentModifies Design Abstraction When Multiple Same Modifies Design Abstractions Are Stored Including Duplicated Values") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "1"));
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "2"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "ma8", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ma8", "3"));
+
+        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma7"));
+
+        REQUIRE(pkbResult.toString() == "MODIFIES:ASSIGNMENT: ma7: 1, 2, ");
+    }
+}
