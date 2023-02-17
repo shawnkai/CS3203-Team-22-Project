@@ -11,6 +11,7 @@
 #include "PKB/DesignAbstractions/ModifiesAbstraction/StatementModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/ProcedureModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/ProcedureCallModifies.h"
+#include "PKB/DesignAbstractions/ModifiesAbstraction/IfStatementModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/WhileStatementModifies.h"
 
 using namespace std;
@@ -33,7 +34,7 @@ DesignAbstraction* ModifiesFactory::createModifiesAbstraction(tuple<string, stri
     } else if (modifiesAbstractionType == "PROCEDURECALL") {
         return new ProcedureCallModifies(abstractionDetails);
     } else if (modifiesAbstractionType == "IF") {
-
+        return new IfStatementModifies(abstractionDetails);
     } else if (modifiesAbstractionType == "WHILE") {
         return new WhileStatementModifies(abstractionDetails);
     }

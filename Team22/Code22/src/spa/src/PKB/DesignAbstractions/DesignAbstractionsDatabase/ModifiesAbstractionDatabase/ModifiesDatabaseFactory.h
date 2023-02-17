@@ -16,6 +16,7 @@
 #include "ProcedureModifiesDatabase.h"
 #include "ProcedureCallModifiesDatabase.h"
 #include "WhileStatementModifiesDatabase.h"
+#include "IfStatementModifiesDatabase.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ class ModifiesDatabaseFactory {
     static inline DesignAbstractionDatabase* procedureModifiesDatabase = new ProcedureModifiesDatabase();
     static inline DesignAbstractionDatabase* procedureCallModifiesDatabase = new ProcedureCallModifiesDatabase();
     static inline DesignAbstractionDatabase* whileStatementModifiesDatabase = new WhileStatementModifiesDatabase();
+    static inline DesignAbstractionDatabase* ifStatementModifiesDatabase = new IfStatementModifiesDatabase();
     // Add more of these (possibly wildcard?)
 
 public:
