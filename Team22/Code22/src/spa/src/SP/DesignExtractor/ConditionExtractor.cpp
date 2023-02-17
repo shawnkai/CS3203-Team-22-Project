@@ -47,6 +47,11 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 				queue1.push(childNodes[i]);
 			}
 		}
+		else if (tokenType1 == "INTEGER") {
+			std::string stringOfConstant = currentNode1.stringId;
+			//pkbinstance.addDesignEntity("CONSTANT", make_tuple(stringOfConstant, std::to_string(currentNode1.stmtNumber)));
+
+		}
 		else {}
 		queue1.pop();
 

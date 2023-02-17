@@ -29,7 +29,9 @@ TestWrapper::TestWrapper() {
 // method for parsing the SIMPLE source
 void TestWrapper::parse(std::string filename) {
     // call your parser to do the parsing
-    Tokenizer tokenizer = Tokenizer();
+    SPDriver driver;
+    driver.parseSimpleProgram(filename);
+    /**Tokenizer tokenizer = Tokenizer();
     std::vector<Token> tokenList;
     try {
         tokenList = tokenizer.tokenize(filename.c_str());
@@ -68,7 +70,8 @@ void TestWrapper::parse(std::string filename) {
     }
     
     DesignExtractor designExtractor;
-    designExtractor.extractAbstraction(result);
+    designExtractor.extractAbstraction(result);*/
+
 ////  SPDriver class not in use for now
 ////	SPDriver spdriver;
 ////	spdriver.parseSimpleProgram();
