@@ -10,7 +10,7 @@
 #include "catch.hpp"
 
 //NOTE: This test cases' relative path is written for a MAC OS machine, it will break on a Windows Machine.
-//Thus, it should be commented out when pushing to GitHib.
+//Windows developer, please fill in the relative path when you run the unit tests.
 TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
@@ -29,8 +29,10 @@ TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     REQUIRE(tokenList[6].type == TokenType::RIGHT_CURLY_BRACKET);
 }
 
-TEST_CASE("TestCase2_TokenizeWhileStatementInProcedure_ShouldSuccess") {
+TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
 
 }
 
-TEST_CASE("TestCase")
+TEST_CASE("TestCase3_TokenizeIfStatement_ShouldSuccess") {
+
+}
