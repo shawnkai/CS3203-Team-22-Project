@@ -18,8 +18,11 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 	std::string nodeType1 = ToString(currentNode.nodeType);
 
 	if (nodeType1 != "ASSIGN") {
+		cout << "something went wrong" << endl;
 	}
 	else {
+		PatternPrefixStringExtractor prefixExtractor;
+		prefixExtractor.extractPrefixString(currentNode, pkbinstance);
 		queue<TNode> queue1;
 		int firstTime = 0;
 		queue1.push(currentNode);

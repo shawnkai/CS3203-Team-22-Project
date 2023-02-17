@@ -8,10 +8,6 @@ using namespace std;
 
 #include "DesignExtractor.h"
 
-/*#include "PKB.h"
-#include "AbstractionExtractor.h"
-#include "EntityExtractor.h"
-#include "TNode.h"*/
 #include "../../PKB/PKB.h"
 
 

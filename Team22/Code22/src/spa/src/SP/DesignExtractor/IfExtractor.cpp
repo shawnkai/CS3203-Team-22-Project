@@ -10,16 +10,13 @@
 using namespace std;
 
 #include "IfExtractor.h"
-/*#include "PKB.h"
-#include "TNode.h"*/
-//#include "Token.h"
 
 
 
 void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType == UNKNOWN) {
-		//return "";
+		cout << "something went wrong" << endl;
 	}
 	else {
 		int ifLineNo = currentNode.stmtNumber;

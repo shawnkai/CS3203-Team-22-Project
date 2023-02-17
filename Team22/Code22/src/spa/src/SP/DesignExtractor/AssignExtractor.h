@@ -8,6 +8,7 @@
 
 #include "SP/Parser/TNode.h"
 #include "../../PKB/PKB.h"
+#include "PatternPrefixStringExtractor.h"
 
 using namespace std;
 

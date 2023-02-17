@@ -3,36 +3,14 @@
 using namespace std;
 
 void PatternPrefixStringExtractor::extractPrefixString(TNode root, PKB instance) {
-    if (root.nodeType != TokenType::STATEMENT_LIST) {
-        cout << "Something went wrong, pattern prefix extractor cannot work on non-statementList nodes" << endl;
-        return;
-    }
-    // Get all assignment statements
-    vector<TNode> assignments(0);
-    queue<TNode> iterator;
-    iterator.push(root);
-    while (!iterator.empty()) {
-        TNode curr = iterator.front();
-        iterator.pop();
-        if (curr.nodeType == TokenType::ASSIGN) {
-            assignments.push_back(curr);
-        }
-        if (!curr.children.empty()) {
-            auto children = (curr).children;
-            for (TNode nextLevel: children) {
-                iterator.push(nextLevel);
-            }
-        }
-    }
-    for (TNode assignment: assignments) {
-        TNode lhs = assignment.children[0];
-        TNode rhs = assignment.children[1];
-        string lhsString = lhs.stringId;
-        string stmtNumber = to_string(assignment.stmtNumber);
-        string rhsString = handlePrefixGeneration(rhs, "");
-        cout << lhsString << " " << rhsString << " " << endl;
-        // insert to PKB here
-    }
+    
+    TNode lhs = root.children[0];
+    TNode rhs = root.children[1];
+    string lhsString = lhs.stringId;
+    string stmtNumber = to_string(root.stmtNumber);
+    string rhsString = handlePrefixGeneration(rhs, "");
+    cout << lhsString << " " << rhsString << " " << endl;
+    
 }
 
 string PatternPrefixStringExtractor::handlePrefixGeneration(TNode node, string result) {

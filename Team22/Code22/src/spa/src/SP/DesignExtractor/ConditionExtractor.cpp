@@ -10,9 +10,6 @@
 using namespace std;
 
 #include "ConditionExtractor.h"
-/*#include "PKB.h"
-#include "TNode.h"*/
-//#include "Token.h"
 
 void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 	std::string nodeType1 = ToString(currentNode.nodeType);

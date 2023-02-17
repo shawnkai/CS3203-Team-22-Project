@@ -10,15 +10,12 @@
 using namespace std;
 
 #include "ReadPrintExtractor.h"
-/*#include "PKB.h"
-#include "TNode.h"*/
-//#include "Token.h"
 
 
 void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType == UNKNOWN) {
-		//return "";
+		cout << "something went wrong" << endl;
 	}
 	else {
 		std::string tokenType1 = ToString(currentNode.nodeType);

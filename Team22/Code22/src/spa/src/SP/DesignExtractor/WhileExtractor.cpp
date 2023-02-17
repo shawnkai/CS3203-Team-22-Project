@@ -10,16 +10,13 @@
 using namespace std;
 
 #include "WhileExtractor.h"
-/*#include "PKB.h"
-#include "TNode.h"*/
-//#include "Token.h"
 
 
 
 void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType == UNKNOWN) {
-		//return "";
+		cout << "something went wrong" << endl;
 	}
 	else {
 		int whileLineNo = currentNode.stmtNumber;

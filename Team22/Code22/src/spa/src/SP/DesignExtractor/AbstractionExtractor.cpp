@@ -27,7 +27,7 @@ void AbstractionExtractor::extractAbstraction(TNode root) {
 
 
 	if (root.nodeType != PROCEDURE) {
-
+		cout << "something went wrong" << endl;
 	}
 	else {
 		std::string procedureName;

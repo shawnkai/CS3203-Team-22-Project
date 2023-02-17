@@ -10,16 +10,14 @@
 using namespace std;
 
 #include "StmtlstExtractor.h"
-/*#include "PKB.h"
-#include "TNode.h"*/
-//#include "Token.h"
+
 
 
 
 void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent) {
 
 	if (currentNode.nodeType == UNKNOWN) {
-		//return "";
+		cout << "something went wrong" << endl;
 	}
 	else {
 		std::vector<TNode> childstmts = currentNode.children;

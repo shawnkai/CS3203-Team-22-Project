@@ -31,54 +31,6 @@ void TestWrapper::parse(std::string filename) {
     // call your parser to do the parsing
     SPDriver driver;
     driver.parseSimpleProgram(filename);
-    /**Tokenizer tokenizer = Tokenizer();
-    std::vector<Token> tokenList;
-    try {
-        tokenList = tokenizer.tokenize(filename.c_str());
-    } catch (std::invalid_argument& e) {
-        std::cerr << e.what() << endl;
-        ::exit(1);
-    }
-    std::cout << "execution of tokenizer done" << std::endl;
-    //driver.parseSimpleProgram(fileTest);
-    for (Token token: tokenList) {
-            std::cout << "Token" << ToString(token) << std::endl;
-        }
-    Parser testParser = Parser(tokenList);
-    TNode result;
-    try {
-        result = testParser.Parse();
-    } catch (std::invalid_argument& e) {
-        std::cerr << e.what() << endl;
-        ::exit(1);
-    }
-    if (result.children.empty()) {
-        cout << "Null pointer returned, use debug mode to find out why" << endl;
-    }
-    std::queue<TNode> pendingToString;
-    pendingToString.push(result);
-    while (!pendingToString.empty()) {
-        auto toProcess = pendingToString.front();
-        pendingToString.pop();
-        cout << ToString(toProcess) << endl;
-        if (!toProcess.children.empty()) {
-            auto childrenArr = (toProcess).children;
-            for (TNode child: childrenArr) {
-                pendingToString.push(child);
-            }
-        }
-    }
-    
-    DesignExtractor designExtractor;
-    designExtractor.extractAbstraction(result);*/
-
-////  SPDriver class not in use for now
-////	SPDriver spdriver;
-////	spdriver.parseSimpleProgram();
-//    DesignExtractor designExtractor;
-//    designExtractor.extractAbstraction(result);
-//    designExtractor.extractEntity(result);
-//
 //    PKB pkbinstance = PKB();
 //
 //    cout << pkbinstance.getDesignEntity("VARIABLE", "x").toString() << endl;
