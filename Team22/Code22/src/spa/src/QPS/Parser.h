@@ -31,12 +31,14 @@ public:
 	bool isDeclaration(const string& query);
 	bool containsModifiesExpression(string query);
 	bool containsUsesExpression(string query);
+    bool containsPatternExpression(string query);
 
     void addToSynonymTable(string type, const string& name);
 	void extractDeclarations(string query);
 
 	vector<ModifiesExpression*> extractModifiesExpression(const string& query);
 	vector<UsesExpression*> extractUsesExpression(const string& query);
+    vector<PatternExpression*> extractPatternExpression(const string& query);
 
     vector<tuple<string, string>> getSynonymTable();
 };
