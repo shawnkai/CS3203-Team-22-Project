@@ -116,3 +116,19 @@ TEST_CASE("Test 9: WhileStatement Design Entity, Query for Same Type, Different 
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: WhileStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws10", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws10", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws10", "2"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("WHILE", "ws10");
+
+        Result expectedResult("WHILE", "ws10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

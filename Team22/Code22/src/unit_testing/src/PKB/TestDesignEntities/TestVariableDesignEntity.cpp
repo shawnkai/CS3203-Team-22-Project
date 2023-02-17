@@ -116,3 +116,19 @@ TEST_CASE("Test 9: Variable Design Entity, Query for Same Type, Different Entity
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: Variable Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("v10", "1"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("v10", "1"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("v10", "2"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("v11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("VARIABLE", "v10");
+
+        Result expectedResult("VARIABLE", "v10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

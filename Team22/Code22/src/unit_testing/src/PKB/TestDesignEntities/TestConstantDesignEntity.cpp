@@ -116,3 +116,19 @@ TEST_CASE("Test 9: Constant Design Entity, Query for Same Type, Different Entity
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: Constant Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c10", "1"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c10", "1"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c10", "2"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("CONSTANT", "c10");
+
+        Result expectedResult("CONSTANT", "c10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

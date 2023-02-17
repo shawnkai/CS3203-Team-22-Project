@@ -116,3 +116,19 @@ TEST_CASE("Test 9: CallStatement Design Entity, Query for Same Type, Different E
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: CallStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("CALL", make_tuple("cs10", "1"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs10", "1"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs10", "2"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("CALL", "cs10");
+
+        Result expectedResult("CALL", "cs10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

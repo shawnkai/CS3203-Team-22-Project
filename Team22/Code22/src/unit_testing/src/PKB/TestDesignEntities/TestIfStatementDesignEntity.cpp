@@ -116,3 +116,19 @@ TEST_CASE("Test 9: IfStatement Design Entity, Query for Same Type, Different Ent
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: IfStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("IF", make_tuple("is10", "1"));
+        pkbTest.addDesignEntity("IF", make_tuple("is10", "1"));
+        pkbTest.addDesignEntity("IF", make_tuple("is10", "2"));
+        pkbTest.addDesignEntity("IF", make_tuple("is11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("IF", "is10");
+
+        Result expectedResult("IF", "is10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

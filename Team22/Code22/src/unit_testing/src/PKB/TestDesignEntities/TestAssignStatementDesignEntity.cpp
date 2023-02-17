@@ -116,3 +116,19 @@ TEST_CASE("Test 9: AssignStatement Design Entity, Query for Same Type, Different
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: AssignStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("ASSIGN", make_tuple("as10", "1"));
+        pkbTest.addDesignEntity("ASSIGN", make_tuple("as10", "1"));
+        pkbTest.addDesignEntity("ASSIGN", make_tuple("as10", "2"));
+        pkbTest.addDesignEntity("ASSIGN", make_tuple("as11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("ASSIGN", "as10");
+
+        Result expectedResult("ASSIGN", "as10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

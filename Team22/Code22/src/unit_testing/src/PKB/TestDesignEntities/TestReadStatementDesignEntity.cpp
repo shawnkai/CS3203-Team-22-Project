@@ -116,3 +116,19 @@ TEST_CASE("Test 9: ReadStatement Design Entity, Query for Same Type, Different E
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: ReadStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("READ", make_tuple("rs10", "1"));
+        pkbTest.addDesignEntity("READ", make_tuple("rs10", "1"));
+        pkbTest.addDesignEntity("READ", make_tuple("rs10", "2"));
+        pkbTest.addDesignEntity("READ", make_tuple("rs11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("READ", "rs10");
+
+        Result expectedResult("READ", "rs10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}

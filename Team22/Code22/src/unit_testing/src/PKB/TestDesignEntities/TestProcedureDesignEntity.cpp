@@ -116,3 +116,19 @@ TEST_CASE("Test 9: Procedure Design Entity, Query for Same Type, Different Entit
         REQUIRE(!pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 10: Procedure Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p10", "1"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p10", "1"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p10", "2"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p11", "3"));
+
+        Result pkbResult = pkbTest.getDesignEntity("PROCEDURE", "p10");
+
+        Result expectedResult("PROCEDURE", "p10", vector<string>{"1", "2"});
+
+        REQUIRE(pkbResult.areEqual(expectedResult));
+    }
+}
