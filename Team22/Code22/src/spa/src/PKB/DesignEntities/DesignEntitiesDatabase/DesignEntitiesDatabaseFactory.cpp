@@ -24,6 +24,18 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return statementEntitiesDatabase;
     } else if (designEntityType == "READ") {
         return readStatementEntitiesDatabase;
+    } else if (designEntityType == "CONSTANT") {
+        return constantEntitiesDatabase;
+    } else if (designEntityType == "PRINT") {
+        return printStatementEntitiesDatabase;
+    } else if (designEntityType == "ASSIGN") {
+        return assignStatementEntitiesDatabase;
+    } else if (designEntityType == "CALL") {
+        return callStatementEntitiesDatabase;
+    } else if (designEntityType == "WHILE") {
+        return whileStatementEntitiesDatabase;
+    } else if (designEntityType == "IF") {
+        return ifStatementEntitiesDatabase;
     }
 
     // TEMP: For building purposes

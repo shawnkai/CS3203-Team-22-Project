@@ -35,7 +35,7 @@ TEST_CASE("Test Select Statement Evaluation") {
     SelectExpression *exp1 = queryParser.parse(query1);
     SelectExpression *exp2 = queryParser.parse(query2);
 
-    REQUIRE(queryEvaluator.evaluate(exp1).find('a') != string::npos);
+    REQUIRE(queryEvaluator.evaluate(exp1).find("v1") != string::npos);
     REQUIRE(queryEvaluator.evaluate(exp2).find("main") != string::npos);
 }
 

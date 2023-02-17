@@ -16,6 +16,11 @@ DesignAbstraction::DesignAbstraction(tuple<string, string, string> abstractionDe
     (this->entityOccurrences).push_back(get<2>(abstractionDetails));
 }
 
+bool DesignAbstraction::isOccurrencePresent(string entityOccurrence) {
+    return (find(this->entityOccurrences.begin(), this->entityOccurrences.end(), entityOccurrence))
+                                                                != (this->entityOccurrences.end());
+}
+
 void DesignAbstraction::addToDatabase() {
     // Error caused here maybe
     DesignAbstractionDatabase* database = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(this);
@@ -23,7 +28,9 @@ void DesignAbstraction::addToDatabase() {
 }
 
 void DesignAbstraction::addAdditionalOccurrence(string entityOccurrence) {
-    (this->entityOccurrences).push_back(entityOccurrence);
+    if (!this->isOccurrencePresent(entityOccurrence)) {
+        (this->entityOccurrences).push_back(entityOccurrence);
+    }
 }
 
 string DesignAbstraction::getEntityTypeBeingAbstracted() {

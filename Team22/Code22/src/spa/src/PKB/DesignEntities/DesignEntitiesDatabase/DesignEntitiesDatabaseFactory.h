@@ -13,6 +13,12 @@
 #include "ProcedureDatabase.h"
 #include "StatementDatabase.h"
 #include "ReadStatementDatabase.h"
+#include "ConstantDatabase.h"
+#include "PrintStatementDatabase.h"
+#include "AssignStatementDatabase.h"
+#include "CallStatementDatabase.h"
+#include "WhileStatementDatabase.h"
+#include "IfStatementDatabase.h"
 
 using namespace std;
 
@@ -21,6 +27,12 @@ class DesignEntitiesDatabaseFactory {
     static inline DesignEntityDatabase* procedureEntitiesDatabase = new ProcedureDatabase();
     static inline DesignEntityDatabase* statementEntitiesDatabase = new StatementDatabase();
     static inline DesignEntityDatabase* readStatementEntitiesDatabase = new ReadStatementDatabase();
+    static inline DesignEntityDatabase* constantEntitiesDatabase = new ConstantDatabase();
+    static inline DesignEntityDatabase* printStatementEntitiesDatabase = new PrintStatementDatabase();
+    static inline DesignEntityDatabase* assignStatementEntitiesDatabase = new AssignStatementDatabase();
+    static inline DesignEntityDatabase* callStatementEntitiesDatabase = new CallStatementDatabase();
+    static inline DesignEntityDatabase* whileStatementEntitiesDatabase = new WhileStatementDatabase();
+    static inline DesignEntityDatabase* ifStatementEntitiesDatabase = new IfStatementDatabase();
     // Add more as implemented
 
 public:

@@ -17,4 +17,5 @@ class DesignAbstractionsFactory {
 public:
     static DesignAbstraction* createDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
 };
+
 #endif //SPA_DESIGNABSTRACTIONSFACTORY_H
