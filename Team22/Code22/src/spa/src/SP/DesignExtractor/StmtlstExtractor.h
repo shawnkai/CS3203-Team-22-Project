@@ -18,5 +18,5 @@ using namespace std;
 class StmtlstExtractor {
 public:
 	StmtlstExtractor() {};
-	void extractAbstraction(TNode root);
+	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent);
 };

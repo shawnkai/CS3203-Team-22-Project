@@ -14,26 +14,10 @@ using namespace std;
 #include "TNode.h"*/
 #include "../../PKB/PKB.h"
 
-/*int DesignExtractor() {
-	return 0;
-}*/
 
-//class DesignExtractor {
-	//AbstractionExtractor abstractionExtractor;
-	//EntityExtractor entityExtractor;
-//public:
-	//DesignExtractor() {
-
-	//};
 
 void DesignExtractor::extractAbstraction(TNode root) {
 	AbstractionExtractor abstractionExtractor;
 	abstractionExtractor.extractAbstraction(root);
 };
 
-/*void DesignExtractor::extractEntity(TNode root) {
-	EntityExtractor entityExtractor;
-	entityExtractor.extractEntity(root);
-};*/
-
-//};

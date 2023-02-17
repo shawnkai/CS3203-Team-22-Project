@@ -16,5 +16,5 @@ using namespace std;
 class IfExtractor {
 public:
 	IfExtractor() {};
-	void extractAbstraction(TNode root);
+	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
 };

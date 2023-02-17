@@ -16,21 +16,22 @@ using namespace std;
 
 
 
-void IfExtractor::extractAbstraction(TNode currentNode) {
+void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType == UNKNOWN) {
 		//return "";
 	}
 	else {
-		int whileLineNo = currentNode.stmtNumber;
+		int ifLineNo = currentNode.stmtNumber;
+		ifContainers.push_back(ifLineNo);
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];
-		TNode ifstmtlstNode = childNodes[1];//"stmtlst" node
+		TNode ifstmtlstNode = childNodes[1];
 		StmtlstExtractor stmtlstExtractor;
-		stmtlstExtractor.extractAbstraction(ifstmtlstNode);
-		TNode elsestmtlstNode = childNodes[1];
+		stmtlstExtractor.extractAbstraction(ifstmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo);
+		TNode elsestmtlstNode = childNodes[2];
 		StmtlstExtractor stmtlstExtractor2;
-		stmtlstExtractor2.extractAbstraction(elsestmtlstNode);
+		stmtlstExtractor2.extractAbstraction(elsestmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo);
 	}
 
 };

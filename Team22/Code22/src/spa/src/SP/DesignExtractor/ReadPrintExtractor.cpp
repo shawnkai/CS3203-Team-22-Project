@@ -14,33 +14,11 @@ using namespace std;
 #include "TNode.h"*/
 //#include "Token.h"
 
-//change TNode to TNode1, Tokentype to string
-/*class TNode1 {
-public:
-	std::string nodeType;
-	std::string stringId;
-	int stmtNumber;
-	std::vector<TNode1> children;
 
-	explicit TNode1(const std::string& type = "", const std::string& stringId = "",
-		int stmtNumber = 0,
-		const std::vector<TNode1>& children = std::vector<TNode1>(0)) :
-		nodeType(type), stringId(stringId), stmtNumber(stmtNumber), children(children) {};
-};*/
-
-
-
-//class ReadExtractor {
-//public:
-	//ReadExtractor() {
-
-	//};
-
-std::string ReadPrintExtractor::extractAbstraction(TNode currentNode) {
+void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType == UNKNOWN) {
-		//auto result = std::make_tuple("NULL");
-		return "";
+		//return "";
 	}
 	else {
 		std::string tokenType1 = ToString(currentNode.nodeType);
@@ -52,55 +30,41 @@ std::string ReadPrintExtractor::extractAbstraction(TNode currentNode) {
 		result1 = result1 + variableName + std::to_string(lineNumOfVariable);//deletelater
 		auto tuple1 = std::make_tuple(result1);
 		cout << result1;
-		PKB pkbinstance = PKB();
 		
 		if (tokenType1 == "READ") {
 			//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableName, procedureName));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("READ", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
-			return variableName;
+			for (int j = 0; j < whileContainers.size(); j++) {
+				cout << std::to_string(whileContainers[j]) << endl;
+				//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+			}
+			for (int i = 0; i < ifContainers.size(); i++) {
+				cout << std::to_string(ifContainers[i]) << endl;
+				//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
+			}
 		}
 		else if (tokenType1 == "PRINT") {
-			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PRINT", variableName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
+			//pkbinstance.addDesignAbstraction("USES", make_tuple("PRINT", variableName, std::to_string(lineNumOfVariable)));
+			//pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
-			return variableName;
+			if (whileContainers.size() != 0) {
+				for (int j = 0; j < whileContainers.size(); j++) {
+					cout << std::to_string(whileContainers[j]) << endl;
+					//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+				}
+			}
+			if (ifContainers.size() != 0) {
+				for (int i = 0; i < ifContainers.size(); i++) {
+					cout << std::to_string(ifContainers[i]) << endl;
+					//pkbinstance.addDesignAbstraction("USES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
+				}
+			}
 
 		}
 		else {
-			return "";
 		}
 			
 	}
 };
-//};
-
-/*int main() {
-	TNode1 var;
-	var.nodeType = "NAME_IDENTIFIER";
-	var.stringId = "x";
-	var.stmtNumber = 2;
-	var.children = std::vector<TNode1>(0);
-
-	TNode1 read;
-	read.nodeType = "READ";
-	read.stringId = "read";
-	read.stmtNumber = 2;
-	read.children = std::vector<TNode1>{ var };
-
-	TNode1 stmtlist;
-	stmtlist.nodeType = "STATEMENT_LIST";
-	stmtlist.stringId = "stmtlist";
-	stmtlist.stmtNumber = 1;
-	stmtlist.children = std::vector<TNode1>{ read };
-
-	TNode1 root;
-	root.nodeType = "PROCEDURE";
-	root.stringId = "main";
-	root.stmtNumber = 0;
-	root.children = std::vector<TNode1>{ stmtlist };
-
-	ReadExtractor readExtractor;
-	readExtractor.extractAbstraction(root);
-};*/
