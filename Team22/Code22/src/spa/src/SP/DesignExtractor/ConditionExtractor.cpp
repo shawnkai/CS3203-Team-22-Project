@@ -14,7 +14,7 @@ using namespace std;
 #include "TNode.h"*/
 //#include "Token.h"
 
-void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentContainer, std::string containerType) {
+void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 	queue<TNode> queue1;
 	queue1.push(currentNode);
@@ -25,20 +25,12 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			std::string nameOfVariable = currentNode1.stringId;
 			int lineNumOfVariable = currentNode1.stmtNumber;
 			cout << currentNode1.stringId << endl;
-			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
-			if (containerType == "while") {
-				//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(lineNumOfVariable)));
-
-			}
-			else {
-				//pkbinstance.addDesignAbstraction("USES", make_tuple("IF", nameOfVariable, std::to_string(lineNumOfVariable)));
-
-			}
+			//pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
-				for (int j = 0; j < whileContainers.size(); j++) {
-					cout << std::to_string(whileContainers[j]) << endl;
-					//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+				for (int i = 0; i < whileContainers.size(); i++) {
+					cout << std::to_string(whileContainers[i]) << endl;
+					//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
 				}
 			}
 			if (ifContainers.size() != 0) {
@@ -51,8 +43,8 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 		}
 		else if (tokenType1 == "OPERATOR") {
 			std::vector<TNode> childNodes = currentNode1.children;
-			for (auto& childNode1 : childNodes) {
-				queue1.push(childNode1);
+			for (int i = 0; i < childNodes.size(); i++) {
+				queue1.push(childNodes[i]);
 			}
 		}
 		else {}

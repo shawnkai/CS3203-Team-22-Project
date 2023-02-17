@@ -36,9 +36,9 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 					if (whileContainers.size() != 0) {
-						for (int j = 0; j < whileContainers.size(); j++) {
-							cout << std::to_string(whileContainers[j]) << endl;
-							//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+						for (int i = 0; i < whileContainers.size(); i++) {
+							cout << std::to_string(whileContainers[i]) << endl;
+							//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
 						}
 					}
 					if (ifContainers.size() != 0) {
@@ -53,9 +53,9 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					//pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 					if (whileContainers.size() != 0) {
-						for (int j = 0; j < whileContainers.size(); j++) {
-							cout << std::to_string(whileContainers[j]) << endl;
-							//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[j])));
+						for (int i = 0; i < whileContainers.size(); i++) {
+							cout << std::to_string(whileContainers[i]) << endl;
+							//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
 						}
 					}
 					if (ifContainers.size() != 0) {
@@ -69,14 +69,14 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 			}
 			else if (tokenType1 == "OPERATOR") {
 				std::vector<TNode> childNodes = currentNode1.children;
-				for (auto& childNode1 : childNodes) {
-					queue1.push(childNode1);
+				for (int i = 0; i < childNodes.size(); i++) {
+					queue1.push(childNodes[i]);//const
 				}
 			}
 			else if (tokenType1 == "ASSIGN") {
 				std::vector<TNode> childNodes = currentNode1.children;
-				for (auto& childNode1 : childNodes) {
-					queue1.push(childNode1);
+				for (int i = 0; i < childNodes.size(); i++) {
+					queue1.push(childNodes[i]);
 				}
 			}
 			else {}

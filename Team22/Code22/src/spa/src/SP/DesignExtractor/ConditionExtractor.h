@@ -14,5 +14,5 @@ using namespace std;
 class ConditionExtractor {
 public:
 	ConditionExtractor() {};
-	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentContainer, std::string containerType);
+	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
 };
