@@ -22,6 +22,8 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
         return procedureModifiesDatabase;
     } else if (entityTypeBeingAbstracted == "PROCEDURECALL") {
         return procedureCallModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "WHILE") {
+        return whileStatementModifiesDatabase;
     }
     // add others as they are implemented (possibly wildcard?)
 
