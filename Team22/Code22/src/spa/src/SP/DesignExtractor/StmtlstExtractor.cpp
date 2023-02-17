@@ -65,7 +65,6 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 			}
 		}
 
-		//for (auto& childstmt : childstmts) {
 		for (int i = 0; i < childstmts.size(); i++) {
 			TNode childstmt = childstmts[i];
 			std::string tokenType1 = ToString(childstmt.nodeType);
