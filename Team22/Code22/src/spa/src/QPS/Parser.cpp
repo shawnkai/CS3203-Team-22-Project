@@ -12,14 +12,10 @@ QueryParser::QueryParser() {
 
 }
 
-regex DECLARATIONREGEX = regex("((^|; )(stmt|read|print|call|while|if|assign|variable|constant|procedure) ((\\w|, )+))+;");
-regex MODIFIESREGEX = regex(R"lit(Modifies\s?\("?(\w+)"?, "?(\w+)"?\))lit");
-regex USESREGEX = regex(R"lit(Uses\s?\("?(\w+)"?, "?(\w+)"?\))lit");
-regex PATTERNREGEX = regex(R"(pattern (\w+)\(((?:_?\"[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*/]+\"?_?)|_)\))");
-regex RETURNVALUEREGEX = regex("Select (\\w+)");
-
 SelectExpression* QueryParser::parse(const string& query) {
-	vector<Expression*> conditions;
+    regex RETURNVALUEREGEX = regex("Select (\\w+)");
+
+    vector<Expression*> conditions;
 
 	if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
@@ -45,9 +41,29 @@ SelectExpression* QueryParser::parse(const string& query) {
             for (PatternExpression *e : patternConditions) {
                 conditions.push_back(e);
             }
+        } else if (this->containsFollowsExpression(query)) {
+            vector<FollowsExpression*> followsConditions = this->extractFollowsExpression(query);
+            for (FollowsExpression *e : followsConditions) {
+                conditions.push_back(e);
+            }
+        } else if (this->containsFollowsStarExpression(query)) {
+            vector<FollowsStarExpression*> followsStarConditions = this ->extractFollowsStarExpression(query);
+            for (FollowsStarExpression *e : followsStarConditions) {
+                conditions.push_back(e);
+            }
+        } else if (this->containsParentExpression(query)) {
+            vector<ParentExpression*> parentConditions = this->extractParentExpression(query);
+            for (ParentExpression *e : parentConditions) {
+                conditions.push_back(e);
+            }
+        } else if (this->containsParentStarExpression(query)) {
+            vector<ParentStarExpression*> parentStarConditions = this ->extractParentStarExpression(query);
+            for (ParentStarExpression *e : parentStarConditions) {
+                conditions.push_back(e);
+            }
         }
 
-		return new SelectExpression({arg}, conditions);
+        return new SelectExpression({arg}, conditions);
 	}
 }
 
@@ -64,6 +80,26 @@ bool QueryParser::containsModifiesExpression(string query) {
 bool QueryParser::containsUsesExpression(string query) {
 	regex CONTAINSUSESREGEX = regex(R"lit(Uses\s?\("?(\w+)"?, "?(\w+)"?\))lit");
 	return distance(sregex_iterator(query.begin(), query.end(), CONTAINSUSESREGEX), std::sregex_iterator()) > 0;
+}
+
+bool QueryParser::containsFollowsExpression(string query) {
+    regex CONTAINSFOLLOWSREGEX = regex(R"lit(Follows\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSREGEX), std::sregex_iterator()) > 0;
+}
+
+bool QueryParser::containsFollowsStarExpression(string query) {
+    regex CONTAINSFOLLOWSSTARREGEX = regex(R"lit(Follows*\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSSTARREGEX), std::sregex_iterator()) > 0;
+}
+
+bool QueryParser::containsParentExpression(string query) {
+    regex CONTAINSFOLLOWSREGEX = regex(R"lit(Follows\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSREGEX), std::sregex_iterator()) > 0;
+}
+
+bool QueryParser::containsParentStarExpression(string query) {
+    regex CONTAINSFOLLOWSSTARREGEX = regex(R"lit(Parent*\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSSTARREGEX), std::sregex_iterator()) > 0;
 }
 
 bool QueryParser::containsPatternExpression(string query) {
@@ -200,6 +236,134 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
         searchStart = sm.suffix().first;
     }
 
+    return expressions;
+}
+
+vector<FollowsExpression*> QueryParser::extractFollowsExpression(const string& query) {
+    regex FOLLOWSREGEX = regex(R"lit(Follows\s?\(("?\w+"?), ("?\w+"?)\))lit");
+    smatch sm;
+
+    string::const_iterator searchStart(query.begin());
+
+    vector<FollowsExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, FOLLOWSREGEX)) {
+        string arg1 = sm.str(1);
+        string arg2 = sm.str(2);
+        int a1;
+        int a2;
+
+        if (isNumber(arg1)) {
+            a1 = stoi(arg1);
+        } else {
+            a1 = -1;
+        }
+
+        if (isNumber(arg2)) {
+            a2 = stoi(arg2);
+        } else {
+            a2 = -1;
+        }
+
+        expressions.push_back(new FollowsExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        searchStart = sm.suffix().first;
+    }
+    return expressions;
+}
+
+vector<FollowsStarExpression*> QueryParser::extractFollowsStarExpression(const string& query) {
+    regex FOLLOWSSTARREGEX = regex(R"lit(Follows*\s?\(("?\w+"?), ("?\w+"?)\))lit");
+    smatch sm;
+
+    string::const_iterator searchStart(query.begin());
+
+    vector<FollowsStarExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, FOLLOWSSTARREGEX)) {
+        string arg1 = sm.str(1);
+        string arg2 = sm.str(2);
+        int a1;
+        int a2;
+
+        if (isNumber(arg1)) {
+            a1 = stoi(arg1);
+        } else {
+            a1 = -1;
+        }
+
+        if (isNumber(arg2)) {
+            a2 = stoi(arg2);
+        } else {
+            a2 = -1;
+        }
+
+        expressions.push_back(new FollowsStarExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        searchStart = sm.suffix().first;
+    }
+    return expressions;
+}
+
+vector<ParentExpression*> QueryParser::extractParentExpression(const string& query) {
+    regex PARENTREGEX = regex(R"lit(Parent\s?\(("?\w+"?), ("?\w+"?)\))lit");
+    smatch sm;
+
+    string::const_iterator searchStart(query.begin());
+
+    vector<ParentExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, PARENTREGEX)) {
+        string arg1 = sm.str(1);
+        string arg2 = sm.str(2);
+        int a1;
+        int a2;
+
+        if (isNumber(arg1)) {
+            a1 = stoi(arg1);
+        } else {
+            a1 = -1;
+        }
+
+        if (isNumber(arg2)) {
+            a2 = stoi(arg2);
+        } else {
+            a2 = -1;
+        }
+
+        expressions.push_back(new ParentExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        searchStart = sm.suffix().first;
+    }
+    return expressions;
+}
+
+vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const string& query) {
+    regex PARENTSTARREGEX = regex(R"lit(Parent*\s?\(("?\w+"?), ("?\w+"?)\))lit");
+    smatch sm;
+
+    string::const_iterator searchStart(query.begin());
+
+    vector<ParentStarExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, PARENTSTARREGEX)) {
+        string arg1 = sm.str(1);
+        string arg2 = sm.str(2);
+        int a1;
+        int a2;
+
+        if (isNumber(arg1)) {
+            a1 = stoi(arg1);
+        } else {
+            a1 = -1;
+        }
+
+        if (isNumber(arg2)) {
+            a2 = stoi(arg2);
+        } else {
+            a2 = -1;
+        }
+
+        expressions.push_back(new ParentStarExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        searchStart = sm.suffix().first;
+    }
     return expressions;
 }
 
