@@ -62,6 +62,7 @@ TEST_CASE("Test 5: Retrieval of an WhileStatementModifies Design Abstraction Whe
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "mis6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mis6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mis6", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis6", "1"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("WHILE", "mis6"));
 

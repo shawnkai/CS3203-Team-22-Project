@@ -62,6 +62,7 @@ TEST_CASE("Test 5: Retrieval of an IfStatementModifies Design Abstraction When M
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mis6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mis6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "mis6", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mis6", "1"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("IF", "mis6"));
 

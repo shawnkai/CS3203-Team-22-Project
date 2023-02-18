@@ -61,6 +61,8 @@ TEST_CASE("Test 5: Retrieval of an ReadModifies Design Abstraction When Multiple
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mr6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "mr6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mr6", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mr6", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mr6", "1"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr6"));
 
