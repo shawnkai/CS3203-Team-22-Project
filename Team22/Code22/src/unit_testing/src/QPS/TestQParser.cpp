@@ -106,3 +106,17 @@ TEST_CASE("Test Select such that pattern Statement Extraction") {
     
     REQUIRE(actualResult->toString() == expected);
 }
+
+TEST_CASE("Test Select such that Follows Statement Extraction 1") {
+    QueryParser queryParser;
+    string declaration = "assign a;";
+    string query = "Select a such that Follows(12, a)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select -1 such that Follows(12, -1)";
+
+    REQUIRE(actualResult->toString() == expected);
+}
