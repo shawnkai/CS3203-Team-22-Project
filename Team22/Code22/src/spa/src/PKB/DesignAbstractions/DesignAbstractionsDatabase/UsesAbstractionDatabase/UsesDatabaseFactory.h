@@ -15,6 +15,8 @@
 #include "ProcedureUsesDatabase.h"
 #include "StatementUsesDatabase.h"
 #include "ProcedureCallUsesDatabase.h"
+#include "WhileStatementUsesDatabase.h"
+#include "IfStatementUsesDatabase.h"
 
 using namespace std;
 
@@ -24,10 +26,11 @@ class UsesDatabaseFactory {
     static inline DesignAbstractionDatabase* procedureUsesDatabase = new ProcedureUsesDatabase();
     static inline DesignAbstractionDatabase* statementUsesDatabase = new StatementUsesDatabase();
     static inline DesignAbstractionDatabase* procedureCallUsesDatabase = new ProcedureCallUsesDatabase();
+    static inline DesignAbstractionDatabase* whileStatementUsesDatabase = new WhileStatementUsesDatabase();
+    static inline DesignAbstractionDatabase* ifStatementUsesDatabase = new IfStatementUsesDatabase();
 
 public:
     static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingAbstracted);
 };
-
 
 #endif //SPA_USESDATABASEFACTORY_H
