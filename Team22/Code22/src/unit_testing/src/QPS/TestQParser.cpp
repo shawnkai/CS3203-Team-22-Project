@@ -20,7 +20,7 @@ TEST_CASE("Test Declaration Extraction") {
 
     vector<tuple<string, string>> result = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGN"}, {"a1", "ASSIGN"},
+    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
