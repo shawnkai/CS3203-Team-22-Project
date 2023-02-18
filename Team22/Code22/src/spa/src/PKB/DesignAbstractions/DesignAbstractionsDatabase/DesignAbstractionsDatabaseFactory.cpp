@@ -143,15 +143,9 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentDatabase(
 
 /**
  * Returns a DesignAbstractionDatabase pointer, of ParentStar Abstraction database.
- * 
+ *
  * @return A DesignAbstractionDatabase pointer, of ParentStar Abstraction database.
  */
 DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatabase() {
     return ParentStarDatabaseFactory::getParentStarDatabase();
 }
-
-//DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(string designAbstractionType) {
-//    if (designAbstractionType == "MODIFIES") {
-//        return getModifiesDatabase();
-//    }
-//}
