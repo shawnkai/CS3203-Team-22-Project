@@ -208,7 +208,6 @@ vector<string> ModifiesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
-        ::printf("%s\n", this->entities[1]->getType().c_str());
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
         if (!res.getQueryResult().empty()) {
             vector<string> ans = res.getQueryResult();
@@ -218,14 +217,30 @@ vector<string> ModifiesPExpression::evaluate(PKB pkb) {
             return {""};
         }
     } else {
-        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        bool isFirstWildCard = this->entities[1]->getType() == "WILDCARD";
+
+        vector<Result> vars;
+
+        if (this->entities[0]->getType() == "WILDCARD") {
+            auto varResult = pkb.getAllDesignEntity("VARIABLE");
+            auto constResult = pkb.getAllDesignEntity("CONSTANT");
+            vars.insert(vars.end(), varResult.begin(), varResult.end());
+            vars.insert(vars.end(), constResult.begin(), constResult.end());
+        } else {
+            vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        }
+
         vector<Result> results;
         for (auto var : vars) {
-            results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+            if (isFirstWildCard) {
+                results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", var.getQueryEntityName())));
+            } else {
+                results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+            }
         }
         vector<string> result;
         for (auto res: results) {
-            if (res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
+            if ((isFirstWildCard && res.getQueryEntityName() != "none") || res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
                 for (const auto& x : res.getQueryResult()) {
                     result.push_back(res.getQueryEntityName() + "," + x);
                 }
@@ -280,14 +295,30 @@ vector<string> UsesPExpression::evaluate(PKB pkb) {
         }
     }
     else {
-        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        bool isFirstWildCard = this->entities[1]->getType() == "WILDCARD";
+
+        vector<Result> vars;
+
+        if (this->entities[0]->getType() == "WILDCARD") {
+            auto varResult = pkb.getAllDesignEntity("VARIABLE");
+            auto constResult = pkb.getAllDesignEntity("CONSTANT");
+            vars.insert(vars.end(), varResult.begin(), varResult.end());
+            vars.insert(vars.end(), constResult.begin(), constResult.end());
+        } else {
+            vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        }
+
         vector<Result> results;
         for (auto var : vars) {
-            results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+            if (isFirstWildCard) {
+                results.push_back(pkb.getDesignAbstraction("USES", make_pair("STATEMENT", var.getQueryEntityName())));
+            } else {
+                results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+            }
         }
         vector<string> result;
         for (auto res : results) {
-            if (res.getQueryEntityType() == "USES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
+            if ((isFirstWildCard && res.getQueryEntityName() != "none") || res.getQueryEntityType() == "USES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
                 for (const auto& x : res.getQueryResult()) {
                     result.push_back(res.getQueryEntityName() + "," + x);
                 }
@@ -308,6 +339,7 @@ vector<string> FAPSExpression::evaluate(PKB pkb) {
                 possibleLines.push_back(l);
             }
         }
+
         vector<string> followedLines;
         for (Result res : vars1) {
             for (const string& line : res.getQueryResult()) {
