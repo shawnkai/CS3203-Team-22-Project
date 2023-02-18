@@ -15,7 +15,7 @@
 #include "ReadStatementDatabase.h"
 #include "ConstantDatabase.h"
 #include "PrintStatementDatabase.h"
-#include "AssignStatementDatabase.h"
+#include "AssignmentStatementDatabase.h"
 #include "CallStatementDatabase.h"
 #include "WhileStatementDatabase.h"
 #include "IfStatementDatabase.h"
@@ -29,7 +29,7 @@ class DesignEntitiesDatabaseFactory {
     static inline DesignEntityDatabase* readStatementEntitiesDatabase = new ReadStatementDatabase();
     static inline DesignEntityDatabase* constantEntitiesDatabase = new ConstantDatabase();
     static inline DesignEntityDatabase* printStatementEntitiesDatabase = new PrintStatementDatabase();
-    static inline DesignEntityDatabase* assignStatementEntitiesDatabase = new AssignStatementDatabase();
+    static inline DesignEntityDatabase* assignmentStatementEntitiesDatabase = new AssignmentStatementDatabase();
     static inline DesignEntityDatabase* callStatementEntitiesDatabase = new CallStatementDatabase();
     static inline DesignEntityDatabase* whileStatementEntitiesDatabase = new WhileStatementDatabase();
     static inline DesignEntityDatabase* ifStatementEntitiesDatabase = new IfStatementDatabase();
