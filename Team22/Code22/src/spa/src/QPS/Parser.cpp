@@ -250,22 +250,23 @@ vector<FollowsExpression*> QueryParser::extractFollowsExpression(const string& q
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-        int a1;
-        int a2;
+
+        StmtEntity *a1;
+        StmtEntity *a2;
 
         if (isNumber(arg1)) {
-            a1 = stoi(arg1);
+            a1 = new StmtEntity(stoi(arg1));
         } else {
-            a1 = -1;
+            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
-            a2 = stoi(arg2);
+            a2 = new StmtEntity(stoi(arg2));
         } else {
-            a2 = -1;
+            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
 
-        expressions.push_back(new FollowsExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        expressions.push_back(new FollowsExpression(a1, a2));
         searchStart = sm.suffix().first;
     }
     return expressions;
@@ -282,22 +283,23 @@ vector<FollowsStarExpression*> QueryParser::extractFollowsStarExpression(const s
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSSTARREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-        int a1;
-        int a2;
+
+        StmtEntity *a1;
+        StmtEntity *a2;
 
         if (isNumber(arg1)) {
-            a1 = stoi(arg1);
+            a1 = new StmtEntity(stoi(arg1));
         } else {
-            a1 = -1;
+            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
-            a2 = stoi(arg2);
+            a2 = new StmtEntity(stoi(arg2));
         } else {
-            a2 = -1;
+            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
 
-        expressions.push_back(new FollowsStarExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        expressions.push_back(new FollowsStarExpression(a1, a2));
         searchStart = sm.suffix().first;
     }
     return expressions;
@@ -314,22 +316,23 @@ vector<ParentExpression*> QueryParser::extractParentExpression(const string& que
     while (regex_search(searchStart, query.cend(), sm, PARENTREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-        int a1;
-        int a2;
+
+        StmtEntity *a1;
+        StmtEntity *a2;
 
         if (isNumber(arg1)) {
-            a1 = stoi(arg1);
+            a1 = new StmtEntity(stoi(arg1));
         } else {
-            a1 = -1;
+            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
-            a2 = stoi(arg2);
+            a2 = new StmtEntity(stoi(arg2));
         } else {
-            a2 = -1;
+            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
 
-        expressions.push_back(new ParentExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        expressions.push_back(new ParentExpression(a1, a2));
         searchStart = sm.suffix().first;
     }
     return expressions;
@@ -346,22 +349,23 @@ vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const str
     while (regex_search(searchStart, query.cend(), sm, PARENTSTARREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-        int a1;
-        int a2;
+
+        StmtEntity *a1;
+        StmtEntity *a2;
 
         if (isNumber(arg1)) {
-            a1 = stoi(arg1);
+            a1 = new StmtEntity(stoi(arg1));
         } else {
-            a1 = -1;
+            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
-            a2 = stoi(arg2);
+            a2 = new StmtEntity(stoi(arg2));
         } else {
-            a2 = -1;
+            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
 
-        expressions.push_back(new ParentStarExpression(new StmtEntity(a1),new StmtEntity(a2)));
+        expressions.push_back(new ParentStarExpression(a1, a2));
         searchStart = sm.suffix().first;
     }
     return expressions;
