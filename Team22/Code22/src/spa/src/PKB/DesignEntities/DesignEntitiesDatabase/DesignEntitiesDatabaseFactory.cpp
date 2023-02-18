@@ -9,10 +9,26 @@
 
 using namespace std;
 
+/**
+ * Returns a DesignEntityDatabase pointer, based on the type of Design Entity that
+ * has been passed in, that has to be stored. A null pointer will be returned for
+ * invalid Design Entities.
+ *
+ * @param designEntity The Design Entity, for which the database is to be obtained.
+ * @return A DesignEntityDatabase pointer, for the specified Design Entity.
+ */
 DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(DesignEntity* designEntity) {
     return getEntityDatabase(designEntity->getTypeOfEntity());
 }
 
+/**
+ * Returns a DesignEntityDatabase pointer, based on the type of Design Entity that
+ * has been passed in, that has to be stored. A null pointer will be returned for
+ * invalid Design Entities.
+ *
+ * @param designEntityType The type of Design Entity, for which the database is to be obtained.
+ * @return A DesignEntityDatabase pointer, for the specified Design Entity.
+ */
 DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string designEntityType) {
     transform(designEntityType.begin(), designEntityType.end(), designEntityType.begin(), ::toupper);
 
@@ -38,6 +54,6 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return ifStatementEntitiesDatabase;
     }
 
-    // TEMP: For building purposes
+    // Returning this in case of invalid Design Entity Type
     return nullptr;
 }
