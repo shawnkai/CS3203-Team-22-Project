@@ -65,7 +65,6 @@ public:
     vector<string> evaluate(PKB pkb) override;
 };
 
-
 //Uses expression classes
 class UsesExpression : public Expression {
 public:
@@ -85,6 +84,42 @@ public:
 class UsesPExpression : public UsesExpression {
 public:
     explicit UsesPExpression(NamedEntity* user, DesignEntity* target);
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class FollowsExpression: public Expression {
+public:
+    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class FollowsStarExpression: public Expression {
+public:
+    explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class ParentExpression: public Expression {
+public:
+    explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class ParentStarExpression: public Expression {
+public:
+    explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
 

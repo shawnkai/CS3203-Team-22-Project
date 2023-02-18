@@ -105,6 +105,27 @@ string UsesPExpression::toString() {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
+FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {}
+string FollowsExpression::toString() {
+    return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+FollowsStarExpression::FollowsStarExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {}
+string FollowsStarExpression::toString() {
+    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+ParentExpression::ParentExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {}
+string ParentExpression::toString() {
+    return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+ParentStarExpression::ParentStarExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {}
+string ParentStarExpression::toString() {
+    return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+
 PatternExpression::PatternExpression(DesignEntity *entity, NamedEntity* p1, string p2) : Expression({entity}) {
     this->p1 = std::move(p1);
     this->p2 = std::move(p2);
@@ -236,6 +257,22 @@ vector<string> UsesPExpression::evaluate(PKB pkb) {
         }
         return result;
     }
+}
+
+vector<string> FollowsExpression::evaluate(PKB pkb) {
+    return vector<string>();
+}
+
+vector<string> FollowsStarExpression::evaluate(PKB pkb) {
+    return vector<string>();
+}
+
+vector<string> ParentExpression::evaluate(PKB pkb) {
+    return vector<string>();
+}
+
+vector<string> ParentStarExpression::evaluate(PKB pkb) {
+    return vector<string>();
 }
 
 string PatternExpression::toString() {
