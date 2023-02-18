@@ -11,6 +11,8 @@
 #include "ProcedureUses.h"
 #include "StatementUses.h"
 #include "ProcedureCallUses.h"
+#include "WhileStatementUses.h"
+#include "IfStatementUses.h"
 
 using namespace std;
 
@@ -28,6 +30,10 @@ DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, stri
         return new StatementUses(abstractionDetails);
     } else if (usesAbstractionType == "PROCEDURECALL") {
         return new ProcedureCallUses(abstractionDetails);
+    } else if (usesAbstractionType == "WHILE") {
+        return new WhileStatementUses(abstractionDetails);
+    } else if (usesAbstractionType == "IF") {
+        return new IfStatementUses(abstractionDetails);
     }
 
     // Temp: to pass build

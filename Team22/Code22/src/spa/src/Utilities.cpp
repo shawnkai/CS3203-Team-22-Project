@@ -99,3 +99,12 @@ string Utilities::infixToPrefix(string exp) {
 
     return prefix;
 }
+
+bool Utilities::checkIfPresent(vector<string> list, string value) {
+    for (string v : list) {
+        if (v == value) {
+            return true;
+        }
+    }
+    return false;
+}

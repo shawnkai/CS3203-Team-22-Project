@@ -61,6 +61,8 @@ TEST_CASE("Test 5: Retrieval of an StatementUses Design Abstraction When Multipl
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "us6", "1"));
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "us6", "1"));
         pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "us6", "1"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "us6", "1"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "us6", "1"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us6"));
 

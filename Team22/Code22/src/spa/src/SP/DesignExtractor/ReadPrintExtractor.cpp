@@ -26,6 +26,8 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 		cout << variableName << endl;
 		
 		if (tokenType1 == "READ") {
+            pkbinstance.addDesignEntity("READ", make_tuple("READ", std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("READ", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
@@ -46,6 +48,8 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			}
 		}
 		else if (tokenType1 == "PRINT") {
+            pkbinstance.addDesignEntity("PRINT", make_tuple("PRINT", std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("USES", make_tuple("PRINT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));

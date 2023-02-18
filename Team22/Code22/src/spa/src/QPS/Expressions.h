@@ -23,6 +23,8 @@ class Expression {
 
         virtual vector<string> evaluate(PKB pkb) = 0;
 
+        vector<DesignEntity*> getAllEntities();
+
         virtual string toString() = 0;
 };
 

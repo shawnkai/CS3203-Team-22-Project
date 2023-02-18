@@ -131,3 +131,28 @@ TEST_CASE("Test Select such that pattern Evaluation") {
 
     REQUIRE(count(res.begin(), res.end(), "8"));
 }
+
+TEST_CASE("Test Select such that Follows Evaluation") {
+    PKB pkb;
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("v6", "8"));
+    pkb.addDesignAbstraction("FOLLOWS", make_tuple("_", "v6", "8"));
+    pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v7", "8"));
+    pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v8", "8"));
+    pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v9", "8"));
+    pkb.addAssignPattern("v6", "+v7v8", "8");
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select a such that pattern a(_, \"v7+v8\")";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(count(res.begin(), res.end(), "8"));
+}

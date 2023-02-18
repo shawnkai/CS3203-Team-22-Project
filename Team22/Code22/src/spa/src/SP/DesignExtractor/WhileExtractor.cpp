@@ -20,6 +20,8 @@ void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifCo
 	}
 	else {
 		int whileLineNo = currentNode.stmtNumber;
+        pkbinstance.addDesignEntity("WHILE", make_tuple("WHILE", std::to_string(whileLineNo)));
+        pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(whileLineNo)));
 		whileContainers.push_back(whileLineNo);
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];

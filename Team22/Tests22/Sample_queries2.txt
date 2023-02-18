@@ -28,3 +28,28 @@ variable v; print p;
 Select v such that Uses(p, v)
 p
 5000
+7 - Select assignment statement that is followed by a if
+assign a; if i;
+Select a such that Follows(a, i)
+5
+5000
+8 - Select assignment statement that follows a if
+assign a; if i;
+Select a such that Follows(i, a)
+9
+5000
+9 - Select assignment statement that is followed by line 3
+assign a;
+Select a such that Follows(a, 3)
+2
+5000
+10 - Select assignment statement that follows line 2
+assign a; if i;
+Select a such that Follows(2, a)
+3
+5000
+11 - Select assignment statement that is followed by any statement
+assign a;
+Select a such that Follows(a, _)
+1, 2, 3, 5, 9
+5000

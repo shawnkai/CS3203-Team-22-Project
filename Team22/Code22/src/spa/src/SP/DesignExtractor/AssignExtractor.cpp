@@ -17,7 +17,7 @@ using namespace std;
 void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 
-	if (nodeType1 != "ASSIGN") {
+	if (nodeType1 != "ASSIGNMENT") {
 		cout << "something went wrong" << endl;
 	}
 	else {
@@ -32,6 +32,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 			if (tokenType1 == "NAME_IDENTIFIER") {
 				std::string nameOfVariable = currentNode1.stringId;
 				int lineNumOfVariable = currentNode1.stmtNumber;
+                pkbinstance.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", std::to_string(lineNumOfVariable)));
+                pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(lineNumOfVariable)));
 				cout << currentNode1.stringId << endl;
 				if (firstTime == 0) {
 					firstTime = 1;
@@ -83,7 +85,7 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					queue1.push(childNodes[i]);
 				}
 			}
-			else if (tokenType1 == "ASSIGN") {
+			else if (tokenType1 == "ASSIGNMENT") {
 				std::vector<TNode> childNodes = currentNode1.children;
 				for (int i = 0; i < childNodes.size(); i++) {
 					queue1.push(childNodes[i]);
