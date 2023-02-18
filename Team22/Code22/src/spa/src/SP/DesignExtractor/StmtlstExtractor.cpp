@@ -16,7 +16,7 @@ using namespace std;
 
 void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent) {
 
-	if (currentNode.nodeType == UNKNOWN) {
+	if (currentNode.nodeType != TokenType::STATEMENT_LIST) {
 		cout << "something went wrong" << endl;
 	}
 	else {
@@ -65,21 +65,21 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 
 		for (int i = 0; i < childstmts.size(); i++) {
 			TNode childstmt = childstmts[i];
-			std::string tokenType1 = ToString(childstmt.nodeType);
-			if ((tokenType1 == "READ") || (tokenType1 == "PRINT")) {
+			TokenType tokenType1 = childstmt.nodeType;
+			if ((tokenType1 == TokenType::READ) || (tokenType1 == TokenType::PRINT)) {
 				ReadPrintExtractor readPrintExtractor;
 				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
 			}
-			else if (tokenType1 == "WHILE") {
+			else if (tokenType1 == TokenType::WHILE) {
 				WhileExtractor whileExtractor1;
 				whileExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
 			}
-			else if (tokenType1 == "IF") {
+			else if (tokenType1 == TokenType::IF) {
 				IfExtractor ifExtractor1;
 				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
 
 			}
-			else if (tokenType1 == "ASSIGNMENT") {
+			else if (tokenType1 == TokenType::ASSIGN) {
 				AssignExtractor assignExtractor1;
 				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
 			}

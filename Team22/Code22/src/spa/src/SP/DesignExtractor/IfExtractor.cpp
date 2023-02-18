@@ -15,13 +15,13 @@ using namespace std;
 
 void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
-	if (currentNode.nodeType == UNKNOWN) {
+	if (currentNode.nodeType != TokenType::IF) {
 		cout << "something went wrong" << endl;
 	}
 	else {
 		int ifLineNo = currentNode.stmtNumber;
-        pkbinstance.addDesignEntity("IF", make_tuple("IF", std::to_string(ifLineNo)));
         pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(ifLineNo)));
+		pkbinstance.addDesignEntity("IF", make_tuple(currentNode.stringId, std::to_string(ifLineNo)));
 		ifContainers.push_back(ifLineNo);
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];

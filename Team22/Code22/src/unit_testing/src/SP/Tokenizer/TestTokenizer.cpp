@@ -9,6 +9,9 @@
 #include <string>
 #include "catch.hpp"
 
+
+using namespace std;
+
 //NOTE: This test cases' relative path is written for a MAC OS machine, it will break on a Windows Machine.
 //Windows developer, please fill in the relative path when you run the unit tests.
 TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
@@ -16,7 +19,7 @@ TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "../../../SPTestingResources/SP_Tokenizer_ut1.txt";
+    relativePath = "SPTestingResources/SP_Tokenizer_ut1.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -34,5 +37,13 @@ TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
 }
 
 TEST_CASE("TestCase3_TokenizeIfStatement_ShouldSuccess") {
+
+}
+
+TEST_CASE("TestCase4_TokenizeReadPrintStatement_ShouldSuccess") {
+
+}
+
+TEST_CASE("TestCase5_TokenizeIfStatement_ShouldSuccess") {
 
 }

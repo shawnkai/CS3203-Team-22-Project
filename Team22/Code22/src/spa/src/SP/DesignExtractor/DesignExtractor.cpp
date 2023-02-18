@@ -12,8 +12,8 @@ using namespace std;
 
 
 
-void DesignExtractor::extractAbstraction(TNode root) {
+void DesignExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 	AbstractionExtractor abstractionExtractor;
-	abstractionExtractor.extractAbstraction(root);
+	abstractionExtractor.extractAbstraction(root, pkbinstance);
 };
 

@@ -60,7 +60,7 @@ void SPDriver::parseSimpleProgram(std::string filename) {
             }
         }
     }
-
+    PKB pkbinstance = PKB();
     DesignExtractor designExtractor;
-    designExtractor.extractAbstraction(result);
+    designExtractor.extractAbstraction(result, pkbinstance);
 };
