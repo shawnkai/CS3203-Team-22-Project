@@ -79,7 +79,7 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
 
 			}
-			else if (tokenType1 == "ASSIGN") {
+			else if (tokenType1 == "ASSIGNMENT") {
 				AssignExtractor assignExtractor1;
 				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
 			}
