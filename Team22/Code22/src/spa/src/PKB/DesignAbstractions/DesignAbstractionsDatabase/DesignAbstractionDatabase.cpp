@@ -58,9 +58,7 @@ bool DesignAbstractionDatabase::isPresentInDatabase(string entityName) {
 void DesignAbstractionDatabase::updateAbstractionInDatabase(DesignAbstraction *designAbstractionToBeStored) {
     auto iterator = (this->abstractionDatabase).find(designAbstractionToBeStored->getEntityName());
     (iterator->second)->addAdditionalOccurrence(designAbstractionToBeStored->getEntityOccurrence()[0]);
-    // Should the above line only copy the 0th index or
-    // copy the entire vector, by indexing through it?
-
+    
     // maybe delete the pointer object here
 }
 
@@ -74,17 +72,8 @@ void DesignAbstractionDatabase::updateAbstractionInDatabase(DesignAbstraction *d
  * @return A Result object, with the result of the query, or a none Result object.
  */
 Result DesignAbstractionDatabase::getFromDatabase(string entityName) {
-    // Should Result be modified to accommodate DesignAbstraction?
-
     if (this->isPresentInDatabase(entityName)) {
         auto iterator = (this->abstractionDatabase).find(entityName);
-
-        // Suggestion, overload result constructor to accept DesignAbstraction,
-        // and let it parse
-//        return Result(
-//                ((iterator->second)->getTypeOfAbstraction() + "/" + (iterator->second)->getEntityTypeBeingAbstracted()),
-//                (iterator->second)->getEntityName(),
-//                (iterator->second)->getEntityOccurrence());
 
         return Result(
                 ((iterator->second)->getTypeOfAbstraction()),
