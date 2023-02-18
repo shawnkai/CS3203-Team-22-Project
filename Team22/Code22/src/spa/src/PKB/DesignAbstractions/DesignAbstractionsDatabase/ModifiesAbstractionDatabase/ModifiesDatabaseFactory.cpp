@@ -9,6 +9,14 @@
 
 using namespace std;
 
+/**
+ * Returns a DesignAbstractionDatabase pointer, of type ModifiesDatabase, depending on the type
+ * of entity that is being abstracted. A null pointer will be returned, if an invalid type of
+ * entity is being abstracted.
+ *
+ * @param entityTypeBeingAbstracted The type of Design Entity that is being abstracted.
+ * @return A DesignAbstractionDatabase pointer, of type ModifiesDatabase, relying on type of Design Entity abstracted.
+ */
 DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string entityTypeBeingAbstracted) {
     transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
 
@@ -29,6 +37,6 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
     }
     // add others as they are implemented (possibly wildcard?)
 
-    // Temp: to pass build or throw error if not found
+    // Return null pointer, in case of invalid type of entity to be abstracted.
     return nullptr;
 }
