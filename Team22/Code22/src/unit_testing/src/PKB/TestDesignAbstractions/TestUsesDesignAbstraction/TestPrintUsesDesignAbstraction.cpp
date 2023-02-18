@@ -61,6 +61,8 @@ TEST_CASE("Test 5: Retrieval of an PrintUses Design Abstraction When Multiple Di
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "up6", "1"));
         pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "up6", "1"));
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "up6", "1"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "up6", "1"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "up6", "1"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PRINT", "up6"));
 

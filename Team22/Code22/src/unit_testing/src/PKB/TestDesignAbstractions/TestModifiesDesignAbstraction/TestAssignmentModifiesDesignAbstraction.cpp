@@ -61,6 +61,8 @@ TEST_CASE("Test 5: Retrieval of an AssignmentModifies Design Abstraction When Mu
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "ma6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "ma6", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ma6", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "ma6", "1"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "ma6", "1"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma6"));
 
@@ -76,7 +78,7 @@ TEST_CASE("Test 6: Retrieval of an AssignmentModifies Design Abstraction When Mu
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "1"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "2"));
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "ma8", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ma8", "3"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma8", "3"));
 
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma7"));
 

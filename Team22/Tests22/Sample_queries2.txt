@@ -28,3 +28,8 @@ variable v; print p;
 Select v such that Uses(p, v)
 p
 5000
+7 - Select assignment statement that is followed by a while
+assign a; while w;
+Select a such that Follows(w, a)
+p
+5000

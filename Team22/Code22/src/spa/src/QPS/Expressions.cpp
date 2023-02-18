@@ -48,7 +48,7 @@ vector<string> SelectExpression::evaluate(PKB pkb) {
                 vector<string> modified;
                 for (const string& x: res) {
                     size_t ind = x.find(',');
-                    string name = x.substr(0, ind + 1);
+                    string name = x.substr(0, ind);
                     string line = x.substr(ind + 1, x.size() - ind);
                     if (this->entities[0]->getType() == "PROCEDURE" || this->entities[0]->getType() == "VARIABLE"
                     || this->entities[0]->getType() == "CONSTANT") {
@@ -260,7 +260,64 @@ vector<string> UsesPExpression::evaluate(PKB pkb) {
 }
 
 vector<string> FollowsExpression::evaluate(PKB pkb) {
-    return vector<string>();
+    if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1 && dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
+        ::printf("I AM HERE with %s and %s\n", this->entities[0]->getType().c_str(), this->entities[1]->getType().c_str());
+        auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
+        ::printf("DONE FIRST\n");
+        auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
+        ::printf("DONE SECOND\n");
+        ::printf("%zu\n", vars1.size());
+        ::printf("%zu\n", vars2.size());
+        vector<string> possibleLines;
+        for (Result res : vars2) {
+            ::printf("--%s--\n", res.toString().c_str());
+            possibleLines.insert(possibleLines.end(), res.getQueryResult().begin(), res.getQueryResult().end());
+        }
+        ::printf("%s---\n", possibleLines[0].c_str());
+        vector<string> followedLines;
+        for (Result res : vars1) {
+            for (const string& line : res.getQueryResult()) {
+                Result follows = pkb.getDesignAbstraction("FOLLOWS", make_tuple("_", line));
+                vector<vector<string>> all_vectors;
+                all_vectors.push_back(possibleLines);
+                all_vectors.push_back(follows.getQueryResult());
+                vector<string> followsSatisfied = Utilities::findIntersection(all_vectors);
+                for (const string& r : followsSatisfied) {
+                    followedLines.push_back(line + "," + r);
+                }
+            }
+        }
+        return followedLines;
+    } else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1) {
+        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+        string nextLine = to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine());
+        vector<string> followedLines;
+        for (Result res : vars) {
+            for (const string& line : res.getQueryResult()) {
+                Result follows = pkb.getDesignAbstraction("FOLLOWS", make_tuple("_", line));
+                if (count(follows.getQueryResult().begin(), follows.getQueryResult().end(), nextLine)) {
+                    followedLines.push_back(line);
+                }
+            }
+        }
+        return followedLines;
+    } else if (dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
+        string prevLine = to_string(dynamic_cast<StmtEntity*>(this->entities[0])->getLine());
+        Result follows = pkb.getDesignAbstraction("FOLLOWS", make_tuple("_", prevLine));
+        auto vars = pkb.getAllDesignEntity(this->entities[1]->getType());
+        vector<string> possibleLines;
+        for (Result res : vars) {
+            possibleLines.insert(possibleLines.end(), res.getQueryResult().begin(), res.getQueryResult().end());
+        }
+        vector<string> followedLines;
+        for (const string& line : possibleLines) {
+            if (count(follows.getQueryResult().begin(), follows.getQueryResult().end(), line)) {
+                followedLines.push_back(line);
+            }
+        }
+        return followedLines;
+    }
+    return {};
 }
 
 vector<string> FollowsStarExpression::evaluate(PKB pkb) {
