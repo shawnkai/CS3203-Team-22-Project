@@ -15,7 +15,7 @@ using namespace std;
 
 void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
-	if (currentNode.nodeType == UNKNOWN) {
+	if (currentNode.nodeType != TokenType::WHILE) {
 		cout << "something went wrong" << endl;
 	}
 	else {

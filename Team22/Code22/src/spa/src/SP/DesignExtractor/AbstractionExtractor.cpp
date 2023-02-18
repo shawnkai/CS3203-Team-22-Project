@@ -7,26 +7,17 @@
 
 using namespace std;
 
-/*#include "PKB.h"
-#include "ReadExtractor.h"
-#include "TNode.h"*/
 #include "AbstractionExtractor.h"
 
-//class AbstractionExtractor {
-	//ReadExtractor readExtractor;
-//public:
-//AbstractionExtractor() {
-
-//};
 
 
 
-void AbstractionExtractor::extractAbstraction(TNode root) {
+void AbstractionExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 	std::vector<std::tuple<int, int>> followsVector;
 	std::vector<std::tuple<int, int>> parentVector;
 
 
-	if (root.nodeType != PROCEDURE) {
+	if (root.nodeType != TokenType::PROCEDURE) {
 		cout << "something went wrong" << endl;
 	}
 	else {
@@ -40,7 +31,6 @@ void AbstractionExtractor::extractAbstraction(TNode root) {
 				StmtlstExtractor stmtlstExtractor;
 				std::vector<int> ifContainer = std::vector<int>(0);
 				std::vector<int> whileContainer = std::vector<int>(0);
-				PKB pkbinstance = PKB();
 				int currentParent = 0;
 				stmtlstExtractor.extractAbstraction(currentNode, ifContainer, whileContainer, pkbinstance, currentParent);
 			}

@@ -17,8 +17,8 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 	queue1.push(currentNode);
 	while (queue1.size() != 0) {
 		TNode currentNode1 = queue1.front();
-		std::string tokenType1 = ToString(currentNode1.nodeType);
-		if (tokenType1 == "NAME_IDENTIFIER") {
+		TokenType tokenType1 = currentNode1.nodeType;
+		if (tokenType1 == TokenType::NAME_IDENTIFIER) {
 			std::string nameOfVariable = currentNode1.stringId;
 			int lineNumOfVariable = currentNode1.stmtNumber;
 			cout << currentNode1.stringId << endl;
@@ -40,13 +40,13 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			}
 
 		}
-		else if (tokenType1 == "OPERATOR") {
+		else if (tokenType1 == TokenType::OPERATOR) {
 			std::vector<TNode> childNodes = currentNode1.children;
 			for (int i = 0; i < childNodes.size(); i++) {
 				queue1.push(childNodes[i]);
 			}
 		}
-		else if (tokenType1 == "INTEGER") {
+		else if (tokenType1 == TokenType::INTEGER) {
 			std::string stringOfConstant = currentNode1.stringId;
 			pkbinstance.addDesignEntity("CONSTANT", make_tuple(stringOfConstant, std::to_string(currentNode1.stmtNumber)));
 

@@ -20,7 +20,6 @@ using namespace std;
 class DesignExtractor {
 public:
 	DesignExtractor() {};
-	void extractAbstraction(TNode root);//DesignExtractor::
-	void extractEntity(TNode root);
+	void extractAbstraction(TNode root, PKB pkbinstance);
 };
 #endif //SPA_DESIGNEXTRACTOR_H
