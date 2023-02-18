@@ -6,15 +6,14 @@
 #include <vector>
 #include <tuple>
 
-#include "PKB/PKB.h"
-#include "ReadExtractor.h"
-#include "TNode.h"
-
+#include "../../PKB/PKB.h"
+#include "StmtlstExtractor.h"
+#include "SP/Parser/TNode.h"
 
 using namespace std;
 
 class AbstractionExtractor {
 public:
 	AbstractionExtractor() {};
-	void extractAbstraction(TNode root);
+	void extractAbstraction(TNode root, PKB pkbinstance);
 };

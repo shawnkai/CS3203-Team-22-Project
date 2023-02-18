@@ -10,17 +10,16 @@
 #include <vector>
 #include <tuple>
 
-#include "PKB/PKB.h"
+#include "../../PKB/PKB.h"
 #include "AbstractionExtractor.h"
-#include "EntityExtractor.h"
-#include "TNode.h"
+//#include "EntityExtractor.h"
+#include "SP/Parser/TNode.h"
 
 using namespace std;
 
 class DesignExtractor {
 public:
 	DesignExtractor() {};
-	void extractAbstraction(TNode root);//DesignExtractor::
-	void extractEntity(TNode root);
+	void extractAbstraction(TNode root, PKB pkbinstance);
 };
 #endif //SPA_DESIGNEXTRACTOR_H

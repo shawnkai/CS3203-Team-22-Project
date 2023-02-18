@@ -4,16 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Token.h"
-
-/* Copied from discussion:
- * struct TNode {
- *     Token operator; --> stmtType: read
- *     int lineNumber;
- *     NameSpace identifier;
- *     std::vector<TNode> children;
- * }
- */
+#include "../Tokenizer/Token.h"
 
 class TNode
 {
