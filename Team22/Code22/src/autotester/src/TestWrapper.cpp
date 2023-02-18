@@ -33,10 +33,12 @@ void TestWrapper::parse(std::string filename) {
     driver.parseSimpleProgram(filename);
     PKB pkbinstance = PKB();
     cout << pkbinstance.getDesignEntity("VARIABLE", "x").toString() << endl;
+    cout << pkbinstance.getDesignEntity("IF", "if").toString() << endl;
     cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString() << endl;
     cout << pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("WHILE", "x")).toString() << endl;
     cout << pkbinstance.getDesignAbstraction("USES", make_tuple("IF", "z")).toString() << endl;
     cout << pkbinstance.getDesignAbstraction("USES", make_tuple("ASSIGNMENT", "a")).toString() << endl;
+
 
 }
 
