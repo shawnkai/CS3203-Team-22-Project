@@ -67,7 +67,7 @@ string DesignAbstraction::getEntityTypeBeingAbstracted() {
 
 /**
  * Returns the name of the entity that is being abstracted, by the given Design Abstraction.
- * 
+ *
  * @return A string containing the name of the entity.
  */
 string DesignAbstraction::getEntityName() {
