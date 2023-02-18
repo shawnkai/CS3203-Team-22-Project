@@ -256,12 +256,16 @@ vector<FollowsExpression*> QueryParser::extractFollowsExpression(const string& q
 
         if (isNumber(arg1)) {
             a1 = new StmtEntity(stoi(arg1));
+        } else if (arg1 == "_") {
+            a1 = new StmtEntity(-1);
         } else {
             a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
             a2 = new StmtEntity(stoi(arg2));
+        } else if (arg2 == "_") {
+            a2 = new StmtEntity(-1);
         } else {
             a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
@@ -289,12 +293,16 @@ vector<FollowsStarExpression*> QueryParser::extractFollowsStarExpression(const s
 
         if (isNumber(arg1)) {
             a1 = new StmtEntity(stoi(arg1));
+        } else if (arg1 == "_") {
+            a1 = new StmtEntity(-1);
         } else {
             a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
             a2 = new StmtEntity(stoi(arg2));
+        } else if (arg2 == "_") {
+            a2 = new StmtEntity(-1);
         } else {
             a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
@@ -322,12 +330,16 @@ vector<ParentExpression*> QueryParser::extractParentExpression(const string& que
 
         if (isNumber(arg1)) {
             a1 = new StmtEntity(stoi(arg1));
+        } else if (arg1 == "_") {
+            a1 = new StmtEntity(-1);
         } else {
             a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
             a2 = new StmtEntity(stoi(arg2));
+        } else if (arg2 == "_") {
+            a2 = new StmtEntity(-1);
         } else {
             a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
@@ -355,12 +367,16 @@ vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const str
 
         if (isNumber(arg1)) {
             a1 = new StmtEntity(stoi(arg1));
+        } else if (arg1 == "_") {
+            a1 = new StmtEntity(-1);
         } else {
             a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
         }
 
         if (isNumber(arg2)) {
             a2 = new StmtEntity(stoi(arg2));
+        } else if (arg2 == "_") {
+            a2 = new StmtEntity(-1);
         } else {
             a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
         }
