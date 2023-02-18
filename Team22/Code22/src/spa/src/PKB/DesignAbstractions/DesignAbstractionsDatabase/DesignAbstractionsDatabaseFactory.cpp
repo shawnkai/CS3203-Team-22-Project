@@ -8,6 +8,10 @@
 #include "DesignAbstractionsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ModifiesAbstractionDatabase/ModifiesDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/UsesAbstractionDatabase/UsesDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsAbstractionDatabase/FollowsDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsStarAbstractionDatabase/FollowsStarDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentAbstractionDatabase/ParentDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentStarAbstractionDatabase/ParentStarDatabaseFactory.h"
 
 using namespace std;
 
@@ -30,8 +34,15 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getModifiesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
     } else if (regex_match(designAbstraction->getTypeOfAbstraction(), regex("USES:[0-9A-Za-z]+"))) {
         return getUsesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
+    } else if (designAbstraction->getTypeOfAbstraction() == "FOLLOWS") {
+        return getFollowsDatabase();
+    } else if (designAbstraction->getTypeOfAbstraction() == "FOLLOWSSTAR") {
+        return getFollowsStarDatabase();
+    } else if (designAbstraction->getTypeOfAbstraction() == "PARENT") {
+        return getParentDatabase();
+    } else if (designAbstraction->getTypeOfAbstraction() == "PARENTSTAR") {
+        return getParentStarDatabase();
     }
-
 
     // Temp: To pass build
     return nullptr;
@@ -45,6 +56,14 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
          return getModifiesDatabase(entityTypeBeingAbstracted);
     } else if (designAbstractionType == "USES") {
         return getUsesDatabase(entityTypeBeingAbstracted);
+    } else if (designAbstractionType == "FOLLOWS") {
+        return getFollowsDatabase();
+    } else if (designAbstractionType == "FOLLOWSSTAR") {
+        return getFollowsStarDatabase();
+    } else if (designAbstractionType == "PARENT") {
+        return getParentDatabase();
+    } else if (designAbstractionType == "PARENTSTAR") {
+        return getParentStarDatabase();
     }
 
     // Temp: To pass build
@@ -57,6 +76,22 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabas
 
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(string entityTypeBeingExtracted) {
     return UsesDatabaseFactory::getUsesDatabase(entityTypeBeingExtracted);
+}
+
+DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsDatabase() {
+    return FollowsDatabaseFactory::getFollowsDatabase();
+}
+
+DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsStarDatabase() {
+    return FollowsStarDatabaseFactory::getFollowsStarDatabase();
+}
+
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentDatabase() {
+    return ParentDatabaseFactory::getParentDatabase();
+}
+
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatabase() {
+    return ParentStarDatabaseFactory::getParentStarDatabase();
 }
 
 //DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(string designAbstractionType) {

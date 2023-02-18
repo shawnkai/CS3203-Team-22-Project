@@ -2,7 +2,6 @@
 
 
 #include "PKB/PKB.h"
-#include "TNode.h"
 #include "Parser.h"
 #include "Utilities.h"
 
@@ -46,8 +45,6 @@ SelectExpression* QueryParser::parse(const string& query) {
             for (PatternExpression *e : patternConditions) {
                 conditions.push_back(e);
             }
-        } else {
-            ::printf("cannot be here");
         }
 
 		return new SelectExpression({arg}, conditions);

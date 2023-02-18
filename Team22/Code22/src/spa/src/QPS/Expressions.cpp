@@ -43,7 +43,24 @@ vector<string> SelectExpression::evaluate(PKB pkb) {
     } else {
         vector<vector<string>> all_results;
         for (Expression *exp : this->conditions) {
-            all_results.push_back(exp->evaluate(pkb));
+            vector<string> res = exp->evaluate(pkb);
+            if (count(res[0].begin(), res[0].end(), ',')) {
+                vector<string> modified;
+                for (const string& x: res) {
+                    size_t ind = x.find(',');
+                    string name = x.substr(0, ind + 1);
+                    string line = x.substr(ind + 1, x.size() - ind);
+                    if (this->entities[0]->getType() == "PROCEDURE" || this->entities[0]->getType() == "VARIABLE"
+                    || this->entities[0]->getType() == "CONSTANT") {
+                        modified.push_back(name);
+                    } else {
+                        modified.push_back(line);
+                    }
+                }
+                all_results.push_back(modified);
+            } else {
+                all_results.push_back(res);
+            }
         }
         return Utilities::findIntersection(all_results);
     }
@@ -132,6 +149,7 @@ vector<string> ModifiesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
+        ::printf("%s\n", this->entities[1]->getType().c_str());
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
         if (!res.getQueryResult().empty()) {
             vector<string> ans = res.getQueryResult();
@@ -149,7 +167,9 @@ vector<string> ModifiesPExpression::evaluate(PKB pkb) {
         vector<string> result;
         for (auto res: results) {
             if (res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
-                result.push_back(res.getQueryEntityName());
+                for (const auto& x : res.getQueryResult()) {
+                    result.push_back(res.getQueryEntityName() + "," + x);
+                }
             }
         }
         sort(result.begin(), result.end());
@@ -209,7 +229,9 @@ vector<string> UsesPExpression::evaluate(PKB pkb) {
         vector<string> result;
         for (auto res : results) {
             if (res.getQueryEntityType() == "USES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
-                result.push_back(res.getQueryEntityName());
+                for (const auto& x : res.getQueryResult()) {
+                    result.push_back(res.getQueryEntityName() + "," + x);
+                }
             }
         }
         return result;

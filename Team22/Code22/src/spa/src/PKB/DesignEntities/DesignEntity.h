@@ -18,6 +18,8 @@ class DesignEntity {
     string nameOfEntity;
     vector<string> occurrenceOfEntity;
 
+    virtual bool isOccurrencePresent(string occurrence);
+
 public:
 
     explicit DesignEntity(tuple<string, string> entityDetails);

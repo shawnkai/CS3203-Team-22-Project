@@ -43,8 +43,8 @@ ReadEntity::ReadEntity(int lineNumber) : StmtEntity("READ", lineNumber) {}
 ReadEntity::ReadEntity() : StmtEntity("READ") {}
 PrintEntity::PrintEntity(int lineNumber) : StmtEntity("PRINT", lineNumber) {}
 PrintEntity::PrintEntity() : StmtEntity("PRINT") {}
-AssignEntity::AssignEntity(int lineNumber) : StmtEntity("ASSIGN", lineNumber) {}
-AssignEntity::AssignEntity() : StmtEntity("ASSIGN") {}
+AssignEntity::AssignEntity(int lineNumber) : StmtEntity("ASSIGNMENT", lineNumber) {}
+AssignEntity::AssignEntity() : StmtEntity("ASSIGNMENT") {}
 CallEntity::CallEntity(int lineNumber) : StmtEntity("CALL", lineNumber) {}
 CallEntity::CallEntity() : StmtEntity("CALL") {}
 WhileEntity::WhileEntity(int lineNumber) : StmtEntity("WHILE", lineNumber) {}
