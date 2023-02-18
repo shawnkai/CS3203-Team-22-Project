@@ -304,9 +304,10 @@ vector<string> FAPSExpression::evaluate(PKB pkb) {
 
         vector<string> possibleLines;
         for (Result res : vars2) {
-            possibleLines.insert(possibleLines.end(), res.getQueryResult().begin(), res.getQueryResult().end());
+            for (string l : res.getQueryResult()) {
+                possibleLines.push_back(l);
+            }
         }
-
         vector<string> followedLines;
         for (Result res : vars1) {
             for (const string& line : res.getQueryResult()) {
@@ -328,9 +329,6 @@ vector<string> FAPSExpression::evaluate(PKB pkb) {
         vector<string> followedLines;
         for (Result res : vars) {
             for (const string& line : res.getQueryResult()) {
-                if (stoi(line) > nextLineInt) {
-                    continue;
-                }
                 Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", line));
                 if (Utilities::checkIfPresent(follows.getQueryResult(), nextLine)) {
                     followedLines.push_back(line);
@@ -345,13 +343,12 @@ vector<string> FAPSExpression::evaluate(PKB pkb) {
         auto vars = pkb.getAllDesignEntity(this->entities[1]->getType());
         vector<string> possibleLines;
         for (Result res : vars) {
-            possibleLines.insert(possibleLines.end(), res.getQueryResult().begin(), res.getQueryResult().end());
+            for (string l : res.getQueryResult()) {
+                possibleLines.push_back(l);
+            }
         }
         vector<string> followedLines;
         for (const string& line : possibleLines) {
-            if (stoi(line) < prevLineInt) {
-                continue;
-            }
             if (Utilities::checkIfPresent(follows.getQueryResult(), line)) {
                 followedLines.push_back(line);
             }

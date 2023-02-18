@@ -83,3 +83,23 @@ while w; assign a;
 Select a such that Parent*(w, a)
 5, 7, 8, 9, 11
 5000
+17 - Select variables that are modified
+variable v;
+Select v such that Modifies(_, v)
+x, z, i, y, q
+5000
+18 - Select assignment where any variable is modified
+assign a;
+Select a such that Modifies(a, _)
+1, 2, 3, 5, 7, 8, 9, 11
+5000
+19 - Select while where any variable is used
+while w;
+Select w such that Uses(w, _)
+4
+5000
+20 - Select variables that are used
+variable v;
+Select v such that Uses(_, v)
+i, x, z, p
+5000
