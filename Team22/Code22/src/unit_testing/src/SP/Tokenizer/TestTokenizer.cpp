@@ -16,7 +16,7 @@ TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "../../../SPTestingResources/SP_Tokenizer_ut1.txt";
+    relativePath = "SPTestingResources/SP_Tokenizer_ut1.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -34,5 +34,13 @@ TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
 }
 
 TEST_CASE("TestCase3_TokenizeIfStatement_ShouldSuccess") {
+
+}
+
+TEST_CASE("TestCase4_TokenizeReadPrintStatement_ShouldSuccess") {
+
+}
+
+TEST_CASE("TestCase5_TokenizeIfStatement_ShouldSuccess") {
 
 }
