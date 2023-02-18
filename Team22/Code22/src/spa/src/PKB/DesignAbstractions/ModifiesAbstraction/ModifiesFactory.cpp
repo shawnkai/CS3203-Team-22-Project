@@ -16,8 +16,15 @@
 
 using namespace std;
 
+/**
+ * Returns a DesignAbstraction pointer, related to the Modifies Design Abstraction,
+ * based on the type of entity being abstracted. A null pointer will be returned,
+ * for invalid type of entities to be abstracted.
+ *
+ * @param abstractionDetails The details of the abstraction, that is to be stored.
+ * @return A DesignAbstraction pointer, of type of Modifies, depending on type of entity being abstracted.
+ */
 DesignAbstraction* ModifiesFactory::createModifiesAbstraction(tuple<string, string, string> abstractionDetails) {
-    // To be implemented
     // Design choice, pass 1st param as type of modifies? -> think
 
     string modifiesAbstractionType = get<0>(abstractionDetails);
@@ -39,8 +46,6 @@ DesignAbstraction* ModifiesFactory::createModifiesAbstraction(tuple<string, stri
         return new WhileStatementModifies(abstractionDetails);
     }
 
-    // TEMP: to pass build,
-    // also to return this, implying wrong modifiesAbstractionType
-    // Catch it somewhere?
+    // Returning a null pointer, in case of an invalid modifiesAbstractionType
     return nullptr;
 }
