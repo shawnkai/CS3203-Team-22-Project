@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <regex>
+#include <algorithm> // For Windows
 
 #include "DesignAbstractionsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ModifiesAbstractionDatabase/ModifiesDatabaseFactory.h"
@@ -50,7 +51,7 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
 
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(string designAbstractionType,
                                                                                      string entityTypeBeingAbstracted) {
-    // Make string toupper
+    transform(designAbstractionType.begin(), designAbstractionType.end(), designAbstractionType.begin(), ::toupper);
 
     if (designAbstractionType == "MODIFIES") {
          return getModifiesDatabase(entityTypeBeingAbstracted);
@@ -70,12 +71,14 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
     return nullptr;
 }
 
-DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabase(string entityTypeBeingExtracted) {
-    return ModifiesDatabaseFactory::getModifiesDatabase(entityTypeBeingExtracted);
+DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabase(string entityTypeBeingAbstracted) {
+    transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
+    return ModifiesDatabaseFactory::getModifiesDatabase(entityTypeBeingAbstracted);
 }
 
-DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(string entityTypeBeingExtracted) {
-    return UsesDatabaseFactory::getUsesDatabase(entityTypeBeingExtracted);
+DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(string entityTypeBeingAbstracted) {
+    transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
+    return UsesDatabaseFactory::getUsesDatabase(entityTypeBeingAbstracted);
 }
 
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsDatabase() {
