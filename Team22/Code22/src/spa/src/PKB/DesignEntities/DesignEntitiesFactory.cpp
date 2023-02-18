@@ -12,7 +12,7 @@
 #include "ReadStatement.h"
 #include "Constant.h"
 #include "PrintStatement.h"
-#include "AssignStatement.h"
+#include "AssignmentStatement.h"
 #include "CallStatement.h"
 #include "WhileStatement.h"
 #include "IfStatement.h"
@@ -34,8 +34,8 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
         return new ReadStatement(entityDetails);
     } else if (designEntity == "PRINT") {
         return new PrintStatement(entityDetails);
-    } else if (designEntity == "ASSIGN") {
-        return new AssignStatement(entityDetails);
+    } else if (designEntity == "ASSIGNMENT") {
+        return new AssignmentStatement(entityDetails);
     } else if (designEntity == "CALL") {
         return new CallStatement(entityDetails);
     } else if (designEntity == "WHILE") {

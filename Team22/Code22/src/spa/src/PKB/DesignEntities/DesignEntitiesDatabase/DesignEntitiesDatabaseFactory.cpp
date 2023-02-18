@@ -28,8 +28,8 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return constantEntitiesDatabase;
     } else if (designEntityType == "PRINT") {
         return printStatementEntitiesDatabase;
-    } else if (designEntityType == "ASSIGN") {
-        return assignStatementEntitiesDatabase;
+    } else if (designEntityType == "ASSIGNMENT") {
+        return assignmentStatementEntitiesDatabase;
     } else if (designEntityType == "CALL") {
         return callStatementEntitiesDatabase;
     } else if (designEntityType == "WHILE") {
