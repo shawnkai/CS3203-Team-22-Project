@@ -92,42 +92,44 @@ public:
     vector<string> evaluate(PKB pkb) override;
 };
 
-class FollowsExpression: public Expression {
+class FAPSExpression: public Expression {
+private:
+    string pkbAbstraction;
+
+public:
+    explicit FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class FollowsExpression: public FAPSExpression {
 private:
     string pkbAbstraction;
 public:
     explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
 
-    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
-
     string toString() override;
-
-    vector<string> evaluate(PKB pkb) override;
 };
 
-class FollowsStarExpression: public FollowsExpression {
+class FollowsStarExpression: public FAPSExpression {
 public:
     explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
 };
 
-class ParentExpression: public Expression {
+class ParentExpression: public FAPSExpression {
 public:
     explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
-
-    vector<string> evaluate(PKB pkb) override;
 };
 
-class ParentStarExpression: public Expression {
+class ParentStarExpression: public FAPSExpression {
 public:
     explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
-
-    vector<string> evaluate(PKB pkb) override;
 };
 
 class PatternExpression : public Expression {

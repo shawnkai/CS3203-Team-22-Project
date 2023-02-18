@@ -93,7 +93,7 @@ bool QueryParser::containsFollowsStarExpression(string query) {
 }
 
 bool QueryParser::containsParentExpression(string query) {
-    regex CONTAINSFOLLOWSREGEX = regex(R"lit(Follows\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    regex CONTAINSFOLLOWSREGEX = regex(R"lit(Parent\s?\("?(\w+)"?, "?(\w+)"?\))lit");
     return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSREGEX), std::sregex_iterator()) > 0;
 }
 

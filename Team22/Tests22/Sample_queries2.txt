@@ -63,3 +63,23 @@ assign a;
 Select a such that Follows*(a, _)
 1, 2, 3, 5, 9
 5000
+14 - Select while that satisfies Parent(w, 9)
+while w;
+Select w such that Parent(w, 9)
+4
+5000
+15 - Select while that is parent of if
+while w; if i;
+Select w such that Parent(w, i)
+4
+5000
+16 - Select assignments that satisfy Parent(w, a)
+while w; assign a;
+Select a such that Parent(w, a)
+5, 9, 11
+5000
+16 - Select assignments that satisfy Parent*(w, a)
+while w; assign a;
+Select a such that Parent*(w, a)
+5, 7, 8, 9, 11
+5000

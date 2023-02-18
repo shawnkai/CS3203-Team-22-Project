@@ -137,37 +137,35 @@ string UsesPExpression::toString() {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {
-    this->pkbAbstraction = "FOLLOWS";
-}
-
-FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction) : Expression({s1, s2}) {
+FAPSExpression::FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction) : Expression({s1, s2}) {
     this->pkbAbstraction = pkbAbstraction;
 }
+
+FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
 
 string FollowsExpression::toString() {
     return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-FollowsStarExpression::FollowsStarExpression(StmtEntity* s1, StmtEntity* s2) : FollowsExpression(s1, s2, "FOLLOWSSTAR") {}
+FollowsStarExpression::FollowsStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWSSTAR") {}
 
 string FollowsStarExpression::toString() {
     return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-ParentExpression::ParentExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {}
+ParentExpression::ParentExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENT") {}
 string ParentExpression::toString() {
     return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-ParentStarExpression::ParentStarExpression(StmtEntity* s1, StmtEntity* s2) : Expression({s1, s2}) {}
+ParentStarExpression::ParentStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENTSTAR") {}
 string ParentStarExpression::toString() {
     return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 
 PatternExpression::PatternExpression(DesignEntity *entity, NamedEntity* p1, string p2) : Expression({entity}) {
-    this->p1 = std::move(p1);
+    this->p1 = p1;
     this->p2 = std::move(p2);
 }
 
@@ -299,7 +297,7 @@ vector<string> UsesPExpression::evaluate(PKB pkb) {
     }
 }
 
-vector<string> FollowsExpression::evaluate(PKB pkb) {
+vector<string> FAPSExpression::evaluate(PKB pkb) {
     if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1 && dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
         auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
@@ -361,14 +359,6 @@ vector<string> FollowsExpression::evaluate(PKB pkb) {
         return followedLines;
     }
     return {};
-}
-
-vector<string> ParentExpression::evaluate(PKB pkb) {
-    return vector<string>();
-}
-
-vector<string> ParentStarExpression::evaluate(PKB pkb) {
-    return vector<string>();
 }
 
 string PatternExpression::toString() {
