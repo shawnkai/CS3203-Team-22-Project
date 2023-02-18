@@ -3,7 +3,6 @@
 using namespace std;
 TEST_CASE("Testcase1_ExtractOneStatement_ShouldSuccess") {
     TNode variable1 = TNode(TokenType::NAME_IDENTIFIER, "x", 1, std::vector<TNode>(0));
-
     TNode read1 = TNode(TokenType::READ, "read", 1, std::vector<TNode>(0));
     std::vector<TNode> child2;
     child2.push_back(variable1);

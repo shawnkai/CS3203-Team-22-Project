@@ -9,6 +9,9 @@
 #include <string>
 #include "catch.hpp"
 
+
+using namespace std;
+
 //NOTE: This test cases' relative path is written for a MAC OS machine, it will break on a Windows Machine.
 //Windows developer, please fill in the relative path when you run the unit tests.
 TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {

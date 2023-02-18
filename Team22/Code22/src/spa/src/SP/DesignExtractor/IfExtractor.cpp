@@ -20,6 +20,7 @@ void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifConta
 	}
 	else {
 		int ifLineNo = currentNode.stmtNumber;
+		pkbinstance.addDesignEntity("IF", make_tuple(currentNode.stringId, std::to_string(ifLineNo)));
 		ifContainers.push_back(ifLineNo);
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];
