@@ -25,7 +25,6 @@ using namespace std;
  * @param abstractionDetails A tuple, which takes in 3 strings. which contains the details about the Abstraction.
  */
 void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
-    // To be implemented -> Done [05/02/2023]
     DesignAbstraction* da = DesignAbstractionsFactory::createDesignAbstraction(designAbstraction, abstractionDetails);
     da->addToDatabase();
 }
@@ -37,7 +36,6 @@ void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, s
  * @param entityDetails A tuple, which takes in 2 strings, which contains the details about the Design Entity.
  */
 void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
-    // To be implemented -> Done [05/02/2023]
     DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
     de->addToDatabase();
 }
@@ -51,7 +49,6 @@ void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetai
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
-    // To be implemented -> Done [05/02/2023]
     DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(abstractionType,
                                                                                               get<0>(query));
     Result queryResult = db->getFromDatabase(get<1>(query));
@@ -68,7 +65,6 @@ Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> q
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result PKB::getDesignEntity(string entityType, string entityName) {
-    // To be implemented -> Done [05/02/2023]
     DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
     Result queryResult = db->getFromDatabase(entityName);
 
@@ -83,7 +79,6 @@ Result PKB::getDesignEntity(string entityType, string entityName) {
  * @return A vector<Result> with each Result Object containing the details of that Design Entity type.
  */
 vector<Result> PKB::getAllDesignEntity(string entityType) {
-    // To be implemented
     vector<Result> queryResult;
 
     DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
