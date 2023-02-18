@@ -42,7 +42,6 @@ SelectExpression* QueryParser::parse(const string& query) {
                 conditions.push_back(e);
             }
 		} else if (this->containsPatternExpression(query)) {
-            ::printf("I AM HERE\n");
             vector<PatternExpression*> patternConditions = this ->extractPatternExpression(query);
             for (PatternExpression *e : patternConditions) {
                 conditions.push_back(e);

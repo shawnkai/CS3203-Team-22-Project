@@ -103,8 +103,6 @@ TEST_CASE("Test Select such that pattern Statement Extraction") {
     SelectExpression *actualResult = queryParser.parse(query);
 
     string expected = R"(Select -1 such that pattern a(_, _+xy_))";
-
-    ::printf("%s\n", actualResult->toString().c_str());
-
+    
     REQUIRE(actualResult->toString() == expected);
 }
