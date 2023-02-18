@@ -53,3 +53,13 @@ assign a;
 Select a such that Follows(a, _)
 1, 2, 3, 5, 9
 5000
+12 - Select assignment statement that satisfies Follow*(5, a)
+assign a;
+Select a such that Follows*(5, a)
+9, 11
+5000
+13 - Select assignment statement that satisfies Follow*(a, _)
+assign a;
+Select a such that Follows*(a, _)
+1, 2, 3, 5, 9
+5000

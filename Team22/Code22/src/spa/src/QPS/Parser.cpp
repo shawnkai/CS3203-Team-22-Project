@@ -88,7 +88,7 @@ bool QueryParser::containsFollowsExpression(string query) {
 }
 
 bool QueryParser::containsFollowsStarExpression(string query) {
-    regex CONTAINSFOLLOWSSTARREGEX = regex(R"lit(Follows*\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    regex CONTAINSFOLLOWSSTARREGEX = regex(R"lit(Follows\*\s?\("?(\w+)"?, "?(\w+)"?\))lit");
     return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSSTARREGEX), std::sregex_iterator()) > 0;
 }
 
@@ -98,7 +98,7 @@ bool QueryParser::containsParentExpression(string query) {
 }
 
 bool QueryParser::containsParentStarExpression(string query) {
-    regex CONTAINSFOLLOWSSTARREGEX = regex(R"lit(Parent*\s?\("?(\w+)"?, "?(\w+)"?\))lit");
+    regex CONTAINSFOLLOWSSTARREGEX = regex(R"lit(Parent\*\s?\("?(\w+)"?, "?(\w+)"?\))lit");
     return distance(sregex_iterator(query.begin(), query.end(), CONTAINSFOLLOWSSTARREGEX), std::sregex_iterator()) > 0;
 }
 

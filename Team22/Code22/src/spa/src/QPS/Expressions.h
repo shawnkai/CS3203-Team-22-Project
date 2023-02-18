@@ -93,21 +93,23 @@ public:
 };
 
 class FollowsExpression: public Expression {
+private:
+    string pkbAbstraction;
 public:
     explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
+
+    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
 
     string toString() override;
 
     vector<string> evaluate(PKB pkb) override;
 };
 
-class FollowsStarExpression: public Expression {
+class FollowsStarExpression: public FollowsExpression {
 public:
     explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
-
-    vector<string> evaluate(PKB pkb) override;
 };
 
 class ParentExpression: public Expression {
