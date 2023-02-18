@@ -277,7 +277,7 @@ vector<FollowsExpression*> QueryParser::extractFollowsExpression(const string& q
 }
 
 vector<FollowsStarExpression*> QueryParser::extractFollowsStarExpression(const string& query) {
-    regex FOLLOWSSTARREGEX = regex(R"lit(Follows*\s?\(("?\w+"?), ("?\w+"?)\))lit");
+    regex FOLLOWSSTARREGEX = regex(R"lit(Follows\*\s?\(("?\w+"?), ("?\w+"?)\))lit");
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -351,7 +351,7 @@ vector<ParentExpression*> QueryParser::extractParentExpression(const string& que
 }
 
 vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const string& query) {
-    regex PARENTSTARREGEX = regex(R"lit(Parent*\s?\(("?\w+"?), ("?\w+"?)\))lit");
+    regex PARENTSTARREGEX = regex(R"lit(Parent\*\s?\(("?\w+"?), ("?\w+"?)\))lit");
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
