@@ -24,37 +24,15 @@ using namespace std;
  * @param designAbstraction The type of the Design Abstraction, whose database is to be obtained.
  * @return A DesignAbstractionDatabase pointer, based on the type of Design Abstraction passed.
  */
-// The below one might not work
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionDatabase(
         DesignAbstraction *designAbstraction) {
-//    return getAbstractionDatabase(designAbstraction->getTypeOfAbstraction(),
-//                                  designAbstraction->getEntityTypeBeingAbstracted());
-
-    // Root of error here: returned null as input was "MODIFIES:ASSIGNMENT" and not "MODIFIES"
-    // Possible ways to fix it:
-    // 1. make all type of Modifies return "MODIFIES"
-    // 2. Slice the string
-    // 3. Regex, here trying that
-//    if (designAbstraction->getTypeOfAbstraction() == "MODIFIES") {
-//        return getModifiesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
-//    }
-
     if (regex_match(designAbstraction->getTypeOfAbstraction(), regex("MODIFIES:[0-9A-Za-z]+"))) {
-        return getModifiesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
+        return getAbstractionDatabase("MODIFIES", designAbstraction->getEntityTypeBeingAbstracted());
     } else if (regex_match(designAbstraction->getTypeOfAbstraction(), regex("USES:[0-9A-Za-z]+"))) {
-        return getUsesDatabase(designAbstraction->getEntityTypeBeingAbstracted());
-    } else if (designAbstraction->getTypeOfAbstraction() == "FOLLOWS") {
-        return getFollowsDatabase();
-    } else if (designAbstraction->getTypeOfAbstraction() == "FOLLOWSSTAR") {
-        return getFollowsStarDatabase();
-    } else if (designAbstraction->getTypeOfAbstraction() == "PARENT") {
-        return getParentDatabase();
-    } else if (designAbstraction->getTypeOfAbstraction() == "PARENTSTAR") {
-        return getParentStarDatabase();
+        return getAbstractionDatabase("USES", designAbstraction->getEntityTypeBeingAbstracted());
     }
 
-    // Temp: To pass build
-    return nullptr;
+    return getAbstractionDatabase(designAbstraction->getTypeOfAbstraction(), "_");
 }
 
 /**
