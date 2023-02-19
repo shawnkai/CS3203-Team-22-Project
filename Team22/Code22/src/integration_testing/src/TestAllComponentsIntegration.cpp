@@ -1,8 +1,11 @@
+#include "catch.hpp"
+
 #include "SP/SPDriver.h"
 #include "QPS/Parser.h"
 #include "QPS/Evaluator.h"
-#include "catch.hpp"
+
 using namespace std;
+
 void require(bool b) {
     REQUIRE(b);
 }
@@ -11,6 +14,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     SPDriver driver;
     std::string inputFilePath;
 #if __APPLE__
+//    inputFilePath = "../../../tests/Sample_source2.txt";
     inputFilePath = "Sample_source2.txt";
 #endif
     driver.parseSimpleProgram(inputFilePath);
@@ -57,6 +61,26 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
     REQUIRE(output2.find('7') != std::string::npos);
     REQUIRE(output2.find('8') != std::string::npos);
+
+    string declaration3 = "stmt s;";
+    string query3 = "Select s such that Parent(4, s)";
+    parser.parse(declaration3);
+    auto exp3 = parser.parse(query3);
+    vector<string> res_3 = evaluator.evaluate(exp3);
+    string output3;
+    for (const string& r : res_3) {
+        output3 += r;
+    }
+    cout << "Output 3" << output3 << endl; ;
+
+    REQUIRE(output3.find('5') != std::string::npos);
+    REQUIRE(output3.find('6') != std::string::npos);
+    REQUIRE(output3.find('7') == std::string::npos);
+    REQUIRE(output3.find('8') == std::string::npos);
+    REQUIRE(output3.find('9') != std::string::npos);
+    REQUIRE(output3.find("10") != std::string::npos);
+    REQUIRE(output3.find("11") != std::string::npos);
+    REQUIRE(output3.find("12") == std::string::npos);
 }
 
 TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
