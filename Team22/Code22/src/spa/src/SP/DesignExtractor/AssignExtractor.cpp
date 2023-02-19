@@ -18,6 +18,7 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 		cout << "something went wrong" << endl;
 	}
 	else {
+		pkbinstance.addDesignEntity("ASSIGNMENT", make_tuple(currentNode.stringId, std::to_string(currentNode.stmtNumber)));
 		PatternPrefixStringExtractor prefixExtractor;
 		prefixExtractor.extractPrefixString(currentNode, pkbinstance);
 		queue<TNode> queue1;
@@ -29,6 +30,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 			if (tokenType1 == TokenType::NAME_IDENTIFIER) {
 				std::string nameOfVariable = currentNode1.stringId;
 				int lineNumOfVariable = currentNode1.stmtNumber;
+                pkbinstance.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", std::to_string(lineNumOfVariable)));
+                pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(lineNumOfVariable)));
 				cout << currentNode1.stringId << endl;
 				if (firstTime == 0) {
 					firstTime = 1;
@@ -38,14 +41,14 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					if (whileContainers.size() != 0) {
 						for (int i = 0; i < whileContainers.size(); i++) {
 							cout << std::to_string(whileContainers[i]) << endl;
-							//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
+							pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
 							pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, std::to_string(whileContainers[i])));
 						}
 					}
 					if (ifContainers.size() != 0) {
 						for (int i = 0; i < ifContainers.size(); i++) {
 							cout << std::to_string(ifContainers[i]) << endl;
-							//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
+							pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
 							pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, std::to_string(ifContainers[i])));
 						}
 					}
@@ -58,7 +61,7 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					if (whileContainers.size() != 0) {
 						for (int i = 0; i < whileContainers.size(); i++) {
 							cout << std::to_string(whileContainers[i]) << endl;
-							//pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
+							pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
 						    pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(whileContainers[i])));
 
 						}
@@ -66,7 +69,7 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					if (ifContainers.size() != 0) {
 						for (int i = 0; i < ifContainers.size(); i++) {
 							cout << std::to_string(ifContainers[i]) << endl;
-							//pkbinstance.addDesignAbstraction("USES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
+							pkbinstance.addDesignAbstraction("USES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
 							pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(ifContainers[i])));
 
 						}

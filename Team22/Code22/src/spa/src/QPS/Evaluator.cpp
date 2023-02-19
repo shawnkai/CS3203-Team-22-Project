@@ -8,6 +8,6 @@ QueryEvaluator::QueryEvaluator(PKB pkb) {
     this->pkb = pkb;
 }
 
-string QueryEvaluator::evaluate(Expression *expression) {
+vector<string> QueryEvaluator::evaluate(Expression *expression) {
     return expression->evaluate(this->pkb);
 }

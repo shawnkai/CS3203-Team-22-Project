@@ -21,7 +21,9 @@ class Expression {
     public:
         explicit Expression(vector<DesignEntity*> entities);
 
-        virtual string evaluate(PKB pkb) = 0;
+        virtual vector<string> evaluate(PKB pkb) = 0;
+
+        vector<DesignEntity*> getAllEntities();
 
         virtual string toString() = 0;
 };
@@ -36,7 +38,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 
 };
 
@@ -53,7 +55,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -62,9 +64,8 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
-
 
 //Uses expression classes
 class UsesExpression : public Expression {
@@ -79,7 +80,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -88,8 +89,62 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
+
+class FAPSExpression: public Expression {
+private:
+    string pkbAbstraction;
+
+public:
+    explicit FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class FollowsExpression: public FAPSExpression {
+private:
+    string pkbAbstraction;
+public:
+    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class FollowsStarExpression: public FAPSExpression {
+public:
+    explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class ParentExpression: public FAPSExpression {
+public:
+    explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class ParentStarExpression: public FAPSExpression {
+public:
+    explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class PatternExpression : public Expression {
+private:
+    NamedEntity *p1;
+    string p2;
+public:
+    explicit PatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+
 
 
 #endif //SPA_EXPRESSIONS_H

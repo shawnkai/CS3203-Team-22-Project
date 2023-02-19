@@ -32,7 +32,7 @@ inline const char* ToString(TokenType t) {
         case PROCEDURE: return "PROCEDURE";
         case READ: return "READ";
         case PRINT: return "PRINT";
-        case ASSIGN: return "ASSIGN";
+        case ASSIGN: return "ASSIGNMENT";
         case WHILE: return "WHILE";
         case IF: return "IF";
         case CALL: return "CALL";

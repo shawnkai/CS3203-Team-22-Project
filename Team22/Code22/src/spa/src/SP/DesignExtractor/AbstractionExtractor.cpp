@@ -23,6 +23,7 @@ void AbstractionExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 	else {
 		std::string procedureName;
 		procedureName = root.stringId;
+		pkbinstance.addDesignEntity("PROCEDURE", make_tuple(procedureName, std::to_string(root.stmtNumber)));
 		int noOfChildren = (root.children).size();
 		for (int j = 0; j < noOfChildren; j++) {
 			std::vector<TNode> childNodes = root.children;
