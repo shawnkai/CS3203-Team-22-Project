@@ -11,8 +11,16 @@ using namespace std;
 
 #include "IfExtractor.h"
 
-
-
+/**
+ * Extracts the abstractions and entities from an if statement and adds the abstractions and
+ * entities to the Program Knowledge Base. The ifContainers vector will be updated as well to
+ * include the current if statement's line number.
+ *
+ * @param currentNode The current node in the Abstract Syntax Tree, of type TNode.
+ * @param ifContainers The vector of line numbers of the if statements that the current statement is nested in.
+ * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
+ * @param pkbinstance An instance of Program Knowledge Base.
+ */
 void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType != TokenType::IF) {

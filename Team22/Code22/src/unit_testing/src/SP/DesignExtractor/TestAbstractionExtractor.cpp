@@ -27,7 +27,7 @@ TEST_CASE("Testcase1_ExtractOneStatement_ShouldSuccess") {
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
     REQUIRE(result1 == "VARIABLE: x: 1, ");
-    REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1,");
+    REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
@@ -99,6 +99,6 @@ TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
 
     REQUIRE(result1 == "VARIABLE: x: 1, 4, ");
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
-    REQUIRE(result3 == "USES:STATEMENT: x: 4, 3,");
+    REQUIRE(result3 == "USES:STATEMENT: x: 4, 3, ");
 
 }
