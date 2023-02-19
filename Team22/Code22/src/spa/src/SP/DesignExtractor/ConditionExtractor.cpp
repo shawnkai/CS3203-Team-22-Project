@@ -11,6 +11,17 @@ using namespace std;
 
 #include "ConditionExtractor.h"
 
+/**
+ * Extracts the abstractions and entities from a condition of an if or while statement and
+ * adds the abstractions and entities to the Program Knowledge Base. If the current if 
+ * or while statement is nested in other if or while statements, then the related abstractions
+ * would also be added to the Program Knowledge Base.
+ *
+ * @param currentNode The current node in the Abstract Syntax Tree, of type TNode.
+ * @param ifContainers The vector of line numbers of the if statements that the current statement is nested in.
+ * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
+ * @param pkbinstance An instance of Program Knowledge Base.
+ */
 void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 	queue<TNode> queue1;

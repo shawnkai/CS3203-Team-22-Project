@@ -11,7 +11,17 @@ using namespace std;
 
 #include "ReadPrintExtractor.h"
 
-
+/**
+ * Extracts the abstractions and entities from a read statement or a print statement, and adds
+ * the abstractions and entities to the Program Knowledge Base. If the current statement is 
+ * nested in other if or while statements, then the related abstractions would also be added
+ * to the Program Knowledge Base.
+ *
+ * @param currentNode The current node in the Abstract Syntax Tree, of type TNode.
+ * @param ifContainers The vector of line numbers of the if statements that the current statement is nested in.
+ * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
+ * @param pkbinstance An instance of Program Knowledge Base.
+ */
 void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 
 	if (currentNode.nodeType == TokenType::UNKNOWN) {
