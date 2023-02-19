@@ -139,18 +139,34 @@ vector<AssignPattern*> PKB::getAllRightHandExpressions() {
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
 
+/**
+ * Clears the Assignment Pattern Database. This method is hidden
+ * from the user.
+ */
 void PKB::clearAssignPatternDatabase() {
     AssignPatternDatabaseFactory::clearDatabase();
 }
 
+/**
+ * Clears the Design Entities Database. This method is hidden
+ * from the user.
+ */
 void PKB::clearDesignEntityDatabase() {
     DesignEntitiesDatabaseFactory::clearDatabase();
 }
 
+/**
+ * Clears the Design Abstractions Database. This method is hidden
+ * from the user.
+ */
 void PKB::clearDesignAbstractionDatabase() {
     DesignAbstractionsDatabaseFactory::clearDatabase();
 }
 
+/**
+ * Clears the databases. Implemented to improve testing, as PKB storage is
+ * static in nature, and to avoid cross-linkage among test cases.
+ */
 void PKB::clearAllDatabases() {
     this->clearDesignAbstractionDatabase();
     this->clearDesignEntityDatabase();

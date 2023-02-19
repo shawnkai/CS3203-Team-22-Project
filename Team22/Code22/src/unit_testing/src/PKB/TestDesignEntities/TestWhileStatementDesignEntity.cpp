@@ -132,3 +132,26 @@ TEST_CASE("Test 10: WhileStatement Design Entity, Check for Duplication Filterin
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 11: WhileStatement Design Entity, Populate The Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "2"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "3"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignEntity("WHILE", "ws12");
+
+        Result expectedResultBeforeClearing("WHILE", "ws12", vector<string>{"1", "2", "3"});
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignEntity("WHILE", "ws12");
+
+        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+
+        REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
+                 && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
+    }
+}

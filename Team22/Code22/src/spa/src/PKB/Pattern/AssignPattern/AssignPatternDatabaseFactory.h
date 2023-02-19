@@ -19,6 +19,7 @@ class AssignPatternDatabaseFactory {
 public:
 
     static AssignPatternDatabase* getAssignPatternDatabase();
+
     static void clearDatabase();
 };
 
