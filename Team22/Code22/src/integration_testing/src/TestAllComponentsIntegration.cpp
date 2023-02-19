@@ -62,6 +62,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output2.find('7') != std::string::npos);
     REQUIRE(output2.find('8') != std::string::npos);
 
+    // Testing Parent
     string declaration3 = "stmt s;";
     string query3 = "Select s such that Parent(4, s)";
     parser.parse(declaration3);
@@ -71,7 +72,6 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     for (const string& r : res_3) {
         output3 += r;
     }
-    cout << "Output 3" << output3 << endl; ;
 
     REQUIRE(output3.find('5') != std::string::npos);
     REQUIRE(output3.find('6') != std::string::npos);
@@ -81,6 +81,85 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output3.find("10") != std::string::npos);
     REQUIRE(output3.find("11") != std::string::npos);
     REQUIRE(output3.find("12") == std::string::npos);
+
+    // Testing Follows*
+    string declaration4 = "variable a;";
+    string query4 = "Select a such that Follows*(3, a)";
+    parser.parse(declaration4);
+    auto exp4 = parser.parse(query4);
+    vector<string> res_4 = evaluator.evaluate(exp4);
+    string output4;
+    for (const string& r : res_4) {
+        output4 += r;
+    }
+
+    REQUIRE(output4.find('4') != std::string::npos);
+    REQUIRE(output4.find("12") != std::string::npos);
+
+    // Testing Follows
+    string declaration5 = "variable a;";
+    string query5 = "Select a such that Follows(3, a)";
+    parser.parse(declaration5);
+    auto exp5 = parser.parse(query5);
+    vector<string> res_5 = evaluator.evaluate(exp5);
+    string output5;
+    for (const string& r : res_5) {
+        output5 += r;
+    }
+
+    REQUIRE(output5.find('4') != std::string::npos);
+    REQUIRE(output5.find("12") == std::string::npos);
+
+    // Testing Uses
+    string declaration6 = "variable v;";
+    string query6 = "Select v such that Uses(9, v)";
+    parser.parse(declaration6);
+    auto exp6 = parser.parse(query6);
+    vector<string> res_6 = evaluator.evaluate(exp6);
+    string output6;
+    for (const string& r : res_6) {
+        output6 += r;
+    }
+
+    REQUIRE(output6.find('i') != std::string::npos);
+    REQUIRE(output6.find('z') != std::string::npos);
+    REQUIRE(output6.find('x') != std::string::npos);
+    REQUIRE(output6.find('o') == std::string::npos);
+
+    // Testing Modifies
+    string declaration7 = "variable v;";
+    string query7 = "Select v such that Modifies(7, v)";
+    parser.parse(declaration7);
+    auto exp7 = parser.parse(query7);
+    vector<string> res_7 = evaluator.evaluate(exp7);
+    string output7;
+    for (const string& r : res_7) {
+        output7 += r;
+    }
+
+    REQUIRE(output7.find('i') == std::string::npos);
+    REQUIRE(output7.find('z') != std::string::npos);
+    REQUIRE(output7.find('x') == std::string::npos);
+
+    // Testing Parent*
+    string declaration8 = "assign a; while w;";
+    string query8 = "Select a such that Parent* (w, a)";
+    parser.parse(declaration8);
+    auto exp8 = parser.parse(query8);
+    vector<string> res_8 = evaluator.evaluate(exp8);
+    string output8;
+    for (const string& r : res_8) {
+        output8 += r;
+    }
+
+    REQUIRE(output8.find('5') != std::string::npos);
+    REQUIRE(output8.find('6') == std::string::npos);
+    REQUIRE(output8.find('7') != std::string::npos);
+    REQUIRE(output8.find('8') != std::string::npos);
+    REQUIRE(output8.find('9') != std::string::npos);
+    REQUIRE(output8.find("10") == std::string::npos);
+    REQUIRE(output8.find("11") != std::string::npos);
+    REQUIRE(output8.find("12") == std::string::npos);
 }
 
 TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
