@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an ProcedureUses Design Abstraction When Multipl
         REQUIRE(pkbResult.toString() == "USES:PROCEDURE: upd7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The ProcedureUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd9", "upd10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd9", "upd10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd9", "upd11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd9", "upd12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURE", "upd9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURE", "upd9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PROCEDURE: upd9: upd10, upd11, upd12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

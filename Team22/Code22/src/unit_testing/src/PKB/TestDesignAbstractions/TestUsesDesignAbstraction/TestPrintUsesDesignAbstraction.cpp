@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an PrintUses Design Abstraction When Multiple Sa
         REQUIRE(pkbResult.toString() == "USES:PRINT: up7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The PrintUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up9", "up10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up9", "up10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up9", "up11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up9", "up12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("PRINT", "up9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PRINT", "up9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PRINT: up9: up10, up11, up12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

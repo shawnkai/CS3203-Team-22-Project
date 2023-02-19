@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an StatementUses Design Abstraction When Multipl
         REQUIRE(pkbResult.toString() == "USES:STATEMENT: us7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The StatementUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:STATEMENT: us9: us10, us11, us12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

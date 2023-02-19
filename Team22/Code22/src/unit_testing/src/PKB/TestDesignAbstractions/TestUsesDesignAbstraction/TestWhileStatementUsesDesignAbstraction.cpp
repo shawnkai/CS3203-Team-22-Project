@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an WhileStatementUses Design Abstraction When Mu
         REQUIRE(pkbResult.toString() == "USES:WHILE: uws7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The WhileStatementUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws9", "uws10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws9", "uws10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws9", "uws11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws9", "uws12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("WHILE", "uws9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("WHILE", "uws9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:WHILE: uws9: uws10, uws11, uws12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}
