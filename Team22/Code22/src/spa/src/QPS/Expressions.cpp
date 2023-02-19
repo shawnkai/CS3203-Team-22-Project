@@ -396,6 +396,7 @@ string PatternExpression::toString() {
 
 vector<string> PatternExpression::evaluate(PKB pkb) {
     string prefix_expr = p2;
+    prefix_expr = Utilities::removeAllOccurrences(prefix_expr, '\"');
     prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
     prefix_expr = regex_replace(prefix_expr, regex("\\+"), "\\+");
     prefix_expr = regex_replace(prefix_expr, regex("\\*"), "\\*");
