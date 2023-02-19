@@ -23,6 +23,6 @@ TEST_CASE("TestCase2_TokenToString_ShouldSuccess") {
     string t1String = ToString(t1);
     string t2String = ToString(t2);
 
-    REQUIRE(t1String == "ASSIGN=1");
+    REQUIRE(t1String == "ASSIGNMENT=1");
     REQUIRE(t2String == "NAME_IDENTIFIERx1");
 }

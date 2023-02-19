@@ -20,7 +20,7 @@ TEST_CASE("Test Declaration Extraction") {
 
     vector<tuple<string, string>> result = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGN"}, {"a1", "ASSIGN"},
+    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
@@ -91,4 +91,32 @@ TEST_CASE("Test Select such that Uses Statement Extraction 2") {
     SelectExpression *actualResult = queryParser.parse(query);
 
     REQUIRE(actualResult->toString() == query);
+}
+
+TEST_CASE("Test Select such that pattern Statement Extraction") {
+    QueryParser queryParser;
+    string declaration = "assign a;";
+    string query = R"(Select a such that pattern a(_, _"x+y"_))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select -1 such that pattern a(_, _+xy_))";
+    
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("Test Select such that Follows Statement Extraction 1") {
+    QueryParser queryParser;
+    string declaration = "assign a;";
+    string query = "Select a such that Follows(12, a)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select -1 such that Follows(12, -1)";
+
+    REQUIRE(actualResult->toString() == expected);
 }

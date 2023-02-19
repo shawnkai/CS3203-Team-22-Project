@@ -104,4 +104,9 @@ public:
     explicit ConstantEntity(string synonym);
 };
 
+class WildCardEntity : public NamedEntity {
+public:
+    explicit WildCardEntity();
+};
+
 #endif //INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
