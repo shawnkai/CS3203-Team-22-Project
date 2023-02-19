@@ -12,6 +12,10 @@
 using namespace std;
 
 class PKB {
+    void clearDesignAbstractionDatabase();
+    void clearDesignEntityDatabase();
+    void clearAssignPatternDatabase();
+
 public:
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     Result getDesignEntity(string entityType, string entityName);
@@ -24,4 +28,6 @@ public:
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber);
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
     vector<AssignPattern*> getAllRightHandExpressions();
+
+    void clearAllDatabases();
 };

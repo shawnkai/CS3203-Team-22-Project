@@ -18,6 +18,8 @@ class ParentStarDatabaseFactory {
 
 public:
     static DesignAbstractionDatabase* getParentStarDatabase();
+
+    static void clearDatabase();
 };
 
 #endif //SPA_PARENTSTARDATABASEFACTORY_H

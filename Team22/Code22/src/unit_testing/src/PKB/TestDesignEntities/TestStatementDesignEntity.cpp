@@ -132,3 +132,26 @@ TEST_CASE("Test 10: Statement Design Entity, Check for Duplication Filtering Whe
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 11: Statement Design Entity, Populate The Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("STATEMENT", make_tuple("s12", "1"));
+        pkbTest.addDesignEntity("STATEMENT", make_tuple("s12", "1"));
+        pkbTest.addDesignEntity("STATEMENT", make_tuple("s12", "2"));
+        pkbTest.addDesignEntity("STATEMENT", make_tuple("s12", "3"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignEntity("STATEMENT", "s12");
+
+        Result expectedResultBeforeClearing("STATEMENT", "s12", vector<string>{"1", "2", "3"});
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignEntity("STATEMENT", "s12");
+
+        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+
+        REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
+                 && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
+    }
+}

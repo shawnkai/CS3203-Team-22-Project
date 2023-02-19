@@ -1,24 +1,8 @@
 #include <vector>
 #include <iostream>
 #include "SPDriver.h"
-//#include "Tokenizer.h"
-//#include "TNode.h"//added
-//#include "DesignExtractor.h" //added
 
 SPDriver::SPDriver() {}
-
-/*void SPDriver::parseSimpleProgram(const char* fileName) {
-    try {
-        //Tokenizer spTokenizer(fileName);
-        const std::vector<Token> tokens = Tokenizer::tokenize(fileName);
-        for (Token token: tokens) {
-           std::cout << "Token" << ToString(token) << std::endl;
-        }
-    }
-    catch (std::logic_error &error) {
-        exit(1);
-    }
-}*/
 
 void SPDriver::parseSimpleProgram(std::string filename) {
     Tokenizer tokenizer = Tokenizer();
@@ -31,7 +15,6 @@ void SPDriver::parseSimpleProgram(std::string filename) {
         ::exit(1);
     }
     std::cout << "execution of tokenizer done" << std::endl;
-    //driver.parseSimpleProgram(fileTest);
     for (Token token : tokenList) {
         std::cout << "Token" << ToString(token) << std::endl;
     }
@@ -63,4 +46,4 @@ void SPDriver::parseSimpleProgram(std::string filename) {
     PKB pkbinstance = PKB();
     DesignExtractor designExtractor;
     designExtractor.extractAbstraction(result, pkbinstance);
-};
+}

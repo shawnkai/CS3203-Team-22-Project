@@ -68,3 +68,22 @@ TEST_CASE("Test 5: Retrieval of an Follows Design Abstraction When Multiple Same
         REQUIRE(pkbResult.toString() == "FOLLOWS: a11: a13, a14, ");
     }
 }
+
+TEST_CASE("Test 6: Populate The Follows Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a15", "a16"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a15", "a16"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a15", "a17"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a15", "a18"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("FOLLOWS", make_pair("_", "a15"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("FOLLOWS", make_pair("_", "a15"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "FOLLOWS: a15: a16, a17, a18, ")
+        && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

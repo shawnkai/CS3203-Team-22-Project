@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an IfStatementUses Design Abstraction When Multi
         REQUIRE(pkbResult.toString() == "USES:IF: uis7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The IfStatementUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis9", "uis10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis9", "uis10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis9", "uis11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis9", "uis12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("IF", "uis9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("IF", "uis9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:IF: uis9: uis10, uis11, uis12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

@@ -68,3 +68,22 @@ TEST_CASE("Test 5: Retrieval of an Parent Design Abstraction When Multiple Same 
         REQUIRE(pkbResult.toString() == "PARENT: a11: a13, a14, ");
     }
 }
+
+TEST_CASE("Test 6: Populate The Parent Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a15", "a16"));
+        pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a15", "a16"));
+        pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a15", "a17"));
+        pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a15", "a18"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("PARENT", make_pair("_", "a15"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("PARENT", make_pair("_", "a15"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "PARENT: a15: a16, a17, a18, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

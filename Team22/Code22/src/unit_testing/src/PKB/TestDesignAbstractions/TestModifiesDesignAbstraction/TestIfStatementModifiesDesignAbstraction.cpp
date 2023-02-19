@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an IfStatementModifies Design Abstraction When M
         REQUIRE(pkbResult.toString() == "MODIFIES:IF: mis7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The IfStatementModifies Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis9", "mis10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis9", "mis10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis9", "mis11"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis9", "mis12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("IF", "mis9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("IF", "mis9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:IF: mis9: mis10, mis11, mis12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an ProcedureCallUses Design Abstraction When Mul
         REQUIRE(pkbResult.toString() == "USES:PROCEDURECALL: updc7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The ProcedureCallUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc9", "updc10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc9", "updc10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc9", "updc11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc9", "updc12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PROCEDURECALL: updc9: updc10, updc11, updc12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

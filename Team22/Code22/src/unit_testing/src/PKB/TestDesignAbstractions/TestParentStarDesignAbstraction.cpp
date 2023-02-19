@@ -68,3 +68,22 @@ TEST_CASE("Test 5: Retrieval of an ParentStar Design Abstraction When Multiple S
         REQUIRE(pkbResult.toString() == "PARENTSTAR: a11: a13, a14, ");
     }
 }
+
+TEST_CASE("Test 6: Populate The ParentStar Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a15", "a16"));
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a15", "a16"));
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a15", "a17"));
+        pkbTest.addDesignAbstraction("PARENTSTAR", make_tuple("_", "a15", "a18"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("PARENTSTAR", make_pair("_", "a15"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("PARENTSTAR", make_pair("_", "a15"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "PARENTSTAR: a15: a16, a17, a18, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

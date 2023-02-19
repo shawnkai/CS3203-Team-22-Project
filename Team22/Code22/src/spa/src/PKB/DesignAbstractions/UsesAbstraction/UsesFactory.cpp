@@ -16,6 +16,14 @@
 
 using namespace std;
 
+/**
+ * Returns a DesignAbstraction pointer, related to the Uses Design Abstraction,
+ * based on the type of entity being abstracted. A null pointer will be returned,
+ * for invalid type of entities to be abstracted.
+ *
+ * @param abstractionDetails The details of the abstraction, that is to be stored.
+ * @return A DesignAbstraction pointer, of type of Uses, depending on type of entity being abstracted.
+ */
 DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, string> abstractionDetails) {
     string usesAbstractionType = get<0>(abstractionDetails);
     transform(usesAbstractionType.begin(), usesAbstractionType.end(), usesAbstractionType.begin(), ::toupper);
@@ -36,6 +44,6 @@ DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, stri
         return new IfStatementUses(abstractionDetails);
     }
 
-    // Temp: to pass build
+    // Returning a null pointer, in case of an invalid usesAbstractionType
     return nullptr;
 }

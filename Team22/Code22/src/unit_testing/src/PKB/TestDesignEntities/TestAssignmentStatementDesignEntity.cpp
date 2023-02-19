@@ -132,3 +132,26 @@ TEST_CASE("Test 10: AssignmentStatement Design Entity, Check for Duplication Fil
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
 }
+
+TEST_CASE("Test 11: AssignmentStatement Design Entity, Populate The Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "1"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "1"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "2"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "3"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignEntity("ASSIGNMENT", "as12");
+
+        Result expectedResultBeforeClearing("ASSIGNMENT", "as12", vector<string>{"1", "2", "3"});
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignEntity("ASSIGNMENT", "as12");
+
+        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+
+        REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
+        && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
+    }
+}

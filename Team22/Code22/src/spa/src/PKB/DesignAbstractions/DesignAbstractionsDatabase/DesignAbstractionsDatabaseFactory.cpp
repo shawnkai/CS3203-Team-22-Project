@@ -127,3 +127,57 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentDatabase(
 DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatabase() {
     return ParentStarDatabaseFactory::getParentStarDatabase();
 }
+
+/**
+ * Clears all the Modifies Design Abstraction databases.
+ */
+void DesignAbstractionsDatabaseFactory::clearModifiesDatabase() {
+    ModifiesDatabaseFactory::clearDatabase();
+}
+
+/**
+ * Clears all the Uses Design Abstraction databases.
+ */
+void DesignAbstractionsDatabaseFactory::clearUsesDatabase() {
+    UsesDatabaseFactory::clearDatabase();
+}
+
+/**
+ * Clears the Follows Design Abstraction database.
+ */
+void DesignAbstractionsDatabaseFactory::clearFollowsDatabase() {
+    FollowsDatabaseFactory::clearDatabase();
+}
+
+/**
+ * Clears the FollowsStar Design Abstraction database.
+ */
+void DesignAbstractionsDatabaseFactory::clearFollowsStarDatabase() {
+    FollowsStarDatabaseFactory::clearDatabase();
+}
+
+/**
+ * Clears the Parent Design Abstraction database.
+ */
+void DesignAbstractionsDatabaseFactory::clearParentDatabase() {
+    ParentDatabaseFactory::clearDatabase();
+}
+
+/**
+ * Clears the ParentStar Design Abstraction database.
+ */
+void DesignAbstractionsDatabaseFactory::clearParentStarDatabase() {
+    ParentStarDatabaseFactory::clearDatabase();
+}
+
+/**
+ * Clears all the Design Abstraction databases.
+ */
+void DesignAbstractionsDatabaseFactory::clearDatabase() {
+    clearModifiesDatabase();
+    clearUsesDatabase();
+    clearFollowsDatabase();
+    clearFollowsStarDatabase();
+    clearParentDatabase();
+    clearParentStarDatabase();
+}

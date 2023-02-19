@@ -8,6 +8,20 @@
 
 using namespace std;
 
+/**
+ * Returns the database, that stores all the Follows relationships.
+ *
+ * @return A DesignAbstractionDatabase pointer, that points to the Follows relationship database.
+ */
 DesignAbstractionDatabase* FollowsDatabaseFactory::getFollowsDatabase() {
     return followsDatabase;
+}
+
+/**
+ * Clears the Follows database.
+ */
+void FollowsDatabaseFactory::clearDatabase() {
+    delete followsDatabase;
+
+    followsDatabase = new FollowsDatabase();
 }

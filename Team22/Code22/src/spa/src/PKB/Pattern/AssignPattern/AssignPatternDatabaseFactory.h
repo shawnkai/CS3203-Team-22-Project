@@ -19,6 +19,8 @@ class AssignPatternDatabaseFactory {
 public:
 
     static AssignPatternDatabase* getAssignPatternDatabase();
+
+    static void clearDatabase();
 };
 
 #endif //SPA_ASSIGNPATTERNDATABASEFACTORY_H

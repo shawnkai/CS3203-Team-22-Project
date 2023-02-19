@@ -3,6 +3,7 @@
 //
 
 #include "Utilities.h"
+#include <algorithm>
 
 vector<string> Utilities::findIntersection(vector<vector<string>> &all_vectors) {
     vector<string> intersection;
