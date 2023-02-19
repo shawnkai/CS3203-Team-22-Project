@@ -10,9 +10,28 @@ void require(bool b) {
 TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     SPDriver driver;
     std::string inputFilePath;
-#if __APPLE__
+
     inputFilePath = "Sample_source2.txt";
-#endif
+
+    string code = "procedure Example {\n"
+                  "  x = 2;\n"
+                  "  z = 3;\n"
+                  "  i = 5;\n"
+                  "  while (i!=0) {\n"
+                  "    x = x - 1;\n"
+                  "    if (x==1) then {\n"
+                  "      z = x + 1; }\n"
+                  "    else {\n"
+                  "      y = z + x; }\n"
+                  "    z = z + x + i;\n"
+                  "    read q;\n"
+                  "    i = i - 1; }\n"
+                  "    print p; }";
+    ofstream temp_file;
+    temp_file.open(inputFilePath);
+    temp_file << code;
+    temp_file.close();
+
     driver.parseSimpleProgram(inputFilePath);
 
     PKB standardExampleSIMPLESourceChecker = PKB();
@@ -57,6 +76,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
     REQUIRE(output2.find('7') != std::string::npos);
     REQUIRE(output2.find('8') != std::string::npos);
+    REQUIRE(filesystem::remove(inputFilePath));
 }
 
 TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
@@ -64,9 +84,44 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     standardExampleSIMPLESourceChecker.clearAllDatabases();
     SPDriver driver;
     std::string inputFilePath;
-#if __APPLE__
+
     inputFilePath = "Sample_source3.txt";
-#endif
+
+    string code = "procedure Example {\n"
+                  " x = 2;\n"
+                  " while (i!=0) {\n"
+                  "   if (x > 1) then {\n"
+                  "     z = x + 1; }\n"
+                  "   else {\n"
+                  "     y = z + x;\n"
+                  "     if (x >= 5) then {\n"
+                  "        z = x + 1;\n"
+                  "        while ( x < 10) {\n"
+                  "           x = x - 1;\n"
+                  "           while ((x <= 9) || ((z % 2) == 1)) {\n"
+                  "             anx = 1;\n"
+                  "             if (z == 1) then {\n"
+                  "               z = 2;\n"
+                  "             } else {\n"
+                  "               z = 3;\n"
+                  "               while (!(!(j < 0))) {\n"
+                  "                 j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;\n"
+                  "               }\n"
+                  "             }\n"
+                  "           }\n"
+                  "        }\n"
+                  "     }\n"
+                  "     else {\n"
+                  "       print x;\n"
+                  "     }\n"
+                  "   }\n"
+                  " }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(inputFilePath);
+    temp_file << code;
+    temp_file.close();
+
     driver.parseSimpleProgram(inputFilePath);
 
     //PKB standardExampleSIMPLESourceChecker = PKB();
@@ -122,4 +177,5 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     REQUIRE(output2.find("15") != std::string::npos);
     REQUIRE(output2.find("16") != std::string::npos);
     REQUIRE(output2.find("17") != std::string::npos);
+    REQUIRE(filesystem::remove(inputFilePath));
 }

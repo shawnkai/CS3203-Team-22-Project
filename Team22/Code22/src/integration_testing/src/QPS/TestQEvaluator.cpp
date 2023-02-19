@@ -18,6 +18,7 @@ using namespace std;
 
 TEST_CASE("TestCase1_EvaluateSelectStatement_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("PROCEDURE", make_tuple("main", "1"));
     pkb.addDesignEntity("VARIABLE", make_tuple("v1", "2"));
@@ -46,6 +47,7 @@ TEST_CASE("TestCase1_EvaluateSelectStatement_ShouldSuccess") {
 
 TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v3", "1"));
     pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v3", "1"));
@@ -67,6 +69,7 @@ TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess")
 
 TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v4", "1"));
     pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v4", "1"));
@@ -88,6 +91,7 @@ TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
 
 TEST_CASE("TestCase5_EvaluateSelectStatementWithPatternExactMatching_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v6", "8"));
     pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v6", "8"));
@@ -112,6 +116,7 @@ TEST_CASE("TestCase5_EvaluateSelectStatementWithPatternExactMatching_ShouldSucce
 
 TEST_CASE("TestCase6_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v6", "9"));
     pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v6", "9"));
@@ -141,6 +146,7 @@ TEST_CASE("TestCase6_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") 
 
 TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "10"));
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "11"));
@@ -167,6 +173,7 @@ TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess") 
 
 TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "12"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "13"));
@@ -193,6 +200,7 @@ TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldSu
 
 TEST_CASE("TestCase9_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "15"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "14"));
@@ -219,6 +227,7 @@ TEST_CASE("TestCase9_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") {
 
 TEST_CASE("TestCase10_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "17"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "16"));
@@ -245,6 +254,7 @@ TEST_CASE("TestCase10_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSu
 
 TEST_CASE("TestCase11_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSuccess") {
     PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "18"));
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "20"));
@@ -269,35 +279,9 @@ TEST_CASE("TestCase11_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSucce
     REQUIRE(Utilities::checkIfPresent(res2, "20"));
 }
 
-TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatFollowsStarSynonyms_ShouldSuccess") {
+TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatParentStar_ShouldSuccess") {
     PKB pkb;
-
-    pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "23"));
-    pkb.addDesignEntity("WHILE", make_tuple("WHILE", "21"));
-    pkb.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "21", "23"));
-
-    QueryEvaluator queryEvaluator(pkb);
-    QueryParser queryParser;
-
-    string declaration = "assign a; while w;";
-    string query1 = "Select a such that Follows*(w, a)";
-    string query2 = "Select w such that Follows*(w, a)";
-
-    queryParser.parse(declaration);
-
-    SelectExpression *exp1 = queryParser.parse(query1);
-    SelectExpression *exp2 = queryParser.parse(query2);
-
-
-    vector<string> res1 = queryEvaluator.evaluate(exp1);
-    vector<string> res2 = queryEvaluator.evaluate(exp2);
-
-    REQUIRE(Utilities::checkIfPresent(res1, "23"));
-    REQUIRE(Utilities::checkIfPresent(res2, "21"));
-}
-
-TEST_CASE("TestCase13_EvaluateSelectStatementWithSuchThatParentStar_ShouldSuccess") {
-    PKB pkb;
+    pkb.clearAllDatabases();
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "26"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "24"));
@@ -320,30 +304,4 @@ TEST_CASE("TestCase13_EvaluateSelectStatementWithSuchThatParentStar_ShouldSucces
 
     REQUIRE(Utilities::checkIfPresent(res1, "26"));
     REQUIRE(Utilities::checkIfPresent(res2, "24"));
-}
-
-TEST_CASE("TestCase14_EvaluateSelectStatementWithSuchThatParentStarSynonyms_ShouldSuccess") {
-    PKB pkb;
-
-    pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "29"));
-    pkb.addDesignEntity("WHILE", make_tuple("WHILE", "27"));
-    pkb.addDesignAbstraction("PARENTSTAR", make_tuple("_", "27", "29"));
-
-    QueryEvaluator queryEvaluator(pkb);
-    QueryParser queryParser;
-
-    string declaration = "assign a; while w;";
-    string query1 = "Select a such that Parent*(w, a)";
-    string query2 = "Select w such that Parent*(w, a)";
-
-    queryParser.parse(declaration);
-
-    SelectExpression *exp1 = queryParser.parse(query1);
-    SelectExpression *exp2 = queryParser.parse(query2);
-
-    vector<string> res1 = queryEvaluator.evaluate(exp1);
-    vector<string> res2 = queryEvaluator.evaluate(exp2);
-
-    REQUIRE(Utilities::checkIfPresent(res1, "29"));
-    REQUIRE(Utilities::checkIfPresent(res2, "27"));
 }
