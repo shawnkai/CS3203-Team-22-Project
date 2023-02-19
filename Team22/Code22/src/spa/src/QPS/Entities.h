@@ -90,7 +90,7 @@ class NamedEntity : public DesignEntity {
 protected:
     string synonym;
 public:
-    NamedEntity(string type, string synonym);
+    NamedEntity(const string& type, string synonym);
 
     string getSynonym();
 

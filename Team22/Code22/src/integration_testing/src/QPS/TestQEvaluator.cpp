@@ -1,8 +1,4 @@
 //
-// Created by Atin Sakkeer Hussain on 06/02/2023.
-//
-
-//
 // Created by Atin Sakkeer Hussain on 04/02/2023.
 //
 
@@ -12,7 +8,6 @@
 #include "PKB/PKB.h"
 #include "catch.hpp"
 #include "Utilities.h"
-
 
 using namespace std;
 
@@ -305,3 +300,21 @@ TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatParentStar_ShouldSucces
     REQUIRE(Utilities::checkIfPresent(res1, "26"));
     REQUIRE(Utilities::checkIfPresent(res2, "24"));
 }
+
+
+//mismatching StmtEntity, NamedEntity
+TEST_CASE("TestCase29_ValidNamedEntityArg1FollowsExpression_SemanticError") {}
+
+TEST_CASE("TestCase30_ValidNamedEntityArg2FollowsStarExpression_SemanticError") {}
+
+TEST_CASE("TestCase31_ValidNamedEntityArg1ModifiesSExpression_SemanticError") {}
+
+TEST_CASE("TestCase32_ValidStmtEntityArg2UsesSExpression_SemanticError") {}
+
+TEST_CASE("TestCase33_ValidStmtEntityArg1ModifiesPExpression_SemanticError") {}
+
+TEST_CASE("TestCase34_ValidStmtEntityArg1PatternExpression_SemanticError") {}
+
+
+
+

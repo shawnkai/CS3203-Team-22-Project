@@ -5,7 +5,7 @@
 
 #include "QPS/Parser.h"
 #include "catch.hpp"
-
+#include "QPS/Exceptions.h"
 
 using namespace std;
 
@@ -216,3 +216,99 @@ TEST_CASE("TestCase15_ParseSelectWithSuchThatParentSynonyms_ShouldSuccess") {
 
     REQUIRE(actualResult->toString() == query);
 }
+
+TEST_CASE("TestCase16_InvalidSelectKeyword_SyntaxError") {
+    QueryParser queryParser;
+
+    string query1 = "Sel v";
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query1);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+
+}
+
+TEST_CASE("TestCase17_MultipleSelectOccurrence_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(1, v) Select v such that Uses(1, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+
+}
+
+
+TEST_CASE("TestCase18_OneInvalidDesignAbstraction_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that InvalidEntity(1, h)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+
+}
+
+
+//Missing quotation marks, wildcard combinations
+TEST_CASE("TestCase19_MissingOpeningQuoteWithoutWildcardsPatternExpression_SyntaxError") {}
+
+TEST_CASE("TestCase20_MissingClosingQuotePatternWithoutWildcardsExpression_SyntaxError") {}
+
+TEST_CASE("TestCase36_MissingClosingWildcardWithValidQuotesPatternExpression_SyntaxError") {}
+
+TEST_CASE("TestCase37_MissingOpeningQuoteWithValidWildcardsPatternExpression_SyntaxError") {}
+
+TEST_CASE("TestCase38_MissingAllQuotesWithNoWildcardPatternExpression_SyntaxError") {}
+
+TEST_CASE("TestCase39_MissingAllQuotesWithValidWildcardPatternExpression_SyntaxError") {}
+
+
+//undeclared synonyms
+TEST_CASE("TestCase29_UndeclaredStmtEntityArg1FollowsExpression_SemanticError") {}
+
+TEST_CASE("TestCase30_UndeclaredStmtEntityArg2FollowsStarExpression_SemanticError") {}
+
+TEST_CASE("TestCase31_UndeclaredStmtEntityArg1ModifiesSExpression_SemanticError") {}
+
+TEST_CASE("TestCase32_UndeclaredVariableArg2UsesSExpression_SemanticError") {}
+
+TEST_CASE("TestCase33_UndeclaredVariableArg1ModifiesPExpression_SemanticError") {}
+
+TEST_CASE("TestCase34_UndeclaredNamedEntityArg2UsesPExpression_SemanticError") {}
+
+
+
+TEST_CASE("TestCase35_InvalidExpressionSpecPatternExpression_SyntaxError") {}
+
+
+
+
+
+

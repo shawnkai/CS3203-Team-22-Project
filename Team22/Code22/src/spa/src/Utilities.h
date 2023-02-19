@@ -24,6 +24,8 @@ public:
 
     static bool isNumber(string s);
 
+    static bool isAlphanumericString(string s);
+
     static vector<string> findIntersection(vector<vector<string>>& all_vectors);
 
     static bool checkIfPresent(vector<string> list, string value);
