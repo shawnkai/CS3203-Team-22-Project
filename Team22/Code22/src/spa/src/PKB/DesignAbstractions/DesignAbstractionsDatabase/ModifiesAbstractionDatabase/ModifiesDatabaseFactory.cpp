@@ -41,6 +41,9 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
     return nullptr;
 }
 
+/**
+ * Clears all the Modifies Design Abstraction databases.
+ */
 void ModifiesDatabaseFactory::clearDatabase() {
     delete assignmentModifiesDatabase;
     delete readModifiesDatabase;

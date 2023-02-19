@@ -58,6 +58,9 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
     return nullptr;
 }
 
+/**
+ * Clears all the Design Entity databases.
+ */
 void DesignEntitiesDatabaseFactory::clearDatabase() {
     delete variableEntitiesDatabase;
     delete procedureEntitiesDatabase;
