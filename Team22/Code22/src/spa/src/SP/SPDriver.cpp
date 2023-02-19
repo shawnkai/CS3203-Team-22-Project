@@ -2,8 +2,17 @@
 #include <iostream>
 #include "SPDriver.h"
 
+/**
+ * Creates an instance of SPDriver.
+ */
 SPDriver::SPDriver() {}
 
+/**
+ * Parses the SIMPLE program and adds the abstractions and entities into the Program
+ * Knowledge Base.
+ *
+ * @param filename The filename of the SIMPLE program.
+ */
 void SPDriver::parseSimpleProgram(std::string filename) {
     Tokenizer tokenizer = Tokenizer();
     std::vector<Token> tokenList;

@@ -11,13 +11,25 @@ using namespace std;
 
 #include "StmtlstExtractor.h"
 
-
-
-
+/**
+ * Extracts the abstractions and entities from a statement list node in the Abstract Syntax Tree
+ * and add the abstractions and entities to the Program Knowledge Base. If the current list of 
+ * statements is nested in some if or while statements, the related abstractions would also be
+ * added to the Program Knowledge Base.
+ *
+ * @param curentNode The current node in the Abstract Syntax Tree, of type TNode.
+ * @param ifContainers The vector of line numbers of the if statements that the current statement is nested in.
+ * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
+ * @param pkbinstance An instance of Program Knowledge Base.
+ * @param currentParent The current parent statement of this list of statement, if there is no parent the value is 0.
+ */
 void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent) {
 
 	if (currentNode.nodeType != TokenType::STATEMENT_LIST) {
 		cout << "something went wrong" << endl;
+	}
+	else if ((currentNode.children).size() == 0) {
+
 	}
 	else {
 		std::vector<TNode> childstmts = currentNode.children;

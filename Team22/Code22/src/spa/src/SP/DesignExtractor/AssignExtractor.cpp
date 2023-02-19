@@ -11,6 +11,17 @@ using namespace std;
 
 #include "AssignExtractor.h"
 
+/**
+ * Extracts the abstractions and entities from an assignment statement and
+ * adds the abstractions and entities to the Program Knowledge Base. If the assignment 
+ * statement is nested in if or while statements, then the related abstractions
+ * would also be added to the Program Knowledge Base.
+ *
+ * @param currentNode The current node in the Abstract Syntax Tree, of type TNode.
+ * @param ifContainers The vector of line numbers of the if statements that this assignment statement is nested in.
+ * @param whileContainers The vector of line numbers of the while statements that this assignment statement is nested in.
+ * @param pkbinstance An instance of Program Knowledge Base.
+ */
 void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
 	TokenType nodeType1 = currentNode.nodeType;
 
