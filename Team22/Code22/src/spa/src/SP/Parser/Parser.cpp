@@ -12,6 +12,11 @@ using namespace std;
 #include "Parser.h"
 #include "TNode.h"
 
+/**
+ * Entry point of parsing.
+ *
+ * @return an AST representation of the SIMPLE Source
+ */
 TNode Parser::Parse() {
     Token currToken = tokenList[pos];
     ++pos;
@@ -22,6 +27,11 @@ TNode Parser::Parse() {
     return parseProcedure();
 }
 
+/**
+ * Parse one single procedure of a SIMPLE Source.
+ *
+ * @return an AST representation of a procedure
+ */
 TNode Parser::parseProcedure() {
     Token currToken = tokenList[pos];
     TNode node;
@@ -66,6 +76,11 @@ TNode Parser::parseProcedure() {
     return node;
 }
 
+/**
+ * Parse the 'stmtList', which is a block containing one or more statements.
+ *
+ * @return an AST representing a Statement List block
+ */
 TNode Parser::parseStatement() {
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
@@ -115,6 +130,11 @@ TNode Parser::parseStatement() {
     return stmtNode;
 }
 
+/**
+ * Parse one single assignment statement with exactly two children, left-hand side and right-hand side.
+ *
+ * @return an AST representation of one single assignment statement
+ */
 TNode Parser::parseAssignStatement() {
     Token currToken = tokenList[pos];
     TNode assignNode;
@@ -142,6 +162,12 @@ TNode Parser::parseAssignStatement() {
     return assignNode;
 }
 
+/**
+ * Build a variable Tree Node with the Token given.
+ *
+ * @param token a Token of Type NAME_IDENTIFIER
+ * @return a TNode representation of the variable
+ */
 TNode Parser::constructVarNode(const Token& token) {
     TNode varNode;
     varNode.nodeType = token.type;
@@ -150,6 +176,11 @@ TNode Parser::constructVarNode(const Token& token) {
     return varNode;
 }
 
+/**
+ * Parse the 'expr' of SIMPLE Source.
+ *
+ * @return an AST representation of an expression
+ */
 TNode Parser::parseExpression() {
     auto node = parseTerm();
     while (tokenList[pos].type == TokenType::OPERATOR && (tokenList[pos].value == "+" || tokenList[pos].value == "-")) {
@@ -166,6 +197,11 @@ TNode Parser::parseExpression() {
     return node;
 }
 
+/**
+ * Parse the 'term' of SIMPLE Source.
+ *
+ * @return an AST representation of a term
+ */
 TNode Parser::parseTerm() {
     auto node = parseFactor();
     while (tokenList[pos].type == TokenType::OPERATOR &&
@@ -183,6 +219,11 @@ TNode Parser::parseTerm() {
     return node;
 }
 
+/**
+ * Parse the 'factor' of SIMPLE Source.
+ *
+ * @return an AST representation of a factor
+ */
 TNode Parser::parseFactor() {
     TNode node;
     Token currToken = tokenList[pos];
@@ -214,6 +255,11 @@ TNode Parser::parseFactor() {
     return node;
 }
 
+/**
+ * Parse one single If statement, which has exactly three children of condition, then stmtList and else stmtList.
+ *
+ * @return an AST representation of one single If statement
+ */
 TNode Parser::parseIfStatement() {
     TNode ifNode;
     if (!(tokenList[pos].type == TokenType::IF && tokenList[pos].value == "if")) {
@@ -273,6 +319,11 @@ TNode Parser::parseIfStatement() {
     return ifNode;
 }
 
+/**
+ * Parse one single While statement, which has exactly two children of condition, and a stmtList.
+ *
+ * @return an AST representation of one single While statement
+ */
 TNode Parser::parseWhileStatement() {
     Token currToken = tokenList[pos];
     TNode whileNode;
@@ -312,6 +363,11 @@ TNode Parser::parseWhileStatement() {
     return whileNode;
 }
 
+/**
+ * Parse the 'cond_expr' of SIMPLE Source.
+ *
+ * @return an AST representation of a conditional expression
+ */
 TNode Parser::parseConditionalExpr() {
     Token currToken = tokenList[pos];
     TNode condNode;
@@ -410,6 +466,11 @@ TNode Parser::parseConditionalExpr() {
     }
 }
 
+/**
+ * Parse the 'rel_expr' of SIMPLE Source.
+ *
+ * @return an AST representation of a relational expression
+ */
 TNode Parser::parseRelationalExpr() {
     TNode node = parseRelationalFactor();
     TNode relationalNode;
@@ -426,6 +487,11 @@ TNode Parser::parseRelationalExpr() {
     return relationalNode;
 }
 
+/**
+ * Parse the 'rel_factor' of SIMPLE Source.
+ *
+ * @return an AST representation of a relational factor
+ */
 TNode Parser::parseRelationalFactor() {
     TNode node;
     Token currToken = tokenList[pos];
@@ -438,6 +504,11 @@ TNode Parser::parseRelationalFactor() {
     return node;
 }
 
+/**
+ * Parse one single print statement, which has exactly one child.
+ *
+ * @return an AST representation of the print statement
+ */
 TNode Parser::parsePrintStatement() {
     Token currToken = tokenList[pos];
     TNode node;
@@ -470,6 +541,11 @@ TNode Parser::parsePrintStatement() {
     return node;
 }
 
+/**
+ * Parse one single read statement, which has exactly one child.
+ *
+ * @return an AST representation of the print statement
+ */
 TNode Parser::parseReadStatement() {
     Token currToken = tokenList[pos];
     TNode node;
@@ -501,133 +577,3 @@ TNode Parser::parseReadStatement() {
     node.children.push_back(childNode);
     return node;
 }
-
-//int main() {
-//    vector<Token> tokens;
-//    tokens.push_back(Token(TokenType::PROCEDURE, "procedure", 0));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "compute", 0));
-//    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 0));
-//    //base test 1 read and print
-////    tokens.push_back(Token(TokenType::READ, "read", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "x", 1));
-////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 1));
-////    tokens.push_back(Token(TokenType::PRINT, "print", 2));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 2));
-////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
-//    //base test 2 assignment stmt
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "normsq", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "=", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "centX", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "*", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "centX", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "+", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "centY", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "*", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "centY", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "-", 1));
-////    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
-////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 1));
-//    //base test 3 while stmt
-//    tokens.push_back(Token(TokenType::WHILE, "while", 1));
-//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "z", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, ">", 1));
-//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, "+", 1));
-//    tokens.push_back(Token(TokenType::INTEGER, "2", 1));
-//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, "*", 1));
-//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::INTEGER, "3", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, "+", 1));
-//    tokens.push_back(Token(TokenType::INTEGER, "4", 1));
-//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, "||", 1));
-//    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "z", 1));
-//    tokens.push_back(Token(TokenType::OPERATOR, "==", 1));
-//    tokens.push_back(Token(TokenType::INTEGER, "0", 1));
-//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-//    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-//    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
-//    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "j", 2));
-//    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 2));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "1", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "+", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "2", 2));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "*", 2));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "3", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "+", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "4", 2));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "+", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "5", 2));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "%", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "6", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "/", 2));
-//    tokens.push_back(Token(TokenType::INTEGER, "7", 2));
-//    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
-//    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-//    //base test 4 if stmt
-////    tokens.push_back(Token(TokenType::IF, "if", 1));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, "!", 1));
-////    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 1));
-////    tokens.push_back(Token(TokenType::OPERATOR, ">", 1));
-////    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-////    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
-////    tokens.push_back(Token(TokenType::IF, "then", 1));
-////    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 2));
-////    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
-////    tokens.push_back(Token(TokenType::INTEGER, "1", 2));
-////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
-////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-////    tokens.push_back(Token(TokenType::IF, "else", 1));
-////    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 2));
-////    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "y", 3));
-////    tokens.push_back(Token(TokenType::OPERATOR, "=", 3));
-////    tokens.push_back(Token(TokenType::INTEGER, "2", 3));
-////    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 3));
-////    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
-//    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
-//    for (Token token: tokens) {
-//            std::cout << "Token" << ToString(token) << std::endl;
-//    }
-//    Parser parser = Parser(tokens);
-//    TNode result;
-//    try {
-//        result = parser.Parse();
-//    } catch (std::invalid_argument& e) {
-//        std::cerr << e.what() << endl;
-//        ::exit(1);
-//    }
-//
-//    if (result.children.empty()) {
-//        cout << "Null pointer returned, use debug mode to find out why" << endl;
-//    }
-//    std::queue<TNode> pendingToString;
-//    pendingToString.push(result);
-//    while (!pendingToString.empty()) {
-//        auto toProcess = pendingToString.front();
-//        pendingToString.pop();
-//        cout << ToString(toProcess) << endl;
-//        if (!toProcess.children.empty()) {
-//            auto childrenArr = (toProcess).children;
-//            for (TNode child: childrenArr) {
-//                pendingToString.push(child);
-//            }
-//        }
-//    }
-//    return 0;
-//};
