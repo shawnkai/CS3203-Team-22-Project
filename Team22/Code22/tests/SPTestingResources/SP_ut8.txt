@@ -1,0 +1,7 @@
+procedure Example {
+  while (i!=0) {
+    x = x - 1;
+    z = z + x + i;
+    read print;
+    i = i - 1; }
+}

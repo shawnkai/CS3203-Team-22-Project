@@ -83,7 +83,7 @@ TNode Parser::parseStatement() {
         stmtNode.stringId = "stmtList";
         stmtNode.stmtNumber = currToken.lineNumber;
     }
-    while (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET) {
+    while (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET && pos < tokenList.size()) {
         if (pos >= tokenList.size()) {
             cout << "SIMPLE source procedure ends unexpectedly without right curly bracket" << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
@@ -202,6 +202,10 @@ TNode Parser::parseFactor() {
         ++ pos;
     }
     else {
+        if (currToken.type != TokenType::INTEGER) {
+            cout << "Expected constant or variable but instead got: " << currToken.value << endl;
+            throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
+        }
         node.nodeType = currToken.type;
         node.stringId = currToken.value;
         node.stmtNumber = currToken.lineNumber;

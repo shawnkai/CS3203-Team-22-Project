@@ -1,0 +1,12 @@
+procedure Example {
+  x = 2;
+  z = 3;
+  while (i!=0) {
+    if (x==1) then {
+      z = x + 1; }
+    else {
+      y = z + x;
+    }
+    x = x - 1;
+  }
+}
