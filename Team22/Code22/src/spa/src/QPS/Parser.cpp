@@ -8,9 +8,7 @@
 
 using namespace std;
 
-QueryParser::QueryParser() {
-
-}
+QueryParser::QueryParser() {}
 
 SelectExpression* QueryParser::parse(const string& query) {
     regex RETURNVALUEREGEX = regex("Select (\\w+)");
@@ -107,16 +105,6 @@ bool QueryParser::containsPatternExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), CONTAINSPATTERNREGEX), std::sregex_iterator()) > 0;
 }
 
-// Returns true if s is a number else false
-bool isNumber(string s)
-{
-	for (int i = 0; i < s.length(); i++)
-		if (isdigit(s[i]) == false)
-			return false;
-
-	return true;
-}
-
 vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string& query) {
 	regex MODIFIESREGEX = regex(R"lit(Modifies\s?\(("?\w+"?), ("?\w+"?)\))lit");
 	smatch sm;
@@ -129,7 +117,7 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
 
-        if (isNumber(arg1)) {
+        if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
             auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
             expressions.push_back(new ModifiesSExpression(a1, a2));
@@ -175,7 +163,7 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
 
-        if (isNumber(arg1)) {
+        if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
             auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
             expressions.push_back(new UsesSExpression(a1, a2));
@@ -219,7 +207,6 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
     while (regex_search(searchStart, query.cend(), sm, USESPATTERN)) {
         string arg1 = sm.str(1);
 
-
         string arg2 = sm.str(2);
 
         NamedEntity* a2;
@@ -231,7 +218,6 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
         }else {
             a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
         }
-
 
         string arg3 = sm.str(3);
         arg3 = Utilities::removeAllOccurrences(arg3, '\"');
@@ -247,6 +233,29 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
     return expressions;
 }
 
+tuple<StmtEntity*, StmtEntity*> QueryParser::generateStmtEntityPair(string arg1, string arg2) {
+    StmtEntity *a1;
+    StmtEntity *a2;
+
+    if (Utilities::isNumber(arg1)) {
+        a1 = new StmtEntity(stoi(arg1));
+    } else if (arg1 == "_") {
+        a1 = new StmtEntity(-1);
+    } else {
+        a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
+    }
+
+    if (Utilities::isNumber(arg2)) {
+        a2 = new StmtEntity(stoi(arg2));
+    } else if (arg2 == "_") {
+        a2 = new StmtEntity(-1);
+    } else {
+        a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
+    }
+
+    return std::make_tuple(a1, a2);
+}
+
 vector<FollowsExpression*> QueryParser::extractFollowsExpression(const string& query) {
     regex FOLLOWSREGEX = regex(R"lit(Follows\s?\(("?\w+"?), ("?\w+"?)\))lit");
     smatch sm;
@@ -256,27 +265,10 @@ vector<FollowsExpression*> QueryParser::extractFollowsExpression(const string& q
     vector<FollowsExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSREGEX)) {
-        string arg1 = sm.str(1);
-        string arg2 = sm.str(2);
+        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2));
 
-        StmtEntity *a1;
-        StmtEntity *a2;
-
-        if (isNumber(arg1)) {
-            a1 = new StmtEntity(stoi(arg1));
-        } else if (arg1 == "_") {
-            a1 = new StmtEntity(-1);
-        } else {
-            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
-        }
-
-        if (isNumber(arg2)) {
-            a2 = new StmtEntity(stoi(arg2));
-        } else if (arg2 == "_") {
-            a2 = new StmtEntity(-1);
-        } else {
-            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
-        }
+        StmtEntity* a1 = std::get<0>(stmtEntityPair);
+        StmtEntity* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new FollowsExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -293,27 +285,10 @@ vector<FollowsStarExpression*> QueryParser::extractFollowsStarExpression(const s
     vector<FollowsStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSSTARREGEX)) {
-        string arg1 = sm.str(1);
-        string arg2 = sm.str(2);
+        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2));
 
-        StmtEntity *a1;
-        StmtEntity *a2;
-
-        if (isNumber(arg1)) {
-            a1 = new StmtEntity(stoi(arg1));
-        } else if (arg1 == "_") {
-            a1 = new StmtEntity(-1);
-        } else {
-            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
-        }
-
-        if (isNumber(arg2)) {
-            a2 = new StmtEntity(stoi(arg2));
-        } else if (arg2 == "_") {
-            a2 = new StmtEntity(-1);
-        } else {
-            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
-        }
+        StmtEntity* a1 = std::get<0>(stmtEntityPair);
+        StmtEntity* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new FollowsStarExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -330,27 +305,10 @@ vector<ParentExpression*> QueryParser::extractParentExpression(const string& que
     vector<ParentExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PARENTREGEX)) {
-        string arg1 = sm.str(1);
-        string arg2 = sm.str(2);
+        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2));
 
-        StmtEntity *a1;
-        StmtEntity *a2;
-
-        if (isNumber(arg1)) {
-            a1 = new StmtEntity(stoi(arg1));
-        } else if (arg1 == "_") {
-            a1 = new StmtEntity(-1);
-        } else {
-            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
-        }
-
-        if (isNumber(arg2)) {
-            a2 = new StmtEntity(stoi(arg2));
-        } else if (arg2 == "_") {
-            a2 = new StmtEntity(-1);
-        } else {
-            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
-        }
+        StmtEntity* a1 = std::get<0>(stmtEntityPair);
+        StmtEntity* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new ParentExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -367,27 +325,10 @@ vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const str
     vector<ParentStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PARENTSTARREGEX)) {
-        string arg1 = sm.str(1);
-        string arg2 = sm.str(2);
+        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2));
 
-        StmtEntity *a1;
-        StmtEntity *a2;
-
-        if (isNumber(arg1)) {
-            a1 = new StmtEntity(stoi(arg1));
-        } else if (arg1 == "_") {
-            a1 = new StmtEntity(-1);
-        } else {
-            a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
-        }
-
-        if (isNumber(arg2)) {
-            a2 = new StmtEntity(stoi(arg2));
-        } else if (arg2 == "_") {
-            a2 = new StmtEntity(-1);
-        } else {
-            a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
-        }
+        StmtEntity* a1 = std::get<0>(stmtEntityPair);
+        StmtEntity* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new ParentStarExpression(a1, a2));
         searchStart = sm.suffix().first;

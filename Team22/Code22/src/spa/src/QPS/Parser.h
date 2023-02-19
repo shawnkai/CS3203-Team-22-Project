@@ -16,8 +16,6 @@
 
 using namespace std;
 
-bool isNumber(string s);
-
 class QueryParser {
 
 protected:
@@ -26,12 +24,14 @@ protected:
 public:
 	QueryParser();
 
-	SelectExpression *parse(const string& query);
+    SelectExpression* parse(const string& query);
 
 	bool isDeclaration(const string& query);
 	bool containsModifiesExpression(string query);
 	bool containsUsesExpression(string query);
     bool containsPatternExpression(string query);
+
+    tuple<StmtEntity*, StmtEntity*> generateStmtEntityPair(string arg1, string arg2);
     bool containsFollowsExpression(string query);
     bool containsFollowsStarExpression(string query);
     bool containsParentExpression(string query);

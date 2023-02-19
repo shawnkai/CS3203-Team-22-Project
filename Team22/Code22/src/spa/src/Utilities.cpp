@@ -30,6 +30,16 @@ bool Utilities::isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%');
 }
 
+// Returns true if s is a number else false
+bool Utilities::isNumber(string s)
+{
+    for (int i = 0; i < s.length(); i++)
+        if (isdigit(s[i]) == false)
+            return false;
+
+    return true;
+}
+
 string Utilities::removeAllOccurrences(string str, char c) {
     str.erase(remove(str.begin(), str.end(), c), str.end());
     return str;
