@@ -26,7 +26,7 @@ TEST_CASE("Testcase1_ExtractSimpleCondition_ShouldSuccess") {
     std::string result3 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "z")).toString();
     REQUIRE(result1 == "VARIABLE: x: 1, ");
     REQUIRE(result2 == "USES:STATEMENT: x: 1, ");
-    REQUIRE(result3 == "USES:STATEMENT: z: 1,");
+    REQUIRE(result3 == "USES:STATEMENT: z: 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractComplexCondition_ShouldSuccess") {

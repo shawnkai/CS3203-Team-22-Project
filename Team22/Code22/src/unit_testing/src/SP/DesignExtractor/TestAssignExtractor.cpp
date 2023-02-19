@@ -33,7 +33,7 @@ TEST_CASE("Testcase1_ExtractSimpleAssignment_ShouldSuccess") {
     std::string result3 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
     REQUIRE(result1 == "VARIABLE: x: 1, ");
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
-    REQUIRE(result3 == "USES:STATEMENT: y: 1,");
+    REQUIRE(result3 == "USES:STATEMENT: y: 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
@@ -95,5 +95,5 @@ TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: y: 3, ");
     REQUIRE(result2 == "CONSTANT: 3: 3, ");
     REQUIRE(result3 == "MODIFIES:STATEMENT: x: 3, 1, 2, ");
-    REQUIRE(result4 == "USES:STATEMENT: z: 3, 1, 2,");
+    REQUIRE(result4 == "USES:STATEMENT: z: 3, 1, 2, ");
 }
