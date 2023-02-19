@@ -30,6 +30,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 			if (tokenType1 == TokenType::NAME_IDENTIFIER) {
 				std::string nameOfVariable = currentNode1.stringId;
 				int lineNumOfVariable = currentNode1.stmtNumber;
+                pkbinstance.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", std::to_string(lineNumOfVariable)));
+                pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(lineNumOfVariable)));
 				cout << currentNode1.stringId << endl;
 				if (firstTime == 0) {
 					firstTime = 1;

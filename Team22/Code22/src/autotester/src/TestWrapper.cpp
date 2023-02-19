@@ -42,36 +42,21 @@ void TestWrapper::parse(std::string filename) {
 
 }
 
-//QueryParser parser;
-//PKB pkb;
+QueryParser parser;
+PKB pkb;
 
-//QueryEvaluator evaluator(pkb);
+QueryEvaluator evaluator(pkb);
 
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
-// call your evaluator to evaluate the query here
-  // ...code to evaluate query...
+      size_t ind = query.find_last_of(';');
+      string declaration = query.substr(0, ind + 1);
+      string queryToExecute = query.substr(ind + 1, query.size() - ind);
 
-  // store the answers to the query in the results list (it is initially empty)
-  // each result must be a string.
-//      size_t ind = query.find_last_of(';');
-//      string declaration = query.substr(0, ind + 1);
-//      string queryToExecute = query.substr(ind + 1, query.size() - ind);
-//
-//      parser.parse(declaration);
-//
-//      auto exp = parser.parse(queryToExecute);
-//      string exp_res = evaluator.evaluate(exp);
-//      string res_to_add;
-//      for (auto c : exp_res) {
-//          if (c == ',') {
-//              results.push_back(res_to_add);
-//              res_to_add.clear();
-//          } else if (c != ' ') {
-//              res_to_add.push_back(c);
-//          }
-//      }
-//      if (!res_to_add.empty()) {
-//          results.push_back(res_to_add);
-//      }
+      parser.parse(declaration);
+      auto exp = parser.parse(queryToExecute);
+      vector<string> exp_res = evaluator.evaluate(exp);
+      for (const string& r : exp_res) {
+          results.push_back(r);
+      }
 }

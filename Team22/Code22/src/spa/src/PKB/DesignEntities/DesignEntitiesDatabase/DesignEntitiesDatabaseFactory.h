@@ -39,6 +39,8 @@ public:
 
     static DesignEntityDatabase* getEntityDatabase(DesignEntity* designEntity);
     static DesignEntityDatabase* getEntityDatabase(string designEntityType);
+
+    static void clearDatabase();
 };
 
 #endif //SPA_DESIGNENTITIESDATABASEFACTORY_H

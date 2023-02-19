@@ -11,3 +11,9 @@ using namespace std;
 AssignPatternDatabase *AssignPatternDatabaseFactory::getAssignPatternDatabase() {
     return assignPatternDatabase;
 }
+
+void AssignPatternDatabaseFactory::clearDatabase() {
+    delete assignPatternDatabase;
+
+    assignPatternDatabase = new AssignPatternDatabase();
+}

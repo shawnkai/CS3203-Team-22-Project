@@ -31,6 +31,8 @@ class UsesDatabaseFactory {
 
 public:
     static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingAbstracted);
+
+    static void clearDatabase();
 };
 
 #endif //SPA_USESDATABASEFACTORY_H

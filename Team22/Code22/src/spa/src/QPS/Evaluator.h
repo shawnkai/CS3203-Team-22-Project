@@ -17,7 +17,7 @@ private:
 public:
     QueryEvaluator(PKB pkb);
 
-    string evaluate(Expression *expression);
+    vector<string> evaluate(Expression *expression);
 };
 
 #endif //SPA_EVALUATOR_H
