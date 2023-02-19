@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an ProcedureCallModifies Design Abstraction When
         REQUIRE(pkbResult.toString() == "MODIFIES:PROCEDURECALL: mpc7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The ProcedureCallModifies Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc9", "mpc10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc9", "mpc10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc9", "mpc11"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc9", "mpc12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURECALL", "mpc9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURECALL", "mpc9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:PROCEDURECALL: mpc9: mpc10, mpc11, mpc12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

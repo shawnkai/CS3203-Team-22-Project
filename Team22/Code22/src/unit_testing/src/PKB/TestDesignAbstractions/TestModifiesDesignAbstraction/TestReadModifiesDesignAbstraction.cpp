@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an ReadModifies Design Abstraction When Multiple
         REQUIRE(pkbResult.toString() == "MODIFIES:READ: mr7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The ReadModifies Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr11"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:READ: mr9: mr10, mr11, mr12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

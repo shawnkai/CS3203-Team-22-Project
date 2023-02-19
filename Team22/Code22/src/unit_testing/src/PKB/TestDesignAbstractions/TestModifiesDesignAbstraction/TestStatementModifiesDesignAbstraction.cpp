@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an StatementModifies Design Abstraction When Mul
         REQUIRE(pkbResult.toString() == "MODIFIES:STATEMENT: ms7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The StatementModifies Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms9", "ms10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms9", "ms10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms9", "ms11"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms9", "ms12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:STATEMENT: ms9: ms10, ms11, ms12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}

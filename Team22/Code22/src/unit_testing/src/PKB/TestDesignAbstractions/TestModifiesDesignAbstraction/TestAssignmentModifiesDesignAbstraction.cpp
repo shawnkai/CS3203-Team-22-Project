@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an AssignmentModifies Design Abstraction When Mu
         REQUIRE(pkbResult.toString() == "MODIFIES:ASSIGNMENT: ma7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The AssignmentModifies Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma9", "ma10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma9", "ma10"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma9", "ma11"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma9", "ma12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:ASSIGNMENT: ma9: ma10, ma11, ma12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}
