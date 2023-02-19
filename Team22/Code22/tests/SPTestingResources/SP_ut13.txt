@@ -7,8 +7,7 @@ procedure Example {
     if (x==1) then {
       z = x + 1; }
     else {
-      y = z + x; }
-    z = z + x + i;
-    read q;
-    i = i - 1; }
-    print p; }
+      y = z + x;
+    }
+  }
+}

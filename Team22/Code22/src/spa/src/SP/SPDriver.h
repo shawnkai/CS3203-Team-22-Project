@@ -17,5 +17,4 @@ class SPDriver {
 public:
     SPDriver();
     void parseSimpleProgram(std::string filename);
-    //void parseSimpleProgram(const char* fileName);
 };
