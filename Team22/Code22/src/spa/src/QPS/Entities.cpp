@@ -19,6 +19,9 @@ DesignEntity::DesignEntity() {}
 
 //Stmt Entity and its children
 StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(type)) {
+    if (lineNumber <= 0) {
+        throw SemanticException();
+    }
     this->lineNumber = lineNumber;
 }
 
