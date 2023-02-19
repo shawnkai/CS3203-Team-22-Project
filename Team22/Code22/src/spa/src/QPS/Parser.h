@@ -19,7 +19,6 @@ using namespace std;
 class QueryParser {
 private:
     string RETURNVALUE = R"lit(Select (\w+))lit";
-    string QUERYVALIDATION = R"lit(Select \w+( such that (Modifies\s?\("?(\w+)"?, "?(\w+)"?\)|Uses\s?\("?(\w+)"?, "?(\w+)"?\)|Follows\s?\((\w+), "?(\w+)"?\)|Follows\*\s?\((\w+), (\w+)\)|Parent\s?\((\w+), (\w+)\)|Parent\*\s?\((\w+), (\w+)\)|pattern (\w+)\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*/]+\"?_?)|_)\)))?)lit";
     string ISDECLARATION = R"lit(((^|; )(stmt|read|print|call|while|if|assign|variable|constant|procedure) ((\w|, )+))+;)lit";
     string CONTAINSMODIFIES = R"lit(Modifies\s?\("?(\w+)"?, "?(\w+)"?\))lit";
     string CONTAINSUSES = R"lit(Uses\s?\("?(\w+)"?, "?(\w+)"?\))lit";
@@ -30,12 +29,13 @@ private:
     string CONTAINSPATTERN = R"(pattern (\w+)\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*/]+\"?_?)|_)\))";
     string MODIFIES = R"lit(Modifies\s?\(("?\w+"?), ("?\w+"?)\))lit";
     string USES = R"lit(Uses\s?\(("?\w+"?), ("?\w+"?)\))lit";
-    string USESPATTERN = R"(pattern (\w+)\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*/]+\"?_?)|_)\))";
+    string PATTERN = R"(pattern (\w+)\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*/]+\"?_?)|_)\))";
     string FOLLOWS = R"lit(Follows\s?\(("?\w+"?), ("?\w+"?)\))lit";
     string FOLLOWSSTAR = R"lit(Follows\*\s?\(("?\w+"?), ("?\w+"?)\))lit";
     string PARENT = R"lit(Parent\s?\(("?\w+"?), ("?\w+"?)\))lit";
     string PARENTSTAR = R"lit(Parent\*\s?\(("?\w+"?), ("?\w+"?)\))lit";
     string EXTRACTDECLARATION = "(^| )(stmt|read|print|call|while|if|assign|variable|constant|procedure) ((\\w|, )+)";
+    string QUERYVALIDATION = R"lit(Select \w+( such that (Modifies\s?\("?(\w+)"?, "?(\w+)"?\)|Uses\s?\("?(\w+)"?, "?(\w+)"?\)|Follows\s?\((\w+), "?(\w+)"?\)|Follows\*\s?\((\w+), (\w+)\)|Parent\s?\((\w+), (\w+)\)|Parent\*\s?\((\w+), (\w+)\)|pattern (\w+)\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*/]+\"?_?)|_)\)))?)lit";
 
     // Regexes
     regex RETURNVALUEREGEX = regex(RETURNVALUE);
@@ -50,13 +50,12 @@ private:
     regex CONTAINSPATTERNREGEX = regex(CONTAINSPATTERN);
     regex MODIFIESREGEX = regex(MODIFIES);
     regex USESREGEX = regex(USES);
-    regex USESPATTERNREGEX = regex(USESPATTERN);
+    regex PATTERNREGEX = regex(PATTERN);
     regex FOLLOWSREGEX = regex(FOLLOWS);
     regex FOLLOWSSTARREGEX = regex(FOLLOWSSTAR);
     regex PARENTREGEX = regex(PARENT);
     regex PARENTSTARREGEX = regex(PARENTSTAR);
     regex EXTRACTDECLARATIONREGEX = regex(EXTRACTDECLARATION);
-
 
 
 protected:

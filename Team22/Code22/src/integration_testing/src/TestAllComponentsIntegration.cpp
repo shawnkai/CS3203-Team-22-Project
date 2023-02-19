@@ -48,11 +48,11 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     Result expectedResult2("USES:ASSIGNMENT", "i", vector<string>{"9", "11"});
     REQUIRE(pkbResult2.areEqual(expectedResult2));
 
-    QueryParser parser;
     QueryEvaluator evaluator(standardExampleSIMPLESourceChecker);
 
     string declaration1 = "variable v;";
     string query1 = "Select v";
+    QueryParser parser;
     parser.parse(declaration1);
     auto exp1 = parser.parse(query1);
     vector<string> exp_res = evaluator.evaluate(exp1);
@@ -69,6 +69,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
     string declaration2 = "stmt m; if if;";
     string query2 = "Select m such that Parent(if, m)";
+    parser = QueryParser();
     parser.parse(declaration2);
     auto exp2 = parser.parse(query2);
     vector<string> res_2 = evaluator.evaluate(exp2);
@@ -83,12 +84,13 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Parent
     string declaration3 = "stmt s;";
     string query3 = "Select s such that Parent(4, s)";
+    parser = QueryParser();
     parser.parse(declaration3);
     auto exp3 = parser.parse(query3);
     vector<string> res_3 = evaluator.evaluate(exp3);
     string output3;
     for (const string& r : res_3) {
-        output3 += r;
+        output3 += r + " ";
     }
 
     REQUIRE(output3.find('5') != std::string::npos);
@@ -101,8 +103,9 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output3.find("12") == std::string::npos);
 
     // Testing Follows*
-    string declaration4 = "variable a;";
+    string declaration4 = "stmt a;";
     string query4 = "Select a such that Follows*(3, a)";
+    parser = QueryParser();
     parser.parse(declaration4);
     auto exp4 = parser.parse(query4);
     vector<string> res_4 = evaluator.evaluate(exp4);
@@ -114,9 +117,11 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output4.find('4') != std::string::npos);
     REQUIRE(output4.find("12") != std::string::npos);
 
+
     // Testing Follows
-    string declaration5 = "variable a;";
+    string declaration5 = "stmt a;";
     string query5 = "Select a such that Follows(3, a)";
+    parser = QueryParser();
     parser.parse(declaration5);
     auto exp5 = parser.parse(query5);
     vector<string> res_5 = evaluator.evaluate(exp5);
@@ -131,6 +136,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Uses
     string declaration6 = "variable v;";
     string query6 = "Select v such that Uses(9, v)";
+    parser = QueryParser();
     parser.parse(declaration6);
     auto exp6 = parser.parse(query6);
     vector<string> res_6 = evaluator.evaluate(exp6);
@@ -147,6 +153,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Modifies
     string declaration7 = "variable v;";
     string query7 = "Select v such that Modifies(7, v)";
+    parser = QueryParser();
     parser.parse(declaration7);
     auto exp7 = parser.parse(query7);
     vector<string> res_7 = evaluator.evaluate(exp7);
@@ -162,6 +169,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Parent*
     string declaration8 = "assign a; while w;";
     string query8 = "Select a such that Parent* (w, a)";
+    parser = QueryParser();
     parser.parse(declaration8);
     auto exp8 = parser.parse(query8);
     vector<string> res_8 = evaluator.evaluate(exp8);

@@ -275,37 +275,275 @@ TEST_CASE("TestCase18_OneInvalidDesignAbstraction_SyntaxError") {
 
 }
 
-
 //Missing quotation marks, wildcard combinations
-TEST_CASE("TestCase19_MissingOpeningQuoteWithoutWildcardsPatternExpression_SyntaxError") {}
+TEST_CASE("TestCase19_MissingOpeningQuoteWithoutWildcardsPatternExpression_SyntaxError") {
+    QueryParser queryParser;
 
-TEST_CASE("TestCase20_MissingClosingQuotePatternWithoutWildcardsExpression_SyntaxError") {}
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, x+y\")";
 
-TEST_CASE("TestCase36_MissingClosingWildcardWithValidQuotesPatternExpression_SyntaxError") {}
+    queryParser.parse(declaration);
 
-TEST_CASE("TestCase37_MissingOpeningQuoteWithValidWildcardsPatternExpression_SyntaxError") {}
+    bool throwsException = false;
 
-TEST_CASE("TestCase38_MissingAllQuotesWithNoWildcardPatternExpression_SyntaxError") {}
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
 
-TEST_CASE("TestCase39_MissingAllQuotesWithValidWildcardPatternExpression_SyntaxError") {}
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase20_MissingClosingQuotePatternWithoutWildcardsExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, \"x+y)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase21_MissingClosingWildcardWithValidQuotesPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, _\"x+y\")";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase22_MissingOpeningQuoteWithValidWildcardsPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, \"x+y\"_)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase23_MissingAllQuotesWithNoWildcardPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, x+y)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase24_MissingAllQuotesWithValidWildcardPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, _x+y_)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
 
 
 //undeclared synonyms
-TEST_CASE("TestCase29_UndeclaredStmtEntityArg1FollowsExpression_SemanticError") {}
+TEST_CASE("TestCase25_UndeclaredStmtEntityArg1FollowsExpression_SemanticError") {
+    QueryParser queryParser;
 
-TEST_CASE("TestCase30_UndeclaredStmtEntityArg2FollowsStarExpression_SemanticError") {}
+    string declaration = "variable v;";
+    string query = "Select v such that Follows(w, v)";
 
-TEST_CASE("TestCase31_UndeclaredStmtEntityArg1ModifiesSExpression_SemanticError") {}
+    queryParser.parse(declaration);
 
-TEST_CASE("TestCase32_UndeclaredVariableArg2UsesSExpression_SemanticError") {}
+    bool throwsException = false;
 
-TEST_CASE("TestCase33_UndeclaredVariableArg1ModifiesPExpression_SemanticError") {}
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
 
-TEST_CASE("TestCase34_UndeclaredNamedEntityArg2UsesPExpression_SemanticError") {}
+    REQUIRE(throwsException);
+}
 
 
+TEST_CASE("TestCase26_UndeclaredStmtEntityArg2FollowsExpression_SemanticError") {
+    QueryParser queryParser;
 
-TEST_CASE("TestCase35_InvalidExpressionSpecPatternExpression_SyntaxError") {}
+    string declaration = "variable v;";
+    string query = "Select v such that Follows(v, w)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase27_UndeclaredVariableArg1ModifiesPExpression_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(a, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase28_UndeclaredNamedEntityArg2UsesSExpression_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(r, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase29_UndeclaredNamedEntityArg2UsesPExpression_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(v, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase30_UndeclaredNamedEntityArg2ModifiesSExpression_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(r, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase31_UndeclaredNamedEntityArg2ModifiesPExpression_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(v, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase32_InvalidSymbolsExpressionSpecPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v such that pattern a(v, \"__\")";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
 
 
 

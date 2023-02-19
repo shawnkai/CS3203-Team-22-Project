@@ -18,10 +18,7 @@ SelectExpression* QueryParser::parse(string query) {
     if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
 		return new SelectExpression({}, conditions);
-	} else {
-        if (!this->isValidQuery(query)) {
-            throw SyntacticException();
-        }
+	} else if (this->isValidQuery(query)) {
 		smatch sm;
 		regex_search(query, sm, RETURNVALUEREGEX);
 		
@@ -63,9 +60,10 @@ SelectExpression* QueryParser::parse(string query) {
                 conditions.push_back(e);
             }
         }
-
         return new SelectExpression({arg}, conditions);
-	}
+	} else {
+        throw SyntacticException();
+    }
 }
 
 bool QueryParser::isValidQuery(const string& query) {
@@ -196,10 +194,11 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
 
     vector<PatternExpression*> expressions;
 
-    while (regex_search(searchStart, query.cend(), sm, USESPATTERNREGEX)) {
+    while (regex_search(searchStart, query.cend(), sm, PATTERNREGEX)) {
         string arg1 = sm.str(1);
 
         string arg2 = sm.str(2);
+
         NamedEntity* a2;
         if (arg2.find('\"') != string::npos) {
             a2 = new NamedEntity("ident", arg2);
@@ -208,22 +207,21 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
         } else {
             a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
         }
+
         string arg3 = sm.str(3);
+
         if (arg3.size() == 1 && arg3[0] != '_') {
-            ::printf("Throw 1");
             throw SyntacticException();
         } else if (arg3.size() != 1) {
             if (arg3.find('\"') == string::npos) {
-                ::printf("Throw 2");
                 throw SyntacticException();
             } else if (arg3[0] == '_' && arg3[arg3.size() - 1] != '_') {
-                ::printf("Throw 3");
                 throw SyntacticException();
             } else if (arg3[0] != '_' && (arg3[0] != '\"' || arg3[arg3.size() - 1] != '\"')) {
-                ::printf("Throw 4");
                 throw SyntacticException();
             } else if (arg3[0] == '_' && (arg3[1] != '\"' || arg3[arg3.size() - 2] != '\"')) {
-                ::printf("Throw 5");
+                throw SyntacticException();
+            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9\+\-\*/]+\"_?)"))) {
                 throw SyntacticException();
             }
         }
@@ -404,6 +402,7 @@ DesignEntity *QueryParser::getFromSynonymTable(const string& name, const string&
     if (!synonymTable.count(name)) {
         throw SemanticException();
     }
+
     DesignEntity *entity = synonymTable[name];
 
     if (desiredType == "stmt") {
