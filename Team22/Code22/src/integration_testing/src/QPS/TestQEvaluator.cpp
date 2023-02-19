@@ -40,6 +40,31 @@ TEST_CASE("TestCase1_EvaluateSelectStatement_ShouldSuccess") {
     REQUIRE(Utilities::checkIfPresent(res2, "main"));
 }
 
+TEST_CASE("TestCase2_EvaluateSelectLineStatement_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("READ", make_tuple("v1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("v2", "2"));
+    pkb.addDesignEntity("READ", make_tuple("v3", "3"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "read r;";
+    string query = "Select r";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+    REQUIRE(Utilities::checkIfPresent(res, "2"));
+    REQUIRE(Utilities::checkIfPresent(res, "3"));
+}
+
 TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
@@ -62,6 +87,75 @@ TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess")
     REQUIRE(Utilities::checkIfPresent(res, "v3"));
 }
 
+TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifiesSynonyms_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("x1", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("READ", "x1", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(r, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "x1"));
+}
+
+TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifiesIdent_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("x1", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("READ", "x1", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "read r;";
+    string query = "Select r such that Modifies(r, \"x1\")";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+}
+
+TEST_CASE("TestCase2_EvaluateSelectLineWithSuchThatModifiesSynonyms_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("x1", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("READ", "x1", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select r such that Modifies(r, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+}
+
 TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
@@ -82,6 +176,52 @@ TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
     vector<string> res = queryEvaluator.evaluate(exp);
 
     REQUIRE(Utilities::checkIfPresent(res, "v4"));
+}
+
+TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUsesSynonym_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x4", "1"));
+    pkb.addDesignEntity("PRINT", make_tuple("x4", "1"));
+    pkb.addDesignAbstraction("USES", make_tuple("PRINT", "x4", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; print p;";
+    string query = "Select v such that Uses(p, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "x4"));
+}
+
+TEST_CASE("TestCase4_EvaluateSelectLineWithSuchThatUsesSynonym_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x4", "1"));
+    pkb.addDesignEntity("PRINT", make_tuple("x4", "1"));
+    pkb.addDesignAbstraction("USES", make_tuple("PRINT", "x4", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; print p;";
+    string query = "Select p such that Uses(p, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
 }
 
 TEST_CASE("TestCase5_EvaluateSelectStatementWithPatternExactMatching_ShouldSuccess") {
@@ -300,21 +440,3 @@ TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatParentStar_ShouldSucces
     REQUIRE(Utilities::checkIfPresent(res1, "26"));
     REQUIRE(Utilities::checkIfPresent(res2, "24"));
 }
-
-
-//mismatching StmtEntity, NamedEntity
-TEST_CASE("TestCase29_ValidNamedEntityArg1FollowsExpression_SemanticError") {}
-
-TEST_CASE("TestCase30_ValidNamedEntityArg2FollowsStarExpression_SemanticError") {}
-
-TEST_CASE("TestCase31_ValidNamedEntityArg1ModifiesSExpression_SemanticError") {}
-
-TEST_CASE("TestCase32_ValidStmtEntityArg2UsesSExpression_SemanticError") {}
-
-TEST_CASE("TestCase33_ValidStmtEntityArg1ModifiesPExpression_SemanticError") {}
-
-TEST_CASE("TestCase34_ValidStmtEntityArg1PatternExpression_SemanticError") {}
-
-
-
-
