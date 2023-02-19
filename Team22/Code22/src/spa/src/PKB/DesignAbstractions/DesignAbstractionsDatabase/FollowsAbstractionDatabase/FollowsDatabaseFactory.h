@@ -18,6 +18,8 @@ class FollowsDatabaseFactory {
 
 public:
     static DesignAbstractionDatabase* getFollowsDatabase();
+
+    static void clearDatabase();
 };
 
 #endif //SPA_FOLLOWSDATABASEFACTORY_H

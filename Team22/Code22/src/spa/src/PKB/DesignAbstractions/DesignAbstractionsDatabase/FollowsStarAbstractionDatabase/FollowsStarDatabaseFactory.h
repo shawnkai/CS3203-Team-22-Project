@@ -18,6 +18,8 @@ class FollowsStarDatabaseFactory {
 
 public:
     static DesignAbstractionDatabase* getFollowsStarDatabase();
+
+    static void clearDatabase();
 };
 
 

@@ -9,6 +9,14 @@
 
 using namespace std;
 
+/**
+ * Returns a DesignAbstractionDatabase pointer, of type UsesDatabase, depending on the type
+ * of entity that is being abstracted. A null pointer will be returned, if an invalid type of
+ * entity is being abstracted.
+ *
+ * @param entityTypeBeingAbstracted The type of Design Entity that is being abstracted.
+ * @return A DesignAbstractionDatabase pointer, of type UsesDatabase, relying on type of Design Entity abstracted.
+ */
 DesignAbstractionDatabase *UsesDatabaseFactory::getUsesDatabase(string entityTypeBeingAbstracted) {
     transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
 
@@ -28,6 +36,24 @@ DesignAbstractionDatabase *UsesDatabaseFactory::getUsesDatabase(string entityTyp
         return ifStatementUsesDatabase;
     }
 
-    // Temp: to pass build or throw error if not found
+    // Return null pointer, in case of invalid type of entity to be abstracted.
     return nullptr;
+}
+
+void UsesDatabaseFactory::clearDatabase() {
+    delete assignmentUsesDatabase;
+    delete printUsesDatabase;
+    delete procedureUsesDatabase;
+    delete statementUsesDatabase;
+    delete procedureCallUsesDatabase;
+    delete whileStatementUsesDatabase;
+    delete ifStatementUsesDatabase;
+
+    assignmentUsesDatabase = new AssignmentUsesDatabase();
+    printUsesDatabase = new PrintUsesDatabase();
+    procedureUsesDatabase = new ProcedureUsesDatabase();
+    statementUsesDatabase = new StatementUsesDatabase();
+    procedureCallUsesDatabase = new ProcedureCallUsesDatabase();
+    whileStatementUsesDatabase = new WhileStatementUsesDatabase();
+    ifStatementUsesDatabase = new IfStatementUsesDatabase();
 }

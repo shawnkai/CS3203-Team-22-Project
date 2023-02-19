@@ -21,10 +21,19 @@ class DesignAbstractionsDatabaseFactory {
     static DesignAbstractionDatabase* getParentDatabase();
     static DesignAbstractionDatabase* getParentStarDatabase();
 
+    static void clearModifiesDatabase();
+    static void clearUsesDatabase();
+    static void clearFollowsDatabase();
+    static void clearFollowsStarDatabase();
+    static void clearParentDatabase();
+    static void clearParentStarDatabase();
+
 public:
     static DesignAbstractionDatabase* getAbstractionDatabase(DesignAbstraction* designAbstraction);
     static DesignAbstractionDatabase* getAbstractionDatabase(string designAbstractionType,
                                                              string entityTypeBeingAbstracted);
+
+    static void clearDatabase();
 };
 
 #endif //SPA_DESIGNABSTRACTIONSDATABASEFACTORY_H

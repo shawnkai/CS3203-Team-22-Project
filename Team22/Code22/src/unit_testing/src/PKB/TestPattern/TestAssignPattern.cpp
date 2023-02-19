@@ -109,7 +109,7 @@ TEST_CASE("Test 9: Query for a existent variable name with multiple expressions 
     }
 }
 
-TEST_CASE("Test 10:  Query for a existent variable name with various patterns existent on various line numbers using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
+TEST_CASE("Test 10: Query for a existent variable name with various patterns existent on various line numbers using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
     SECTION("") {
         PKB pkbTest = PKB();
         pkbTest.addAssignPattern("j", "1%2%3%", "12");
@@ -119,5 +119,22 @@ TEST_CASE("Test 10:  Query for a existent variable name with various patterns ex
         string result2 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "13");
 
         REQUIRE(((result1 == "1%2%3%") && (result2 == "1%2%3")));
+    }
+}
+
+TEST_CASE("Test 11: Populate the Assign Pattern Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addAssignPattern("k", "1-2%+%", "14");
+        pkbTest.addAssignPattern("k", "1+2+3", "15");
+        pkbTest.addAssignPattern("k", "1/2*3", "16");
+
+        pkbTest.clearAllDatabases();
+
+        string result1 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("k", "14");
+        string result2 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("k", "15");
+        string result3 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("k", "17");
+
+        REQUIRE(((result1 == "") && (result2 == "") && (result3 == "")));
     }
 }
