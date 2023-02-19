@@ -19,7 +19,7 @@ TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut1.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut1.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -38,7 +38,7 @@ TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut2.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut2.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -57,7 +57,7 @@ TEST_CASE("TestCase3_TokenizeIfStatement_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut3.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut3.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -79,7 +79,7 @@ TEST_CASE("TestCase4_TokenizeReadPrintStatement_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut4.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut4.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -101,7 +101,7 @@ TEST_CASE("TestCase5_TokenizeAssignStatement_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut5.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut5.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -123,7 +123,7 @@ TEST_CASE("TestCase6_TokenizeComplexSimpleSource_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut6.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut6.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
@@ -146,7 +146,7 @@ TEST_CASE("TestCase7_TokenizeIllegalSimpleSource_ShouldThrowException") {
     const char *relativePath;
     bool isExceptionThrown = false;
 #if __APPLE__
-    relativePath = "SPTestingResources/SP_Tokenizer_ut7.txt";
+    relativePath = "../../../tests/SPTestingResources/SP_Tokenizer_ut7.txt";
 #endif
     try {
         tokenList = tk.tokenize(relativePath);
