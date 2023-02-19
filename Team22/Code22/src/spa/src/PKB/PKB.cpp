@@ -138,3 +138,21 @@ vector<AssignPattern*> PKB::getAllRightHandExpressions() {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
+
+void PKB::clearAssignPatternDatabase() {
+    AssignPatternDatabaseFactory::clearDatabase();
+}
+
+void PKB::clearDesignEntityDatabase() {
+    DesignEntitiesDatabaseFactory::clearDatabase();
+}
+
+void PKB::clearDesignAbstractionDatabase() {
+    DesignAbstractionsDatabaseFactory::clearDatabase();
+}
+
+void PKB::clearAllDatabases() {
+    this->clearDesignAbstractionDatabase();
+    this->clearDesignEntityDatabase();
+    this->clearAssignPatternDatabase();
+}

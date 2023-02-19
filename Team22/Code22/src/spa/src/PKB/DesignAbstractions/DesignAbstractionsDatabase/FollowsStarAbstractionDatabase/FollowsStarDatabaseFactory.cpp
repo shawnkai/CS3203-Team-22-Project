@@ -11,3 +11,9 @@ using namespace std;
 DesignAbstractionDatabase* FollowsStarDatabaseFactory::getFollowsStarDatabase() {
     return followsStarDatabase;
 }
+
+void FollowsStarDatabaseFactory::clearDatabase() {
+    delete followsStarDatabase;
+
+    followsStarDatabase = new FollowsStarDatabase();
+}

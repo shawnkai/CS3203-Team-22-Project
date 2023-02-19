@@ -11,3 +11,9 @@ using namespace std;
 DesignAbstractionDatabase *ParentDatabaseFactory::getParentDatabase() {
     return parentDatabase;
 }
+
+void ParentDatabaseFactory::clearDatabase() {
+    delete parentDatabase;
+
+    parentDatabase = new ParentDatabase();
+}

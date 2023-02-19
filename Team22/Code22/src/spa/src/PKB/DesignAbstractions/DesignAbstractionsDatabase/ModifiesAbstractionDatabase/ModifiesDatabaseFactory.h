@@ -32,6 +32,8 @@ class ModifiesDatabaseFactory {
 
 public:
     static DesignAbstractionDatabase* getModifiesDatabase(string entityTypeBeingAbstracted);
+
+    static void clearDatabase();
 };
 
 #endif //SPA_MODIFIESDATABASEFACTORY_H

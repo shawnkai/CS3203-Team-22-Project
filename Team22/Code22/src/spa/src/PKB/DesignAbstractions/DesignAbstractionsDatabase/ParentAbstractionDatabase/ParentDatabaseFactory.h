@@ -18,6 +18,8 @@ class ParentDatabaseFactory {
 
 public:
     static DesignAbstractionDatabase* getParentDatabase();
+
+    static void clearDatabase();
 };
 
 #endif //SPA_PARENTDATABASEFACTORY_H

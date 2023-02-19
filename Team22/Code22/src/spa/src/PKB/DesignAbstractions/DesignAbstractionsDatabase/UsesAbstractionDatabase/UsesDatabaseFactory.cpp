@@ -39,3 +39,21 @@ DesignAbstractionDatabase *UsesDatabaseFactory::getUsesDatabase(string entityTyp
     // Return null pointer, in case of invalid type of entity to be abstracted.
     return nullptr;
 }
+
+void UsesDatabaseFactory::clearDatabase() {
+    delete assignmentUsesDatabase;
+    delete printUsesDatabase;
+    delete procedureUsesDatabase;
+    delete statementUsesDatabase;
+    delete procedureCallUsesDatabase;
+    delete whileStatementUsesDatabase;
+    delete ifStatementUsesDatabase;
+
+    assignmentUsesDatabase = new AssignmentUsesDatabase();
+    printUsesDatabase = new PrintUsesDatabase();
+    procedureUsesDatabase = new ProcedureUsesDatabase();
+    statementUsesDatabase = new StatementUsesDatabase();
+    procedureCallUsesDatabase = new ProcedureCallUsesDatabase();
+    whileStatementUsesDatabase = new WhileStatementUsesDatabase();
+    ifStatementUsesDatabase = new IfStatementUsesDatabase();
+}

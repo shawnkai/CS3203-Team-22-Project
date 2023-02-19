@@ -40,3 +40,21 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
     // Return null pointer, in case of invalid type of entity to be abstracted.
     return nullptr;
 }
+
+void ModifiesDatabaseFactory::clearDatabase() {
+    delete assignmentModifiesDatabase;
+    delete readModifiesDatabase;
+    delete statementModifiesDatabase;
+    delete procedureModifiesDatabase;
+    delete procedureCallModifiesDatabase;
+    delete whileStatementModifiesDatabase;
+    delete ifStatementModifiesDatabase;
+
+    assignmentModifiesDatabase = new AssignmentModifiesDatabase();
+    readModifiesDatabase = new ReadModifiesDatabase();
+    statementModifiesDatabase = new StatementModifiesDatabase();
+    procedureModifiesDatabase = new ProcedureModifiesDatabase();
+    procedureCallModifiesDatabase = new ProcedureCallModifiesDatabase();
+    whileStatementModifiesDatabase = new WhileStatementModifiesDatabase();
+    ifStatementModifiesDatabase = new IfStatementModifiesDatabase();
+}

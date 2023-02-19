@@ -127,3 +127,36 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentDatabase(
 DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatabase() {
     return ParentStarDatabaseFactory::getParentStarDatabase();
 }
+
+void DesignAbstractionsDatabaseFactory::clearModifiesDatabase() {
+    ModifiesDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearUsesDatabase() {
+    UsesDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearFollowsDatabase() {
+    FollowsDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearFollowsStarDatabase() {
+    FollowsStarDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearParentDatabase() {
+    ParentDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearParentStarDatabase() {
+    ParentStarDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearDatabase() {
+    clearModifiesDatabase();
+    clearUsesDatabase();
+    clearFollowsDatabase();
+    clearFollowsStarDatabase();
+    clearParentDatabase();
+    clearParentStarDatabase();
+}

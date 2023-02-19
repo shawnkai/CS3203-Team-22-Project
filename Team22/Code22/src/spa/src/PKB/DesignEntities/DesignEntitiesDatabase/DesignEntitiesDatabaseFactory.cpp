@@ -57,3 +57,27 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
     // Returning this in case of invalid Design Entity Type
     return nullptr;
 }
+
+void DesignEntitiesDatabaseFactory::clearDatabase() {
+    delete variableEntitiesDatabase;
+    delete procedureEntitiesDatabase;
+    delete statementEntitiesDatabase;
+    delete readStatementEntitiesDatabase;
+    delete constantEntitiesDatabase;
+    delete printStatementEntitiesDatabase;
+    delete assignmentStatementEntitiesDatabase;
+    delete callStatementEntitiesDatabase;
+    delete whileStatementEntitiesDatabase;
+    delete ifStatementEntitiesDatabase;
+
+    variableEntitiesDatabase = new VariableDatabase();
+    procedureEntitiesDatabase = new ProcedureDatabase();
+    statementEntitiesDatabase = new StatementDatabase();
+    readStatementEntitiesDatabase = new ReadStatementDatabase();
+    constantEntitiesDatabase = new ConstantDatabase();
+    printStatementEntitiesDatabase = new PrintStatementDatabase();
+    assignmentStatementEntitiesDatabase = new AssignmentStatementDatabase();
+    callStatementEntitiesDatabase = new CallStatementDatabase();
+    whileStatementEntitiesDatabase = new WhileStatementDatabase();
+    ifStatementEntitiesDatabase = new IfStatementDatabase();
+}
