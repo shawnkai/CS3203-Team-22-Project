@@ -30,8 +30,10 @@ public:
 class StmtEntity : public DesignEntity {
 protected:
     int lineNumber = -1;
+    string synonym = "-1";
 public:
     StmtEntity(string type,  int lineNumber);
+    StmtEntity(string type, string synonym);
     StmtEntity(string type);
     StmtEntity(int lineNumber);
     StmtEntity();
@@ -44,36 +46,42 @@ public:
 class ReadEntity : public StmtEntity {
 public:
     explicit ReadEntity(int lineNumber);
+    explicit ReadEntity(string synonym);
     ReadEntity();
 };
 
 class PrintEntity : public StmtEntity {
 public:
     explicit PrintEntity(int lineNumber);
+    explicit PrintEntity(string synonym);
     PrintEntity();
 };
 
 class AssignEntity : public StmtEntity {
 public:
     explicit AssignEntity(int lineNumber);
+    explicit AssignEntity(string synonym);
     AssignEntity();
 };
 
 class CallEntity : public StmtEntity {
 public:
     explicit CallEntity(int lineNumber);
+    explicit CallEntity(string synonym);
     CallEntity();
 };
 
 class WhileEntity : public StmtEntity {
 public:
     explicit WhileEntity(int lineNumber);
+    explicit WhileEntity(string synonym);
     WhileEntity();
 };
 
 class IfEntity : public StmtEntity {
 public:
     explicit IfEntity(int lineNumber);
+    explicit IfEntity(string synonym);
     IfEntity();
 };
 

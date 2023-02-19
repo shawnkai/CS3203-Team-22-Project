@@ -242,7 +242,7 @@ tuple<StmtEntity*, StmtEntity*> QueryParser::generateStmtEntityPair(string arg1,
     } else if (arg1 == "_") {
         a1 = new StmtEntity(-1);
     } else {
-        a1 = new StmtEntity(this->synonymTable[arg1]->getType(), -1);
+        a1 = new StmtEntity(this->synonymTable[arg1]->getType(), arg1);
     }
 
     if (Utilities::isNumber(arg2)) {
@@ -250,7 +250,7 @@ tuple<StmtEntity*, StmtEntity*> QueryParser::generateStmtEntityPair(string arg1,
     } else if (arg2 == "_") {
         a2 = new StmtEntity(-1);
     } else {
-        a2 = new StmtEntity(this->synonymTable[arg2]->getType(), -1);
+        a2 = new StmtEntity(this->synonymTable[arg2]->getType(), arg2);
     }
 
     return std::make_tuple(a1, a2);
@@ -338,19 +338,19 @@ vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const str
 
 void QueryParser::addToSynonymTable(string type, const string& name) {
     if (type == "stmt") {
-        this->synonymTable[name] = new StmtEntity();
+        this->synonymTable[name] = new StmtEntity("STATEMENT", name);
     } else if (type == "read") {
-        this->synonymTable[name] = new ReadEntity();
+        this->synonymTable[name] = new ReadEntity(name);
     } else if (type == "print") {
-        this->synonymTable[name] = new PrintEntity();
+        this->synonymTable[name] = new PrintEntity(name);
     } else if (type == "call") {
-        this->synonymTable[name] = new CallEntity();
+        this->synonymTable[name] = new CallEntity(name);
     } else if (type == "while") {
-        this->synonymTable[name] = new WhileEntity();
+        this->synonymTable[name] = new WhileEntity(name);
     } else if (type == "if") {
-        this->synonymTable[name] = new IfEntity();
+        this->synonymTable[name] = new IfEntity(name);
     } else if (type == "assign") {
-        this->synonymTable[name] = new AssignEntity();
+        this->synonymTable[name] = new AssignEntity(name);
     } else if (type == "variable") {
         this->synonymTable[name] = new VariableEntity(name);
     } else if (type == "constant") {

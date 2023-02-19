@@ -22,6 +22,10 @@ StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(typ
     this->lineNumber = lineNumber;
 }
 
+StmtEntity::StmtEntity(string type, string synonym) : DesignEntity(std::move(type)) {
+    this->synonym = std::move(synonym);
+}
+
 StmtEntity::StmtEntity(string type) : DesignEntity(std::move(type)) {}
 
 StmtEntity::StmtEntity(int lineNumber) : DesignEntity("STATEMENT") {
@@ -36,21 +40,33 @@ int StmtEntity::getLine() {
 }
 
 string StmtEntity::toString() {
-    return to_string(this->getLine());
+    if (this->getLine() == -1 && this->synonym == "-1") {
+        return "_";
+    } else if (this->getLine() == -1) {
+        return this->synonym;
+    } else {
+        return to_string(this->getLine());
+    }
 }
 
 ReadEntity::ReadEntity(int lineNumber) : StmtEntity("READ", lineNumber) {}
 ReadEntity::ReadEntity() : StmtEntity("READ") {}
+ReadEntity::ReadEntity(string synonym) : StmtEntity("READ", std::move(synonym)) {}
 PrintEntity::PrintEntity(int lineNumber) : StmtEntity("PRINT", lineNumber) {}
 PrintEntity::PrintEntity() : StmtEntity("PRINT") {}
+PrintEntity::PrintEntity(string synonym) : StmtEntity("PRINT", std::move(synonym)) {}
 AssignEntity::AssignEntity(int lineNumber) : StmtEntity("ASSIGNMENT", lineNumber) {}
 AssignEntity::AssignEntity() : StmtEntity("ASSIGNMENT") {}
+AssignEntity::AssignEntity(string synonym) : StmtEntity("ASSIGNMENT", std::move(synonym)) {}
 CallEntity::CallEntity(int lineNumber) : StmtEntity("CALL", lineNumber) {}
 CallEntity::CallEntity() : StmtEntity("CALL") {}
+CallEntity::CallEntity(string synonym) : StmtEntity("CALL", std::move(synonym)) {}
 WhileEntity::WhileEntity(int lineNumber) : StmtEntity("WHILE", lineNumber) {}
 WhileEntity::WhileEntity() : StmtEntity("WHILE") {}
+WhileEntity::WhileEntity(string synonym) : StmtEntity("WHILE", std::move(synonym)) {}
 IfEntity::IfEntity(int lineNumber) : StmtEntity("IF", lineNumber) {}
 IfEntity::IfEntity() : StmtEntity("IF") {}
+IfEntity::IfEntity(string synonym) : StmtEntity("IF", std::move(synonym)) {}
 
 
 // Named Entities and its children
