@@ -345,6 +345,9 @@ vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const str
 }
 
 void QueryParser::addToSynonymTable(string type, const string& name) {
+    if (this->synonymTable.count(name)) {
+        throw SyntacticException();
+    }
     if (type == "stmt") {
         this->synonymTable[name] = new StmtEntity("STATEMENT", name);
     } else if (type == "read") {

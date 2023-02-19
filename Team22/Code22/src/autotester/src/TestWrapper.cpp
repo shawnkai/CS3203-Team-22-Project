@@ -43,18 +43,18 @@ void TestWrapper::parse(std::string filename) {
 
 }
 
-QueryParser parser;
 PKB pkb;
 
 QueryEvaluator evaluator(pkb);
 
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
-      size_t ind = query.find_last_of(';');
-      string declaration = query.substr(0, ind + 1);
-      string queryToExecute = query.substr(ind + 1, query.size() - ind);
+    QueryParser parser;
+    size_t ind = query.find_last_of(';');
+    string declaration = query.substr(0, ind + 1);
+    string queryToExecute = query.substr(ind + 1, query.size() - ind);
 
-      parser.parse(declaration);
+    parser.parse(declaration);
 
     try {
         auto exp = parser.parse(queryToExecute);

@@ -267,6 +267,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
 
     string declaration2 = "stmt m; if if;";
     string query2 = "Select m such that Parent*(if, m)";
+    parser = QueryParser();
     parser.parse(declaration2);
     auto exp2 = parser.parse(query2);
     vector<string> res_2 = evaluator.evaluate(exp2);
@@ -292,6 +293,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Parent
     string declaration3 = "stmt s;";
     string query3 = "Select s such that Parent(8, s)";
+    parser = QueryParser();
     parser.parse(declaration3);
     auto exp3 = parser.parse(query3);
     vector<string> res_3 = evaluator.evaluate(exp3);
@@ -308,6 +310,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Parent*
     string declaration4 = "stmt s;";
     string query4 = "Select s such that Parent*(8, s)";
+    parser = QueryParser();
     parser.parse(declaration4);
     auto exp4 = parser.parse(query4);
     vector<string> res_4 = evaluator.evaluate(exp4);
@@ -329,6 +332,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Uses
     string declaration5 = "variable v;";
     string query5 = "Select v such that Uses(15, v)";
+    parser = QueryParser();
     parser.parse(declaration5);
     auto exp5 = parser.parse(query5);
     vector<string> res_5 = evaluator.evaluate(exp5);
@@ -343,6 +347,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Modifies
     string declaration6 = "variable v;";
     string query6 = "Select v such that Modifies(16, v)";
+    parser = QueryParser();
     parser.parse(declaration6);
     auto exp6 = parser.parse(query6);
     vector<string> res_6 = evaluator.evaluate(exp6);
@@ -357,6 +362,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Follows
     string declaration7 = "stmt s;";
     string query7 = "Select s such that Follows(14, s)";
+    parser = QueryParser();
     parser.parse(declaration7);
     auto exp7 = parser.parse(query7);
     vector<string> res_7 = evaluator.evaluate(exp7);
@@ -371,6 +377,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Follows*
     string declaration8 = "stmt s;";
     string query8 = "Select s such that Follows*(14, s)";
+    parser = QueryParser();
     parser.parse(declaration8);
     auto exp8 = parser.parse(query8);
     vector<string> res_8 = evaluator.evaluate(exp8);
