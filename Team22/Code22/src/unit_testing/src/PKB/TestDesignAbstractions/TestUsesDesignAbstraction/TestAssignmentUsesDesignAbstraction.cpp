@@ -85,3 +85,22 @@ TEST_CASE("Test 6: Retrieval of an AssignmentUses Design Abstraction When Multip
         REQUIRE(pkbResult.toString() == "USES:ASSIGNMENT: ua7: 1, 2, ");
     }
 }
+
+TEST_CASE("Test 7: Populate The AssignmentUses Database And Call Clear All Database using the clearAllDatabases() API") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua9", "ua10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua9", "ua10"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua9", "ua11"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua9", "ua12"));
+
+        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua9"));
+
+        pkbTest.clearAllDatabases();
+
+        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua9"));
+
+        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:ASSIGNMENT: ua9: ua10, ua11, ua12, ")
+                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+    }
+}
