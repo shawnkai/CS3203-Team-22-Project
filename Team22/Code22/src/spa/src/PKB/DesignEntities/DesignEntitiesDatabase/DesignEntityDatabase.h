@@ -18,12 +18,13 @@ using namespace std;
 class DesignEntityDatabase {
     unordered_map<string, DesignEntity*> database;
 
-public:
-
-    virtual void addToDatabase(DesignEntity* designEntityToBeStored);
     virtual bool isPresentInDatabase(DesignEntity* designEntityToBeStored);
     virtual void updateEntityInDatabase(DesignEntity* designEntityToBeStored);
     virtual bool isPresentInDatabase(string entityName);
+
+public:
+
+    virtual void addToDatabase(DesignEntity* designEntityToBeStored);
     virtual Result getFromDatabase(string entityName);
     virtual vector<Result> getAllFromDatabase();
 };

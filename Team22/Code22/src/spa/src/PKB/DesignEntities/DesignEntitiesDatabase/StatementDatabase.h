@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class StatementDatabase: public DesignEntityDatabase{
+class StatementDatabase: public DesignEntityDatabase {
 public:
 
 };

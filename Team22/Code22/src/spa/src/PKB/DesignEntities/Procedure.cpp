@@ -8,11 +8,21 @@
 
 using namespace std;
 
+/**
+ * Creates a Procedure Design Entity with the given details,
+ *
+ * @param entityDetails This encompasses the details of the Procedure Entity to be created.
+ */
 Procedure::Procedure(tuple<string, string> entityDetails)
 : DesignEntity(entityDetails) {
 
 }
 
+/**
+ * Returns the type of Entity.
+ *
+ * @return A string stating the type of Entity.
+ */
 string Procedure::getTypeOfEntity() {
     return "PROCEDURE";
 }
