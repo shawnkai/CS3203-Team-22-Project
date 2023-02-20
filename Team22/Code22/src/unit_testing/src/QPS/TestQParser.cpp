@@ -266,7 +266,7 @@ TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithWildCard_ShouldSuccess") {
 TEST_CASE("TestCase16_ParseSelectWithExactMatchingPattern_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
-    string query = R"(Select a such that pattern a(_, "x+y"))";
+    string query = R"(Select a pattern a(_, "x+y"))";
 
     queryParser.parse(declaration);
 
@@ -280,7 +280,7 @@ TEST_CASE("TestCase16_ParseSelectWithExactMatchingPattern_ShouldSuccess") {
 TEST_CASE("TestCase17_ParseSelectWithWildCardPattern_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
-    string query = R"(Select a such that pattern a(_, _"x+y"_))";
+    string query = R"(Select a pattern a(_, _"x+y"_))";
 
     queryParser.parse(declaration);
 
@@ -426,7 +426,7 @@ TEST_CASE("TestCase27_MissingOpeningQuoteWithoutWildcardsPatternExpression_Synta
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, x+y\")";
+    string query = "Select v pattern a(v, x+y\")";
 
     queryParser.parse(declaration);
 
@@ -445,7 +445,7 @@ TEST_CASE("TestCase28_MissingClosingQuotePatternWithoutWildcardsExpression_Synta
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, \"x+y)";
+    string query = "Select v pattern a(v, \"x+y)";
 
     queryParser.parse(declaration);
 
@@ -464,7 +464,7 @@ TEST_CASE("TestCase29_MissingClosingWildcardWithValidQuotesPatternExpression_Syn
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, _\"x+y\")";
+    string query = "Select v pattern a(v, _\"x+y\")";
 
     queryParser.parse(declaration);
 
@@ -483,7 +483,7 @@ TEST_CASE("TestCase30_MissingOpeningQuoteWithValidWildcardsPatternExpression_Syn
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, \"x+y\"_)";
+    string query = "Select v pattern a(v, \"x+y\"_)";
 
     queryParser.parse(declaration);
 
@@ -502,7 +502,7 @@ TEST_CASE("TestCase31_MissingAllQuotesWithNoWildcardPatternExpression_SyntaxErro
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, x+y)";
+    string query = "Select v pattern a(v, x+y)";
 
     queryParser.parse(declaration);
 
@@ -521,7 +521,7 @@ TEST_CASE("TestCase32_MissingAllQuotesWithValidWildcardPatternExpression_SyntaxE
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, _x+y_)";
+    string query = "Select v pattern a(v, _x+y_)";
 
     queryParser.parse(declaration);
 
@@ -676,7 +676,7 @@ TEST_CASE("TestCase40_InvalidSymbolsExpressionSpecPatternExpression_SyntaxError"
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select v such that pattern a(v, \"__\")";
+    string query = "Select v pattern a(v, \"__\")";
 
     queryParser.parse(declaration);
 

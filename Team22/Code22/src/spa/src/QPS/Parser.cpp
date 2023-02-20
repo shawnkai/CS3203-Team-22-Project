@@ -209,7 +209,7 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
         }
 
         string arg3 = sm.str(3);
-
+        arg3 = Utilities::removeAllOccurrences(arg3, ' ');
         if (arg3.size() == 1 && arg3[0] != '_') {
             throw SyntacticException();
         } else if (arg3.size() != 1) {
@@ -230,7 +230,6 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
 
         auto *a1 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg1, "stmt"));
         string prefixPattern = Utilities::infixToPrefix(Utilities::removeAllOccurrences(arg3, '"'));
-
         expressions.push_back(new PatternExpression(a1,  a2, prefixPattern));
 
         searchStart = sm.suffix().first;
