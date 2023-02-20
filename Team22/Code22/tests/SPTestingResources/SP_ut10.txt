@@ -1,0 +1,6 @@
+procedure compute {
+    read x;
+    read call;
+    print read;
+    print call;
+}

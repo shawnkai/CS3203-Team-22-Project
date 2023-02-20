@@ -15,19 +15,29 @@
 using namespace std;
 
 class Expression {
+    /**
+     * This is the parent class for all expressions and contains the virtual functions evaluate() and toString()
+     * which overridden by its child classes
+     */
     protected:
         vector<DesignEntity*> entities;
 
     public:
         explicit Expression(vector<DesignEntity*> entities);
 
-        virtual string evaluate(PKB pkb) = 0;
+        virtual vector<string> evaluate(PKB pkb) = 0;
+
+        vector<DesignEntity*> getAllEntities();
 
         virtual string toString() = 0;
 };
 
 
 class SelectExpression : public Expression {
+    /**
+     * All Queries when parsed will return a SelectExpression type
+     * which may consist of other Expressions called conditions
+     */
 private:
     vector<Expression*> conditions;
 
@@ -36,7 +46,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 
 };
 
@@ -53,7 +63,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -62,9 +72,8 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
-
 
 //Uses expression classes
 class UsesExpression : public Expression {
@@ -79,7 +88,7 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -88,8 +97,71 @@ public:
 
     string toString() override;
 
-    string evaluate(PKB pkb) override;
+    vector<string> evaluate(PKB pkb) override;
 };
+
+class FAPSExpression: public Expression {
+    /**
+     * The FAPSExpression is the parent class for Follows, FollowsStar, Parent and ParentStar since their evaluations
+     * are identical except for the PKB Abstraction each employs. To encapsulate this common evaluate we use the
+     * FAPSExpression class
+     */
+private:
+    string pkbAbstraction;
+
+public:
+    explicit FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+class FollowsExpression: public FAPSExpression {
+private:
+    string pkbAbstraction;
+public:
+    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class FollowsStarExpression: public FAPSExpression {
+public:
+    explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class ParentExpression: public FAPSExpression {
+public:
+    explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class ParentStarExpression: public FAPSExpression {
+public:
+    explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
+
+    string toString() override;
+};
+
+class PatternExpression : public Expression {
+    /**
+     * This class encapsulates a pattern expression which chooses a DesignEntity taking in the NamedEntity and
+     * the string match for RHS (either exact or with wildcards)
+     */
+private:
+    NamedEntity *p1;
+    string p2;
+public:
+    explicit PatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
+
+    string toString() override;
+
+    vector<string> evaluate(PKB pkb) override;
+};
+
+
 
 
 #endif //SPA_EXPRESSIONS_H

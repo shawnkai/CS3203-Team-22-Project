@@ -14,15 +14,26 @@
 using namespace std;
 
 class DesignAbstractionsDatabaseFactory {
-    // Implement the below as methods or their own Factory classes
-    static DesignAbstractionDatabase* getModifiesDatabase(string entityTypeBeingExtracted);
-    static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingExtracted);
+    static DesignAbstractionDatabase* getModifiesDatabase(string entityTypeBeingAbstracted);
+    static DesignAbstractionDatabase* getUsesDatabase(string entityTypeBeingAbstracted);
+    static DesignAbstractionDatabase* getFollowsDatabase();
+    static DesignAbstractionDatabase* getFollowsStarDatabase();
+    static DesignAbstractionDatabase* getParentDatabase();
+    static DesignAbstractionDatabase* getParentStarDatabase();
+
+    static void clearModifiesDatabase();
+    static void clearUsesDatabase();
+    static void clearFollowsDatabase();
+    static void clearFollowsStarDatabase();
+    static void clearParentDatabase();
+    static void clearParentStarDatabase();
 
 public:
     static DesignAbstractionDatabase* getAbstractionDatabase(DesignAbstraction* designAbstraction);
     static DesignAbstractionDatabase* getAbstractionDatabase(string designAbstractionType,
                                                              string entityTypeBeingAbstracted);
-//    static DesignAbstractionDatabase* getAbstractionDatabase(string designAbstractionType);
+
+    static void clearDatabase();
 };
 
 #endif //SPA_DESIGNABSTRACTIONSDATABASEFACTORY_H
