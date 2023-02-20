@@ -10,17 +10,17 @@ z, x, i
 5000
 3 - Select Variables modified by z + x exact match
 variable v; assign a;
-Select v such that pattern a(v, "z+x")
+Select v pattern a(v, "z+x")
 y
 5000
 4 - Select Variables modified by z + x wildcard
 variable v; assign a;
-Select v such that pattern a(v, _"z+x"_)
+Select v pattern a(v, _"z+x"_)
 y, z
 5000
 5 - Select all the assignment statements for z
 assign a;
-Select a such that pattern a("z", _)
+Select a pattern a("z", _)
 2, 7, 9
 5000
 6 - Select all variables that are print
@@ -102,4 +102,9 @@ Select w such that Uses(w, _)
 variable v;
 Select v such that Uses(_, v)
 i, x, z, p
+5000
+21 - Select assignment with x=x-1
+assign a;
+Select a pattern a(_, "x-1")
+5
 5000

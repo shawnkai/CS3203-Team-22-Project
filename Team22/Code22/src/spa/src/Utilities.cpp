@@ -82,6 +82,7 @@ string Utilities::infixToPrefix(string exp) {
     bool isRightWildcard = exp[exp.length() - 1] == '_';
 
     exp = Utilities::removeAllOccurrences(exp, '_');
+    exp = Utilities::removeAllOccurrences(exp, ' ');
 
     reverse(exp.begin(), exp.end());
 
