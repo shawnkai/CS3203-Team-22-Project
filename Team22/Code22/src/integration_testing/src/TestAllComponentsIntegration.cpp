@@ -160,6 +160,27 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output8.find("10") == std::string::npos);
     REQUIRE(output8.find("11") != std::string::npos);
     REQUIRE(output8.find("12") == std::string::npos);
+
+    // Testing Assign Patten
+    string declaration9 = "assign a;";
+    string query9 = "Select a pattern a(\"x\", \"x - 1\")";
+    parser.parse(declaration9);
+    auto exp9 = parser.parse(query9);
+    vector<string> res_9 = evaluator.evaluate(exp9);
+    string output9;
+    for (const string& r : res_9) {
+        output9 += r;
+    }
+
+    cout << "Output 9: " << output9 << endl;
+    REQUIRE(output9.find('5') != std::string::npos);
+    REQUIRE(output9.find('6') == std::string::npos);
+//    REQUIRE(output9.find('7') != std::string::npos);
+//    REQUIRE(output9.find('8') != std::string::npos);
+//    REQUIRE(output9.find('9') != std::string::npos);
+//    REQUIRE(output9.find("10") == std::string::npos);
+//    REQUIRE(output9.find("11") != std::string::npos);
+//    REQUIRE(output9.find("12") == std::string::npos);
 }
 
 TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
