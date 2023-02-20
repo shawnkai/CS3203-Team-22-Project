@@ -20,11 +20,11 @@ No additional instructions required.
 
 # Team Members
 
-| Name  | Email                    | Development OS  | Development Subsystem |
-| ------------- |--------------------------| ------------- | ------------- |
-| Atin Sakkeer Hussain  | atin.s@u.nus.edu         | Mac OS  | QPS  |
-| Tanishq Sharma  | tanishq.sharma@u.nus.edu | Windows 10  | QPS  |
-| Jai Lal Lulla  | jai.lulla@u.nus.edu      | Mac OS  | PKB  |
-| Yi Zhang  | e0439342@u.nus.edu       | Mac OS  | SPA  |
-| Wang Mo  | e0439309@u.nus.edu       | Windows 10  | SPA  |
-| Shawn Tan  | -                        | Windows 10  | QPS  |
+| Name  | Email                     | Development OS  | Development Subsystem |
+| ------------- |---------------------------| ------------- | ----------- |
+| Atin Sakkeer Hussain  | atin.s@u.nus.edu          | Mac OS  | QPS |
+| Tanishq Sharma  | tanishq.sharma@u.nus.edu  | Windows 10  | QPS |
+| Jai Lal Lulla  | jai.lulla@u.nus.edu       | Mac OS  | PKB |
+| Yi Zhang  | e0439342@u.nus.edu        | Mac OS  | SP |
+| Wang Mo  | e0439309@u.nus.edu        | Windows 10  | SP |
+| Shawn Tan  | tanjingkaishawn@u.nus.edu | Windows 10  | QPS |
