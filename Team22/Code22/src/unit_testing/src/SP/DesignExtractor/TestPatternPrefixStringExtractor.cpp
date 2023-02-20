@@ -54,7 +54,9 @@ TEST_CASE("TestCase2_TestComplexCaseAssignmentToPrefix_ShouldSuccess") {
     extractor.extractPrefixString(t0,anotherInstance);
 
     vector<AssignPattern*> result = anotherInstance.getAllRightHandExpressions();
+    string result3 = anotherInstance.getRightHandExpressionOfAVariableOnAParticularLineNumber("x", "1");
     unordered_map<string, string> result2 = anotherInstance.getAllRightHandExpressionsOfAVariable("x");
     REQUIRE(result.size() > 0);
     REQUIRE(result2.find("1")->second=="/%+*125-327");
+    REQUIRE(result3 == "/%+*125-327");
 }
