@@ -13,10 +13,31 @@ void require(bool b) {
 TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     SPDriver driver;
     std::string inputFilePath;
+
 #if __APPLE__
-//    inputFilePath = "../../../tests/Sample_source2.txt";
-    inputFilePath = "Sample_source2.txt";
+    inputFilePath = "../../../tests/Sample_source2.txt";
+//    inputFilePath = "Sample_source2.txt";
 #endif
+
+    string code = "procedure Example {\n"
+                  "  x = 2;\n"
+                  "  z = 3;\n"
+                  "  i = 5;\n"
+                  "  while (i!=0) {\n"
+                  "    x = x - 1;\n"
+                  "    if (x==1) then {\n"
+                  "      z = x + 1; }\n"
+                  "    else {\n"
+                  "      y = z + x; }\n"
+                  "    z = z + x + i;\n"
+                  "    read q;\n"
+                  "    i = i - 1; }\n"
+                  "    print p; }";
+    ofstream temp_file;
+    temp_file.open(inputFilePath);
+    temp_file << code;
+    temp_file.close();
+
     driver.parseSimpleProgram(inputFilePath);
 
     PKB standardExampleSIMPLESourceChecker = PKB();
@@ -30,11 +51,11 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     Result expectedResult2("USES:ASSIGNMENT", "i", vector<string>{"9", "11"});
     REQUIRE(pkbResult2.areEqual(expectedResult2));
 
-    QueryParser parser;
     QueryEvaluator evaluator(standardExampleSIMPLESourceChecker);
 
     string declaration1 = "variable v;";
     string query1 = "Select v";
+    QueryParser parser;
     parser.parse(declaration1);
     auto exp1 = parser.parse(query1);
     vector<string> exp_res = evaluator.evaluate(exp1);
@@ -51,6 +72,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
     string declaration2 = "stmt m; if if;";
     string query2 = "Select m such that Parent(if, m)";
+    parser = QueryParser();
     parser.parse(declaration2);
     auto exp2 = parser.parse(query2);
     vector<string> res_2 = evaluator.evaluate(exp2);
@@ -65,12 +87,13 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Parent
     string declaration3 = "stmt s;";
     string query3 = "Select s such that Parent(4, s)";
+    parser = QueryParser();
     parser.parse(declaration3);
     auto exp3 = parser.parse(query3);
     vector<string> res_3 = evaluator.evaluate(exp3);
     string output3;
     for (const string& r : res_3) {
-        output3 += r;
+        output3 += r + " ";
     }
 
     REQUIRE(output3.find('5') != std::string::npos);
@@ -83,8 +106,9 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output3.find("12") == std::string::npos);
 
     // Testing Follows*
-    string declaration4 = "variable a;";
+    string declaration4 = "stmt a;";
     string query4 = "Select a such that Follows*(3, a)";
+    parser = QueryParser();
     parser.parse(declaration4);
     auto exp4 = parser.parse(query4);
     vector<string> res_4 = evaluator.evaluate(exp4);
@@ -96,9 +120,11 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output4.find('4') != std::string::npos);
     REQUIRE(output4.find("12") != std::string::npos);
 
+
     // Testing Follows
-    string declaration5 = "variable a;";
+    string declaration5 = "stmt a;";
     string query5 = "Select a such that Follows(3, a)";
+    parser = QueryParser();
     parser.parse(declaration5);
     auto exp5 = parser.parse(query5);
     vector<string> res_5 = evaluator.evaluate(exp5);
@@ -113,6 +139,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Uses
     string declaration6 = "variable v;";
     string query6 = "Select v such that Uses(9, v)";
+    parser = QueryParser();
     parser.parse(declaration6);
     auto exp6 = parser.parse(query6);
     vector<string> res_6 = evaluator.evaluate(exp6);
@@ -129,6 +156,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Modifies
     string declaration7 = "variable v;";
     string query7 = "Select v such that Modifies(7, v)";
+    parser = QueryParser();
     parser.parse(declaration7);
     auto exp7 = parser.parse(query7);
     vector<string> res_7 = evaluator.evaluate(exp7);
@@ -144,6 +172,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Parent*
     string declaration8 = "assign a; while w;";
     string query8 = "Select a such that Parent* (w, a)";
+    parser = QueryParser();
     parser.parse(declaration8);
     auto exp8 = parser.parse(query8);
     vector<string> res_8 = evaluator.evaluate(exp8);
@@ -164,6 +193,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     // Testing Assign Patten
     string declaration9 = "assign a;";
     string query9 = "Select a pattern a(\"x\", \"x - 1\")";
+    parser = QueryParser();
     parser.parse(declaration9);
     auto exp9 = parser.parse(query9);
     vector<string> res_9 = evaluator.evaluate(exp9);
@@ -181,6 +211,9 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 //    REQUIRE(output9.find("10") == std::string::npos);
 //    REQUIRE(output9.find("11") != std::string::npos);
 //    REQUIRE(output9.find("12") == std::string::npos);
+
+    REQUIRE(filesystem::remove(inputFilePath));
+
 }
 
 TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
@@ -188,10 +221,44 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     standardExampleSIMPLESourceChecker.clearAllDatabases();
     SPDriver driver;
     std::string inputFilePath;
-#if __APPLE__
-//    inputFilePath = "../../../tests/Sample_source3.txt";
+
     inputFilePath = "Sample_source3.txt";
-#endif
+
+    string code = "procedure Example {\n"
+                  " x = 2;\n"
+                  " while (i!=0) {\n"
+                  "   if (x > 1) then {\n"
+                  "     z = x + 1; }\n"
+                  "   else {\n"
+                  "     y = z + x;\n"
+                  "     if (x >= 5) then {\n"
+                  "        z = x + 1;\n"
+                  "        while ( x < 10) {\n"
+                  "           x = x - 1;\n"
+                  "           while ((x <= 9) || ((z % 2) == 1)) {\n"
+                  "             anx = 1;\n"
+                  "             if (z == 1) then {\n"
+                  "               z = 2;\n"
+                  "             } else {\n"
+                  "               z = 3;\n"
+                  "               while (!(!(j < 0))) {\n"
+                  "                 j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;\n"
+                  "               }\n"
+                  "             }\n"
+                  "           }\n"
+                  "        }\n"
+                  "     }\n"
+                  "     else {\n"
+                  "       print x;\n"
+                  "     }\n"
+                  "   }\n"
+                  " }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(inputFilePath);
+    temp_file << code;
+    temp_file.close();
+
     driver.parseSimpleProgram(inputFilePath);
 
     //PKB standardExampleSIMPLESourceChecker = PKB();
@@ -226,6 +293,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
 
     string declaration2 = "stmt m; if if;";
     string query2 = "Select m such that Parent*(if, m)";
+    parser = QueryParser();
     parser.parse(declaration2);
     auto exp2 = parser.parse(query2);
     vector<string> res_2 = evaluator.evaluate(exp2);
@@ -251,6 +319,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Parent
     string declaration3 = "stmt s;";
     string query3 = "Select s such that Parent(8, s)";
+    parser = QueryParser();
     parser.parse(declaration3);
     auto exp3 = parser.parse(query3);
     vector<string> res_3 = evaluator.evaluate(exp3);
@@ -267,6 +336,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Parent*
     string declaration4 = "stmt s;";
     string query4 = "Select s such that Parent*(8, s)";
+    parser = QueryParser();
     parser.parse(declaration4);
     auto exp4 = parser.parse(query4);
     vector<string> res_4 = evaluator.evaluate(exp4);
@@ -288,6 +358,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Uses
     string declaration5 = "variable v;";
     string query5 = "Select v such that Uses(15, v)";
+    parser = QueryParser();
     parser.parse(declaration5);
     auto exp5 = parser.parse(query5);
     vector<string> res_5 = evaluator.evaluate(exp5);
@@ -302,6 +373,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Modifies
     string declaration6 = "variable v;";
     string query6 = "Select v such that Modifies(16, v)";
+    parser = QueryParser();
     parser.parse(declaration6);
     auto exp6 = parser.parse(query6);
     vector<string> res_6 = evaluator.evaluate(exp6);
@@ -316,6 +388,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Follows
     string declaration7 = "stmt s;";
     string query7 = "Select s such that Follows(14, s)";
+    parser = QueryParser();
     parser.parse(declaration7);
     auto exp7 = parser.parse(query7);
     vector<string> res_7 = evaluator.evaluate(exp7);
@@ -330,6 +403,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     // Testing Follows*
     string declaration8 = "stmt s;";
     string query8 = "Select s such that Follows*(14, s)";
+    parser = QueryParser();
     parser.parse(declaration8);
     auto exp8 = parser.parse(query8);
     vector<string> res_8 = evaluator.evaluate(exp8);
@@ -340,4 +414,6 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
 
     REQUIRE(output8.find("16") == std::string::npos);
     REQUIRE(output8.find("15") != std::string::npos);
+
+    REQUIRE(filesystem::remove(inputFilePath));
 }

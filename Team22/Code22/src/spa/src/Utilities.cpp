@@ -31,6 +31,29 @@ bool Utilities::isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%');
 }
 
+// Returns true if s is a number else false
+bool Utilities::isNumber(string s)
+{
+    for (int i = 0; i < s.length(); i++)
+        if (isdigit(s[i]) == false)
+            return false;
+
+    return true;
+}
+
+/**
+ * Checks if a String is alphanumeric
+ *
+ * @param str input
+ * @return true if String is alphanumeric else false
+ */
+bool Utilities::isAlphanumericString(string str) {
+    return std::all_of(
+            str.begin(),
+            str.end(),
+            [](char c){return std::isalnum(c);});
+}
+
 string Utilities::removeAllOccurrences(string str, char c) {
     str.erase(remove(str.begin(), str.end(), c), str.end());
     return str;

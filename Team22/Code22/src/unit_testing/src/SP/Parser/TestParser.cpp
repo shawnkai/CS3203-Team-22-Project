@@ -5,6 +5,8 @@
 #include "SP/Parser/Parser.h"
 #include "SP/Tokenizer/Tokenizer.h"
 #include "catch.hpp"
+#include <filesystem>
+
 using namespace std;
 
 TEST_CASE("TestCase1_ParseTokenListBasicSource_ShouldSuccess") {
@@ -253,9 +255,14 @@ TEST_CASE("TestCase6_ParseBasicSimpleSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut1.txt";
-#endif
+    relativePath = "SP_ut1.txt";
+    string code = "procedure main {\n"
+                  "    read x;\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -273,15 +280,26 @@ TEST_CASE("TestCase6_ParseBasicSimpleSource_ShouldSuccess") {
     REQUIRE(result.nodeType == TokenType::PROCEDURE);
     REQUIRE(result.children.size() == 1);
     REQUIRE(result.children[0].children.size() == 1);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase7_ParseWhileStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut8.txt";
-#endif
+
+    relativePath = "SP_ut8.txt";
+    string code = "procedure Example {\n"
+                  "  while (i!=0) {\n"
+                  "    x = x - 1;\n"
+                  "    z = z + x + i;\n"
+                  "    read print;\n"
+                  "    i = i - 1; }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -302,15 +320,27 @@ TEST_CASE("TestCase7_ParseWhileStmtSource_ShouldSuccess") {
     auto whileStmt = node.children[0];
     REQUIRE(whileStmt.nodeType == TokenType::WHILE);
     REQUIRE(whileStmt.children.size() == 2);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase8_ParseIfStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut9.txt";
-#endif
+
+    relativePath = "SP_ut9.txt";
+
+    string code = "procedure Example {\n"
+                  "    if (x>=1) then {\n"
+                  "      z = x + 1; }\n"
+                  "    else {\n"
+                  "      y = z + x; }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -335,15 +365,27 @@ TEST_CASE("TestCase8_ParseIfStmtSource_ShouldSuccess") {
     auto cond = node2.children[0];
     REQUIRE(cond.nodeType == TokenType::OPERATOR);
     REQUIRE(cond.stringId == ">=");
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase9_ParseReadPrintStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut10.txt";
-#endif
+
+    relativePath = "SP_ut10.txt";
+
+    string code = "procedure compute {\n"
+                  "    read x;\n"
+                  "    read call;\n"
+                  "    print read;\n"
+                  "    print call;\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -368,15 +410,24 @@ TEST_CASE("TestCase9_ParseReadPrintStmtSource_ShouldSuccess") {
     auto node3 = node2.children[0];
     REQUIRE(node3.nodeType == TokenType::NAME_IDENTIFIER);
     REQUIRE(node3.stringId == "call");
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase10_ParseAssignStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut11.txt";
-#endif
+
+    relativePath = "SP_ut11.txt";
+
+    string code = "procedure compute {\n"
+                  "    x = ((1 + 2) * (a + 4) + 5) % 6 / 7 ;\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -400,15 +451,33 @@ TEST_CASE("TestCase10_ParseAssignStmtSource_ShouldSuccess") {
     auto node3 = node2.children[1];
     REQUIRE(node3.nodeType == TokenType::OPERATOR);
     REQUIRE(node3.stringId == "/");
+    REQUIRE(filesystem::remove(relativePath)) ;
 }
 
 TEST_CASE("TestCase11_ParseIfWhileCombinedMix1_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut12.txt";
-#endif
+
+    relativePath = "SP_ut12.txt";
+
+    string code = "procedure p {\n"
+                  "  if (x<0) then {\n"
+                  "    print a;\n"
+                  "    while (i>0) {\n"
+                  "      x = z * 3 + 2 * y;\n"
+                  "      read q;\n"
+                  "      i = i - 1; }\n"
+                  "    x = x + 1;\n"
+                  "    z = x + z; }\n"
+                  "  else {\n"
+                  "    z = 1; }\n"
+                  "  z = z + x + i; }";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -436,15 +505,34 @@ TEST_CASE("TestCase11_ParseIfWhileCombinedMix1_ShouldSuccess") {
     REQUIRE(node4.children.size() == 4);
     auto node5 = node4.children[1];
     REQUIRE(node5.nodeType == TokenType::WHILE);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase12_ParseIfWhileCombinedMix2_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut13.txt";
-#endif
+
+    relativePath = "SP_ut13.txt";
+
+    string code = "procedure Example {\n"
+                  "  x = 2;\n"
+                  "  z = 3;\n"
+                  "  i = 5;\n"
+                  "  while (i!=0) {\n"
+                  "    x = x - 1;\n"
+                  "    if (x==1) then {\n"
+                  "      z = x + 1; }\n"
+                  "    else {\n"
+                  "      y = z + x;\n"
+                  "    }\n"
+                  "  }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -471,15 +559,33 @@ TEST_CASE("TestCase12_ParseIfWhileCombinedMix2_ShouldSuccess") {
     REQUIRE(node3.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node3.children.size() == 2);
     REQUIRE(node3.children[1].nodeType == TokenType::IF);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase13_ParseIfWhileCombinedMix3_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut14.txt";
-#endif
+
+    relativePath = "SP_ut14.txt";
+
+    string code = "procedure Example {\n"
+                  "  x = 2;\n"
+                  "  z = 3;\n"
+                  "  while (i!=0) {\n"
+                  "    if (x==1) then {\n"
+                  "      z = x + 1; }\n"
+                  "    else {\n"
+                  "      y = z + x;\n"
+                  "    }\n"
+                  "    x = x - 1;\n"
+                  "  }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -506,15 +612,44 @@ TEST_CASE("TestCase13_ParseIfWhileCombinedMix3_ShouldSuccess") {
     REQUIRE(node3.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node3.children.size() == 2);
     REQUIRE(node3.children[0].nodeType == TokenType::IF);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase14_ParseDeepNestingSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut15.txt";
-#endif
+
+    relativePath = "SP_ut15.txt";
+
+    string code = "procedure Example {\n"
+                  "  x = 2;\n"
+                  "  z = 3;\n"
+                  "  while (i!=0) {\n"
+                  "    if (x==1) then {\n"
+                  "      z = x + 1;\n"
+                  "      while (a < 9) {\n"
+                  "        while(b > 7) {\n"
+                  "          while (c == 8) {\n"
+                  "            while (maz != 10) {\n"
+                  "              while (i >= 0) {\n"
+                  "                print here123;\n"
+                  "              }\n"
+                  "            }\n"
+                  "          }\n"
+                  "        }\n"
+                  "      }\n"
+                  "    } else {\n"
+                  "        y = z + x;\n"
+                  "    }\n"
+                  "  }\n"
+                  "  x = x - 1;\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -543,15 +678,26 @@ TEST_CASE("TestCase14_ParseDeepNestingSource_ShouldSuccess") {
     REQUIRE(node9.nodeType == TokenType::PRINT);
     auto node10 = node9.children[0];
     REQUIRE(node10.stringId == "here123");
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase15_ParseComplexConditionalStmt_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut16.txt";
-#endif
+
+    relativePath = "SP_ut16.txt";
+
+    string code = "procedure Example {\n"
+                  " while (!(!((z > (1+2) * (3+4)) && ((z - 3) <= 9) ))) {\n"
+                  "  j = 7 ;\n"
+                  " }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -573,15 +719,26 @@ TEST_CASE("TestCase15_ParseComplexConditionalStmt_ShouldSuccess") {
     REQUIRE(node2.stringId == "neg");
     auto node3 = node2.children[0];
     REQUIRE(node3.stringId == "neg");
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase16_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut17.txt";
-#endif
+
+    relativePath = "SP_ut17.txt";
+
+    string code = "procedure Example {\n"
+                  " while ( (b == 9) || ( ((z > (1+2) * (3+4)) && ((z - 3) <= 9) ) && (a == 1))) {\n"
+                  "  j = 7 ;\n"
+                  " }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -606,15 +763,51 @@ TEST_CASE("TestCase16_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
     auto node3 = node2.children[1];
     REQUIRE(node3.stringId == "and");
     REQUIRE(node3.children.size() == 2);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase17_ParseGrandSimpleSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut18.txt";
-#endif
+
+    relativePath = "SP_ut18.txt";
+
+    string code = "procedure Example {\n"
+                  " x = 2;\n"
+                  " while (i!=0) {\n"
+                  "   if (x > 1) then {\n"
+                  "     z = x + 1; }\n"
+                  "   else {\n"
+                  "     y = z + x;\n"
+                  "     if (x >= 5) then {\n"
+                  "        z = x + 1;\n"
+                  "        while ( x < 10) {\n"
+                  "           x = x - 1;\n"
+                  "           while ((x <= 9) || ((z % 2) == 1)) {\n"
+                  "             anx = 1;\n"
+                  "             if (z == 1) then {\n"
+                  "               z = 2;\n"
+                  "             } else {\n"
+                  "               z = 3;\n"
+                  "               while (!(!(j < 0))) {\n"
+                  "                 j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;\n"
+                  "               }\n"
+                  "             }\n"
+                  "           }\n"
+                  "        }\n"
+                  "     }\n"
+                  "     else {\n"
+                  "       print x;\n"
+                  "     }\n"
+                  "   }\n"
+                  " }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -639,6 +832,7 @@ TEST_CASE("TestCase17_ParseGrandSimpleSource_ShouldSuccess") {
     REQUIRE(node3.nodeType == TokenType::IF);
     REQUIRE(node3.children.size() == 3);
     REQUIRE(node3.children[0].stringId == ">");
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase18_ParseIllegalToken_ShouldThrowException") {
@@ -689,9 +883,44 @@ TEST_CASE("TestCase19_ParseIllegalGrammar_ShouldThrowException") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut19.txt";
-#endif
+
+    relativePath = "SP_ut19.txt";
+
+    string code = "procedure Example {\n"
+                  " x = 2;;;\n"
+                  " while (i!=0) {\n"
+                  "   if (x > 1) then {\n"
+                  "     z = x + 1; }\n"
+                  "   else {\n"
+                  "     y = z + x;\n"
+                  "     if (x >= 5) then {\n"
+                  "        z = x + 1;\n"
+                  "        while ( x < 10) {\n"
+                  "           x = x - 1;\n"
+                  "           while ((x <= 9) || ((z % 2) == 1)) {\n"
+                  "             anx = 1;\n"
+                  "             if (z == 1) then {\n"
+                  "               z = 2;\n"
+                  "             } else {\n"
+                  "               z = 3;\n"
+                  "               while (!(!(j < 0))) {\n"
+                  "                 j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;\n"
+                  "               }\n"
+                  "             }\n"
+                  "           }\n"
+                  "        }\n"
+                  "     }\n"
+                  "     else {\n"
+                  "       print x;\n"
+                  "     }\n"
+                  "   }\n"
+                  " }\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -709,15 +938,51 @@ TEST_CASE("TestCase19_ParseIllegalGrammar_ShouldThrowException") {
     }
 
     REQUIRE(isThrownException);
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase20_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
-#if __APPLE__
-    relativePath = "SPTestingResources/SP_ut20.txt";
-#endif
+
+    relativePath = "SP_ut20.txt";
+
+    string code = "procedure Example {\n"
+                  " x = 2;\n"
+                  " while (i!=0) {\n"
+                  "   if (x > 1) then {\n"
+                  "     z = x + 1; }\n"
+                  "   else {\n"
+                  "     y = z + x;\n"
+                  "     if (x >= 5) then {\n"
+                  "        z = x + 1;\n"
+                  "        while ( x < 10) {\n"
+                  "           x = x - 1;\n"
+                  "           while ((x <= 9) || ((z % 2) == 1)) {\n"
+                  "             anx = 1;\n"
+                  "             if (z == 1) then {\n"
+                  "               z = 2;\n"
+                  "             } else {\n"
+                  "               z = 3;\n"
+                  "               while (!(!(j < 0))) {\n"
+                  "                 j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;\n"
+                  "               }\n"
+                  "             }\n"
+                  "           }\n"
+                  "        }\n"
+                  "     }\n"
+                  "     else {\n"
+                  "       print x;\n"
+                  "     }\n"
+                  "   }\n"
+                  " }\n"
+                  "} random ; staff 123";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
     try {
         tokenList = tk.tokenize(relativePath);
     } catch (std::invalid_argument& e) {
@@ -736,4 +1001,5 @@ TEST_CASE("TestCase20_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
     REQUIRE(result.nodeType == TokenType::PROCEDURE);
     REQUIRE(result.children.size() == 1);
     REQUIRE(result.children[0].nodeType == TokenType::STATEMENT_LIST);
+    REQUIRE(filesystem::remove(relativePath));
 }

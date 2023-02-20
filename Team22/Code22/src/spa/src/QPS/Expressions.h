@@ -15,6 +15,10 @@
 using namespace std;
 
 class Expression {
+    /**
+     * This is the parent class for all expressions and contains the virtual functions evaluate() and toString()
+     * which overridden by its child classes
+     */
     protected:
         vector<DesignEntity*> entities;
 
@@ -30,6 +34,10 @@ class Expression {
 
 
 class SelectExpression : public Expression {
+    /**
+     * All Queries when parsed will return a SelectExpression type
+     * which may consist of other Expressions called conditions
+     */
 private:
     vector<Expression*> conditions;
 
@@ -93,6 +101,11 @@ public:
 };
 
 class FAPSExpression: public Expression {
+    /**
+     * The FAPSExpression is the parent class for Follows, FollowsStar, Parent and ParentStar since their evaluations
+     * are identical except for the PKB Abstraction each employs. To encapsulate this common evaluate we use the
+     * FAPSExpression class
+     */
 private:
     string pkbAbstraction;
 
@@ -133,6 +146,10 @@ public:
 };
 
 class PatternExpression : public Expression {
+    /**
+     * This class encapsulates a pattern expression which chooses a DesignEntity taking in the NamedEntity and
+     * the string match for RHS (either exact or with wildcards)
+     */
 private:
     NamedEntity *p1;
     string p2;

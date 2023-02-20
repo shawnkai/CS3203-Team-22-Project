@@ -61,6 +61,16 @@ bool Tokenizer::isLegalArithmeticChar(char c) {
     return c == '+' || c == '-' || c == '*' || c == '/' || c == '%';
 }
 
+/**
+ * Generate the Token representing the string being passed.
+ *
+ * @param delimeter the character to be used for splitting
+ * @param type Token type
+ * @param tokenId a string representation of the token
+ * @param remainingLine the rest of the string for further processing
+ * @param lineNumber statement number
+ * @return a token representing the string value
+ */
 Token Tokenizer::checkingAndGettingToken(char delimeter, TokenType type, std::string tokenId, std::string remainingLine,
                                          int lineNumber) {
     if (remainingLine.find_first_not_of(delimeter) == std::string::npos) {
@@ -98,6 +108,16 @@ Token Tokenizer::checkingAndGettingToken(char delimeter, TokenType type, std::st
     }
 }
 
+/**
+ * Generate the corresponding token for keywords of statements of SIMPLE programming language.
+ *
+ * @param currentTokens result to be returned at the end of tokenization
+ * @param candidateToken a string representing the current Token to be generated
+ * @param line a string of the current line of the SIMPLE source being processed
+ * @param charPos global pointer pointing to the next character to be examined
+ * @param lineNumber statement number of @param candidateToken
+ * @return an updated list of all legal Tokens including the Tokens representing the keywords
+ */
 std::vector<Token> Tokenizer::handleKeyword(std::vector<Token> currentTokens, std::string candidateToken,
                                             std::string line, int charPos, int lineNumber) {
     std::string follows = line.substr(charPos);
@@ -137,6 +157,13 @@ std::vector<Token> Tokenizer::handleKeyword(std::vector<Token> currentTokens, st
     return currentTokens;
 }
 
+/**
+ * Generate all legal tokens of a SIMPLE source programme from string and assemble in a vector.
+ * Work horse of the Tokenizer.
+ *
+ * @param fileName path and file name to a txt file where the SIMPLE source is stored
+ * @return a vector of tokens extracted from string
+ */
 std::vector<Token> Tokenizer::tokenize(const char* fileName) {
     std::ifstream inputSimpleProgram(fileName);
     std::vector<Token> tokens;
@@ -278,20 +305,3 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
     }
     return tokens;
 }
-
-//int main() {
-//    const char* fileTest = "/Users/diwuyi/CLionProjects/spa-cp/Team22/Code22/src/spa/src/SP/SPtestFile_DoNotRemove.txt";
-//    std::cout << "received file name" << fileTest << std::endl;
-//    std::ifstream test(fileTest);
-//    if (test.is_open()) {
-//        std::cout << "file opened" << std::endl;
-//    }
-//    Tokenizer tokenizer;
-//    const std::vector<Token> tokens = tokenizer.tokenize(fileTest);
-//    std::cout << "execution of tokenizer done" << std::endl;
-//    //driver.parseSimpleProgram(fileTest);
-//    for (Token token: tokens) {
-//            std::cout << "Token" << ToString(token) << std::endl;
-//        }
-//    return 0;
-//};

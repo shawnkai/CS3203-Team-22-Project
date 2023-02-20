@@ -41,7 +41,15 @@ vector<string> SelectExpression::evaluate(PKB pkb) {
         auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
         vector<string> answer;
         for (auto res : results) {
-            answer.push_back(res.getQueryEntityName());
+            if (this->entities[0]->getType() == "VARIABLE" || this->entities[0]->getType() == "PROCEDURE" || this->entities[0]->getType() == "CONSTANT") {
+                answer.push_back(res.getQueryEntityName());
+            } else {
+                for (string a : res.getQueryResult()) {
+                    if (!Utilities::checkIfPresent(answer, a)) {
+                        answer.push_back(a);
+                    }
+                }
+            }
         }
         return answer;
     } else {
@@ -396,6 +404,7 @@ string PatternExpression::toString() {
 
 vector<string> PatternExpression::evaluate(PKB pkb) {
     string prefix_expr = p2;
+    prefix_expr = Utilities::removeAllOccurrences(prefix_expr, '\"');
     prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
     prefix_expr = regex_replace(prefix_expr, regex("\\+"), "\\+");
     prefix_expr = regex_replace(prefix_expr, regex("\\*"), "\\*");

@@ -10,6 +10,7 @@
 #include "PKB/PKB.h"
 #include "QPS/Parser.h"
 #include "QPS/Evaluator.h"
+#include "QPS/Exceptions.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;
@@ -42,21 +43,29 @@ void TestWrapper::parse(std::string filename) {
 
 }
 
-QueryParser parser;
 PKB pkb;
 
 QueryEvaluator evaluator(pkb);
 
 // method to evaluating a query
 void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
-      size_t ind = query.find_last_of(';');
-      string declaration = query.substr(0, ind + 1);
-      string queryToExecute = query.substr(ind + 1, query.size() - ind);
+    QueryParser parser;
+    size_t ind = query.find_last_of(';');
+    string declaration = query.substr(0, ind + 1);
+    string queryToExecute = query.substr(ind + 1, query.size() - ind);
 
-      parser.parse(declaration);
-      auto exp = parser.parse(queryToExecute);
-      vector<string> exp_res = evaluator.evaluate(exp);
-      for (const string& r : exp_res) {
-          results.push_back(r);
-      }
+    parser.parse(declaration);
+
+    try {
+        auto exp = parser.parse(queryToExecute);
+        vector<string> exp_res = evaluator.evaluate(exp);
+        for (const string& r : exp_res) {
+            results.push_back(r);
+        }
+    } catch (SyntacticException& e) {
+        results.emplace_back("SyntaxError");
+    } catch (SemanticException& e) {
+        results.emplace_back("SemanticError");
+    }
+
 }
