@@ -26,10 +26,10 @@ private:
     string CONTAINSFOLLOWSSTAR = R"lit(Follows\*\s?\((\w+),\s+(\w+)\))lit";
     string CONTAINSPARENT = R"lit(Parent\s?\((\w+),\s?(\w+)\))lit";
     string CONTAINSPARENTSTAR = R"lit(Parent\*\s?\((\w+),\s?(\w+)\))lit";
-    string CONTAINSPATTERN = R"(pattern\s+(\w+)\s?\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/]+\"?_?)|_)\))";
+    string CONTAINSPATTERN = R"(pattern\s+(\w+)\s?\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%]+\"?_?)|_)\))";
     string MODIFIES = R"lit(Modifies\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
     string USES = R"lit(Uses\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string PATTERN = R"(pattern\s+(\w+)\s?\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/]+\"?_?)|_)\))";
+    string PATTERN = R"(pattern\s+(\w+)\s?\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%]+\"?_?)|_)\))";
     string FOLLOWS = R"lit(Follows\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
     string FOLLOWSSTAR = R"lit(Follows\*\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
     string PARENT = R"lit(Parent\s?\(("?\w+"?),\s?("?\w+"?)\))lit";

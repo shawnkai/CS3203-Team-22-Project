@@ -408,7 +408,7 @@ vector<string> PatternExpression::evaluate(PKB pkb) {
     prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
     prefix_expr = regex_replace(prefix_expr, regex("\\+"), "\\+");
     prefix_expr = regex_replace(prefix_expr, regex("\\*"), "\\*");
-    prefix_expr = regex_replace(prefix_expr, regex("_"), R"([\w\+\-\*/]*)");
+    prefix_expr = regex_replace(prefix_expr, regex("_"), R"([\w\+\-\*/%]*)");
     regex right_expr (prefix_expr);
 
     if (p1->getSynonym() == "_" || p1->getType() == "VARIABLE") {
@@ -429,7 +429,6 @@ vector<string> PatternExpression::evaluate(PKB pkb) {
     } else {
         auto key_values = pkb.getAllRightHandExpressionsOfAVariable(p1->getSynonym());
         vector<string> result;
-
         for (const auto& pair : key_values) {
             if (regex_match(pair.second, right_expr)) {
                 result.push_back(pair.first);

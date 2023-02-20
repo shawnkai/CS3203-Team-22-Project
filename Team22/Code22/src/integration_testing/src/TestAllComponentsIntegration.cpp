@@ -14,7 +14,10 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     SPDriver driver;
     std::string inputFilePath;
 
+#if __APPLE__
+//    inputFilePath = "../../../tests/Sample_source2.txt";
     inputFilePath = "Sample_source2.txt";
+#endif
 
     string code = "procedure Example {\n"
                   "  x = 2;\n"
@@ -403,6 +406,20 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
 
     REQUIRE(output8.find("16") == std::string::npos);
     REQUIRE(output8.find("15") != std::string::npos);
+
+    // Testing Assign Patten
+    string declaration9 = "assign a;";
+    string query9 = "Select a pattern a(\"j\", _)";
+    parser = QueryParser();
+    parser.parse(declaration9);
+    auto exp9 = parser.parse(query9);
+    vector<string> res_9 = evaluator.evaluate(exp9);
+    string output9;
+    for (const string& r : res_9) {
+        output9 += r;
+    }
+    REQUIRE(output9.find("16") != std::string::npos);
+    REQUIRE(output9.find("15") == std::string::npos);
 
     REQUIRE(filesystem::remove(inputFilePath));
 }
