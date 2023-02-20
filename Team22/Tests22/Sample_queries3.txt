@@ -20,7 +20,7 @@ y
 5000
 5 - Select all the assignment statements for z
 assign a;
-Select a such that pattern a("z", _)
+Select a pattern a("z", _)
 4, 7, 13, 14
 5000
 6 - Select all variables that are print
