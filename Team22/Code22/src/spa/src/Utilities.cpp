@@ -41,6 +41,19 @@ bool Utilities::isNumber(string s)
     return true;
 }
 
+/**
+ * Checks if a String is alphanumeric
+ *
+ * @param str input
+ * @return true if String is alphanumeric else false
+ */
+bool Utilities::isAlphanumericString(string str) {
+    return std::all_of(
+            str.begin(),
+            str.end(),
+            [](char c){return std::isalnum(c);});
+}
+
 string Utilities::removeAllOccurrences(string str, char c) {
     str.erase(remove(str.begin(), str.end(), c), str.end());
     return str;
@@ -69,6 +82,7 @@ string Utilities::infixToPrefix(string exp) {
     bool isRightWildcard = exp[exp.length() - 1] == '_';
 
     exp = Utilities::removeAllOccurrences(exp, '_');
+    exp = Utilities::removeAllOccurrences(exp, ' ');
 
     reverse(exp.begin(), exp.end());
 

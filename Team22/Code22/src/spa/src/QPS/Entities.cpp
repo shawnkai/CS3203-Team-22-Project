@@ -3,8 +3,8 @@
 //
 
 #include "QPS/Entities.h"
-
-#include <utility>
+#include "QPS/Exceptions.h"
+#include "Utilities.h"
 
 // Design Entity
 DesignEntity::DesignEntity(string entityType) {
@@ -19,16 +19,25 @@ DesignEntity::DesignEntity() {}
 
 //Stmt Entity and its children
 StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(type)) {
+    if (lineNumber <= 0) {
+        throw SemanticException();
+    }
     this->lineNumber = lineNumber;
 }
 
 StmtEntity::StmtEntity(string type, string synonym) : DesignEntity(std::move(type)) {
+    if (!Utilities::isAlphanumericString(synonym)) {
+        throw SyntacticException();
+    }
     this->synonym = std::move(synonym);
 }
 
 StmtEntity::StmtEntity(string type) : DesignEntity(std::move(type)) {}
 
 StmtEntity::StmtEntity(int lineNumber) : DesignEntity("STATEMENT") {
+    if (lineNumber <= 0) {
+        throw SemanticException();
+    }
     this->lineNumber = lineNumber;
 }
 
@@ -70,8 +79,16 @@ IfEntity::IfEntity(string synonym) : StmtEntity("IF", std::move(synonym)) {}
 
 
 // Named Entities and its children
-NamedEntity::NamedEntity(string type, string synonym) : DesignEntity(std::move(type)) {
-    this->synonym = std::move(synonym);
+NamedEntity::NamedEntity(const string& type, string synonym) : DesignEntity(type) {
+    string synonym_removed = Utilities::removeAllOccurrences(synonym, '\"');
+    if (!Utilities::isAlphanumericString(synonym_removed) && synonym != "_") {
+        throw SyntacticException();
+    }
+    if (type == "ident" && (synonym[0] != '\"' || synonym[synonym.size() - 1] != '\"')) {
+        ::printf("ERROR SYN: %s\n", synonym.c_str());
+        throw SyntacticException();
+    }
+    this->synonym = synonym_removed;
 }
 
 string NamedEntity::getSynonym() {

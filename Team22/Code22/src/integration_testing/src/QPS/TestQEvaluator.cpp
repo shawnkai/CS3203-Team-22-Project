@@ -1,8 +1,4 @@
 //
-// Created by Atin Sakkeer Hussain on 06/02/2023.
-//
-
-//
 // Created by Atin Sakkeer Hussain on 04/02/2023.
 //
 
@@ -12,7 +8,6 @@
 #include "PKB/PKB.h"
 #include "catch.hpp"
 #include "Utilities.h"
-
 
 using namespace std;
 
@@ -45,7 +40,32 @@ TEST_CASE("TestCase1_EvaluateSelectStatement_ShouldSuccess") {
     REQUIRE(Utilities::checkIfPresent(res2, "main"));
 }
 
-TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess") {
+TEST_CASE("TestCase2_EvaluateSelectLineStatement_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("READ", make_tuple("v1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("v2", "2"));
+    pkb.addDesignEntity("READ", make_tuple("v3", "3"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "read r;";
+    string query = "Select r";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+    REQUIRE(Utilities::checkIfPresent(res, "2"));
+    REQUIRE(Utilities::checkIfPresent(res, "3"));
+}
+
+TEST_CASE("TestCase3_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -67,7 +87,76 @@ TEST_CASE("TestCase2_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess")
     REQUIRE(Utilities::checkIfPresent(res, "v3"));
 }
 
-TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
+TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatModifiesSynonyms_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("x1", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("READ", "x1", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(r, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "x1"));
+}
+
+TEST_CASE("TestCase5_EvaluateSelectStatementWithSuchThatModifiesIdent_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("x1", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("READ", "x1", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "read r;";
+    string query = "Select r such that Modifies(r, \"x1\")";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+}
+
+TEST_CASE("TestCase6_EvaluateSelectLineWithSuchThatModifiesSynonyms_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
+    pkb.addDesignEntity("READ", make_tuple("x1", "1"));
+    pkb.addDesignAbstraction("MODIFIES", make_tuple("READ", "x1", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select r such that Modifies(r, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+}
+
+TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -89,7 +178,53 @@ TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
     REQUIRE(Utilities::checkIfPresent(res, "v4"));
 }
 
-TEST_CASE("TestCase5_EvaluateSelectStatementWithPatternExactMatching_ShouldSuccess") {
+TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatUsesSynonym_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x4", "1"));
+    pkb.addDesignEntity("PRINT", make_tuple("x4", "1"));
+    pkb.addDesignAbstraction("USES", make_tuple("PRINT", "x4", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; print p;";
+    string query = "Select v such that Uses(p, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "x4"));
+}
+
+TEST_CASE("TestCase9_EvaluateSelectLineWithSuchThatUsesSynonym_ShouldSuccess") {
+    PKB pkb;
+    pkb.clearAllDatabases();
+
+    pkb.addDesignEntity("VARIABLE", make_tuple("x4", "1"));
+    pkb.addDesignEntity("PRINT", make_tuple("x4", "1"));
+    pkb.addDesignAbstraction("USES", make_tuple("PRINT", "x4", "1"));
+
+    QueryEvaluator queryEvaluator(pkb);
+    QueryParser queryParser;
+
+    string declaration = "variable v; print p;";
+    string query = "Select p such that Uses(p, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *exp = queryParser.parse(query);
+
+    vector<string> res = queryEvaluator.evaluate(exp);
+
+    REQUIRE(Utilities::checkIfPresent(res, "1"));
+}
+
+TEST_CASE("TestCase10_EvaluateSelectStatementWithPatternExactMatching_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -103,7 +238,7 @@ TEST_CASE("TestCase5_EvaluateSelectStatementWithPatternExactMatching_ShouldSucce
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query = "Select a such that pattern a(_, \"v7+v8\")";
+    string query = "Select a pattern a(_, \"v7+v8\")";
 
     queryParser.parse(declaration);
 
@@ -114,7 +249,7 @@ TEST_CASE("TestCase5_EvaluateSelectStatementWithPatternExactMatching_ShouldSucce
     REQUIRE(Utilities::checkIfPresent(res, "8"));
 }
 
-TEST_CASE("TestCase6_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") {
+TEST_CASE("TestCase11_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -129,8 +264,8 @@ TEST_CASE("TestCase6_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") 
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";
-    string query1 = "Select a such that pattern a(_, _\"v7+v8\"_)";
-    string query2 = "Select a such that pattern a(_, _\"v7+v9\"_)";
+    string query1 = "Select a pattern a(_, _\"v7+v8\"_)";
+    string query2 = "Select a pattern a(_, _\"v7+v9\"_)";
 
     queryParser.parse(declaration);
 
@@ -144,7 +279,7 @@ TEST_CASE("TestCase6_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") 
     REQUIRE(Utilities::checkIfPresent(res2, "9"));
 }
 
-TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess") {
+TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -171,7 +306,7 @@ TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess") 
     REQUIRE(Utilities::checkIfPresent(res2, "11"));
 }
 
-TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldSuccess") {
+TEST_CASE("TestCase13_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -198,7 +333,7 @@ TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldSu
     REQUIRE(Utilities::checkIfPresent(res2, "13"));
 }
 
-TEST_CASE("TestCase9_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") {
+TEST_CASE("TestCase14_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -225,7 +360,7 @@ TEST_CASE("TestCase9_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") {
     REQUIRE(Utilities::checkIfPresent(res2, "14"));
 }
 
-TEST_CASE("TestCase10_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSuccess") {
+TEST_CASE("TestCase15_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -252,7 +387,7 @@ TEST_CASE("TestCase10_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSu
     REQUIRE(Utilities::checkIfPresent(res2, "16"));
 }
 
-TEST_CASE("TestCase11_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSuccess") {
+TEST_CASE("TestCase16_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 
@@ -279,7 +414,7 @@ TEST_CASE("TestCase11_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSucce
     REQUIRE(Utilities::checkIfPresent(res2, "20"));
 }
 
-TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatParentStar_ShouldSuccess") {
+TEST_CASE("TestCase17_EvaluateSelectStatementWithSuchThatParentStar_ShouldSuccess") {
     PKB pkb;
     pkb.clearAllDatabases();
 

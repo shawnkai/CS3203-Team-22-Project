@@ -27,7 +27,12 @@ public:
     }
 };
 
+
 class StmtEntity : public DesignEntity {
+    /**
+     * StmtEntity Class is the super class for ReadEntity, PrintEntity, AssignEntity, CallEntity, IfEntity and WhileEntity
+     * it can be initialized with the specific type and its line number or the specific type and the synonym used in declaration
+     */
 protected:
     int lineNumber = -1;
     string synonym = "-1";
@@ -87,10 +92,14 @@ public:
 
 
 class NamedEntity : public DesignEntity {
+    /**
+     * NamedEntity class is the super class for ProcedureEntity, VariableEntity, ConstantEntity and WildCardEntity
+     * This class stores the specific type of the NamedEntity and also its synonym
+     */
 protected:
     string synonym;
 public:
-    NamedEntity(string type, string synonym);
+    NamedEntity(const string& type, string synonym);
 
     string getSynonym();
 
