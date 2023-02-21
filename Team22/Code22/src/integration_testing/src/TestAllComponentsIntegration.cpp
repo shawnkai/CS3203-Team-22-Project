@@ -3,6 +3,9 @@
 #include "SP/SPDriver.h"
 #include "QPS/Parser.h"
 #include "QPS/Evaluator.h"
+#include <iostream>
+#include <cstdint>
+#include <filesystem>
 
 using namespace std;
 
@@ -16,6 +19,8 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
 #if __APPLE__
 //    inputFilePath = "../../../tests/Sample_source2.txt";
+    inputFilePath = "Sample_source2.txt";
+#else 
     inputFilePath = "Sample_source2.txt";
 #endif
 
