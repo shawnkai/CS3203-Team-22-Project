@@ -17,7 +17,7 @@ TEST_CASE("TestCase1_StmtEntityAlphanumericSynonym_Success") {
         throwsException = true;
     }
 
-    REQUIRE(not throwsException);
+    REQUIRE(!throwsException);
 }
 
 TEST_CASE("TestCase2_NamedEntityAlphanumericSynonym_Success") {
@@ -29,7 +29,7 @@ TEST_CASE("TestCase2_NamedEntityAlphanumericSynonym_Success") {
         throwsException = true;
     }
 
-    REQUIRE(not throwsException);
+    REQUIRE(!throwsException);
 }
 
 TEST_CASE("TestCase3_StmtEntityPositiveInteger_Success") {
@@ -41,7 +41,7 @@ TEST_CASE("TestCase3_StmtEntityPositiveInteger_Success") {
         throwsException = true;
     }
 
-    REQUIRE(not throwsException);
+    REQUIRE(!throwsException);
 }
 
 
