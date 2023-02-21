@@ -17,12 +17,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     SPDriver driver;
     std::string inputFilePath;
 
-#if __APPLE__
-//    inputFilePath = "../../../tests/Sample_source2.txt";
     inputFilePath = "Sample_source2.txt";
-#else 
-    inputFilePath = "Sample_source2.txt";
-#endif
 
     string code = "procedure Example {\n"
                   "  x = 2;\n"
