@@ -388,7 +388,9 @@ void QueryParser::extractDeclarations(string query) {
                 name.erase(0, pos + delimiter.length());
             }
         }
-        this->addToSynonymTable(type, name);
+        if (!name.empty()) {
+            this->addToSynonymTable(type, name);
+        }
 	}
 }
 
