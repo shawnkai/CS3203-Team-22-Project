@@ -384,6 +384,9 @@ void QueryParser::extractDeclarations(string query) {
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);
+                if (subname.empty()) {
+                    break;
+                }
                 this->addToSynonymTable(type, subname);
                 name.erase(0, pos + delimiter.length());
             }
