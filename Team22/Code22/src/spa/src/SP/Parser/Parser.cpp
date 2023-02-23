@@ -499,7 +499,8 @@ TNode Parser::parseRelationalFactor() {
         int peekPos = pos + 1;
         if (tokenList[peekPos].type == TokenType::RIGHT_ROUND_BRACKET ||
         (tokenList[peekPos].type == TokenType::OPERATOR && (tokenList[peekPos].value == ">" ||
-        tokenList[peekPos].value == ">="|| tokenList[peekPos].value == "<=" ||tokenList[peekPos].value == "<"))) {
+        tokenList[peekPos].value == ">="|| tokenList[peekPos].value == "<=" ||tokenList[peekPos].value == "<"
+        || tokenList[peekPos].value == "==" || tokenList[peekPos].value == "!="))) {
             node = constructVarNode(currToken);
             ++pos;
         }
