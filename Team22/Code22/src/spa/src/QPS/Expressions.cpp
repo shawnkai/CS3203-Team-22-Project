@@ -4,7 +4,6 @@
 
 #include "QPS/Expressions.h"
 
-#include <utility>
 #include "PKB/PKB.h"
 #include <algorithm>
 #include <regex>
@@ -294,9 +293,11 @@ vector<string> UsesSExpression::evaluate(PKB pkb) {
 
 vector<string> UsesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
-        Result res = pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), this->entities[0]->toString()));
-        if (!res.getQueryResult().empty() && Utilities::checkIfPresent(res.getQueryResult(), to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()))) {
-            return {res.toString()};
+        string varName = this->entities[0]->toString();
+        varName = Utilities::removeAllOccurrences(varName, '\"');
+        Result res = pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), varName));
+        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty()) {
+            return res.getQueryResult();
         }
         else {
             return {};
