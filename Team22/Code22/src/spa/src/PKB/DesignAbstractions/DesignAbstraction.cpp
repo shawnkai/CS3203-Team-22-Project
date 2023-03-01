@@ -7,6 +7,7 @@
 #include "DesignAbstraction.h"
 #include "DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
 #include "DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
+#include <algorithm>
 
 using namespace std;
 

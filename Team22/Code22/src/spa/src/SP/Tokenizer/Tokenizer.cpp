@@ -4,6 +4,7 @@
 #include <string>
 #include <map>
 #include <stdexcept>
+#include <filesystem>
 #include "Token.h"
 #include "Tokenizer.h"
 
@@ -22,7 +23,7 @@ bool Tokenizer::isLegalDigit(char c) {
 }
 
 bool Tokenizer::isWhiteSpace(char c) {
-    return c == ' ';
+    return c == ' ' || c == '\t';
 }
 
 bool Tokenizer::isStatementTerminal(char c) {

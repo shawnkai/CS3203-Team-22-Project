@@ -191,7 +191,58 @@ TEST_CASE("TestCase4_ParseTokenListWhileStatementExpr2_ShouldSuccess") {
     REQUIRE(stmt.children[0].stringId == "==");
 }
 
-TEST_CASE("TestCase5_ParseTokenListIfStatement_ShouldSuccess") {
+TEST_CASE("TestCase5_ParseTokenListWhileStatementExpr3_ShouldSuccess") {
+    vector<Token> tokens;
+    tokens.push_back(Token(TokenType::PROCEDURE, "procedure", 0));
+    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "compute", 0));
+    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 0));
+    //complex conditional expression
+    tokens.push_back(Token(TokenType::WHILE, "while", 1));
+    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
+    tokens.push_back(Token(TokenType::OPERATOR, ">=", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
+    tokens.push_back(Token(TokenType::OPERATOR, "%", 1));
+    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+    tokens.push_back(Token(TokenType::LEFT_ROUND_BRACKET, "(", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "2", 1));
+    tokens.push_back(Token(TokenType::OPERATOR, "-", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "1", 1));
+    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+    tokens.push_back(Token(TokenType::RIGHT_ROUND_BRACKET, ")", 1));
+    tokens.push_back(Token(TokenType::LEFT_CURLY_BRACKET, "{", 1));
+    tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "j", 2));
+    tokens.push_back(Token(TokenType::OPERATOR, "=", 2));
+    tokens.push_back(Token(TokenType::INTEGER, "7", 2));
+    tokens.push_back(Token(TokenType::OPERATOR, "%", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "2", 1));
+    tokens.push_back(Token(TokenType::OPERATOR, "+", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "3", 2));
+    tokens.push_back(Token(TokenType::OPERATOR, "*", 1));
+    tokens.push_back(Token(TokenType::INTEGER, "4", 1));
+    tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
+    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
+    tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
+    Parser ps = Parser(tokens);
+    TNode result;
+    try {
+        result = ps.Parse();
+    } catch (invalid_argument& e) {
+        cerr << e.what() << endl;
+        exit(1);
+    }
+
+    TNode stmtList = result.children[0];
+    REQUIRE(stmtList.children.size() == 1);
+
+    TNode whileNode = stmtList.children[0];
+    TNode condNode = whileNode.children[0];
+    REQUIRE(condNode.nodeType == TokenType::OPERATOR);
+    REQUIRE(condNode.children[1].stringId == "%");
+}
+
+TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
     vector<Token> tokens;
     tokens.push_back(Token(TokenType::PROCEDURE, "procedure", 0));
     tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "compute", 0));
@@ -251,7 +302,7 @@ TEST_CASE("TestCase5_ParseTokenListIfStatement_ShouldSuccess") {
     REQUIRE(greaterThanNode.stringId == ">");
 }
 
-TEST_CASE("TestCase6_ParseBasicSimpleSource_ShouldSuccess") {
+TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -283,7 +334,7 @@ TEST_CASE("TestCase6_ParseBasicSimpleSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase7_ParseWhileStmtSource_ShouldSuccess") {
+TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -323,7 +374,7 @@ TEST_CASE("TestCase7_ParseWhileStmtSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase8_ParseIfStmtSource_ShouldSuccess") {
+TEST_CASE("TestCase9_ParseIfStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -368,7 +419,7 @@ TEST_CASE("TestCase8_ParseIfStmtSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase9_ParseReadPrintStmtSource_ShouldSuccess") {
+TEST_CASE("TestCase10_ParseReadPrintStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -413,7 +464,7 @@ TEST_CASE("TestCase9_ParseReadPrintStmtSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase10_ParseAssignStmtSource_ShouldSuccess") {
+TEST_CASE("TestCase11_ParseAssignStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -454,7 +505,7 @@ TEST_CASE("TestCase10_ParseAssignStmtSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath)) ;
 }
 
-TEST_CASE("TestCase11_ParseIfWhileCombinedMix1_ShouldSuccess") {
+TEST_CASE("TestCase12_ParseIfWhileCombinedMix1_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -508,7 +559,7 @@ TEST_CASE("TestCase11_ParseIfWhileCombinedMix1_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase12_ParseIfWhileCombinedMix2_ShouldSuccess") {
+TEST_CASE("TestCase13_ParseIfWhileCombinedMix2_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -562,7 +613,7 @@ TEST_CASE("TestCase12_ParseIfWhileCombinedMix2_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase13_ParseIfWhileCombinedMix3_ShouldSuccess") {
+TEST_CASE("TestCase14_ParseIfWhileCombinedMix3_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -615,7 +666,7 @@ TEST_CASE("TestCase13_ParseIfWhileCombinedMix3_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase14_ParseDeepNestingSource_ShouldSuccess") {
+TEST_CASE("TestCase15_ParseDeepNestingSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -681,7 +732,7 @@ TEST_CASE("TestCase14_ParseDeepNestingSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase15_ParseComplexConditionalStmt_ShouldSuccess") {
+TEST_CASE("TestCase16_ParseComplexConditionalStmt_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -722,7 +773,7 @@ TEST_CASE("TestCase15_ParseComplexConditionalStmt_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase16_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
+TEST_CASE("TestCase17_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -766,7 +817,7 @@ TEST_CASE("TestCase16_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase17_ParseGrandSimpleSource_ShouldSuccess") {
+TEST_CASE("TestCase18_ParseGrandSimpleSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -835,7 +886,7 @@ TEST_CASE("TestCase17_ParseGrandSimpleSource_ShouldSuccess") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase18_ParseIllegalToken_ShouldThrowException") {
+TEST_CASE("TestCase19_ParseIllegalToken_ShouldThrowException") {
     vector<Token> tokens;
     tokens.push_back(Token(TokenType::PROCEDURE, "procedure", 0));
     tokens.push_back(Token(TokenType::NAME_IDENTIFIER, "compute", 0));
@@ -879,7 +930,7 @@ TEST_CASE("TestCase18_ParseIllegalToken_ShouldThrowException") {
     REQUIRE(isThrownException);
 }
 
-TEST_CASE("TestCase19_ParseIllegalGrammar_ShouldThrowException") {
+TEST_CASE("TestCase20_ParseIllegalGrammar_ShouldThrowException") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;
@@ -941,7 +992,7 @@ TEST_CASE("TestCase19_ParseIllegalGrammar_ShouldThrowException") {
     REQUIRE(filesystem::remove(relativePath));
 }
 
-TEST_CASE("TestCase20_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
+TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
     const char *relativePath;

@@ -3,6 +3,10 @@
 #include "SP/SPDriver.h"
 #include "QPS/Parser.h"
 #include "QPS/Evaluator.h"
+#include "QPS/Exceptions.h"
+#include <iostream>
+#include <cstdint>
+#include <filesystem>
 
 using namespace std;
 
@@ -14,10 +18,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     SPDriver driver;
     std::string inputFilePath;
 
-#if __APPLE__
-//    inputFilePath = "../../../tests/Sample_source2.txt";
     inputFilePath = "Sample_source2.txt";
-#endif
 
     string code = "procedure Example {\n"
                   "  x = 2;\n"
@@ -422,4 +423,22 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     REQUIRE(output9.find("15") == std::string::npos);
 
     REQUIRE(filesystem::remove(inputFilePath));
+
+    // Testing Uses with ident
+    string declaration10 = "assign a;";
+    string query10 = "Select a such that Uses(a, \"x\")";
+    parser = QueryParser();
+    parser.parse(declaration10);
+    auto exp10 = parser.parse(query10);
+    vector<string> res_10 = evaluator.evaluate(exp10);
+    string output10;
+    for (const string &r: res_10) {
+        output10 += r;
+    }
+
+    REQUIRE(output10.find('4') != std::string::npos);
+    REQUIRE(output10.find('5') != std::string::npos);
+    REQUIRE(output10.find('7') != std::string::npos);
+    REQUIRE(output10.find('9') != std::string::npos);
+    REQUIRE(output10.find('1') == std::string::npos);
 }
