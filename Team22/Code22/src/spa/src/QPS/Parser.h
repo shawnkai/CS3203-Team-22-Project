@@ -35,7 +35,7 @@ private:
     string PARENT = R"lit(Parent\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
     string PARENTSTAR = R"lit(Parent\*\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
     string EXTRACTDECLARATION = "(^| |;\\s?)(stmt|read|print|call|while|if|assign|variable|constant|procedure)\\s+((\\w|,\\s?)+)";
-    string QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + CONTAINSMODIFIES + "|" + CONTAINSUSES + "|" + CONTAINSFOLLOWS + "|" + CONTAINSFOLLOWSSTAR + "|" + CONTAINSPARENT + "|" + CONTAINSPARENTSTAR  + ")|\\s+"+ CONTAINSPATTERN +")?";
+    string QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + CONTAINSMODIFIES + "|" + CONTAINSUSES + "|" + CONTAINSFOLLOWS + "|" + CONTAINSFOLLOWSSTAR + "|" + CONTAINSPARENT + "|" + CONTAINSPARENTSTAR  + ")|\\s+"+ CONTAINSPATTERN +")*";
 
     // Regexes
     regex RETURNVALUEREGEX = regex(RETURNVALUE);
