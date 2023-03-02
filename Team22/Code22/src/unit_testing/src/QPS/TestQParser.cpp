@@ -14,8 +14,6 @@ TEST_CASE("TestCase1_ParsingDeclarationStatement_ShouldCreateDesignEntityForEach
 
     string declaration = "assign a, a1; stmt s, s1; while w; if ifs; variable v, v1; procedure p, q; constant c; read re; print pn; call cl;";
 
-    REQUIRE(queryParser.isDeclaration(declaration));
-
     queryParser.parse(declaration);
 
     vector<tuple<string, string>> result = queryParser.getSynonymTable();
@@ -38,8 +36,6 @@ TEST_CASE("TestCase2_ParsingDeclarationStatementSwitchedOrder_Success") {
     QueryParser queryParser;
 
     string declaration = "stmt s, s1; assign a, a1; while w; if ifs; variable v, v1; procedure p, q; constant c; read re; print pn; call cl;";
-
-    REQUIRE(queryParser.isDeclaration(declaration));
 
     queryParser.parse(declaration);
 
@@ -135,8 +131,6 @@ TEST_CASE("TestCase7_ParsingDeclarationStatementSynonymNameSameAsType_Success") 
 
     string declaration = "stmt stmt, s1; assign assign, a1; while while; if if; variable variable, v1; procedure procedure, q; constant constant; read read; print print; call call;";
 
-    REQUIRE(queryParser.isDeclaration(declaration));
-
     queryParser.parse(declaration);
 
     vector<tuple<string, string>> result = queryParser.getSynonymTable();
@@ -158,8 +152,6 @@ TEST_CASE("TestCase8_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Succe
     QueryParser queryParser;
 
     string declaration = "assign a; assign a1; stmt s1; while w; if ifs; variable v, v1; stmt s; procedure p, q; constant c; read re; print pn; call cl;";
-
-    REQUIRE(queryParser.isDeclaration(declaration));
 
     queryParser.parse(declaration);
 
@@ -826,10 +818,8 @@ TEST_CASE("TestCase48_ParsingDeclarationStatementMoreWhitespacesInserted_Success
     QueryParser queryParser;
 
     string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
-
-    REQUIRE(queryParser.isDeclaration(declaration));
-
     queryParser.parse(declaration);
+
 
     vector<tuple<string, string>> result = queryParser.getSynonymTable();
 
@@ -957,13 +947,18 @@ TEST_CASE("TestCase55_MultipleWhitespacesAfterSynAssignPatternExpression_Success
     REQUIRE(actualResult->toString() == expected);
 }
 
+TEST_CASE("TestCase56_IsDeclarationStatementValidDeclaration_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;assign a1;stmt s1;while w;if ifs;variable v,v1;stmt s;procedure p,q;constant c;read re;print pn;call cl;";
+
+    REQUIRE(queryParser.isDeclaration(declaration));
+}
 
 TEST_CASE("TestCase56_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
-
-    REQUIRE(queryParser.isDeclaration(declaration));
 
     queryParser.parse(declaration);
 
