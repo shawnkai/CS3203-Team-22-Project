@@ -121,7 +121,7 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
             NamedEntity *a1;
 
             if (arg1 == "_") {
-                a1 = new WildCardEntity();
+                throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
             } else {
@@ -164,7 +164,7 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
             NamedEntity *a1;
 
             if (arg1 == "_") {
-                a1 = new WildCardEntity();
+                throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
             } else {

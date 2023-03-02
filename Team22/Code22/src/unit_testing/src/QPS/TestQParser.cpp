@@ -690,3 +690,47 @@ TEST_CASE("TestCase40_InvalidSymbolsExpressionSpecPatternExpression_SyntaxError"
 
     REQUIRE(throwsException);
 }
+
+//first arg for uses/modifies cannot be wildcard
+
+TEST_CASE("TestCase41_ModifiesExpressionFirstArgWildcard_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Modifies(_, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+TEST_CASE("TestCase42_UsesExpressionFirstArgWildcard_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(_, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+
