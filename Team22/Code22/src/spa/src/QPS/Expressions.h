@@ -11,6 +11,7 @@
 #include "QPS/Entities.h"
 #include "PKB/PKB.h"
 #include "Result.h"
+#include "QPS/ResultTable.h"
 
 using namespace std;
 
@@ -25,7 +26,7 @@ class Expression {
     public:
         explicit Expression(vector<DesignEntity*> entities);
 
-        virtual vector<string> evaluate(PKB pkb) = 0;
+        virtual ResultTable evaluate(PKB pkb) = 0;
 
         vector<DesignEntity*> getAllEntities();
 
@@ -46,7 +47,7 @@ public:
 
     string toString() override;
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 
 };
 
@@ -63,7 +64,7 @@ public:
 
     string toString() override;
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -72,7 +73,7 @@ public:
 
     string toString() override;
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 };
 
 //Uses expression classes
@@ -88,7 +89,7 @@ public:
 
     string toString() override;
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -97,7 +98,7 @@ public:
 
     string toString() override;
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 };
 
 class FAPSExpression: public Expression {
@@ -112,7 +113,7 @@ private:
 public:
     explicit FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 };
 
 class FollowsExpression: public FAPSExpression {
@@ -158,7 +159,7 @@ public:
 
     string toString() override;
 
-    vector<string> evaluate(PKB pkb) override;
+    ResultTable evaluate(PKB pkb) override;
 };
 
 

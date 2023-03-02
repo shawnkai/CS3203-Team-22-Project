@@ -21,25 +21,27 @@ public:
 
     explicit ResultTable(const map<string, vector<string>>& table);
 
-    ::size_t getSize() {
-        return this->table.begin()->second.size();
-    }
+    ::size_t getSize();
 
     ResultTable intersection(ResultTable table2);
 
-    static ResultTable intersection(initializer_list<ResultTable> resultTables);
+    static ResultTable intersection(vector<ResultTable> resultTables);
 
     string toString();
 
+    ResultTable getColumn(string column);
 
+    vector<string> getValues(const string& column);
+
+    vector<string> getColumnNames();
 
     bool equals(ResultTable table2);
 
 private:
 
-    ResultTable crossProduct(ResultTable table2, vector<string> all_keys);
+    ResultTable crossProduct(ResultTable table2, const vector<string>& all_keys);
 
-    ResultTable naturalJoin(ResultTable table2, vector<string> all_keys, vector<string> common_keys);
+    ResultTable naturalJoin(ResultTable table2, const vector<string>& all_keys, vector<string> common_keys);
 
 };
 

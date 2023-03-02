@@ -4,6 +4,8 @@
 
 #include "QPS/ResultTable.h"
 
+#include <utility>
+
 ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     for (pair<string, vector<string>> p : args) {
         table.insert(p);
@@ -20,6 +22,11 @@ bool ResultTable::equals(ResultTable table2) {
     if (this->table.size() != table2.table.size()) {
         return false;
     }
+
+    if (this->table.size() == 0 & table2.table.size() == 0) {
+        return true;
+    }
+
     vector<string> key1;
     vector<string> key2;
 
@@ -52,7 +59,7 @@ bool ResultTable::equals(ResultTable table2) {
 
     for (const vector<string>& t1_temp : t1) {
         bool found = false;
-        for (vector<string> t2_temp : t2) {
+        for (const vector<string>& t2_temp : t2) {
             if (t1_temp == t2_temp) {
                 found = true;
                 break;
@@ -66,7 +73,7 @@ bool ResultTable::equals(ResultTable table2) {
 }
 
 string ResultTable::toString() {
-    int length = this->getSize();
+    size_t length = this->getSize();
     string result;
     for (const auto& kv: this->table) {
         result.append(kv.first + "\t");
@@ -85,7 +92,7 @@ string ResultTable::toString() {
     return result;
 }
 
-ResultTable ResultTable::crossProduct(ResultTable table2, vector<string> all_keys) {
+ResultTable ResultTable::crossProduct(ResultTable table2, const vector<string>& all_keys) {
     map<string, vector<string>> result;
     for (const string& key: all_keys) {
         result.insert({key, {}});
@@ -104,7 +111,7 @@ ResultTable ResultTable::crossProduct(ResultTable table2, vector<string> all_key
     return ResultTable(result);
 }
 
-ResultTable ResultTable:: naturalJoin(ResultTable table2, vector<string> all_keys, vector<string> common_keys) {
+ResultTable ResultTable:: naturalJoin(ResultTable table2, const vector<string>& all_keys, vector<string> common_keys) {
     vector<int> target_indexes;
     map<int, vector<int>> index_map;
     for (int i = 0; i < table2.getSize(); i ++) {
@@ -135,32 +142,6 @@ ResultTable ResultTable:: naturalJoin(ResultTable table2, vector<string> all_key
             }
             ind += 1;
         }
-    }
-
-//    for (const auto& key : common_keys) {
-//        int ind = 0;
-//        vector<string> target = this->table.find(key)->second;
-//        for (const auto& values : table2.table.find(key)->second) {
-//            if (!Utilities::checkIfPresent(target, values)) {
-//                target_indexes.erase(std::remove(target_indexes.begin(), target_indexes.end(), ind), target_indexes.end());
-//            } else {
-//                for (int i = 0; i < target.size(); i++) {
-//                    if (target[i] == values) {
-//                        index_map.find(ind)->second.push_back(i);
-//                    }
-//                }
-//            }
-//            ind += 1;
-//        }
-//    }
-
-    ::printf("Mapping: \n");
-    for (auto kv: index_map) {
-        ::printf("Target Index: %d, Indexes: ", kv.first);
-        for (int i : kv.second) {
-            ::printf("%d, ", i);
-        }
-        ::printf("\n");
     }
 
     map<string, vector<string>> result;
@@ -211,20 +192,10 @@ ResultTable ResultTable::intersection(ResultTable table2) {
     } else {
         return this->naturalJoin(table2, all_keys, common_keys);
     }
-
-//    ::printf("Mapping: \n");
-//    for (auto kv: index_map) {
-//        ::printf("Target Index: %d, Indexes: ", kv.first);
-//        for (int i : kv.second) {
-//            ::printf("%d, ", i);
-//        }
-//        ::printf("\n");
-//    }
-
 }
 
-ResultTable ResultTable::intersection(initializer_list<ResultTable> tables) {
-    vector resultTables = vector(tables);
+ResultTable ResultTable::intersection(vector<ResultTable> tables) {
+    vector resultTables = vector(std::move(tables));
 
     ResultTable finalResult = resultTables[0];
 
@@ -235,6 +206,32 @@ ResultTable ResultTable::intersection(initializer_list<ResultTable> tables) {
     return finalResult;
 }
 
+
+ResultTable ResultTable::getColumn(string column) {
+    if (!Utilities::checkIfPresent(this->getColumnNames(), column)) {
+        return {};
+    }
+    return ResultTable({{column, this->table.find(column)->second}});
+}
+
+vector<string> ResultTable::getValues(const string& column) {
+    return this->table.find(column)->second;
+}
+
+vector<string> ResultTable::getColumnNames() {
+    vector<string> columns;
+    for (const auto& kv: this->table) {
+        columns.push_back(kv.first);
+    }
+    return columns;
+}
+
+::size_t ResultTable::getSize() {
+    if (this->table.empty()) {
+        return 0;
+    }
+    return this->table.begin()->second.size();
+}
 
 //int main() {
 //    IntermediateResultTable table1({make_pair<string, vector<string>>("s", {"1", "2", "3", "4", "5"}),

@@ -18,8 +18,6 @@ TEST_CASE("TestCase1_MatchingSingleColumnMatchingRows") {
                                                   make_pair<string, vector<string>>("s1", {"7", "11", "9", "9"}),
                                                   make_pair<string, vector<string>>("v", {"x", "x", "x", "y"})});
 
-    ::printf("%s\n", table1.intersection(table2).toString().c_str());
-
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
 }
@@ -114,7 +112,6 @@ TEST_CASE("TestCase6_NoMatchingColumnsRecurringCells") {
                                                   make_pair<string, vector<string>>("s2", {"6", "6", "7", "7"}),
                                                   make_pair<string, vector<string>>("s3", {"2", "6", "2", "6"}),
                                           });
-    ::printf("%s\n", table1.intersection(table2).toString().c_str());
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
 }
@@ -130,7 +127,6 @@ TEST_CASE("TestCase7_MatchingColumnsOneTableEmpty") {
                                                   make_pair<string, vector<string>>("s1", {}),
                                                   make_pair<string, vector<string>>("s2", {}),
                                           });
-    ::printf("%s\n", table1.intersection(table2).toString().c_str());
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
 }
@@ -176,3 +172,28 @@ TEST_CASE("TestCase10_MatchingColumnsBothTablesEmpty") {
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
 }
+
+
+//test cases for getColumn
+TEST_CASE("TestCase10_GetSingleColumnExists_Success") {
+    IntermediateResultTable table({
+                                           make_pair<string, vector<string>>("s1", {}),
+                                           make_pair<string, vector<string>>("s2", {})});
+
+    IntermediateResultTable expectedTable({
+                                                  make_pair<string, vector<string>>("s1", {}),
+                                          });
+
+    REQUIRE(table.getColumn("s1").equals(expectedTable));
+}
+
+TEST_CASE("TestCase10_GetSingleColumnWhichDoesNotExist_EmptyTable") {
+    IntermediateResultTable table({
+                                          make_pair<string, vector<string>>("a", {}),
+                                          make_pair<string, vector<string>>("b", {})});
+
+    IntermediateResultTable expectedTable({});
+
+    REQUIRE(table.getColumn("s1").equals(expectedTable));
+}
+
