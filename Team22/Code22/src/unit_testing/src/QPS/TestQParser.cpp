@@ -691,9 +691,281 @@ TEST_CASE("TestCase40_InvalidSymbolsExpressionSpecPatternExpression_SyntaxError"
     REQUIRE(throwsException);
 }
 
+TEST_CASE("TestCase41_SuchThatPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a such that pattern a(_, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+//whitespace tests
+TEST_CASE("TestCase42_WhitespaceOnLeftSideArg1PatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a( _, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase43_WhitespaceOnRightSideArg1PatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a(v  , "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(v, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase44_MultipleWhitespaceOnBothSidesBothArgsPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v pattern a(    v  ,   \"x+y\"  )";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select v such that pattern a(v, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase45_NoWhitespaceBothArgsPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a(_,"x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase46_OneWhitespacesAfterSynAssignPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a ( _ , "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase47_MultipleWhitespacesAfterSynAssignPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a  ( _ ,  "x+y"  ))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+
+TEST_CASE("TestCase48_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
+
+    REQUIRE(queryParser.isDeclaration(declaration));
+
+    queryParser.parse(declaration);
+
+    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+
+    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+                                         {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
+                                         {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
+                                         {"pn", "PRINT"}, {"cl", "CALL"}};
+
+    map<string, string> actualTable;
+    for (auto & i : result) {
+        actualTable[get<0>(i)] = get<1>(i);
+    }
+
+    REQUIRE(actualTable == expectedTable);
+}
+
+TEST_CASE("TestCase49_SuchThatPatternExpression_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a such that pattern a(_, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+//whitespace tests
+TEST_CASE("TestCase50_WhitespaceOnLeftSideArg1PatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a( _, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase51_WhitespaceOnRightSideArg1PatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a(v  , "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(v, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase52_MultipleWhitespaceOnBothSidesBothArgsPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = "Select v pattern a(    v  ,   \"x+y\"  )";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select v such that pattern a(v, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase53_NoWhitespaceBothArgsPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a(_,"x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase54_OneWhitespacesAfterSynAssignPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a ( _ , "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase55_MultipleWhitespacesAfterSynAssignPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; assign a;";
+    string query = R"(Select a pattern a  ( _ ,  "x+y"  ))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+
+TEST_CASE("TestCase56_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
+
+    REQUIRE(queryParser.isDeclaration(declaration));
+
+    queryParser.parse(declaration);
+
+    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+
+    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+                                         {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
+                                         {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
+                                         {"pn", "PRINT"}, {"cl", "CALL"}};
+
+    map<string, string> actualTable;
+    for (auto & i : result) {
+        actualTable[get<0>(i)] = get<1>(i);
+    }
+
+    REQUIRE(actualTable == expectedTable);
+}
+
 //first arg for uses/modifies cannot be wildcard
 
-TEST_CASE("TestCase41_ModifiesExpressionFirstArgWildcard_SemanticError") {
+TEST_CASE("TestCase57_ModifiesExpressionFirstArgWildcard_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -713,7 +985,7 @@ TEST_CASE("TestCase41_ModifiesExpressionFirstArgWildcard_SemanticError") {
 }
 
 
-TEST_CASE("TestCase42_UsesExpressionFirstArgWildcard_SemanticError") {
+TEST_CASE("TestCase58_UsesExpressionFirstArgWildcard_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
