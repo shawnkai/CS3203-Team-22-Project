@@ -398,8 +398,9 @@ void QueryParser::extractDeclarations(string query) {
         smatch match = *i;                                                 
         string type = match.str(2);
         string name =  match.str(3);
+
         unsigned long pos = 0;
-        string delimiter = ", ";
+        string delimiter = ",";
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);
