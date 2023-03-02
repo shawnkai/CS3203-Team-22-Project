@@ -1,4 +1,4 @@
-procedure test_assignment_pattern {
+procedure testAssignmentPattern {
     a = 0;
     x = x + 1 + a;
     y = x - a;

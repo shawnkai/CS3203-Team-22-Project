@@ -6,12 +6,13 @@ none
 2 - Get all assignment statements
 assign a;
 Select a pattern a (_, _)
-1, 2, 3. 6, 7, 10, 12, 13, 17, 18, 22, 25, 27, 28, 29, 32, 33
+1, 2, 3, 6, 7, 10, 12, 13, 17, 18, 22, 25, 27, 28, 29, 32, 33
 5000
 3 - Get assignment statements who have z on the lhs
 assign a;
 Select a pattern a ("z", _)
 none
+5000
 4 - Get assignment statements who have a on the lhs
 assign a;
 Select a pattern a ("a", _)
@@ -21,10 +22,12 @@ Select a pattern a ("a", _)
 assign a;
 Select a pattern a ("b", _)
 28
+5000
 6 - Get assignment statements who have x on the lhs
 assign a;
 Select a pattern a ("x", _)
 2, 6, 10, 17, 18
+5000
 7 - Get assignment statements who have y on the lhs
 assign a;
 Select a pattern a ("y", _)
@@ -43,5 +46,5 @@ Select a pattern a (_, "c + 1")
 10 - Get statements who have x on the lhs and a being used on the rhs
 assign a;
 Select a pattern a ("x", _"a"_)
-2, 6, 10
+2, 3, 6, 7, 10, 18, 22, 27, 29, 32, 33
 5000
