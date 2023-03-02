@@ -29,6 +29,8 @@
 *.lai
 *.la
 *.a
+*.lib
+.DS_Store
 
 # Executables
 *.exe
