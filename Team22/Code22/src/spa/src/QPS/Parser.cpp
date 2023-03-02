@@ -22,7 +22,7 @@ SelectExpression* QueryParser::parse(string query) {
 		smatch sm;
 		regex_search(query, sm, RETURNVALUEREGEX);
 		
-		DesignEntity *arg = this->synonymTable[sm.str(1)];
+		DesignEntity *arg = this->getFromSynonymTable(sm.str(1), "select");
 
 		if (this->containsModifiesExpression(query)) {
             vector<ModifiesExpression*> modifiesConditions = this->extractModifiesExpression(query);
@@ -115,7 +115,7 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
@@ -158,7 +158,7 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             expressions.push_back(new UsesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
@@ -414,7 +414,9 @@ DesignEntity *QueryParser::getFromSynonymTable(const string& name, const string&
 
     if (desiredType == "stmt") {
         return new StmtEntity(entity->getType(), name);
-    } else {
+    } else if (desiredType == "named") {
         return new NamedEntity(entity->getType(), name);
+    } else if (desiredType == "select"){
+        return entity;
     }
 }

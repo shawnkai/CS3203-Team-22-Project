@@ -672,6 +672,25 @@ TEST_CASE("TestCase39_UndeclaredNamedEntityArg2ModifiesPExpression_SemanticError
     REQUIRE(throwsException);
 }
 
+TEST_CASE("TestCase39_UndeclaredNamedEntitySelectExpression_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select x such that Modifies(v, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
 TEST_CASE("TestCase40_InvalidSymbolsExpressionSpecPatternExpression_SyntaxError") {
     QueryParser queryParser;
 
