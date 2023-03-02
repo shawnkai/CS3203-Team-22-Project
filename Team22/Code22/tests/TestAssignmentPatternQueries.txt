@@ -1,0 +1,47 @@
+1 - Get assignment statements who have x on the lhs and a only on the rhs
+assign a;
+Select a pattern a ("x", "a")
+none
+5000
+2 - Get all assignment statements
+assign a;
+Select a pattern a (_, _)
+1, 2, 3. 6, 7, 10, 12, 13, 17, 18, 22, 25, 27, 28, 29, 32, 33
+5000
+3 - Get assignment statements who have z on the lhs
+assign a;
+Select a pattern a ("z", _)
+none
+4 - Get assignment statements who have a on the lhs
+assign a;
+Select a pattern a ("a", _)
+1, 12, 13, 29, 32, 33
+5000
+5 - Get assignment statements who have b on the lhs
+assign a;
+Select a pattern a ("b", _)
+28
+6 - Get assignment statements who have x on the lhs
+assign a;
+Select a pattern a ("x", _)
+2, 6, 10, 17, 18
+7 - Get assignment statements who have y on the lhs
+assign a;
+Select a pattern a ("y", _)
+3, 7
+5000
+8 - Get assignment statements who have c on the lhs
+assign a;
+Select a pattern a ("c", _)
+22, 25, 27
+5000
+9 - Get assignment statements who have anything on lhs and "c + 1" on rhs
+assign a;
+Select a pattern a (_, "c + 1")
+25
+5000
+10 - Get statements who have x on the lhs and a being used on the rhs
+assign a;
+Select a pattern a ("x", _"a"_)
+2, 6, 10
+5000
