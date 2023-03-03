@@ -138,6 +138,11 @@ assign a;
 Select a pattern a ("x", _"1"_)
 2, 17
 5000
+29 - Get statements who have a variable on the lhs and "1" being used on the rhs
+assign a, var v;
+Select v pattern a (v, _"1"_)
+x, c, b, a
+5000
 101 - Test Select statement with no space in between a and (
 assign a;
 Select a pattern a("x", _"a"_)
@@ -218,17 +223,27 @@ assign a;
 Select a pattern a ("x", "a"_)
 SyntaxError
 5000
-116 - Test Select statement with no quotes for first parameter
+116 - Test Select statement with no quotes for undeclared first parameter
 assign a;
 Select a pattern a (x, "a")
-SyntaxError
+SemanticError
 5000
-117 - Test Select statement with no quotes for second parameter
+117 - Test Select statement with no quotes for declared variable first parameter
+assign a, var x;
+Select a pattern a (x, "a")
+none
+5000
+118 - Test Select statement with no quotes for declared first parameter but of other entity type
+assign a, if x;
+Select a pattern a (x, "a")
+SemanticError
+5000
+119 - Test Select statement with no quotes for second parameter
 assign a;
 Select a pattern a ("x", a)
 SyntaxError
 5000
-118 - Test Select statement with no quotes for either parameters
+120 - Test Select statement with no quotes for either parameters
 assign a;
 Select a pattern a (x, a)
 SyntaxError
