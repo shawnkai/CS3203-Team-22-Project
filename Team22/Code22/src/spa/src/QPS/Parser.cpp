@@ -229,6 +229,7 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
 
         string arg3 = sm.str(3);
         arg3 = Utilities::removeAllOccurrences(arg3, ' ');
+
         if (arg3.size() == 1 && arg3[0] != '_') {
             throw SyntacticException();
         } else if (arg3.size() != 1) {
@@ -240,7 +241,7 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
                 throw SyntacticException();
             } else if (arg3[0] == '_' && (arg3[1] != '\"' || arg3[arg3.size() - 2] != '\"')) {
                 throw SyntacticException();
-            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9\+\-\*/]+\"_?)"))) {
+            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9+\-*/%)(]+\"_?)"))) {
                 throw SyntacticException();
             }
         }
