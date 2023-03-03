@@ -1,6 +1,5 @@
 #include<stdio.h>
 
-
 #include "PKB/PKB.h"
 #include "Parser.h"
 #include "Utilities.h"
@@ -214,19 +213,6 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
     vector<PatternExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PATTERNREGEX)) {
-        string arg1 = sm.str(1);
-
-        string arg2 = sm.str(2);
-
-        NamedEntity* a2;
-        if (arg2.find('\"') != string::npos) {
-            a2 = new NamedEntity("ident", arg2);
-        } else if (arg2 == "_") {
-            a2 = new WildCardEntity();
-        } else {
-            a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
-        }
-
         string arg3 = sm.str(3);
         arg3 = Utilities::removeAllOccurrences(arg3, ' ');
 
@@ -246,7 +232,18 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
             }
         }
 
-        arg3 = Utilities::removeAllOccurrences(arg3, '\"');
+        string arg1 = sm.str(1);
+
+        string arg2 = sm.str(2);
+
+        NamedEntity* a2;
+        if (arg2.find('\"') != string::npos) {
+            a2 = new NamedEntity("ident", arg2);
+        } else if (arg2 == "_") {
+            a2 = new WildCardEntity();
+        } else {
+            a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+        }
 
         auto *a1 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg1, "stmt"));
         string prefixPattern = Utilities::infixToPrefix(Utilities::removeAllOccurrences(arg3, '"'));
