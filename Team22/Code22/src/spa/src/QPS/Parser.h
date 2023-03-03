@@ -57,7 +57,7 @@ private:
     regex PARENTSTARREGEX = regex(PARENTSTAR);
     regex EXTRACTDECLARATIONREGEX = regex(EXTRACTDECLARATION);
 
-    static string sanitiseQuery(string query);
+    static string sanitiseQuery(const string& query);
 
 
 protected:

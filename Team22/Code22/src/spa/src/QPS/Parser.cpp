@@ -65,23 +65,22 @@ SelectExpression* QueryParser::parse(string query) {
     }
 }
 
-string QueryParser::sanitiseQuery(string query) {
-    query = regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
+string QueryParser::sanitiseQuery(const string& query) {
+    return regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
 
-    //replace multiple spaces with single space
-    query = regex_replace(query, std::regex("\\s+"), " ");
-
-    //remove any spaces before/after non-alphanumeric characters
-    string result_query;
-    for (int i = 0; i < query.size(); i++) {
-        if (query[i] == ' ') {
-            if (!isalnum(query[min(i + 1, int(query.size()) - 1)]) || !isalnum(query[max(i - 1, 0)])) {
-                continue;
-            }
-        }
-        result_query += query[i];
-    }
-    return result_query;
+//    //replace multiple spaces with single space
+//    query = regex_replace(query, std::regex("\\s+"), " ");
+//
+//    //remove any spaces before/after non-alphanumeric characters
+//    string result_query;
+//    for (int i = 0; i < query.size(); i++) {
+//        if (query[i] == ' ') {
+//            if (!isalnum(query[min(i + 1, int(query.size()) - 1)]) || !isalnum(query[max(i - 1, 0)])) {
+//                continue;
+//            }
+//        }
+//        result_query += query[i];
+//    }
 }
 
 bool QueryParser::isValidQuery(const string& query) {
