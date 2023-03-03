@@ -1,147 +1,190 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>38.953000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>39.715000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Get assignment statements who have x on the lhs and a only on the rhs">1</id><querystr><![CDATA[assign a; Select a pattern a ("x", "a")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>2.231000</time_taken>
+<time_taken>3.279000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get all assignment statements">2</id><querystr><![CDATA[assign a; Select a pattern a (_, _)]]></querystr>
 <stuans>28,3,7,2,10,6,17,18,22,27,25,12,29,1,32,13,33</stuans>
 <correct>1,2,3,6,7,10,12,13,17,18,22,25,27,28,29,32,33</correct>
-<time_taken>2.401000</time_taken>
+<time_taken>3.613000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have z on the lhs">3</id><querystr><![CDATA[assign a; Select a pattern a ("z", _)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>1.998000</time_taken>
+<time_taken>2.412000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have a on the lhs">4</id><querystr><![CDATA[assign a; Select a pattern a ("a", _)]]></querystr>
 <stuans>12,29,1,32,13,33</stuans>
 <correct>1,12,13,29,32,33</correct>
-<time_taken>2.099000</time_taken>
+<time_taken>3.014000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have b on the lhs">5</id><querystr><![CDATA[assign a; Select a pattern a ("b", _)]]></querystr>
 <stuans>28</stuans>
 <correct>28</correct>
-<time_taken>1.844000</time_taken>
+<time_taken>2.209000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have x on the lhs">6</id><querystr><![CDATA[assign a; Select a pattern a ("x", _)]]></querystr>
 <stuans>2,10,6,17,18</stuans>
 <correct>2,6,10,17,18</correct>
-<time_taken>1.942000</time_taken>
+<time_taken>2.474000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have y on the lhs">7</id><querystr><![CDATA[assign a; Select a pattern a ("y", _)]]></querystr>
 <stuans>3,7</stuans>
 <correct>3,7</correct>
-<time_taken>1.838000</time_taken>
+<time_taken>2.215000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have c on the lhs">8</id><querystr><![CDATA[assign a; Select a pattern a ("c", _)]]></querystr>
 <stuans>22,27,25</stuans>
 <correct>22,25,27</correct>
-<time_taken>1.840000</time_taken>
+<time_taken>2.421000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get assignment statements who have anything on lhs and "c + 1" on rhs">9</id><querystr><![CDATA[assign a; Select a pattern a (_, "c + 1")]]></querystr>
 <stuans>25</stuans>
 <correct>25</correct>
-<time_taken>1.965000</time_taken>
+<time_taken>2.538000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get statements who used "a" on the rhs">10</id><querystr><![CDATA[assign a; Select a pattern a (_, _"a"_)]]></querystr>
 <stuans>3,7,2,10,6,18,22,27,29,32,33</stuans>
 <correct>2,3,6,7,10,18,22,27,29,32,33</correct>
-<time_taken>2.170000</time_taken>
+<time_taken>2.659000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get statements who have x on the lhs and a being used on the rhs">11</id><querystr><![CDATA[assign a; Select a pattern a ("x", _"a"_)]]></querystr>
 <stuans>2,10,6,18</stuans>
 <correct>2,6,10,18</correct>
-<time_taken>2.022000</time_taken>
+<time_taken>2.339000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="3" Pattern="1" CondNum="5" RelNum="0" comment="Get statements who used "x % y" on the rhs">12</id><querystr><![CDATA[assign a; Select a pattern a (_, _"x % y"_)]]></querystr>
 <stuans>22,29</stuans>
 <correct>22,29</correct>
-<time_taken>2.253000</time_taken>
+<time_taken>2.640000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="3" Pattern="1" CondNum="5" RelNum="0" comment="Get statements who used "(x % y)" on the rhs">13</id><querystr><![CDATA[assign a; Select a pattern a (_, _"(x % y)"_)]]></querystr>
-<stuans>22,29</stuans>
+<stuans>SyntaxError</stuans>
 <correct>22,29</correct>
-<time_taken>2.284000</time_taken>
-<passed/>
+<time_taken>2.008000</time_taken>
+<failed>
+<missing>22,29</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>2</expected>
+<matched>0</matched>
+<missing>2</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get statements who have a on the lhs and "(x % y)" being used on the rhs">14</id><querystr><![CDATA[assign a; Select a pattern a ("a", _"(x % y)"_)]]></querystr>
-<stuans>29</stuans>
+<stuans>SyntaxError</stuans>
 <correct>29</correct>
-<time_taken>2.100000</time_taken>
-<passed/>
+<time_taken>1.954000</time_taken>
+<failed>
+<missing>29</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 <query>
 <id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Get statements who have a on the lhs and "c - b + a / x % y * 3" being used on the rhs">15</id><querystr><![CDATA[assign a; Select a pattern a ("a", "c - b + a / x % y * 3")]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>2.186000</time_taken>
+<time_taken>2.573000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Get statements who have "c - b + a / x % y * 3" being used on the rhs">16</id><querystr><![CDATA[assign a; Select a pattern a (_, "c - b + a / x % y * 3")]]></querystr>
 <stuans>27</stuans>
 <correct>27</correct>
-<time_taken>2.247000</time_taken>
+<time_taken>2.639000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get statements who have a on the lhs and "5 % 3" being used on the rhs">17</id><querystr><![CDATA[assign a; Select a pattern a ("a", _"5 % 3"_)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>2.057000</time_taken>
+<time_taken>2.309000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get statements who have x on the lhs and "x - b % b" being used on the rhs">18</id><querystr><![CDATA[assign a; Select a pattern a ("x", _"x - b % b"_)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>2.225000</time_taken>
+<time_taken>3.076000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get statements who have x on the lhs and "((x - b) % b)" being used on the rhs">19</id><querystr><![CDATA[assign a; Select a pattern a ("x", _"((x - b) % b)"_)]]></querystr>
-<stuans>18</stuans>
+<stuans>SyntaxError</stuans>
 <correct>18</correct>
-<time_taken>2.257000</time_taken>
-<passed/>
+<time_taken>2.103000</time_taken>
+<failed>
+<missing>18</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Get statements who have x on the lhs and "(x - (b % b))" being used on the rhs">20</id><querystr><![CDATA[assign a; Select a pattern a ("x", _"(x - (b % b))"_)]]></querystr>
-<stuans></stuans>
+<stuans>SyntaxError</stuans>
 <correct></correct>
-<time_taken>2.323000</time_taken>
+<time_taken>1.971000</time_taken>
+<failed>
+<missing></missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>0</expected>
+<matched>0</matched>
+<missing>0</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Get statements who have a on the rhs">21</id><querystr><![CDATA[assign a; var x; Select a pattern a (x, "a")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>1.545000</time_taken>
 <passed/>
 </query>
 </queries>

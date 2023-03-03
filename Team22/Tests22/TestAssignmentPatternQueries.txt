@@ -98,3 +98,8 @@ assign a;
 Select a pattern a ("x", _"(x - (b % b))"_)
 none
 5000
+21 - Get statements who have a on the rhs
+assign a; var x;
+Select a pattern a (x, "a")
+SyntaxError
+5000
