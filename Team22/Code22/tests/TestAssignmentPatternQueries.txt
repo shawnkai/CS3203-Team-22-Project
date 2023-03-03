@@ -61,7 +61,7 @@ Select a pattern a (_, _"x % y"_)
 13 - Get statements who used "(x % y)" on the rhs
 assign a;
 Select a pattern a (_, _"(x % y)"_)
-22, 27, 29
+22, 29
 5000
 14 - Get statements who have a on the lhs and "(x % y)" being used on the rhs
 assign a;
@@ -81,7 +81,7 @@ Select a pattern a (_, "c - b + a / x % y * 3")
 17 - Get statements who have a on the lhs and "5 % 3" being used on the rhs
 assign a;
 Select a pattern a ("a", _"5 % 3"_)
-33
+none
 5000
 18 - Get statements who have x on the lhs and "x - b % b" being used on the rhs
 assign a;
@@ -139,7 +139,7 @@ Select a pattern a ("x", _"1"_)
 2, 17
 5000
 29 - Get statements who have a variable on the lhs and "1" being used on the rhs
-assign a, var v;
+assign a; variable v;
 Select v pattern a (v, _"1"_)
 x, c, b, a
 5000
@@ -196,17 +196,17 @@ Select a2 pattern a1 ("x", _"a"_)
 110 - Test Select statement with undeclared variable name
 assign a;
 Select v pattern v ("x", _"a"_)
-SyntaxError
+SemanticError
 5000
 111 - Test Select statement with undeclared variable name
 assign a;
 Select v pattern a ("x", _"a"_)
-SyntaxError
+SemanticError
 5000
 112 - Test Select statement with undeclared variable name
 assign a;
 Select a pattern v ("x", _"a"_)
-SyntaxError
+SemanticError
 5000
 113 - Test Select statement with another type of entity
 if a;
@@ -229,12 +229,12 @@ Select a pattern a (x, "a")
 SemanticError
 5000
 117 - Test Select statement with no quotes for declared variable first parameter
-assign a, var x;
+assign a; variable x;
 Select a pattern a (x, "a")
 none
 5000
 118 - Test Select statement with no quotes for declared first parameter but of other entity type
-assign a, if x;
+assign a; if x;
 Select a pattern a (x, "a")
 SemanticError
 5000

@@ -298,7 +298,10 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
 }
 
 ResultTable FAPSExpression::evaluate(PKB pkb) {
-    if (this->entities[0]->toString() == this->entities[1]->toString()) {
+    if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
+        return ResultTable({{"_", {"-"}}});
+    }
+    else if (this->entities[0]->toString() == this->entities[1]->toString()) {
         return ResultTable({{this->entities[0]->toString(), {}}});
     } else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1 && dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
