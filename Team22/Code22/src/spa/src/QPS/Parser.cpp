@@ -13,7 +13,6 @@ SelectExpression* QueryParser::parse(string query) {
     vector<Expression*> conditions;
 
     query = sanitiseQuery(query);
-
     if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
 		return new SelectExpression({}, conditions);
@@ -61,26 +60,16 @@ SelectExpression* QueryParser::parse(string query) {
         }
         return new SelectExpression({arg}, conditions);
 	} else {
+        ::printf("Main Thrown %s, %d\n", query.c_str(), isValidQuery(query));
+        ::printf("Query Validation Regex: %s\n", QUERYVALIDATION.c_str());
         throw SyntacticException();
     }
 }
 
 string QueryParser::sanitiseQuery(const string& query) {
-    return regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
-
-//    //replace multiple spaces with single space
-//    query = regex_replace(query, std::regex("\\s+"), " ");
-//
-//    //remove any spaces before/after non-alphanumeric characters
-//    string result_query;
-//    for (int i = 0; i < query.size(); i++) {
-//        if (query[i] == ' ') {
-//            if (!isalnum(query[min(i + 1, int(query.size()) - 1)]) || !isalnum(query[max(i - 1, 0)])) {
-//                continue;
-//            }
-//        }
-//        result_query += query[i];
-//    }
+    string result_query = regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
+    result_query = regex_replace(result_query, std::regex(R"(\s+(?=(?:(?:[^"]*"){2})*[^"]*"[^"]*$))"), "$1");
+    return result_query;
 }
 
 bool QueryParser::isValidQuery(const string& query) {
@@ -242,10 +231,16 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
             a2 = new WildCardEntity();
         } else {
             a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            if (a2->getType() != "VARIABLE") {
+                throw SemanticException();
+            }
         }
 
         auto *a1 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg1, "stmt"));
         string prefixPattern = Utilities::infixToPrefix(Utilities::removeAllOccurrences(arg3, '"'));
+        if (a1->getType() != "ASSIGNMENT") {
+            throw SemanticException();
+        }
         expressions.push_back(new PatternExpression(a1,  a2, prefixPattern));
 
         searchStart = sm.suffix().first;
@@ -397,7 +392,7 @@ void QueryParser::extractDeclarations(string query) {
         string name =  match.str(3);
 
         unsigned long pos = 0;
-        string delimiter = ",";
+        string delimiter = ", ";
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);
