@@ -59,6 +59,9 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
         ResultTable table = ResultTable::intersection(all_results);
         vector<string> tableColumns = table.getColumnNames();
         if (!Utilities::checkIfPresent(tableColumns, this->entities[0]->toString())) {
+            if (table.getSize() == 0) {
+                return ResultTable({{this->entities[0]->toString(), {}}});
+            }
             auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
             vector<string> answer;
             for (auto res : results) {
