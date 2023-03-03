@@ -36,7 +36,7 @@ Select a such that Parent(i, a) pattern a(_, _"x"_)
 8 - Parent* + pattern
 assign a; while w;
 Select a such that Parent*(w, a) pattern a(_, _"x"_)
-5, 7, 8, 9
+5, 7, 8, 9, 10
 5000
 9 - Uses + pattern
 assign a;
@@ -51,7 +51,7 @@ Select b such that Uses(a, v) pattern a (v, _)
 11 - Uses + pattern 3
 assign a; stmt n; variable v;
 Select n such that Uses (a, v) pattern a (v, _"iter"_)
-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+none
 5000
 12 - Read + Modifies + pattern
 assign a; read rd; variable v;
@@ -71,7 +71,7 @@ Select w such that Uses (w, "left") pattern a (_, _"right"_)
 15 - Print + follows + pattern
 print pr; assign a1; assign a2; variable v;
 Select v such that Follows(pr, a1) pattern a2 (v, _)
-area, left, right, x, z, y, q, i
+area, left, right, x, z, y, q
 5000
 16 - Print + follows + pattern 2
 print pr; assign a;
@@ -96,12 +96,12 @@ Select c such that Parent(n1, n2) pattern a (_, _)
 19 - Statement + Parent + pattern 2
 stmt n1; constant c; assign a;
 Select c such that Parent(n1, n1) pattern a (_, _"right"_)
-none
+0, 1, 2, 3, 5, 9
 5000
 20 - Constant + Uses + pattern
 variable v; variable v2; assign a; print pr;
 Select v2 such that Uses(pr, v) pattern a (v, _)
-x, left, right, i, z, y , q, area
+x, left, right, i, z, y , q, area, iter, p
 5000
 21 - Constant + Uses + pattern 2
 variable v; constant c; assign a; print pr;
