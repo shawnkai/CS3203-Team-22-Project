@@ -18,23 +18,23 @@ using namespace std;
 
 class QueryParser {
 private:
-    string RETURNVALUE = R"lit(Select (\w+))lit";
-    string ISDECLARATION = R"lit(((^|;\s?)(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s?)+))+;)lit";
-    string CONTAINSMODIFIES = R"lit(Modifies\s?\("?(\w+)"?,\s?"?(\w+)"?\))lit";
-    string CONTAINSUSES = R"lit(Uses\s?\("?(\w+)"?,\s?"?(\w+)"?\))lit";
-    string CONTAINSFOLLOWS = R"lit(Follows\s?\((\w+),\s?(\w+)\))lit";
-    string CONTAINSFOLLOWSSTAR = R"lit(Follows\*\s?\((\w+),\s+(\w+)\))lit";
-    string CONTAINSPARENT = R"lit(Parent\s?\((\w+),\s?(\w+)\))lit";
-    string CONTAINSPARENTSTAR = R"lit(Parent\*\s?\((\w+),\s?(\w+)\))lit";
-    string CONTAINSPATTERN = R"(pattern\s+(\w+)\s?\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%]+\"?_?)|_)\))";
-    string MODIFIES = R"lit(Modifies\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string USES = R"lit(Uses\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string PATTERN = R"(pattern\s+(\w+)\s?\(((?:_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%]+\"?_?)|_)\))";
-    string FOLLOWS = R"lit(Follows\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string FOLLOWSSTAR = R"lit(Follows\*\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string PARENT = R"lit(Parent\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string PARENTSTAR = R"lit(Parent\*\s?\(("?\w+"?),\s?("?\w+"?)\))lit";
-    string EXTRACTDECLARATION = "(^| |;\\s?)(stmt|read|print|call|while|if|assign|variable|constant|procedure)\\s+((\\w|,\\s?)+)";
+    string RETURNVALUE = R"lit(Select\s*(\w+))lit";
+    string ISDECLARATION = R"lit(((^|;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,?)+))+;)lit";
+    string CONTAINSMODIFIES = R"lit(Modifies\s*\("?(\w+)"?,"?(\w+)"?\))lit";
+    string CONTAINSUSES = R"lit(Uses\s*\("?(\w+)"?,"?(\w+)"?\))lit";
+    string CONTAINSFOLLOWS = R"lit(Follows\s*\((\w+),(\w+)\))lit";
+    string CONTAINSFOLLOWSSTAR = R"lit(Follows\*\s*\((\w+),(\w+)\))lit";
+    string CONTAINSPARENT = R"lit(Parent\s*\((\w+),(\w+)\))lit";
+    string CONTAINSPARENTSTAR = R"lit(Parent\*\s*\((\w+),(\w+)\))lit";
+    string CONTAINSPATTERN = R"(pattern\s+(\w+)\s*\(((?:_?\"?[\w]+\"?_?)|_),((?:_?\"?[\w\+\-\*\s/%)(]+\"?_?)|_)\))";
+    string MODIFIES = R"lit(Modifies\s*\(("?\w+"?),("?\w+"?)\))lit";
+    string USES = R"lit(Uses\s*\(("?\w+"?),("?\w+"?)\))lit";
+    string PATTERN = R"(pattern\s+(\w+)\s*\(((?:\"?[\w]+\"?)|_),((?:_?\"?[\w\+\-\*\s()/%]+\"?_?)|_)\))";
+    string FOLLOWS = R"lit(Follows\s*\(("?\w+"?),("?\w+"?)\))lit";
+    string FOLLOWSSTAR = R"lit(Follows\*\s*\(("?\w+"?),("?\w+"?)\))lit";
+    string PARENT = R"lit(Parent\s*\(("?\w+"?),("?\w+"?)\))lit";
+    string PARENTSTAR = R"lit(Parent\*\s*\(("?\w+"?),\s*("?\w+"?)\s*\))lit";
+    string EXTRACTDECLARATION = "(^| |;\\s?)\\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\\s+((\\w|,\\s*?)+)";
     string QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + CONTAINSMODIFIES + "|" + CONTAINSUSES + "|" + CONTAINSFOLLOWS + "|" + CONTAINSFOLLOWSSTAR + "|" + CONTAINSPARENT + "|" + CONTAINSPARENTSTAR  + ")|\\s+"+ CONTAINSPATTERN +")*";
 
     // Regexes
@@ -56,6 +56,8 @@ private:
     regex PARENTREGEX = regex(PARENT);
     regex PARENTSTARREGEX = regex(PARENTSTAR);
     regex EXTRACTDECLARATIONREGEX = regex(EXTRACTDECLARATION);
+
+    static string sanitiseQuery(string query);
 
 
 protected:

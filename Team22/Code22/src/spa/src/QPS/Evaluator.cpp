@@ -9,5 +9,6 @@ QueryEvaluator::QueryEvaluator(PKB pkb) {
 }
 
 vector<string> QueryEvaluator::evaluate(Expression *expression) {
-    return expression->evaluate(this->pkb);
+    ResultTable table = expression->evaluate(this->pkb);
+    return table.getValues(table.getColumnNames()[0]);
 }

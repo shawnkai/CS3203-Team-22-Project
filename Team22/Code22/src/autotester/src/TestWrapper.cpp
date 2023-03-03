@@ -51,6 +51,10 @@ void TestWrapper::evaluate(std::string query, std::list<std::string>& results){
     try {
         auto exp = parser.parse(queryToExecute);
         vector<string> exp_res = evaluator.evaluate(exp);
+//        if (exp_res.empty()) {
+//            results.emplace_back("none");
+//            return;
+//        }
         for (const string& r : exp_res) {
             results.push_back(r);
         }

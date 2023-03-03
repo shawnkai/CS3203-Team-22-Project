@@ -13,7 +13,7 @@ QueryParser::QueryParser() {}
 SelectExpression* QueryParser::parse(string query) {
     vector<Expression*> conditions;
 
-    query = regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
+    query = sanitiseQuery(query);
 
     if (this->isDeclaration(query)) {
 		this->extractDeclarations(query);
@@ -22,7 +22,7 @@ SelectExpression* QueryParser::parse(string query) {
 		smatch sm;
 		regex_search(query, sm, RETURNVALUEREGEX);
 		
-		DesignEntity *arg = this->synonymTable[sm.str(1)];
+		DesignEntity *arg = this->getFromSynonymTable(sm.str(1), "select");
 
 		if (this->containsModifiesExpression(query)) {
             vector<ModifiesExpression*> modifiesConditions = this->extractModifiesExpression(query);
@@ -64,6 +64,25 @@ SelectExpression* QueryParser::parse(string query) {
 	} else {
         throw SyntacticException();
     }
+}
+
+string QueryParser::sanitiseQuery(string query) {
+    query = regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
+
+    //replace multiple spaces with single space
+    query = regex_replace(query, std::regex("\\s+"), " ");
+
+    //remove any spaces before/after non-alphanumeric characters
+    string result_query;
+    for (int i = 0; i < query.size(); i++) {
+        if (query[i] == ' ') {
+            if (!isalnum(query[min(i + 1, int(query.size()) - 1)]) || !isalnum(query[max(i - 1, 0)])) {
+                continue;
+            }
+        }
+        result_query += query[i];
+    }
+    return result_query;
 }
 
 bool QueryParser::isValidQuery(const string& query) {
@@ -115,13 +134,13 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
 
             if (arg1 == "_") {
-                a1 = new WildCardEntity();
+                throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
             } else {
@@ -158,13 +177,13 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = new NamedEntity(this->synonymTable[arg2]->getType(), arg2);
+            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             expressions.push_back(new UsesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
 
             if (arg1 == "_") {
-                a1 = new WildCardEntity();
+                throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
             } else {
@@ -210,6 +229,7 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
 
         string arg3 = sm.str(3);
         arg3 = Utilities::removeAllOccurrences(arg3, ' ');
+
         if (arg3.size() == 1 && arg3[0] != '_') {
             throw SyntacticException();
         } else if (arg3.size() != 1) {
@@ -221,7 +241,7 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
                 throw SyntacticException();
             } else if (arg3[0] == '_' && (arg3[1] != '\"' || arg3[arg3.size() - 2] != '\"')) {
                 throw SyntacticException();
-            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9\+\-\*/]+\"_?)"))) {
+            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9+\-*/%)(]+\"_?)"))) {
                 throw SyntacticException();
             }
         }
@@ -379,8 +399,9 @@ void QueryParser::extractDeclarations(string query) {
         smatch match = *i;                                                 
         string type = match.str(2);
         string name =  match.str(3);
+
         unsigned long pos = 0;
-        string delimiter = ", ";
+        string delimiter = ",";
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);
@@ -414,7 +435,9 @@ DesignEntity *QueryParser::getFromSynonymTable(const string& name, const string&
 
     if (desiredType == "stmt") {
         return new StmtEntity(entity->getType(), name);
-    } else {
+    } else if (desiredType == "named") {
         return new NamedEntity(entity->getType(), name);
+    } else if (desiredType == "select"){
+        return entity;
     }
 }
