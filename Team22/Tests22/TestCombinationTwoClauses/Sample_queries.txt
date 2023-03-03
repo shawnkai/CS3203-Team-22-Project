@@ -1,24 +1,24 @@
-1 - Follows + pattern <--- THIS IS FAILING, EXPECTED 15, GOT "_ is an Unnamedvar "
+1 - Follows + pattern <--- THIS IS FAILING , EXPECTED 15, GOT 1, 5, 9, 15
 assign a; while w;
 Select a such that Follows (w,  a )  pattern a  ("x"  , _)
 15
 5000
-2 - Follows + pattern , different number of white spaces  <--- THIS IS FAILING, EXPECTED 15, GOT ",_ is an Unnamedvar "
+2 - Follows + pattern , different number of white spaces
 assign a; while w;
 Select a such that Follows (w,  a)  pattern a  (   "x"   ,_)
 15
 5000
-3 - Follows + pattern , different variable  <--- THIS IS FAILING, EXPECTED SEE LINE 14, GOT ",_ is an Unnamedvar "
+3 - Follows + pattern , different variable
 assign a;
 Select a such that Follows   (_, a ) pattern a ("x", _ )
 5, 9, 15
 5000
-4 - Follows* + pattern , previous variable <--- THIS IS FAILING, EXPECTED SEE LINE 19, GOT "_ is an Unnamedvar "
+4 - Follows* + pattern , previous variable
 assign a;
 Select a such that Follows* (a, _) pattern a ("left", _)
 2, 10, 13
 5000
-5 - Modifies + pattern 1 <--- ALL TESTS IN THIS FILE ARE FAILING WITH SYNTAX ERROR, PLEASE CORRECT PARSING
+5 - Modifies + pattern 1
 assign a;
 Select a such that Modifies (a, "x") pattern a (_, _"x"_)
 5, 9
@@ -108,10 +108,11 @@ variable v; constant c; assign a; print pr;
 Select c such that Uses(v, v) pattern a (v, _)
 Semantic Error
 5000
-22 - pattern-> evaluates to True
+22 - pattern special case evaluates to True
 assign a; stmt w;
 Select w pattern a (_, _"left"_)
 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+5000
 23 - Print + follows + pattern 3
 print pr; assign a1; variable v;
 Select v such that Follows(pr, a1) pattern a1 (v, _)

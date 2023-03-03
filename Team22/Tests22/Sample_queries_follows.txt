@@ -89,6 +89,7 @@ Select s such that Follows (s, s)
 none
 5000
 19 - Select undefined read
+
 Select r such that Follows* (1, r)
 SemanticError
 5000
