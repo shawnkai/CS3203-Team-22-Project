@@ -1,161 +1,161 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>13.944000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>7.997000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select All Variables">1</id><querystr><![CDATA[variable v; Select v]]></querystr>
 <stuans>p,q,i,y,z,x</stuans>
 <correct>x,z,i,y,q,p</correct>
-<time_taken>3.374000</time_taken>
+<time_taken>1.820000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select Variables used in line 9">2</id><querystr><![CDATA[variable v; Select v such that Uses(9, v)]]></querystr>
 <stuans>i,z,x</stuans>
 <correct>z,x,i</correct>
-<time_taken>3.590000</time_taken>
+<time_taken>2.670000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Select Variables modified by z + x exact match">3</id><querystr><![CDATA[variable v; assign a; Select v pattern a(v, "z+x")]]></querystr>
 <stuans>y</stuans>
 <correct>y</correct>
-<time_taken>4.404000</time_taken>
+<time_taken>2.254000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select Variables modified by z + x wildcard">4</id><querystr><![CDATA[variable v; assign a; Select v pattern a(v, _"z+x"_)]]></querystr>
 <stuans>y,z</stuans>
 <correct>y,z</correct>
-<time_taken>4.221000</time_taken>
+<time_taken>2.321000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all the assignment statements for z">5</id><querystr><![CDATA[assign a; Select a pattern a("z", _)]]></querystr>
 <stuans>2,7,9</stuans>
 <correct>2,7,9</correct>
-<time_taken>4.015000</time_taken>
+<time_taken>2.006000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all variables that are print">6</id><querystr><![CDATA[variable v; print p; Select v such that Uses(p, v)]]></querystr>
 <stuans>p</stuans>
 <correct>p</correct>
-<time_taken>3.101000</time_taken>
+<time_taken>2.026000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that is followed by a if">7</id><querystr><![CDATA[assign a; if i; Select a such that Follows(a, i)]]></querystr>
 <stuans>5</stuans>
 <correct>5</correct>
-<time_taken>4.444000</time_taken>
+<time_taken>2.242000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that follows a if">8</id><querystr><![CDATA[assign a; if i; Select a such that Follows(i, a)]]></querystr>
 <stuans>9</stuans>
 <correct>9</correct>
-<time_taken>4.189000</time_taken>
+<time_taken>2.058000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that is followed by line 3">9</id><querystr><![CDATA[assign a; Select a such that Follows(a, 3)]]></querystr>
 <stuans>2,2</stuans>
 <correct>2</correct>
-<time_taken>3.303000</time_taken>
+<time_taken>2.041000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that follows line 2">10</id><querystr><![CDATA[assign a; if i; Select a such that Follows(2, a)]]></querystr>
 <stuans>3,3</stuans>
 <correct>3</correct>
-<time_taken>4.241000</time_taken>
+<time_taken>2.122000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Follows="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment statement that is followed by any statement">11</id><querystr><![CDATA[assign a; Select a such that Follows(a, _)]]></querystr>
 <stuans>1,2,3,5,9</stuans>
 <correct>1,2,3,5,9</correct>
-<time_taken>3.309000</time_taken>
+<time_taken>2.172000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that satisfies Follow*(5, a)">12</id><querystr><![CDATA[assign a; Select a such that Follows*(5, a)]]></querystr>
 <stuans>9,11,9,11</stuans>
 <correct>9,11</correct>
-<time_taken>4.179000</time_taken>
+<time_taken>2.179000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment statement that satisfies Follow*(a, _)">13</id><querystr><![CDATA[assign a; Select a such that Follows*(a, _)]]></querystr>
 <stuans>1,1,1,1,2,2,2,3,3,5,5,5,5,9,9</stuans>
 <correct>1,2,3,5,9</correct>
-<time_taken>4.074000</time_taken>
+<time_taken>2.643000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that satisfies Parent(w, 9)">14</id><querystr><![CDATA[while w; Select w such that Parent(w, 9)]]></querystr>
 <stuans>4</stuans>
 <correct>4</correct>
-<time_taken>4.371000</time_taken>
+<time_taken>2.298000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that is parent of if">15</id><querystr><![CDATA[while w; if i; Select w such that Parent(w, i)]]></querystr>
 <stuans>4</stuans>
 <correct>4</correct>
-<time_taken>3.937000</time_taken>
+<time_taken>2.357000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignments that satisfy Parent(w, a)">16</id><querystr><![CDATA[while w; assign a; Select a such that Parent(w, a)]]></querystr>
 <stuans>5,9,11</stuans>
 <correct>5,9,11</correct>
-<time_taken>4.526000</time_taken>
+<time_taken>2.454000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignments that satisfy Parent*(w, a)">16</id><querystr><![CDATA[while w; assign a; Select a such that Parent*(w, a)]]></querystr>
 <stuans>5,7,8,9,11</stuans>
 <correct>5,7,8,9,11</correct>
-<time_taken>4.479000</time_taken>
+<time_taken>2.462000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select variables that are modified">17</id><querystr><![CDATA[variable v; Select v such that Modifies(_, v)]]></querystr>
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
-<time_taken>3.510000</time_taken>
+<time_taken>1.852000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment where any variable is modified">18</id><querystr><![CDATA[assign a; Select a such that Modifies(a, _)]]></querystr>
 <stuans>3,11,8,2,7,9,1,5</stuans>
 <correct>1,2,3,5,7,8,9,11</correct>
-<time_taken>3.734000</time_taken>
+<time_taken>2.105000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select while where any variable is used">19</id><querystr><![CDATA[while w; Select w such that Uses(w, _)]]></querystr>
 <stuans>4,4,4</stuans>
 <correct>4</correct>
-<time_taken>3.796000</time_taken>
+<time_taken>2.048000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select variables that are used">20</id><querystr><![CDATA[variable v; Select v such that Uses(_, v)]]></querystr>
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
-<time_taken>3.453000</time_taken>
+<time_taken>1.844000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select assignment with x=x-1">21</id><querystr><![CDATA[assign a; Select a pattern a(_, "x-1")]]></querystr>
 <stuans>5</stuans>
 <correct>5</correct>
-<time_taken>3.871000</time_taken>
+<time_taken>1.994000</time_taken>
 <passed/>
 </query>
 </queries>
