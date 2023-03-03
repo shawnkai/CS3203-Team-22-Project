@@ -86,7 +86,7 @@ Select a such that Parent*(w, a)
 17 - Select variables that are modified
 variable v;
 Select v such that Modifies(_, v)
-x, z, i, y, q
+SemanticError
 5000
 18 - Select assignment where any variable is modified
 assign a;
@@ -101,7 +101,7 @@ Select w such that Uses(w, _)
 20 - Select variables that are used
 variable v;
 Select v such that Uses(_, v)
-i, x, z, p
+SemanticError
 5000
 21 - Select assignment with x=x-1
 assign a;

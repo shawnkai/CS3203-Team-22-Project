@@ -1,0 +1,48 @@
+procedure testAssignmentPattern {
+    a = 0;
+    x = x + 1 + a;
+    y = x - a;
+    read b;
+    if (b > 0) then {
+        x = x % b + a;
+        y = (y + x) % (b % a) - y;
+        while (x != y) {
+            read c;
+            x = (((x - y) - c) % b) + a;
+            if (c > a) then {
+                a = c + b;
+            } else {
+                a = c - b % 2;
+            }
+        }
+    } else {
+        print b;
+        if (x < b) then {
+            print x;
+            x = x + 1;
+        } else {
+            x = ((x - b) % b) + (a - c);
+        }
+        while (b != a) {
+            print b;
+            while (c != b) {
+                c = c + (b % a) - ((x % y) / 3);
+                if (c < 0) then {
+                    print c;
+                    c = c + 1;
+                } else {
+                    read b;
+                    c = c - b + a / x % y * 3;
+                }
+            }
+            b = (b % x) + (1) * (2 / y);
+            a = a * (1 / (a + (x % y)));
+            print a;
+            if (a > 5) then {
+                a = a % 5;
+            } else {
+                a = a * 5 % 3;
+            }
+        }
+    }
+}
