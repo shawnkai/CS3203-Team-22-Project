@@ -56,12 +56,12 @@ Select a pattern a ("x", _"a"_)
 12 - Get statements who used "x % y" on the rhs
 assign a;
 Select a pattern a (_, _"x % y"_)
-22, 27, 29
+22, 29
 5000
 13 - Get statements who used "(x % y)" on the rhs
 assign a;
 Select a pattern a (_, _"(x % y)"_)
-22, 27, 29
+22, 29
 5000
 14 - Get statements who have a on the lhs and "(x % y)" being used on the rhs
 assign a;
@@ -81,7 +81,7 @@ Select a pattern a (_, "c - b + a / x % y * 3")
 17 - Get statements who have a on the lhs and "5 % 3" being used on the rhs
 assign a;
 Select a pattern a ("a", _"5 % 3"_)
-33
+none
 5000
 18 - Get statements who have x on the lhs and "x - b % b" being used on the rhs
 assign a;
@@ -97,4 +97,154 @@ Select a pattern a ("x", _"((x - b) % b)"_)
 assign a;
 Select a pattern a ("x", _"(x - (b % b))"_)
 none
+5000
+21 - Get statements who have a on the lhs and "a" being used on the rhs
+assign a;
+Select a pattern a ("x", _"a"_)
+2, 6, 10, 18
+5000
+22 - Get statements who have x on the lhs and "b + a" being used on the rhs
+assign a;
+Select a pattern a ("x", _"b + a"_)
+none
+5000
+23 - Get statements who have "1" being used on the rhs
+assign a;
+Select a pattern a (_, _"1"_)
+2, 17, 25, 28, 29
+5000
+24 - Get statements who have only "1" being used on the rhs
+assign a;
+Select a pattern a (_, "1")
+none
+5000
+25 - Get statements who have only "3" being used on the rhs
+assign a;
+Select a pattern a (_, "3")
+none
+5000
+26 - Get statements who have b on the lhs and only "1" being used on the rhs
+assign a;
+Select a pattern a ("b", "1")
+none
+5000
+27 - Get statements who have x on the lhs and only "1" being used on the rhs
+assign a;
+Select a pattern a ("x", "1")
+none
+5000
+28 - Get statements who have x on the lhs and "1" being used on the rhs
+assign a;
+Select a pattern a ("x", _"1"_)
+2, 17
+5000
+29 - Get statements who have a variable on the lhs and "1" being used on the rhs
+assign a; variable v;
+Select v pattern a (v, _"1"_)
+x, c, b, a
+5000
+101 - Test Select statement with no space in between a and (
+assign a;
+Select a pattern a("x", _"a"_)
+2, 6, 10, 18
+5000
+102 - Test Select statement with no space in between a and ( and internally among variables
+assign a;
+Select a pattern a("x", _"a"_)
+2, 6, 10, 18
+5000
+103 - Test Select statement with no space in between a and ( and internally among variables but with space in second parameter
+assign a;
+Select a pattern a("x", _" a "_)
+2, 6, 10, 18
+5000
+103 - Test Select statement with no space in between a and ( and internally among variables but with space in second parameter
+assign a;
+Select a pattern a("x", _" a "_)
+2, 6, 10, 18
+5000
+104 - Test Select statement with no space in between a and ( and internally among variables but with space in both parameters
+assign a;
+Select a pattern a(" x ", _" a "_)
+2, 6, 10, 18
+5000
+105 - Test Select statement with "assign" as variable name
+assign assign;
+Select assign pattern assign ("x", _"a"_)
+2, 6, 10, 18
+5000
+106 - Test Select statement with multiple assign variables
+assign a2, a1;
+Select a1 pattern a1 ("x", _"a"_)
+2, 6, 10, 18
+5000
+107 - Test Select statement with multiple assign variables
+assign a2, a1;
+Select a2 pattern a2 ("x", _"a"_)
+2, 6, 10, 18
+5000
+108 - Test Select statement with multiple assign variables
+assign a2, a1;
+Select a1 pattern a2 ("x", _"a"_)
+1, 2, 3, 6, 7, 10, 12, 13, 17, 18, 22, 25, 27, 28, 29, 32, 33
+5000
+109 - Test Select statement with multiple assign variables
+assign a2, a1;
+Select a2 pattern a1 ("x", _"a"_)
+1, 2, 3, 6, 7, 10, 12, 13, 17, 18, 22, 25, 27, 28, 29, 32, 33
+5000
+110 - Test Select statement with undeclared variable name
+assign a;
+Select v pattern v ("x", _"a"_)
+SemanticError
+5000
+111 - Test Select statement with undeclared variable name
+assign a;
+Select v pattern a ("x", _"a"_)
+SemanticError
+5000
+112 - Test Select statement with undeclared variable name
+assign a;
+Select a pattern v ("x", _"a"_)
+SemanticError
+5000
+113 - Test Select statement with another type of entity
+if a;
+Select a pattern a ("x", _"a"_)
+SemanticError
+5000
+114 - Test Select statement with wild card on either side only for second parameter
+assign a;
+Select a pattern a ("x", _"a")
+SyntaxError
+5000
+115 - Test Select statement with wild card on either side only for second parameter
+assign a;
+Select a pattern a ("x", "a"_)
+SyntaxError
+5000
+116 - Test Select statement with no quotes for undeclared first parameter
+assign a;
+Select a pattern a (x, "a")
+SemanticError
+5000
+117 - Test Select statement with no quotes for declared variable first parameter
+assign a; variable x;
+Select a pattern a (x, "a")
+none
+5000
+118 - Test Select statement with no quotes for declared first parameter but of other entity type
+assign a; if x;
+Select a pattern a (x, "a")
+SemanticError
+5000
+119 - Test Select statement with no quotes for second parameter
+assign a;
+Select a pattern a ("x", a)
+SyntaxError
+5000
+120 - Test Select statement with no quotes for either parameters
+assign a;
+Select a pattern a (x, a)
+SyntaxError
 5000
