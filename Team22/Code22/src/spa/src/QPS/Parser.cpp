@@ -27,37 +27,50 @@ SelectExpression* QueryParser::parse(string query) {
 			for (ModifiesExpression *e : modifiesConditions) {
                 conditions.push_back(e);
             }
-		} else if (this->containsUsesExpression(query)) {
+		}
+
+        if (this->containsUsesExpression(query)) {
             vector<UsesExpression*> usesConditions = this->extractUsesExpression(query);
             for (UsesExpression *e : usesConditions) {
                 conditions.push_back(e);
             }
-		} else if (this->containsPatternExpression(query)) {
+		}
+
+        if (this->containsPatternExpression(query)) {
             vector<PatternExpression*> patternConditions = this ->extractPatternExpression(query);
             for (PatternExpression *e : patternConditions) {
                 conditions.push_back(e);
             }
-        } else if (this->containsFollowsExpression(query)) {
+        }
+
+        if (this->containsFollowsExpression(query)) {
             vector<FollowsExpression*> followsConditions = this->extractFollowsExpression(query);
             for (FollowsExpression *e : followsConditions) {
                 conditions.push_back(e);
             }
-        } else if (this->containsFollowsStarExpression(query)) {
+        }
+
+        if (this->containsFollowsStarExpression(query)) {
             vector<FollowsStarExpression*> followsStarConditions = this ->extractFollowsStarExpression(query);
             for (FollowsStarExpression *e : followsStarConditions) {
                 conditions.push_back(e);
             }
-        } else if (this->containsParentExpression(query)) {
+        }
+
+        if (this->containsParentExpression(query)) {
             vector<ParentExpression*> parentConditions = this->extractParentExpression(query);
             for (ParentExpression *e : parentConditions) {
                 conditions.push_back(e);
             }
-        } else if (this->containsParentStarExpression(query)) {
+        }
+
+        if (this->containsParentStarExpression(query)) {
             vector<ParentStarExpression*> parentStarConditions = this ->extractParentStarExpression(query);
             for (ParentStarExpression *e : parentStarConditions) {
                 conditions.push_back(e);
             }
         }
+
         return new SelectExpression({arg}, conditions);
 	} else {
         ::printf("Main Thrown %s, %d\n", query.c_str(), isValidQuery(query));

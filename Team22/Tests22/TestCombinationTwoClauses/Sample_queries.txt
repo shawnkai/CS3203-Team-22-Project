@@ -11,7 +11,7 @@ Select a such that Follows (w,  a)  pattern a  (   "x"   ,_)
 3 - Follows + pattern , different variable
 assign a;
 Select a such that Follows   (_, a ) pattern a ("x", _ )
-5, 9, 15
+9, 15
 5000
 4 - Follows* + pattern , previous variable
 assign a;
