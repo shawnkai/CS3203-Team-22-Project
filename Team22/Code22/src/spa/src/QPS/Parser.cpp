@@ -1,6 +1,5 @@
 #include<stdio.h>
 
-
 #include "PKB/PKB.h"
 #include "Parser.h"
 #include "Utilities.h"
@@ -214,6 +213,25 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
     vector<PatternExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PATTERNREGEX)) {
+        string arg3 = sm.str(3);
+        arg3 = Utilities::removeAllOccurrences(arg3, ' ');
+
+        if (arg3.size() == 1 && arg3[0] != '_') {
+            throw SyntacticException();
+        } else if (arg3.size() != 1) {
+            if (arg3.find('\"') == string::npos) {
+                throw SyntacticException();
+            } else if (arg3[0] == '_' && arg3[arg3.size() - 1] != '_') {
+                throw SyntacticException();
+            } else if (arg3[0] != '_' && (arg3[0] != '\"' || arg3[arg3.size() - 1] != '\"')) {
+                throw SyntacticException();
+            } else if (arg3[0] == '_' && (arg3[1] != '\"' || arg3[arg3.size() - 2] != '\"')) {
+                throw SyntacticException();
+            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9+\-*/%)(]+\"_?)"))) {
+                throw SyntacticException();
+            }
+        }
+
         string arg1 = sm.str(1);
 
         string arg2 = sm.str(2);
@@ -226,26 +244,6 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
         } else {
             a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
         }
-
-        string arg3 = sm.str(3);
-        arg3 = Utilities::removeAllOccurrences(arg3, ' ');
-        if (arg3.size() == 1 && arg3[0] != '_') {
-            throw SyntacticException();
-        } else if (arg3.size() != 1) {
-            if (arg3.find('\"') == string::npos) {
-                throw SyntacticException();
-            } else if (arg3[0] == '_' && arg3[arg3.size() - 1] != '_') {
-                throw SyntacticException();
-            } else if (arg3[0] != '_' && (arg3[0] != '\"' || arg3[arg3.size() - 1] != '\"')) {
-                throw SyntacticException();
-            } else if (arg3[0] == '_' && (arg3[1] != '\"' || arg3[arg3.size() - 2] != '\"')) {
-                throw SyntacticException();
-            } else if (!regex_match(arg3, regex(R"(_?\"[A-Za-z0-9\+\-\*/]+\"_?)"))) {
-                throw SyntacticException();
-            }
-        }
-
-        arg3 = Utilities::removeAllOccurrences(arg3, '\"');
 
         auto *a1 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg1, "stmt"));
         string prefixPattern = Utilities::infixToPrefix(Utilities::removeAllOccurrences(arg3, '"'));

@@ -1,0 +1,259 @@
+1 - Select s that follows line 3
+stmt s;
+Select s such that Follows (3, s)
+17
+5000
+2 - Select s that line 15 follows
+stmt s;
+Select s such that Follows (s, 15)
+14
+5000
+3 - Select s that follows* line 3
+stmt s;
+Select s such that Follows* (3, s)
+17, 30
+5000
+4 - Select s that is the parent of line 7
+stmt s;
+Select s such that Parent (s, 7)
+6
+5000
+5 - Select s that line 30 follows*
+stmt s;
+Select s such that Follows* (s, 30)
+1, 2, 3, 17
+5000
+6 - Select while that is the parent of line 11
+while w;
+Select w such that Parent (w, 11)
+9
+5000
+7 - Select if that is the parent of line 7
+if i;
+Select i such that Parent (i, 7)
+6
+5000
+8 - Select s that is the parent of line 10
+stmt s;
+Select s such that Parent (s, 10)
+9
+5000
+9 - Select if that follows* line 2
+if i;
+Select i such that Follows* (2, i)
+17
+5000
+10 - Select if that line 3 is parent of it
+if i;
+Select i such that Parent (3, i)
+6
+5000
+11 - Select while that line 3 is parent* of it
+while w;
+Select w such that Parent* (3, w)
+9, 11
+5000
+12 - Select read that follows* line 1
+read r;
+Select r such that Follows* (1, r)
+30
+5000
+13 - Select assignment statement that Parent*(a, _) holds
+assign a;
+Select a such that Parent*(a, _)
+none
+5000
+14 - Select while that Parent*(w, 14) holds
+while w;
+Select w such that Parent* (w, 14)
+11, 9, 3
+5000
+15 - Select while that is the parent of while
+while w, w1;
+Select w such that Parent(w, w1)
+3, 9, 21, 25
+5000
+16 - Select while that its parent is while
+while w, w1;
+Select w1 such that Parent(w, w1)
+9, 11, 25, 28
+5000
+17 - Select if that follows itself
+if i;
+Select i such that Follows (i, i)
+none
+5000
+18 - Select stmt that follows itself
+stmt s;
+Select s such that Follows (s, s)
+none
+5000
+19 - Select undefined read
+Select r such that Follows* (1, r)
+SemanticError
+5000
+20 - Select undefined while
+read r;
+Select w such that Parent (w, r)
+SemanticError
+5000
+21 - Select while that follows itself
+while w;
+Select w such that Follows (w, w)
+none
+5000
+22 - Select assign that follows itself
+assign a;
+Select a such that Follows (a, a)
+none
+5000
+23 - Select read that follows itself
+read r;
+Select r such that Follows (r, r)
+none
+5000
+24 - Select print that follows itself
+print p;
+Select p such that Follows (p, p)
+none
+5000
+25 - Select s that follows some stmt
+stmt s;
+Select s such that Follows (_, s)
+2, 3, 5, 6, 9, 11, 15, 16, 21, 23, 24, 27, 28, 30
+5000
+26 - Select s that some stmt follows it
+stmt s;
+Select s such that Follows (s, _)
+1, 2, 3, 17, 4, 5, 6, 8, 10, 14, 19, 22, 23, 26, 27
+5000
+27 - Select if such that Follows(_, _)
+if i;
+Select i such that Follows (_, _)
+6, 12, 17, 24
+5000
+28 - Select while such that Follows(_, _)
+while w;
+Select w such that Follows (_, _)
+3, 9, 11, 19, 21, 25, 28
+5000
+29 - Select assign such that Follows(_, _)
+assign a;
+Select a such that Follows (_, _)
+1, 8, 13, 16, 20, 26
+5000
+30 - Select print such that Follows(_, _)
+print p;
+Select p such that Follows (_, _)
+2, 14, 22, 23, 27
+5000
+31 - Select while such that Follows(w, w1)
+while w, w1;
+Select w such that Follows* (w, w1)
+19
+5000
+32 - Select while such that Follows* (w, w)
+while w;
+Select w such that Follows* (w, w)
+none
+5000
+33 - Select stmt such that Follows* (s, s)
+stmt s;
+Select s such that Follows* (s, s)
+none
+5000
+34 - Select while such that Parent* (w, w)
+while w;
+Select w such that Parent* (w, w)
+none
+5000
+35 - Select print such that follows (p, p1)
+print p, p1;
+Select p such that follows (p, p1)
+22
+5000
+35 - Select print such that it follows print
+print p, p1;
+Select p1 such that follows (p, p1)
+23
+5000
+36 - Select while such that Follows*(w, w1)
+while w, w1;
+Select w1 such that Follows* (w, w1)
+21
+5000
+37 - Select while such that Follows* (_, w)
+while w;
+Select w such that Follows* (_, w)
+3, 9, 11, 21, 28
+5000
+37 - Select print such that Follows* (_, p)
+print p;
+Select p such that Follows* (_, p)
+2, 5, 23, 27
+5000
+38 - Select print such that Parent (_, p)
+print p;
+Select p such that Parent (_, p)
+5, 14, 22, 23, 27
+5000
+39 - Select print such that Parent* (_, p)
+print p;
+Select p such that Parent* (_, p)
+5, 14, 22, 23, 27
+5000
+40 - Select print such that Parent (p, _)
+print p;
+Select p such that Parent (p, _)
+none
+5000
+41 - Select stmt such that Parent (w, s)
+while w; stmt s;
+Select s such that Parent (w, s)
+4, 5, 6, 16, 10, 11, 12, 20, 22, 23, 24, 26, 27, 28, 29
+5000
+42 - Select while such that Parent* (w, w1)
+while w, w1;
+Select w1 such that Parent* (w, w1)
+9, 11, 25, 28
+5000
+43 - Select if such that Parent (w, i)
+while w; if i;
+Select i such that Parent (w, i)
+6, 12, 24
+5000
+44 - Select while such that Parent (i, w)
+while w; if i;
+Select w such that Parent (i, w)
+9, 19, 21, 25
+5000
+45 - Select while such that Parent* (i, w)
+while w; if i;
+Select w such that Parent* (i, w)
+9, 11, 19, 21, 25, 28
+5000
+46 - Select if such that Parent* (i, _)
+if i;
+Select i such that Parent* (i, _)
+6, 12, 17, 24
+5000
+47 - Select stmt s such that Parent (s, _)
+stmt s;
+Select s such that Parent (s, _)
+3, 6, 9, 11, 12, 17, 19, 21, 24, 25, 28
+5000
+48 - Select if such that Parent (_, i)
+if i;
+Select i such that Parent (_, i)
+6, 12, 24
+5000
+49 - Select while such that Parent (_, w)
+while w;
+Select w such that Parent (_, w)
+9, 11, 19, 21, 25, 28
+5000
+50 - Select stmt s such that Parent (s, w)
+while w; stmt s;
+Select s such that Parent (s, w)
+6, 9, 17, 24, 25
+5000
