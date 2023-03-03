@@ -206,7 +206,7 @@ SyntaxError
 113 - Test Select statement with another type of entity
 if a;
 Select a pattern a ("x", _"a"_)
-SyntaxError
+SemanticError
 5000
 114 - Test Select statement with wild card on either side only for second parameter
 assign a;
