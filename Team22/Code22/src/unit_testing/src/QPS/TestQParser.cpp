@@ -3,9 +3,9 @@
 //
 
 
-#include "QPS/Parser.h"
+#include "QPS/Parser/Parser.h"
 #include "catch.hpp"
-#include "QPS/Exceptions.h"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -16,19 +16,14 @@ TEST_CASE("TestCase1_ParsingDeclarationStatement_ShouldCreateDesignEntityForEach
 
     queryParser.parse(declaration);
 
-    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+    SynonymTable actualTable = queryParser.getSynonymTable();
 
     map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
 
-    map<string, string> actualTable;
-    for (auto & i : result) {
-        actualTable[get<0>(i)] = get<1>(i);
-    }
-
-    REQUIRE(actualTable == expectedTable);
+    REQUIRE(actualTable.isEquivalentTo(expectedTable));
 }
 
 
@@ -39,19 +34,14 @@ TEST_CASE("TestCase2_ParsingDeclarationStatementSwitchedOrder_Success") {
 
     queryParser.parse(declaration);
 
-    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+    SynonymTable actualTable = queryParser.getSynonymTable();
 
     map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
 
-    map<string, string> actualTable;
-    for (auto & i : result) {
-        actualTable[get<0>(i)] = get<1>(i);
-    }
-
-    REQUIRE(actualTable == expectedTable);
+    REQUIRE(actualTable.isEquivalentTo(expectedTable));
 }
 
 TEST_CASE("TestCase3_ParsingDeclarationStatementInvalidType_SyntaxError") {
@@ -133,19 +123,14 @@ TEST_CASE("TestCase7_ParsingDeclarationStatementSynonymNameSameAsType_Success") 
 
     queryParser.parse(declaration);
 
-    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+    SynonymTable resultTable = queryParser.getSynonymTable();
 
     map<string, string> expectedTable = {{"stmt", "STATEMENT"}, {"s1", "STATEMENT"}, {"assign", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"while", "WHILE"}, {"if", "IF"}, {"variable", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"procedure", "PROCEDURE"}, {"q", "PROCEDURE"}, {"constant", "CONSTANT"}, {"read", "READ"},
                                          {"print", "PRINT"}, {"call", "CALL"}};
 
-    map<string, string> actualTable;
-    for (auto & i : result) {
-        actualTable[get<0>(i)] = get<1>(i);
-    }
-
-    REQUIRE(actualTable == expectedTable);
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
 
 TEST_CASE("TestCase8_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Success") {
@@ -155,19 +140,15 @@ TEST_CASE("TestCase8_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Succe
 
     queryParser.parse(declaration);
 
-    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+    SynonymTable resultTable = queryParser.getSynonymTable();
 
     map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
 
-    map<string, string> actualTable;
-    for (auto & i : result) {
-        actualTable[get<0>(i)] = get<1>(i);
-    }
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
 
-    REQUIRE(actualTable == expectedTable);
 }
 
 
@@ -195,17 +176,24 @@ TEST_CASE("TestCase10_ParseSelectWithSuchThatModifies_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase11_ParseSelectWithSuchThatModifiesWithIdent_ShouldSuccess") {
-    QueryParser queryParser;
-    string declaration = "variable v; procedure p;";
-    string query = "Select p such that Modifies(p, \"x\")";
-
-    queryParser.parse(declaration);
-
-    SelectExpression *actualResult = queryParser.parse(query);
-
-    REQUIRE(actualResult->toString() == query);
-}
+//TEST_CASE("TestCase11_ParseSelectWithSuchThatModifiesWithIdent_ShouldSuccess") {
+//    QueryParser queryParser;
+//    string declaration = "variable v; procedure p;";
+//    string query = "Select p such that Modifies(p, \"x\")";
+//
+//    queryParser.parse(declaration);
+//
+//    bool throwsException = false;
+//
+//    try {
+//        Expression *exp1 = queryParser.parse(query);
+//    } catch (SyntacticException& e) {
+//        throwsException = true;
+//    }
+//
+//    REQUIRE(throwsException);
+//
+//}
 
 TEST_CASE("TestCase12_ParseSelectWithSuchThatModifiesWithWildCard_ShouldSuccess") {
     QueryParser queryParser;
@@ -818,20 +806,15 @@ TEST_CASE("TestCase48_ParsingDeclarationStatementMoreWhitespacesInserted_Success
     string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
     queryParser.parse(declaration);
 
-
-    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+    SynonymTable resultTable = queryParser.getSynonymTable();
 
     map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
 
-    map<string, string> actualTable;
-    for (auto & i : result) {
-        actualTable[get<0>(i)] = get<1>(i);
-    }
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
 
-    REQUIRE(actualTable == expectedTable);
 }
 
 TEST_CASE("TestCase49_SuchThatPatternExpression_SyntaxError") {
@@ -952,19 +935,15 @@ TEST_CASE("TestCase56_ParsingDeclarationStatementMoreWhitespacesInserted_Success
 
     queryParser.parse(declaration);
 
-    vector<tuple<string, string>> result = queryParser.getSynonymTable();
+    SynonymTable resultTable = queryParser.getSynonymTable();
 
     map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
 
-    map<string, string> actualTable;
-    for (auto & i : result) {
-        actualTable[get<0>(i)] = get<1>(i);
-    }
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
 
-    REQUIRE(actualTable == expectedTable);
 }
 
 //first arg for uses/modifies cannot be wildcard

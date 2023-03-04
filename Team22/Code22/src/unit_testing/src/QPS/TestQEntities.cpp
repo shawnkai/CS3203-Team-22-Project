@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 20/2/23.
 //
 
-#include "QPS/Entities.h"
+#include "QPS/Entities/Entities.h"
 #include "catch.hpp"
-#include "QPS/Exceptions.h"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 

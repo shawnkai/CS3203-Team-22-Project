@@ -6,7 +6,7 @@
 #define SPA_EVALUATOR_H
 
 #include <string>
-#include "Expressions.h"
+#include "QPS/Expressions/Expressions.h"
 #include "PKB/PKB.h"
 
 using namespace std;

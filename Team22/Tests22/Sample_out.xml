@@ -1,6 +1,7 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
+<<<<<<< HEAD
 <name>autotester</name><parsing_time_taken>16.039000</parsing_time_taken>
 </info>
 <queries>
@@ -72,6 +73,391 @@
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
 <time_taken>2.842000</time_taken>
+=======
+<name>autotester</name><parsing_time_taken>9.264000</parsing_time_taken>
+</info>
+<queries>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select s that follows line 3">1</id><querystr><![CDATA[stmt s; Select s such that Follows (3, s)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>1.493000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select s that line 15 follows">2</id><querystr><![CDATA[stmt s; Select s such that Follows (s, 15)]]></querystr>
+<stuans>14</stuans>
+<correct>14</correct>
+<time_taken>1.450000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select s that follows* line 3">3</id><querystr><![CDATA[stmt s; Select s such that Follows* (3, s)]]></querystr>
+<stuans>17,30</stuans>
+<correct>17,30</correct>
+<time_taken>1.331000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select s that is the parent of line 7">4</id><querystr><![CDATA[stmt s; Select s such that Parent (s, 7)]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>1.321000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select s that line 30 follows*">5</id><querystr><![CDATA[stmt s; Select s such that Follows* (s, 30)]]></querystr>
+<stuans>1,17,2,3</stuans>
+<correct>1,2,3,17</correct>
+<time_taken>1.385000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that is the parent of line 11">6</id><querystr><![CDATA[while w; Select w such that Parent (w, 11)]]></querystr>
+<stuans>9</stuans>
+<correct>9</correct>
+<time_taken>1.376000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if that is the parent of line 7">7</id><querystr><![CDATA[if i; Select i such that Parent (i, 7)]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>1.396000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select s that is the parent of line 10">8</id><querystr><![CDATA[stmt s; Select s such that Parent (s, 10)]]></querystr>
+<stuans>9</stuans>
+<correct>9</correct>
+<time_taken>1.375000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if that follows* line 2">9</id><querystr><![CDATA[if i; Select i such that Follows* (2, i)]]></querystr>
+<stuans>17</stuans>
+<correct>17</correct>
+<time_taken>1.328000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if that line 3 is parent of it">10</id><querystr><![CDATA[if i; Select i such that Parent (3, i)]]></querystr>
+<stuans>6</stuans>
+<correct>6</correct>
+<time_taken>1.233000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that line 3 is parent* of it">11</id><querystr><![CDATA[while w; Select w such that Parent* (3, w)]]></querystr>
+<stuans>11,9</stuans>
+<correct>9,11</correct>
+<time_taken>1.366000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select read that follows* line 1">12</id><querystr><![CDATA[read r; Select r such that Follows* (1, r)]]></querystr>
+<stuans>30</stuans>
+<correct>30</correct>
+<time_taken>1.360000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment statement that Parent*(a, _) holds">13</id><querystr><![CDATA[assign a; Select a such that Parent*(a, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.295000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that Parent*(w, 14) holds">14</id><querystr><![CDATA[while w; Select w such that Parent* (w, 14)]]></querystr>
+<stuans>11,3,9</stuans>
+<correct>11,9,3</correct>
+<time_taken>1.330000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that is the parent of while">15</id><querystr><![CDATA[while w, w1; Select w such that Parent(w, w1)]]></querystr>
+<stuans>25,9</stuans>
+<correct>9,25</correct>
+<time_taken>1.301000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that its parent is while">16</id><querystr><![CDATA[while w, w1; Select w1 such that Parent(w, w1)]]></querystr>
+<stuans>11,28</stuans>
+<correct>9,11,25,28</correct>
+<time_taken>1.314000</time_taken>
+<failed>
+<missing>25,9</missing>
+<additional></additional>
+<summary>
+<expected>4</expected>
+<matched>2</matched>
+<missing>2</missing>
+<additional>0</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if that follows itself">17</id><querystr><![CDATA[if i; Select i such that Follows (i, i)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.391000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt that follows itself">18</id><querystr><![CDATA[stmt s; Select s such that Follows (s, s)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.384000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select undefined read">19</id><querystr><![CDATA[ Select r such that Follows* (1, r)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SemanticError</correct>
+<time_taken>0.621000</time_taken>
+<failed>
+<missing>SemanticError</missing>
+<additional>SyntaxError</additional>
+<summary>
+<expected>1</expected>
+<matched>0</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select undefined while">20</id><querystr><![CDATA[read r; Select w such that Parent (w, r)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>0.914000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that follows itself">21</id><querystr><![CDATA[while w; Select w such that Follows (w, w)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.299000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assign that follows itself">22</id><querystr><![CDATA[assign a; Select a such that Follows (a, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.339000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select read that follows itself">23</id><querystr><![CDATA[read r; Select r such that Follows (r, r)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.323000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print that follows itself">24</id><querystr><![CDATA[print p; Select p such that Follows (p, p)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.235000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select s that follows some stmt">25</id><querystr><![CDATA[stmt s; Select s such that Follows (_, s)]]></querystr>
+<stuans>11,15,16,17,2,21,23,24,27,28,3,30,5,6,9</stuans>
+<correct>2,3,5,6,9,11,15,16,17,21,23,24,27,28,30</correct>
+<time_taken>1.507000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select s that some stmt follows it">26</id><querystr><![CDATA[stmt s; Select s such that Follows (s, _)]]></querystr>
+<stuans>1,10,14,17,19,2,22,23,26,27,3,4,5,6,8</stuans>
+<correct>1,2,3,17,4,5,6,8,10,14,19,22,23,26,27</correct>
+<time_taken>1.508000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="Select if such that Follows(_, _)">27</id><querystr><![CDATA[if i; Select i such that Follows (_, _)]]></querystr>
+<stuans>6,12,17,24</stuans>
+<correct>6,12,17,24</correct>
+<time_taken>1.254000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="Select while such that Follows(_, _)">28</id><querystr><![CDATA[while w; Select w such that Follows (_, _)]]></querystr>
+<stuans>3,9,11,19,21,25,28</stuans>
+<correct>3,9,11,19,21,25,28</correct>
+<time_taken>1.257000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="Select assign such that Follows(_, _)">29</id><querystr><![CDATA[assign a; Select a such that Follows (_, _)]]></querystr>
+<stuans>1,8,13,16,20,26</stuans>
+<correct>1,8,13,16,20,26</correct>
+<time_taken>1.226000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="Select print such that Follows(_, _)">30</id><querystr><![CDATA[print p; Select p such that Follows (_, _)]]></querystr>
+<stuans>27,5,23,14,2,22</stuans>
+<correct>2,5,14,22,23,27</correct>
+<time_taken>1.257000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Follows(w, w1)">31</id><querystr><![CDATA[while w, w1; Select w such that Follows* (w, w1)]]></querystr>
+<stuans>19</stuans>
+<correct>19</correct>
+<time_taken>1.472000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Follows* (w, w)">32</id><querystr><![CDATA[while w; Select w such that Follows* (w, w)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.352000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt such that Follows* (s, s)">33</id><querystr><![CDATA[stmt s; Select s such that Follows* (s, s)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.282000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Parent* (w, w)">34</id><querystr><![CDATA[while w; Select w such that Parent* (w, w)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.269000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print such that follows (p, p1)">35</id><querystr><![CDATA[print p, p1; Select p such that Follows (p, p1)]]></querystr>
+<stuans>22</stuans>
+<correct>22</correct>
+<time_taken>1.368000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select print such that it follows print">36</id><querystr><![CDATA[print p, p1; Select p1 such that Follows (p, p1)]]></querystr>
+<stuans>23</stuans>
+<correct>23</correct>
+<time_taken>1.437000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Follows*(w, w1)">37</id><querystr><![CDATA[while w, w1; Select w1 such that Follows* (w, w1)]]></querystr>
+<stuans>21</stuans>
+<correct>21</correct>
+<time_taken>1.455000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select while such that Follows* (_, w)">38</id><querystr><![CDATA[while w; Select w such that Follows* (_, w)]]></querystr>
+<stuans>11,21,28,3,9</stuans>
+<correct>3,9,11,21,28</correct>
+<time_taken>1.468000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select print such that Follows* (_, p)">39</id><querystr><![CDATA[print p; Select p such that Follows* (_, p)]]></querystr>
+<stuans>2,23,27,5</stuans>
+<correct>2,5,23,27</correct>
+<time_taken>1.411000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select print such that Parent (_, p)">40</id><querystr><![CDATA[print p; Select p such that Parent (_, p)]]></querystr>
+<stuans>14,22,23,27,5</stuans>
+<correct>5,14,22,23,27</correct>
+<time_taken>1.432000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select print such that Parent* (_, p)">41</id><querystr><![CDATA[print p; Select p such that Parent* (_, p)]]></querystr>
+<stuans>14,22,23,27,5</stuans>
+<correct>5,14,22,23,27</correct>
+<time_taken>1.389000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select print such that Parent (p, _)">42</id><querystr><![CDATA[print p; Select p such that Parent (p, _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.268000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt such that Parent (w, s)">43</id><querystr><![CDATA[while w; stmt s; Select s such that Parent (w, s)]]></querystr>
+<stuans>10,11,12,16,20,22,23,24,26,27,28,29,4,5,6</stuans>
+<correct>4,5,6,16,10,11,12,20,22,23,24,26,27,28,29</correct>
+<time_taken>1.534000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Parent* (w, w1)">44</id><querystr><![CDATA[while w, w1; Select w1 such that Parent* (w, w1)]]></querystr>
+<stuans>11,25,28,9</stuans>
+<correct>9,11,25,28</correct>
+<time_taken>1.496000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select if such that Parent (w, i)">45</id><querystr><![CDATA[while w; if i; Select i such that Parent (w, i)]]></querystr>
+<stuans>12,24,6</stuans>
+<correct>6,12,24</correct>
+<time_taken>1.357000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Parent (i, w)">46</id><querystr><![CDATA[while w; if i; Select w such that Parent (i, w)]]></querystr>
+<stuans>19,21,25,9</stuans>
+<correct>9,19,21,25</correct>
+<time_taken>1.330000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while such that Parent* (i, w)">47</id><querystr><![CDATA[while w; if i; Select w such that Parent* (i, w)]]></querystr>
+<stuans>11,19,21,25,28,9</stuans>
+<correct>9,11,19,21,25,28</correct>
+<time_taken>1.409000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select if such that Parent* (i, _)">48</id><querystr><![CDATA[if i; Select i such that Parent* (i, _)]]></querystr>
+<stuans>12,17,24,6</stuans>
+<correct>6,12,17,24</correct>
+<time_taken>1.395000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select stmt s such that Parent (s, _)">49</id><querystr><![CDATA[stmt s; Select s such that Parent (s, _)]]></querystr>
+<stuans>11,12,17,19,21,24,25,28,3,6,9</stuans>
+<correct>3,6,9,11,12,17,19,21,24,25,28</correct>
+<time_taken>1.504000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select if such that Parent (_, i)">50</id><querystr><![CDATA[if i; Select i such that Parent (_, i)]]></querystr>
+<stuans>12,24,6</stuans>
+<correct>6,12,24</correct>
+<time_taken>1.368000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select while such that Parent (_, w)">51</id><querystr><![CDATA[while w; Select w such that Parent (_, w)]]></querystr>
+<stuans>11,19,21,25,28,9</stuans>
+<correct>9,11,19,21,25,28</correct>
+<time_taken>1.268000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select stmt s such that Parent (s, w)">52</id><querystr><![CDATA[while w; stmt s; Select s such that Parent (s, w)]]></querystr>
+<stuans>17,24,25,6,9</stuans>
+<correct>6,9,17,24,25</correct>
+<time_taken>1.371000</time_taken>
+>>>>>>> 18c10fca2bdf0817a90fa1e18e73072d3814958b
 <passed/>
 </query>
 <query>
