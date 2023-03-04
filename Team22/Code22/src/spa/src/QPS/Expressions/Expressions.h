@@ -8,10 +8,10 @@
 #include <string>
 #include <utility>
 #include <vector>
-#include "QPS/Entities.h"
+#include "QPS/Entities/Entities.h"
 #include "PKB/PKB.h"
 #include "Result.h"
-#include "QPS/ResultTable.h"
+#include "QPS/Evaluator/ResultTable.h"
 
 using namespace std;
 

@@ -5,12 +5,12 @@
 #ifndef SPA_PARSER_H
 #define SPA_PARSER_H
 
-#include "QPS/Expressions.h"
+#include "QPS/Expressions/Expressions.h"
+#include "SynonymTable.h"
 
 #include <iostream>
 #include <string>
 #include <vector>
-#include <map>
 #include <regex>
 #include <tuple>
 
@@ -61,7 +61,7 @@ private:
 
 
 protected:
-	map<string, DesignEntity*> synonymTable;
+	SynonymTable synonymTable;
 
 public:
 	QueryParser();
@@ -80,7 +80,6 @@ public:
     bool containsParentExpression(string query);
     bool containsParentStarExpression(string query);
 
-    void addToSynonymTable(string type, const string& name);
 	void extractDeclarations(string query);
 
 	vector<ModifiesExpression*> extractModifiesExpression(const string& query);
@@ -91,8 +90,8 @@ public:
     vector<ParentExpression*> extractParentExpression(const string& query);
     vector<ParentStarExpression*> extractParentStarExpression(const string& query);
 
-    vector<tuple<string, string>> getSynonymTable();
-    DesignEntity *getFromSynonymTable(const string& name, const string& desiredType);
+    SynonymTable getSynonymTable();
+
 };
 
 

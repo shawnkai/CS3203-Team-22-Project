@@ -2,7 +2,7 @@
 // Created by Atin Sakkeer Hussain on 02/03/2023.
 //
 
-#include "QPS/ResultTable.h"
+#include "ResultTable.h"
 
 #include <utility>
 #include <set>

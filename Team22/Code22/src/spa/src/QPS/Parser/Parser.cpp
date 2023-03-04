@@ -1,9 +1,8 @@
 #include<stdio.h>
 
-#include "PKB/PKB.h"
 #include "Parser.h"
 #include "Utilities.h"
-#include "Exceptions.h"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -20,7 +19,7 @@ SelectExpression* QueryParser::parse(string query) {
 		smatch sm;
 		regex_search(query, sm, RETURNVALUEREGEX);
 		
-		DesignEntity *arg = this->getFromSynonymTable(sm.str(1), "select");
+		DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
 
 		if (this->containsModifiesExpression(query)) {
             vector<ModifiesExpression*> modifiesConditions = this->extractModifiesExpression(query);
@@ -134,7 +133,7 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            auto *a2 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg2, "named"));
             expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
@@ -144,7 +143,7 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
             } else {
-                a1 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg1, "named"));
+                a1 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg1, "named"));
             }
 
             NamedEntity *a2;
@@ -154,7 +153,7 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
             } else {
-                a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+                a2 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg2, "named"));
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT" || a1->getType() == "PROCEDURE") {
@@ -181,7 +180,7 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            auto *a2 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg2, "named"));
             expressions.push_back(new UsesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
@@ -191,7 +190,7 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
             } else {
-                a1 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg1, "named"));
+                a1 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg1, "named"));
             }
 
             NamedEntity *a2;
@@ -200,7 +199,7 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
             } else {
-                a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+                a2 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg2, "named"));
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT" || a1->getType() == "PROCEDURE") {
@@ -252,13 +251,13 @@ vector<PatternExpression*> QueryParser::extractPatternExpression(const string& q
         } else if (arg2 == "_") {
             a2 = new WildCardEntity();
         } else {
-            a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            a2 = dynamic_cast<NamedEntity*>(this->synonymTable.get(arg2, "named"));
             if (a2->getType() != "VARIABLE") {
                 throw SemanticException();
             }
         }
 
-        auto *a1 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg1, "stmt"));
+        auto *a1 = dynamic_cast<StmtEntity*>(this->synonymTable.get(arg1, "stmt"));
         string prefixPattern = Utilities::infixToPrefix(Utilities::removeAllOccurrences(arg3, '"'));
         if (a1->getType() != "ASSIGNMENT") {
             throw SemanticException();
@@ -280,7 +279,7 @@ tuple<StmtEntity*, StmtEntity*> QueryParser::generateStmtEntityPair(string arg1,
     } else if (arg1 == "_") {
         a1 = new StmtEntity();
     } else {
-        a1 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg1, "stmt"));
+        a1 = dynamic_cast<StmtEntity*>(this->synonymTable.get(arg1, "stmt"));
         if (a1->getType() == "VARIABLE" || a1->getType() == "PROCEDURE" || a1->getType() == "CONSTANT") {
             throw SemanticException();
         }
@@ -291,7 +290,7 @@ tuple<StmtEntity*, StmtEntity*> QueryParser::generateStmtEntityPair(string arg1,
     } else if (arg2 == "_") {
         a2 = new StmtEntity();
     } else {
-        a2 = dynamic_cast<StmtEntity*>(this->getFromSynonymTable(arg2, "stmt"));
+        a2 = dynamic_cast<StmtEntity*>(this->synonymTable.get(arg2, "stmt"));
         if (a2->getType() == "VARIABLE" || a2->getType() == "PROCEDURE" || a2->getType() == "CONSTANT") {
             throw SemanticException();
         }
@@ -376,33 +375,6 @@ vector<ParentStarExpression*> QueryParser::extractParentStarExpression(const str
     return expressions;
 }
 
-void QueryParser::addToSynonymTable(string type, const string& name) {
-    if (this->synonymTable.count(name)) {
-        throw SyntacticException();
-    }
-    if (type == "stmt") {
-        this->synonymTable[name] = new StmtEntity("STATEMENT", name);
-    } else if (type == "read") {
-        this->synonymTable[name] = new ReadEntity(name);
-    } else if (type == "print") {
-        this->synonymTable[name] = new PrintEntity(name);
-    } else if (type == "call") {
-        this->synonymTable[name] = new CallEntity(name);
-    } else if (type == "while") {
-        this->synonymTable[name] = new WhileEntity(name);
-    } else if (type == "if") {
-        this->synonymTable[name] = new IfEntity(name);
-    } else if (type == "assign") {
-        this->synonymTable[name] = new AssignEntity(name);
-    } else if (type == "variable") {
-        this->synonymTable[name] = new VariableEntity(name);
-    } else if (type == "constant") {
-        this->synonymTable[name] = new ConstantEntity(name);
-    } else if (type == "procedure") {
-        this->synonymTable[name] = new ProcedureEntity(name);
-    }
-}
-
 void QueryParser::extractDeclarations(string query) {
 	smatch sm;
 	auto begin = sregex_iterator(query.begin(), query.end(), EXTRACTDECLARATIONREGEX);
@@ -421,36 +393,17 @@ void QueryParser::extractDeclarations(string query) {
                 if (subname.empty()) {
                     break;
                 }
-                this->addToSynonymTable(type, subname);
+                this->synonymTable.add(type, subname);
                 name.erase(0, pos + delimiter.length());
             }
         }
         if (!name.empty()) {
-            this->addToSynonymTable(type, name);
+            this->synonymTable.add(type, name);
         }
 	}
 }
 
-vector<tuple<string, string>> QueryParser::getSynonymTable() {
-    vector<tuple<string, string>> result;
-    for (tuple<string, DesignEntity*> t : this->synonymTable) {
-        result.emplace_back(get<0>(t), get<1>(t)->getType());
-    }
-    return result;
+SynonymTable QueryParser::getSynonymTable() {
+    return this->synonymTable;
 }
 
-DesignEntity *QueryParser::getFromSynonymTable(const string& name, const string& desiredType) {
-    if (!synonymTable.count(name)) {
-        throw SemanticException();
-    }
-
-    DesignEntity *entity = synonymTable[name];
-
-    if (desiredType == "stmt") {
-        return new StmtEntity(entity->getType(), name);
-    } else if (desiredType == "named") {
-        return new NamedEntity(entity->getType(), name);
-    } else if (desiredType == "select"){
-        return entity;
-    }
-}
