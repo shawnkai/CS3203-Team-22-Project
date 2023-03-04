@@ -133,3 +133,8 @@ stmt n1; constant c; assign a;
 Select c such that Parent(4, 5) pattern a (_, _"right"_)
 0, 1, 2, 3, 5, 9
 5000
+27 - Statement + Parent + pattern 3 <--- SIMILARLY, THIS IS FAILING , EXPECTED none, GOT ALL CONSTANTS
+stmt n1; constant c; assign a;
+Select c pattern a (_, _"right"_) such that Parent(4, 4)
+none
+5000
