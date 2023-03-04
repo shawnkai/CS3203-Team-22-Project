@@ -5,7 +5,7 @@ Select a such that Follows (w,  a )  pattern a  ("x"  , _)
 5000
 2 - Follows + pattern , different number of white spaces
 assign a; while w;
-Select a such that Follows (w,  a)  pattern a  (   "x"   ,_)
+Select a such that Follows (w,  a)  pattern a  (   "x"   ,_  )
 15
 5000
 3 - Follows + pattern , different variable
