@@ -3,6 +3,7 @@
 //
 
 #include "SynonymTable.h"
+#include <stdexcept>
 
 void SynonymTable::add(string type, const string& name) {
     if (this->table.count(name)) {
