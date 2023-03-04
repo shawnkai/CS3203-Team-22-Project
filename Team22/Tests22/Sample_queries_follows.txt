@@ -76,7 +76,7 @@ Select w such that Parent(w, w1)
 16 - Select while that its parent is while
 while w, w1;
 Select w1 such that Parent(w, w1)
-9, 11, 25, 28
+11, 28
 5000
 17 - Select if that follows itself
 if i;
