@@ -8,7 +8,7 @@
 #include <algorithm>
 #include <regex>
 #include "Utilities.h"
-#include "QPS/Exceptions.h"
+#include "QPS/Exceptions/Exceptions.h"
 
 // Function Definitions
 
