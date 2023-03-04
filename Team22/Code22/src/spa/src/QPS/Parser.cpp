@@ -73,8 +73,6 @@ SelectExpression* QueryParser::parse(string query) {
 
         return new SelectExpression({arg}, conditions);
 	} else {
-        ::printf("Main Thrown %s, %d\n", query.c_str(), isValidQuery(query));
-        ::printf("Query Validation Regex: %s\n", QUERYVALIDATION.c_str());
         throw SyntacticException();
     }
 }
@@ -134,15 +132,26 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
 
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            NamedEntity *a2;
+
+            if (arg2 == "_") {
+                a2 = new WildCardEntity();
+            } else if (arg2.find('\"') != string::npos) {
+                a2 = new NamedEntity("ident", arg2);
+            } else {
+                a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            }
             expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
+
             NamedEntity *a1;
 
             if (arg1 == "_") {
                 throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
+            } else if (!Utilities::isAlphanumericString(arg1)) {
+                throw SyntacticException();
             } else {
                 a1 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg1, "named"));
             }
@@ -153,11 +162,13 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
                 a2 = new WildCardEntity();
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
+            } else if (!Utilities::isAlphanumericString(arg2)) {
+                throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             }
 
-            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT" || a1->getType() == "PROCEDURE") {
+            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
                 throw SemanticException();
             }
 
@@ -178,18 +189,31 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
     while (regex_search(searchStart, query.cend(), sm, USESREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-
+        ::printf("Arguments: %s, %s\n", arg1.c_str(), arg2.c_str());
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
-            auto *a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            NamedEntity *a2;
+            if (arg2 == "_") {
+                a2 = new WildCardEntity();
+            } else if (arg2.find('\"') != string::npos) {
+                a2 = new NamedEntity("ident", arg2);
+            } else if (!Utilities::isAlphanumericString(arg2)) {
+                ::printf("THROWN ERROR\n");
+                throw SyntacticException();
+            } else {
+                a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
+            }
             expressions.push_back(new UsesSExpression(a1, a2));
         } else {
             NamedEntity *a1;
 
             if (arg1 == "_") {
+                ::printf("THROWN ERROR\n");
                 throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
+            } else if (!Utilities::isAlphanumericString(arg1)) {
+                throw SyntacticException();
             } else {
                 a1 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg1, "named"));
             }
@@ -199,11 +223,14 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
                 a2 = new WildCardEntity();
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
+            } else if (!Utilities::isAlphanumericString(arg2)) {
+                throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             }
 
-            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT" || a1->getType() == "PROCEDURE") {
+            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
+                ::printf("THROWN ERROR\n");
                 throw SemanticException();
             }
 

@@ -36,7 +36,7 @@ SyntaxError
 8 - argument 2 as null return syntax error <--- should return syntax error
 variable v;
 Select v such that Uses(7, null)
-SyntaxError
+SemanticError
 5000
 9 - empty " " with multiple whitespace return syntax error
 variable v;

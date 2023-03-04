@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <regex>
 #include "Utilities.h"
+#include "QPS/Exceptions.h"
 
 // Function Definitions
 
@@ -82,7 +83,11 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
 }
 
 
-ModifiesExpression::ModifiesExpression(NamedEntity *target) : Expression({target}) {}
+ModifiesExpression::ModifiesExpression(NamedEntity *target) : Expression({target}) {
+    if (target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
+        throw SemanticException();
+    }
+}
 
 
 ModifiesSExpression::ModifiesSExpression(StmtEntity *modifier, NamedEntity *target) : ModifiesExpression(target) {
@@ -101,7 +106,11 @@ string ModifiesPExpression::toString() {
     return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {}
+UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {
+    if (target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
+        throw SemanticException();
+    }
+}
 
 
 UsesSExpression::UsesSExpression(StmtEntity* user, DesignEntity* target) : UsesExpression(target) {
@@ -153,7 +162,18 @@ PatternExpression::PatternExpression(DesignEntity *entity, NamedEntity* p1, stri
 }
 
 ResultTable ModifiesSExpression::evaluate(PKB pkb) {
-    auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+    vector<Result> vars;
+    if (this->entities[0]->getType() == "WILDCARD") {
+        auto varResult = pkb.getAllDesignEntity("VARIABLE");
+        auto constResult = pkb.getAllDesignEntity("CONSTANT");
+        vars.insert(vars.end(), varResult.begin(), varResult.end());
+        vars.insert(vars.end(), constResult.begin(), constResult.end());
+    } else if (this->entities[0]->getType() == "ident") {
+        vars.push_back(pkb.getDesignEntity("VARIABLE", dynamic_cast<NamedEntity*>(this->entities[1])->getSynonym()));
+    } else {
+        vars = pkb.getAllDesignEntity(this->entities[0]->getType());
+    }
+
     vector<Result> results;
     for (auto var : vars) {
         results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));

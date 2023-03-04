@@ -1,176 +1,96 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>10.590000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>16.039000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Follows + pattern <--- THIS IS FAILING , EXPECTED 15, GOT 1, 5, 9, 15">1</id><querystr><![CDATA[assign a; while w; Select a such that Follows (w,  a )  pattern a  ("x"  , _)]]></querystr>
-<stuans>15</stuans>
-<correct>15</correct>
-<time_taken>5.766000</time_taken>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="double connected wildcard return syntax error <---- This should be a syntax error as double wildcard is not valid syntax">1</id><querystr><![CDATA[variable v; Select v such that Modifies(v, __)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>3.184000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Follows + pattern , different number of white spaces">2</id><querystr><![CDATA[assign a; while w; Select a such that Follows (w,  a)  pattern a  (   "x"   ,_)]]></querystr>
-<stuans>15</stuans>
-<correct>15</correct>
-<time_taken>5.976000</time_taken>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="double separated wildcard return syntax error <---- This should be a syntax error as double separated wildcard is not valid syntax">2</id><querystr><![CDATA[variable v; Select v such that Modifies(v, _ _)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>2.833000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Follows + pattern , different variable">3</id><querystr><![CDATA[assign a; Select a such that Follows   (_, a ) pattern a ("x", _ )]]></querystr>
-<stuans>15,9</stuans>
-<correct>9,15</correct>
-<time_taken>4.285000</time_taken>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="empty " " return syntax error">3</id><querystr><![CDATA[variable v; Select v such that Modifies(v, "")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>2.709000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Followsstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Follows* + pattern , previous variable">4</id><querystr><![CDATA[assign a; Select a such that Follows* (a, _) pattern a ("left", _)]]></querystr>
-<stuans>10,13,2</stuans>
-<correct>2,10,13</correct>
-<time_taken>4.313000</time_taken>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="empty " " with whitespace return syntax error">4</id><querystr><![CDATA[variable v; Select v such that Modifies(v, " ")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>2.563000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Modifies="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Modifies + pattern 1">5</id><querystr><![CDATA[assign a; Select a such that Modifies (a, "x") pattern a (_, _"x"_)]]></querystr>
-<stuans>5,9</stuans>
-<correct>5,9</correct>
-<time_taken>5.008000</time_taken>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="wildcard with " " return syntax error">5</id><querystr><![CDATA[variable v; Select v such that Modifies(v, "_")]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>2.443000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Modifies + pattern 2">6</id><querystr><![CDATA[assign a; Select a such that Modifies (a, "x") pattern a (_, "x")]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>4.113000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" SuchThat="1" CondNum="3" RelNum="0" comment="Modifies spelled as ModifiesS return syntax error">6</id><querystr><![CDATA[variable v; Select v such that ModifiesS(1, _)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>2.318000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Parent + pattern">7</id><querystr><![CDATA[assign a; if i; Select a such that Parent(i, a) pattern a(_, _"x"_)]]></querystr>
-<stuans>7,8,9</stuans>
-<correct>7,8,9</correct>
-<time_taken>3.653000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" SuchThat="1" CondNum="3" RelNum="0" comment="Modifies spelled as ModifiesP return syntax error">7</id><querystr><![CDATA[variable v; Select v such that ModifiesP(1, _)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>2.351000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Parent* + pattern">8</id><querystr><![CDATA[assign a; while w; Select a such that Parent*(w, a) pattern a(_, _"x"_)]]></querystr>
-<stuans>10,5,7,8,9</stuans>
-<correct>5,7,8,9,10</correct>
-<time_taken>3.973000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Uses + pattern">9</id><querystr><![CDATA[assign a; Select a such that Uses(a, "x") pattern a ("x", _"left"_)]]></querystr>
-<stuans>9</stuans>
-<correct>9</correct>
-<time_taken>3.910000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Uses + pattern 2">10</id><querystr><![CDATA[assign a; constant b; variable v; Select b such that Uses(a, v) pattern a (v, _)]]></querystr>
-<stuans>9,2,1,0,5,3</stuans>
-<correct>0,1,2,3,5,9</correct>
-<time_taken>4.447000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Uses + pattern 3">11</id><querystr><![CDATA[assign a; stmt n; variable v; Select n such that Uses (a, v) pattern a (v, _"iter"_)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>4.879000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Read + Modifies + pattern">12</id><querystr><![CDATA[assign a; read rd; variable v; Select a such that Modifies (rd, v) pattern a (v, _)]]></querystr>
-<stuans>14</stuans>
-<correct>14</correct>
-<time_taken>4.947000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Parentstar="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Parent + pattern">13</id><querystr><![CDATA[assign a; stmt w; print pr; Select w such that Parent*(w, pr) pattern a (_, _"left"_)]]></querystr>
-<stuans>4</stuans>
-<correct>4</correct>
-<time_taken>4.836000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="2" Uses="1" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Uses + pattern">14</id><querystr><![CDATA[while w; assign a; Select w such that Uses (w, "left") pattern a (_, _"right"_)]]></querystr>
-<stuans>4</stuans>
-<correct>4</correct>
-<time_taken>4.721000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Print + follows + pattern">15</id><querystr><![CDATA[print pr; assign a1; assign a2; variable v; Select v such that Follows(pr, a1) pattern a2 (v, _)]]></querystr>
-<stuans>area,left,q,right,x,y,z</stuans>
-<correct>area,left,right,x,z,y,q</correct>
-<time_taken>5.043000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Print + follows + pattern 2">16</id><querystr><![CDATA[print pr; assign a; Select a such that Follows(pr, a) pattern a("left", _)]]></querystr>
-<stuans>13</stuans>
-<correct>13</correct>
-<time_taken>4.236000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Print + follows + pattern">16</id><querystr><![CDATA[print pr; assign a; Select a such that Follows(pr, a) pattern a ("left", _"right"_)]]></querystr>
-<stuans>13</stuans>
-<correct>13</correct>
-<time_taken>4.664000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Follows="1" Pattern="1" SuchThat="1" CondNum="4" RelNum="1" comment="Print + follows + pattern 2">17</id><querystr><![CDATA[print pr; assign a; Select a such that Follows(pr, a) pattern a ("left", "right")]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>4.782000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Statement + Parent + pattern">18</id><querystr><![CDATA[stmt n1; stmt n2; constant c; assign a; Select c such that Parent(n1, n2) pattern a (_, _)]]></querystr>
-<stuans>9,2,1,0,5,3</stuans>
-<correct>0,1,2,3,5,9</correct>
-<time_taken>5.357000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Parent="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Statement + Parent + pattern 2">19</id><querystr><![CDATA[stmt n1; constant c; assign a; Select c such that Parent(n1, n1) pattern a (_, _"right"_)]]></querystr>
-<stuans>9,2,1,0,5,3</stuans>
-<correct>0,1,2,3,5,9</correct>
-<time_taken>4.771000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Constant + Uses + pattern">20</id><querystr><![CDATA[variable v; variable v2; assign a; print pr; Select v2 such that Uses(pr, v) pattern a (v, _)]]></querystr>
-<stuans>p,q,i,right,iter,y,z,area,left,x</stuans>
-<correct>x,left,right,i,z,y,q,area,iter,p</correct>
-<time_taken>4.704000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Constant + Uses + pattern 2">21</id><querystr><![CDATA[variable v; constant c; assign a; print pr; Select c such that Uses(v, v) pattern a (v, _)]]></querystr>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="both argument is wildcard return semantic error">8</id><querystr><![CDATA[variable v; Select v such that Modifies(_, _)]]></querystr>
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
-<time_taken>3.382000</time_taken>
+<time_taken>2.576000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="pattern special case evaluates to True">22</id><querystr><![CDATA[assign a; stmt w; Select w pattern a (_, _"left"_)]]></querystr>
-<stuans>16,11,12,1,2,3,4,5,6,7,8,9,10,13,14,15,17</stuans>
-<correct>1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17</correct>
-<time_taken>3.132000</time_taken>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="argument 1 is wildcard return semantic error">9</id><querystr><![CDATA[variable v; Select v such that Modifies(_, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>2.727000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Follows="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Print + follows + pattern 3">23</id><querystr><![CDATA[print pr; assign a1; variable v; Select v such that Follows(pr, a1) pattern a1 (v, _)]]></querystr>
-<stuans>area,left</stuans>
-<correct>left,area</correct>
-<time_taken>4.485000</time_taken>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="argument 2 is non-variable synonym return semantic error <---- This should be a semantic error as second argument has to refer to a variable">10</id><querystr><![CDATA[assign v; Select v such that Modifies(1, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>2.842000</time_taken>
 <passed/>
 </query>
-</queries>
-</test_results>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="undeclared synonym as argument 1 return semantic error">11</id><querystr><![CDATA[assign a; Select v such that Modifies(v, "x")]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>2.714000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="undeclared synonym as argument 2 return semantic error">12</id><querystr><![CDATA[assign a; Select v such that Modifies(1, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>3.159000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="argument 1 using actual variable return semantic error <---- error not handled">0</id><querystr><![CDATA[//variable v; //Select v such that Modifies("x", v)]]></querystr>
+<timeout/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="valid meaningless query return all variables <---- valid meaningless query should return all variables">14</id><querystr><![CDATA[variable v; assign a; Select v such that Modifies(7, "x")]]></querystr>

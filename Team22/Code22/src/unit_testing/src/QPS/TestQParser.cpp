@@ -237,9 +237,7 @@ TEST_CASE("TestCase14_ParseSelectWithSuchThatUsesWithIdent_ShouldSuccess") {
     string query = "Select p such that Uses(p, \"x\")";
 
     queryParser.parse(declaration);
-
     SelectExpression *actualResult = queryParser.parse(query);
-
     REQUIRE(actualResult->toString() == query);
 }
 
@@ -945,14 +943,6 @@ TEST_CASE("TestCase55_MultipleWhitespacesAfterSynAssignPatternExpression_Success
     string expected = R"(Select a such that pattern a(_, +xy))";
 
     REQUIRE(actualResult->toString() == expected);
-}
-
-TEST_CASE("TestCase56_IsDeclarationStatementValidDeclaration_Success") {
-    QueryParser queryParser;
-
-    string declaration = "assign a;assign a1;stmt s1;while w;if ifs;variable v,v1;stmt s;procedure p,q;constant c;read re;print pn;call cl;";
-
-    REQUIRE(queryParser.isDeclaration(declaration));
 }
 
 TEST_CASE("TestCase56_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
