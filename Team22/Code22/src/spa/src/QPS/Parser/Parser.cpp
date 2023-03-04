@@ -12,7 +12,7 @@ SelectExpression* QueryParser::parse(string query) {
     vector<Expression*> conditions;
 
     query = sanitiseQuery(query);
-    if (this->isDeclaration(query)) {
+    if (this->isDeclaration(query) or query.empty()) {
 		this->extractDeclarations(query);
 		return new SelectExpression({}, conditions);
 	} else if (this->isValidQuery(query)) {
