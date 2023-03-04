@@ -106,7 +106,7 @@ x, left, right, i, z, y , q, area, iter, p
 21 - Constant + Uses + pattern 2
 variable v; constant c; assign a; print pr;
 Select c such that Uses(v, v) pattern a (v, _)
-Semantic Error
+SemanticError
 5000
 22 - pattern special case evaluates to True
 assign a; stmt w;
@@ -116,5 +116,5 @@ Select w pattern a (_, _"left"_)
 23 - Print + follows + pattern 3
 print pr; assign a1; variable v;
 Select v such that Follows(pr, a1) pattern a1 (v, _)
-left
+left, area
 5000

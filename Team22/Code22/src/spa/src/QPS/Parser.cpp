@@ -157,6 +157,10 @@ vector<ModifiesExpression*> QueryParser::extractModifiesExpression(const string&
                 a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             }
 
+            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT" || a1->getType() == "PROCEDURE") {
+                throw SemanticException();
+            }
+
             expressions.push_back(new ModifiesPExpression(a1,  a2));
         }
         searchStart = sm.suffix().first;
@@ -198,6 +202,11 @@ vector<UsesExpression*> QueryParser::extractUsesExpression(const string& query) 
             } else {
                 a2 = dynamic_cast<NamedEntity*>(this->getFromSynonymTable(arg2, "named"));
             }
+
+            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT" || a1->getType() == "PROCEDURE") {
+                throw SemanticException();
+            }
+
             expressions.push_back(new UsesPExpression(a1,  a2));
         }
         searchStart = sm.suffix().first;
