@@ -44,7 +44,11 @@ DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
         return new NamedEntity(entity->getType(), name);
     } else if (desiredType == "select"){
         return entity;
+    } else {
+        string errorMsg = "unknown type: " + desiredType;
+        throw std::runtime_error(errorMsg);
     }
+
 }
 
 vector<tuple<string, string>> SynonymTable::getSimpleSynonymTable() {
