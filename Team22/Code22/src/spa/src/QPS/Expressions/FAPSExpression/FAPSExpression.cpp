@@ -39,7 +39,6 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
     } else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1 && dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
         auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
-
         vector<string> possibleLines;
         for (Result res : vars2) {
             for (string l : res.getQueryResult()) {
@@ -98,8 +97,18 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
             }
         }
         return ResultTable({{this->entities[1]->toString(), followedLines}});
+    } else {
+        int prevLineInt = dynamic_cast<StmtEntity*>(this->entities[0])->getLine();
+        string prevLine = to_string(prevLineInt);
+        int nextLineInt = dynamic_cast<StmtEntity*>(this->entities[1])->getLine();
+        string nextLine = to_string(nextLineInt);
+        Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", prevLine));
+        if (Utilities::checkIfPresent(follows.getQueryResult(), nextLine)) {
+            return ResultTable({{this->entities[0]->toString(), {this->entities[1]->toString()}}});
+        } else {
+            return ResultTable({{this->entities[0]->toString(), {}}});
+        }
     }
-    return {};
 }
 
 tuple<StmtEntity*, StmtEntity*> FAPSExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
