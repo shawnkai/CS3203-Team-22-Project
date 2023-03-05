@@ -183,10 +183,12 @@ ResultTable ResultTable::intersection(ResultTable table2) {
     }
 
     if (common_keys.empty()) {
-        if (table2.getSize() == 0) {
-            return *this;
-        } else if (this->getSize() == 0) {
-            return table2;
+        if (table2.getSize() == 0 || this->getSize() == 0) {
+            map<string, vector<string>> empty_keys;
+            for (const string& k : all_keys) {
+                empty_keys.insert({k, {}});
+            }
+            return ResultTable(empty_keys);
         } else {
             return this->crossProduct(table2, all_keys);
         }

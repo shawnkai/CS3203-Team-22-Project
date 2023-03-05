@@ -55,7 +55,8 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
     } else {
         vector<ResultTable> all_results;
         for (Expression *exp : this->conditions) {
-            all_results.push_back(exp->evaluate(pkb));
+            ResultTable temp = exp->evaluate(pkb);
+            all_results.push_back(temp);
         }
         ResultTable table = ResultTable::intersection(all_results);
         vector<string> tableColumns = table.getColumnNames();
@@ -69,7 +70,7 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
                 if (this->entities[0]->getType() == "VARIABLE" || this->entities[0]->getType() == "PROCEDURE" || this->entities[0]->getType() == "CONSTANT") {
                     answer.push_back(res.getQueryEntityName());
                 } else {
-                    for (string a : res.getQueryResult()) {
+                    for (const string& a : res.getQueryResult()) {
                         if (!Utilities::checkIfPresent(answer, a)) {
                             answer.push_back(a);
                         }
@@ -385,6 +386,17 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
             }
         }
         return ResultTable({{this->entities[1]->toString(), followedLines}});
+    } else {
+        int prevLineInt = dynamic_cast<StmtEntity*>(this->entities[0])->getLine();
+        string prevLine = to_string(prevLineInt);
+        int nextLineInt = dynamic_cast<StmtEntity*>(this->entities[1])->getLine();
+        string nextLine = to_string(nextLineInt);
+        Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", prevLine));
+        if (Utilities::checkIfPresent(follows.getQueryResult(), nextLine)) {
+            return ResultTable({{this->entities[0]->toString(), {this->entities[1]->toString()}}});
+        } else {
+            return ResultTable({{this->entities[0]->toString(), {}}});
+        }
     }
     return {};
 }
