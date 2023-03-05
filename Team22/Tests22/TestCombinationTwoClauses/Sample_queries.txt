@@ -93,7 +93,7 @@ stmt n1; stmt n2; constant c; assign a;
 Select c such that Parent(n1, n2) pattern a (_, _)
 0, 1, 2, 3, 5, 9
 5000
-19 - Statement + Parent + pattern 2 <--- THIS IS FAILING , EXPECTED none, GOT ALL CONSTANTS
+19 - Statement + Parent + pattern 2
 stmt n1; constant c; assign a;
 Select c such that Parent(n1, n1) pattern a (_, _"right"_)
 none
@@ -123,7 +123,7 @@ print pr; assign a1; variable v; assign a2;
 Select v such that Follows(pr, a1) pattern a2 (v, _)
 left, area, right, x, z, y, q
 5000
-25 - Statement + Parent + pattern 3 <--- SIMILARLY, THIS IS FAILING , EXPECTED none, GOT ALL CONSTANTS
+25 - Statement + Parent + pattern 3
 stmt n1; constant c; assign a;
 Select c such that Parent(4, 4) pattern a (_, _"right"_)
 none
@@ -133,7 +133,7 @@ stmt n1; constant c; assign a;
 Select c such that Parent(4, 5) pattern a (_, _"right"_)
 0, 1, 2, 3, 5, 9
 5000
-27 - Statement + Parent + pattern 3 <--- SIMILARLY, THIS IS FAILING , EXPECTED none, GOT ALL CONSTANTS
+27 - Statement + Parent + pattern 3
 stmt n1; constant c; assign a;
 Select c pattern a (_, _"right"_) such that Parent(4, 4)
 none
