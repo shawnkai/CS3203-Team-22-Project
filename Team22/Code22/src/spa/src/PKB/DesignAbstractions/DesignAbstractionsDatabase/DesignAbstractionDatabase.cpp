@@ -60,6 +60,7 @@ void DesignAbstractionDatabase::updateAbstractionInDatabase(DesignAbstraction *d
     (iterator->second)->addAdditionalOccurrence(designAbstractionToBeStored->getEntityOccurrence()[0]);
     
     // maybe delete the pointer object here
+    delete designAbstractionToBeStored;
 }
 
 /**
