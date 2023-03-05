@@ -1,0 +1,105 @@
+1 - Get assignment statements who have x on the lhs and a only on the rhs
+assign a;
+Select a pattern a ("x", "a")
+none
+5000
+2 - Get all assignment statements
+assign a;
+Select a pattern a (_, _)
+1, 2, 3, 6, 7, 10, 12, 13, 17, 18, 22, 25, 27, 28, 29, 32, 33
+5000
+3 - Get assignment statements who have z on the lhs
+assign a;
+Select a pattern a ("z", _)
+none
+5000
+4 - Get assignment statements who have a on the lhs
+assign a;
+Select a pattern a ("a", _)
+1, 12, 13, 29, 32, 33
+5000
+5 - Get assignment statements who have b on the lhs
+assign a;
+Select a pattern a ("b", _)
+28
+5000
+6 - Get assignment statements who have x on the lhs
+assign a;
+Select a pattern a ("x", _)
+2, 6, 10, 17, 18
+5000
+7 - Get assignment statements who have y on the lhs
+assign a;
+Select a pattern a ("y", _)
+3, 7
+5000
+8 - Get assignment statements who have c on the lhs
+assign a;
+Select a pattern a ("c", _)
+22, 25, 27
+5000
+9 - Get assignment statements who have anything on lhs and "c + 1" on rhs
+assign a;
+Select a pattern a (_, "c + 1")
+25
+5000
+10 - Get statements who used "a" on the rhs
+assign a;
+Select a pattern a (_, _"a"_)
+2, 3, 6, 7, 10, 18, 22, 27, 29, 32, 33
+5000
+11 - Get statements who have x on the lhs and a being used on the rhs
+assign a;
+Select a pattern a ("x", _"a"_)
+2, 6, 10, 18
+5000
+12 - Get statements who used "x % y" on the rhs
+assign a;
+Select a pattern a (_, _"x % y"_)
+22, 29
+5000
+13 - Get statements who used "(x % y)" on the rhs
+assign a;
+Select a pattern a (_, _"(x % y)"_)
+22, 29
+5000
+14 - Get statements who have a on the lhs and "(x % y)" being used on the rhs
+assign a;
+Select a pattern a ("a", _"(x % y)"_)
+29
+5000
+15 - Get statements who have a on the lhs and "c - b + a / x % y * 3" being used on the rhs
+assign a;
+Select a pattern a ("a", "c - b + a / x % y * 3")
+none
+5000
+16 - Get statements who have "c - b + a / x % y * 3" being used on the rhs
+assign a;
+Select a pattern a (_, "c - b + a / x % y * 3")
+27
+5000
+17 - Get statements who have a on the lhs and "5 % 3" being used on the rhs
+assign a;
+Select a pattern a ("a", _"5 % 3"_)
+none
+5000
+18 - Get statements who have x on the lhs and "x - b % b" being used on the rhs
+assign a;
+Select a pattern a ("x", _"x - b % b"_)
+none
+5000
+19 - Get statements who have x on the lhs and "((x - b) % b)" being used on the rhs
+assign a;
+Select a pattern a ("x", _"((x - b) % b)"_)
+18
+5000
+20 - Get statements who have x on the lhs and "(x - (b % b))" being used on the rhs
+assign a;
+Select a pattern a ("x", _"(x - (b % b))"_)
+none
+5000
+21 - Get statements who have a on the rhs
+assign a; var x;
+Select a pattern a (x, "a")
+SyntaxError
+5000

@@ -1,9 +1,9 @@
 #include "catch.hpp"
 
 #include "SP/SPDriver.h"
-#include "QPS/Parser.h"
-#include "QPS/Evaluator.h"
-#include "QPS/Exceptions.h"
+#include "QPS/Parser/Parser.h"
+#include "QPS/Evaluator/Evaluator.h"
+#include "QPS/Exceptions/Exceptions.h"
 #include <iostream>
 #include <cstdint>
 #include <filesystem>
@@ -205,6 +205,48 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
     REQUIRE(output9.find('5') != std::string::npos);
     REQUIRE(output9.find('6') == std::string::npos);
+
+    // Testing Follows with same type
+    string declaration10 = "assign a1, a2;";
+    string query10 = "Select a1 such that Follows(a1, a2)";
+    parser = QueryParser();
+    parser.parse(declaration10);
+    auto exp10 = parser.parse(query10);
+    vector<string> res_10 = evaluator.evaluate(exp10);
+    string output10;
+    for (const string &r: res_10) {
+        output10 += r + ",";
+    }
+
+    REQUIRE(output10.find('2') != std::string::npos);
+    REQUIRE(output10.find('3') == std::string::npos);
+    REQUIRE(output10.find('1') != std::string::npos);
+    REQUIRE(output10.find('5') == std::string::npos);
+
+    // Testing Follows with same type
+    string declaration11 = "assign a1, a2;";
+    string query11 = "Select a2 such that Follows(a1, a2)";
+    parser = QueryParser();
+    parser.parse(declaration11);
+    auto exp11 = parser.parse(query11);
+    vector<string> res_11 = evaluator.evaluate(exp11);
+    string output11;
+    for (const string &r: res_11) {
+        output11 += r + ",";
+    }
+
+    REQUIRE(output11.find('2') != std::string::npos);
+    REQUIRE(output11.find('3') != std::string::npos);
+    REQUIRE(output11.find('1') == std::string::npos);
+    REQUIRE(output11.find('5') == std::string::npos);
+
+    string declaration12 = "stmt s;";
+    string query12 = "Select s such that Follows(s, s)";
+    parser = QueryParser();
+    parser.parse(declaration12);
+    auto exp12 = parser.parse(query12);
+    vector<string> res_12 = evaluator.evaluate(exp12);
+    REQUIRE(res_12.empty());
 
     REQUIRE(filesystem::remove(inputFilePath));
 }

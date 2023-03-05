@@ -1,0 +1,140 @@
+1 - Follows + pattern
+assign a; while w;
+Select a such that Follows (w,  a )  pattern a  ("x"  , _)
+15
+5000
+2 - Follows + pattern , different number of white spaces
+assign a; while w;
+Select a such that Follows (w,  a)  pattern a  (   "x"   ,_  )
+15
+5000
+3 - Follows + pattern , different variable
+assign a;
+Select a such that Follows   (_, a ) pattern a ("x", _ )
+9, 15
+5000
+4 - Follows* + pattern , previous variable
+assign a;
+Select a such that Follows* (a, _) pattern a ("left", _)
+2, 10, 13
+5000
+5 - Modifies + pattern 1
+assign a;
+Select a such that Modifies (a, "x") pattern a (_, _"x"_)
+5, 9
+5000
+6 - Modifies + pattern 2
+assign a;
+Select a such that Modifies (a, "x") pattern a (_, "x")
+none
+5000
+7 - Parent + pattern
+assign a; if i;
+Select a such that Parent(i, a) pattern a(_, _"x"_)
+7, 8, 9
+5000
+8 - Parent* + pattern
+assign a; while w;
+Select a such that Parent*(w, a) pattern a(_, _"x"_)
+5, 7, 8, 9, 10
+5000
+9 - Uses + pattern
+assign a;
+Select a such that Uses(a, "x") pattern a ("x", _"left"_)
+9
+5000
+10 - Uses + pattern 2
+assign a; constant b; variable v;
+Select b such that Uses(a, v) pattern a (v, _)
+0, 1, 2, 3, 5, 9
+5000
+11 - Uses + pattern 3
+assign a; stmt n; variable v;
+Select n such that Uses (a, v) pattern a (v, _"iter"_)
+none
+5000
+12 - Read + Modifies + pattern
+assign a; read rd; variable v;
+Select a such that Modifies (rd, v) pattern a (v, _)
+14
+5000
+13 - Parent + pattern
+assign a; stmt w; print pr;
+Select w such that Parent*(w, pr) pattern a (_, _"left"_)
+4
+5000
+14 - Uses + pattern
+while w; assign a;
+Select w such that Uses (w, "left") pattern a (_, _"right"_)
+4
+5000
+15 - Print + follows + pattern
+print pr; assign a1; assign a2; variable v;
+Select v such that Follows(pr, a1) pattern a2 (v, _)
+area, left, right, x, z, y, q
+5000
+16 - Print + follows + pattern 2
+print pr; assign a;
+Select a such that Follows(pr, a) pattern a("left", _)
+13
+5000
+16 - Print + follows + pattern
+print pr; assign a;
+Select a such that Follows(pr, a) pattern a ("left", _"right"_)
+13
+5000
+17 - Print + follows + pattern 2
+print pr; assign a;
+Select a such that Follows(pr, a) pattern a ("left", "right")
+none
+5000
+18 - Statement + Parent + pattern
+stmt n1; stmt n2; constant c; assign a;
+Select c such that Parent(n1, n2) pattern a (_, _)
+0, 1, 2, 3, 5, 9
+5000
+19 - Statement + Parent + pattern 2
+stmt n1; constant c; assign a;
+Select c such that Parent(n1, n1) pattern a (_, _"right"_)
+none
+5000
+20 - Constant + Uses + pattern
+variable v; variable v2; assign a; print pr;
+Select v2 such that Uses(pr, v) pattern a (v, _)
+x, left, right, i, z, y , q, area, iter, p
+5000
+21 - Constant + Uses + pattern 2
+variable v; constant c; assign a; print pr;
+Select c such that Uses(v, v) pattern a (v, _)
+SemanticError
+5000
+22 - pattern special case evaluates to True
+assign a; stmt w;
+Select w pattern a (_, _"left"_)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17
+5000
+23 - Print + follows + pattern 3
+print pr; assign a1; variable v;
+Select v such that Follows(pr, a1) pattern a1 (v, _)
+left, area
+5000
+24 - Print + follows + pattern 4
+print pr; assign a1; variable v; assign a2;
+Select v such that Follows(pr, a1) pattern a2 (v, _)
+left, area, right, x, z, y, q
+5000
+25 - Statement + Parent + pattern 3
+stmt n1; constant c; assign a;
+Select c such that Parent(4, 4) pattern a (_, _"right"_)
+none
+5000
+26 - Statement + Parent + pattern 3
+stmt n1; constant c; assign a;
+Select c such that Parent(4, 5) pattern a (_, _"right"_)
+0, 1, 2, 3, 5, 9
+5000
+27 - Statement + Parent + pattern 3
+stmt n1; constant c; assign a;
+Select c pattern a (_, _"right"_) such that Parent(4, 4)
+none
+5000

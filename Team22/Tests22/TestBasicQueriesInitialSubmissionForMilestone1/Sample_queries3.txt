@@ -1,12 +1,12 @@
 1 - Select All Variables
 variable v;
 Select v
-x, z, i, y, q, p
+x, z, i, y, anx, j
 5000
 2 - Select Variables used in line 9
 variable v;
 Select v such that Uses(9, v)
-z, x, i
+x
 5000
 3 - Select Variables modified by z + x exact match
 variable v; assign a;
@@ -16,95 +16,90 @@ y
 4 - Select Variables modified by z + x wildcard
 variable v; assign a;
 Select v pattern a(v, _"z+x"_)
-y, z
+y
 5000
 5 - Select all the assignment statements for z
 assign a;
 Select a pattern a("z", _)
-2, 7, 9
+4, 7, 13, 14
 5000
 6 - Select all variables that are print
 variable v; print p;
 Select v such that Uses(p, v)
-p
+x
 5000
 7 - Select assignment statement that is followed by a if
 assign a; if i;
 Select a such that Follows(a, i)
-5
+5, 11
 5000
 8 - Select assignment statement that follows a if
 assign a; if i;
 Select a such that Follows(i, a)
-9
+none
 5000
 9 - Select assignment statement that is followed by line 3
 assign a;
 Select a such that Follows(a, 3)
-2
+none
 5000
 10 - Select assignment statement that follows line 2
 assign a; if i;
 Select a such that Follows(2, a)
-3
+none
 5000
 11 - Select assignment statement that is followed by any statement
 assign a;
 Select a such that Follows(a, _)
-1, 2, 3, 5, 9
+1, 5, 7, 9, 11, 14
 5000
 12 - Select assignment statement that satisfies Follow*(5, a)
 assign a;
 Select a such that Follows*(5, a)
-9, 11
+none
 5000
 13 - Select assignment statement that satisfies Follow*(a, _)
 assign a;
 Select a such that Follows*(a, _)
-1, 2, 3, 5, 9
+1, 5, 7, 9, 11, 14
 5000
 14 - Select while that satisfies Parent(w, 9)
 while w;
 Select w such that Parent(w, 9)
-4
+8
 5000
 15 - Select while that is parent of if
 while w; if i;
 Select w such that Parent(w, i)
-4
+2, 10
 5000
 16 - Select assignments that satisfy Parent(w, a)
 while w; assign a;
 Select a such that Parent(w, a)
-5, 9, 11
+9, 11, 16
 5000
-16 - Select assignments that satisfy Parent*(w, a)
+17 - Select assignments that satisfy Parent*(w, a)
 while w; assign a;
 Select a such that Parent*(w, a)
-5, 7, 8, 9, 11
+4, 5, 7, 9, 11, 13, 14, 16
 5000
-17 - Select variables that are modified
+18 - Select variables that are modified, Semantic Error
 variable v;
 Select v such that Modifies(_, v)
-x, z, i, y, q
+SemanticError
 5000
-18 - Select assignment where any variable is modified
+19 - Select assignment where any variable is modified
 assign a;
 Select a such that Modifies(a, _)
-1, 2, 3, 5, 7, 8, 9, 11
+1, 4, 5, 7, 9, 11, 13, 14, 16
 5000
-19 - Select while where any variable is used
+20 - Select while where any variable is used
 while w;
 Select w such that Uses(w, _)
-4
+2, 8, 10, 15
 5000
-20 - Select variables that are used
+21 - Select variables that are used, Semantic Error
 variable v;
 Select v such that Uses(_, v)
-i, x, z, p
-5000
-21 - Select assignment with x=x-1
-assign a;
-Select a pattern a(_, "x-1")
-5
+SemanticError
 5000

@@ -83,10 +83,10 @@ while w; assign a;
 Select a such that Parent*(w, a)
 5, 7, 8, 9, 11
 5000
-18 - Select variables that are modified
+18 - Return semantic error when argument 1 of modifies is wildcard
 variable v;
 Select v such that Modifies(_, v)
-x, z, i, y, q
+SemanticError
 5000
 19 - Select assignment where any variable is modified
 assign a;
@@ -98,8 +98,8 @@ while w;
 Select w such that Uses(w, _)
 4
 5000
-21 - Select variables that are used
+21 - Return semantic error when argument 1 of uses is wildcard
 variable v;
 Select v such that Uses(_, v)
-i, x, z, p
+SemanticError
 5000
