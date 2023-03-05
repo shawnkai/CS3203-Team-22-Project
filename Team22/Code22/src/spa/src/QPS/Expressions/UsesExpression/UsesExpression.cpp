@@ -27,7 +27,6 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
             } else if (!Utilities::isAlphanumericString(arg2)) {
-                ::printf("THROWN ERROR\n");
                 throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
@@ -37,7 +36,6 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             NamedEntity *a1;
 
             if (arg1 == "_") {
-                ::printf("THROWN ERROR\n");
                 throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
@@ -59,7 +57,6 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                ::printf("THROWN ERROR\n");
                 throw SemanticException();
             }
 

@@ -83,10 +83,10 @@ while w; assign a;
 Select a such that Parent*(w, a)
 4, 5, 7, 9, 11, 13, 14, 16
 5000
-18 - Select variables that are modified
+18 - Select variables that are modified, Semantic Error
 variable v;
 Select v such that Modifies(_, v)
-x, z, anx, y, j
+SemanticError
 5000
 19 - Select assignment where any variable is modified
 assign a;
@@ -98,8 +98,8 @@ while w;
 Select w such that Uses(w, _)
 2, 8, 10, 15
 5000
-21 - Select variables that are used
+21 - Select variables that are used, Semantic Error
 variable v;
 Select v such that Uses(_, v)
-i, x, z, j
+SemanticError
 5000
