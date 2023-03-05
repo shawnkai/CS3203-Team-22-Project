@@ -2,7 +2,7 @@
 // Created by Tanishq Sharma on 02/03/2023.
 //
 #include "catch.hpp"
-#include "QPS/ResultTable.h"
+#include "QPS/Evaluator/ResultTable.h"
 
 TEST_CASE("TestCase1_MatchingSingleColumnMatchingRows") {
     IntermediateResultTable table1({

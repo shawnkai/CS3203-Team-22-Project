@@ -2,9 +2,10 @@
 // Created by Atin Sakkeer Hussain on 02/03/2023.
 //
 
-#include "QPS/ResultTable.h"
+#include "ResultTable.h"
 
 #include <utility>
+#include <set>
 
 ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     for (pair<string, vector<string>> p : args) {
@@ -211,7 +212,10 @@ ResultTable ResultTable::getColumn(string column) {
     if (!Utilities::checkIfPresent(this->getColumnNames(), column)) {
         return {};
     }
-    return ResultTable({{column, this->table.find(column)->second}});
+    vector<string> temp = this->getValues(column);
+    set<string> s(temp.begin(), temp.end());
+    temp.assign( s.begin(), s.end());
+    return ResultTable({{column, temp}});
 }
 
 vector<string> ResultTable::getValues(const string& column) {

@@ -2,8 +2,8 @@
 // Created by Atin Sakkeer Hussain on 01/02/2023.
 //
 
-#include "QPS/Entities.h"
-#include "QPS/Exceptions.h"
+#include "Entities.h"
+#include "QPS/Exceptions/Exceptions.h"
 #include "Utilities.h"
 
 // Design Entity

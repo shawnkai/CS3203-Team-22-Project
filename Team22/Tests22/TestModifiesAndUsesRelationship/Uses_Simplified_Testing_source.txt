@@ -1,7 +1,7 @@
 procedure Example {
   x = 2;
   z = 3;
-  a = -1
+  a = 1;
   b = 0;
   i = 5;
   while (i!=0) {
@@ -11,7 +11,8 @@ procedure Example {
       if (x==1) then {
         z = x + 1;
         if (x==1) then {
-          read b; }
+          x = a;
+          print b; }
         else {
           x = x + 1; }}
       else {
@@ -19,4 +20,5 @@ procedure Example {
     else {
       y = z + x; }
     z = z + x + i;
-    i = i - 1; }}
+    i = i - 1; 
+    read b; }}

@@ -8,9 +8,9 @@
 #include "SP/Parser/Parser.h"
 #include <queue>
 #include "PKB/PKB.h"
-#include "QPS/Parser.h"
-#include "QPS/Evaluator.h"
-#include "QPS/Exceptions.h"
+#include "QPS/Parser/Parser.h"
+#include "QPS/Evaluator/Evaluator.h"
+#include "QPS/Exceptions/Exceptions.h"
 
 // implementation code of WrapperFactory - do NOT modify the next 5 lines
 AbstractWrapper* WrapperFactory::wrapper = 0;

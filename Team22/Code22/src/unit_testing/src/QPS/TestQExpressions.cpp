@@ -4,8 +4,8 @@
 
 
 
-#include "QPS/Evaluator.h"
-#include "QPS/Parser.h"
+#include "QPS/Evaluator/Evaluator.h"
+#include "QPS/Parser/Parser.h"
 #include "PKB/PKB.h"
 #include "catch.hpp"
 
