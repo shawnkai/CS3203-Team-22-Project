@@ -8,28 +8,6 @@ FAPSExpression::FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstrac
     this->pkbAbstraction = pkbAbstraction;
 }
 
-FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
-
-string FollowsExpression::toString() {
-    return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-FollowsStarExpression::FollowsStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWSSTAR") {}
-
-string FollowsStarExpression::toString() {
-    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-ParentExpression::ParentExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENT") {}
-string ParentExpression::toString() {
-    return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-ParentStarExpression::ParentStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENTSTAR") {}
-string ParentStarExpression::toString() {
-    return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
 ResultTable FAPSExpression::evaluate(PKB pkb) {
     if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
         return ResultTable({{"_", {"-"}}});
@@ -138,6 +116,28 @@ tuple<StmtEntity*, StmtEntity*> FAPSExpression::generateStmtEntityPair(string ar
     }
 
     return std::make_tuple(a1, a2);
+}
+
+FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
+
+string FollowsExpression::toString() {
+    return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+FollowsStarExpression::FollowsStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWSSTAR") {}
+
+string FollowsStarExpression::toString() {
+    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+ParentExpression::ParentExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENT") {}
+string ParentExpression::toString() {
+    return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+ParentStarExpression::ParentStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENTSTAR") {}
+string ParentStarExpression::toString() {
+    return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const string& query, const SynonymTable& synonymTable) {
