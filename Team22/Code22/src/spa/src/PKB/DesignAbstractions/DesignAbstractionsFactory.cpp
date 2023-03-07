@@ -12,6 +12,7 @@
 #include "PKB/DesignAbstractions/FollowsStarAbstraction/FollowsStarFactory.h"
 #include "PKB/DesignAbstractions/ParentAbstraction/ParentFactory.h"
 #include "PKB/DesignAbstractions/ParentStarAbstraction/ParentStarFactory.h"
+#include "PKB/DesignAbstractions/CallsAbstraction/CallsFactory.h"
 
 using namespace std;
 
@@ -39,8 +40,9 @@ DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
         return ParentFactory::createParentAbstraction(abstractionDetails);
     } else if (designAbstraction == "PARENTSTAR") {
         return ParentStarFactory::createParentStarAbstraction(abstractionDetails);
+    } else if (designAbstraction == "CALLS") {
+        return CallsFactory::createCallsAbstraction(abstractionDetails);
     }
-
     // To be implemented concretely
     return nullptr;
 }
