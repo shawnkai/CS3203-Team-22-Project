@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ProcedureCallModifies Design Abst
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURECALL", "mpc0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The ProcedureCallModifies Database And Call Clear Al
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURECALL", "mpc9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:PROCEDURECALL: mpc9: mpc10, mpc11, mpc12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

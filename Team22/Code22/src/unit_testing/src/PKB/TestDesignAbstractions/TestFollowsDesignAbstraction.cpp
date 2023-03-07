@@ -38,7 +38,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent Follows Design Abstraction") {
 
         Result result = pkbTest.getDesignAbstraction("FOLLOWS", make_pair("_", "a0"));
 
-        REQUIRE(result.toString() == "none: none: None, ");
+        REQUIRE(result.toString() == "none: none: none, ");
     }
 }
 
@@ -84,6 +84,6 @@ TEST_CASE("Test 6: Populate The Follows Database And Call Clear All Database usi
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("FOLLOWS", make_pair("_", "a15"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "FOLLOWS: a15: a16, a17, a18, ")
-        && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+        && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

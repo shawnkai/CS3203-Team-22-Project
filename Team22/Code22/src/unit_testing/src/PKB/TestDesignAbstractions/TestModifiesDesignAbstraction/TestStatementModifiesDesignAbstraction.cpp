@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent StatementModifies Design Abstract
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The StatementModifies Database And Call Clear All Da
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:STATEMENT: ms9: ms10, ms11, ms12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

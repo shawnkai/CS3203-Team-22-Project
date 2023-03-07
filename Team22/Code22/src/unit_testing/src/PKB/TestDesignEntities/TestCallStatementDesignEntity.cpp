@@ -149,7 +149,7 @@ TEST_CASE("Test 11: CallStatement Design Entity, Populate The Database And Call 
 
         Result pkbResultAfterClearing = pkbTest.getDesignEntity("CALL", "cs12");
 
-        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
 
         REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));

@@ -149,7 +149,7 @@ TEST_CASE("Test 11: Variable Design Entity, Populate The Database And Call Clear
 
         Result pkbResultAfterClearing = pkbTest.getDesignEntity("VARIABLE", "var12");
 
-        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
 
         REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));

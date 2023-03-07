@@ -149,7 +149,7 @@ TEST_CASE("Test 11: Procedure Design Entity, Populate The Database And Call Clea
 
         Result pkbResultAfterClearing = pkbTest.getDesignEntity("PROCEDURE", "p12");
 
-        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
 
         REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));

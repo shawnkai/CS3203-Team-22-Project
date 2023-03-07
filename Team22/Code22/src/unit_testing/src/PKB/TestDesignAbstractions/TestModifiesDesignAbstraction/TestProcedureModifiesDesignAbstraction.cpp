@@ -38,7 +38,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ProcedureModifies Design Abstract
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -102,6 +102,6 @@ TEST_CASE("Test 7: Populate The ProcedureModifies Database And Call Clear All Da
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:PROCEDURE: mp9: mp10, mp11, mp12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

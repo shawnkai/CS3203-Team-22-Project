@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent WhileStatementModifies Design Abs
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("WHILE", "mws0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The WhileStatementModifies Database And Call Clear A
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("WHILE", "mws9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:WHILE: mws9: mws10, mws11, mws12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent IfStatementModifies Design Abstra
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("IF", "mis0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The IfStatementModifies Database And Call Clear All 
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("IF", "mis9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:IF: mis9: mis10, mis11, mis12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

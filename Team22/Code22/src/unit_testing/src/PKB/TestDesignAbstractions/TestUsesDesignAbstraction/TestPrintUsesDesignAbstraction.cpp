@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent PrintUses Design Abstraction") {
         pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PRINT", "up0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The PrintUses Database And Call Clear All Database u
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PRINT", "up9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PRINT: up9: up10, up11, up12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

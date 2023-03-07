@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent AssignmentUses Design Abstraction
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The AssignmentUses Database And Call Clear All Datab
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:ASSIGNMENT: ua9: ua10, ua11, ua12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

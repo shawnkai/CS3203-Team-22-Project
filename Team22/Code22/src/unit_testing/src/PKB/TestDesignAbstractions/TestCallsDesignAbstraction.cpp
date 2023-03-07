@@ -38,7 +38,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent Calls Design Abstraction") {
 
         Result result = pkbTest.getDesignAbstraction("CALLS", make_pair("_", "a0"));
 
-        REQUIRE(result.toString() == "none: none: None, ");
+        REQUIRE(result.toString() == "none: none: none, ");
     }
 }
 
@@ -84,6 +84,6 @@ TEST_CASE("Test 6: Populate The Calls Database And Call Clear All Database using
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("CALLS", make_pair("_", "a15"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "CALLS: a15: a16, a17, a18, ")
-        && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+        && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

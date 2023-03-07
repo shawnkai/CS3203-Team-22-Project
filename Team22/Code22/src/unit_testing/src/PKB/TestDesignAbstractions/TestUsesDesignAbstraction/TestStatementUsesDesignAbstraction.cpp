@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent StatementUses Design Abstraction"
         pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The StatementUses Database And Call Clear All Databa
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:STATEMENT: us9: us10, us11, us12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
