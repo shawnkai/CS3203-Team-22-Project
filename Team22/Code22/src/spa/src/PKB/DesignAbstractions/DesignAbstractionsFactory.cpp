@@ -15,6 +15,8 @@
 #include "PKB/DesignAbstractions/CallsAbstraction/CallsFactory.h"
 #include "PKB/DesignAbstractions/CallsStarAbstraction/CallsStarFactory.h"
 
+#include "PKB/Exceptions/InvalidAbstractionTypeException.cpp"
+
 using namespace std;
 
 /**
@@ -47,6 +49,5 @@ DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
         return CallsStarFactory::createCallsStarAbstraction(abstractionDetails);
     }
 
-    // To be implemented concretely
-    return nullptr;
+    throw InvalidAbstractionTypeException((designAbstraction + " is not a valid Design Abstraction Type").data());
 }

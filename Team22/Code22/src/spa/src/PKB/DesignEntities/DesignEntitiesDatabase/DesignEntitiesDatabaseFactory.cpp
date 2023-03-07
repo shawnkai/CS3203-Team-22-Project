@@ -7,6 +7,8 @@
 
 #include "DesignEntitiesDatabaseFactory.h"
 
+#include "PKB/Exceptions/DatabaseNotFoundException.cpp"
+
 using namespace std;
 
 /**
@@ -54,8 +56,7 @@ DesignEntityDatabase* DesignEntitiesDatabaseFactory::getEntityDatabase(string de
         return ifStatementEntitiesDatabase;
     }
 
-    // Returning this in case of invalid Design Entity Type
-    return nullptr;
+    throw DatabaseNotFoundException(("Database for " + designEntityType + " could not be found").data());
 }
 
 /**

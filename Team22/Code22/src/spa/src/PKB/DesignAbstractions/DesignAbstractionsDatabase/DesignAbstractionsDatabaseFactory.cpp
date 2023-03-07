@@ -16,6 +16,8 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsAbstractionDatabase/CallsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsStarAbstractionDatabase/CallsStarDatabaseFactory.h"
 
+#include "PKB/Exceptions/DatabaseNotFoundException.cpp"
+
 using namespace std;
 
 /**
@@ -68,8 +70,7 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getCallsStarDatabase();
     }
 
-    // Temp: To pass build
-    return nullptr;
+    throw DatabaseNotFoundException(("Database for " + designAbstractionType + " could not be found").data());
 }
 
 /**
