@@ -13,6 +13,7 @@
 #include "PKB/DesignAbstractions/ParentAbstraction/ParentFactory.h"
 #include "PKB/DesignAbstractions/ParentStarAbstraction/ParentStarFactory.h"
 #include "PKB/DesignAbstractions/CallsAbstraction/CallsFactory.h"
+#include "PKB/DesignAbstractions/CallsStarAbstraction/CallsStarFactory.h"
 
 using namespace std;
 
@@ -42,7 +43,10 @@ DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
         return ParentStarFactory::createParentStarAbstraction(abstractionDetails);
     } else if (designAbstraction == "CALLS") {
         return CallsFactory::createCallsAbstraction(abstractionDetails);
+    } else if (designAbstraction == "CALLSSTAR") {
+        return CallsStarFactory::createCallsStarAbstraction(abstractionDetails);
     }
+
     // To be implemented concretely
     return nullptr;
 }

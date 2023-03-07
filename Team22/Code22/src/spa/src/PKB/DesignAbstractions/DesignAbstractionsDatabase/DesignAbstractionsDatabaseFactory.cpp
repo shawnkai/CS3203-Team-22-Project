@@ -14,6 +14,7 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentAbstractionDatabase/ParentDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentStarAbstractionDatabase/ParentStarDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsAbstractionDatabase/CallsDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsStarAbstractionDatabase/CallsStarDatabaseFactory.h"
 
 using namespace std;
 
@@ -63,6 +64,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getParentStarDatabase();
     } else if (designAbstractionType == "CALLS") {
         return getCallsDatabase();
+    } else if (designAbstractionType == "CALLSSTAR") {
+        return getCallsStarDatabase();
     }
 
     // Temp: To pass build
@@ -135,6 +138,10 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsDatabase()
     return CallsDatabaseFactory::getCallsDatabase();
 }
 
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsStarDatabase() {
+    return CallsStarDatabaseFactory::getCallsStarDatabaseDatabase();
+}
+
 /**
  * Clears all the Modifies Design Abstraction databases.
  */
@@ -184,6 +191,10 @@ void DesignAbstractionsDatabaseFactory::clearCallsDatabase() {
     CallsDatabaseFactory::clearDatabase();
 }
 
+void DesignAbstractionsDatabaseFactory::clearCallsStarDatabase() {
+    CallsStarDatabaseFactory::clearDatabase();
+}
+
 /**
  * Clears all the Design Abstraction databases.
  */
@@ -195,4 +206,5 @@ void DesignAbstractionsDatabaseFactory::clearDatabase() {
     clearParentDatabase();
     clearParentStarDatabase();
     clearCallsDatabase();
+    clearCallsStarDatabase();
 }
