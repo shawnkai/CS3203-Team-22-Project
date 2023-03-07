@@ -187,6 +187,8 @@ ResultTable ResultTable::intersection(ResultTable table2) {
                 empty_keys.insert({k, {}});
             }
             return ResultTable(empty_keys);
+        } else {
+            return this->crossProduct(table2, all_keys);
         }
     } else {
         return this->naturalJoin(table2, all_keys, common_keys);
@@ -234,13 +236,3 @@ vector<string> ResultTable::getColumnNames() {
     }
     return this->table.begin()->second.size();
 }
-
-//int main() {
-//    IntermediateResultTable table1({make_pair<string, vector<string>>("s", {"1", "2", "3", "4", "5"}),
-//                       make_pair<string, vector<string>>("s1", {"6", "7", "8", "9", "10"})});
-//
-//    IntermediateResultTable table2({make_pair<string, vector<string>>("s", {"2", "4", "4"}),
-//                       make_pair<string, vector<string>>("v", {"x", "x", "y"})});
-//
-//    ::printf("%s\n", table1.toString().c_str());
-//}
