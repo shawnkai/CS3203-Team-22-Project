@@ -42,6 +42,17 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
                 }
             }
         }
+        if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
+            if (!results.empty()) {
+                return ResultTable({{"True", {""}}});
+            } else {
+                return {{}};
+            }
+        } else if (this->entities[0]->toString() == "_") {
+            return ResultTable(results).getColumn(this->entities[1]->toString());
+        } else if (this->entities[1]->toString() == "_") {
+            return ResultTable(results).getColumn(this->entities[0]->toString());
+        }
         return ResultTable(results);
     } else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1) {
         auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
