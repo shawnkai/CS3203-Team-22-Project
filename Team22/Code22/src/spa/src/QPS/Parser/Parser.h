@@ -24,18 +24,20 @@ private:
     regex EXTRACTDECLARATIONREGEX = regex(R"((^| |;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))");
 
 protected:
-	SynonymTable synonymTable;
+    SynonymTable synonymTable;
 
 public:
-	QueryParser();
+    QueryParser();
 
     SelectExpression* parse(string query);
 
-	bool isDeclaration(const string& query);
+    bool isDeclaration(const string& query);
 
     bool isValidQuery(const string& query);
 
-	void extractDeclarations(string query);
+    void extractDeclarations(string query);
+
+    static string replaceAnd(string query);
 
     SynonymTable getSynonymTable();
 
