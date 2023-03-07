@@ -1,120 +1,155 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>14.642000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>25.163000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="double connected wildcard return syntax error <--- should return syntax error">1</id><querystr><![CDATA[variable v; Select v such that Uses(v, __)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.393000</time_taken>
+<id ReturnTuple="1" CondNum="1" RelNum="0" comment="Select All Variables">1</id><querystr><![CDATA[variable v; Select v]]></querystr>
+<stuans>j,anx,i,y,z,x</stuans>
+<correct>x,z,i,y,anx,j</correct>
+<time_taken>2.154000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Uses="1" SuchThat="1" CondNum="5" RelNum="1" comment="double separated wildcard return syntax error <--- should return syntax error">2</id><querystr><![CDATA[variable v; Select v such that Uses(v, _ _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.947000</time_taken>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select Variables used in line 9">2</id><querystr><![CDATA[variable v; Select v such that Uses(9, v)]]></querystr>
+<stuans>x</stuans>
+<correct>x</correct>
+<time_taken>3.498000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="empty " " return syntax error">3</id><querystr><![CDATA[variable v; Select v such that Uses(v, "")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.913000</time_taken>
+<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Select Variables modified by z + x exact match">3</id><querystr><![CDATA[variable v; assign a; Select v pattern a(v, "z+x")]]></querystr>
+<stuans>y</stuans>
+<correct>y</correct>
+<time_taken>3.451000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="empty " " with whitespace return syntax error">4</id><querystr><![CDATA[variable v; Select v such that Uses(v, " ")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.896000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select Variables modified by z + x wildcard">4</id><querystr><![CDATA[variable v; assign a; Select v pattern a(v, _"z+x"_)]]></querystr>
+<stuans>y</stuans>
+<correct>y</correct>
+<time_taken>3.682000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="wildcard with " " return syntax error">5</id><querystr><![CDATA[variable v; Select v such that Uses(v, "_")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.149000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all the assignment statements for z">5</id><querystr><![CDATA[assign a; Select a pattern a("z", _)]]></querystr>
+<stuans>13,14,4,7</stuans>
+<correct>4,7,13,14</correct>
+<time_taken>3.199000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" SuchThat="1" CondNum="3" RelNum="0" comment="Uses spelled as UsesS return syntax error">6</id><querystr><![CDATA[variable v; Select v such that UsesS(7, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.150000</time_taken>
+<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select all variables that are print">6</id><querystr><![CDATA[variable v; print p; Select v such that Uses(p, v)]]></querystr>
+<stuans>x</stuans>
+<correct>x</correct>
+<time_taken>3.379000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" SuchThat="1" CondNum="3" RelNum="0" comment="Uses spelled as UsesP return syntax error">7</id><querystr><![CDATA[variable v; Select v such that UsesP(7, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.805000</time_taken>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that is followed by a if">7</id><querystr><![CDATA[assign a; if i; Select a such that Follows(a, i)]]></querystr>
+<stuans>11,5</stuans>
+<correct>5,11</correct>
+<time_taken>3.467000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="argument 2 as null return syntax error <--- should return syntax error">8</id><querystr><![CDATA[variable v; Select v such that Uses(7, null)]]></querystr>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that follows a if">8</id><querystr><![CDATA[assign a; if i; Select a such that Follows(i, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>4.237000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that is followed by line 3">9</id><querystr><![CDATA[assign a; Select a such that Follows(a, 3)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>3.612000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that follows line 2">10</id><querystr><![CDATA[assign a; if i; Select a such that Follows(2, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>4.069000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment statement that is followed by any statement">11</id><querystr><![CDATA[assign a; Select a such that Follows(a, _)]]></querystr>
+<stuans>1,11,14,5,7,9</stuans>
+<correct>1,5,7,9,11,14</correct>
+<time_taken>4.401000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment statement that satisfies Follow*(5, a)">12</id><querystr><![CDATA[assign a; Select a such that Follows*(5, a)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>4.702000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment statement that satisfies Follow*(a, _)">13</id><querystr><![CDATA[assign a; Select a such that Follows*(a, _)]]></querystr>
+<stuans>1,11,14,5,7,9</stuans>
+<correct>1,5,7,9,11,14</correct>
+<time_taken>4.871000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that satisfies Parent(w, 9)">14</id><querystr><![CDATA[while w; Select w such that Parent(w, 9)]]></querystr>
+<stuans>8</stuans>
+<correct>8</correct>
+<time_taken>3.111000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select while that is parent of if">15</id><querystr><![CDATA[while w; if i; Select w such that Parent(w, i)]]></querystr>
+<stuans>10,2</stuans>
+<correct>2,10</correct>
+<time_taken>3.960000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignments that satisfy Parent(w, a)">16</id><querystr><![CDATA[while w; assign a; Select a such that Parent(w, a)]]></querystr>
+<stuans>11,16,9</stuans>
+<correct>9,11,16</correct>
+<time_taken>3.811000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parentstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignments that satisfy Parent*(w, a)">17</id><querystr><![CDATA[while w; assign a; Select a such that Parent*(w, a)]]></querystr>
+<stuans>11,13,14,16,4,5,7,9</stuans>
+<correct>4,5,7,9,11,13,14,16</correct>
+<time_taken>4.304000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select variables that are modified, Semantic Error">18</id><querystr><![CDATA[variable v; Select v such that Modifies(_, v)]]></querystr>
 <stuans>SemanticError</stuans>
 <correct>SemanticError</correct>
-<time_taken>2.409000</time_taken>
+<time_taken>2.961000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="empty " " with multiple whitespace return syntax error">9</id><querystr><![CDATA[variable v; Select v such that Uses ( v , " " ) ]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.348000</time_taken>
+<id ReturnTuple="1" Modifies="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select assignment where any variable is modified">19</id><querystr><![CDATA[assign a; Select a such that Modifies(a, _)]]></querystr>
+<stuans>1,11,13,14,16,4,5,7,9</stuans>
+<correct>1,4,5,7,9,11,13,14,16</correct>
+<time_taken>3.448000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment=""Select" with small "s" return syntax error">10</id><querystr><![CDATA[variable v; select v such that Uses(7, _) ]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.063000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select while where any variable is used">20</id><querystr><![CDATA[while w; Select w such that Uses(w, _)]]></querystr>
+<stuans>10,15,2,8</stuans>
+<correct>2,8,10,15</correct>
+<time_taken>3.153000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="missing ; return syntax error <--- error not handled">11</id><querystr><![CDATA[variable v Select v such that Uses(7, _) ]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.021000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select variables that are used, Semantic Error">21</id><querystr><![CDATA[variable v; Select v such that Uses(_, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>2.465000</time_taken>
 <passed/>
 </query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="extra ; return syntax error <--- error not handled">12</id><querystr><![CDATA[variable v; Select v such that Uses(7, _);]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.968000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="declaration spelt wrongly return syntax error <--- error not handled">13</id><querystr><![CDATA[vaiable v; Select v such that Uses(7, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.215000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="declaration variable with capital "v" return syntax error <--- error not handled">14</id><querystr><![CDATA[Variable v; Select v such that Uses(7, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.252000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="declaration stmt spelt in full return syntax error <--- error not handled">15</id><querystr><![CDATA[variable v; statement s; Select v such that Uses(7, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.531000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="missing ; between 2 declarations return syntax error  <--- error not handled">16</id><querystr><![CDATA[variable v stmt s; Select v such that Uses(7, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.418000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="variable synonym declared twice return syntax error <--- should return syntax error">17</id><querystr><![CDATA[variable v; variable v1; Select v such that Uses(7, _)]]></querystr>
+</queries>
+</test_results>

@@ -6,59 +6,22 @@
 #define SPA_PARSER_H
 
 #include "QPS/Expressions/Expressions.h"
-#include "SynonymTable.h"
-
-#include <iostream>
-#include <string>
-#include <vector>
-#include <regex>
-#include <tuple>
+#include "QPS/Expressions/SelectExpression/SelectExpression.h"
+#include "QPS/Expressions/ModifiesExpression/ModifiesExpression.h"
+#include "QPS/Expressions/UsesExpression/UsesExpression.h"
+#include "QPS/Expressions/PatternExpression/PatternExpression.h"
+#include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
+#include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 
 using namespace std;
 
 class QueryParser {
 private:
-    string RETURNVALUE = R"lit(Select\s*(\w+))lit";
-    string ISDECLARATION = R"lit(((^|;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))+;)lit";
-    string CONTAINSMODIFIES = R"lit(Modifies\s*\(\s*"?(\w+)"?\s*,\s*"?(\w+)"?\s*\))lit";
-    string CONTAINSUSES = R"lit(Uses\s*\(\s*"?(\w+)"?\s*,\s*"?(\w+)"?\s*\))lit";
-    string CONTAINSFOLLOWS = R"lit(Follows\s*\(\s*(\w+)\s*,\s*(\w+)\s*\))lit";
-    string CONTAINSFOLLOWSSTAR = R"lit(Follows\*\s*\(\s*(\w+)\s*,\s*(\w+)\s*\))lit";
-    string CONTAINSPARENT = R"lit(Parent\s*\(\s*(\w+)\s*,\s*(\w+)\s*\))lit";
-    string CONTAINSPARENTSTAR = R"lit(Parent\*\s*\(\s*(\w+)\s*,\s*(\w+)\s*\))lit";
-    string CONTAINSPATTERN = R"(pattern\s+(\w+)\s*\(\s*((?:\s*_?\"?[\w]+\"?_?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%()]+\"?_?)|_)\s*\))";
-    string MODIFIES = R"lit(Modifies\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-    string USES = R"lit(Uses\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-    string PATTERN = R"(pattern\s+(\w+)\s*\(\s*((?:\"?[\w]+\"?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%()]+\"?_?)|_)\s*\))";
-    string FOLLOWS = R"lit(Follows\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-    string FOLLOWSSTAR = R"lit(Follows\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-    string PARENT = R"lit(Parent\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-    string PARENTSTAR = R"lit(Parent\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-    string EXTRACTDECLARATION = "(^| |;\\s?)\\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\\s+((\\w|,\\s+?)+)";
-    string QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + CONTAINSMODIFIES + "|" + CONTAINSUSES + "|" + CONTAINSFOLLOWS + "|" + CONTAINSFOLLOWSSTAR + "|" + CONTAINSPARENT + "|" + CONTAINSPARENTSTAR  + ")|\\s+"+ CONTAINSPATTERN +")*";
-
-    // Regexes
-    regex RETURNVALUEREGEX = regex(RETURNVALUE);
-    regex QUERYVALIDATIONREGEX = regex(QUERYVALIDATION);
-    regex ISDECLARATIONREGEX = regex(ISDECLARATION);
-    regex CONTAINSMODIFIESREGEX = regex(CONTAINSMODIFIES);
-    regex CONTAINSUSESREGEX = regex(CONTAINSUSES);
-    regex CONTAINSFOLLOWSREGEX = regex(CONTAINSFOLLOWS);
-    regex CONTAINSFOLLOWSSTARREGEX = regex(CONTAINSFOLLOWSSTAR);
-    regex CONTAINSPARENTREGEX = regex(CONTAINSPARENT);
-    regex CONTAINSPARENTSTARREGEX = regex(CONTAINSPARENTSTAR);
-    regex CONTAINSPATTERNREGEX = regex(CONTAINSPATTERN);
-    regex MODIFIESREGEX = regex(MODIFIES);
-    regex USESREGEX = regex(USES);
-    regex PATTERNREGEX = regex(PATTERN);
-    regex FOLLOWSREGEX = regex(FOLLOWS);
-    regex FOLLOWSSTARREGEX = regex(FOLLOWSSTAR);
-    regex PARENTREGEX = regex(PARENT);
-    regex PARENTSTARREGEX = regex(PARENTSTAR);
-    regex EXTRACTDECLARATIONREGEX = regex(EXTRACTDECLARATION);
-
     static string sanitiseQuery(const string& query);
 
+    regex ISDECLARATIONREGEX = regex(R"lit(((^|;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))+;)lit");
+    regex RETURNVALUEREGEX = regex(R"lit(Select\s*(\w+))lit");
+    regex EXTRACTDECLARATIONREGEX = regex(R"((^| |;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))");
 
 protected:
 	SynonymTable synonymTable;
@@ -69,26 +32,10 @@ public:
     SelectExpression* parse(string query);
 
 	bool isDeclaration(const string& query);
-	bool containsModifiesExpression(string query);
-	bool containsUsesExpression(string query);
-    bool containsPatternExpression(string query);
 
-    tuple<StmtEntity*, StmtEntity*> generateStmtEntityPair(string arg1, string arg2);
     bool isValidQuery(const string& query);
-    bool containsFollowsExpression(string query);
-    bool containsFollowsStarExpression(string query);
-    bool containsParentExpression(string query);
-    bool containsParentStarExpression(string query);
 
 	void extractDeclarations(string query);
-
-	vector<ModifiesExpression*> extractModifiesExpression(const string& query);
-	vector<UsesExpression*> extractUsesExpression(const string& query);
-    vector<PatternExpression*> extractPatternExpression(const string& query);
-    vector<FollowsExpression*> extractFollowsExpression(const string& query);
-    vector<FollowsStarExpression*> extractFollowsStarExpression(const string& query);
-    vector<ParentExpression*> extractParentExpression(const string& query);
-    vector<ParentStarExpression*> extractParentStarExpression(const string& query);
 
     SynonymTable getSynonymTable();
 

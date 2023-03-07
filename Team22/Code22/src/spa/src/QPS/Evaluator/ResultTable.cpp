@@ -166,18 +166,16 @@ ResultTable ResultTable:: naturalJoin(ResultTable table2, const vector<string>& 
     return ResultTable(result);
 }
 
-
-
 ResultTable ResultTable::intersection(ResultTable table2) {
     vector<string> common_keys;
     vector<string> all_keys;
-
     for (const auto& kv : this->table) {
         all_keys.push_back(kv.first);
     }
     for (const auto& kv : table2.table) {
         if (this->table.find(kv.first) != this->table.end()) {
             common_keys.push_back(kv.first);
+            continue;
         }
         all_keys.push_back(kv.first);
     }
