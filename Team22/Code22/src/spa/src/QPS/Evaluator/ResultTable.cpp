@@ -187,6 +187,8 @@ ResultTable ResultTable::intersection(ResultTable table2) {
                 empty_keys.insert({k, {}});
             }
             return ResultTable(empty_keys);
+        } else {
+            return this->crossProduct(table2, all_keys);
         }
     } else {
         return this->naturalJoin(table2, all_keys, common_keys);
