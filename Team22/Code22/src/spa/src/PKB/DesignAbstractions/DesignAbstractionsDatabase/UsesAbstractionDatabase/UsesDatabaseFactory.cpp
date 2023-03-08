@@ -7,6 +7,8 @@
 
 #include "UsesDatabaseFactory.h"
 
+#include "PKB/Exceptions/DatabaseNotFoundException.cpp"
+
 using namespace std;
 
 /**
@@ -36,8 +38,7 @@ DesignAbstractionDatabase *UsesDatabaseFactory::getUsesDatabase(string entityTyp
         return ifStatementUsesDatabase;
     }
 
-    // Return null pointer, in case of invalid type of entity to be abstracted.
-    return nullptr;
+    throw DatabaseNotFoundException(("Database for Uses " + entityTypeBeingAbstracted + " could not be found").data());
 }
 
 void UsesDatabaseFactory::clearDatabase() {

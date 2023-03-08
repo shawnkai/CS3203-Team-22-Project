@@ -14,6 +14,8 @@
 #include "PKB/DesignAbstractions/ModifiesAbstraction/IfStatementModifies.h"
 #include "PKB/DesignAbstractions/ModifiesAbstraction/WhileStatementModifies.h"
 
+#include "PKB/Exceptions/InvalidModifiesAbstractionTypeException.cpp"
+
 using namespace std;
 
 /**
@@ -46,6 +48,5 @@ DesignAbstraction* ModifiesFactory::createModifiesAbstraction(tuple<string, stri
         return new WhileStatementModifies(abstractionDetails);
     }
 
-    // Returning a null pointer, in case of an invalid modifiesAbstractionType
-    return nullptr;
+    throw InvalidModifiesAbstractionTypeException((modifiesAbstractionType + " is not a valid Modifies Design Abstraction Type").data());
 }
