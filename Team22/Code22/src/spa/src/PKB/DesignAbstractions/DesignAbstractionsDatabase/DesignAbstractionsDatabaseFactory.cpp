@@ -15,6 +15,7 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentStarAbstractionDatabase/ParentStarDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsAbstractionDatabase/CallsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsStarAbstractionDatabase/CallsStarDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/NextAbstractionDatabase/NextDatabaseFactory.h"
 
 #include "PKB/Exceptions/DatabaseNotFoundException.cpp"
 
@@ -68,6 +69,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getCallsDatabase();
     } else if (designAbstractionType == "CALLSSTAR") {
         return getCallsStarDatabase();
+    } else if (designAbstractionType == "NEXT") {
+        return getNextDatabase();
     }
 
     throw DatabaseNotFoundException(("Database for " + designAbstractionType + " could not be found").data());
@@ -143,6 +146,10 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsStarDataba
     return CallsStarDatabaseFactory::getCallsStarDatabaseDatabase();
 }
 
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getNextDatabase() {
+    return NextDatabaseFactory::getNextDatabase();
+}
+
 /**
  * Clears all the Modifies Design Abstraction databases.
  */
@@ -196,6 +203,10 @@ void DesignAbstractionsDatabaseFactory::clearCallsStarDatabase() {
     CallsStarDatabaseFactory::clearDatabase();
 }
 
+void DesignAbstractionsDatabaseFactory::clearNextDatabase() {
+    NextDatabaseFactory::clearDatabase();
+}
+
 /**
  * Clears all the Design Abstraction databases.
  */
@@ -208,4 +219,5 @@ void DesignAbstractionsDatabaseFactory::clearDatabase() {
     clearParentStarDatabase();
     clearCallsDatabase();
     clearCallsStarDatabase();
+    clearNextDatabase();
 }
