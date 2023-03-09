@@ -155,3 +155,23 @@ TEST_CASE("Test 11: Variable Design Entity, Populate The Database And Call Clear
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
     }
 }
+
+TEST_CASE("Test 12: Variable Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("var12", "1"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("var12", "1"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("var12", "2"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("var12", "3"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("var13", "1"));
+        pkbTest.addDesignEntity("VARIABLE", make_tuple("var14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("VARIABLE");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("VARIABLE");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
+    }
+}

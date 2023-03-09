@@ -155,3 +155,23 @@ TEST_CASE("Test 11: PrintStatement Design Entity, Populate The Database And Call
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
     }
 }
+
+TEST_CASE("Test 12: PrintStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("PRINT", make_tuple("ps12", "1"));
+        pkbTest.addDesignEntity("PRINT", make_tuple("ps12", "1"));
+        pkbTest.addDesignEntity("PRINT", make_tuple("ps12", "2"));
+        pkbTest.addDesignEntity("PRINT", make_tuple("ps12", "3"));
+        pkbTest.addDesignEntity("PRINT", make_tuple("ps13", "1"));
+        pkbTest.addDesignEntity("PRINT", make_tuple("ps14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("PRINT");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("PRINT");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
+    }
+}

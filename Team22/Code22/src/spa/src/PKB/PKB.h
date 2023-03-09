@@ -17,11 +17,12 @@ class PKB {
     void clearAssignPatternDatabase();
 
 public:
-    void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
+    void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
     Result getDesignEntity(string entityType, string entityName);
     vector<Result> getAllDesignEntity(string entityType);
+    int getNumberOfDesignEntity(string entityType);
 
-    void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
+    void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query);
 
     void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);

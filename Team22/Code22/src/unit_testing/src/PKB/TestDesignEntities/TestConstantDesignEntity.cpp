@@ -155,3 +155,24 @@ TEST_CASE("Test 11: Constant Design Entity, Populate The Database And Call Clear
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
     }
 }
+
+TEST_CASE("Test 12: Constant Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c12", "1"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c12", "1"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c12", "2"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c12", "3"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c13", "1"));
+        pkbTest.addDesignEntity("CONSTANT", make_tuple("c14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("CONSTANT");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("CONSTANT");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
+    }
+}
+

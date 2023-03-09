@@ -139,6 +139,10 @@ vector<AssignPattern*> PKB::getAllRightHandExpressions() {
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
 
+int PKB::getNumberOfDesignEntity(string entityType) {
+    return this->getAllDesignEntity(entityType).size();
+}
+
 /**
  * Clears the Assignment Pattern Database. This method is hidden
  * from the user.

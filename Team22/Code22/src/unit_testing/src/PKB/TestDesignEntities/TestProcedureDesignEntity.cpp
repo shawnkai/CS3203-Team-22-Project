@@ -155,3 +155,23 @@ TEST_CASE("Test 11: Procedure Design Entity, Populate The Database And Call Clea
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
     }
 }
+
+TEST_CASE("Test 12: Procedure Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p12", "1"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p12", "1"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p12", "2"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p12", "3"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p13", "1"));
+        pkbTest.addDesignEntity("PROCEDURE", make_tuple("p14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("PROCEDURE");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("PROCEDURE");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
+    }
+}
