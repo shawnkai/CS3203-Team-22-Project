@@ -63,7 +63,8 @@ bool Tokenizer::isLegalArithmeticChar(char c) {
 }
 
 /**
- * Generate the Token representing the string being passed.
+ * Generate the Token representing the string being passed. In particular, check if a keyword string should be
+ * represented as a keyword token or a name identifier token.
  *
  * @param delimeter the character to be used for splitting
  * @param type Token type
