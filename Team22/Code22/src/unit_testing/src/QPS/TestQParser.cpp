@@ -181,7 +181,7 @@ TEST_CASE("TestCase9_ParseSelectStatement_ShouldSuccess") {
 //
 //}
 
-TEST_CASE("TestCase24_InvalidSelectKeyword_SyntaxError") {
+TEST_CASE("TestCase10_InvalidSelectKeyword_SyntaxError") {
     QueryParser queryParser;
 
     string query1 = "Sel v";
@@ -198,7 +198,7 @@ TEST_CASE("TestCase24_InvalidSelectKeyword_SyntaxError") {
 
 }
 
-TEST_CASE("TestCase25_MultipleSelectOccurrence_SyntaxError") {
+TEST_CASE("TestCase11_MultipleSelectOccurrence_SyntaxError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -219,7 +219,7 @@ TEST_CASE("TestCase25_MultipleSelectOccurrence_SyntaxError") {
 }
 
 
-TEST_CASE("TestCase26_OneInvalidDesignAbstraction_SyntaxError") {
+TEST_CASE("TestCase12_OneInvalidDesignAbstraction_SyntaxError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -241,7 +241,7 @@ TEST_CASE("TestCase26_OneInvalidDesignAbstraction_SyntaxError") {
 
 //undeclared synonyms
 
-TEST_CASE("TestCase48_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
+TEST_CASE("TestCase13_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
@@ -258,7 +258,7 @@ TEST_CASE("TestCase48_ParsingDeclarationStatementMoreWhitespacesInserted_Success
 
 }
 
-TEST_CASE("TestCase56_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
+TEST_CASE("TestCase14_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
@@ -277,7 +277,7 @@ TEST_CASE("TestCase56_ParsingDeclarationStatementMoreWhitespacesInserted_Success
 }
 
 
-TEST_CASE("TestCase59_andClauseAfterSuchThat_Success") {
+TEST_CASE("TestCase15_andClauseAfterSuchThat_Success") {
     string query = "Select v such that Uses(3, v) and Uses(4, v)";
 
     string actualResult = QueryParser::replaceAnd(query);
@@ -286,7 +286,7 @@ TEST_CASE("TestCase59_andClauseAfterSuchThat_Success") {
     REQUIRE(actualResult == expected);
 }
 
-TEST_CASE("TestCase60_andClauseRightAfterSuchThat_FailsValidation") {
+TEST_CASE("TestCase16_andClauseRightAfterSuchThat_FailsValidation") {
     QueryParser queryParser;
     string query = "Select v such that and Uses(3, v)";
 
@@ -300,7 +300,7 @@ TEST_CASE("TestCase60_andClauseRightAfterSuchThat_FailsValidation") {
 }
 
 
-TEST_CASE("TestCase61_andAsFirstConnective_SyntaxError") {
+TEST_CASE("TestCase17_andAsFirstConnective_SyntaxError") {
     QueryParser queryParser;
     string query = "Select v and Uses(3, v) such that Uses(4, v)";
     bool throwsException = false;
@@ -315,7 +315,7 @@ TEST_CASE("TestCase61_andAsFirstConnective_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase62_andClauseAfterWith_Success") {
+TEST_CASE("TestCase18_andClauseAfterWith_Success") {
 
     string query = "Select <s1, s2> with s1.stmt# = 3 and s2.stmt# = 4";
 
@@ -325,11 +325,130 @@ TEST_CASE("TestCase62_andClauseAfterWith_Success") {
     REQUIRE(actualResult == expected);
 }
 
-TEST_CASE("TestCase63_andClauseAfterPattern_Success") {
+TEST_CASE("TestCase19_andClauseAfterPattern_Success") {
     string query = "Select a pattern a(x, _) and a(x, _\"x\"_) ";
 
     string actualResult = QueryParser::replaceAnd(query);
 
     string expected = "Select a pattern a(x, _) pattern a(x, _\"x\"_)";
     REQUIRE(actualResult == expected);
+}
+
+TEST_CASE("TestCase20_andClauseAfterPatternButActAsWithClause_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a pattern a(x, _) and s1.stmt# = 3";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a pattern a(x, _) pattern s1.stmt# = 3";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase21_andClauseAfterPatternButActAsSuchThatClause_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a pattern a(x, _) and Uses(4, v)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a pattern a(x, _) pattern Uses(4, v)";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase22_andClauseAfterWithButActAsSuchThatClause_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select s1 with s1.stmt# = 3 and Uses(4, v)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select s1 with s1.stmt# = 3 with Uses(4, v)";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase23_andClauseAfterWithButActAsPatternClause_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a with a.stmt# = 3 and a(x, _)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a with a.stmt# = 3 with a(x, _)";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase24_andClauseAfterSuchThatButActAsWithClause_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a such that Parent(6, a) and a.stmt# = 3";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a such that Parent(6, a) such that a.stmt# = 3";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase25_andClauseAfterSuchThatButActAsPatternClause_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a such that Parent(6, a) and a(x, _)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a such that Parent(6, a) such that a(x, _)";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase26_andClauseRightAfterWith_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a with and a.stmt# = 3";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a with with a.stmt# = 3";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase27_andClauseRightAfterPattern_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select a pattern and a(x, _)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a pattern pattern a(x, _)";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
+
+TEST_CASE("TestCase28_andClauseBeforeSelect_SyntaxError") {
+    string query = "and Select a pattern pattern a(x, _)";
+
+    bool throwsException = false;
+
+    try {
+        string actualResult = QueryParser::replaceAnd(query);
+    }
+    catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
 }
