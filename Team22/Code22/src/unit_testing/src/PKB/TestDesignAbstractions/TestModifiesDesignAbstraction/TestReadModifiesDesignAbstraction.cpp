@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ReadModifies Design Abstraction")
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The ReadModifies Database And Call Clear All Databas
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:READ: mr9: mr10, mr11, mr12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

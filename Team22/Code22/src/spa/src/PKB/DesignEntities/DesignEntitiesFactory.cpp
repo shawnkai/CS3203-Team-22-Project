@@ -17,6 +17,8 @@
 #include "WhileStatement.h"
 #include "IfStatement.h"
 
+#include "PKB/Exceptions/InvalidEntityTypeException.cpp"
+
 using namespace std;
 
 /**
@@ -52,6 +54,5 @@ DesignEntity* DesignEntitiesFactory::createDesignEntity(string designEntity, tup
         return new IfStatement(entityDetails);
     }
 
-    // Return null pointer in case an invalid type of Design Entity is passed in.
-    return nullptr;
+    throw InvalidEntityTypeException((designEntity + " is not a valid Design Entity Type").data());
 }

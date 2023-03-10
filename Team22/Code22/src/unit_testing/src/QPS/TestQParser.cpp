@@ -967,7 +967,6 @@ TEST_CASE("TestCase57_ModifiesExpressionFirstArgWildcard_SemanticError") {
     REQUIRE(throwsException);
 }
 
-
 TEST_CASE("TestCase58_UsesExpressionFirstArgWildcard_SemanticError") {
     QueryParser queryParser;
 
@@ -987,5 +986,59 @@ TEST_CASE("TestCase58_UsesExpressionFirstArgWildcard_SemanticError") {
     REQUIRE(throwsException);
 }
 
+TEST_CASE("TestCase59_andClauseAfterSuchThat_Success") {
+    string query = "Select v such that Uses(3, v) and Uses(4, v)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select v such that Uses(3, v) such that Uses(4, v)";
+    REQUIRE(actualResult == expected);
+}
+
+TEST_CASE("TestCase60_andClauseRightAfterSuchThat_FailsValidation") {
+    QueryParser queryParser;
+    string query = "Select v such that and Uses(3, v)";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select v such that such that Uses(3, v)";
+
+    REQUIRE(actualResult == expected);
+
+    REQUIRE(!queryParser.isValidQuery(actualResult));
+}
 
 
+TEST_CASE("TestCase61_andAsFirstConnective_SyntaxError") {
+    QueryParser queryParser;
+    string query = "Select v and Uses(3, v) such that Uses(4, v)";
+    bool throwsException = false;
+
+    try {
+        string actualResult = QueryParser::replaceAnd(query);
+    }
+    catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase62_andClauseAfterWith_Success") {
+
+    string query = "Select <s1, s2> with s1.stmt# = 3 and s2.stmt# = 4";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select <s1, s2> with s1.stmt# = 3 with s2.stmt# = 4";
+    REQUIRE(actualResult == expected);
+}
+
+TEST_CASE("TestCase63_andClauseAfterPattern_Success") {
+    string query = "Select a pattern a(x, _) and a(x, _\"x\"_) ";
+
+    string actualResult = QueryParser::replaceAnd(query);
+
+    string expected = "Select a pattern a(x, _) pattern a(x, _\"x\"_)";
+    REQUIRE(actualResult == expected);
+}

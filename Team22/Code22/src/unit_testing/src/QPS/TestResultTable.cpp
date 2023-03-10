@@ -94,7 +94,6 @@ TEST_CASE("TestCase5_NoMatchingColumnsAllUniqueCells") {
                                                   make_pair<string, vector<string>>("s2", {"6", "6", "7", "7"}),
                                                   make_pair<string, vector<string>>("s3", {"3", "4", "3", "4"}),
                                           });
-
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
 }
@@ -139,8 +138,9 @@ TEST_CASE("TestCase8_NoMatchingColumnsOneTableEmpty") {
                                            make_pair<string, vector<string>>("s2", {"6", "7"})});
 
     IntermediateResultTable expectedTable({
-                                                  make_pair<string, vector<string>>("s1", {"1", "2"}),
-                                                  make_pair<string, vector<string>>("s2", {"6", "7"})});
+                                                  make_pair<string, vector<string>>("s1", {}),
+                                                  make_pair<string, vector<string>>("s2", {}),
+                                                  make_pair<string, vector<string>>("s3", {})});
 
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
@@ -153,7 +153,9 @@ TEST_CASE("TestCase9_NoMatchingColumnsBothTablesEmpty_ReturnFirstTable") {
                                            make_pair<string, vector<string>>("s1", {}),
                                            make_pair<string, vector<string>>("s2", {})});
 
-    IntermediateResultTable expectedTable({make_pair<string, vector<string>>("s3", {})});
+    IntermediateResultTable expectedTable({make_pair<string, vector<string>>("s1", {}),
+                                           make_pair<string, vector<string>>("s2", {}),
+                                           make_pair<string, vector<string>>("s3", {})});
 
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
 }
@@ -169,6 +171,7 @@ TEST_CASE("TestCase10_MatchingColumnsBothTablesEmpty") {
                                                   make_pair<string, vector<string>>("s1", {}),
                                                   make_pair<string, vector<string>>("s2", {}),
                                           });
+
     REQUIRE(expectedTable.equals(table1.intersection(table2)));
     REQUIRE(expectedTable.equals(table2.intersection(table1)));
 }

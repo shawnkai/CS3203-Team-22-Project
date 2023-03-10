@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent AssignmentModifies Design Abstrac
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The AssignmentModifies Database And Call Clear All D
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:ASSIGNMENT: ma9: ma10, ma11, ma12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

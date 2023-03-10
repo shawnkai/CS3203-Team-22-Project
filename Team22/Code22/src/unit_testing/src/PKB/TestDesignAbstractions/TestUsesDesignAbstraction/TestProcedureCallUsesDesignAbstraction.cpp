@@ -37,7 +37,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ProcedureCallUses Design Abstract
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +101,6 @@ TEST_CASE("Test 7: Populate The ProcedureCallUses Database And Call Clear All Da
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PROCEDURECALL: updc9: updc10, updc11, updc12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }

@@ -149,9 +149,29 @@ TEST_CASE("Test 11: AssignmentStatement Design Entity, Populate The Database And
 
         Result pkbResultAfterClearing = pkbTest.getDesignEntity("ASSIGNMENT", "as12");
 
-        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
 
         REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
         && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
+    }
+}
+
+TEST_CASE("Test 12: AssignmentStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "1"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "1"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "2"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as12", "3"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as13", "1"));
+        pkbTest.addDesignEntity("ASSIGNMENT", make_tuple("as14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("ASSIGNMENT");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("ASSIGNMENT");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
     }
 }

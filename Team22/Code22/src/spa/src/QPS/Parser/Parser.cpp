@@ -12,28 +12,30 @@ SelectExpression* QueryParser::parse(string query) {
     vector<Expression*> conditions;
 
     query = sanitiseQuery(query);
-    if (this->isDeclaration(query) || query.empty()) {
-		this->extractDeclarations(query);
-		return new SelectExpression({}, conditions);
-	} else if (this->isValidQuery(query)) {
-		smatch sm;
-		regex_search(query, sm, RETURNVALUEREGEX);
-		
-		DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
+    query = replaceAnd(query);
 
-		if (ModifiesExpression::containsModifiesExpression(query)) {
+    if (this->isDeclaration(query) || query.empty()) {
+        this->extractDeclarations(query);
+        return new SelectExpression({}, conditions);
+    } else if (this->isValidQuery(query)) {
+        smatch sm;
+        regex_search(query, sm, RETURNVALUEREGEX);
+
+        DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
+
+        if (ModifiesExpression::containsModifiesExpression(query)) {
             vector<ModifiesExpression*> modifiesConditions = ModifiesExpression::extractModifiesExpression(query, synonymTable);
-			for (ModifiesExpression *e : modifiesConditions) {
+            for (ModifiesExpression *e : modifiesConditions) {
                 conditions.push_back(e);
             }
-		}
+        }
 
         if (UsesExpression::containsUsesExpression(query)) {
             vector<UsesExpression*> usesConditions = UsesExpression::extractUsesExpression(query, synonymTable);
             for (UsesExpression *e : usesConditions) {
                 conditions.push_back(e);
             }
-		}
+        }
 
         if (PatternExpression::containsPatternExpression(query)) {
             vector<PatternExpression*> patternConditions = PatternExpression::extractPatternExpression(query, synonymTable);
@@ -71,7 +73,7 @@ SelectExpression* QueryParser::parse(string query) {
         }
 
         return new SelectExpression({arg}, conditions);
-	} else {
+    } else {
         throw SyntacticException();
     }
 }
@@ -82,21 +84,55 @@ string QueryParser::sanitiseQuery(const string& query) {
     return result_query;
 }
 
+
+
+string QueryParser::replaceAnd(string query) {
+    string previousClause;
+
+    query = regex_replace(query, std::regex("such that"), "such-that");
+
+    regex split("\\s+");
+    sregex_token_iterator split_iterator(query.begin(), query.end(), split, -1);
+    sregex_token_iterator end;
+
+    string result_query;
+
+
+
+    for ( ; split_iterator != end; ++split_iterator) {
+        if (split_iterator->str() == "such-that" || split_iterator->str() == "pattern" || split_iterator->str() == "with") {
+            previousClause = split_iterator->str();
+            result_query += previousClause + " ";
+        } else if (split_iterator->str() == "and") {
+            if (previousClause.empty()) {
+                throw SyntacticException();
+            }
+            result_query += previousClause + " ";
+        } else {
+            result_query += (split_iterator->str()) + " ";
+        }
+    }
+
+    result_query = regex_replace(result_query, regex("such-that"), "such that");
+    result_query.pop_back();
+    return result_query;
+}
+
 bool QueryParser::isValidQuery(const string& query) {
     return regex_match(query, Expression::QUERYVALIDATIONREGEX);
 }
 
 bool QueryParser::isDeclaration(const string& query) {
-	return regex_match(query, ISDECLARATIONREGEX);
+    return regex_match(query, ISDECLARATIONREGEX);
 }
 
 void QueryParser::extractDeclarations(string query) {
-	smatch sm;
-	auto begin = sregex_iterator(query.begin(), query.end(), EXTRACTDECLARATIONREGEX);
+    smatch sm;
+    auto begin = sregex_iterator(query.begin(), query.end(), EXTRACTDECLARATIONREGEX);
     auto end = sregex_iterator();
 
-	for (sregex_iterator i = begin; i != end; ++i) {
-        smatch match = *i;                                                 
+    for (sregex_iterator i = begin; i != end; ++i) {
+        smatch match = *i;
         string type = match.str(2);
         string name =  match.str(3);
 
@@ -115,7 +151,7 @@ void QueryParser::extractDeclarations(string query) {
         if (!name.empty()) {
             this->synonymTable.add(type, name);
         }
-	}
+    }
 }
 
 SynonymTable QueryParser::getSynonymTable() {

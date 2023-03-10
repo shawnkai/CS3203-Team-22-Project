@@ -13,6 +13,11 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/FollowsStarAbstractionDatabase/FollowsStarDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentAbstractionDatabase/ParentDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/ParentStarAbstractionDatabase/ParentStarDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsAbstractionDatabase/CallsDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsStarAbstractionDatabase/CallsStarDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/NextAbstractionDatabase/NextDatabaseFactory.h"
+
+#include "PKB/Exceptions/DatabaseNotFoundException.cpp"
 
 using namespace std;
 
@@ -60,10 +65,15 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getParentDatabase();
     } else if (designAbstractionType == "PARENTSTAR") {
         return getParentStarDatabase();
+    } else if (designAbstractionType == "CALLS") {
+        return getCallsDatabase();
+    } else if (designAbstractionType == "CALLSSTAR") {
+        return getCallsStarDatabase();
+    } else if (designAbstractionType == "NEXT") {
+        return getNextDatabase();
     }
 
-    // Temp: To pass build
-    return nullptr;
+    throw DatabaseNotFoundException(("Database for " + designAbstractionType + " could not be found").data());
 }
 
 /**
@@ -128,6 +138,18 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatab
     return ParentStarDatabaseFactory::getParentStarDatabase();
 }
 
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsDatabase() {
+    return CallsDatabaseFactory::getCallsDatabase();
+}
+
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsStarDatabase() {
+    return CallsStarDatabaseFactory::getCallsStarDatabaseDatabase();
+}
+
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getNextDatabase() {
+    return NextDatabaseFactory::getNextDatabase();
+}
+
 /**
  * Clears all the Modifies Design Abstraction databases.
  */
@@ -171,6 +193,21 @@ void DesignAbstractionsDatabaseFactory::clearParentStarDatabase() {
 }
 
 /**
+ * Clears the Calls Design Abstraction database.
+ */
+void DesignAbstractionsDatabaseFactory::clearCallsDatabase() {
+    CallsDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearCallsStarDatabase() {
+    CallsStarDatabaseFactory::clearDatabase();
+}
+
+void DesignAbstractionsDatabaseFactory::clearNextDatabase() {
+    NextDatabaseFactory::clearDatabase();
+}
+
+/**
  * Clears all the Design Abstraction databases.
  */
 void DesignAbstractionsDatabaseFactory::clearDatabase() {
@@ -180,4 +217,7 @@ void DesignAbstractionsDatabaseFactory::clearDatabase() {
     clearFollowsStarDatabase();
     clearParentDatabase();
     clearParentStarDatabase();
+    clearCallsDatabase();
+    clearCallsStarDatabase();
+    clearNextDatabase();
 }

@@ -60,6 +60,7 @@ void DesignAbstractionDatabase::updateAbstractionInDatabase(DesignAbstraction *d
     (iterator->second)->addAdditionalOccurrence(designAbstractionToBeStored->getEntityOccurrence()[0]);
     
     // maybe delete the pointer object here
+//    delete designAbstractionToBeStored;
 }
 
 /**
@@ -82,7 +83,7 @@ Result DesignAbstractionDatabase::getFromDatabase(string entityName) {
     }
 
     // Return None, as it was not found in Database (or throw an error)?
-    vector<string> none{"None"};
+    vector<string> none{"none"};
     return Result("none", "none", none);
 }
 
