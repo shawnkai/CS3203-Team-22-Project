@@ -12,6 +12,7 @@
 #include "QPS/Expressions/PatternExpression/PatternExpression.h"
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
+#include "QPS/Expressions/AttrCondExpression/AttrCondExpression.h"
 
 using namespace std;
 

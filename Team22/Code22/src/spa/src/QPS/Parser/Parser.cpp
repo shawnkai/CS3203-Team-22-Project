@@ -72,6 +72,13 @@ SelectExpression* QueryParser::parse(string query) {
             }
         }
 
+        if (AttrCondExpression::containsAttrCondExpression(query)) {
+            vector<AttrCondExpression*> AttrCondClauses = AttrCondExpression::extractAttrCondExpression(query, synonymTable);
+            for (AttrCondExpression *e : AttrCondClauses) {
+                conditions.push_back(e);
+            }
+        }
+
         return new SelectExpression({arg}, conditions);
     } else {
         throw SyntacticException();
@@ -96,8 +103,6 @@ string QueryParser::replaceAnd(string query) {
     sregex_token_iterator end;
 
     string result_query;
-
-
 
     for ( ; split_iterator != end; ++split_iterator) {
         if (split_iterator->str() == "such-that" || split_iterator->str() == "pattern" || split_iterator->str() == "with") {
