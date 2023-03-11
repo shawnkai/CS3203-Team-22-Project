@@ -27,6 +27,7 @@ TNode Parser::Parse() {
     programNode.nodeType = TokenType::PROGRAM;
     programNode.stringId = currToken.value;
     programNode.stmtNumber = currToken.lineNumber;
+    ++ pos;
     while (tokenList[pos].type == TokenType::PROCEDURE) {
         programNode.children.push_back(parseProcedure());
     }
