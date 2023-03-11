@@ -22,7 +22,7 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  */
-void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
+void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 	queue<TNode> queue1;
 	queue1.push(currentNode);
@@ -34,6 +34,7 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			int lineNumOfVariable = currentNode1.stmtNumber;
 			cout << currentNode1.stringId << endl;
 			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", nameOfVariable, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {

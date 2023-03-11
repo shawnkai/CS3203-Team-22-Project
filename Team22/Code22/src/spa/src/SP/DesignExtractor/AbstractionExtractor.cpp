@@ -16,7 +16,7 @@ using namespace std;
  * @param root The root node of the Abstract Syntax Tree, of type TNode.
  * @param pkbinstance An instance of Program Knowledge Base.
  */
-void AbstractionExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
+void AbstractionExtractor::extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName) {
 	std::vector<std::tuple<int, int>> followsVector;
 	std::vector<std::tuple<int, int>> parentVector;
 
@@ -41,7 +41,7 @@ void AbstractionExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 					std::vector<int> ifContainer = std::vector<int>(0);
 					std::vector<int> whileContainer = std::vector<int>(0);
 					int currentParent = 0;
-					stmtlstExtractor.extractAbstraction(currentNode, ifContainer, whileContainer, pkbinstance, currentParent);
+					stmtlstExtractor.extractAbstraction(currentNode, ifContainer, whileContainer, pkbinstance, currentParent, procedureName);
 				}
 
 			}

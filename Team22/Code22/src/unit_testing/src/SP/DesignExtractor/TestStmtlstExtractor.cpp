@@ -29,7 +29,7 @@ TEST_CASE("Testcase1_ExtractSimpleStatementlist_ShouldSuccess") {
     ifContainers.push_back(1);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    stmtlstExtractor.extractAbstraction(stmtlist, ifContainers, whileContainers, pkbinstance, 1);
+    stmtlstExtractor.extractAbstraction(stmtlist, ifContainers, whileContainers, pkbinstance, 1, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
@@ -85,7 +85,7 @@ TEST_CASE("Testcase1_ExtractNestedStatementlist_ShouldSuccess") {
     std::vector<int> whileContainers = std::vector<int>(0);
     whileContainers.push_back(2);
 
-    stmtlstExtractor.extractAbstraction(stmtlist, ifContainers, whileContainers, pkbinstance, 2);
+    stmtlstExtractor.extractAbstraction(stmtlist, ifContainers, whileContainers, pkbinstance, 2, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("PARENT", make_tuple("_", "2")).toString();

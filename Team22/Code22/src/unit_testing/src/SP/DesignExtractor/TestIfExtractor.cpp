@@ -47,7 +47,7 @@ TEST_CASE("Testcase1_ExtractOneIfStatement_ShouldSuccess") {
     std::vector<int> ifContainers = std::vector<int>(0);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance);
+    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
@@ -136,7 +136,7 @@ TEST_CASE("Testcase1_ExtractNestedIfStatement_ShouldSuccess") {
     std::vector<int> ifContainers = std::vector<int>(0);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance);
+    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();

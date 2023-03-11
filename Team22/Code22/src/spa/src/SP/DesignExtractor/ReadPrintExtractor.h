@@ -8,11 +8,12 @@
 
 #include "SP/Parser/TNode.h"
 #include "../../PKB/PKB.h"
+#include "Result.h"
 
 using namespace std;
 
 class ReadPrintExtractor {
 public:
 	ReadPrintExtractor() {};
-	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
+	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

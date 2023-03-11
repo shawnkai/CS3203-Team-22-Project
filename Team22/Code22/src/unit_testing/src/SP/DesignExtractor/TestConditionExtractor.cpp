@@ -19,7 +19,7 @@ TEST_CASE("Testcase1_ExtractSimpleCondition_ShouldSuccess") {
     ifContainers.push_back(1);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    conditionExtractor.extractAbstraction(operator1, ifContainers, whileContainers, pkbinstance);
+    conditionExtractor.extractAbstraction(operator1, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "x")).toString();
@@ -73,7 +73,7 @@ TEST_CASE("Testcase2_ExtractComplexCondition_ShouldSuccess") {
     std::vector<int> whileContainers = std::vector<int>(0);
     whileContainers.push_back(1);
 
-    conditionExtractor.extractAbstraction(operator1, ifContainers, whileContainers, pkbinstance);
+    conditionExtractor.extractAbstraction(operator1, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();

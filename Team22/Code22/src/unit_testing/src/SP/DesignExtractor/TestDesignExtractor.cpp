@@ -107,7 +107,7 @@ TEST_CASE("Testcase2_ExtractComplexStatement_ShouldSuccess") {
     pkbinstance.clearAllDatabases();
     AbstractionExtractor abstractionExtractor;
 
-    abstractionExtractor.extractAbstraction(root, pkbinstance);
+    abstractionExtractor.extractAbstraction(root, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
