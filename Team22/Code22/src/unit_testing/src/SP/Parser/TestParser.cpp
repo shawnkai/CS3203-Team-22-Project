@@ -995,9 +995,7 @@ TEST_CASE("TestCase20_ParseIllegalGrammar_ShouldThrowException") {
 TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
-    const char *relativePath;
-
-    relativePath = "SP_ut20.txt";
+    const char *relativePath = "sp_ut21.txt";
 
     string code = "procedure Example {\n"
                   " x = 2;\n"
