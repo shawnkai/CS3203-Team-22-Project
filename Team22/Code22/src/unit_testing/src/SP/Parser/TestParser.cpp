@@ -1054,3 +1054,84 @@ TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
     REQUIRE(result.children[0].nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(filesystem::remove(relativePath));
 }
+
+TEST_CASE("TestCase22_ParseLongProcedure_ShouldSuccess") {
+    Tokenizer tk = Tokenizer();
+    std::vector<Token> tokenList;
+    const char *relativePath;
+    relativePath = "SP_ut22.txt";
+
+    string code = "procedure TestFollows {\n"
+                  " x = 1;\n"
+                  " print y;\n"
+                  " while (z>2) {\n"
+                  "   read z;\n"
+                  "   print k;\n"
+                  "   if (a < 2) then {\n"
+                  "     read y;\n"
+                  "   } else {\n"
+                  "     k = k + 1;\n"
+                  "     while (b <= 6) {\n"
+                  "       read a;\n"
+                  "       while (c > 3) {\n"
+                  "         if (d > a) then {\n"
+                  "           z = 1;\n"
+                  "         } else {\n"
+                  "           print z;\n"
+                  "           read b;\n"
+                  "         }\n"
+                  "       }\n"
+                  "     }\n"
+                  "   }\n"
+                  "   y = a - 1;\n"
+                  " }\n"
+                  "  if (z > 1) then {\n"
+                  "    read k;\n"
+                  "  } else {\n"
+                  "    while (x > 2) {\n"
+                  "      z = 5;\n"
+                  "    }\n"
+                  "    while (y <= 9) {\n"
+                  "      print y;\n"
+                  "      print x;\n"
+                  "      if (a > 5) then {\n"
+                  "         while (a >6) {\n"
+                  "            a = a + 1;\n"
+                  "            print a;\n"
+                  "            while (z > 3) {\n"
+                  "               read z;\n"
+                  "            }\n"
+                  "         }\n"
+                  "       } else {\n"
+                  "       }\n"
+                  "     }  \n"
+                  "  }\n"
+                  " read z;\n"
+                  "}\n"
+                  "procedure test2 {\n"
+                  "read a;\n"
+                  "}\n"
+                  "procedure test3 {\n"
+                  "read b;\n"
+                  "}\n";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+
+    try {
+        tokenList = tk.tokenize(relativePath);
+    } catch (std::invalid_argument& e) {
+        std::cerr << e.what() << std::endl;
+        exit(1);
+    }
+    Parser ps = Parser(tokenList);
+    TNode result;
+    try {
+        result = ps.Parse();
+    } catch (std::invalid_argument& e) {
+        std::cerr << e.what() << std::endl;
+        exit(1);
+    }
+    REQUIRE(result.nodeType == TokenType::PROGRAM);
+}
