@@ -27,7 +27,7 @@ TNode Parser::Parse() {
     programNode.nodeType = TokenType::PROGRAM;
     programNode.stringId = currToken.value;
     programNode.stmtNumber = currToken.lineNumber;
-    ++ pos;
+    //++ pos;
     while (tokenList[pos].type == TokenType::PROCEDURE) {
         programNode.children.push_back(parseProcedure());
     }
@@ -48,7 +48,8 @@ TNode Parser::parseProcedure() {
     node.nodeType = TokenType::PROCEDURE;
     node.stringId = currToken.value;
     node.stmtNumber = currToken.lineNumber;
-    if (currToken.type != TokenType::NAME_IDENTIFIER) {
+    ++ pos;
+    if (tokenList[pos].type != TokenType::NAME_IDENTIFIER) {
         cout << "Expecting function name for a procedure, got something else" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
