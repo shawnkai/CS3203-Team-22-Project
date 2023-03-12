@@ -426,7 +426,6 @@ TNode Parser::parseConditionalExpr() {
         return condNode;
     } else if (tokenList[pos].type == TokenType::LEFT_ROUND_BRACKET) {
         // find matching right round bracket and check if it is && or || operator
-        // Token followingRightRoundBracket = Token(UNKNOWN, "unknown", -1);
         int recorder = -1;
         int stack = 0;
         bool flag = false;

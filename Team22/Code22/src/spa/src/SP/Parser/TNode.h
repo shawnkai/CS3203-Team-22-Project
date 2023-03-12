@@ -25,6 +25,7 @@ inline std::string ToString(const TNode& t) {
     std::string childrenName;
     for (auto const& child : t.children) {
         childrenName += child.stringId;
+        childrenName += " ";
     }
     return ToString(t.nodeType) + t.stringId + std::to_string(t.stmtNumber) + " with children: "
     + childrenName;

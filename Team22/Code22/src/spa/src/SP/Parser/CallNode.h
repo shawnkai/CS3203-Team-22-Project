@@ -1,0 +1,11 @@
+
+#ifndef SPA_CALLNODE_H
+#define SPA_CALLNODE_H
+
+#include "TreeNode.h"
+
+class CallNode: public TreeNode {
+public:
+    void accept(DesignExtractor &de);
+};
+#endif //SPA_CALLNODE_H
