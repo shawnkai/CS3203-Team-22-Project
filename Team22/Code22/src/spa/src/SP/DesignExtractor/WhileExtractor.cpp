@@ -21,7 +21,7 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  */
-void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
+void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
 
 	if (currentNode.nodeType != TokenType::WHILE) {
 		cout << "something went wrong" << endl;
@@ -34,10 +34,10 @@ void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifCo
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];
 		ConditionExtractor conditionExtractor;
-		conditionExtractor.extractAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance);
+		conditionExtractor.extractAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance, procedureName);
 		TNode stmtlstNode = childNodes[1];
 		StmtlstExtractor stmtlstExtractor;
-		stmtlstExtractor.extractAbstraction(stmtlstNode, ifContainers, whileContainers, pkbinstance, whileLineNo);
+		stmtlstExtractor.extractAbstraction(stmtlstNode, ifContainers, whileContainers, pkbinstance, whileLineNo, procedureName);
 	}
 		
 };

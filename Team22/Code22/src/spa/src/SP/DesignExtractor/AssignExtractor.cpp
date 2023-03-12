@@ -22,7 +22,7 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that this assignment statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  */
-void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance) {
+void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
 	TokenType nodeType1 = currentNode.nodeType;
 
 	if (nodeType1 != TokenType::ASSIGN) {
@@ -48,6 +48,7 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					firstTime = 1;
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", nameOfVariable, std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 					if (whileContainers.size() != 0) {
 						for (int i = 0; i < whileContainers.size(); i++) {
@@ -68,6 +69,7 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 				else {
 					pkbinstance.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", nameOfVariable, std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 					if (whileContainers.size() != 0) {
 						for (int i = 0; i < whileContainers.size(); i++) {

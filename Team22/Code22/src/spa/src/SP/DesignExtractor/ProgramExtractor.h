@@ -5,15 +5,18 @@
 #include <string>
 #include <vector>
 #include <tuple>
+#include <map>
+#include <set>
+#include <queue>
 
 #include "../../PKB/PKB.h"
-#include "StmtlstExtractor.h"
+#include "AbstractionExtractor.h"
 #include "SP/Parser/TNode.h"
 
 using namespace std;
 
-class AbstractionExtractor {
+class ProgramExtractor {
 public:
-	AbstractionExtractor() {};
-	void extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
+	ProgramExtractor() {};
+	void extractAbstraction(TNode root, PKB pkbinstance);
 };

@@ -26,7 +26,7 @@ TEST_CASE("Testcase1_ExtractSimpleAssignment_ShouldSuccess") {
     std::vector<int> ifContainers = std::vector<int>(0);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    assignExtractor.extractAbstraction(assignNode, ifContainers, whileContainers, pkbinstance);
+    assignExtractor.extractAbstraction(assignNode, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
@@ -86,7 +86,7 @@ TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
     std::vector<int> whileContainers = std::vector<int>(0);
     whileContainers.push_back(1);
 
-    assignExtractor.extractAbstraction(assignNode, ifContainers, whileContainers, pkbinstance);
+    assignExtractor.extractAbstraction(assignNode, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignEntity("CONSTANT", "3").toString();
