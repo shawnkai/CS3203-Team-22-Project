@@ -281,7 +281,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output14.find('7') == std::string::npos);
 
     string declaration15 = "read r;";
-    string query15 = "Select r with r.varName = \"q\"";
+    string query15 = "Select r.varName with r.varName = \"q\"";
     parser = QueryParser();
     parser.parse(declaration15);
     auto exp15 = parser.parse(query15);
@@ -290,9 +290,9 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     for (const string &r: res_15) {
         output15 += r + ",";
     }
-
-    REQUIRE(output15.find('9') == std::string::npos);
-    REQUIRE(output15.find("10") != std::string::npos);
+    printf("Results: %s\n", output15.c_str());
+    REQUIRE(output15.find('q') != std::string::npos);
+    REQUIRE(output15.find("10") == std::string::npos);
     REQUIRE(output15.find('8') == std::string::npos);
     REQUIRE(output15.find('7') == std::string::npos);
 

@@ -35,6 +35,8 @@ public:
 
     vector<string> getColumnNames();
 
+    void renameColumn(const string& oldName, const string& newName);
+
     bool equals(ResultTable table2);
 
 private:

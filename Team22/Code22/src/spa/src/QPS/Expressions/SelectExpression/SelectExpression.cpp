@@ -41,6 +41,9 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
                 }
             }
         }
+        if (!this->synAttr.empty()) {
+            return this->entities[0]->getAttrVal(this->synAttr, pkb);
+        }
         return ResultTable({make_pair(this->entities[0]->toString(), answer)});
     } else {
         vector<ResultTable> all_results;
@@ -52,6 +55,9 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
         vector<string> tableColumns = table.getColumnNames();
         if (!Utilities::checkIfPresent(tableColumns, this->entities[0]->toString())) {
             if (table.getSize() == 0) {
+                if (!this->synAttr.empty()) {
+                    return ResultTable({{this->entities[0]->toString() + "." + this->synAttr, {}}});
+                }
                 return ResultTable({{this->entities[0]->toString(), {}}});
             }
             auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
@@ -67,7 +73,17 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
                     }
                 }
             }
+            ::printf("Attribute HERE: %s\n", this->synAttr.c_str());
+            if (!this->synAttr.empty()) {
+                return ResultTable({make_pair(this->entities[0]->toString(), answer)})
+                .intersection(this->entities[0]->getAttrVal(this->synAttr, pkb));
+            }
             return ResultTable({make_pair(this->entities[0]->toString(), answer)});
+        }
+        if (!this->synAttr.empty()) {
+            ResultTable temp = table.getColumn(this->entities[0]->toString()).intersection(this->entities[0]->getAttrVal(this->synAttr, pkb));
+            temp.renameColumn("withCond", this->entities[0]->toString() + "." + this->synAttr);
+            return temp.getColumn(this->entities[0]->toString() + "." + this->synAttr);
         }
         return table.getColumn(this->entities[0]->toString());
     }
