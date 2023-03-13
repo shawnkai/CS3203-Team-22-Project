@@ -8,8 +8,7 @@ using namespace std;
 
 QueryParser::QueryParser() {}
 
-SelectExpression* QueryParser::parse(string query) {
-    vector<Expression*> conditions;
+SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditions;
 
     query = sanitiseQuery(query);
     query = replaceAnd(query);
@@ -44,8 +43,7 @@ SelectExpression* QueryParser::parse(string query) {
             }
         }
 
-        if (FollowsExpression::containsFollowsExpression(query)) {
-            vector<FollowsExpression*> followsConditions = FollowsExpression::extractFollowsExpression(query, synonymTable);
+        if (FollowsExpression::containsFollowsExpression(query)) {vector<FollowsExpression*> followsConditions = FollowsExpression::extractFollowsExpression(query, synonymTable);
             for (FollowsExpression *e : followsConditions) {
                 conditions.push_back(e);
             }
@@ -59,8 +57,7 @@ SelectExpression* QueryParser::parse(string query) {
         }
 
         if (ParentExpression::containsParentExpression(query)) {
-            vector<ParentExpression*> parentConditions = ParentExpression::extractParentExpression(query, synonymTable);
-            for (ParentExpression *e : parentConditions) {
+            vector<ParentExpression*> parentConditions = ParentExpression::extractParentExpression(query, synonymTable);for (ParentExpression *e : parentConditions) {
                 conditions.push_back(e);
             }
         }
@@ -81,6 +78,7 @@ SelectExpression* QueryParser::parse(string query) {
 
         return new SelectExpression({arg}, conditions);
     } else {
+        ::printf("%s\n", Expression::QUERYVALIDATION.c_str());
         throw SyntacticException();
     }
 }

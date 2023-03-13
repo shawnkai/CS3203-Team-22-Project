@@ -43,7 +43,7 @@ StmtEntity::StmtEntity(int lineNumber) : DesignEntity("STATEMENT") {
 
 StmtEntity::StmtEntity() : DesignEntity("STATEMENT") {}
 
-vector<string> StmtEntity::validAttrs = {"stmt"};
+vector<string> StmtEntity::validAttrs = {"stmt#"};
 
 int StmtEntity::getLine() {
     return this->lineNumber;
@@ -62,32 +62,32 @@ string StmtEntity::toString() {
 ReadEntity::ReadEntity(int lineNumber) : StmtEntity("READ", lineNumber) {}
 ReadEntity::ReadEntity() : StmtEntity("READ") {}
 ReadEntity::ReadEntity(string synonym) : StmtEntity("READ", std::move(synonym)) {}
-vector<string> ReadEntity::validAttrs = {"varName", "stmt"};
+vector<string> ReadEntity::validAttrs = {"varName", "stmt#"};
 
 PrintEntity::PrintEntity(int lineNumber) : StmtEntity("PRINT", lineNumber) {}
 PrintEntity::PrintEntity() : StmtEntity("PRINT") {}
 PrintEntity::PrintEntity(string synonym) : StmtEntity("PRINT", std::move(synonym)) {}
-vector<string>  PrintEntity::validAttrs = {"varName", "stmt"};
+vector<string>  PrintEntity::validAttrs = {"varName", "stmt#"};
 
 AssignEntity::AssignEntity(int lineNumber) : StmtEntity("ASSIGNMENT", lineNumber) {}
 AssignEntity::AssignEntity() : StmtEntity("ASSIGNMENT") {}
 AssignEntity::AssignEntity(string synonym) : StmtEntity("ASSIGNMENT", std::move(synonym)) {}
-vector<string>  AssignEntity::validAttrs = {"stmt"};
+vector<string>  AssignEntity::validAttrs = {"stmt#"};
 
 CallEntity::CallEntity(int lineNumber) : StmtEntity("CALL", lineNumber) {}
 CallEntity::CallEntity() : StmtEntity("CALL") {}
 CallEntity::CallEntity(string synonym) : StmtEntity("CALL", std::move(synonym)) {}
-vector<string>  CallEntity::validAttrs = {"procName", "stmt"};
+vector<string>  CallEntity::validAttrs = {"procName", "stmt#"};
 
 WhileEntity::WhileEntity(int lineNumber) : StmtEntity("WHILE", lineNumber) {}
 WhileEntity::WhileEntity() : StmtEntity("WHILE") {}
 WhileEntity::WhileEntity(string synonym) : StmtEntity("WHILE", std::move(synonym)) {}
-vector<string>  WhileEntity::validAttrs = {"stmt"};
+vector<string>  WhileEntity::validAttrs = {"stmt#"};
 
 IfEntity::IfEntity(int lineNumber) : StmtEntity("IF", lineNumber) {}
 IfEntity::IfEntity() : StmtEntity("IF") {}
 IfEntity::IfEntity(string synonym) : StmtEntity("IF", std::move(synonym)) {}
-vector<string>  IfEntity::validAttrs = {"stmt"};
+vector<string>  IfEntity::validAttrs = {"stmt#"};
 
 
 // Named Entities and its children

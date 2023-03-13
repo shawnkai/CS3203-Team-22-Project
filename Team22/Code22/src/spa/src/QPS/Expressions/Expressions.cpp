@@ -17,8 +17,8 @@ string FOLLOWS = R"lit(Follows\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string FOLLOWSSTAR = R"lit(Follows\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string PARENT = R"lit(Parent\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string PARENTSTAR = R"lit(Parent\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-string ATTRCOND = R"lit(with\s+([\w]+.(?:\w|#)+|\"\w+\"|\d+)\s*=\s*([\w]+.(?:\w|#)+|\"\w+\"|\d+))lit";
-string QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + ")|\\s+" + PATTERN + "|\\s+" +ATTRCOND + ")*";
+string ATTRCOND = R"lit(with\s+([\w]+\.(?:\w|#)+|\"\w+\"|\d+)\s*=\s*([\w]+\.(?:\w|#)+|\"\w+\"|\d+))lit";
+string Expression::QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + ")|\\s+" + PATTERN + "|\\s+" + ATTRCOND + ")*";
 
 // Regexes
 regex Expression::QUERYVALIDATIONREGEX = regex(QUERYVALIDATION);

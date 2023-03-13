@@ -16,7 +16,8 @@ private:
     string syn1attr;
     string syn2attr;
 
-    static pair<DesignEntity*, string> generateSynAndAttrName(string ref, SynonymTable synonymTable);
+    static map<string, string> attrToType;
+    static pair<DesignEntity*, pair<string, string>> generateSynAndAttrName(string ref, SynonymTable synonymTable);
 
 public:
     AttrCondExpression(DesignEntity* syn1, string syn1attr, DesignEntity* syn2, string syn2attr);

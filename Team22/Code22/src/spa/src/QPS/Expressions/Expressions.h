@@ -39,6 +39,7 @@ class Expression {
         static regex ATTRCONDREGEX;
 
     public:
+        static string QUERYVALIDATION;
         static regex QUERYVALIDATIONREGEX;
 
     explicit Expression(vector<DesignEntity*> entities);
