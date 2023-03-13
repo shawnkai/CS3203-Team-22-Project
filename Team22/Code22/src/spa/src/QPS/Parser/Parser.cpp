@@ -152,7 +152,6 @@ void QueryParser::extractDeclarations(string query) {
                 }
                 this->synonymTable.add(type, subname);
                 name.erase(0, pos + delimiter.length());
-                ::printf("Declaration of %s : %s\n", subname.c_str(), type.c_str());
             }
         }
         if (!name.empty()) {
