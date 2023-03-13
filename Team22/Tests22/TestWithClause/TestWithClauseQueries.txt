@@ -1,0 +1,18 @@
+1 -  Find all statements whose statement number is equal to some constant
+stmt s; constant c;
+Select s with s.stmt# = c.value
+1, 2
+5000
+2 - Find statements that is followed by statement 10
+stmt s, s1;
+Select s.stmt# such that Follows* (s, s1) with s1.stmt#=9
+10, 11
+5000
+3 - Find read statement that has a variable that is used in a assign statement
+variable v, v1; read r;
+Select r such that Uses(r, v) with v.varName = “x”
+7
+5000
+4 - Find all variables used both in a read statement and a print statement
+variable v, v1; read r; print p;
+Select v with r.varName = p.varName
