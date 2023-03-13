@@ -200,8 +200,8 @@ ResultTable ReadEntity::getAttrVal(string attr, PKB pkb) {
         map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
         for (Result r: results) {
             for (string l : r.getQueryResult()) {
-                data[this->toString()].push_back(r.getQueryEntityName());
-                data["withCond"].push_back(l);
+                data[this->toString()].push_back(l);
+                data["withCond"].push_back(r.getQueryEntityName());
             }
         }
         return ResultTable(data);
@@ -220,8 +220,8 @@ ResultTable PrintEntity::getAttrVal(string attr, PKB pkb) {
         map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
         for (Result r: results) {
             for (string l : r.getQueryResult()) {
-                data[this->toString()].push_back(r.getQueryEntityName());
-                data["withCond"].push_back(l);
+                data[this->toString()].push_back(l);
+                data["withCond"].push_back(r.getQueryEntityName());
             }
         }
         return ResultTable(data);

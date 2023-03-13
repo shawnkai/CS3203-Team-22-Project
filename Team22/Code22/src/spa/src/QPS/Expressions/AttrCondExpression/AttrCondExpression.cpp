@@ -62,7 +62,11 @@ vector<AttrCondExpression*> AttrCondExpression::extractAttrCondExpression(const 
 }
 
 ResultTable AttrCondExpression::evaluate(PKB pkb) {
-    return ResultTable({});
+    // Syn1
+    ResultTable syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
+    // Syn2
+    ResultTable syn2Table = this->entities[1]->getAttrVal(syn2attr, pkb);
+    return syn1Table.intersection(syn2Table);
 }
 
 string AttrCondExpression::toString() {
