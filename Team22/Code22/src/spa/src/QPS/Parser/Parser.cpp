@@ -141,9 +141,9 @@ void QueryParser::extractDeclarations(string query) {
         smatch match = *i;
         string type = match.str(2);
         string name =  match.str(3);
-
+        name = Utilities::removeAllOccurrences(name, ' ');
         unsigned long pos = 0;
-        string delimiter = ", ";
+        string delimiter = ",";
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);
@@ -152,6 +152,7 @@ void QueryParser::extractDeclarations(string query) {
                 }
                 this->synonymTable.add(type, subname);
                 name.erase(0, pos + delimiter.length());
+                ::printf("Declaration of %s : %s\n", subname.c_str(), type.c_str());
             }
         }
         if (!name.empty()) {

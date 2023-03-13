@@ -18,3 +18,8 @@ variable v, v1; read r; print p;
 Select v such that Uses(p, v) with r.varName = p.varName
 x
 5000
+5 - Find all variables used both in a read statement and a print statement
+variable v,v1; assign a; print p;
+Select a such that Uses(a, v) pattern a (v1, _)
+4, 5, 10, 11, 12
+5000

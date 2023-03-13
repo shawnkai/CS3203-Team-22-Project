@@ -1,36 +1,52 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>8.121000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>12.170000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" With="1" CondNum="2" RelNum="0" comment="Find all statements whose statement number is equal to some constant">1</id><querystr><![CDATA[stmt s; constant c; Select s with s.stmt# = c.value]]></querystr>
 <stuans>1,2</stuans>
 <correct>1,2</correct>
-<time_taken>4.246000</time_taken>
+<time_taken>6.665000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Followsstar="1" SuchThat="1" With="1" CondNum="4" RelNum="1" comment="Find statements that is followed by statement 9">2</id><querystr><![CDATA[stmt s, s1; Select s such that Follows* (s, s1) with s1.stmt#=9]]></querystr>
 <stuans>1,2,3,6</stuans>
 <correct>1,2,3,6</correct>
-<time_taken>5.847000</time_taken>
+<time_taken>11.208000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" SuchThat="1" With="1" CondNum="4" RelNum="1" comment="Find read statement that has a variable that is used in a assign statement">3</id><querystr><![CDATA[variable v, v1; read r; Select r such that Modifies(r, v) with v.varName = "x"]]></querystr>
 <stuans>7</stuans>
 <correct>7</correct>
-<time_taken>3.752000</time_taken>
+<time_taken>11.925000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Uses="1" SuchThat="1" With="1" CondNum="4" RelNum="1" comment="Find all variables used both in a read statement and a print statement">4</id><querystr><![CDATA[variable v, v1; read r; print p; Select v such that Uses(p, v) with r.varName = p.varName]]></querystr>
 <stuans>x</stuans>
 <correct>x</correct>
-<time_taken>4.222000</time_taken>
+<time_taken>13.038000</time_taken>
 <passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="1" Uses="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Find all variables used both in a read statement and a print statement">5</id><querystr><![CDATA[variable v,v1; assign a; print p; Select a such that Uses(a, v) pattern a (v1, _)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>4,5,10,11,12</correct>
+<time_taken>8.931000</time_taken>
+<failed>
+<missing>10,11,12,4,5</missing>
+<additional>SemanticError</additional>
+<summary>
+<expected>5</expected>
+<matched>0</matched>
+<missing>5</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 </queries>
 </test_results>
