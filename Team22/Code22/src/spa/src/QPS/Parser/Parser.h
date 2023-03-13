@@ -21,7 +21,7 @@ private:
     static string sanitiseQuery(const string& query);
 
     regex ISDECLARATIONREGEX = regex(R"lit(((^|;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))+;)lit");
-    regex RETURNVALUEREGEX = regex(R"lit(Select\s*(\w+))lit");
+    regex RETURNVALUEREGEX = regex(R"lit(Select\s+([\w]+)(?:\.((?:\w|#)+))?)lit");
     regex EXTRACTDECLARATIONREGEX = regex(R"((^| |;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))");
 
 protected:

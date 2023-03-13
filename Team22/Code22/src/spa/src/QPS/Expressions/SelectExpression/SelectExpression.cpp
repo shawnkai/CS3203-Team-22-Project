@@ -4,12 +4,18 @@
 
 #include "SelectExpression.h"
 
-SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<Expression*> conditions) : Expression(std::move(entities)){
+SelectExpression::SelectExpression(DesignEntity* entity, vector<Expression*> conditions, string attribute) : Expression({entity}){
     this->conditions = std::move(conditions);
+    if (!attribute.empty() && !entity->checkAttr(attribute)) {
+        throw SemanticException();
+    }
+    this->synAttr = attribute;
 }
 
 string SelectExpression::toString() {
     string res = "Select " + this->entities[0]->toString();
+    if (!this->synAttr.empty())
+        res += "." + this->synAttr;
 
     if (!conditions.empty()) {
         res += " such that";

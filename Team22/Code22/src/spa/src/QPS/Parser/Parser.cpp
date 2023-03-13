@@ -15,12 +15,13 @@ SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditio
 
     if (this->isDeclaration(query) || query.empty()) {
         this->extractDeclarations(query);
-        return new SelectExpression({}, conditions);
+        return NULL;
     } else if (this->isValidQuery(query)) {
         smatch sm;
         regex_search(query, sm, RETURNVALUEREGEX);
 
         DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
+        string attr = sm.str(2);
 
         if (ModifiesExpression::containsModifiesExpression(query)) {
             vector<ModifiesExpression*> modifiesConditions = ModifiesExpression::extractModifiesExpression(query, synonymTable);
@@ -75,8 +76,10 @@ SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditio
                 conditions.push_back(e);
             }
         }
-
-        return new SelectExpression({arg}, conditions);
+        if (attr.empty()) {
+            return new SelectExpression(arg, conditions);
+        }
+        return new SelectExpression(arg, conditions, attr);
     } else {
         ::printf("%s\n", Expression::QUERYVALIDATION.c_str());
         throw SyntacticException();
