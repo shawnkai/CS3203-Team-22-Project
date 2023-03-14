@@ -25,6 +25,8 @@ public:
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query);
 
+    void addControlFlowGraph();
+
     void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber);
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
