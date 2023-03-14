@@ -18,6 +18,8 @@ using namespace std;
 #include "Pattern/AssignPattern/AssignPatternFactory.h"
 #include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
 
+#include "ControlFlowGraph/ControlFlowGraphStorageManager.h"
+
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
@@ -143,6 +145,33 @@ int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
 }
 
+void PKB::addControlFlowGraph(vector<int> topologicallySortedElements, map<int, vector<int>> blockToStatementNumbers,
+                              map<int, int> statementNumberToBlock, map<int, vector<int>> blockToBlock,
+                              unordered_set<int> blocksWithBackPointers) {
+    ControlFlowGraphStorageManager::addToDatabase(topologicallySortedElements, blockToStatementNumbers,
+                                                  statementNumberToBlock, blockToBlock, blocksWithBackPointers);
+}
+
+vector<int> PKB::getTopologicallySortedElementsDatabase() {
+    return ControlFlowGraphStorageManager::getTopologicallySortedElementsDatabase();
+}
+
+map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase() {
+    return ControlFlowGraphStorageManager::getBlockToStatementNumbersDatabase();
+}
+
+map<int, int> PKB::getStatementNumberToBlockDatabase() {
+    return ControlFlowGraphStorageManager::getStatementNumberToBlockDatabase();
+}
+
+map<int, vector<int>> PKB::getBlockToBlockDatabase() {
+    return ControlFlowGraphStorageManager::getBlockToBlockDatabase();
+}
+
+unordered_set<int> PKB::getBlocksWithBackPointersDatabase() {
+    return ControlFlowGraphStorageManager::getBlocksWithBackPointersDatabase();
+}
+
 /**
  * Clears the Assignment Pattern Database. This method is hidden
  * from the user.
@@ -167,6 +196,10 @@ void PKB::clearDesignAbstractionDatabase() {
     DesignAbstractionsDatabaseFactory::clearDatabase();
 }
 
+void PKB::clearControlFlowGraphDatabase() {
+    ControlFlowGraphStorageManager::clearDatabase();
+}
+
 /**
  * Clears the databases. Implemented to improve testing, as PKB storage is
  * static in nature, and to avoid cross-linkage among test cases.
@@ -175,4 +208,5 @@ void PKB::clearAllDatabases() {
     this->clearDesignAbstractionDatabase();
     this->clearDesignEntityDatabase();
     this->clearAssignPatternDatabase();
+    this->clearControlFlowGraphDatabase();
 }
