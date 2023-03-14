@@ -31,7 +31,7 @@ public:
     void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber);
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
-    vector<AssignPattern*> getAllRightHandExpressions();
+    unordered_map<string, unordered_map<string, string>> getAllRightHandExpressions();
 
     void addControlFlowGraph(vector<int> topologicallySortedElements, map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock, map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
     vector<int> getTopologicallySortedElementsDatabase();
