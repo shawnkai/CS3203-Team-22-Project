@@ -17,6 +17,8 @@ class TopologicallySortedElements {
 
 public:
     explicit TopologicallySortedElements(vector<int> topologicallySortedElementsDatabase);
+    explicit TopologicallySortedElements();
+
     void addElement(int element);
     void copyTopologicallySortedElementsDatabase(vector<int> topologicallySortedElements);
     vector<int> getTopologicallySortedElementsDatabase();

@@ -12,6 +12,10 @@ TopologicallySortedElements::TopologicallySortedElements(vector<int> topological
     this->topologicallySortedElementsDatabase = topologicallySortedElementsDatabase;
 }
 
+TopologicallySortedElements::TopologicallySortedElements() {
+    this->topologicallySortedElementsDatabase = vector<int> {};
+}
+
 void TopologicallySortedElements::addElement(int element) {
     this->topologicallySortedElementsDatabase.push_back(element);
 }

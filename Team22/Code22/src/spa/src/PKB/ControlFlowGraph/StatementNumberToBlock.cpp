@@ -12,6 +12,10 @@ StatementNumberToBlock::StatementNumberToBlock(map<int, int> statementNumbersToB
     this->statementNumbersToBlockDatabase = statementNumbersToBlockDatabase;
 }
 
+StatementNumberToBlock::StatementNumberToBlock() {
+    this->statementNumbersToBlockDatabase = map<int, int> {};
+}
+
 void StatementNumberToBlock::addToDatabase(int statementNumber, int block) {
     this->statementNumbersToBlockDatabase.insert(make_pair(statementNumber, block));
 }

@@ -18,6 +18,8 @@ class BlockToBlock {
 
 public:
     explicit BlockToBlock(map<int, vector<int>> blockToBlockDatabase);
+    explicit BlockToBlock();
+
     void addToDatabase(int block, vector<int> nextBlock);
     map<int, vector<int>> getBlockToBlockDatabase();
     void copyBlockToBlockDatabase(map<int, vector<int>> blockToBlock);

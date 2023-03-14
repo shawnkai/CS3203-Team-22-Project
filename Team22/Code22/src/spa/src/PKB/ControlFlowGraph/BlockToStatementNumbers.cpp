@@ -13,6 +13,10 @@ BlockToStatementNumbers::BlockToStatementNumbers(
     this->blockToStatementNumbersDatabase = blockToStatementNumbersDatabase;
 }
 
+BlockToStatementNumbers::BlockToStatementNumbers() {
+    this->blockToStatementNumbersDatabase = map<int, vector<int>> {};
+}
+
 void BlockToStatementNumbers::addToDatabase(int blockNumber, vector<int> statementNumbers) {
     this->blockToStatementNumbersDatabase.insert(make_pair(blockNumber, statementNumbers));
 }

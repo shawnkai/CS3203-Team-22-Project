@@ -12,6 +12,10 @@ BlockToBlock::BlockToBlock(map<int, vector<int>> blockToBlockDatabase) {
     this->blockToBlockDatabase = blockToBlockDatabase;
 }
 
+BlockToBlock::BlockToBlock() {
+    this->blockToBlockDatabase = map<int, vector<int>> {};
+}
+
 void BlockToBlock::addToDatabase(int block, vector<int> nextBlock) {
     this->blockToBlockDatabase.insert(make_pair(block, nextBlock));
 }

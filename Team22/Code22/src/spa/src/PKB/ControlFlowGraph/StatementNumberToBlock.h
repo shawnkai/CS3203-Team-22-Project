@@ -17,6 +17,8 @@ class StatementNumberToBlock {
 
 public:
     explicit StatementNumberToBlock(map<int, int> statementNumbersToBlockDatabase);
+    explicit StatementNumberToBlock();
+
     void addToDatabase(int statementNumber, int block);
     map<int, int> getStatementNumbersToBlockDatabase();
     void copyStatementNumberToBlockDatabase(map<int, int> statementNumberToBlock);

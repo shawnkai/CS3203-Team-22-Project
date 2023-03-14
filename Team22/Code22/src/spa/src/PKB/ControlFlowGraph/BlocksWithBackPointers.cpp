@@ -12,6 +12,10 @@ BlocksWithBackPointers::BlocksWithBackPointers(unordered_set<int> blocksWithBack
     this->blocksWithBackPointersDatabase = blocksWithBackPointersDatabase;
 }
 
+BlocksWithBackPointers::BlocksWithBackPointers() {
+    this->blocksWithBackPointersDatabase = unordered_set<int> {};
+}
+
 void BlocksWithBackPointers::addToDatabase(int blockWithBackPointer) {
     this->blocksWithBackPointersDatabase.insert(blockWithBackPointer);
 }

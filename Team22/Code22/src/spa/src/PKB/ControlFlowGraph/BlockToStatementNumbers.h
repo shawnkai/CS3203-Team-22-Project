@@ -18,6 +18,8 @@ class BlockToStatementNumbers {
 
 public:
     explicit BlockToStatementNumbers(map<int, vector<int>> blockToStatementNumbersDatabase);
+    explicit BlockToStatementNumbers();
+
     void addToDatabase(int blockNumber, vector<int> statementNumbers);
     map<int, vector<int>> getBlockToStatementNumbersDatabase();
     void copyBlockToStatementNumbersDatabase(map<int, vector<int>> blockToStatementNumbers);

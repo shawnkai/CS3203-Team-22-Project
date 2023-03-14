@@ -17,6 +17,8 @@ class BlocksWithBackPointers {
 
 public:
     explicit BlocksWithBackPointers(unordered_set<int> blocksWithBackPointersDatabase);
+    explicit BlocksWithBackPointers();
+
     void addToDatabase(int blockWithBackPointer);
     void copyBlocksWithBackPointersDatabase(unordered_set<int> blocksWithBackPointers);
     unordered_set<int> getBlocksWithBackPointersDatabase();
