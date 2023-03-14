@@ -9,17 +9,18 @@
 
 #include <iostream>
 #include <map>
+#include <vector>
 
 using namespace std;
 
 class BlockToBlock {
-    map<int, int> blockToBlockDatabase;
+    map<int, vector<int>> blockToBlockDatabase;
 
 public:
-    explicit BlockToBlock(map<int, int> blockToBlockDatabase);
-    void addToDatabase(int block, int nextBlock);
-    map<int, int> getBlockToBlockDatabase();
-    void copyBlockToBlockDatabase(map<int, int> blockToBlock);
+    explicit BlockToBlock(map<int, vector<int>> blockToBlockDatabase);
+    void addToDatabase(int block, vector<int> nextBlock);
+    map<int, vector<int>> getBlockToBlockDatabase();
+    void copyBlockToBlockDatabase(map<int, vector<int>> blockToBlock);
     void clearDatabase();
 };
 

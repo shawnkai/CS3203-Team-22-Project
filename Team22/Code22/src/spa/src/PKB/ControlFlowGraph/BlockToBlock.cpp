@@ -8,19 +8,19 @@
 
 using namespace std;
 
-BlockToBlock::BlockToBlock(map<int, int> blockToBlockDatabase) {
+BlockToBlock::BlockToBlock(map<int, vector<int>> blockToBlockDatabase) {
     this->blockToBlockDatabase = blockToBlockDatabase;
 }
 
-void BlockToBlock::addToDatabase(int block, int nextBlock) {
+void BlockToBlock::addToDatabase(int block, vector<int> nextBlock) {
     this->blockToBlockDatabase.insert(make_pair(block, nextBlock));
 }
 
-void BlockToBlock::copyBlockToBlockDatabase(map<int, int> blockToBlock) {
+void BlockToBlock::copyBlockToBlockDatabase(map<int, vector<int>> blockToBlock) {
     this->blockToBlockDatabase = blockToBlock;
 }
 
-map<int, int> BlockToBlock::getBlockToBlockDatabase() {
+map<int, vector<int>> BlockToBlock::getBlockToBlockDatabase() {
     return this->blockToBlockDatabase;
 }
 
