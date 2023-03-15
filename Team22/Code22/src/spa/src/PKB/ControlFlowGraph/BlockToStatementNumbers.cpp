@@ -30,6 +30,5 @@ void BlockToStatementNumbers::copyBlockToStatementNumbersDatabase(map<int, vecto
 }
 
 void BlockToStatementNumbers::clearDatabase() {
-    std::destroy(this->blockToStatementNumbersDatabase.begin(),
-                 this->blockToStatementNumbersDatabase.end());
+    this->blockToStatementNumbersDatabase = map<int, vector<int>> {};
 }
