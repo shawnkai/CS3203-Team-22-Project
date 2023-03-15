@@ -18,7 +18,8 @@ using namespace std;
 #include "Pattern/AssignPattern/AssignPatternFactory.h"
 #include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
 
-#include "ControlFlowGraph/ControlFlowGraphStorageManager.h"
+#include "ControlFlowGraph/ControlFlowGraphFactory.h"
+#include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
 
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
@@ -145,31 +146,42 @@ int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
 }
 
-void PKB::addControlFlowGraph(vector<int> topologicallySortedElements, map<int, vector<int>> blockToStatementNumbers,
-                              map<int, int> statementNumberToBlock, map<int, vector<int>> blockToBlock,
-                              unordered_set<int> blocksWithBackPointers) {
-    ControlFlowGraphStorageManager::addToDatabase(topologicallySortedElements, blockToStatementNumbers,
-                                                  statementNumberToBlock, blockToBlock, blocksWithBackPointers);
+void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
+                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
+                              map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers) {
+    ControlFlowGraph* controlFlowGraph = ControlFlowGraphFactory::createControlFlowGraph(procedureName,
+                                                                                         topologicallySortedElements,
+                                                                                         blockToStatementNumbers,
+                                                                                         statementNumberToBlock,
+                                                                                         blockToBlock,
+                                                                                         blocksWithBackPointers);
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    db->addToDatabase(controlFlowGraph);
 }
 
-vector<int> PKB::getTopologicallySortedElementsDatabase() {
-    return ControlFlowGraphStorageManager::getTopologicallySortedBlockNumbersDatabase();
+vector<int> PKB::getTopologicallySortedElementsDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getTopologicallySortedBlockNumbersDatabaseFromDatabase(procedureName);
 }
 
-map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase() {
-    return ControlFlowGraphStorageManager::getBlockToStatementNumbersDatabase();
+map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlockToStatementNumberDatabaseFromDatabase(procedureName);
 }
 
-map<int, int> PKB::getStatementNumberToBlockDatabase() {
-    return ControlFlowGraphStorageManager::getStatementNumberToBlockDatabase();
+map<int, int> PKB::getStatementNumberToBlockDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getStatementNumberToBlockDatabaseFromDatabase(procedureName);
 }
 
-map<int, vector<int>> PKB::getBlockToBlockDatabase() {
-    return ControlFlowGraphStorageManager::getBlockToBlockDatabase();
+map<int, vector<int>> PKB::getBlockToBlockDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlockToBlockDatabaseFromDatabase(procedureName);
 }
 
-unordered_set<int> PKB::getBlocksWithBackPointersDatabase() {
-    return ControlFlowGraphStorageManager::getBlocksWithBackPointersDatabase();
+unordered_set<int> PKB::getBlocksWithBackPointersDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlocksWithBackPointersDatabaseFromDatabase(procedureName);
 }
 
 /**
@@ -197,7 +209,7 @@ void PKB::clearDesignAbstractionDatabase() {
 }
 
 void PKB::clearControlFlowGraphDatabase() {
-    ControlFlowGraphStorageManager::clearDatabase();
+    ControlFlowGraphDatabaseFactory::clearDatabase();
 }
 
 /**

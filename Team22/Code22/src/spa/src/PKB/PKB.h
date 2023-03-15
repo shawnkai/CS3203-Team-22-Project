@@ -33,12 +33,12 @@ public:
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
     vector<AssignPattern*> getAllRightHandExpressions();
 
-    void addControlFlowGraph(vector<int> topologicallySortedElements, map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock, map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
-    vector<int> getTopologicallySortedElementsDatabase();
-    map<int, vector<int>> getBlockToStatementNumbersDatabase();
-    map<int, int> getStatementNumberToBlockDatabase();
-    map<int, vector<int>> getBlockToBlockDatabase();
-    unordered_set<int> getBlocksWithBackPointersDatabase();
+    void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements, map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock, map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
+    vector<int> getTopologicallySortedElementsDatabase(string procedureName);
+    map<int, vector<int>> getBlockToStatementNumbersDatabase(string procedureName);
+    map<int, int> getStatementNumberToBlockDatabase(string procedureName);
+    map<int, vector<int>> getBlockToBlockDatabase(string procedureName);
+    unordered_set<int> getBlocksWithBackPointersDatabase(string procedureName);
 
     void clearAllDatabases();
 };
