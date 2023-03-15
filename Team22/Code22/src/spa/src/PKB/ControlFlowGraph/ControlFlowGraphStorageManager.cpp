@@ -8,20 +8,20 @@
 
 using namespace std;
 
-void ControlFlowGraphStorageManager::addToDatabase(vector<int> topologicallySortedElements,
+void ControlFlowGraphStorageManager::addToDatabase(vector<int> topologicallySortedBlockNumbers,
                                                    map<int, vector<int>> blockToStatementNumbers,
                                                    map<int, int> statementNumberToBlock,
                                                    map<int, vector<int>> blockToBlock,
                                                    unordered_set<int> blocksWithBackPointers) {
-    topologicallySortedElementsDatabase = new TopologicallySortedElements(topologicallySortedElements);
+    topologicallySortedBlockNumbersDatabase = new TopologicallySortedBlockNumbers(topologicallySortedBlockNumbers);
     blockToStatementNumbersDatabase = new BlockToStatementNumbers(blockToStatementNumbers);
     statementNumberToBlockDatabase = new StatementNumberToBlock(statementNumberToBlock);
     blockToBlockDatabase = new BlockToBlock(blockToBlock);
     blocksWithBackPointersDatabase = new BlocksWithBackPointers(blocksWithBackPointers);
 }
 
-vector<int> ControlFlowGraphStorageManager::getTopologicallySortedElementsDatabase() {
-    return topologicallySortedElementsDatabase->getTopologicallySortedElementsDatabase();
+vector<int> ControlFlowGraphStorageManager::getTopologicallySortedBlockNumbersDatabase() {
+    return topologicallySortedBlockNumbersDatabase->getTopologicallySortedBlockNumbersDatabase();
 }
 
 map<int, vector<int>> ControlFlowGraphStorageManager::getBlockToStatementNumbersDatabase() {
@@ -41,13 +41,13 @@ unordered_set<int> ControlFlowGraphStorageManager::getBlocksWithBackPointersData
 }
 
 void ControlFlowGraphStorageManager::clearDatabase() {
-    delete topologicallySortedElementsDatabase;
+    delete topologicallySortedBlockNumbersDatabase;
     delete blockToStatementNumbersDatabase;
     delete statementNumberToBlockDatabase;
     delete blockToBlockDatabase;
     delete blocksWithBackPointersDatabase;
 
-    topologicallySortedElementsDatabase = new TopologicallySortedElements();
+    topologicallySortedBlockNumbersDatabase = new TopologicallySortedBlockNumbers();
     blockToStatementNumbersDatabase = new BlockToStatementNumbers();
     statementNumberToBlockDatabase = new StatementNumberToBlock();
     blockToBlockDatabase = new BlockToBlock();

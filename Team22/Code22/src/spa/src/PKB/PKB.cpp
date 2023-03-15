@@ -153,7 +153,7 @@ void PKB::addControlFlowGraph(vector<int> topologicallySortedElements, map<int, 
 }
 
 vector<int> PKB::getTopologicallySortedElementsDatabase() {
-    return ControlFlowGraphStorageManager::getTopologicallySortedElementsDatabase();
+    return ControlFlowGraphStorageManager::getTopologicallySortedBlockNumbersDatabase();
 }
 
 map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase() {
