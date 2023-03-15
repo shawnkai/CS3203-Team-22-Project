@@ -10,14 +10,14 @@
 
 using namespace std;
 
-TEST_CASE("Test 1: Creating Object With Default Constructor") {
+TEST_CASE("Test 1: Creating TopologicallySortedBlockNumbers With Default Constructor") {
     TopologicallySortedBlockNumbers* topologicallySortedBlockNumbers = new TopologicallySortedBlockNumbers();
     vector<int> database = topologicallySortedBlockNumbers->getTopologicallySortedBlockNumbersDatabase();
 
     REQUIRE((database.size() == 0));
 }
 
-TEST_CASE("Test 2: Creating Object With Parameterised Constructor") {
+TEST_CASE("Test 2: Creating TopologicallySortedBlockNumbers With Parameterised Constructor") {
     vector<int> sampleVector = {1, 2, 3, 4};
     TopologicallySortedBlockNumbers* topologicallySortedBlockNumbers = new TopologicallySortedBlockNumbers(sampleVector);
     vector<int> database = topologicallySortedBlockNumbers->getTopologicallySortedBlockNumbersDatabase();
@@ -34,7 +34,7 @@ TEST_CASE("Test 3: Adding An Individual Block Number") {
     REQUIRE((database.size() == 1));
 }
 
-TEST_CASE("Test 4: Copying A New Block Numbers Database") {
+TEST_CASE("Test 4: Copying A New Topologically Sorted Block Numbers Database") {
     TopologicallySortedBlockNumbers* topologicallySortedBlockNumbers = new TopologicallySortedBlockNumbers();
     topologicallySortedBlockNumbers->addBlockNumber(2);
 
@@ -46,7 +46,7 @@ TEST_CASE("Test 4: Copying A New Block Numbers Database") {
     REQUIRE(((oldDatabase.size() == 1) && (newDatabase.size() == 3)));
 }
 
-TEST_CASE("Test 5: Clearing Database") {
+TEST_CASE("Test 5: Clearing TopologicallySortedBlockNumbers Database") {
     TopologicallySortedBlockNumbers* topologicallySortedBlockNumbers = new TopologicallySortedBlockNumbers();
     topologicallySortedBlockNumbers->addBlockNumber(2);
 
