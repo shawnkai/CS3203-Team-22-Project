@@ -42,3 +42,24 @@ map<int, vector<int>> ControlFlowGraph::getBlockToBlockDatabase() {
 unordered_set<int> ControlFlowGraph::getBlocksWithBackPointersDatabase() {
     return this->blocksWithBackPointersDatabase->getBlocksWithBackPointersDatabase();
 }
+
+void ControlFlowGraph::updateTopologicallySortedBlockNumbersDatabase(
+        vector<int> newTopologicallySortedBlockNumbersDatabase) {
+    this->topologicallySortedBlockNumbersDatabase->copyTopologicallySortedBlockNumbersDatabase(newTopologicallySortedBlockNumbersDatabase);
+}
+
+void ControlFlowGraph::updateBlockToStatementNumbersDatabase(map<int, vector<int>> newBlockToStatementNumbersDatabase) {
+    this->blockToStatementNumbersDatabase->copyBlockToStatementNumbersDatabase(newBlockToStatementNumbersDatabase);
+}
+
+void ControlFlowGraph::updateStatementNumberToBlockDatabase(map<int, int> newStatementNumberToBlockDatabase) {
+    this->statementNumberToBlockDatabase->copyStatementNumberToBlockDatabase(newStatementNumberToBlockDatabase);
+}
+
+void ControlFlowGraph::updateBlockToBlockDatabase(map<int, vector<int>> newBlockToBlockDatabase) {
+    this->blockToBlockDatabase->copyBlockToBlockDatabase(newBlockToBlockDatabase);
+}
+
+void ControlFlowGraph::updateBlocksWithBackPointers(unordered_set<int> newBlocksWithBackPointersDatabase) {
+    this->blocksWithBackPointersDatabase->copyBlocksWithBackPointersDatabase(newBlocksWithBackPointersDatabase);
+}

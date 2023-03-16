@@ -37,6 +37,12 @@ public:
     map<int, int> getStatementNumberToBlockDatabase();
     map<int, vector<int>> getBlockToBlockDatabase();
     unordered_set<int> getBlocksWithBackPointersDatabase();
+
+    void updateTopologicallySortedBlockNumbersDatabase(vector<int> newTopologicallySortedBlockNumbersDatabase);
+    void updateBlockToStatementNumbersDatabase(map<int, vector<int>> newBlockToStatementNumbersDatabase);
+    void updateStatementNumberToBlockDatabase(map<int, int> newStatementNumberToBlockDatabase);
+    void updateBlockToBlockDatabase(map<int, vector<int>> newBlockToBlockDatabase);
+    void updateBlocksWithBackPointers(unordered_set<int> newBlocksWithBackPointersDatabase);
 };
 
 #endif //SPA_CONTROLFLOWGRAPH_H
