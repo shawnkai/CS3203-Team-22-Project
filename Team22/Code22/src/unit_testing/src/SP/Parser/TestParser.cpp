@@ -1105,7 +1105,13 @@ TEST_CASE("TestCase22_ParseLongProcedure_ShouldSuccess") {
                   "     }  \n"
                   "  }\n"
                   " read z;\n"
-                  "}";
+                  "}\n"
+                  "procedure test2 {\n"
+                  "read a;\n"
+                  "}\n"
+                  "procedure test3 {\n"
+                  "read b;\n"
+                  "}\n";
     ofstream temp_file;
     temp_file.open(relativePath);
     temp_file << code;

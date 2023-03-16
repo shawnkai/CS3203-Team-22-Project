@@ -52,6 +52,16 @@ void SPDriver::parseSimpleProgram(std::string filename) {
             }
         }
     }
+    vector<Cfg> controlFlowGraphs;
+    for (auto procedure: result.children) {
+        Cfg controlFlowGraph = Cfg(procedure);
+        controlFlowGraph.buildCfg(procedure, -1);
+        controlFlowGraphs.push_back(controlFlowGraph);
+    }
+    for (auto graph: controlFlowGraphs) {
+        cout << graph.toString() << endl;
+    }
+
     PKB pkbinstance = PKB();
     DesignExtractor designExtractor;
     designExtractor.extractAbstraction(result, pkbinstance);
