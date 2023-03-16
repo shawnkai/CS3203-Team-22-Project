@@ -33,7 +33,9 @@ public:
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
     vector<AssignPattern*> getAllRightHandExpressions();
 
-    void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements, map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock, map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
+    void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
+                             map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
+                             map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
     vector<int> getTopologicallySortedElementsDatabase(string procedureName);
     map<int, vector<int>> getBlockToStatementNumbersDatabase(string procedureName);
     map<int, int> getStatementNumberToBlockDatabase(string procedureName);
