@@ -142,6 +142,13 @@ vector<AssignPattern*> PKB::getAllRightHandExpressions() {
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
 
+vector<Result> PKB::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
+    DesignAbstractionDatabase* db =
+            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
+                                                                      entityTypeBeingAbstracted);
+    return db->getAllFromDatabase();
+}
+
 int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
 }

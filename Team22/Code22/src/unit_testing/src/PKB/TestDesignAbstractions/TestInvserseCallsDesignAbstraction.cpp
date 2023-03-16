@@ -87,3 +87,16 @@ TEST_CASE("Test 6: Populate The InverseCalls Database And Call Clear All Databas
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 7: Retrieval of All InverseCalls Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("INVERSECALLS", make_tuple("_", "a19", "a20"));
+        pkbTest.addDesignAbstraction("INVERSECALLS", make_tuple("_", "a21", "a22"));
+        pkbTest.addDesignAbstraction("INVERSECALLS", make_tuple("_", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("INVERSECALLS", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}

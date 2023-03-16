@@ -46,6 +46,7 @@ bool DesignAbstractionDatabase::isPresentInDatabase(string entityName) {
     if ((this->abstractionDatabase).find(entityName) == (this->abstractionDatabase).end()) {
         return false;
     }
+
     return true;
 }
 
@@ -87,3 +88,15 @@ Result DesignAbstractionDatabase::getFromDatabase(string entityName) {
     return Result("none", "none", none);
 }
 
+vector<Result> DesignAbstractionDatabase::getAllFromDatabase() {
+    vector<Result> result;
+
+    for (auto& [entityName, designAbstraction]: this->abstractionDatabase) {
+        result.emplace_back(
+                designAbstraction->getTypeOfAbstraction(),
+                designAbstraction->getEntityName(),
+                designAbstraction->getEntityOccurrence());
+    }
+
+    return result;
+}

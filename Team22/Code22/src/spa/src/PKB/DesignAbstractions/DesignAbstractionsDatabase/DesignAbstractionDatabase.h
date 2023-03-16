@@ -25,6 +25,7 @@ class DesignAbstractionDatabase {
 public:
     virtual void addToDatabase(DesignAbstraction* designAbstractionToBeStored);
     virtual Result getFromDatabase(string entityName);
+    virtual vector<Result> getAllFromDatabase();
 };
 
 #endif //SPA_DESIGNABSTRACTIONDATABASE_H
