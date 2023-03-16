@@ -29,5 +29,5 @@ void StatementNumberToBlock::copyStatementNumberToBlockDatabase(map<int, int> st
 }
 
 void StatementNumberToBlock::clearDatabase() {
-    std::destroy(this->statementNumbersToBlockDatabase.begin(), this->statementNumbersToBlockDatabase.end());
+    this->statementNumbersToBlockDatabase = map<int, int> {};
 }
