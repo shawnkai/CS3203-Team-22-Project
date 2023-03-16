@@ -8,8 +8,13 @@
 
 using namespace std;
 
-void ControlFlowGraphDatabase::addToDatabase(ControlFlowGraph *controlFlowGraph) {
-    this->controlFlowGraphDatabase.insert(make_pair(controlFlowGraph->getProcedureName(), controlFlowGraph));
+void ControlFlowGraphDatabase::addToDatabase(ControlFlowGraph *controlFlowGraphToBeStored) {
+    if (this->isPresentInDatabase(controlFlowGraphToBeStored->getProcedureName())) {
+        this->updateControlFlowGraphInDatabase(controlFlowGraphToBeStored);
+    } else {
+        this->controlFlowGraphDatabase.insert(
+                make_pair(controlFlowGraphToBeStored->getProcedureName(), controlFlowGraphToBeStored));
+    }
 }
 
 bool ControlFlowGraphDatabase::isPresentInDatabase(string procedureName) {
@@ -18,6 +23,23 @@ bool ControlFlowGraphDatabase::isPresentInDatabase(string procedureName) {
     }
 
     return true;
+}
+
+void ControlFlowGraphDatabase::updateControlFlowGraphInDatabase(ControlFlowGraph *controlFlowGraphToBeStored) {
+    auto iterator = this->controlFlowGraphDatabase.find(controlFlowGraphToBeStored->getProcedureName());
+
+    ControlFlowGraph* existingControlFlowGraph = iterator->second;
+
+    existingControlFlowGraph->updateTopologicallySortedBlockNumbersDatabase(
+            controlFlowGraphToBeStored->getTopologicallySortedBlockNumbersDatabase());
+    existingControlFlowGraph->updateBlockToStatementNumbersDatabase(
+            controlFlowGraphToBeStored->getBlockToStatementNumbersDatabase());
+    existingControlFlowGraph->updateStatementNumberToBlockDatabase(
+            controlFlowGraphToBeStored->getStatementNumberToBlockDatabase());
+    existingControlFlowGraph->updateBlockToBlockDatabase(
+            controlFlowGraphToBeStored->getBlockToBlockDatabase());
+    existingControlFlowGraph->updateBlocksWithBackPointers(
+            controlFlowGraphToBeStored->getBlocksWithBackPointersDatabase());
 }
 
 vector<int> ControlFlowGraphDatabase::getTopologicallySortedBlockNumbersDatabaseFromDatabase(string procedureName) {

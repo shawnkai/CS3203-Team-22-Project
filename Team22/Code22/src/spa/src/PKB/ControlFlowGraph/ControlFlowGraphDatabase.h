@@ -20,9 +20,10 @@ class ControlFlowGraphDatabase {
     unordered_map<string, ControlFlowGraph*> controlFlowGraphDatabase;
 
     bool isPresentInDatabase(string procedureName);
+    void updateControlFlowGraphInDatabase(ControlFlowGraph* controlFlowGraphToBeStored);
 
 public:
-    void addToDatabase(ControlFlowGraph* controlFlowGraph);
+    void addToDatabase(ControlFlowGraph* controlFlowGraphToBeStored);
 
     vector<int> getTopologicallySortedBlockNumbersDatabaseFromDatabase(string procedureName);
     map<int, vector<int>> getBlockToStatementNumberDatabaseFromDatabase(string procedureName);
