@@ -88,16 +88,16 @@ variable v;
 Select v such that Uses(_, v)
 SemanticError
 5000
-//19 - actual variable as argument 1 return semantic error <--- error not handled
-//variable v;
-//Select v such that Uses("x", _)
-//SemanticError
-//5000
-//20 - variable synonym as argument 1 return semantic error <--- error not handled
-//variable v;
-//Select v such that Uses(v, _)
-//SemanticError
-//5000
+19 - actual variable as argument 1 return semantic error <--- error not handled
+variable v;
+Select v such that Uses("x", _)
+SemanticError
+5000
+20 - variable synonym as argument 1 return semantic error <--- error not handled
+variable v;
+Select v such that Uses(v, _)
+SemanticError
+5000
 21 - undeclared synonym return semantic error
 variable s;
 Select v such that Uses(v, _)
