@@ -14,6 +14,8 @@
 #pragma once
 
 #include "../Parser/TNode.h"
+#include "../Parser/Parser.h"
+#include "../Tokenizer/Tokenizer.h"
 using namespace std;
 
 class Cfg {
