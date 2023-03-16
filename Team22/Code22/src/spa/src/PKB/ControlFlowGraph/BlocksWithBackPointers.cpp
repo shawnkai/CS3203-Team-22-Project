@@ -29,5 +29,5 @@ unordered_set<int> BlocksWithBackPointers::getBlocksWithBackPointersDatabase() {
 }
 
 void BlocksWithBackPointers::clearDatabase() {
-    std::destroy(this->blocksWithBackPointersDatabase.begin(), this->blocksWithBackPointersDatabase.end());
+    this->blocksWithBackPointersDatabase = unordered_set<int> {};
 }

@@ -25,7 +25,7 @@ TEST_CASE("Test 2: Creating TopologicallySortedBlockNumbers With Parameterised C
     REQUIRE((database.size() != 0));
 }
 
-TEST_CASE("Test 3: Adding An Individual Block Number") {
+TEST_CASE("Test 3: Adding An Individual Block Number In TopologicallySortedBlockNumbers Database") {
     TopologicallySortedBlockNumbers* topologicallySortedBlockNumbers = new TopologicallySortedBlockNumbers();
     topologicallySortedBlockNumbers->addBlockNumber(2);
 
