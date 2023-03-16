@@ -29,5 +29,5 @@ map<int, vector<int>> BlockToBlock::getBlockToBlockDatabase() {
 }
 
 void BlockToBlock::clearDatabase() {
-    std::destroy(this->blockToBlockDatabase.begin(), this->blockToBlockDatabase.end());
+    this->blockToBlockDatabase = map<int, vector<int>> {};
 }

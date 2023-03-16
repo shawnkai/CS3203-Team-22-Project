@@ -58,7 +58,6 @@ TEST_CASE("Test 5: Clearing StatementNumberToBlock Database") {
     StatementNumberToBlock* statementNumberToBlock = new StatementNumberToBlock();
     statementNumberToBlock->addToDatabase(1, 1);
 
-
     statementNumberToBlock->clearDatabase();
 
     map<int, int> database = statementNumberToBlock->getStatementNumbersToBlockDatabase();
