@@ -1,0 +1,374 @@
+//testing of error and corner cases
+
+1 - double connected wildcard in second such that clause return syntax error
+variable v;
+Select v such that Modifies(v, _) such that Uses(v, __)
+SyntaxError
+5000
+2 - double separated wildcard in second such that clause return syntax error
+variable v;
+Select v such that Uses(v, _) such that Modifies(v, _ _)
+SyntaxError
+5000
+3 - empty " " in second such that clause return syntax error 
+variable v;
+Select v such that Uses(v, _) such that Modifies(v, "")
+SyntaxError
+5000
+4 - empty " " with whitespace in second such that clause return syntax error
+variable v;
+Select v such that Uses(v, _) such that Modifies(v, " ")
+SyntaxError
+5000
+5 - wildcard with " " in second such that clause return syntax error
+variable v;
+Select v such that Uses(v, _) such that Modifies(v, "_")
+SyntaxError
+5000
+6 - Modifies spelled as ModifiesS in second such that clause return syntax error
+variable v;
+Select v such that Modifies(1, _) such that ModifiesS(1, _)
+SyntaxError
+5000
+7 - Modifies spelled as ModifiesP in second such that clause return syntax error
+variable v;
+Select v such that Modifies(1, _) such that ModifiesP(1, _)
+SyntaxError
+5000
+8 - both argument is wildcard in second such that clause return semantic error 
+variable v;
+Select v such that Modifies(1, _) such that Modifies(_, _)
+SemanticError
+5000
+9 - argument 1 is wildcard in second such that clause return semantic error
+variable v;
+Select v such that Modifies(1, _) such that Modifies(_, v)
+SemanticError
+5000
+10 - "Select" with small "s" return syntax error
+variable v;
+select v such that such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+11 - missing ; return syntax error
+variable v
+Select v such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+12 - extra ; return syntax error
+variable v;
+Select v such that Modifies(1, _) such that Uses(v, _);
+SyntaxError
+5000
+13 - declaration spelt wrongly return syntax error
+vaiable v;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+14 - declaration variable with capital "v" return syntax error
+Variable v;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+15 - declaration stmt spelt in full return syntax error
+variable v; statement s;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+16 - missing ; between 2 declarations return syntax error
+variable v stmt s;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+17 - variable synonym declared twice return syntax error
+variable v; variable v1;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SyntaxError
+5000
+18 - actual variable as argument 1 in second such that clause return semantic error
+variable v;
+Select v such that Modifies(1, _) such that Uses("x", _)
+SemanticError
+5000
+19 - variable synonym as argument 1 in second such that clause return semantic error
+variable v;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SemanticError
+5000
+20 - undeclared synonym return semantic error
+variable s;
+Select v such that Modifies(1, _) such that Uses(v, _)
+SemanticError
+5000
+21 - argument 2 statement synonym in second such that clause return semantic error
+variable v; stmt s;
+Select v such that Modifies(1, _) such that Uses(7, s)
+SemanticError
+5000
+22 - argument 2 assign synonym for Uses in second such that clause return semantic error
+variable v; assign a;
+Select v such that Modifies(1, _) such that Uses(7, a)
+SemanticError
+5000
+23 - argument 2 assign synonym for Modifies in second such that clause return semantic error
+variable v; assign a;
+Select v such that Uses(a, _) such that Modifies(7, a)
+SemanticError
+5000
+24 - argument 2 assign synonym in second such that clause return semantic error
+variable v; assign variable;
+Select v such that Modifies(1, _) such that Uses(7, variable)
+SemanticError
+5000
+25 - valid meaningless query return all variables
+variable v; assign a;
+Select v such that Uses(7, "x") such that Modifies(7, "x")
+x, y, z, a, b, i
+5000
+26 - invalid meaningless query in second such that clause return nothing
+variable v; assign a;
+Select v such that Modifies(7, "x") such that Uses(7, "z")
+none
+5000
+27 - multiple additional whitespaces in both such that clauses
+assign a; variable v;
+Select a such that   Uses  ( a  ,  "z"    )   such that   Modifies   (  a  ,  "z"    )   
+17,31
+5000
+
+//Testing of ModifiesP and UsesP
+
+28 - modifies with assign and uses with assign
+assign a; variable v;
+Select a such that Modifies(a, "z")  such that Uses(a, "z")    
+17,31
+5000
+29 - modifies with stmt and uses with stmt
+assign a; variable v; stmt s;
+Select s such that Modifies(s, "z")  such that Uses(s, "z")    
+6,8,17,20,31
+5000
+30 - modifies with read and uses with print
+assign a; variable v; stmt s; read re; print pn;
+Select v such that Modifies(re, v)  such that Uses(pn, v)    
+b
+5000
+31 - modifies with if and uses with if
+assign a; variable v; stmt s; read re; print pn; if if; 
+Select if such that Modifies(if, "x")  such that Uses(if, "x") 
+8,10,12,20
+5000
+32 - modifies with while and uses with while
+assign a; variable v; stmt s; read re; print pn; while w; 
+Select w such that Modifies(w, v)  such that Uses(w, v) 
+6,21,23,24
+5000
+33 - modifies with procedure and uses with procedure
+assign a; variable v; stmt s; while w; 
+Select v such that Modifies("Example", v)  such that Uses("Example", v) 
+x,y,z,b,i
+5000
+34 - modifies with assign and variable synonym and uses with assign and wildcard
+assign a; variable v; stmt s; while w; 
+Select a such that Modifies(a, v)  such that Uses(a, _) 
+7,9,11,14,15,16,17,18,22,27,28,30,31
+5000
+35 - modifies with statement and wildcard and uses with statement and actual variable
+assign a; variable v; stmt s; while w; 
+Select s such that Modifies(s, _)  such that Uses(s, "i") 
+6,17,18,20,21,23,24,28
+5000
+36 - modifies with read and actual variable and uses with print and variable synonym
+assign a; variable v; stmt s; while w; read re; print pn;
+Select v such that Modifies(re, "x")  such that Uses(pn, v) 
+none
+5000
+37 - modifies with read and actual variable and uses with print and variable synonym
+assign a; variable v; stmt s; while w; read re; print pn;
+Select v such that Modifies(re, "b")  such that Uses(pn, v) 
+b
+5000
+38 - modifies with if and variable synonym and uses with if and wildcard
+assign a; variable v; stmt s; while w; if if;
+Select if such that Modifies(if, v)  such that Uses(if, _) 
+8,10,12,20,25
+5000
+39 - modifies with while and wildcard and uses with while and actual variable
+assign a; variable v; stmt s; while w;
+Select w such that Modifies(w, _)  such that Uses(w, "i") 
+6,21,23,24
+5000
+39 - modifies with procedure and actual variable and uses with procedure and variable synonym
+assign a; variable v; stmt s; while w;
+Select v such that Modifies("Example", "x") such that Uses("Example", v) 
+x,y,z,b,i
+5000
+40 - modifies with procedure and variable synonym and uses with procedure and variable synonym
+assign a; variable v; stmt s; while w;
+Select v such that Modifies("Example", v) such that Uses("Example", v) 
+x,y,z,b,i
+5000
+41 - modifies with procedure and variable synonym and uses with procedure and variable synonym
+assign a; variable v; stmt s; while w;
+Select v such that Modifies("Example", v) such that Uses("Example", v) 
+x,z,b,i
+5000
+42 - modifies with assign and wildcard and uses with stmt and variable synonym
+assign a; variable v; stmt s; while w;
+Select s such that Modifies(a, _) such that Uses(s, v) 
+6,7,8,9,10,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31
+5000
+43 - modifies with stmt and actual variable and uses with print and wildcard
+assign a; variable v; stmt s; while w; print pn;
+Select a such that Modifies(a, "a") such that Uses(pn, _) 
+3
+5000
+44 - modifies with read and variable synonym and uses with assign and variable synonym
+assign a; variable v; stmt s; while w; read re;
+Select v such that Modifies(re, v) such that Uses(a, v) 
+b
+5000
+45 - modifies with if and variable synonym and uses with stmt and variable synonym
+assign a; variable v; stmt s; if if; read re;
+Select v such that Modifies(if, v) such that Uses(s, v) 
+x,z,b,i
+5000
+46 - modifies with while and wildcard and uses with print and variable synonym
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(w, v) such that Uses(pn, v) 
+b
+5000
+
+
+//Testing of ModifiesS and UsesS
+
+
+47 - modifiesS and wildcard and usesS and variable synonym
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(6, v) such that Uses(3, v) 
+none
+48 - modifiesS and wildcard and usesS and variable synonym
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(6, _) such that Uses(10, v) 
+x
+5000
+49 - modifiesS and wildcard and usesS and wildcard
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(6, _) such that Uses(24, _) 
+b,y,i
+5000
+50 - modifiesS and wildcard and usesS and actual variable
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(6, _) such that Uses(23, "x") 
+x,y,z,a,b,i
+5000
+51 - modifiesS and actual variable and usesS and actual variable
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(3, "a") such that Uses(3, "a") 
+none
+5000
+52 - modifiesS and actual variable and usesS and variable synonym
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(3, "a") such that Uses(6, v) 
+x,z,i
+5000
+53 - modifiesS and actual variable and usesS and wildcard
+assign a; variable v; stmt s; while w; print pn;
+Select v such that Modifies(3, "a") such that Uses(6, _) 
+x,y,z,a,b,i
+5000
+54 - modifiesS and variable synonym and usesS and wildcard
+assign a; variable v; stmt s; while w; print pn; read re;
+Select re such that Modifies(3, "a") such that Uses(6, _) 
+13,29
+5000
+54 - modifiesS and variable synonym and usesS and actual variable
+assign a; variable v; stmt s; while w; print pn;
+Select pn such that Modifies(3, v) such that Uses(6, "x") 
+19,26
+5000
+
+//Modifies Uses and Parent
+55 - assign for modifies, uses and parent
+assign a; variable v; stmt s; while w; print pn;
+Select a such that Modifies(a, v) such that Uses(a, v) such that Parent(a, w)
+none
+5000
+
+56 - assign for modifies, uses, if for parent
+assign a; variable v; stmt s; if if; print pn;
+Select a such that Modifies(a, v) such that Uses(a, v) such that Parent(if, a)
+14,15,27,28,30,31
+5000
+
+57 - assign for modifies, uses, while for parent
+assign a; variable v; stmt s; if if; print pn; while w;
+Select a such that Modifies(a, v) such that Uses(a, v) such that Parent(w, a)
+7,14,15,17,18,27,28,30
+5000
+
+58 - stmt for modifies, uses, while for parent
+assign a; variable v; stmt s; if if; print pn; while w;
+Select s such that Modifies(s, v) such that Uses(s, v) such that Parent(w, s)
+7,8,10,12,14,15,17,18,,23,24,25,27,28,30
+5000
+
+59 - stmt for modifies, uses, if for parent
+assign a; variable v; stmt s; if if; print pn; while w;
+Select s such that Modifies(s, v) such that Uses(s, v) such that Parent(if, s)
+10,12,14,15,17,18,21,23,24,25,27,28,30,31
+5000
+
+60 - read for modifies, if for parent
+assign a; variable v; stmt s; if if; read re; while w;
+Select re such that Modifies(re, v) such that Parent(if, re)
+13,29
+5000
+
+61 - read for modifies, w for parent
+assign a; variable v; stmt s; if if; read re; while w;
+Select re such that Modifies(re, v) such that Parent(w, re)
+13,29
+5000
+
+62 - print for uses, if for parent
+assign a; variable v; stmt s; if if; print pn; while w;
+Select pn such that Uses(pn, v) such that Parent(if, pn)
+26
+5000
+
+63 - print for uses, while for parent
+assign a; variable v; stmt s; if if; print pn; while w;
+Select pn such that Uses(pn, v) such that Parent(w, pn)
+26
+5000
+
+64 - if for modifies, uses, if for parent, return nothing
+assign a; variable v; stmt s; if if, if2; print pn; while w;
+Select if such that Modifies(if, v) such that Uses(if, v) such that Parent(if, if)
+none
+5000
+
+65 - if for modifies, uses, if for parent
+assign a; variable v; stmt s; if if, if2; print pn; while w;
+Select if such that Modifies(if, v) such that Uses(if, v) such that Parent(if2, if)
+10,12,25
+5000
+
+66 - if for modifies, uses, while for parent
+assign a; variable v; stmt s; if if, if2; print pn; while w;
+Select if such that Modifies(if, v) such that Uses(if, v) such that Parent(w, if)
+8,10,12,25
+5000
+
+67 - while for modifies, uses, if for parent
+assign a; variable v; stmt s; if if, if2; print pn; while w;
+Select w such that Modifies(w, v) such that Uses(w, v) such that Parent(if, w)
+21,23,24
+5000
+
+68 - while for modifies, uses, while for parent
+assign a; variable v; stmt s; if if, if2; print pn; while w, w1;
+Select w such that Modifies(w, v) such that Uses(w, v) such that Parent(w1, w)
+23,24
+5000
