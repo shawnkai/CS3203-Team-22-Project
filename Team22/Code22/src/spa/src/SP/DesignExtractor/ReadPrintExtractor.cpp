@@ -41,14 +41,14 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("READ", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", procedureName, std::to_string(lineNumOfVariable)));
-			/*Result result = pkbinstance.getDesignAbstraction("CALLSTAR", make_pair("_", "a1"));
+			Result result = pkbinstance.getDesignAbstraction("CALLSSTAR", make_pair("_", "a1"));
 			std::vector<std::string> vector1 = result.getQueryResult();
 			
 			for (int i = 0; i < vector1.size(); i++) {
 				cout << vector1[i] << endl;
 				pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", vector1[i], std::to_string(lineNumOfVariable)));
 
-			}*/
+			}
 			//pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
