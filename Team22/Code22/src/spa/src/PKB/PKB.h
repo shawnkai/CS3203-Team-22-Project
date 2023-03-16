@@ -28,6 +28,8 @@ public:
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query);
     vector<Result> getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted);
+    unordered_map<string, unordered_set<string>> getAllVariablesCapturedByDesignAbstraction(string designAbstractionType,
+                                                                             string entityTypeBeingAbstracted);
 
     void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName,

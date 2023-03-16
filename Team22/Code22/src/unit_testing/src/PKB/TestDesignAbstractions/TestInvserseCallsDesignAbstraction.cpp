@@ -100,3 +100,17 @@ TEST_CASE("Test 7: Retrieval of All InverseCalls Design Abstractions") {
         REQUIRE(result.size() == 3);
     }
 }
+
+TEST_CASE("Test 8: Retrieval of Variables Captured By InverseCalls Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("INVERSECALLS", make_tuple("_", "a25", "a26"));
+        pkbTest.addDesignAbstraction("INVERSECALLS", make_tuple("_", "a27", "a28"));
+        pkbTest.addDesignAbstraction("INVERSECALLS", make_tuple("_", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("INVERSECALLS", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}

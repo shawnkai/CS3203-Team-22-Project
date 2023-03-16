@@ -149,6 +149,14 @@ vector<Result> PKB::getAllDesignAbstractions(string designAbstractionType, strin
     return db->getAllFromDatabase();
 }
 
+unordered_map<string, unordered_set<string>>
+PKB::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
+    DesignAbstractionDatabase* db =
+            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
+                                                                      entityTypeBeingAbstracted);
+    return db->getAllVariablesCaptured();
+}
+
 int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
 }
