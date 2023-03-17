@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The IfStatementModifies Database And Call Clear All 
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All IfStatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis13", "mis14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis15", "mis16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis17", "mis18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "IF");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By IfStatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis19", "mis20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis21", "mis22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mis23", "mis24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "IF");
+
+        REQUIRE(result.size() == 3);
+    }
+}

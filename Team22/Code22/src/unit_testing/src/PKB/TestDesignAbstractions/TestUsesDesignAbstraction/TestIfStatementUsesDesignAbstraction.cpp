@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The IfStatementUses Database And Call Clear All Data
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All IfStatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis13", "uis14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis15", "uis16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis17", "uis18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "IF");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By IfStatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis19", "uis20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis21", "uis22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis23", "uis24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "IF");
+
+        REQUIRE(result.size() == 3);
+    }
+}

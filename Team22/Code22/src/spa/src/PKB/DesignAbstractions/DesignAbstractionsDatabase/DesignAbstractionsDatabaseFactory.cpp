@@ -16,6 +16,7 @@
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsAbstractionDatabase/CallsDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/CallsStarAbstractionDatabase/CallsStarDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/NextAbstractionDatabase/NextDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/InverseCallsDatabase/InverseCallsDatabaseFactory.h"
 
 #include "PKB/Exceptions/DatabaseNotFoundException.cpp"
 
@@ -71,6 +72,8 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
         return getCallsStarDatabase();
     } else if (designAbstractionType == "NEXT") {
         return getNextDatabase();
+    } else if (designAbstractionType == "INVERSECALLS") {
+        return getInverseCallsAbstraction();
     }
 
     throw DatabaseNotFoundException(("Database for " + designAbstractionType + " could not be found").data());
@@ -150,6 +153,10 @@ DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getNextDatabase() 
     return NextDatabaseFactory::getNextDatabase();
 }
 
+DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getInverseCallsAbstraction() {
+    return InverseCallsDatabaseFactory::getInverseCallsDatabase();
+}
+
 /**
  * Clears all the Modifies Design Abstraction databases.
  */
@@ -207,6 +214,10 @@ void DesignAbstractionsDatabaseFactory::clearNextDatabase() {
     NextDatabaseFactory::clearDatabase();
 }
 
+void DesignAbstractionsDatabaseFactory::clearInverseCallsDatabase() {
+    InverseCallsDatabaseFactory::clearDatabase();
+}
+
 /**
  * Clears all the Design Abstraction databases.
  */
@@ -220,4 +231,5 @@ void DesignAbstractionsDatabaseFactory::clearDatabase() {
     clearCallsDatabase();
     clearCallsStarDatabase();
     clearNextDatabase();
+    clearInverseCallsDatabase();
 }

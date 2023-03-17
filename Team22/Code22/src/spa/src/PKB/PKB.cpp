@@ -18,6 +18,9 @@ using namespace std;
 #include "Pattern/AssignPattern/AssignPatternFactory.h"
 #include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
 
+#include "ControlFlowGraph/ControlFlowGraphFactory.h"
+#include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
+
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
@@ -139,8 +142,61 @@ vector<AssignPattern*> PKB::getAllRightHandExpressions() {
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
 
+vector<Result> PKB::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
+    DesignAbstractionDatabase* db =
+            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
+                                                                      entityTypeBeingAbstracted);
+    return db->getAllFromDatabase();
+}
+
+unordered_map<string, unordered_set<string>>
+PKB::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
+    DesignAbstractionDatabase* db =
+            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
+                                                                      entityTypeBeingAbstracted);
+    return db->getAllVariablesCaptured();
+}
+
 int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
+}
+
+void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
+                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
+                              map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers) {
+    ControlFlowGraph* controlFlowGraph = ControlFlowGraphFactory::createControlFlowGraph(procedureName,
+                                                                                         topologicallySortedElements,
+                                                                                         blockToStatementNumbers,
+                                                                                         statementNumberToBlock,
+                                                                                         blockToBlock,
+                                                                                         blocksWithBackPointers);
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    db->addToDatabase(controlFlowGraph);
+}
+
+vector<int> PKB::getTopologicallySortedElementsDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getTopologicallySortedBlockNumbersDatabaseFromDatabase(procedureName);
+}
+
+map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlockToStatementNumberDatabaseFromDatabase(procedureName);
+}
+
+map<int, int> PKB::getStatementNumberToBlockDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getStatementNumberToBlockDatabaseFromDatabase(procedureName);
+}
+
+map<int, vector<int>> PKB::getBlockToBlockDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlockToBlockDatabaseFromDatabase(procedureName);
+}
+
+unordered_set<int> PKB::getBlocksWithBackPointersDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlocksWithBackPointersDatabaseFromDatabase(procedureName);
 }
 
 /**
@@ -167,6 +223,10 @@ void PKB::clearDesignAbstractionDatabase() {
     DesignAbstractionsDatabaseFactory::clearDatabase();
 }
 
+void PKB::clearControlFlowGraphDatabase() {
+    ControlFlowGraphDatabaseFactory::clearDatabase();
+}
+
 /**
  * Clears the databases. Implemented to improve testing, as PKB storage is
  * static in nature, and to avoid cross-linkage among test cases.
@@ -175,4 +235,5 @@ void PKB::clearAllDatabases() {
     this->clearDesignAbstractionDatabase();
     this->clearDesignEntityDatabase();
     this->clearAssignPatternDatabase();
+    this->clearControlFlowGraphDatabase();
 }

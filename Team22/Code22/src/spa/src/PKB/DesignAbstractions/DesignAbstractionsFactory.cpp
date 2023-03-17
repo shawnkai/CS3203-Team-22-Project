@@ -15,6 +15,7 @@
 #include "PKB/DesignAbstractions/CallsAbstraction/CallsFactory.h"
 #include "PKB/DesignAbstractions/CallsStarAbstraction/CallsStarFactory.h"
 #include "PKB/DesignAbstractions/NextAbstraction/NextFactory.h"
+#include "PKB/DesignAbstractions/InverseCallsAbstraction/InverseCallsFactory.h"
 
 #include "PKB/Exceptions/InvalidAbstractionTypeException.cpp"
 
@@ -50,6 +51,8 @@ DesignAbstraction* DesignAbstractionsFactory::createDesignAbstraction(
         return CallsStarFactory::createCallsStarAbstraction(abstractionDetails);
     } else if (designAbstraction == "NEXT") {
         return NextFactory::createNextAbstraction(abstractionDetails);
+    } else if (designAbstraction == "INVERSECALLS") {
+        return InverseCallsFactory::createInverseCallsAbstraction(abstractionDetails);
     }
 
     throw InvalidAbstractionTypeException((designAbstraction + " is not a valid Design Abstraction Type").data());

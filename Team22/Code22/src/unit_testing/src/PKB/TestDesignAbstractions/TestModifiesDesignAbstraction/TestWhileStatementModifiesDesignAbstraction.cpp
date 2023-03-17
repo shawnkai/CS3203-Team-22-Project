@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The WhileStatementModifies Database And Call Clear A
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All WhileStatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws13", "mws14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws15", "mws16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws17", "mws18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "WHILE");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By WhileStatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws19", "mws20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws21", "mws22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws23", "mws24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "WHILE");
+
+        REQUIRE(result.size() == 3);
+    }
+}

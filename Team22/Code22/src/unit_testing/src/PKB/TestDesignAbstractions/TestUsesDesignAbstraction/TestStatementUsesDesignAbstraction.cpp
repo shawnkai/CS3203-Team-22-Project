@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The StatementUses Database And Call Clear All Databa
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All StatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us13", "us14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us15", "us16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us17", "us18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By StatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us19", "us20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us21", "us22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us23", "us24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}

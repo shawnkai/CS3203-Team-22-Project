@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The StatementModifies Database And Call Clear All Da
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All StatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms13", "ms14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms15", "ms16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms17", "ms18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By StatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms19", "ms20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms21", "ms22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms23", "ms24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}

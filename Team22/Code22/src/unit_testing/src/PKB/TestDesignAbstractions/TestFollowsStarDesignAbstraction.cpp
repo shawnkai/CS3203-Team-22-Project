@@ -87,3 +87,33 @@ TEST_CASE("Test 6: Populate The FollowsStar Database And Call Clear All Database
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 7: Retrieval of All FollowsStar Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "a19", "a20"));
+        pkbTest.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "a21", "a22"));
+        pkbTest.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("FOLLOWSSTAR", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 8: Retrieval of Variables Captured By FollowsStar Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "a25", "a26"));
+        pkbTest.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "a27", "a28"));
+        pkbTest.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("FOLLOWSSTAR", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}
