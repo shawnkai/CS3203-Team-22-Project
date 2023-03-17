@@ -1,18 +1,29 @@
 procedure Example {
- x = 2;
- while (i!=0) {
-   if (x > 1) then {
-     z = x + 1; }
+ x = 2; //1
+ while (i!=0) { //2
+   if (x > 1) then { //3
+     z = x + 1; } //4
    else {
-     y = z + x;
-     if (x >= 5) then {
-        z = x + 1;
-        while ( x < 10) {
-           x = x - 1;
+     y = z + x; //5
+     if (x >= 5) then { //6
+        z = x + 1; //7
+        while ( x < 10) { //8
+           x = x - 1; //9
+           while ((x <= 9) || ((z % 2) == 1)) { //10
+             anx = 1; //11
+             if (z == 1) then { //12
+               z = 2; //13
+             } else {
+               z = 3; //14
+               while (!(!(j < 0))) { //15
+                 j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;  //16
+               }
+             }
+           }
         }
      }
      else {
-       print x;
+       print x; //17
      }
    }
  }
