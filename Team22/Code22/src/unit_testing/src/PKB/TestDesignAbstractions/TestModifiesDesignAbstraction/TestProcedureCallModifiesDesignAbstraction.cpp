@@ -108,9 +108,9 @@ TEST_CASE("Test 7: Populate The ProcedureCallModifies Database And Call Clear Al
 TEST_CASE("Test 9: Retrieval of All ProcedureCallModifies Design Abstractions") {
     SECTION("") {
         PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a19", "a20"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a21", "a22"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a23", "a24"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc13", "mpc14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc15", "mpc16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc17", "mpc18"));
 
         vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "PROCEDURECALL");
 
@@ -124,9 +124,9 @@ TEST_CASE("Test 10: Retrieval of Variables Captured By ProcedureCallModifies Des
 
         pkbTest.clearAllDatabases();
 
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a25", "a26"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a27", "a28"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a29", "a30"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc19", "mpc20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc21", "mpc22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mpc23", "mpc24"));
 
         unordered_map<string, unordered_set<string>> result =
                 pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "PROCEDURECALL");

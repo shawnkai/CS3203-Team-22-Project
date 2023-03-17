@@ -108,9 +108,9 @@ TEST_CASE("Test 7: Populate The ReadModifies Database And Call Clear All Databas
 TEST_CASE("Test 9: Retrieval of All ReadModifies Design Abstractions") {
     SECTION("") {
         PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a19", "a20"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a21", "a22"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a23", "a24"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr13", "mr14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr15", "mr16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr17", "mr18"));
 
         vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "READ");
 
@@ -124,9 +124,9 @@ TEST_CASE("Test 10: Retrieval of Variables Captured By ReadModifies Design Abstr
 
         pkbTest.clearAllDatabases();
 
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a25", "a26"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a27", "a28"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a29", "a30"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr19", "mr20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr21", "mr22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr23", "mr24"));
 
         unordered_map<string, unordered_set<string>> result =
                 pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "READ");

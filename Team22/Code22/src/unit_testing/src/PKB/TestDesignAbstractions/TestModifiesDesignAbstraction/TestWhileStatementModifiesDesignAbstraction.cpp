@@ -108,9 +108,9 @@ TEST_CASE("Test 7: Populate The WhileStatementModifies Database And Call Clear A
 TEST_CASE("Test 9: Retrieval of All WhileStatementModifies Design Abstractions") {
     SECTION("") {
         PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "a19", "a20"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "a21", "a22"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "a23", "a24"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws13", "mws14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws15", "mws16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws17", "mws18"));
 
         vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "WHILE");
 
@@ -124,9 +124,9 @@ TEST_CASE("Test 10: Retrieval of Variables Captured By WhileStatementModifies De
 
         pkbTest.clearAllDatabases();
 
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "a25", "a26"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "a27", "a28"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "a29", "a30"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws19", "mws20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws21", "mws22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws23", "mws24"));
 
         unordered_map<string, unordered_set<string>> result =
                 pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "WHILE");
