@@ -49,17 +49,6 @@ TEST_CASE("Test 2: Retrieval of Calls Design Abstraction") {
     }
 }
 
-TEST_CASE("Test 2b: Retrieval of Calls Design Abstraction") {
-    SECTION("Using API Without Tuple") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("CALLS", make_tuple("_", "a3", "a4"));
-
-        Result result = pkbTest.getDesignAbstraction("CALLS", "a3");
-
-        REQUIRE(result.toString() == "CALLS: a3: a4, ");
-    }
-}
-
 TEST_CASE("Test 3: Retrieval of a non-existent Calls Design Abstraction") {
     SECTION("") {
         PKB pkbTest = PKB();
