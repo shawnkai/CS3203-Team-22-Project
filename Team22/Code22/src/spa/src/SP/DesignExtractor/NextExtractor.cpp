@@ -18,7 +18,9 @@ public:
 
 	};
 
-	void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, vector<int>> blkToStmtMap, std::map<int, int> stmtToBlkMap, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile) {
+	//void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, vector<int>> blkToStmtMap, std::map<int, int> stmtToBlkMap, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile) {
+	void extractAbstraction(vector<int> orderedBlks, std::map<int, vector<int>> blkToStmtMap, std::map<int, int> stmtToBlkMap, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile) {
+
 		if (orderedBlks.size() == 0) {
 			cout << "no blks stored" << endl;
 		}
@@ -32,7 +34,7 @@ public:
 		}
 	};
 
-	vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk) {
+	vector<deque<int>> findPath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk) {
 		/*int noOfBlks = currentPath.size();
 		int endIdx = noOfBlks - 1;
 		int currentBlkNo = currentPath[endIdx];*/
@@ -113,7 +115,7 @@ public:
 		return allPaths;
 	};
 
-	vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk, int exitWhile) {
+	vector<deque<int>> findWhileStmtlstPath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk, int exitWhile) {
 		vector<deque<int>> allPaths;
 		if (currBlk == 0) {
 			cout << "return 0 in while stmtlist" << endl;
@@ -192,7 +194,7 @@ public:
 		return allPaths;
 	};
 
-	vector<deque<int>> NextExtractor::findWhilePath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int currBlk, int whileBlk) {
+	vector<deque<int>> findWhilePath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int currBlk, int whileBlk) {
 		/*int noOfBlks = currentPath.size();
 		int endIdx = noOfBlks - 1;
 		int currentBlkNo = currentPath[endIdx];*/
