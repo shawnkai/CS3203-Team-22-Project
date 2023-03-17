@@ -105,3 +105,33 @@ TEST_CASE("Test 7: Populate The ProcedureModifies Database And Call Clear All Da
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All ProcedureModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "a19", "a20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "a21", "a22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "PROCEDURE");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By ProcedureModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "a25", "a26"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "a27", "a28"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "PROCEDURE");
+
+        REQUIRE(result.size() == 3);
+    }
+}

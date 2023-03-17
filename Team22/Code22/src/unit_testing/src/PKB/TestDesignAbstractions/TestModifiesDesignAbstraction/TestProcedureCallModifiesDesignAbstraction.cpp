@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The ProcedureCallModifies Database And Call Clear Al
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All ProcedureCallModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a19", "a20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a21", "a22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "PROCEDURECALL");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By ProcedureCallModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a25", "a26"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a27", "a28"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "PROCEDURECALL");
+
+        REQUIRE(result.size() == 3);
+    }
+}

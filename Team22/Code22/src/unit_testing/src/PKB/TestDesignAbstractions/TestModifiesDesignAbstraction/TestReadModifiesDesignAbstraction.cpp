@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The ReadModifies Database And Call Clear All Databas
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All ReadModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a19", "a20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a21", "a22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "READ");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By ReadModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a25", "a26"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a27", "a28"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "READ");
+
+        REQUIRE(result.size() == 3);
+    }
+}
