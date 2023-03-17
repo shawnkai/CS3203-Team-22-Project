@@ -177,7 +177,7 @@ Result PKB::getDesignAbstraction(string abstractionType, string query) {
         throw InvalidAPICallException((abstractionType + " Cannot Be Accessed Via This API").data());
     }
 
-    this->getDesignAbstraction(abstractionType, make_tuple("_", query));
+    return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
 }
 
 void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
