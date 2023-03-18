@@ -34,7 +34,35 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			int lineNumOfVariable = currentNode1.stmtNumber;
 			cout << currentNode1.stringId << endl;
 			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", nameOfVariable, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", procedureName, std::to_string(lineNumOfVariable)));
+			cout << std::to_string(lineNumOfVariable) + " uses procedure " + procedureName << endl;
+
+			Result result1 = pkbinstance.getDesignAbstraction("INVERSECALLS", make_pair("_", procedureName));
+			std::vector<std::string> vector1 = result1.getQueryResult();
+			for (int i = 0; i < vector1.size(); i++) {
+				if (vector1[i] != "none") {
+					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", vector1[i], std::to_string(lineNumOfVariable)));
+					cout << std::to_string(lineNumOfVariable) + " uses procedure " + vector1[i] << endl;
+				}
+				Result result3 = pkbinstance.getDesignEntity("CALL", vector1[i]);
+				std::vector<std::string> vector3 = result3.getQueryResult();
+				for (int j = 0; j < vector3.size(); j++) {
+					if (vector3[j] != "none") {
+						pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector3[j], std::to_string(lineNumOfVariable)));
+						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
+					}
+				}
+			}
+
+			Result result2 = pkbinstance.getDesignEntity("CALL", procedureName);
+			std::vector<std::string> vector2 = result2.getQueryResult();
+			for (int i = 0; i < vector2.size(); i++) {
+				if (vector2[i] != "none") {
+					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector2[i], std::to_string(lineNumOfVariable)));
+					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
+				}
+			}
+
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {
