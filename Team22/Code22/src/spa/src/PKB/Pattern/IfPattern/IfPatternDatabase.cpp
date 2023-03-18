@@ -6,6 +6,8 @@
 
 #include "IfPatternDatabase.h"
 
+#include "PKB/Exceptions/InvalidPatternTypeException.cpp"
+
 using namespace std;
 
 bool IfPatternDatabase::isValidPatternType(Pattern *patternToBeStored) {
@@ -33,6 +35,8 @@ void IfPatternDatabase::updatePatternInDatabase(Pattern* patternToBeStored) {
     }
 
     // Throw Error
+    throw InvalidPatternTypeException(
+            ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
 }
 
 void IfPatternDatabase::addToDatabase(Pattern *patternToBeStored) {
@@ -47,6 +51,8 @@ void IfPatternDatabase::addToDatabase(Pattern *patternToBeStored) {
     }
 
     // Throw Error
+    throw InvalidPatternTypeException(
+            ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
 }
 
 unordered_set<string> IfPatternDatabase::getAllVariablesBeingUsed(string lineNumber) {
