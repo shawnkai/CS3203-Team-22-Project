@@ -25,34 +25,34 @@ bool WhilePatternDatabase::isLineNumberPresent(string lineNumber) {
 }
 
 void WhilePatternDatabase::updatePatternInDatabase(Pattern *patternToBeStored) {
-    if (this->isValidPatternType(patternToBeStored)) {
-        WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
-
-        auto elementToAdd =
-                *(this->database.find(whilePatternToBeStored->getLineNumber())->second->getVariableNamesUsed().begin());
-
-        this->database.find(whilePatternToBeStored->getLineNumber())->second->addAdditionalVariableOnLine(elementToAdd);
+    if (!(this->isValidPatternType(patternToBeStored))) {
+        // Throw Error
+        throw InvalidPatternTypeException(
+                ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: WhilePattern Type Here").data());
     }
 
-    // Throw Error
-    throw InvalidPatternTypeException(
-            ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: WhilePattern Type Here").data());
+    WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
+
+    auto elementToAdd =
+            *(this->database.find(whilePatternToBeStored->getLineNumber())->second->getVariableNamesUsed().begin());
+
+    this->database.find(whilePatternToBeStored->getLineNumber())->second->addAdditionalVariableOnLine(elementToAdd);
 }
 
 void WhilePatternDatabase::addToDatabase(Pattern *patternToBeStored) {
-    if (this->isValidPatternType(patternToBeStored)) {
-        WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
-
-        if (this->isLineNumberPresent(whilePatternToBeStored->getLineNumber())) {
-            this->updatePatternInDatabase(patternToBeStored);
-        } else {
-            this->database.insert(make_pair(whilePatternToBeStored->getLineNumber(), whilePatternToBeStored));
-        }
+    if (!(this->isValidPatternType(patternToBeStored))) {
+        // Throw Error
+        throw InvalidPatternTypeException(
+                ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: WhilePattern Type Here").data());
     }
 
-    // Throw Error
-    throw InvalidPatternTypeException(
-            ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: WhilePattern Type Here").data());
+    WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
+
+    if (this->isLineNumberPresent(whilePatternToBeStored->getLineNumber())) {
+        this->updatePatternInDatabase(patternToBeStored);
+    } else {
+        this->database.insert(make_pair(whilePatternToBeStored->getLineNumber(), whilePatternToBeStored));
+    }
 }
 
 unordered_set<string> WhilePatternDatabase::getAllVariablesBeingUsed(string lineNumber) {

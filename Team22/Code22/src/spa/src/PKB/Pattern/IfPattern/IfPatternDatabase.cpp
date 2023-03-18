@@ -25,34 +25,34 @@ bool IfPatternDatabase::isLineNumberPresent(string lineNumber) {
 }
 
 void IfPatternDatabase::updatePatternInDatabase(Pattern* patternToBeStored) {
-    if (this->isValidPatternType(patternToBeStored)) {
-        IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
-
-        auto elementToAdd =
-                *(this->database.find(ifPatternToBeStored->getLineNumber())->second->getVariableNamesUsed().begin());
-
-        this->database.find(ifPatternToBeStored->getLineNumber())->second->addAdditionalVariableOnLine(elementToAdd);
+    if (!(this->isValidPatternType(patternToBeStored))) {
+        // Throw Error
+        throw InvalidPatternTypeException(
+                ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
     }
 
-    // Throw Error
-    throw InvalidPatternTypeException(
-            ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
+    IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
+
+    auto elementToAdd =
+            *(this->database.find(ifPatternToBeStored->getLineNumber())->second->getVariableNamesUsed().begin());
+
+    this->database.find(ifPatternToBeStored->getLineNumber())->second->addAdditionalVariableOnLine(elementToAdd);
 }
 
 void IfPatternDatabase::addToDatabase(Pattern *patternToBeStored) {
-    if (this->isValidPatternType(patternToBeStored)) {
-        IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
-
-        if (this->isLineNumberPresent(ifPatternToBeStored->getLineNumber())) {
-            this->updatePatternInDatabase(patternToBeStored);
-        } else {
-            this->database.insert(make_pair(ifPatternToBeStored->getLineNumber(), ifPatternToBeStored));
-        }
+    if (!(this->isValidPatternType(patternToBeStored))) {
+        // Throw Error
+        throw InvalidPatternTypeException(
+                ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
     }
 
-    // Throw Error
-    throw InvalidPatternTypeException(
-            ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
+    IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
+
+    if (this->isLineNumberPresent(ifPatternToBeStored->getLineNumber())) {
+        this->updatePatternInDatabase(patternToBeStored);
+    } else {
+        this->database.insert(make_pair(ifPatternToBeStored->getLineNumber(), ifPatternToBeStored));
+    }
 }
 
 unordered_set<string> IfPatternDatabase::getAllVariablesBeingUsed(string lineNumber) {

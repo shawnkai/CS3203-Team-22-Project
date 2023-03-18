@@ -218,7 +218,7 @@ bool PKB::isVariableUsedInPattern(string patternType, string lineNumber, string 
 unordered_set<string> PKB::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
     PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
 
-    db->getAllVariablesBeingUsed(lineNumber);
+    return db->getAllVariablesBeingUsed(lineNumber);
 }
 
 /**
