@@ -21,6 +21,9 @@ using namespace std;
 #include "ControlFlowGraph/ControlFlowGraphFactory.h"
 #include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
 
+#include "Pattern//PatternFactory.h"
+#include "Pattern/PatternDatabaseFactory.h"
+
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
 /**
@@ -218,6 +221,25 @@ unordered_set<int> PKB::getBlocksWithBackPointersDatabase(string procedureName) 
     return db->getBlocksWithBackPointersDatabaseFromDatabase(procedureName);
 }
 
+void PKB::addPattern(string patternType, string lineNumber, string variableName) {
+    Pattern* patternToBeStored = PatternFactory::createPattern(patternType, lineNumber, variableName);
+    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+
+    db->addToDatabase(patternToBeStored);
+}
+
+bool PKB::isVariableUsedInPattern(string patternType, string lineNumber, string variableName) {
+    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+
+    return db->isVariableNamePresentOnLineNumber(lineNumber, variableName);
+}
+
+unordered_set<string> PKB::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
+    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+
+    return db->getAllVariablesBeingUsed(lineNumber);
+}
+
 /**
  * Clears the Assignment Pattern Database. This method is hidden
  * from the user.
@@ -246,6 +268,10 @@ void PKB::clearControlFlowGraphDatabase() {
     ControlFlowGraphDatabaseFactory::clearDatabase();
 }
 
+void PKB::clearPatternDatabase() {
+    PatternDatabaseFactory::clearDatabase();
+}
+
 /**
  * Clears the databases. Implemented to improve testing, as PKB storage is
  * static in nature, and to avoid cross-linkage among test cases.
@@ -255,4 +281,5 @@ void PKB::clearAllDatabases() {
     this->clearDesignEntityDatabase();
     this->clearAssignPatternDatabase();
     this->clearControlFlowGraphDatabase();
+    this->clearPatternDatabase();
 }
