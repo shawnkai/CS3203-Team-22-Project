@@ -31,7 +31,7 @@ TEST_CASE("TestCase1_ParseTokenListBasicSource_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-
+    result = result.children[0];
     REQUIRE(result.nodeType == TokenType::PROCEDURE);
     REQUIRE(result.children.size() == 1);
     REQUIRE(result.children[0].children.size() == 2);
@@ -64,7 +64,7 @@ TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-
+    result = result.children[0];
     TNode stmtList = result.children[0];
     REQUIRE(stmtList.children.size() == 1);
     REQUIRE(stmtList.children[0].nodeType == TokenType::ASSIGN);
@@ -122,7 +122,7 @@ TEST_CASE("TestCase3_ParseTokenListWhileStatement_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-
+    result = result.children[0];
     TNode stmtList = result.children[0];
     REQUIRE(stmtList.children.size() == 1);
 
@@ -180,7 +180,7 @@ TEST_CASE("TestCase4_ParseTokenListWhileStatementExpr2_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-
+    result = result.children[0];
     TNode stmtList = result.children[0];
     REQUIRE(stmtList.children.size() == 1);
 
@@ -232,7 +232,7 @@ TEST_CASE("TestCase5_ParseTokenListWhileStatementExpr3_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-
+    result = result.children[0];
     TNode stmtList = result.children[0];
     REQUIRE(stmtList.children.size() == 1);
 
@@ -281,7 +281,7 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-
+    result = result.children[0];
     TNode stmtList = result.children[0];
     REQUIRE(stmtList.children.size() == 1);
 
@@ -328,6 +328,7 @@ TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
+    result = result.children[0];
     REQUIRE(result.nodeType == TokenType::PROCEDURE);
     REQUIRE(result.children.size() == 1);
     REQUIRE(result.children[0].children.size() == 1);
@@ -365,7 +366,7 @@ TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     auto whileStmt = node.children[0];
@@ -406,6 +407,7 @@ TEST_CASE("TestCase9_ParseIfStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
 
@@ -451,7 +453,7 @@ TEST_CASE("TestCase10_ParseReadPrintStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 4);
@@ -493,6 +495,7 @@ TEST_CASE("TestCase11_ParseAssignStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 1);
@@ -543,6 +546,7 @@ TEST_CASE("TestCase12_ParseIfWhileCombinedMix1_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 2);
@@ -598,7 +602,7 @@ TEST_CASE("TestCase13_ParseIfWhileCombinedMix2_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 4);
@@ -651,7 +655,7 @@ TEST_CASE("TestCase14_ParseIfWhileCombinedMix3_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 3);
@@ -715,6 +719,7 @@ TEST_CASE("TestCase15_ParseDeepNestingSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 4);
@@ -763,6 +768,7 @@ TEST_CASE("TestCase16_ParseComplexConditionalStmt_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 1);
@@ -804,7 +810,7 @@ TEST_CASE("TestCase17_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 1);
@@ -873,7 +879,7 @@ TEST_CASE("TestCase18_ParseGrandSimpleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     auto node = result.children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     REQUIRE(node.children.size() == 2);
@@ -1046,7 +1052,7 @@ TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-
+    result = result.children[0];
     REQUIRE(result.nodeType == TokenType::PROCEDURE);
     REQUIRE(result.children.size() == 1);
     REQUIRE(result.children[0].nodeType == TokenType::STATEMENT_LIST);
@@ -1132,4 +1138,7 @@ TEST_CASE("TestCase22_ParseLongProcedure_ShouldSuccess") {
         exit(1);
     }
     REQUIRE(result.nodeType == TokenType::PROGRAM);
+    TNode procedure = result.children[0];
+    REQUIRE(procedure.stringId == "TestFollows");
+    REQUIRE(result.children.size() == 3);
 }
