@@ -14,6 +14,7 @@ result = subprocess.run([start + '/unit_testing/unit_testing'], stdout=subproces
 result = result.stdout.decode()
 
 if "All tests passed" not in result:
+    print(result)
     exit(1)
 
 print("Unit Tests Passed")
