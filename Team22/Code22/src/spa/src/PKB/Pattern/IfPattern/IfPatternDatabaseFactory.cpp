@@ -13,7 +13,8 @@ PatternDatabase *IfPatternDatabaseFactory::getIfPatternDatabase() {
 }
 
 void IfPatternDatabaseFactory::clearDatabase() {
-    delete ifPatternDatabase;
+    // Warning Generated
+    //    delete ifPatternDatabase;
 
     ifPatternDatabase = new IfPatternDatabase();
 }

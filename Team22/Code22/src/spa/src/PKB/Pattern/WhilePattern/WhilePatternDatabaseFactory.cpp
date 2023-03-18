@@ -13,7 +13,8 @@ PatternDatabase *WhilePatternDatabaseFactory::getWhilePatternDatabase() {
 }
 
 void WhilePatternDatabaseFactory::clearDatabase() {
-    delete whilePatternDatabase;
+    // Warning Generated
+    //    delete whilePatternDatabase;
 
     whilePatternDatabase = new WhilePatternDatabase();
 }
