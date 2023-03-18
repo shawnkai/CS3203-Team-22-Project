@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("MODIFIES", make_tuple("mr1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent ReadModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr2"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:READ: mr2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("MODIFIES", "mr2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 

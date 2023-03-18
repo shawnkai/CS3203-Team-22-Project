@@ -21,6 +21,8 @@ using namespace std;
 #include "ControlFlowGraph/ControlFlowGraphFactory.h"
 #include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
@@ -159,6 +161,23 @@ PKB::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, st
 
 int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
+}
+
+void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
+    if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
+        throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
+    }
+
+    this->addDesignAbstraction(designAbstraction,
+                               make_tuple("_", get<0>(abstractionDetails), get<1>(abstractionDetails)));
+}
+
+Result PKB::getDesignAbstraction(string abstractionType, string query) {
+    if (abstractionType == "USES" || abstractionType == "MODIFIES") {
+        throw InvalidAPICallException((abstractionType + " Cannot Be Accessed Via This API").data());
+    }
+
+    return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
 }
 
 void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
