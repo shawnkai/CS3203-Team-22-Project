@@ -43,7 +43,7 @@ TEST_CASE("Testcase1_ExtractSimpleStatementlist_ShouldSuccess") {
 
 }
 
-TEST_CASE("Testcase1_ExtractNestedStatementlist_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractNestedStatementlist_ShouldSuccess") {
     TNode stmtlist2 = TNode(TokenType::STATEMENT_LIST, "stmtList", 3, std::vector<TNode>(0));
 
     TNode condition1 = TNode(TokenType::OPERATOR, ">", 3, std::vector<TNode>(0));

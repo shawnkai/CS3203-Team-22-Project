@@ -27,9 +27,9 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 		cout << "something went wrong" << endl;
 	}
 	else {
-		
 		int noOfProcedures;
 		noOfProcedures = (root.children).size();
+		cout << std::to_string(noOfProcedures) << endl;
 		if (noOfProcedures == 0) {
 			cout << "there are no procedures in this program" << endl;
 		}
@@ -46,18 +46,18 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 					if (current.nodeType == TokenType::CALL) {
 						std::string procedureCalled = current.stringId;
 						int callLineNo = current.stmtNumber;
-						std::vector<string> vectorPrev = mapOfCalls[procedureName];
-						if (vectorPrev.size() == 0) {
+						if (mapOfCalls.count(procedureName) > 0) {
+							std::vector<string> vectorPrev = mapOfCalls.at(procedureName);
+							vectorPrev.push_back(procedureCalled);
+							mapOfCalls[procedureName] = vectorPrev;
+						}
+						else {
 							std::vector<string> vectorNew;
 							vectorNew.push_back(procedureCalled);
 							mapOfCalls[procedureName] = vectorNew;
 						}
-						else {
-							vectorPrev.push_back(procedureCalled);
-							mapOfCalls[procedureName] = vectorPrev;
-						}
 						pkbinstance.addDesignAbstraction("CALLS", make_tuple("_", procedureName, procedureCalled));
-						cout << procedureName + "calls" + procedureCalled << endl;
+						cout << procedureName + " calls " + procedureCalled << endl;
 						pkbinstance.addDesignEntity("CALL", make_tuple(procedureCalled, std::to_string(callLineNo)));
 						pkbinstance.addDesignEntity("STATEMENT", make_tuple(procedureCalled, std::to_string(callLineNo)));
 					}
@@ -78,13 +78,18 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 
 			}
 			else {
-
-
 				for (int i = 0; i < noOfProcedures; i++) {
 					std::string procedureName = vectorOfProcedureNames[i];
 					queue<std::string> queueOfCalls;
 					vector<std::string> vectorOfCallsSTAR;
-					std::vector<string> vector1 = mapOfCalls[procedureName];
+					std::vector<string> vector1;
+					if (mapOfCalls.count(procedureName) > 0) {
+						vector1 = mapOfCalls.at(procedureName);
+					}
+					else {
+
+					}
+					
 					set<std::string> setOfCalls;
 					if (vector1.size() == 0) {
 
@@ -97,7 +102,13 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 						}
 						while (queueOfCalls.size() > 0) {
 							std::string proceduareCalled = queueOfCalls.front();
-							std::vector<string> vector2 = mapOfCalls[proceduareCalled];
+							std::vector<string> vector2;
+							if (mapOfCalls.count(proceduareCalled) > 0) {
+								vector2 = mapOfCalls.at(proceduareCalled);
+							}
+							else {
+
+							}
 							for (int k = 0; k < vector2.size(); k++) {
 								if (setOfCalls.count(vector2[k]) == 1) {
 
@@ -113,6 +124,8 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 					}
 					for (int j = 0; j < vectorOfCallsSTAR.size(); j++) {
 						pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple("_", procedureName, vectorOfCallsSTAR[j]));
+						pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple("_", vectorOfCallsSTAR[j], procedureName));
+						cout << procedureName + " callsStar " + vectorOfCallsSTAR[j] << endl;
 
 					}
 
@@ -125,7 +138,8 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 				AbstractionExtractor abstractionExtractor;
 				abstractionExtractor.extractAbstraction(currentNode, pkbinstance, procedureName);
 			}
-		}	
+			
+		}
 
 	}
 };
