@@ -8,10 +8,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of ProcedureModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp1"));
@@ -20,15 +22,43 @@ TEST_CASE("Test 1: Creation of ProcedureModifies Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("MODIFIES", make_tuple("mp1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent ProcedureModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp2"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:PROCEDURE: mp2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("MODIFIES", "mp2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
