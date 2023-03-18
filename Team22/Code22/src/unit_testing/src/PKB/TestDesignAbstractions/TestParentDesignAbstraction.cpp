@@ -10,9 +10,18 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creation of Parent Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a1", "a2"));
+
+        Result result = pkbTest.getDesignAbstraction("PARENT", make_pair("_", "a1"));
+
+        REQUIRE(((result.getQueryEntityName() == "a1") && (result.getQueryResult().size() != 0)));
+    }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("PARENT", make_tuple("a1", "a2"));
 
         Result result = pkbTest.getDesignAbstraction("PARENT", make_pair("_", "a1"));
 
@@ -21,11 +30,20 @@ TEST_CASE("Test 1: Creation of Parent Design Abstraction") {
 }
 
 TEST_CASE("Test 2: Retrieval of Parent Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a3", "a4"));
 
         Result result = pkbTest.getDesignAbstraction("PARENT", make_pair("_", "a3"));
+
+        REQUIRE(result.toString() == "PARENT: a3: a4, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("PARENT", make_tuple("_", "a3", "a4"));
+
+        Result result = pkbTest.getDesignAbstraction("PARENT", "a3");
 
         REQUIRE(result.toString() == "PARENT: a3: a4, ");
     }
