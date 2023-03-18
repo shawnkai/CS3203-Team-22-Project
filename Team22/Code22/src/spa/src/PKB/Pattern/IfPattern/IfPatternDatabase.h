@@ -15,7 +15,7 @@
 
 using namespace std;
 
-class IfPatternDatabase: PatternDatabase {
+class IfPatternDatabase: public PatternDatabase {
     unordered_map<string, IfPattern*> database;
 
     bool isLineNumberPresent(string lineNumber) override;
