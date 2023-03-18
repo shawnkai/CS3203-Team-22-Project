@@ -1,9 +1,9 @@
-1 - double connected wildcard return syntax error <--- should return syntax error
+1 - double connected wildcard return syntax error
 variable v;
 Select v such that Uses(v, __)
 SyntaxError
 5000
-2 - double separated wildcard return syntax error <--- should return syntax error
+2 - double separated wildcard return syntax error
 variable v;
 Select v such that Uses(v, _ _)
 SyntaxError
@@ -33,7 +33,7 @@ variable v;
 Select v such that UsesP(7, _)
 SyntaxError
 5000
-8 - argument 2 as null return syntax error <--- should return syntax error
+8 - argument 2 as null return syntax error
 variable v;
 Select v such that Uses(7, null)
 SemanticError
@@ -53,27 +53,27 @@ variable v
 Select v such that Uses(7, _) 
 SyntaxError
 5000
-12 - extra ; return syntax error <--- error not handled
+12 - extra ; return syntax error
 variable v;
 Select v such that Uses(7, _);
 SyntaxError
 5000
-13 - declaration spelt wrongly return syntax error <--- error not handled
+13 - declaration spelt wrongly return syntax error
 vaiable v;
 Select v such that Uses(7, _)
 SyntaxError
 5000
-14 - declaration variable with capital "v" return syntax error <--- error not handled
+14 - declaration variable with capital "v" return syntax error
 Variable v;
 Select v such that Uses(7, _)
 SyntaxError
 5000
-15 - declaration stmt spelt in full return syntax error <--- error not handled
+15 - declaration stmt spelt in full return syntax error
 variable v; statement s;
 Select v such that Uses(7, _)
 SyntaxError
 5000
-16 - missing ; between 2 declarations return syntax error  <--- error not handled
+16 - missing ; between 2 declarations return syntax error
 variable v stmt s;
 Select v such that Uses(7, _)
 SyntaxError
@@ -88,16 +88,16 @@ variable v;
 Select v such that Uses(_, v)
 SemanticError
 5000
-//19 - actual variable as argument 1 return semantic error <--- error not handled
-//variable v;
-//Select v such that Uses("x", _)
-//SemanticError
-//5000
-//20 - variable synonym as argument 1 return semantic error <--- error not handled
-//variable v;
-//Select v such that Uses(v, _)
-//SemanticError
-//5000
+19 - actual variable as argument 1 return semantic error <--- error not handled
+variable v;
+Select v such that Uses("x", _)
+SemanticError
+5000
+20 - variable synonym as argument 1 return semantic error <--- error not handled
+variable v;
+Select v such that Uses(v, _)
+SemanticError
+5000
 21 - undeclared synonym return semantic error
 variable s;
 Select v such that Uses(v, _)
@@ -232,21 +232,6 @@ Select w such that Uses(w, v)
 while w; variable v;
 Select w such that Uses(w, "b")
 6
-5000
-48 - UsesP with procedure synonym as argument 1 and wildcard as argument 2 <--- should return procedure name
-procedure p; variable v;
-Select p such that Uses(p, _)
-Example
-5000
-49 - UsesP with procedure synonym as argument 1 and variable synonym as argument 2 <--- should return procedure name
-procedure p; variable v;
-Select p such that Uses(p, v)
-Example
-5000
-50 - UsesP with procedure synonym as argument 1 and actual variable as argument 2 <--- should return procedure name
-procedure p; variable v;
-Select p such that Uses(p, "a")
-Example
 5000
 51 - UsesS with wildcard as argument 2 <--- valid query, should return all variables
 variable v;

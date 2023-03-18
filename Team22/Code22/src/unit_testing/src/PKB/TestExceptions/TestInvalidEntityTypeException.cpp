@@ -11,6 +11,12 @@
 
 using namespace std;
 
-TEST_CASE("Test 1: Catch InvalidEntityTypeException", "[!throws][!shouldfail]") {
-    DesignEntitiesFactory::createDesignEntity("INVALID_ENTITY_TYPE", make_pair("INVALID", "INVALID"));
+TEST_CASE("Test 1: Catch InvalidEntityTypeException") {
+    bool exceptionThrown = false;
+    try {
+        DesignEntitiesFactory::createDesignEntity("INVALID_ENTITY_TYPE", make_pair("INVALID", "INVALID"));
+    } catch (exception &e) {
+        exceptionThrown = true;
+    }
+    REQUIRE(exceptionThrown);
 }
