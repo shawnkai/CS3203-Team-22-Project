@@ -43,7 +43,7 @@ TEST_CASE("Testcase1_ExtractOneWhileStatement_ShouldSuccess") {
     REQUIRE(result2 == "USES:STATEMENT: y: 1, ");
 }
 
-TEST_CASE("Testcase1_ExtractNestedWhileStatement_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractNestedWhileStatement_ShouldSuccess") {
     TNode variable8 = TNode(TokenType::NAME_IDENTIFIER, "y", 4, std::vector<TNode>(0));
     TNode read1 = TNode(TokenType::READ, "read", 4, std::vector<TNode>(0));
     std::vector<TNode> child9;

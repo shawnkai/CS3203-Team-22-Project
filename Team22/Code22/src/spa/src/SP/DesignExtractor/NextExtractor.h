@@ -6,6 +6,8 @@
 #include <vector>
 #include <tuple>
 #include <map>
+#include <deque>
+#include <queue>
 #include <unordered_set>
 
 #include "../../PKB/PKB.h"

@@ -35,7 +35,7 @@ TEST_CASE("Testcase1_ExtractSimpleProgram_ShouldSuccess") {
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
 }
 
-TEST_CASE("Testcase1_ExtractProgramWithMultipleProcedures_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractProgramWithMultipleProcedures_ShouldSuccess") {
     TNode variable1 = TNode(TokenType::NAME_IDENTIFIER, "x", 3, std::vector<TNode>(0));
     TNode read1 = TNode(TokenType::READ, "read", 3, std::vector<TNode>(0));
     std::vector<TNode> child7;

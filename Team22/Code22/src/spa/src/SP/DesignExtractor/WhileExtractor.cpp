@@ -34,7 +34,7 @@ void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifCo
 		std::vector<TNode> childNodes = currentNode.children;
 		TNode conditionNode = childNodes[0];
 		ConditionExtractor conditionExtractor;
-		conditionExtractor.extractAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance, procedureName);
+		conditionExtractor.extractAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance, procedureName, currentNode);
 		TNode stmtlstNode = childNodes[1];
 		StmtlstExtractor stmtlstExtractor;
 		stmtlstExtractor.extractAbstraction(stmtlstNode, ifContainers, whileContainers, pkbinstance, whileLineNo, procedureName);

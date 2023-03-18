@@ -25,7 +25,7 @@ TEST_CASE("Testcase1_ExtractPrintStatement_ShouldSuccess") {
     REQUIRE(result2 == "USES:STATEMENT: y: 2, 1, ");
 }
 
-TEST_CASE("Testcase1_ExtractReadStatement_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractReadStatement_ShouldSuccess") {
 
     TNode variable = TNode(TokenType::NAME_IDENTIFIER, "y", 2, std::vector<TNode>(0));
     TNode read1 = TNode(TokenType::READ, "read", 2, std::vector<TNode>(0));

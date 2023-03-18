@@ -55,7 +55,7 @@ TEST_CASE("Testcase1_ExtractOneIfStatement_ShouldSuccess") {
     REQUIRE(result2 == "USES:STATEMENT: y: 1, 3, ");
 }
 
-TEST_CASE("Testcase1_ExtractNestedIfStatement_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractNestedIfStatement_ShouldSuccess") {
 
     TNode variable8 = TNode(TokenType::NAME_IDENTIFIER, "y", 4, std::vector<TNode>(0));
     TNode print1 = TNode(TokenType::PRINT, "print", 4, std::vector<TNode>(0));

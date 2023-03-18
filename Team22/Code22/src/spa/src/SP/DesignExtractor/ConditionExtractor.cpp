@@ -22,7 +22,7 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  */
-void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
+void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName, TNode prevNode) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 	queue<TNode> queue1;
 	queue1.push(currentNode);
@@ -63,6 +63,17 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 				}
 			}
 
+			if (prevNode.nodeType == TokenType::IF) {
+				pkbinstance.addPattern("IF", std::to_string(lineNumOfVariable), nameOfVariable);
+				cout << std::to_string(lineNumOfVariable) + " pattern ifs " + nameOfVariable << endl;
+			}
+			else if (prevNode.nodeType == TokenType::WHILE) {
+				pkbinstance.addPattern("WHILE", std::to_string(lineNumOfVariable), nameOfVariable);
+				cout << std::to_string(lineNumOfVariable) + " pattern w " + nameOfVariable << endl;
+			}
+			else {
+
+			}
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {
