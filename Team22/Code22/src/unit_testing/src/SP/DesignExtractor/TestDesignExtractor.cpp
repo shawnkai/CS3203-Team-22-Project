@@ -13,10 +13,15 @@ TEST_CASE("Testcase1_ExtractSimpleStatement_ShouldSuccess") {
     child1.push_back(print1);
     stmtlist1.children = child1;
 
-    TNode root = TNode(TokenType::PROCEDURE, "main", 0, std::vector<TNode>(0));
+    TNode procedure1 = TNode(TokenType::PROCEDURE, "main", 0, std::vector<TNode>(0));
     std::vector<TNode> child;
     child.push_back(stmtlist1);
-    root.children = child;
+    procedure1.children = child;
+
+    TNode root = TNode(TokenType::PROGRAM, "program", 0, std::vector<TNode>(0));
+    std::vector<TNode> child3;
+    child3.push_back(procedure1);
+    root.children = child3;
 
     PKB pkbinstance = PKB();
     pkbinstance.clearAllDatabases();
@@ -98,16 +103,21 @@ TEST_CASE("Testcase2_ExtractComplexStatement_ShouldSuccess") {
     child1.push_back(while1);
     stmtlist1.children = child1;
 
-    TNode root = TNode(TokenType::PROCEDURE, "main", 0, std::vector<TNode>(0));
+    TNode procedure1 = TNode(TokenType::PROCEDURE, "main", 0, std::vector<TNode>(0));
     std::vector<TNode> child;
     child.push_back(stmtlist1);
-    root.children = child;
+    procedure1.children = child;
+
+    TNode root = TNode(TokenType::PROGRAM, "program", 0, std::vector<TNode>(0));
+    std::vector<TNode> child12;
+    child12.push_back(procedure1);
+    root.children = child12;
 
     PKB pkbinstance = PKB();
     pkbinstance.clearAllDatabases();
-    AbstractionExtractor abstractionExtractor;
+    DesignExtractor designExtractor;
 
-    abstractionExtractor.extractAbstraction(root, pkbinstance, "procedure1");
+    designExtractor.extractAbstraction(root, pkbinstance);
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
