@@ -7,6 +7,9 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidPatternTypeException.cpp"
+#include "PKB/Exceptions/DatabaseNotFoundException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of While Pattern") {
@@ -84,28 +87,49 @@ TEST_CASE("Test 6: Check Variable Is Used In While Pattern") {
     REQUIRE((resultA && resultB && (!(resultD))));
 }
 
-TEST_CASE("Test 7: WHILE: Creating An Invalid Type Of While Pattern", "[!throws][!shouldfail]") {
+TEST_CASE("Test 7: WHILE: Creating An Invalid Type Of While Pattern") {
+    bool exceptionThrown = false;
     PKB pkbTest = PKB();
 
-    pkbTest.addPattern("FAIL", "8", "a");
+    try {
+        pkbTest.addPattern("FAIL", "8", "a");
+    } catch (InvalidPatternTypeException& e) {
+        exceptionThrown = true;
+    }
+
+    REQUIRE(exceptionThrown);
 }
 
-TEST_CASE("Test 8: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern Type", "[!throws][!shouldfail]") {
+TEST_CASE("Test 8: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
+    bool exceptionThrown = false;
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "9", "a");
     pkbTest.addPattern("WHILE", "9", "b");
     pkbTest.addPattern("WHILE", "9", "c");
 
-    bool resultA = pkbTest.isVariableUsedInPattern("FAIL", "9", "a");
+    try {
+        bool resultA = pkbTest.isVariableUsedInPattern("FAIL", "9", "a");
+    } catch (DatabaseNotFoundException& e) {
+        exceptionThrown = true;
+    }
+
+    REQUIRE(exceptionThrown);
 }
 
-TEST_CASE("Test 9: WHILE: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type", "[!throws][!shouldfail]") {
+TEST_CASE("Test 9: WHILE: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
+    bool exceptionThrown = false;
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "10", "a");
     pkbTest.addPattern("WHILE", "10", "b");
     pkbTest.addPattern("WHILE", "10", "c");
 
-    unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("FAIL", "10");
+    try {
+        unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("FAIL", "10");
+    } catch (DatabaseNotFoundException& e) {
+        exceptionThrown = true;
+    }
+
+    REQUIRE(exceptionThrown);
 }
