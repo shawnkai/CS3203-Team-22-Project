@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The PrintUses Database And Call Clear All Database u
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All PrintUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up13", "up14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up15", "up16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up17", "up18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "PRINT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By PrintUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up19", "up20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up21", "up22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "up23", "up24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "PRINT");
+
+        REQUIRE(result.size() == 3);
+    }
+}

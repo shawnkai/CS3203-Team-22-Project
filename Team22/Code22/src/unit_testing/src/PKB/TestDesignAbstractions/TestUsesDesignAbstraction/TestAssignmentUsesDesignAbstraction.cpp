@@ -104,3 +104,33 @@ TEST_CASE("Test 7: Populate The AssignmentUses Database And Call Clear All Datab
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 9: Retrieval of All AssignmentUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua13", "ua14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua15", "ua16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua17", "ua18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "ASSIGNMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By AssignmentUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua19", "ua20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua21", "ua22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua23", "ua24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "ASSIGNMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}

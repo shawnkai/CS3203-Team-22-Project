@@ -87,3 +87,33 @@ TEST_CASE("Test 6: Populate The Follows Database And Call Clear All Database usi
         && (pkbResultAfterClearing.toString() == "none: none: none, ")));
     }
 }
+
+TEST_CASE("Test 7: Retrieval of All Follows Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a19", "a20"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a21", "a22"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("FOLLOWS", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 8: Retrieval of Variables Captured By Follows Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a25", "a26"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a27", "a28"));
+        pkbTest.addDesignAbstraction("FOLLOWS", make_tuple("_", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("FOLLOWS", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}
