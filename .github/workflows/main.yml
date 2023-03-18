@@ -12,15 +12,17 @@ jobs:
     steps:
       - name : Checkout
         uses : actions/checkout@v3
-      - uses: cpp-linter/cpp-linter-action@v2
-        id: linter
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: whisperity/codechecker-analysis-action@v1
+        id: codechecker
         with:
-          style: file
-      - name: Lint Fail
-        if: steps.linter.outputs.checks-failed > 0
-        run: echo "Some files failed the linting checks!"
+          logfile: ${{ github.workspace }}/Build/compile_commands.json
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "CodeChecker Bug Reports"
+          path: ${{ steps.codechecker.outputs.result-html-dir }}
+      - name: "Code Checker Satisfied"
+        if: ${{ steps.codechecker.outputs.warnings == 'true' }}
+        run: exit 1
       - name: run-cmake
         # You may pin to the exact commit or the version.
         # uses: lukka/run-cmake@2d1ee0acb9c4f656ec9128fc7387d82ac4539816
