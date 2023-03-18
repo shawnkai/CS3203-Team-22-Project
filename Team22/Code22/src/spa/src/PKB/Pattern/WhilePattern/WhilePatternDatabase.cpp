@@ -33,8 +33,7 @@ void WhilePatternDatabase::updatePatternInDatabase(Pattern *patternToBeStored) {
 
     WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
 
-    auto elementToAdd =
-            *(this->database.find(whilePatternToBeStored->getLineNumber())->second->getVariableNamesUsed().begin());
+    auto elementToAdd = *(whilePatternToBeStored->getVariableNamesUsed().begin());
 
     this->database.find(whilePatternToBeStored->getLineNumber())->second->addAdditionalVariableOnLine(elementToAdd);
 }

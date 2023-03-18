@@ -33,8 +33,7 @@ void IfPatternDatabase::updatePatternInDatabase(Pattern* patternToBeStored) {
 
     IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
 
-    auto elementToAdd =
-            *(this->database.find(ifPatternToBeStored->getLineNumber())->second->getVariableNamesUsed().begin());
+    auto elementToAdd = *(ifPatternToBeStored->getVariableNamesUsed().begin());
 
     this->database.find(ifPatternToBeStored->getLineNumber())->second->addAdditionalVariableOnLine(elementToAdd);
 }
