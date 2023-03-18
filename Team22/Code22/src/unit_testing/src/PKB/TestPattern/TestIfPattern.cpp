@@ -70,7 +70,7 @@ TEST_CASE("Test 5: Addition of Same Variables on Different Lines in If Pattern")
     REQUIRE(((resultFive.size() == 1) && (resultSix.size() == 2)));
 }
 
-TEST_CASE("Test 6: Check If Variable Is Used In Pattern") {
+TEST_CASE("Test 6: Check Variable Is Used In If Pattern") {
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("IF", "7", "a");

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-TEST_CASE("Test 1: Creation of while Pattern") {
+TEST_CASE("Test 1: Creation of While Pattern") {
     PKB pkbTest = PKB();
     pkbTest.addPattern("WHILE", "1", "a");
 
@@ -18,7 +18,7 @@ TEST_CASE("Test 1: Creation of while Pattern") {
     REQUIRE(result.size() == 1);
 }
 
-TEST_CASE("Test 2: Test clearAllDatabases() on while Pattern Database") {
+TEST_CASE("Test 2: Test clearAllDatabases() on While Pattern Database") {
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "2", "a");
@@ -34,7 +34,7 @@ TEST_CASE("Test 2: Test clearAllDatabases() on while Pattern Database") {
     REQUIRE(result.size() == 0);
 }
 
-TEST_CASE("Test 3: Addition of Multiple Unique Variables in while Pattern") {
+TEST_CASE("Test 3: Addition of Multiple Unique Variables in While Pattern") {
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "3", "a");
@@ -45,7 +45,7 @@ TEST_CASE("Test 3: Addition of Multiple Unique Variables in while Pattern") {
     REQUIRE(result.size() == 2);
 }
 
-TEST_CASE("Test 4: Addition of Duplicate Variables in while Pattern") {
+TEST_CASE("Test 4: Addition of Duplicate Variables in While Pattern") {
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "4", "a");
@@ -57,7 +57,7 @@ TEST_CASE("Test 4: Addition of Duplicate Variables in while Pattern") {
     REQUIRE(result.size() == 2);
 }
 
-TEST_CASE("Test 5: Addition of Same Variables on Different Lines in while Pattern") {
+TEST_CASE("Test 5: Addition of Same Variables on Different Lines in While Pattern") {
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "5", "a");
@@ -70,7 +70,7 @@ TEST_CASE("Test 5: Addition of Same Variables on Different Lines in while Patter
     REQUIRE(((resultFive.size() == 1) && (resultSix.size() == 2)));
 }
 
-TEST_CASE("Test 6: Check while Variable Is Used In Pattern") {
+TEST_CASE("Test 6: Check Variable Is Used In While Pattern") {
     PKB pkbTest = PKB();
 
     pkbTest.addPattern("WHILE", "7", "a");
