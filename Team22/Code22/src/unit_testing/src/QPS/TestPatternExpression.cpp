@@ -441,35 +441,7 @@ TEST_CASE("TestCase10_InvalidInfixExpressionPatternExpression_SyntacticException
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase16_ParseSelectWhileWithExactMatchingPattern_ShouldSuccess") {
-    QueryParser queryParser;
-    string declaration = "while w;";
-    string query = R"(Select w pattern w(_, "x+y"))";
-
-    queryParser.parse(declaration);
-
-    SelectExpression *actualResult = queryParser.parse(query);
-
-    string expected = R"(Select w such that pattern w(_, +xy))";
-
-    REQUIRE(actualResult->toString() == expected);
-}
-
-TEST_CASE("TestCase16_ParseSelectIfWithExactMatchingPattern_ShouldSuccess") {
-    QueryParser queryParser;
-    string declaration = "if i;";
-    string query = R"(Select i pattern i(_, "x+y"))";
-
-    queryParser.parse(declaration);
-
-    SelectExpression *actualResult = queryParser.parse(query);
-
-    string expected = R"(Select i such that pattern i(_, +xy))";
-
-    REQUIRE(actualResult->toString() == expected);
-}
-
-TEST_CASE("TestCase16_ParseSelectStmtExactMatchingPattern_ShouldSuccess") {
+TEST_CASE("TestCase16_ParseSelectStmtExactMatchingPattern_SemanticError") {
     QueryParser queryParser;
     string declaration = "stmt s;";
     string query = R"(Select s pattern s(_, "x+y"))";
@@ -487,7 +459,7 @@ TEST_CASE("TestCase16_ParseSelectStmtExactMatchingPattern_ShouldSuccess") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase16_ParseSelectCallExactMatchingPattern_ShouldSuccess") {
+TEST_CASE("TestCase16_ParseSelectCallExactMatchingPattern_SemanticError") {
     QueryParser queryParser;
     string declaration = "call c;";
     string query = R"(Select c pattern c(_, "x+y"))";
@@ -499,6 +471,90 @@ TEST_CASE("TestCase16_ParseSelectCallExactMatchingPattern_ShouldSuccess") {
     try {
         Expression *exp1 = queryParser.parse(query);
     } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+TEST_CASE("TestCase17_ParseSelectIfWithExactMatchingPattern_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "if i; variable v;";
+    string query = R"(Select i pattern i(v, _, _))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select i such that pattern i(v, _, _))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase18_ParseSelectIfWithOneQildcard_SyntacticError") {
+    QueryParser queryParser;
+    string declaration = "if i; variable v;";
+    string query = R"(Select i pattern i(v, _))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+TEST_CASE("TestCase19_ParseSelectWhileWithExactMatchingPattern_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "while w; variable v;";
+    string query = R"(Select w pattern w(v, _))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select w such that pattern w(v, _))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase20_ParseSelectIfWithNotWildcards_SyntacticError") {
+    QueryParser queryParser;
+    string declaration = "if i; variable v;";
+    string query = R"(Select i pattern i(v, v, v))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase21_ParseSelectWhileWithNotWildcards_SyntacticError") {
+    QueryParser queryParser;
+    string declaration = "while w; variable v;";
+    string query = R"(Select w pattern w(v, v))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 
