@@ -1,136 +1,136 @@
 1 - multiple such that, pattern a and with clause
 assign a; variable v;  constant c; while w;
-Select a pattern a (¡°x¡±, _) such that Parent* (w, a) and follows*(6, a) with a.stmt# = c
+Select a pattern a (¡°x¡±, _) such that Parent* (w, a) and Follows*(6, a) with a.stmt# = c
 none
 5000
 2 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; stmt s;
-Select w pattern w (¡°i¡±, _) such that Parent* (w, s) such that follows*(a, s) with w.stmt# = c
+Select w pattern w (¡°i¡±, _) such that Parent* (w, s) such that Follows*(a, s) with w.stmt# = c
 none
 5000
 3 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if;
-Select if pattern if (¡°x¡±, _, _) such that Parent* (if, a) such that follows*(a, if) with if.stmt# = c
+Select if pattern if (¡°x¡±, _, _) such that Parent* (if, a) such that Follows*(a, if) with if.stmt# = c
 8
 5000
 4 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt;
-Select a pattern a (¡°x¡±, _) such that Parent (w, a) such that uses(a, "x") with a.stmt# = stmt.stmt#
+Select a pattern a (¡°x¡±, _) such that Parent (w, a) such that Uses(a, "x") with a.stmt# = stmt.stmt#
 7,35
 5000
 5 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re;
-Select w pattern w (¡°i¡±, _) such that Parent* (w, pn) such that modifies(w, "a") with a.stmt# = stmt.stmt#
+Select w pattern w (¡°i¡±, _) such that Parent* (w, pn) such that Modifies(w, "a") with a.stmt# = stmt.stmt#
 6,26
 5000
 6 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re;
-Select if pattern if (¡°i¡±, _, _) such that Parent (if, a) such that uses(if, v) with v.varName = re.varName
+Select if pattern if (¡°i¡±, _, _) such that Parent (if, a) such that Uses(if, v) with v.varName = re.varName
 30
 5000
 7 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re;
-Select a pattern a (¡°x¡±, _) such that Parent (w, a) and modifies(a, "i") with a.stmt# = c
+Select a pattern a (¡°x¡±, _) such that Parent (w, a) and Modifies(a, "i") with a.stmt# = c
 none
 5000
 8 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (v, _) such that Parent (w, v) and modifies(a, v) with v.varName = pn.varName and v.varName = re.varName 
+Select w pattern w (v, _) such that Parent (w, v) and Modifies(a, v) with v.varName = pn.varName and v.varName = re.varName 
 none
 5000
 9 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (¡°a¡±, _) and Parent (w, a) such that modifies(a, v) with v.varName = pn.varName and v.varName = re.varName 
+Select w pattern w (¡°a¡±, _) and Parent (w, a) such that Modifies(a, v) with v.varName = pn.varName and v.varName = re.varName 
 SemanticError
 5000
 10 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if pattern if (¡°x¡±, _, _) such that Parent (w, if) such that modifies(if, _) with if.stmt# =  c
+Select if pattern if (¡°x¡±, _, _) such that Parent (w, if) such that Modifies(if, _) with if.stmt# =  c
 8
 5000
 11 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select v pattern a (v, _"x+y"_) such that follows* (w, a) such that uses(a, v) with v.varName = read.varName
+Select v pattern a (v, _"x+y"_) such that Parent* (w, a) such that Uses(a, v) with v.varName = re.varName
 13
 5000
 12 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (_, _) such that follows* (w, a) such that uses(w, a) with a.stmt# = c
+Select w pattern w (_, _) such that Follows* (w, a) such that Uses(w, a) with a.stmt# = c
 13
 5000
 13 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if such that follows* (w, a) such that uses(1, a) with a.stmt# = c pattern if (¡°x¡±, _)
+Select if such that Follows* (w, a) such that Uses(1, a) with a.stmt# = c pattern if (¡°x¡±, _)
 SyntaxError
 5000
 14 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if pattern if (¡°x¡±, _, v) such that follows* (w, a) such that uses(1, a) with a.stmt# = c 
+Select if pattern if (¡°x¡±, _, v) such that Follows* (w, a) such that Uses(1, a) with a.stmt# = c 
 SemanticError
 5000
 15 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select a pattern a (_, "a") such that follows* (w, a) such that modifies(if, a) with v.varName = "a"
+Select a pattern a (_, "a") such that Follows* (w, a) such that Modifies(if, a) with v.varName = "a"
 13
 5000
 16 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (¡°x¡±, _) such that follows* (w, a) and modifies(w, a)
+Select w pattern w (¡°x¡±, _) such that Follows* (w, a) and Modifies(w, a)
 13
 5000
 17 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (v, _) such that follows* (w, a) and modifies(w, a) with v.varName = pn.varName
+Select w pattern w (v, _) such that Follows* (w, a) and Modifies(w, a) with v.varName = pn.varName
 13
 5000
 18 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w ("x", v) such that follows* (w, a) and modifies(w, a) with v.varName = pn.varName
+Select w pattern w ("x", v) such that Follows* (w, a) and Modifies(w, a) with v.varName = pn.varName
 SemanticError
 5000
 19 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if pattern if (¡°x¡±, _, _) such that follows* (w, a) pattern w (¡°x¡±, _) such that modifies(w, a)
+Select if pattern if (¡°x¡±, _, _) such that Follows* (w, a) pattern w (¡°x¡±, _) such that Modifies(w, a)
 
 5000
 20 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if pattern if (¡°x¡±, _, _) such that follows* (if, w) such that modifies(w, v) with if.stmt# = c
+Select if pattern if (¡°x¡±, _, _) such that Follows* (if, w) such that Modifies(w, v) with if.stmt# = c
 
 5000
 21 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select a pattern a (_, _) such that uses (w, v) such that modifies(w, v)
+Select a pattern a (_, _) such that Uses (w, v) such that Modifies(w, v)
 
 5000
 22 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select a pattern a (_, "x+y+a") such that uses (w, v) such that modifies(w, v) with v.varName = v
+Select a pattern a (_, "x+y+a") such that Uses (w, v) such that Modifies(w, v) with v.varName = v
 
 5000
 23 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (¡°x¡±, _) such that uses (w, _) such that modifies(w, v) with v.varName = re.varName 
+Select w pattern w (¡°x¡±, _) such that Uses (w, _) such that Modifies(w, v) with v.varName = re.varName 
 
 5000
 24 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w (¡°x¡±, _) such that uses (_, v) such that modifies(w, v) with v.varName = re.varName 
+Select w pattern w (¡°x¡±, _) such that Uses (_, v) such that Modifies(w, v) with v.varName = re.varName 
 SemanticError
 5000
 25 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if such that uses (if, _) and modifies(1, a) pattern if (v, _, _) with if.stmt# = c
+Select if such that Uses (if, _) and Modifies(1, a) pattern if (v, _, _) with if.stmt# = c
 13
 5000
 26 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if such that uses (if, _) and modifies(1, a) pattern a ("x+y",_) with if.stmt# = c
+Select if such that Uses (if, _) and Modifies(1, a) pattern a ("x+y",_) with if.stmt# = c
 SemanticError
 5000
 27 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if such that uses (if, _) and modifies(1, a) pattern a ("x+y",_) with if.stmt# = v.varName
+Select if such that Uses (if, _) and Modifies(1, a) pattern a ("x+y",_) with if.stmt# = v.varName
 SemanticError
 5000
 
