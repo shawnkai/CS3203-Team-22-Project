@@ -441,11 +441,3 @@ TEST_CASE("TestCase10_InvalidInfixExpressionPatternExpression_SyntacticException
     REQUIRE(throwsException);
 }
 
-//(Fixed?) Crashes
-//stmt n; assign a; Select n such that Parent (_, _) pattern a (_, _)
-//while w; assign a; Select w such that Uses(w, "left") pattern a(_, _"right"_)
-//print rd; variable v; stmt s; assign a; Select s such that Parent (s, rd) pattern a(v,_)
-//assign a; while w; Select a such that Modifies (w, "x") pattern a (_, _"x"_)
-
-
-
