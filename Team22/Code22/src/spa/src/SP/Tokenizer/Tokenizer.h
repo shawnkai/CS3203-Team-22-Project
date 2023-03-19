@@ -34,4 +34,10 @@ private:
                                      int charPos, int lineNumber);
     Token checkingAndGettingToken(char delimeter, TokenType type, std::string tokenId, std::string remainingLine,
                                              int lineNumber);
+    std::pair<int, std::vector<Token> > handleConditionalChar(std::vector<Token> currentTokens, std::string candidateToken,
+                                                         std::string currLine, int currLineNum, int charPos);
+    std::pair<int, std::vector<Token> > handleRelationalChar(std::vector<Token> currentTokens, std::string candidateToken,
+                                                              std::string currLine, int currLineNum, int charPos);
+    std::pair<int, std::vector<Token> > handleAssignmentChar(std::vector<Token> currentTokens, std::string candidateToken,
+                                                             std::string currLine, int currLineNum, int charPos);
 };

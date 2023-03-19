@@ -38,27 +38,14 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
         }
         if (!currStmts.empty()) {
             if (!pendingLinkingBack.empty()) {
-                for (int entry: pendingLinkingBack) {
-                    thisBlkNeighbour.push_back(currentBlk);
-                    map<int, vector<int> >::iterator itr;
-                    itr = blockGraph.find(entry);
-                    if (itr == blockGraph.end()) {
-                        blockGraph.insert(pair<int, vector<int> >(entry, thisBlkNeighbour));
-                    }else{
-                        auto existing = itr->second;
-                        existing.insert(existing.end(), thisBlkNeighbour.begin(), thisBlkNeighbour.end());
-                        itr->second = existing;
-                    }
-                    thisBlkNeighbour.clear();
-                }
-                pendingLinkingBack.clear();
+                pendingLinkingBack = handleLinkingBackBlocks(pendingLinkingBack, thisBlkNeighbour);
             }
             int exitingBlk = buildBasicNode(currStmts);
             if (i == statementListToProcess.children.size() && exitParent == -1) {
                 //link last blk to 0
-                vector<int> end;
-                end.push_back(0);
-                blockGraph.insert(pair<int, vector<int> >(exitingBlk, end));
+                vector<int> tempResult;
+                tempResult.push_back(exitingBlk);
+                vector<int> end = handleTerminalBlocks(tempResult);
                 return end;
             }
             pendingLinkingBack.push_back(exitingBlk);
@@ -68,35 +55,14 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
             thisBlkNeighbour.clear();
             currStmts.clear();
             if (!pendingLinkingBack.empty()) {
-                for (int entry: pendingLinkingBack) {
-                    thisBlkNeighbour.push_back(currentBlk);
-                    map<int, vector<int> >::iterator itr;
-                    itr = blockGraph.find(entry);
-                    if (itr == blockGraph.end()) {
-                        blockGraph.insert(pair<int, vector<int> >(entry, thisBlkNeighbour));
-                    }else{
-                        auto existing = itr->second;
-                        existing.insert(existing.end(), thisBlkNeighbour.begin(), thisBlkNeighbour.end());
-                        itr->second = existing;
-                    }
-                    thisBlkNeighbour.clear();
-                }
-                pendingLinkingBack.clear();
+                pendingLinkingBack = handleLinkingBackBlocks(pendingLinkingBack, thisBlkNeighbour);
             }
             int exitingBlk = buildWhileNode(currStmts, statementListToProcess, i);
             if (i == statementListToProcess.children.size() - 1 && exitParent == -1) {
                 //link last blk to 0
-                vector<int> end;
-                end.push_back(0);
-                map<int, vector<int> >::iterator itr;
-                itr = blockGraph.find(exitingBlk);
-                if (itr == blockGraph.end()) {
-                    blockGraph.insert(pair<int, vector<int> >(exitingBlk, end));
-                }else{
-                    auto existing = itr->second;
-                    existing.insert(existing.end(), end.begin(), end.end());
-                    itr->second = existing;
-                }
+                vector<int> tempResult;
+                tempResult.push_back(exitingBlk);
+                vector<int> end = handleTerminalBlocks(tempResult);
                 return end;
             }
             pendingLinkingBack.push_back(exitingBlk);
@@ -106,37 +72,12 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
             thisBlkNeighbour.clear();
             currStmts.clear();
             if (!pendingLinkingBack.empty()) {
-                for (int entry: pendingLinkingBack) {
-                    thisBlkNeighbour.push_back(currentBlk);
-                    map<int, vector<int> >::iterator itr;
-                    itr = blockGraph.find(entry);
-                    if (itr == blockGraph.end()) {
-                        blockGraph.insert(pair<int, vector<int> >(entry, thisBlkNeighbour));
-                    }else{
-                        auto existing = itr->second;
-                        existing.insert(existing.end(), thisBlkNeighbour.begin(), thisBlkNeighbour.end());
-                        itr->second = existing;
-                    }
-                    thisBlkNeighbour.clear();
-                }
-                pendingLinkingBack.clear();
+                pendingLinkingBack = handleLinkingBackBlocks(pendingLinkingBack, thisBlkNeighbour);
             }
             vector<int> exitingBlkVec = buildIfNode(currStmts, statementListToProcess, i);
             if (i == statementListToProcess.children.size() - 1 && root.nodeType == TokenType::PROCEDURE) {
                 //link last blk to 0
-                vector<int> end;
-                end.push_back(0);
-                for (int pendingToEnd: exitingBlkVec) {
-                    map<int, vector<int> >::iterator itr;
-                    itr = blockGraph.find(pendingToEnd);
-                    if (itr == blockGraph.end()) {
-                        blockGraph.insert(pair<int, vector<int> >(pendingToEnd, end));
-                    }else{
-                        auto existing = itr->second;
-                        existing.insert(existing.end(), end.begin(), end.end());
-                        itr->second = existing;
-                    }
-                }
+                vector<int> end = handleTerminalBlocks(exitingBlkVec);
                 return end;
             }
             pendingLinkingBack.insert(pendingLinkingBack.end(), exitingBlkVec.begin(), exitingBlkVec.end());
@@ -144,33 +85,65 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
     }
     if (!currStmts.empty()) {
         if (!pendingLinkingBack.empty()) {
-            for (int entry: pendingLinkingBack) {
-                thisBlkNeighbour.push_back(currentBlk);
-                map<int, vector<int> >::iterator itr;
-                itr = blockGraph.find(entry);
-                if (itr == blockGraph.end()) {
-                    blockGraph.insert(pair<int, vector<int> >(entry, thisBlkNeighbour));
-                }else{
-                    auto existing = itr->second;
-                    existing.insert(existing.end(), thisBlkNeighbour.begin(), thisBlkNeighbour.end());
-                    itr->second = existing;
-                }
-                thisBlkNeighbour.clear();
-            }
-            pendingLinkingBack.clear();
+            pendingLinkingBack = handleLinkingBackBlocks(pendingLinkingBack, thisBlkNeighbour);
         }
         int exitingBlk = buildBasicNode(currStmts);
         vector<int> result;
         result.push_back(exitingBlk);
         if (root.nodeType == TokenType::PROCEDURE) {
-            vector<int> end;
-            end.push_back(0);
-            blockGraph.insert(pair<int, vector<int> >(exitingBlk, end));
+            vector<int> end = handleTerminalBlocks(result);
             return end;
         }
         return result;
     }
     return pendingLinkingBack;
+}
+
+/**
+ * Link the outermost exiting blocks to basic block 0 to indicate program termination.
+ *
+ * @param pendingToTerminate
+ * @return
+ */
+vector<int> Cfg::handleTerminalBlocks(const vector<int>& pendingToTerminate) {
+    vector<int> end;
+    end.push_back(0);
+    for(int ending: pendingToTerminate) {
+        map<int, vector<int> >::iterator itr;
+        itr = blockGraph.find(ending);
+        if (itr == blockGraph.end()) {
+            blockGraph.insert(pair<int, vector<int> >(ending, end));
+        } else {
+            auto existing = itr->second;
+            existing.insert(existing.end(), end.begin(), end.end());
+            itr->second = existing;
+        }
+    }
+    return end;
+}
+
+/**
+ * Links exiting blocks from the previous layer to the current basic block being built.
+ *
+ * @param pendingHandling Exiting blocks from the previous recursive call
+ * @param neighbours a vector for temporary storage of neighbours of the exiting blocks
+ * @return a cleared vector for the algorithm to continue
+ */
+vector<int> Cfg::handleLinkingBackBlocks(vector<int> pendingHandling, vector<int> neighbours) {
+    for (int entry: pendingHandling) {
+        neighbours.push_back(currentBlk);
+        map<int, vector<int> >::iterator itr;
+        itr = blockGraph.find(entry);
+        if (itr == blockGraph.end()) {
+            blockGraph.insert(pair<int, vector<int> >(entry, neighbours));
+        } else {
+            auto existing = itr->second;
+            existing.insert(existing.end(), neighbours.begin(), neighbours.end());
+        }
+        neighbours.clear();
+    }
+    pendingHandling.clear();
+    return pendingHandling;
 }
 
 /**
@@ -332,229 +305,3 @@ string Cfg::toString() {
     result += "\n";
     return result;
 }
-
-//int main() {
-//    TNode root;
-//    root.nodeType = TokenType::PROCEDURE;
-//    root.stringId = "example";
-//    TNode statementListNode;
-//    statementListNode.nodeType = TokenType::STATEMENT_LIST;
-//    statementListNode.stringId = "stmtList";
-//    TNode readNode;
-//    readNode.nodeType = TokenType::READ;
-//    readNode.stringId = "read";
-//    readNode.stmtNumber = 1;
-//    TNode varNode;
-//    varNode.nodeType = TokenType::NAME_IDENTIFIER;
-//    varNode.stringId = "x";
-//    varNode.stmtNumber = 1;
-//    TNode readNode2;
-//    readNode2.nodeType = TokenType::READ;
-//    readNode2.stringId = "read";
-//    readNode2.stmtNumber = 7;
-//    TNode varNode2;
-//    varNode2.nodeType = TokenType::NAME_IDENTIFIER;
-//    varNode2.stringId = "y";
-//    varNode2.stmtNumber = 4;
-//    readNode.children.push_back(varNode);
-//    readNode2.children.push_back(varNode2);
-//    TNode whileNode;
-//    whileNode.nodeType = TokenType::WHILE;
-//    whileNode.stringId = "while";
-//    whileNode.stmtNumber = 2;
-//    TNode condition;
-//    condition.nodeType = TokenType::OPERATOR;
-//    condition.stringId = "<";
-//    condition.stmtNumber = 2;
-//    TNode condition2;
-//    condition2.nodeType = TokenType::OPERATOR;
-//    condition2.stringId = "==";
-//    condition2.stmtNumber = 4;
-//    TNode varNode3;
-//    varNode3.nodeType = TokenType::NAME_IDENTIFIER;
-//    varNode3.stringId = "i";
-//    varNode3.stmtNumber = 2;
-//    TNode intNode;
-//    intNode.nodeType = TokenType::INTEGER;
-//    intNode.stringId = "1";
-//    intNode.stmtNumber = 2;
-//    TNode readNode3;
-//    readNode3.nodeType = TokenType::READ;
-//    readNode3.stringId = "";
-//    readNode3.stmtNumber = 5;
-//    TNode varNode4;
-//    varNode4.nodeType = TokenType::NAME_IDENTIFIER;
-//    varNode4.stringId = "i";
-//    varNode4.stmtNumber = 3;
-//    TNode statementListNode2;
-//    statementListNode2.nodeType = TokenType::STATEMENT_LIST;
-//    statementListNode2.stringId = "stmtList";
-//    statementListNode2.stmtNumber = 5;
-//    readNode3.children.push_back(varNode4);
-//    condition.children.push_back(varNode3);
-//    condition.children.push_back(intNode);
-//    whileNode.children.push_back(condition2);
-//    statementListNode2.children.push_back(readNode3);
-//    //whileNode.children.push_back(statementListNode2);
-//    TNode ifNode;
-//    ifNode.nodeType = TokenType::IF;
-//    ifNode.stringId = "if";
-//    ifNode.stmtNumber = 2;
-//    TNode statementListNode3;
-//    statementListNode3.nodeType = TokenType::STATEMENT_LIST;
-//    statementListNode3.stringId = "if";
-//    statementListNode3.stmtNumber = 3;
-//    TNode statementListNode4;
-//    statementListNode4.nodeType = TokenType::STATEMENT_LIST;
-//    statementListNode4.stringId = "else";
-//    statementListNode4.stmtNumber = 3;
-//    TNode printNode1;
-//    printNode1.nodeType = TokenType::PRINT;
-//    printNode1.stringId = "print";
-//    printNode1.stmtNumber = 3;
-//    TNode printNode2;
-//    printNode2.nodeType = TokenType::PRINT;
-//    printNode2.stringId = "print";
-//    printNode2.stmtNumber = 6;
-//    TNode varNode5;
-//    varNode5.nodeType = TokenType::NAME_IDENTIFIER;
-//    varNode5.stringId = "i";
-//    varNode5.stmtNumber = 3;
-//    TNode varNode6;
-//    varNode6.nodeType = TokenType::NAME_IDENTIFIER;
-//    varNode6.stringId = "i";
-//    varNode6.stmtNumber = 6;
-//    printNode1.children.push_back(varNode5);
-//    printNode2.children.push_back(varNode6);
-//
-//    statementListNode3.children.push_back(printNode1);
-//    //statementListNode3.children.push_back(whileNode);
-//    statementListNode4.children.push_back(printNode2);
-//    ifNode.children.push_back(condition);
-//    ifNode.children.push_back(statementListNode3);
-//    ifNode.children.push_back(statementListNode4);
-//    statementListNode2.children.push_back(ifNode);
-//    whileNode.children.push_back(statementListNode2);
-////    statementListNode.children.push_back(readNode);
-////    //statementListNode.children.push_back(whileNode);
-////    //statementListNode.children.push_back(ifNode);
-////    statementListNode.children.push_back(whileNode);
-////    //statementListNode.children.push_back(printNode1);
-////    statementListNode.children.push_back(readNode2);
-////    root.children.push_back(statementListNode);
-////    cout << ToString(root) << endl;
-////    cout << ToString(statementListNode) << endl;
-////    cout << to_string(statementListNode.children.size()) << endl;
-////    cout << ToString(statementListNode3) << endl;
-////    Cfg cfgTest = Cfg(root);
-////    cfgTest.buildCfg(root, -1);
-////    cout << cfgTest.toString() << endl;
-//
-//    TNode newPrintNode;
-//    newPrintNode.nodeType = TokenType::PRINT;
-//    newPrintNode.stringId = "print";
-//    newPrintNode.stmtNumber = 3;
-//    TNode newstatementListNode;
-//    newstatementListNode.nodeType = TokenType::STATEMENT_LIST;
-//    newstatementListNode.stringId = "stmtList";
-//    newstatementListNode.stmtNumber = 3;
-//    newstatementListNode.children.push_back(newPrintNode);
-//    TNode newconditionNode;
-//    newconditionNode.nodeType = TokenType::OPERATOR;
-//    newconditionNode.stringId = "==";
-//    newconditionNode.stmtNumber = 4;
-//    TNode newwhileNode;
-//    newwhileNode.nodeType = TokenType::WHILE;
-//    newwhileNode.stringId = "while";
-//    newwhileNode.stmtNumber = 2;
-//    newwhileNode.children.push_back(newconditionNode);
-//    newwhileNode.children.push_back(newstatementListNode);
-//    TNode newPrintNode2;
-//    newPrintNode2.nodeType = TokenType::PRINT;
-//    newPrintNode2.stringId = "print";
-//    newPrintNode2.stmtNumber = 3;
-//    TNode newPrintNode3;
-//    newPrintNode3.nodeType = TokenType::PRINT;
-//    newPrintNode3.stringId = "print";
-//    newPrintNode3.stmtNumber = 3;
-//    TNode newstatementListNode2;
-//    newstatementListNode2.nodeType = TokenType::STATEMENT_LIST;
-//    newstatementListNode2.stringId = "stmtList";
-//    newstatementListNode2.stmtNumber = 3;
-//    newstatementListNode2.children.push_back(newPrintNode2);
-//    newstatementListNode2.children.push_back(newwhileNode);
-//    TNode newstatementListNode3;
-//    newstatementListNode3.nodeType = TokenType::STATEMENT_LIST;
-//    newstatementListNode3.stringId = "stmtList";
-//    newstatementListNode3.stmtNumber = 3;
-//    newstatementListNode3.children.push_back(newPrintNode3);
-//    TNode newconditionNode2;
-//    newconditionNode2.nodeType = TokenType::OPERATOR;
-//    newconditionNode2.stringId = "==";
-//    newconditionNode2.stmtNumber = 4;
-//    TNode newifNode;
-//    newifNode.nodeType = TokenType::IF;
-//    newifNode.stringId = "if";
-//    newifNode.stmtNumber = 2;
-//    newifNode.children.push_back(newconditionNode2);
-//    newifNode.children.push_back(newstatementListNode2);
-//    newifNode.children.push_back(newstatementListNode3);
-//
-//    TNode newPrintNode4;
-//    newPrintNode4.nodeType = TokenType::PRINT;
-//    newPrintNode4.stringId = "print";
-//    newPrintNode4.stmtNumber = 3;
-//    TNode newPrintNode5;
-//    newPrintNode5.nodeType = TokenType::PRINT;
-//    newPrintNode5.stringId = "print";
-//    newPrintNode5.stmtNumber = 3;
-//    TNode newconditionNode3;
-//    newconditionNode2.nodeType = TokenType::OPERATOR;
-//    newconditionNode2.stringId = "==";
-//    newconditionNode2.stmtNumber = 4;
-//    TNode newstatementListNode4;
-//    newstatementListNode4.nodeType = TokenType::STATEMENT_LIST;
-//    newstatementListNode4.stringId = "stmtList";
-//    newstatementListNode4.stmtNumber = 3;
-//    TNode newstatementListNode5;
-//    newstatementListNode5.nodeType = TokenType::STATEMENT_LIST;
-//    newstatementListNode5.stringId = "stmtList";
-//    newstatementListNode5.stmtNumber = 3;
-//    newstatementListNode4.children.push_back(newPrintNode4);
-//    newstatementListNode5.children.push_back(newPrintNode5);
-//    newstatementListNode5.children.push_back(newifNode);
-//    TNode newifNode2;
-//    newifNode2.nodeType = TokenType::IF;
-//    newifNode2.stringId = "if";
-//    newifNode2.stmtNumber = 2;
-//    newifNode2.children.push_back(newconditionNode3);
-//    newifNode2.children.push_back(newstatementListNode4);
-//    newifNode2.children.push_back(newstatementListNode5);
-//
-//    TNode newconditionNode4;
-//    newconditionNode4.nodeType = TokenType::OPERATOR;
-//    newconditionNode4.stringId = "==";
-//    newconditionNode4.stmtNumber = 4;
-//    TNode newstatementListNode6;
-//    newstatementListNode6.nodeType = TokenType::STATEMENT_LIST;
-//    newstatementListNode6.stringId = "stmtList";
-//    newstatementListNode6.stmtNumber = 3;
-//    newstatementListNode6.children.push_back(newifNode2);
-//    TNode newwhileNode2;
-//    newwhileNode2.nodeType = TokenType::WHILE;
-//    newwhileNode2.stringId = "while";
-//    newwhileNode2.stmtNumber = 2;
-//    newwhileNode2.children.push_back(newconditionNode4);
-//    newwhileNode2.children.push_back(newstatementListNode6);
-//    statementListNode.children.push_back(readNode);
-//    statementListNode.children.push_back(newwhileNode2);
-//    root.children.push_back(statementListNode);
-//    cout << ToString(root) << endl;
-//    cout << ToString(statementListNode) << endl;
-//    cout << to_string(statementListNode.children.size()) << endl;
-//    cout << ToString(statementListNode3) << endl;
-//    Cfg cfgTest = Cfg(root);
-//    cfgTest.buildCfg(root, -1);
-//    cout << cfgTest.toString() << endl;
-//    return 0;
-//}

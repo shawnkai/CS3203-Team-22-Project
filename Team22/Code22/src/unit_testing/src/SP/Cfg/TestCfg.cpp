@@ -12,7 +12,7 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
     std::vector<Token> tokenList;
     const char *relativePath;
 
-    relativePath = "SP_ut18.txt";
+    relativePath = "SP_ut_cfg_1.txt";
 
     string code = "procedure Example {\n"
                   " x = 2;\n"
@@ -63,11 +63,12 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Cfg builder = Cfg(result);
-    builder.buildCfg(result, -1);
+    TNode largest = result.children[0];
+    Cfg builder = Cfg(largest);
+    builder.buildCfg(largest, -1);
 
     REQUIRE(builder.basicBlock.size() == 17);
-    REQUIRE(builder.blockPointingBackward.size() == 4);
+    REQUIRE(builder.blockPointingBackward.size() == 7);
     REQUIRE(builder.blockGraph.size() == 17);
     REQUIRE(builder.blockToStatement.size() == 17);
     REQUIRE(builder.statementNumberToBlock.size() == 17);
