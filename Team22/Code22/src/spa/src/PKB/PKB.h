@@ -42,7 +42,7 @@ public:
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName,
                                                                     string patternLineNumber);
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
-    vector<AssignPattern*> getAllRightHandExpressions();
+    unordered_map<string, unordered_map<string, string>> getAllRightHandExpressions();
 
     void addPattern(string patternType, string lineNumber, string variableName);
     bool isVariableUsedInPattern(string patternType, string lineNumber, string variableName);

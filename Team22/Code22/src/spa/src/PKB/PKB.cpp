@@ -142,7 +142,7 @@ unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string 
  *
  * @return A vector of AssignPattern pointer objects, or an empty vector, if nothing is stored.
  */
-vector<AssignPattern*> PKB::getAllRightHandExpressions() {
+unordered_map<string, unordered_map<string, string>> PKB::getAllRightHandExpressions() {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
