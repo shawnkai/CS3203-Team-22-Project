@@ -18,6 +18,7 @@ class PKB {
     void clearDesignEntityDatabase();
     void clearAssignPatternDatabase();
     void clearControlFlowGraphDatabase();
+    void clearPatternDatabase();
 
 public:
     // APIs Related To Design Entities
@@ -44,6 +45,10 @@ public:
     vector<AssignPattern*> getAllRightHandExpressions();
 
     // APIs Related to Control Flow Graph
+    void addPattern(string patternType, string lineNumber, string variableName);
+    bool isVariableUsedInPattern(string patternType, string lineNumber, string variableName);
+    unordered_set<string> getAllVariablesUsedInPattern(string patternType, string lineNumber);
+
     void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
                              map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);

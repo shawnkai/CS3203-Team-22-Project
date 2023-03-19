@@ -19,7 +19,7 @@ jobs:
         with:
           tidy-checks: '-*'
           files-changed-only: false
-          
+
       - name: run-cmake
         # You may pin to the exact commit or the version.
         # uses: lukka/run-cmake@2d1ee0acb9c4f656ec9128fc7387d82ac4539816
