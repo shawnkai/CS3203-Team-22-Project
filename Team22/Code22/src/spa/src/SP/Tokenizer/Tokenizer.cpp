@@ -63,7 +63,8 @@ bool Tokenizer::isLegalArithmeticChar(char c) {
 }
 
 /**
- * Generate the Token representing the string being passed.
+ * Generate the Token representing the string being passed. In particular, check if a keyword string should be
+ * represented as a keyword token or a name identifier token.
  *
  * @param delimeter the character to be used for splitting
  * @param type Token type
@@ -159,6 +160,106 @@ std::vector<Token> Tokenizer::handleKeyword(std::vector<Token> currentTokens, st
 }
 
 /**
+ * Handles and abstracts out the logic to check if the current token is a conditional expression.
+ *
+ * @param currentTokens full list of tokens generated so far
+ * @param candidateToken a string storing current chars to be binded together
+ * @param currLine the line being scanned through
+ * @param currLineNum integer representing the statement number
+ * @param charPos position of the character being processed
+ * @return the updated charPos and full list of tokens generated as a pair
+ */
+std::pair<int, std::vector<Token> > Tokenizer::handleConditionalChar(std::vector<Token> currentTokens,
+                                                                     std::string candidateToken, std::string currLine,
+                                                                     int currLineNum,
+                                                                     int charPos) {
+    char currChar = currLine[charPos];
+    candidateToken.push_back(currChar);
+    ++ charPos;
+    if (isConditionalChar(currLine[charPos])) {
+        candidateToken.push_back(currLine[charPos]);
+        if (!(isConditionalExpression(candidateToken))) {
+            throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+        }
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+        ++ charPos;
+    }
+    else if (isAssignmentChar(currLine[charPos]) && currChar == '!') {
+        candidateToken.push_back(currLine[charPos]);
+        if (!(isRelationalExpression(candidateToken))) {
+            throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+        }
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+        ++ charPos;
+    }
+    else {
+        if (!(isConditionalExpression(candidateToken))) {
+            throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+        }
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+    }
+    return std::pair<int, std::vector<Token> >(charPos, currentTokens);
+}
+
+/**
+ * Handles and abstracts out the logic to check if the current token is a relational expression.
+ *
+ * @param currentTokens full list of tokens generated so far
+ * @param candidateToken a string storing current chars to be binded together
+ * @param currLine the line being scanned through
+ * @param currLineNum integer representing the statement number
+ * @param charPos position of the character being processed
+ * @return the updated charPos and full list of tokens generated as a pair
+ */
+std::pair<int, std::vector<Token> > Tokenizer::handleRelationalChar(std::vector<Token> currentTokens,
+                                                                    std::string candidateToken, std::string currLine,
+                                                                    int currLineNum, int charPos) {
+    char charToProcess = currLine[charPos];
+    candidateToken.push_back(charToProcess);
+    ++ charPos;
+    if (isRelationalChar(currLine[charPos])) {
+        candidateToken.push_back(currLine[charPos]);
+        if (!(isRelationalExpression(candidateToken))) {
+            throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
+        }
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+        ++ charPos;
+    }
+    else {
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+    }
+
+    return std::pair<int, std::vector<Token> >(charPos, currentTokens);
+}
+
+/**
+ * Handles and abstracts out the logic to check if the current token is an assignment expression.
+ *
+ * @param currentTokens full list of tokens generated so far
+ * @param candidateToken a string storing current chars to be binded together
+ * @param currLine the line being scanned through
+ * @param currLineNum integer representing the statement number
+ * @param charPos position of the character being processed
+ * @return the updated charPos and full list of tokens generated as a pair
+ */
+std::pair<int, std::vector<Token> > Tokenizer::handleAssignmentChar(std::vector<Token> currentTokens,
+                                                                    std::string candidateToken, std::string currLine,
+                                                                    int currLineNum, int charPos) {
+    char charToProcess = currLine[charPos];
+    candidateToken.push_back(charToProcess);
+    ++ charPos;
+    if (isAssignmentChar(currLine[charPos])) {
+        candidateToken.push_back(currLine[charPos]);
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+        ++ charPos;
+    }
+    else {
+        currentTokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
+    }
+    return std::pair<int, std::vector<Token> >(charPos, currentTokens);
+}
+
+/**
  * Generate all legal tokens of a SIMPLE source programme from string and assemble in a vector.
  * Work horse of the Tokenizer.
  *
@@ -199,8 +300,7 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
                                            currLineNum);
                 }
                 else {
-                    tokens.push_back(Token(NAME_IDENTIFIER, candidateToken,
-                                               currLineNum));
+                    tokens.push_back(Token(NAME_IDENTIFIER, candidateToken,currLineNum));
                 }
             }
             else if (isLegalDigit(charToProcess)) {
@@ -215,59 +315,24 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
                 tokens.push_back(Token(INTEGER, candidateToken, currLineNum));
             }
             else if (isConditionalChar(charToProcess)) {
-                candidateToken.push_back(charToProcess);
-                ++ charPos;
-                if (isConditionalChar(currLine[charPos])) {
-                    candidateToken.push_back(currLine[charPos]);
-                    if (!(isConditionalExpression(candidateToken))) {
-                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
-                    }
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                    ++ charPos;
-                }
-                else if (isAssignmentChar(currLine[charPos]) && charToProcess == '!') {
-                    candidateToken.push_back(currLine[charPos]);
-                    if (!(isRelationalExpression(candidateToken))) {
-                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
-                    }
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                    ++ charPos;
-                }
-                else {
-                    if (!(isConditionalExpression(candidateToken))) {
-                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
-                    }
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                }
+                std::pair<int, std::vector<Token> > result = handleConditionalChar(tokens, candidateToken, currLine,
+                                                                                   currLineNum, charPos);
+                charPos = result.first;
+                tokens = result.second;
                 continue;
             }
             else if (isRelationalChar(charToProcess)) {
-                candidateToken.push_back(charToProcess);
-                ++ charPos;
-                if (isRelationalChar(currLine[charPos])) {
-                    candidateToken.push_back(currLine[charPos]);
-                    if (!(isRelationalExpression(candidateToken))) {
-                        throw std::invalid_argument("Illegal SIMPLE Programme: Illegal token");
-                    }
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                    ++ charPos;
-                }
-                else {
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                }
+                std::pair<int, std::vector<Token> > result = handleRelationalChar(tokens, candidateToken, currLine,
+                                                                                  currLineNum, charPos);
+                charPos = result.first;
+                tokens = result.second;
                 continue;
             }
             else if (isAssignmentChar(charToProcess)) {
-                candidateToken.push_back(charToProcess);
-                ++ charPos;
-                if (isAssignmentChar(currLine[charPos])) {
-                    candidateToken.push_back(currLine[charPos]);
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                    ++ charPos;
-                }
-                else {
-                    tokens.push_back(Token(OPERATOR, candidateToken, currLineNum));
-                }
+                std::pair<int, std::vector<Token> > result = handleAssignmentChar(tokens, candidateToken, currLine,
+                                                                                  currLineNum, charPos);
+                charPos = result.first;
+                tokens = result.second;
             }
             else if (isLegalArithmeticChar(charToProcess)) {
                 candidateToken.push_back(charToProcess);
