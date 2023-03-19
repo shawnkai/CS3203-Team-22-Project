@@ -71,7 +71,7 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
 }
 
 ModifiesExpression::ModifiesExpression(NamedEntity *target) : Expression({target}) {
-    if (target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
+    if (target->getType() != "CONSTANT" && target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
         throw SemanticException();
     }
 }

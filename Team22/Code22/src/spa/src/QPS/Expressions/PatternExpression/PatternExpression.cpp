@@ -99,7 +99,14 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
         }
 
         auto *a1 = dynamic_cast<StmtEntity*>(synonymTable.get(arg1, "stmt"));
-        string prefixPattern = Utilities::infixToPrefix(Utilities::removeAllOccurrences(arg3, '"'));
+
+        string infixPattern = Utilities::removeAllOccurrences(arg3, '"');
+
+        if (!Utilities::checkInfixExpression(Utilities::removeAllOccurrences(infixPattern, '_'))) {
+            throw SyntacticException();
+        }
+
+        string prefixPattern = Utilities::infixToPrefix(infixPattern);
         if (a1->getType() != "ASSIGNMENT") {
             throw SemanticException();
         }

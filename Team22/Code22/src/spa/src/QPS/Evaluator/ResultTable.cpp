@@ -236,3 +236,9 @@ vector<string> ResultTable::getColumnNames() {
     }
     return this->table.begin()->second.size();
 }
+
+void ResultTable::renameColumn(const string& oldName, const string& newName) {
+    vector<string> data = this->table.find(oldName)->second;
+    this->table.insert({newName, data});
+    this->table.erase(this->table.find(oldName));
+}
