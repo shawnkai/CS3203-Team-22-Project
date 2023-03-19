@@ -46,7 +46,7 @@ Select r with r.varName = "w"
 10 -  Select read with varName = x
 read r;
 Select r with r.varName = "x"
-19, 20
+19, 21
 5000
 11 - Select print with varName = x
 print p;
@@ -56,12 +56,12 @@ Select p with p.varName = "x"
 12 - Select variable a
 variable v;
 Select v with v.varName = "a"
-10, 13, 14, 15, 22
+10, 13, 14, 15, 23
 5000
 13 - Select constant 1
 constant c;
 Select c with c.value = 1
-1, 5, 7, 16, 21
+1, 5, 7, 16, 22
 5000
 14 - Select read with varName = "z"
 read r;
@@ -86,7 +86,7 @@ y
 18 - Select call statement with c.procName = "TestWith2"
 call c;
 Select c with c.procName = "TestWith2"
-2, 23
+2, 24
 5000
 19 - Select assignment with a line number which is not assignment statement
 assign a;
@@ -131,7 +131,7 @@ TestWith2
 27 - Select procedure call that modifies x
 call c;
 Select c such that Modifies (c, "x")
-2, 23
+2, 24
 5000
 28 -  Select procedure call that modifies k
 call c;
