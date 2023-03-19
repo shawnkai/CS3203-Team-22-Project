@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of AssignmentUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of AssignmentUses Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("USES", make_tuple("ua1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent AssignmentUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua2"));
 
         REQUIRE(pkbResult.toString() == "USES:ASSIGNMENT: ua2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("USES", "ua2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -37,7 +67,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent AssignmentUses Design Abstraction
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +131,36 @@ TEST_CASE("Test 7: Populate The AssignmentUses Database And Call Clear All Datab
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:ASSIGNMENT: ua9: ua10, ua11, ua12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All AssignmentUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua13", "ua14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua15", "ua16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua17", "ua18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "ASSIGNMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By AssignmentUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua19", "ua20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua21", "ua22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua23", "ua24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "ASSIGNMENT");
+
+        REQUIRE(result.size() == 3);
     }
 }

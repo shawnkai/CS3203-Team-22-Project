@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of ProcedureCallUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of ProcedureCallUses Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("USES", make_tuple("updc1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent ProcedureCallUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc2"));
 
         REQUIRE(pkbResult.toString() == "USES:PROCEDURECALL: updc2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("USES", "updc2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -37,7 +67,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ProcedureCallUses Design Abstract
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +131,36 @@ TEST_CASE("Test 7: Populate The ProcedureCallUses Database And Call Clear All Da
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURECALL", "updc9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PROCEDURECALL: updc9: updc10, updc11, updc12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All ProcedureCallUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc13", "updc14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc15", "updc16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc17", "updc18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "PROCEDURECALL");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By ProcedureCallUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc19", "updc20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc21", "updc22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "updc23", "updc24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "PROCEDURECALL");
+
+        REQUIRE(result.size() == 3);
     }
 }

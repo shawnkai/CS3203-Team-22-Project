@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
 
 #include "PKB/DesignAbstractions/DesignAbstraction.h"
 #include "Result.h"
@@ -25,6 +26,8 @@ class DesignAbstractionDatabase {
 public:
     virtual void addToDatabase(DesignAbstraction* designAbstractionToBeStored);
     virtual Result getFromDatabase(string entityName);
+    virtual vector<Result> getAllFromDatabase();
+    virtual unordered_map<string, unordered_set<string>> getAllVariablesCaptured();
 };
 
 #endif //SPA_DESIGNABSTRACTIONDATABASE_H

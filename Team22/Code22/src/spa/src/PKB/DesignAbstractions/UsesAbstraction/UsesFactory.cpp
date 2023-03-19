@@ -14,6 +14,8 @@
 #include "WhileStatementUses.h"
 #include "IfStatementUses.h"
 
+#include "PKB/Exceptions/InvalidUsesAbstractionTypeException.cpp"
+
 using namespace std;
 
 /**
@@ -44,6 +46,5 @@ DesignAbstraction* UsesFactory::createUsesAbstraction(tuple<string, string, stri
         return new IfStatementUses(abstractionDetails);
     }
 
-    // Returning a null pointer, in case of an invalid usesAbstractionType
-    return nullptr;
+    throw InvalidUsesAbstractionTypeException((usesAbstractionType + " is not a valid Uses Design Abstraction Type").data());
 }
