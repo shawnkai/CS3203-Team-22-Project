@@ -2,8 +2,6 @@
 #define SPA_DESIGNEXTRACTOR_H
 
 
-// Design Extractor uses the Facade design pattern and is divided into Abstraction Extractor and Entity Extractor
-// Both of which implements the extract() method
 #include<stdio.h>
 #include <iostream>
 #include <string>
@@ -11,8 +9,7 @@
 #include <tuple>
 
 #include "../../PKB/PKB.h"
-#include "AbstractionExtractor.h"
-//#include "EntityExtractor.h"
+#include "ProgramExtractor.h"
 #include "SP/Parser/TNode.h"
 
 using namespace std;

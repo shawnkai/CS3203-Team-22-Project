@@ -15,5 +15,5 @@ using namespace std;
 class AssignExtractor {
 public:
 	AssignExtractor() {};
-	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
+	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

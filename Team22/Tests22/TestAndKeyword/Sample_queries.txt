@@ -1,0 +1,50 @@
+1- and for pattern
+assign a; variable v1, v2;
+Select v1 pattern a (v1, _) and a (v2, _ )
+x, b
+5000
+2- and for such that
+variable v1; stmt s, s2;
+Select v1 such that Modifies(s, v1) and Modifies (s2, v1)
+x, b
+5000
+3- and for such that different clauses
+variable v1, v2; stmt s;
+Select v1 such that Modifies(s, v1) and Uses (s, v2)
+x, b
+5000
+4- and for pattern, different patterns
+assign a; if i; while w; variable v;
+Select v pattern a (_,_) and i  (v, _, _ ) and w (v,   _)
+a
+5000
+5- and for pattern, same ans
+assign a; if i; while w; variable v;
+Select v pattern a (_,_) and w (v,   _   ) and i (v, _, _)
+a
+5000
+6- and for pattern, different entity_ref
+assign a; if i; while w; variable v;
+Select v pattern w (_,_) and i (_, _, _)
+x, a, b, c
+5000
+7- and for such that, more clauses
+variable v;
+Select v such that Modifies(_, v) and Uses(_, v) and Modifies(_, _) and Uses(_, _)
+x, b
+5000
+8- and for a mixture of such that and pattern
+variable v; constant c; stmt s1, s2; assign a;
+Select c such that Follows (s1, s2) and Parent (s1, s2) pattern a (v, _) and a (_, _)
+none
+5000
+9- and for with clause
+variable v,v2;
+Select v with v.varName = "x" and v2.varName = "y"
+none
+5000
+10- and for such that, pattern and with clause
+variable v; constant c, c2; stmt s; assign a;
+Select s such that Follows(_, s) and Parent(_, s) pattern a (v, _ ) and a (_, _) with c.value = 1 and c2.value = 0
+6, 7
+5000
