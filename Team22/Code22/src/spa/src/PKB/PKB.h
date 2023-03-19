@@ -42,7 +42,7 @@ public:
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName,
                                                                     string patternLineNumber);
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
-    vector<AssignPattern*> getAllRightHandExpressions();
+    unordered_map<string, unordered_map<string, string>> getAllRightHandExpressions();
 
     // APIs Related to Control Flow Graph
     void addPattern(string patternType, string lineNumber, string variableName);

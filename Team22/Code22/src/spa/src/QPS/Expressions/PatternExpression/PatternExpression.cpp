@@ -26,11 +26,12 @@ ResultTable PatternExpression::evaluate(PKB pkb) {
         auto key_values = pkb.getAllRightHandExpressions();
         vector<string> results;
         map<string, vector<string>> altResults = {{this->entities[0]->toString(), {}}, {p1->getSynonym(), {}}};
-        for (auto pattern : key_values) {
-            for (const auto& lineno_expression : pattern->getAllRightHandExpressions()) {
-                if (regex_match(lineno_expression.second, right_expr)) {
-                    altResults.find(this->entities[0]->toString())->second.push_back(lineno_expression.first);
-                    altResults.find(p1->getSynonym())->second.push_back(pattern->getLeftHandVariableName());
+        for (const auto& pattern : key_values) {
+            ::printf("For %s\n", pattern.first.c_str());
+            for (const auto& line_exp: pattern.second) {
+                if (regex_match(line_exp.second, right_expr)) {
+                    altResults.find(this->entities[0]->toString())->second.push_back(line_exp.first);
+                    altResults.find(p1->getSynonym())->second.push_back(pattern.first);
                 }
             }
         }
