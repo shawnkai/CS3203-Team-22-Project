@@ -248,6 +248,38 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     vector<string> res_12 = evaluator.evaluate(exp12);
     REQUIRE(res_12.empty());
 
+    string declaration13 = "assign a;";
+    string query13 = "Select a such that Follows(_, a) and Parent(_, a)";
+    parser = QueryParser();
+    parser.parse(declaration13);
+    auto exp13 = parser.parse(query13);
+    vector<string> res_13 = evaluator.evaluate(exp13);
+    string output13;
+    for (const string &r: res_13) {
+        output13 += r + ",";
+    }
+
+    REQUIRE(output13.find('9') != std::string::npos);
+    REQUIRE(output13.find("11") != std::string::npos);
+    REQUIRE(output13.find('8') == std::string::npos);
+    REQUIRE(output13.find('7') == std::string::npos);
+
+    string declaration14 = "assign a;";
+    string query14 = "Select a such that Follows(_, a) and Parent(_, a) pattern a(_, _\"i\"_) and a(_, _\"x\"_)";
+    parser = QueryParser();
+    parser.parse(declaration14);
+    auto exp14 = parser.parse(query14);
+    vector<string> res_14 = evaluator.evaluate(exp14);
+    string output14;
+    for (const string &r: res_14) {
+        output14 += r + ",";
+    }
+
+    REQUIRE(output14.find('9') != std::string::npos);
+    REQUIRE(output14.find("11") == std::string::npos);
+    REQUIRE(output14.find('8') == std::string::npos);
+    REQUIRE(output14.find('7') == std::string::npos);
+
     REQUIRE(filesystem::remove(inputFilePath));
 }
 

@@ -12,6 +12,12 @@
 
 using namespace std;
 
-TEST_CASE("Test 1: Catch InvalidModifiesAbstractionTypeException In ModifiesFactory", "[!throws][!shouldfail]") {
-    ModifiesFactory::createModifiesAbstraction(make_tuple("INVALID", "INVALID", "INVALID"));
+TEST_CASE("Test 1: Catch InvalidModifiesAbstractionTypeException In ModifiesFactory") {
+    bool exceptionThrown = false;
+    try {
+        ModifiesFactory::createModifiesAbstraction(make_tuple("INVALID", "INVALID", "INVALID"));
+    } catch (exception &e) {
+        exceptionThrown = true;
+    }
+    REQUIRE(exceptionThrown);
 }
