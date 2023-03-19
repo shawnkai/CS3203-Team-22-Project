@@ -46,7 +46,7 @@ procedure TestTwo {
         print z;
         print y;
         a = y + z;
-        while (a != -1) {
+        while (a != 1) {
             call TestFour;
             print a;
         }
