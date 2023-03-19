@@ -73,7 +73,6 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
                     }
                 }
             }
-            ::printf("Attribute HERE: %s\n", this->synAttr.c_str());
             if (!this->synAttr.empty()) {
                 return ResultTable({make_pair(this->entities[0]->toString(), answer)})
                 .intersection(this->entities[0]->getAttrVal(this->synAttr, pkb));

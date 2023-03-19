@@ -27,7 +27,6 @@ ResultTable PatternExpression::evaluate(PKB pkb) {
         vector<string> results;
         map<string, vector<string>> altResults = {{this->entities[0]->toString(), {}}, {p1->getSynonym(), {}}};
         for (const auto& pattern : key_values) {
-            ::printf("For %s\n", pattern.first.c_str());
             for (const auto& line_exp: pattern.second) {
                 if (regex_match(line_exp.second, right_expr)) {
                     altResults.find(this->entities[0]->toString())->second.push_back(line_exp.first);
