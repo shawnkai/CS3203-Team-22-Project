@@ -14,9 +14,10 @@ class SelectExpression : public Expression {
      */
 private:
     vector<Expression*> conditions;
+    string synAttr;
 
 public:
-    explicit SelectExpression(vector<DesignEntity*> entities, vector<Expression*> conditions);
+    explicit SelectExpression(DesignEntity* entity, vector<Expression*> conditions, string attribute = "");
 
     string toString() override;
 

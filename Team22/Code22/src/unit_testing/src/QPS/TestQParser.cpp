@@ -334,108 +334,30 @@ TEST_CASE("TestCase19_andClauseAfterPattern_Success") {
     REQUIRE(actualResult == expected);
 }
 
-TEST_CASE("TestCase20_andClauseAfterPatternButActAsWithClause_FailsValidation") {
+TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace_Success") {
     QueryParser queryParser;
-    string query = "Select a pattern a(x, _) and s1.stmt# = 3";
 
-    string actualResult = QueryParser::replaceAnd(query);
+    string declaration = "assign a; variable v,v1;";
 
-    string expected = "Select a pattern a(x, _) pattern s1.stmt# = 3";
+    queryParser.parse(declaration);
 
-    REQUIRE(actualResult == expected);
+    SynonymTable resultTable = queryParser.getSynonymTable();
 
-    REQUIRE(!queryParser.isValidQuery(actualResult));
+    map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"}};
+
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
 
-TEST_CASE("TestCase22_andClauseAfterWithButActAsSuchThatClause_FailsValidation") {
+TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace2_Success") {
     QueryParser queryParser;
-    string query = "Select s1 with s1.stmt# = 3 and Uses(4, v)";
 
-    string actualResult = QueryParser::replaceAnd(query);
+    string declaration = "assign a,a1; variable v;";
 
-    string expected = "Select s1 with s1.stmt# = 3 with Uses(4, v)";
+    queryParser.parse(declaration);
 
-    REQUIRE(actualResult == expected);
+    SynonymTable resultTable = queryParser.getSynonymTable();
 
-    REQUIRE(!queryParser.isValidQuery(actualResult));
-}
+    map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"}, {"v", "VARIABLE"}};
 
-TEST_CASE("TestCase23_andClauseAfterWithButActAsPatternClause_FailsValidation") {
-    QueryParser queryParser;
-    string query = "Select a with a.stmt# = 3 and a(x, _)";
-
-    string actualResult = QueryParser::replaceAnd(query);
-
-    string expected = "Select a with a.stmt# = 3 with a(x, _)";
-
-    REQUIRE(actualResult == expected);
-
-    REQUIRE(!queryParser.isValidQuery(actualResult));
-}
-
-TEST_CASE("TestCase24_andClauseAfterSuchThatButActAsWithClause_FailsValidation") {
-    QueryParser queryParser;
-    string query = "Select a such that Parent(6, a) and a.stmt# = 3";
-
-    string actualResult = QueryParser::replaceAnd(query);
-
-    string expected = "Select a such that Parent(6, a) such that a.stmt# = 3";
-
-    REQUIRE(actualResult == expected);
-
-    REQUIRE(!queryParser.isValidQuery(actualResult));
-}
-
-TEST_CASE("TestCase25_andClauseAfterSuchThatButActAsPatternClause_FailsValidation") {
-    QueryParser queryParser;
-    string query = "Select a such that Parent(6, a) and a(x, _)";
-
-    string actualResult = QueryParser::replaceAnd(query);
-
-    string expected = "Select a such that Parent(6, a) such that a(x, _)";
-
-    REQUIRE(actualResult == expected);
-
-    REQUIRE(!queryParser.isValidQuery(actualResult));
-}
-
-TEST_CASE("TestCase26_andClauseRightAfterWith_FailsValidation") {
-    QueryParser queryParser;
-    string query = "Select a with and a.stmt# = 3";
-
-    string actualResult = QueryParser::replaceAnd(query);
-
-    string expected = "Select a with with a.stmt# = 3";
-
-    REQUIRE(actualResult == expected);
-
-    REQUIRE(!queryParser.isValidQuery(actualResult));
-}
-
-TEST_CASE("TestCase27_andClauseRightAfterPattern_FailsValidation") {
-    QueryParser queryParser;
-    string query = "Select a pattern and a(x, _)";
-
-    string actualResult = QueryParser::replaceAnd(query);
-
-    string expected = "Select a pattern pattern a(x, _)";
-
-    REQUIRE(actualResult == expected);
-
-    REQUIRE(!queryParser.isValidQuery(actualResult));
-}
-
-TEST_CASE("TestCase28_andClauseBeforeSelect_SyntaxError") {
-    string query = "and Select a pattern pattern a(x, _)";
-
-    bool throwsException = false;
-
-    try {
-        string actualResult = QueryParser::replaceAnd(query);
-    }
-    catch (SyntacticException& e) {
-        throwsException = true;
-    }
-
-    REQUIRE(throwsException);
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }

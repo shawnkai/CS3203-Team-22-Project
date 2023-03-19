@@ -29,6 +29,8 @@ public:
     static vector<string> findIntersection(vector<vector<string>>& all_vectors);
 
     static bool checkIfPresent(vector<string> list, string value);
+
+    static bool checkInfixExpression(string str);
 };
 
 #endif //SPA_UTILITIES_H
