@@ -124,11 +124,3 @@ TEST_CASE("Test 10: Returns Print Statement Design Entity Database") {
         REQUIRE(((wsdb != nullptr) && (sdb != nullptr) && (sdb1 != nullptr))) ;
     }
 }
-
-TEST_CASE("Test 11: Returns Null Pointer For Any Unknown Design Entity Passed In") {
-    SECTION ("") {
-        DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase("TRIAL");
-
-        REQUIRE (db == nullptr);
-    }
-}

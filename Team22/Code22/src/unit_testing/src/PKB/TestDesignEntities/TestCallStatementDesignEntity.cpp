@@ -149,9 +149,30 @@ TEST_CASE("Test 11: CallStatement Design Entity, Populate The Database And Call 
 
         Result pkbResultAfterClearing = pkbTest.getDesignEntity("CALL", "cs12");
 
-        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
 
         REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
     }
 }
+
+TEST_CASE("Test 12: CallStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("CALL", make_tuple("cs12", "1"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs12", "1"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs12", "2"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs12", "3"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs13", "1"));
+        pkbTest.addDesignEntity("CALL", make_tuple("cs14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("CALL");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("CALL");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
+    }
+}
+

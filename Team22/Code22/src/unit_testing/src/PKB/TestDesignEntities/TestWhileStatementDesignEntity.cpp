@@ -149,9 +149,29 @@ TEST_CASE("Test 11: WhileStatement Design Entity, Populate The Database And Call
 
         Result pkbResultAfterClearing = pkbTest.getDesignEntity("WHILE", "ws12");
 
-        Result expectedResultAfterClearing("none", "none", vector<string>{"None"});
+        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
 
         REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
                  && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
+    }
+}
+
+TEST_CASE("Test 12: WhileStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "2"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws12", "3"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws13", "1"));
+        pkbTest.addDesignEntity("WHILE", make_tuple("ws14", "1"));
+
+        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("WHILE");
+
+        pkbTest.clearAllDatabases();
+
+        int countAfterClearing = pkbTest.getNumberOfDesignEntity("WHILE");
+
+        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
     }
 }

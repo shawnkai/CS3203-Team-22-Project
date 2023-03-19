@@ -27,7 +27,7 @@ public:
     virtual void addToDatabase(AssignPattern* assignPatternToBeStored);
     virtual string getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(string leftHandVariableName, string patternLineNumber);
     virtual unordered_map<string, string> getAllRightHandExpressionsOfAVariableFromDatabase(string leftHandVariableName);
-    virtual vector<AssignPattern*> getAllRightHandExpressionsFromDatabase();
+    virtual unordered_map<string, unordered_map<string, string>> getAllRightHandExpressionsFromDatabase();
 };
 
 #endif //SPA_ASSIGNPATTERNDATABASE_H

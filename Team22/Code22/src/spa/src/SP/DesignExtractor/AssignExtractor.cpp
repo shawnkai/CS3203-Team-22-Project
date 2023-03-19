@@ -102,7 +102,9 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 			}
 			else if (tokenType1 == TokenType::INTEGER) {
 				std::string stringOfConstant = currentNode1.stringId;
-				pkbinstance.addDesignEntity("CONSTANT", make_tuple(stringOfConstant, std::to_string(currentNode1.stmtNumber)));
+                pkbinstance.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", stringOfConstant, std::to_string(currentNode1.stmtNumber)));
+                pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", stringOfConstant, std::to_string(currentNode1.stmtNumber)));
+                pkbinstance.addDesignEntity("CONSTANT", make_tuple(stringOfConstant, std::to_string(currentNode1.stmtNumber)));
 
 			}
 			else {}

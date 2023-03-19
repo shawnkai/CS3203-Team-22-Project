@@ -17,7 +17,7 @@ TEST_CASE("TestCase1_TestBaseCaseAssignmentToPrefix_ShouldSuccess") {
     extractor.extractPrefixString(t0,PKB());
 
     PKB testPatternPrefixExtractorPkb = PKB();
-    vector<AssignPattern*> result = testPatternPrefixExtractorPkb.getAllRightHandExpressions();
+    unordered_map<string, unordered_map<string, string>> result = testPatternPrefixExtractorPkb.getAllRightHandExpressions();
     unordered_map<string, string> result2 = testPatternPrefixExtractorPkb.getAllRightHandExpressionsOfAVariable("x");
     REQUIRE(result.size() > 0);
     REQUIRE(result2.find("1")->second=="+22");
@@ -53,7 +53,7 @@ TEST_CASE("TestCase2_TestComplexCaseAssignmentToPrefix_ShouldSuccess") {
     PatternPrefixStringExtractor extractor;
     extractor.extractPrefixString(t0,anotherInstance);
 
-    vector<AssignPattern*> result = anotherInstance.getAllRightHandExpressions();
+    unordered_map<string, unordered_map<string, string>> result = anotherInstance.getAllRightHandExpressions();
     string result3 = anotherInstance.getRightHandExpressionOfAVariableOnAParticularLineNumber("x", "1");
     unordered_map<string, string> result2 = anotherInstance.getAllRightHandExpressionsOfAVariable("x");
     REQUIRE(result.size() > 0);

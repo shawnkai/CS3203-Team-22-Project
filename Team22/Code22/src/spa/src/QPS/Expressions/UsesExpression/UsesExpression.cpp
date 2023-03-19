@@ -57,6 +57,7 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
+                ::printf("Types: (%s, %s), (%s, %s)\n", a1->toString().c_str(), a1->getType().c_str(), a2->toString().c_str(), a2->getType().c_str());
                 throw SemanticException();
             }
 
@@ -143,7 +144,7 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
 }
 
 UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {
-    if (target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
+    if (target->getType() != "CONSTANT" && target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
         throw SemanticException();
     }
 }

@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of ProcedureUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURE", "upd1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of ProcedureUses Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("USES", make_tuple("upd1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent ProcedureUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURE", "upd2"));
 
         REQUIRE(pkbResult.toString() == "USES:PROCEDURE: upd2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("USES", "upd2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -37,7 +67,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ProcedureUses Design Abstraction"
         pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURE", "upd0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +131,36 @@ TEST_CASE("Test 7: Populate The ProcedureUses Database And Call Clear All Databa
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("PROCEDURE", "upd9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:PROCEDURE: upd9: upd10, upd11, upd12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All ProcedureUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd13", "upd14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd15", "upd16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd17", "upd18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "PROCEDURE");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By ProcedureUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd19", "upd20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd21", "upd22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "upd23", "upd24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "PROCEDURE");
+
+        REQUIRE(result.size() == 3);
     }
 }
