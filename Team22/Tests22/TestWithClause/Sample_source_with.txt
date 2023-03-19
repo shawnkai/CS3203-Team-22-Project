@@ -1,0 +1,42 @@
+procedure TestWith {
+ x = y + 1;
+ call TestWith2;
+ while (x < 2) {
+  z = x * 3;
+  while (w < 1) {
+   read w;
+   z = z + 1;
+   if (z > 10) {
+     print x;
+   } else {
+     a = x + y;
+     while (b < 7) {
+      while (k > 0) {
+       a = a + k;
+       if (a < 5) {
+          read a;
+        } else {
+           y = y + 1;
+        }
+      }
+      read y;
+     }
+   }
+  }
+ }
+ if (z > 3) {
+   read x;
+ } else {
+   
+}
+procedure TestWith2 {
+  read x;
+  y = y + 1;
+}
+
+procedure TestWith3 {
+  read a;
+  call TestWith2;
+}
+
+  
