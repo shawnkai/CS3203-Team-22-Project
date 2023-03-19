@@ -13,23 +13,29 @@ if ifs;
 Select ifs pattern ifs ("b", _, _)
 38, 40, 54
 5000
-4 - Select all if statement numbers that use the variable "x"
+4 - Select all if statement numbers that use the variable "c"
+if ifs;
+Select ifs pattern ifs ("c", _, _)
+none
+5000
+5 - Select all if statement numbers that use the variable "x"
 if ifs;
 Select ifs pattern ifs ("x", _, _)
 2, 9, 29, 31, 38, 40
 5000
-5 - Select all if statement numbers that use the variable "y"
+6 - Select all if statement numbers that use the variable "y"
 if ifs;
 Select ifs pattern ifs ("y", _, _)
 2, 6, 9, 10, 23
-6 - Select all if statement numbers that use the variable "z"
+5000
+7 - Select all if statement numbers that use the variable "z"
 if ifs;
 Select ifs pattern ifs ("z", _, _)
 6, 10, 14
 5000
-7 - Select all if statement numbers that use the variable "c"
+7 - Select all if statement numbers that use the variable "r"
 if ifs;
-Select ifs pattern ifs ("c", _, _)
+Select ifs pattern ifs ("r", _, _)
 none
 5000
 8 - Select all if statement numbers that use any variable(s) in the conditional statement
