@@ -18,10 +18,17 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
     while (regex_search(searchStart, query.cend(), sm, USESREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-        ::printf("Arguments: %s, %s\n", arg1.c_str(), arg2.c_str());
+
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
             NamedEntity *a2;
+
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             if (arg2 == "_") {
                 a2 = new WildCardEntity();
             } else if (arg2.find('\"') != string::npos) {
@@ -45,6 +52,12 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
             }
 
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             NamedEntity *a2;
             if (arg2 == "_") {
                 a2 = new WildCardEntity();
@@ -57,7 +70,6 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                ::printf("Types: (%s, %s), (%s, %s)\n", a1->toString().c_str(), a1->getType().c_str(), a2->toString().c_str(), a2->getType().c_str());
                 throw SemanticException();
             }
 
@@ -122,7 +134,11 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
             if (isFirstWildCard) {
                 results.push_back(pkb.getDesignAbstraction("USES", make_pair("STATEMENT", var.getQueryEntityName())));
             } else {
-                results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+                if (this->entities[1]->getType() == "ident") {
+                    results.push_back(pkb.getDesignAbstraction("USES", make_pair("PROCEDURE", var.getQueryEntityName())));
+                } else {
+                    results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+                }
             }
         }
         map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};

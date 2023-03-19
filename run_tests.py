@@ -44,7 +44,10 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                        "TestModifiesAndUsesRelationship/Modifies_Simplified_Testing_queries.txt"),
                       ("TestModifiesAndUsesRelationship/Uses_Simplified_Testing_source.txt",
                        "TestModifiesAndUsesRelationship/Uses_Simplified_Testing_queries.txt"),
-                      ("TestCombinationTwoClauses/Sample_source.txt", "TestCombinationTwoClauses/Sample_queries.txt")]
+                      ("TestCombinationTwoClauses/Sample_source.txt", "TestCombinationTwoClauses/Sample_queries.txt"),
+                      ("TestMultipleExpressions/Multiple_Expressions_Source.txt", "TestMultipleExpressions"
+                                                                                  "/Multiple_Expressions_Queries.txt"),
+                      ("Ms2Testing/Milestone_2_Testing_Source.txt", "Ms2Testing/Milestone_2_Testing_Queries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+) - ((?:.|\n(?!\d+ - ))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
@@ -53,11 +56,10 @@ missingAnswerRegex = re.compile("(Missing: (.)*)")
 additionalAnswerRegex = re.compile("(Additional: (.)*)")
 queryRegex = re.compile(R"(\n.*\n(.*)\n(.*))")
 
-wrong = []
-queries = []
-correct = []
-
 for source, query in source_query_pairs:
+    wrong = []
+    queries = []
+    correct = []
     command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
                "./Team22/Tests22/Sample_out.xml"]
     result = subprocess.run(command, stdout=subprocess.PIPE)
@@ -77,8 +79,12 @@ for source, query in source_query_pairs:
 
         matchQuery = re.search(queryRegex, arg2)
 
-        if matchMissing is None and matchAdditional is None:
+        if matchMissing is None and matchAdditional is None and "<exception/>" not in arg2:
             correct.append(arg1)
+        elif "<exception/>" in arg2:
+            wrong.append(arg1)
+            queries.append(
+                [matchQuery.group(2) + "\n" + matchQuery.group(3), "Throws Exception", "Throws Exception", "Throws Exception", "Throws Exception"])
         else:
             missing = matchMissing.group(0)
 
