@@ -49,7 +49,7 @@ Select w pattern w (v, _, _)
 SyntaxError
 5000
 102 - Using While Pattern Clause With Variable v not defined
-if w;
+while w;
 Select w pattern w (v, _)
 SemanticError
 5000
