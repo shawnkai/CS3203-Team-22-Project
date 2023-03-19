@@ -83,3 +83,8 @@ while w;
 Select w pattern w (2, _)
 SyntaxError
 5000
+109 - Using While Pattern Clause With A Different Design Entity
+while w, procedure p;
+Select w pattern w (p, _, _)
+SemanticError
+5000
