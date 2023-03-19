@@ -1,0 +1,130 @@
+1 - Return All Procedures Called By Procedure TestOne
+procedure p;
+Select p such that calls ("TestOne", p)
+TestTwo, TestThree, TestFour
+5000
+2 - Return All Procedures Called By Procedure TestTwo
+procedure p;
+Select p such that calls ("TestTwo", p)
+TestFour
+5000
+3 - Return All Procedures Called By Procedure TestThree
+procedure p;
+Select p such that calls ("TestThree", p)
+TestFour
+5000
+4 - Return All Procedures Called By Procedure TestFour
+procedure p;
+Select p such that calls ("TestFour", p)
+none
+5000
+5 - Return All Procedures Called By Procedure TestFive
+procedure p;
+Select p such that calls ("TestFive", p)
+none
+5000
+6 - Return All Procedures That Call TestOne
+procedure p;
+Select p such that calls (p, "TestOne")
+none
+5000
+7 - Return All Procedures That Call TestTwo
+procedure p;
+Select p such that calls (p, "TestTwo")
+TestOne
+5000
+8 - Return All Procedures That Call TestThree
+procedure p;
+Select p such that calls (p, "TestThree")
+TestOne
+5000
+9 - Return All Procedures That Call TestFour
+procedure p;
+Select p such that calls (p, "TestFour")
+TestOne, TestTwo, TestThree
+5000
+10 - Return All Procedures That Call TestFive
+procedure p;
+Select p such that calls (p, "TestFive")
+TestThree
+5000
+11 - Return All Procedures That Call Another One
+procedure p, q;
+Select p such that calls (p, q)
+TestOne, TestTwo, TestThree
+5000
+12 - Return All Procedures That Are Called By Another
+procedure p, q;
+Select q such that calls (p, q)
+TestTwo, TestThree, TestFour, TestFive
+5000
+13 - Return Any Procedures That Call "TestOne"
+procedure p;
+Select p such that calls (_, "TestOne")
+none
+5000
+14 - Return Any Procedures That Call "TestTwo"
+procedure p;
+Select p such that calls (_, "TestTwo")
+TestOne
+5000
+15 - Return Any Procedures That Call "TestThree"
+procedure p;
+Select p such that calls (_, "TestThree")
+TestOne
+5000
+16 - Return Any Procedures That Call "TestFour"
+procedure p;
+Select p such that calls (_, "TestFour")
+TestOne, TestTwo, TestThree
+5000
+17 - Return Any Procedures That Call "TestFive"
+procedure p;
+Select p such that calls (_, "TestFive")
+TestFour
+5000
+18 - Return Any Procedures Called By "TestOne"
+procedure p;
+Select p such that calls ("TestOne", _)
+TestTwo, TestThree, TestFour
+5000
+19 - Return Any Procedures Called By "TestTwo"
+procedure p;
+Select p such that calls ("TestTwo", _)
+TestFour
+5000
+20 - Return Any Procedures Called By "TestThree"
+procedure p;
+Select p such that calls ("TestThree", _)
+TestFour, TestFive
+5000
+22 - Return Any Procedures Called By "TestFour"
+procedure p;
+Select p such that calls ("TestFour", _)
+none
+5000
+23 - Return Any Procedures Called By "TestFive"
+procedure p;
+Select p such that calls ("TestFive", _)
+none
+5000
+24 - Return Any Procedures That Call Themselves
+procedure p;
+Select p such that calls (p, p)
+none
+5000
+25 - Return Any Procedures That Call Any Other Procedure or Are Called By Any Procedure
+procedure p;
+Select p such that calls (_, _)
+TestOne, TestTwo, TestThree, TestFour, TestFive
+5000
+101 - Using Invalid Design Entity Type In Calls
+variable p;
+Select p such that calls (p, "TestOne")
+SemanticError
+5000
+102 - Test Calls With Extra Space in Argument
+procedure p;
+Select p such that calls (" TestOne ", _)
+TestOne, TestTwo, TestThree
+5000

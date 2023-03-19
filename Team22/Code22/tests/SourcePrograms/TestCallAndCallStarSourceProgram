@@ -1,0 +1,75 @@
+procedure TestOne {
+    if (x == 1) then {
+        call TestThree;
+    } else {
+        call TestTwo;
+    }
+    while (x != 1) {
+        call TestTwo;
+        call TestThree;
+        y = 1;
+        read z;
+        if (z == 2) then {
+            call TestThree;
+            read z;
+            while (z > 100) {
+                if (z % 120 == 0) then {
+                    call TestThree;
+                    print z;
+                } else {
+                    call TestTwo;
+                    print x;
+                }
+            }
+        } else {
+            call TestTwo;
+            if (1 == 1) then {
+                call TestFour;
+            } else {
+                while (1 == 1) {
+                    read x;
+                    x = x + 1;
+                    print x;
+                    call TestThree;
+                }
+            }
+        }
+    }
+}
+procedure TestTwo {
+    call TestFour;
+    read z;
+    read y;
+    if (z == y) then {
+        call TestFour;
+    } else {
+        print z;
+        print y;
+        a = y + z;
+        while (a != -1) {
+            call TestFour;
+            print a;
+        }
+    }
+}
+procedure TestThree {
+    call TestFour;
+    call TestFive;
+}
+procedure TestFour {
+    read a;
+    read b;
+    read c;
+    print a;
+    print b;
+    print c;
+    x = a + b + c;
+    if (x == a + (b + c)) then {
+        x = 1;
+    } else {
+        x = a - b + c;
+    }
+}
+procedure TestFive {
+    print a;
+}
