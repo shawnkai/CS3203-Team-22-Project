@@ -91,13 +91,8 @@ vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int
 					allPaths.push_back(path23);
 						
 				}
-				cout << "note1" << endl;
 				for (int i = 0; i < allPaths.size(); i++) {
 					deque<int> result1 = allPaths[i];
-					cout << "start1" << endl;
-					for (int i = 0; i < result1.size(); i++) {
-						cout << std::to_string(result1[i]) << endl;
-					}
 
 				}
 
@@ -132,10 +127,6 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 		deque<int> result;
 		result.push_back(exitWhile);
 		allPaths.push_back(result);
-		/*cout << "note" << endl;
-		cout << std::to_string(currBlk) << endl;
-		cout << std::to_string(exitWhile) << endl;
-		cout << "note" << endl;*/
 	}
 	else {
 		if (blkToBlkMap.count(currBlk) > 0) {
@@ -165,9 +156,6 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 						deque<int> path22 = path2[j];
 						for (int i = returned1.size() - 1; i >= 0; i--) {
 							path22.push_front(returned1[i]);
-							/*cout << "note" << endl;
-							cout << std::to_string(returned1[i]) << endl;
-							cout << "note" << endl;*/
 						}
 						path22.push_front(currBlk);
 						allPaths.push_back(path22);
@@ -206,6 +194,18 @@ vector<deque<int>> NextExtractor::findWhilePath(vector<int> orderedBlks, std::ma
 		
 };
 
+/**
+ * Extracts the next relationships from the CFG and adds the abstractions to the Program 
+ * Knowledge Base.
+ *
+ * @param orderedBlks The blocks of CFG.
+ * @param blkToStmtMap The map from block number to its corresponding statement numbers.
+ * @param stmtToBlkMap The map from statement number to its corresponding block number.
+ * @param blkToBlkMap The map from block number to the blocks it is connected to.
+ * @param setOfWhile The set of while blocks.
+ * @param pkbinstance The instance of Program Knowledge Base.
+ * @param procedureName The name of the procedure.
+ */
 void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, vector<int>> blkToStmtMap, std::map<int, int> stmtToBlkMap, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, PKB pkbinstance, std::string procedureName) {
 
 	if (orderedBlks.size() == 0) {
@@ -273,107 +273,4 @@ void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, ve
 		}
 	}
 };
-
-//int main() {
-	/*vector<int> orderedBlks;
-	orderedBlks.push_back(1);
-	orderedBlks.push_back(2);
-	orderedBlks.push_back(3);
-	orderedBlks.push_back(4);
-	orderedBlks.push_back(5);
-	orderedBlks.push_back(6);
-	orderedBlks.push_back(7);
-	std::map<int, vector<int>> blkToBlkMap;
-	vector<int> v1;
-	v1.push_back(2);
-	blkToBlkMap[1] = v1;
-
-	vector<int> v2;
-	v2.push_back(3);
-	v2.push_back(4);
-	blkToBlkMap[2] = v2;
-
-	vector<int> v3;
-	v3.push_back(2);
-	blkToBlkMap[3] = v3;
-
-	vector<int> v4;
-	v4.push_back(5);
-	v4.push_back(6);
-	blkToBlkMap[4] = v4;
-
-	vector<int> v5;
-	v5.push_back(7);
-	blkToBlkMap[5] = v5;
-
-	vector<int> v6;
-	v6.push_back(7);
-	blkToBlkMap[6] = v6;
-
-	vector<int> v7;
-	v7.push_back(0);
-	blkToBlkMap[7] = v7;*/
-
-	/*vector<int> orderedBlks;
-	orderedBlks.push_back(1);
-	orderedBlks.push_back(2);
-	orderedBlks.push_back(3);
-	orderedBlks.push_back(4);
-	orderedBlks.push_back(5);
-	orderedBlks.push_back(6);
-	orderedBlks.push_back(7);
-	std::map<int, vector<int>> blkToBlkMap;
-	vector<int> v1;
-	v1.push_back(2);
-	//v1.push_back(6);
-	blkToBlkMap[1] = v1;
-
-	vector<int> v2;
-	v2.push_back(3);
-	v2.push_back(4);
-	blkToBlkMap[2] = v2;
-
-	vector<int> v3;
-	v3.push_back(7);
-	//v3.push_back(2);
-	blkToBlkMap[3] = v3;
-
-	vector<int> v4;
-	v4.push_back(5);
-	v4.push_back(7);
-	blkToBlkMap[4] = v4;
-
-	vector<int> v5;
-	v5.push_back(6);
-	v5.push_back(4);
-	blkToBlkMap[5] = v5;
-
-	vector<int> v6;
-	v6.push_back(5);
-	
-	blkToBlkMap[6] = v6;
-
-	vector<int> v7;
-	v7.push_back(0);
-	blkToBlkMap[7] = v7;
-
-	cout << "a" << endl;
-	std::unordered_set<int> setOfWhile;
-	//setOfWhile.insert(1);
-	//setOfWhile.insert(2);
-	//setOfWhile.insert(3);
-	setOfWhile.insert(4);
-	setOfWhile.insert(5);
-	NextExtractor nextExtractor;
-	vector<deque<int>> results = nextExtractor.findPath(orderedBlks, blkToBlkMap, setOfWhile, 1, 1);
-	for (int i = 0; i < results.size(); i++) {
-		deque<int> result1 = results[i];
-		cout << "start" << endl;
-		for (int i = 0; i < result1.size(); i++) {
-			cout << std::to_string(result1[i]) << endl;
-		}
-
-	}*/
-	//findPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[0]);
-//}
 		

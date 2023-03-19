@@ -20,6 +20,7 @@ using namespace std;
  * @param ifContainers The vector of line numbers of the if statements that the current statement is nested in.
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
+ * @param procedureName The name of the procedure.
  */
 void WhileExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
 

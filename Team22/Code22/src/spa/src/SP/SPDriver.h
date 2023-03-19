@@ -13,7 +13,6 @@
 #include "SP/SPDriver.h"
 #include "SP/Parser/Parser.h"
 #include "SP/Cfg/Cfg.h"
-#include "SP/DesignExtractor/NextExtractor.h"
 
 class SPDriver {
 public:

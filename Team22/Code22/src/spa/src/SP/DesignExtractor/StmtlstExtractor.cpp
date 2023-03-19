@@ -22,6 +22,7 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  * @param currentParent The current parent statement of this list of statement, if there is no parent the value is 0.
+ * @param procedureName The name of the procedure.
  */
 void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName) {
 
