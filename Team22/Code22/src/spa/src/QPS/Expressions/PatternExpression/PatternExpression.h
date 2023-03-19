@@ -22,7 +22,7 @@ public:
     };
 
     virtual ResultTable evaluate(PKB pkb) {
-        return ResultTable({});
+        return {{}};
     };
 
     static bool containsPatternExpression(string query);

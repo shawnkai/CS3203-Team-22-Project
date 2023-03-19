@@ -143,7 +143,38 @@ ResultTable AssignPatternExpression::evaluate(PKB pkb) {
 }
 
 ResultTable IfWhilePatternExpression::evaluate(PKB pkb) {
-    return ResultTable({});
+    vector<Result> all_entities = pkb.getAllDesignEntity(this->entities[0]->getType());
+    string col1 = this->entities[0]->toString();
+    string col2 = this->p1->toString();
+
+    if (this->p1->getType() == "ident") {
+        map<string, vector<string>> results = {{col1, {}}};
+        string var = Utilities::removeAllOccurrences(col2, '\"');
+        for (Result entity : all_entities) {
+            for (const string& line : entity.getQueryResult()) {
+                if (pkb.isVariableUsedInPattern(this->entities[0]->getType(), line, var)) {
+                    results[col1].push_back(line);
+                }
+            }
+        }
+        return ResultTable(results);
+    } else {
+        map<string, vector<string>> results = {{col1, {}}, {col2, {}}};
+        vector<string> matches;
+        for (Result entity : all_entities) {
+            for (const string& line : entity.getQueryResult()) {
+                unordered_set<string> sub_res = pkb.getAllVariablesUsedInPattern(this->entities[0]->getType(), line);
+                for(const string& var : sub_res) {
+                    results[col1].push_back(line);
+                    results[col2].push_back(var);
+                }
+            }
+        }
+        if (this->p1->getType() == "WILDCARD") {
+            return ResultTable(results).getColumn(col1);
+        }
+        return ResultTable(results);
+    }
 }
 
 

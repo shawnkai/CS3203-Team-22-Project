@@ -18,7 +18,6 @@ bool AttrCondExpression::containsAttrCondExpression(string query) {
 }
 
 pair<DesignEntity*, pair<string, string>> AttrCondExpression::generateSynAndAttrName(string ref, SynonymTable synonymTable) {
-    ::printf("Attribute: %s\n", ref.c_str());
     if (regex_match(ref, regex("[\\w]+\\.(?:\\w|#)+"))) {
     //attribute ref
         string syn_string = ::strtok(ref.data(), ".");

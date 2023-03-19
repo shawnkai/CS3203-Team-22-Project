@@ -9,8 +9,8 @@ Select w pattern w ("i", _) such that Parent* (w, s) such that Follows*(a, s) wi
 none
 5000
 3 - multiple such that, pattern while and with clause
-assign a; variable v;  constant c; while w; if if;
-Select if pattern if ("x", _, _) such that Parent* (if, a) such that Follows*(a, if) with if.stmt# = c.value
+assign a, a1; variable v;  constant c; while w; if if;
+Select if pattern if ("x", _, _) such that Parent* (if, a) such that Follows*(a1, if) with if.stmt# = c.value
 8
 5000
 4 - multiple such that, pattern while and with clause
@@ -45,7 +45,7 @@ SemanticError
 5000
 10 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select if pattern if ("x", _, _) such that Parent (w, if) such that Modifies(if, _) with if.stmt# =  c
+Select if pattern if ("x", _, _) such that Parent (w, if) such that Modifies(if, _) with if.stmt# =  c.value
 8
 5000
 11 - multiple such that, pattern while and with clause
@@ -126,12 +126,12 @@ Select if such that Uses (if, _) and Modifies(5, v) pattern if (v, _, _) with if
 26 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
 Select if such that Uses (if, _) and Modifies(1, a) pattern a ("x+y",_) with if.stmt# = c.value
-SemanticError
+SyntaxError
 5000
 27 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
 Select if such that Uses (if, _) and Modifies(1, a) pattern a ("x+y",_) with if.stmt# = v.varName
-SemanticError
+SyntaxError
 5000
 28 - multiple such that, pattern while and with clause
 assign a; variable v, v1;  constant c; while w; if if; stmt stmt; read re; print pn;
