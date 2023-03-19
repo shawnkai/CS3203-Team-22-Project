@@ -66,8 +66,6 @@ void SPDriver::parseSimpleProgram(std::string filename) {
                                         controlFlowGraph.statementNumberToBlock,
                                         controlFlowGraph.blockGraph,
                                         controlFlowGraph.blockPointingBackward);
-        //NextExtractor nextExtractor;
-        //nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement, controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph, controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
 
     }
     for (auto graph: controlFlowGraphs) {

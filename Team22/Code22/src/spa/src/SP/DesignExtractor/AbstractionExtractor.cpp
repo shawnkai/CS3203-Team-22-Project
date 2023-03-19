@@ -15,6 +15,7 @@ using namespace std;
  * 
  * @param root The root node of the Abstract Syntax Tree, of type TNode.
  * @param pkbinstance An instance of Program Knowledge Base.
+ * @param procedureName The name of the procedure.
  */
 void AbstractionExtractor::extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName) {
 	std::vector<std::tuple<int, int>> followsVector;
