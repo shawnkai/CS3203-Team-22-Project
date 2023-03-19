@@ -333,3 +333,31 @@ TEST_CASE("TestCase63_andClauseAfterPattern_Success") {
     string expected = "Select a pattern a(x, _) pattern a(x, _\"x\"_)";
     REQUIRE(actualResult == expected);
 }
+
+TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a; variable v,v1;";
+
+    queryParser.parse(declaration);
+
+    SynonymTable resultTable = queryParser.getSynonymTable();
+
+    map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"}};
+
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
+}
+
+TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace2_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a,a1; variable v;";
+
+    queryParser.parse(declaration);
+
+    SynonymTable resultTable = queryParser.getSynonymTable();
+
+    map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"}, {"v", "VARIABLE"}};
+
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
+}

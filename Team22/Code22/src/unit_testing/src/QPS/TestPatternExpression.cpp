@@ -391,3 +391,61 @@ TEST_CASE("TestCase55_MultipleWhitespacesAfterSynAssignPatternExpression_Success
 
     REQUIRE(actualResult->toString() == expected);
 }
+
+TEST_CASE("TestCase10_MultipleWhitespacesAfterSynAssignPatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;";
+    string query = R"(Select a pattern a (_ , _"1 "_))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, _1_))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase10_SingleIntWithWhitespacePatternExpression_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;";
+    string query = R"(Select a pattern a (_ , _"1 "_))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select a such that pattern a(_, _1_))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase10_InvalidInfixExpressionPatternExpression_SyntacticException") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;";
+    string query = R"(Select a pattern a (_ , _" +temp"_))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+//(Fixed?) Crashes
+//stmt n; assign a; Select n such that Parent (_, _) pattern a (_, _)
+//while w; assign a; Select w such that Uses(w, "left") pattern a(_, _"right"_)
+//print rd; variable v; stmt s; assign a; Select s such that Parent (s, rd) pattern a(v,_)
+//assign a; while w; Select a such that Modifies (w, "x") pattern a (_, _"x"_)
+
+
+

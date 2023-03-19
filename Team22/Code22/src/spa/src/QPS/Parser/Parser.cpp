@@ -81,7 +81,6 @@ SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditio
         }
         return new SelectExpression(arg, conditions, attr);
     } else {
-        ::printf("%s\n", Expression::QUERYVALIDATION.c_str());
         throw SyntacticException();
     }
 }
