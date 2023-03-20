@@ -31,10 +31,10 @@ TEST_CASE("TestCase1_ParseTokenListBasicSource_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-    result = result.children[0];
-    REQUIRE(result.nodeType == TokenType::PROCEDURE);
-    REQUIRE(result.children.size() == 1);
-    REQUIRE(result.children[0].children.size() == 2);
+    TNode result1 = result.children[0];
+    REQUIRE(result1.nodeType == TokenType::PROCEDURE);
+    REQUIRE(result1.children.size() == 1);
+    REQUIRE(result1.children[0].children.size() == 2);
 }
 
 TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
@@ -379,8 +379,8 @@ TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    result = result.children[0];
-    auto node = result.children[0];
+
+    auto node = result.children[0].children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     auto whileStmt = node.children[0];
     REQUIRE(whileStmt.nodeType == TokenType::WHILE);
