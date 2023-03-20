@@ -37,14 +37,18 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			cout << currentNode1.stringId << endl;
 			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", procedureName, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", procedureName, nameOfVariable));
 			cout << std::to_string(lineNumOfVariable) + " uses procedure " + procedureName << endl;
+			cout << nameOfVariable + " uses procedure " + procedureName << endl;
 
 			Result result1 = pkbinstance.getDesignAbstraction("INVERSECALLS", make_pair("_", procedureName));
 			std::vector<std::string> vector1 = result1.getQueryResult();
 			for (int i = 0; i < vector1.size(); i++) {
 				if (vector1[i] != "none") {
 					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", vector1[i], std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", vector1[i], nameOfVariable));
 					cout << std::to_string(lineNumOfVariable) + " uses procedure " + vector1[i] << endl;
+					cout << nameOfVariable + " uses procedure " + vector1[i] << endl;
 				}
 				Result result3 = pkbinstance.getDesignEntity("CALL", vector1[i]);
 				std::vector<std::string> vector3 = result3.getQueryResult();
