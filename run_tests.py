@@ -55,8 +55,8 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
                       ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
                       ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
-                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
-                      ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestWhilePatternClauseQueries.txt")]
+                      ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
+                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+ - ))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
@@ -74,7 +74,6 @@ for source, query in source_query_pairs:
 
     result = subprocess.run(command, stdout=subprocess.PIPE)
     result = result.stdout.decode()
-    print(result)
 
     for case in re.finditer(testCaseRegex, result):
         arg1 = case.group(2)

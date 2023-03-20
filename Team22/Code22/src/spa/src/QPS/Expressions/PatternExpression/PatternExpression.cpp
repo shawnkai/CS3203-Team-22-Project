@@ -52,6 +52,10 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
             throw SyntacticException();
         }
 
+        if (a1->getType() != "IF" && !arg4.empty()) {
+            throw SyntacticException();
+        }
+
         //check for assign
         if (arg3.size() == 1 && arg3[0] != '_') {
             throw SyntacticException();

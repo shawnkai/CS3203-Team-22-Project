@@ -1,7 +1,7 @@
 1 - Select all if statement numbers that use a variable in the conditional statement
 if ifs;
 Select ifs pattern ifs (_, _, _)
-2, 6, 9, 10, 14, 17, 23, 29, 31, 38, 40, 54
+2, 6, 9, 10, 14, 23, 29, 31, 38, 40, 54
 5000
 2 - Select all if statement numbers that use the variable "a"
 if ifs;
@@ -39,9 +39,9 @@ Select ifs pattern ifs ("r", _, _)
 none
 5000
 8 - Select all if statement numbers that use any variable(s) in the conditional statement
-if ifs, variable v;
+if ifs; variable v;
 Select ifs pattern ifs (v, _, _)
-2, 6, 9, 10, 14, 17, 23, 29, 31, 38, 40, 54
+2, 6, 9, 10, 14, 23, 29, 31, 38, 40, 54
 5000
 101 - Using If Pattern Clause With Wrong Number of Arguments
 if ifs, variable v;
@@ -64,7 +64,7 @@ Select ifs pattern ifs (_, _, "v")
 SyntaxError
 5000
 105 - Using If Pattern Clause With 2nd Argument as Variable Synonym
-if ifs, variable v;
+if ifs; variable v;
 Select ifs pattern ifs (_, v, _)
 SyntaxError
 5000
@@ -74,22 +74,22 @@ Select ifs pattern ifs (_, _, v)
 SyntaxError
 5000
 107 - Using If Pattern Clause With Wildcards
-if ifs, variable v;
+if ifs; variable v;
 Select ifs pattern ifs (_"v"_, _, _)
 SyntaxError
 5000
 108 - Using If Pattern Clause With Both 1st and 2nd Argument Filled With Variable Synonym
-if ifs, variable v;
+if ifs; variable v;
 Select ifs pattern ifs (v, v, _)
 SyntaxError
 5000
 109 - Using If Pattern Clause With Both 1st and 3rd Argument Filled With Variable Synonym
-if ifs, variable v;
+if ifs; variable v;
 Select ifs pattern ifs (v, _, v)
 SyntaxError
 5000
 110 - Using If Pattern Clause With All 1st, 2nd and 3rd Argument Filled With Variable Synonym
-if ifs, variable v;
+if ifs; variable v;
 Select ifs pattern ifs (v, v, v)
 SyntaxError
 5000
@@ -111,10 +111,10 @@ SyntaxError
 114 - Using If Pattern Clause With A Number as a Variable Name
 if ifs;
 Select ifs pattern ifs (2, _, _)
-SyntaxError
+SemanticError
 5000
 114 - Using If Pattern Clause With A Different Design Entity
-if ifs, procedure p;
+if ifs; procedure p;
 Select ifs pattern ifs (p, _, _)
 SemanticError
 5000
