@@ -64,21 +64,7 @@ TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-    //cout << ToString(result) << endl;
-//    std::queue<TNode> pendingToString;
-//    pendingToString.push(result);
-//    while (!pendingToString.empty()) {
-//        auto toProcess = pendingToString.front();
-//        pendingToString.pop();
-//        cout << ToString(toProcess) << endl;
-//        if (!toProcess.children.empty()) {
-//            auto childrenArr = (toProcess).children;
-//            for (TNode child : childrenArr) {
-//                pendingToString.push(child);
-//            }
-//        }
-//    }
-    //result = result.children[0];
+
     TNode stmtList = result.children[0].children[0];
     REQUIRE(stmtList.children.size() == 1);
     REQUIRE(stmtList.children[0].nodeType == TokenType::ASSIGN);
@@ -341,7 +327,7 @@ TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    result = result.children[0];
+    TNode result1 = result.children[0];
     REQUIRE(result.nodeType == TokenType::PROCEDURE);
     REQUIRE(result.children.size() == 1);
     REQUIRE(result.children[0].children.size() == 1);
