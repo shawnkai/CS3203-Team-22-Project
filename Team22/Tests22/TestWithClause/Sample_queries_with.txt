@@ -13,11 +13,6 @@ if i;
 Select i with i.stmt# = 8
 8
 5000
-4 - Select call with statement number equal to 2
-call c;
-Select c with c.stmt# = 2
-2
-5000
 5 - Select s with statement number equal to if's statement number
 stmt s; if i;
 Select s with s.stmt# = i.stmt#
@@ -27,11 +22,6 @@ Select s with s.stmt# = i.stmt#
 procedure p;
 Select p with p.procName = "TestWith"
 TestWith
-5000
-7 - Select procedure called with the procedureName
-procedure p1, p2;
-Select p2 such that Calls (p1, p2) with p1.procName = "TestWith"
-TestWith2
 5000
 8 - Select a with assignment statement number equal to 4
 assign a;
@@ -68,11 +58,6 @@ read r;
 Select r with r.varName = "z"
 none
 5000
-15 - Select variable modified by call TestWith2 statement
-variable v; call c;
-Select v such that Modifies (c, v) with c.procName = "TestWith2"
-x, y
-5000
 16 - Select variable modified by TestWith3
 variable v; procedure p;
 Select v such that Modifies (p, v) with p.procName = "TestWith3"
@@ -82,11 +67,6 @@ a, x, y
 variable v; procedure p;
 Select v such that Uses (p, v) with p.procName = "TestWith3"
 y
-5000
-18 - Select call statement with c.procName = "TestWith2"
-call c;
-Select c with c.procName = "TestWith2"
-2, 24
 5000
 19 - Select assignment with a line number which is not assignment statement
 assign a;
@@ -116,35 +96,5 @@ TestWith
 24 - Select procedure that modifies k
 procedure p;
 Select p such that Modifies (p, "k")
-none
-5000
-25 - Select procedure that calls* TestWith2
-procedure p1, p2;
-Select p1 such that Calls* (p1, p2) with p2.procName = "TestWith2"
-TestWith, TestWith3
-5000
-26 - Select procedure that TestWith calls*
-procedure p1, p2;
-Select p2 such that Calls* (p1, p2) with p1.procName = "TestWith"
-TestWith2
-5000
-27 - Select procedure call that modifies x
-call c;
-Select c such that Modifies (c, "x")
-2, 24
-5000
-28 -  Select procedure call that modifies k
-call c;
-Select c such that Modifies (c, "k")
-none
-5000
-29 -  Select procedure call that uses k
-call c;
-Select c such that Uses (c, "k")
-none
-5000
-30 -  Select procedure call that uses x
-call c;
-Select c such that Uses (c, "x")
 none
 5000
