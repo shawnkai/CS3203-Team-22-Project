@@ -40,7 +40,7 @@ procedure TestFollows {
             }
          }
        } else {
-           print j;
+           j = j + 1;
        }
      }  
   }
