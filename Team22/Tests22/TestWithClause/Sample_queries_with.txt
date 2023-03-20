@@ -46,12 +46,12 @@ Select p with p.varName = "x"
 10 - Select variable a
 variable v;
 Select v with v.varName = "a"
-10, 13, 14, 15, 23
+a
 5000
 11 - Select constant 1
 constant c;
 Select c with c.value = 1
-1, 5, 7, 16, 22
+1
 5000
 12 - Select read with varName = "z"
 read r;
