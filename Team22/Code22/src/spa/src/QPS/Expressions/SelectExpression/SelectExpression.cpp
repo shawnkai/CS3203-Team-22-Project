@@ -47,6 +47,7 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
         return ResultTable({make_pair(this->entities[0]->toString(), answer)});
     } else {
         vector<ResultTable> all_results;
+        ResultTable inter({});
         for (Expression *exp : this->conditions) {
             ResultTable temp = exp->evaluate(pkb);
             all_results.push_back(temp);
