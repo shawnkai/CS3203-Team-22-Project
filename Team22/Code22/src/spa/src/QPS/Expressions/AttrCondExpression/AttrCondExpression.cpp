@@ -18,7 +18,6 @@ bool AttrCondExpression::containsAttrCondExpression(string query) {
 }
 
 pair<DesignEntity*, pair<string, string>> AttrCondExpression::generateSynAndAttrName(string ref, SynonymTable synonymTable) {
-    ::printf("Attribute: %s\n", ref.c_str());
     if (regex_match(ref, regex("[\\w]+\\.(?:\\w|#)+"))) {
     //attribute ref
         string syn_string = ::strtok(ref.data(), ".");
@@ -66,7 +65,7 @@ ResultTable AttrCondExpression::evaluate(PKB pkb) {
     ResultTable syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
     // Syn2
     ResultTable syn2Table = this->entities[1]->getAttrVal(syn2attr, pkb);
-    return syn1Table.intersection(syn2Table);
+    return syn1Table.intersection(syn2Table).removeColumn("withCond");
 }
 
 string AttrCondExpression::toString() {

@@ -21,10 +21,10 @@ using namespace std;
 #include "ControlFlowGraph/ControlFlowGraphFactory.h"
 #include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
 
-#include "PKB/Exceptions/InvalidAPICallException.cpp"
-
 #include "Pattern//PatternFactory.h"
 #include "Pattern/PatternDatabaseFactory.h"
+
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
 
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.

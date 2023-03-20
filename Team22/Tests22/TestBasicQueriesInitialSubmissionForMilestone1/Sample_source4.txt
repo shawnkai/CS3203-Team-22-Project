@@ -1,0 +1,7 @@
+procedure a1 {
+     read x;
+     call a2;
+}
+procedure a2 {
+    read y;
+}

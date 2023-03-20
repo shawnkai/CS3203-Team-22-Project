@@ -13,10 +13,12 @@ using namespace std;
 
 TEST_CASE("Test 1: Catch InvalidAbstractionTypeException") {
     bool exceptionThrown = false;
+
     try {
         DesignAbstractionsFactory::createDesignAbstraction("INVALID_ABSTRACTION_TYPE", make_tuple("INVALID", "INVALID", "INVALID"));
-    } catch (exception &e) {
+    } catch (InvalidAbstractionTypeException &e) {
         exceptionThrown = true;
     }
+
     REQUIRE(exceptionThrown);
 }

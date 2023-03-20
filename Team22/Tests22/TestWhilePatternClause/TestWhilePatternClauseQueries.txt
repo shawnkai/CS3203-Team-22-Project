@@ -1,0 +1,90 @@
+1 - Select all While statement numbers that use a variable in the conditional statement
+while w;
+Select w pattern w (_, _)
+4, 7, 12, 17, 22, 26, 37, 41, 48, 50
+5000
+2 - Select all While statement numbers that use a variable in the conditional statement (another way)
+while w; variable v;
+Select w pattern w (v, _)
+4, 7, 12, 17, 22, 26, 37, 41, 48, 50
+5000
+3 - Select all while statement numbers that use the variable "a"
+while w;
+Select w pattern w ("a", _)
+26, 37, 41, 50
+5000
+4 - Select all while statement numbers that use the variable "b"
+while w;
+Select w pattern w ("b", _)
+26, 37, 41, 50
+5000
+5 - Select all while statement numbers that use the variable "c"
+while w;
+Select w pattern w ("c", _)
+26
+5000
+6 - Select all while statement numbers that use the variable "x"
+while w;
+Select w pattern w ("x", _)
+4, 7, 12, 17, 22
+5000
+7 - Select all while statement numbers that use the variable "y"
+while w;
+Select w pattern w ("y", _)
+4, 7, 22, 26, 48
+5000
+8 - Select all while statement numbers that use the variable "z"
+while w;
+Select w pattern w ("z", _)
+4, 7, 26
+5000
+8 - Select all while statement numbers that use the variable "r"
+while w;
+Select w pattern w ("r", _)
+none
+5000
+101 - Using While Pattern Clause With Wrong Number of Arguments
+while w; variable v;
+Select w pattern w (v, _, _)
+SyntaxError
+5000
+102 - Using While Pattern Clause With Variable v not defined
+while w;
+Select w pattern w (v, _)
+SemanticError
+5000
+103 - Using While Pattern Clause With 2nd Argument as Variable Name
+while w;
+Select w pattern w (_, "v")
+SyntaxError
+5000
+104 - Using While Pattern Clause With 2nd Argument as Variable Synonym
+while w; variable v;
+Select w pattern w (_, v)
+SyntaxError
+5000
+105 - Using While Pattern Clause With Wildcards
+while w; variable v;
+Select w pattern w (_"v"_, _)
+SyntaxError
+5000
+106 - Using While Pattern Clause With Both 1st and 2nd Argument Filled With Variable Synonym
+while w; variable v;
+Select w pattern w (v, v)
+SyntaxError
+5000
+107 - Using While Pattern Clause With Both 1st and 2nd Argument Filled With Variable Name
+while w;
+Select w pattern w ("v", "v")
+SyntaxError
+5000
+108 - Using While Pattern Clause With A Number as a Variable Name
+while w;
+Select w pattern w (2, _)
+SemanticError
+5000
+109 - Using While Pattern Clause With A Different Design Entity
+while w; procedure p;
+Select w pattern w (p, _)
+SemanticError
+5000

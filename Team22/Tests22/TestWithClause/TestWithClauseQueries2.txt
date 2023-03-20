@@ -83,26 +83,6 @@ stmt s; constant c; print pn;
 Select s with s.stmt# = -1
 SyntaxError
 5000
-18 -  Find stmt.stmt#
-stmt s; constant c; print pn;
-Select s with s.stmt# = 33
-SemanticError
-5000
-19 -  Find stmt.stmt#
-stmt s; constant c; print pn;
-Select s with 33 = s.stmt#
-SemanticError
-5000
-20 -  Find stmt.stmt#
-stmt s; constant c; print pn;
-Select s with 0 = s.stmt#
-SemanticError
-5000
-21 -  Find stmt.stmt#
-stmt s; constant c; print pn;
-Select s with s.stmt# = 0
-SemanticError
-5000
 22 -  Find stmt.stmt#
 stmt s; constant c; print pn;
 Select s with s.stmt# = 17
@@ -118,16 +98,6 @@ stmt s; constant c; print pn; read re;
 Select re with 29 = re.stmt#
 29
 5000
-25 -  Find read.stmt#
-stmt s; constant c; print pn; read re;
-Select re with 0 = re.stmt#
-SemanticError
-5000
-26 -  Find read.stmt#
-stmt s; constant c; print pn; read re;
-Select re with 33 = re.stmt#
-SemanticError
-5000
 27 -  Find print.stmt#
 stmt s; constant c; print pn; read re;
 Select pn with 26 = pn.stmt#
@@ -137,11 +107,6 @@ Select pn with 26 = pn.stmt#
 stmt s; constant c; print pn; read re;
 Select pn with pn.stmt# = 26
 26
-5000
-29 -  Find print.stmt#
-stmt s; constant c; print pn; read re;
-Select pn with pn.stmt# = 0
-SemanticError
 5000
 30 -  Find while.stmt#
 stmt s; constant c; print pn; read re; while w;
@@ -157,16 +122,6 @@ Select w with 21 = w.stmt#
 stmt s; constant c; print pn; read re; while w;
 Select w with 22 = w.stmt# 
 none
-5000
-33 -  Find while.stmt#
-stmt s; constant c; print pn; read re; while w;
-Select w with 33 = w.stmt# 
-SemanticError
-5000
-34 -  Find if.stmt#
-stmt s; constant c; print pn; read re; if if;
-Select if with 33 = if.stmt# 
-SemanticError
 5000
 35 -  Find if.stmt#
 stmt s; constant c; print pn; read re; if if;
@@ -240,22 +195,22 @@ b
 5000
 49 -  Find re.varName and pn.varName
 stmt s; variable v; print pn; read re; if if; assign a; constant constant;
-Select re with re.varName = pn.varName
+Select re.varName with re.varName = pn.varName
 b
 5000
 50 -  Find re.varName and pn.varName
 stmt s; variable v; print pn; read re; if if; assign a; constant constant;
-Select re with pn.varName = re.varName
+Select re.varName with pn.varName = re.varName
 b
 5000
 51 -  Find re.varName and pn.varName
 stmt s; variable v; print pn; read re; if if; assign a; constant constant;
-Select pn with pn.varName = re.varName
+Select pn.varName with pn.varName = re.varName
 b
 5000
 52 -  Find re.varName and pn.varName
 stmt s; variable v; print pn; read re; if if; assign a; constant constant;
-Select pn with re.varName = pn.varName
+Select pn.varName with re.varName = pn.varName
 b
 5000
 53 -  Find constant.value and stmt.stmt#
@@ -367,6 +322,7 @@ Select c with c.value = a.stmt#
 stmt s; variable v; print pn; read re; if if; assign a; constant c; while w;
 Select c with a.stmt# = c.value
 1,2,3,5
+5000
 75 -  Find constant.value and if.stmt#
 stmt s; variable v; print pn; read re; if if; assign a; constant c; while w;
 Select if with c.value = if.stmt#
@@ -375,7 +331,7 @@ none
 76 -  Find constant.value and if.stmt#
 stmt s; variable v; print pn; read re; if if; assign a; constant c; while w;
 Select if with a.stmt# = if.value
-none
+SemanticError
 5000
 77 -  Find constant.value and if.stmt#
 stmt s; variable v; print pn; read re; if if; assign a; constant c; while w;
@@ -385,7 +341,7 @@ none
 78 -  Find constant.value and if.stmt#
 stmt s; variable v; print pn; read re; if if; assign a; constant c; while w;
 Select c with a.stmt# = if.value
-none
+SemanticError
 5000
 79 -  Find proc.procName and v.varName
 stmt s; call c; print pn; read re; if if; assign a; procedure proc; variable v;

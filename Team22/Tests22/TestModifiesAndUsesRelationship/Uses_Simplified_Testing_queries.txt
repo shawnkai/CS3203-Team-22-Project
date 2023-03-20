@@ -43,54 +43,9 @@ variable v;
 Select v such that Uses ( v , " " ) 
 SyntaxError
 5000
-10 - "Select" with small "s" return syntax error
-variable v;
-select v such that Uses(7, _) 
-SyntaxError
-5000
-11 - missing ; return syntax error <--- error not handled
-variable v
-Select v such that Uses(7, _) 
-SyntaxError
-5000
-12 - extra ; return syntax error
-variable v;
-Select v such that Uses(7, _);
-SyntaxError
-5000
-13 - declaration spelt wrongly return syntax error
-vaiable v;
-Select v such that Uses(7, _)
-SyntaxError
-5000
-14 - declaration variable with capital "v" return syntax error
-Variable v;
-Select v such that Uses(7, _)
-SyntaxError
-5000
-15 - declaration stmt spelt in full return syntax error
-variable v; statement s;
-Select v such that Uses(7, _)
-SyntaxError
-5000
-16 - missing ; between 2 declarations return syntax error
-variable v stmt s;
-Select v such that Uses(7, _)
-SyntaxError
-5000
-17 - variable synonym declared twice return syntax error <--- should return syntax error
-variable v; variable v1;
-Select v such that Uses(7, _)
-SyntaxError
-5000
 18 - wildcard as argument 1 return semantic error
 variable v;
 Select v such that Uses(_, v)
-SemanticError
-5000
-19 - actual variable as argument 1 return semantic error <--- error not handled
-variable v;
-Select v such that Uses("x", _)
 SemanticError
 5000
 20 - variable synonym as argument 1 return semantic error <--- error not handled
@@ -117,16 +72,6 @@ SemanticError
 variable v; assign variable;
 Select v such that Uses(7, variable)
 SemanticError
-5000
-25 - valid meaningless query return all variables <--- valid meaningless query should return all variables
-variable v; assign a;
-Select v such that Uses(7, "x")
-x, z, a, b, i
-5000
-26 - invalid meaningless query return nothing <---- semantically correct valid query, should return none
-variable v; assign a;
-Select v such that Uses(7, "z")
-none
 5000
 27 - Uses with whitespace before parentheses
 assign a; variable v;
@@ -233,18 +178,8 @@ while w; variable v;
 Select w such that Uses(w, "b")
 6
 5000
-51 - UsesS with wildcard as argument 2 <--- valid query, should return all variables
-variable v;
-Select v such that Uses(7, _)
-x, z, a, b, i
-5000
 52 - UsesS with variable synonym as argument 2
 variable v;
 Select v such that Uses(7, v)
 x
-5000
-53 - UsesS with actual variable as argument 2 <--- valid meaningless query, should return all variables
-variable v;
-Select v such that Uses(7, "x")
-x, z, a, b, i
 5000

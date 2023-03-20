@@ -104,17 +104,30 @@ string QueryParser::replaceAnd(string query) {
 
     string result_query;
 
+    vector<string> subClauses = {"Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies",
+                                 "Calls", "Calls*", "Next", "Next*", "Affects", "Affects*"};
+
+    vector<string> split_tokens;
+
     for ( ; split_iterator != end; ++split_iterator) {
-        if (split_iterator->str() == "such-that" || split_iterator->str() == "pattern" || split_iterator->str() == "with") {
-            previousClause = split_iterator->str();
+        split_tokens.push_back(split_iterator->str());
+    }
+
+
+    for (int i = 0; i < split_tokens.size(); i++) {
+        if (split_tokens[i] == "such-that" || split_tokens[i] == "pattern" || split_tokens[i] == "with") {
+            previousClause = split_tokens[i];
             result_query += previousClause + " ";
-        } else if (split_iterator->str() == "and") {
+        } else if (split_tokens[i] == "and") {
             if (previousClause.empty()) {
                 throw SyntacticException();
             }
+            if (previousClause == "pattern" && std::find(subClauses.begin(), subClauses.end(), split_tokens[i + 1]) != subClauses.end()) {
+                previousClause = "such-that";
+            }
             result_query += previousClause + " ";
         } else {
-            result_query += (split_iterator->str()) + " ";
+            result_query += (split_tokens[i]) + " ";
         }
     }
 
