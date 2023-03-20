@@ -441,3 +441,66 @@ TEST_CASE("TestCase10_InvalidInfixExpressionPatternExpression_SyntacticException
     REQUIRE(throwsException);
 }
 
+TEST_CASE("TestCase16_ParseSelectWhileWithExactMatchingPattern_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "while w;";
+    string query = R"(Select w pattern w(_, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select w such that pattern w(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase16_ParseSelectIfWithExactMatchingPattern_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "if i;";
+    string query = R"(Select i pattern i(_, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = R"(Select i such that pattern i(_, +xy))";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase16_ParseSelectStmtExactMatchingPattern_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "stmt s;";
+    string query = R"(Select s pattern s(_, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase16_ParseSelectCallExactMatchingPattern_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "call c;";
+    string query = R"(Select c pattern c(_, "x+y"))";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}

@@ -107,9 +107,12 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
         }
 
         string prefixPattern = Utilities::infixToPrefix(infixPattern);
-        if (a1->getType() != "ASSIGNMENT") {
+
+        string a1type = a1->getType();
+        if (a1type != "ASSIGNMENT" && a1type != "WHILE" && a1type != "IF") {
             throw SemanticException();
         }
+
         expressions.push_back(new PatternExpression(a1,  a2, prefixPattern));
 
         searchStart = sm.suffix().first;
