@@ -151,7 +151,7 @@ Select s such that Modifies(s, _)  such that Uses(s, "i")
 36 - modifies with read and actual variable and uses with print and variable synonym
 assign a; variable v; stmt s; while w; read re; print pn;
 Select v such that Modifies(re, "x")  such that Uses(pn, v) 
-b
+none
 5000
 37 - modifies with read and actual variable and uses with print and variable synonym
 assign a; variable v; stmt s; while w; read re; print pn;
