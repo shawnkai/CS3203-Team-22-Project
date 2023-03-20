@@ -142,7 +142,7 @@ ResultTable ModifiesPExpression::evaluate(PKB pkb) {
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
-        if (!res.getQueryResult().empty()) {
+        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty() && res.toString().find("none") == string::npos) {
             vector<string> ans = res.getQueryResult();
             sort(ans.begin(), ans.end());
             return ResultTable({{this->entities[1]->toString(), ans}});

@@ -42,7 +42,7 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("READ", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", procedureName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", procedureName, variableName));
+			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableName, procedureName));
 			cout << std::to_string(lineNumOfVariable) + " modifies procedure " + procedureName << endl;
 			cout << variableName + " modifies procedure " + procedureName << endl;
 
@@ -51,7 +51,7 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			for (int i = 0; i < vector1.size(); i++) {
 				if (vector1[i] != "none") {
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", vector1[i], std::to_string(lineNumOfVariable)));
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", vector1[i], variableName));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", variableName, vector1[i]));
 					cout << std::to_string(lineNumOfVariable) + " modifies procedure " + vector1[i] << endl;
 					cout << variableName + " modifies procedure " + vector1[i] << endl;
 				}
@@ -97,7 +97,7 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			pkbinstance.addDesignAbstraction("USES", make_tuple("PRINT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", variableName, std::to_string(lineNumOfVariable)));
 			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", procedureName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", procedureName, variableName));
+			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", variableName, procedureName));
 			cout << std::to_string(lineNumOfVariable) + " uses procedure " + procedureName << endl;
 			cout << variableName + " uses procedure " + procedureName << endl;
 
@@ -106,7 +106,7 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			for (int i = 0; i < vector1.size(); i++) {
 				if (vector1[i] != "none") {
 					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", vector1[i], std::to_string(lineNumOfVariable)));
-					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", vector1[i], variableName));
+					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", variableName, vector1[i]));
 					cout << std::to_string(lineNumOfVariable) + " uses procedure " + vector1[i] << endl;
 					cout << variableName + " uses procedure " + vector1[i] << endl;
 				}

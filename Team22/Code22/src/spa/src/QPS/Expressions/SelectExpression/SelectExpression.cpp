@@ -88,4 +88,3 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
         return table.getColumn(this->entities[0]->toString());
     }
 }
-
