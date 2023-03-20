@@ -14,10 +14,12 @@ using namespace std;
 
 TEST_CASE("Test 1: Catch InvalidUsesAbstractionTypeException In UsesFactory") {
     bool exceptionThrown = false;
+
     try {
         UsesFactory::createUsesAbstraction(make_tuple("INVALID", "INVALID", "INVALID"));
-    } catch (exception &e) {
+    } catch (InvalidUsesAbstractionTypeException &e) {
         exceptionThrown = true;
     }
+
     REQUIRE(exceptionThrown);
 }

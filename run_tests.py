@@ -52,7 +52,11 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestWithClause/TestWithClauseSource.txt", "TestWithClause/TestWithClauseQueries.txt"),
                       ("TestWithClause/TestWithClauseSource2.txt", "TestWithClause/TestWithClauseQueries2.txt"),
                       ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
-                      ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt")]
+                      ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
+                      ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
+                      ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
+                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
+                      ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestWhilePatternClauseQueries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+ - ))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
@@ -67,8 +71,10 @@ for source, query in source_query_pairs:
     correct = []
     command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
                "./Team22/Tests22/Sample_out.xml"]
+
     result = subprocess.run(command, stdout=subprocess.PIPE)
     result = result.stdout.decode()
+    print(result)
 
     for case in re.finditer(testCaseRegex, result):
         arg1 = case.group(2)
