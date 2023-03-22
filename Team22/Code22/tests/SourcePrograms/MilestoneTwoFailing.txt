@@ -1,0 +1,9 @@
+procedure Transform {
+    weight = 1;
+    tmp = 100;
+}
+
+procedure w {
+    top = x2 - x1 * incre;
+    bottom = y2 * y2 - decrement;
+}
