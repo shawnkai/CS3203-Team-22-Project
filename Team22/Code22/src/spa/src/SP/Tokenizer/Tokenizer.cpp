@@ -175,8 +175,14 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
     int currLineNum = 0;
     std::string currLine;
     while (std::getline(inputSimpleProgram, currLine)) {
-        if (currLine.find("while") != std::string::npos
-        || currLine.find("if") != std::string::npos
+        std::string whileKey = "while";
+        std::string ifKey = "if";
+        std::size_t findWhile = currLine.find(whileKey);
+        std::size_t findIf = currLine.find(ifKey);
+        if ((currLine.find("while") != std::string::npos && currLine[findWhile + whileKey.length()] == ' '
+        && (findWhile - 1 >= 0 && currLine[findWhile - 1] == ' '))
+        || (currLine.find("if") != std::string::npos && currLine[findIf + ifKey.length()] == ' '
+        && (findIf - 1 >= 0 && currLine[findIf - 1] == ' '))
         || currLine.find(';') != std::string::npos) {
             currLineNum++;
         }
