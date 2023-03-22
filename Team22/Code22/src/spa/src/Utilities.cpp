@@ -4,6 +4,7 @@
 
 #include "Utilities.h"
 #include <algorithm>
+#include <regex>
 
 vector<string> Utilities::findIntersection(vector<vector<string>> &all_vectors) {
     vector<string> intersection;
@@ -124,6 +125,50 @@ string Utilities::infixToPrefix(string exp) {
 
     return prefix;
 }
+
+bool Utilities::checkInfixExpression(string str) {
+    std::stack<char> stk;
+    bool prevIsOperand = false; // to check if the previous character was an operand
+    str = Utilities::removeAllOccurrences(str, ' ');
+    str = regex_replace(str, regex("(\\w){2,}"), "$1");
+    for (char c : str) {
+        if (isalpha(c)) {
+            if (prevIsOperand) {
+                return false; // two operands in a row
+            }
+            prevIsOperand = true;
+        } else if (isdigit(c)) {
+            if (prevIsOperand) {
+                return false; // two operands in a row
+            }
+            prevIsOperand = true;
+        } else if (c == '(' || c == '[' || c == '{') {
+            stk.push(c);
+            prevIsOperand = false;
+        } else if (c == ')' || c == ']' || c == '}') {
+            if (stk.empty()) {
+                return false;
+            }
+            char top = stk.top();
+            stk.pop();
+            if ((c == ')' && top != '(') ||
+                (c == ']' && top != '[') ||
+                (c == '}' && top != '{')) {
+                return false;
+            }
+            prevIsOperand = true;
+        } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
+            if (!prevIsOperand) {
+                return false; // an operator must be preceded by an operand
+            }
+            prevIsOperand = false;
+        } else {
+            return false; // invalid character
+        }
+    }
+    return stk.empty();
+}
+
 
 bool Utilities::checkIfPresent(vector<string> list, string value) {
     for (string v : list) {

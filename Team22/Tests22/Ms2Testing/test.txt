@@ -1,0 +1,5 @@
+3 - multiple such that, pattern while and with clause
+assign a, a1; variable v;  constant c; while w; if if;
+Select if pattern if ("x", _, _) such that Parent* (if, a) such that Follows*(a1, if) with if.stmt# = c.value
+8
+5000

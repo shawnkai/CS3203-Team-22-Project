@@ -6,25 +6,56 @@
 #define SPA_PATTERNEXPRESSION_H
 
 #include "QPS/Expressions/Expressions.h"
+#include <string>
+
+using namespace std;
 
 class PatternExpression : public Expression {
+protected:
+    NamedEntity *p1;
+
+public:
+    explicit PatternExpression(DesignEntity *entity, NamedEntity *p1);
+
+    virtual string toString() {
+        return "";
+    };
+
+    virtual ResultTable evaluate(PKB pkb) {
+        return {{}};
+    };
+
+    static bool containsPatternExpression(string query);
+
+    static vector<PatternExpression*> extractPatternExpression(const string& query, SynonymTable synonymTable);
+};
+
+class AssignPatternExpression : public PatternExpression {
     /**
      * This class encapsulates a pattern expression which chooses a DesignEntity taking in the NamedEntity and
      * the string match for RHS (either exact or with wildcards)
      */
 private:
-    NamedEntity *p1;
-    string p2;
+     string p2;
 public:
-    explicit PatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
+    explicit AssignPatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
 
     string toString() override;
 
     ResultTable evaluate(PKB pkb) override;
 
-    static bool containsPatternExpression(string query);
+};
 
-    static vector<PatternExpression*> extractPatternExpression(const string& query, SynonymTable synonymTable);
+
+class IfWhilePatternExpression : public PatternExpression {
+public:
+
+    IfWhilePatternExpression(DesignEntity *entity, NamedEntity *p1);
+
+    string toString() override;
+
+    ResultTable evaluate(PKB pkb) override;
+
 };
 
 #endif //SPA_PATTERNEXPRESSION_H

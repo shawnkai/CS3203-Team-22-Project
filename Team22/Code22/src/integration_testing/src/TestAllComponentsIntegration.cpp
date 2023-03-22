@@ -21,7 +21,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     inputFilePath = "Sample_source2.txt";
 
     string code = "procedure Example {\n"
-                  "  x = 2;\n"
+                  "  x = 1;\n"
                   "  z = 3;\n"
                   "  i = 5;\n"
                   "  while (i!=0) {\n"
@@ -279,6 +279,37 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     REQUIRE(output14.find("11") == std::string::npos);
     REQUIRE(output14.find('8') == std::string::npos);
     REQUIRE(output14.find('7') == std::string::npos);
+
+    string declaration15 = "read r;";
+    string query15 = "Select r.varName with r.varName = \"q\"";
+    parser = QueryParser();
+    parser.parse(declaration15);
+    auto exp15 = parser.parse(query15);
+    vector<string> res_15 = evaluator.evaluate(exp15);
+    string output15;
+    for (const string &r: res_15) {
+        output15 += r + ",";
+    }
+    printf("Results: %s\n", output15.c_str());
+    REQUIRE(output15.find('q') != std::string::npos);
+    REQUIRE(output15.find("10") == std::string::npos);
+    REQUIRE(output15.find('8') == std::string::npos);
+    REQUIRE(output15.find('7') == std::string::npos);
+
+    string declaration16 = "assign a; constant c;";
+    string query16 = "Select c such that Uses(a, c) with c.value = a.stmt#";
+    parser = QueryParser();
+    parser.parse(declaration16);
+    auto exp16 = parser.parse(query16);
+    vector<string> res_16 = evaluator.evaluate(exp16);
+    string output16;
+    for (const string &r: res_16) {
+        output16 += r + ",";
+    }
+    ::printf("Result: %s\n", output16.c_str());
+    REQUIRE(output16.find('2') == std::string::npos);
+    REQUIRE(output16.find('1') != std::string::npos);
+    REQUIRE(output16.find('3') == std::string::npos);
 
     REQUIRE(filesystem::remove(inputFilePath));
 }

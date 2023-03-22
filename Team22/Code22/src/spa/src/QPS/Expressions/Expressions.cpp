@@ -12,12 +12,13 @@
 
 string MODIFIES = R"lit(Modifies\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string USES = R"lit(Uses\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-string PATTERN = R"(pattern\s+(\w+)\s*\(\s*((?:\"?[\w]+\"?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%()]+\"?_?)|_)\s*\))";
+string PATTERN = R"(pattern\s+(\w+)\s*\(\s*((?:\"?[\w]+\"?)|_)\s*,\s*((?:_?\"[\w\+\-\*\s/%()]+\"_?)|_)(?:\s*,\s*(_))?\s*\))";
 string FOLLOWS = R"lit(Follows\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string FOLLOWSSTAR = R"lit(Follows\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string PARENT = R"lit(Parent\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string PARENTSTAR = R"lit(Parent\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-string QUERYVALIDATION = R"lit(Select\s+\w+(\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + ")|\\s+"+ PATTERN +")*";
+string ATTRCOND = R"lit(with\s+([\w]+\.(?:\w|#)+|\"\w+\"|\d+)\s*=\s*([\w]+\.(?:\w|#)+|\"\w+\"|\d+))lit";
+string Expression::QUERYVALIDATION = R"lit(Select\s+([\w]+)(?:\.((?:\w|#)+))?(\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + ")|\\s+" + PATTERN + "|\\s+" + ATTRCOND + ")*";
 
 // Regexes
 regex Expression::QUERYVALIDATIONREGEX = regex(QUERYVALIDATION);
@@ -28,6 +29,7 @@ regex Expression::FOLLOWSREGEX = regex(FOLLOWS);
 regex Expression::FOLLOWSSTARREGEX = regex(FOLLOWSSTAR);
 regex Expression::PARENTREGEX = regex(PARENT);
 regex Expression::PARENTSTARREGEX = regex(PARENTSTAR);
+regex Expression::ATTRCONDREGEX = regex(ATTRCOND);
 
 // Function Definitions
 Expression::Expression(vector<DesignEntity*> entities) {

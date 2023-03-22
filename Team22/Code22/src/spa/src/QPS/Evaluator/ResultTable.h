@@ -27,6 +27,14 @@ public:
 
     static ResultTable intersection(vector<ResultTable> resultTables);
 
+    ResultTable removeColumn(string column) {
+        auto it = this->table.find(column);
+        if (it != this->table.end()) {
+            this->table.erase(it);
+        }
+        return ResultTable(this->table);
+    }
+
     string toString();
 
     ResultTable getColumn(string column);
@@ -34,6 +42,8 @@ public:
     vector<string> getValues(const string& column);
 
     vector<string> getColumnNames();
+
+    void renameColumn(const string& oldName, const string& newName);
 
     bool equals(ResultTable table2);
 

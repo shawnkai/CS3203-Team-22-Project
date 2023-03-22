@@ -36,8 +36,10 @@ class Expression {
         static regex FOLLOWSSTARREGEX;
         static regex PARENTREGEX;
         static regex PARENTSTARREGEX;
+        static regex ATTRCONDREGEX;
 
     public:
+        static string QUERYVALIDATION;
         static regex QUERYVALIDATIONREGEX;
 
     explicit Expression(vector<DesignEntity*> entities);
