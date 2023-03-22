@@ -1,0 +1,100 @@
+1 - Select s with statement number equal to 1
+stmt s;
+Select s with s.stmt# = 1
+1
+5000
+2 - Select read with statement number equal to 6
+read r;
+Select r with r.stmt# = 6
+6
+5000
+3 - Select if with statement number equal to 8
+if i;
+Select i with i.stmt# = 8
+8
+5000
+4 - Select s with statement number equal to if's statement number
+stmt s; if i;
+Select s with s.stmt# = i.stmt#
+8, 14, 18
+5000
+5 - Select procedure with the procedureName
+procedure p;
+Select p with p.procName = "TestWith"
+TestWith
+5000
+6 - Select a with assignment statement number equal to 4
+assign a;
+Select a with a.stmt# = 4
+4
+5000
+7 - Select read with varName = w
+read r;
+Select r with r.varName = "w"
+6
+5000
+8 -  Select read with varName = x
+read r;
+Select r with r.varName = "x"
+19, 21
+5000
+9 - Select print with varName = x
+print p;
+Select p with p.varName = "x"
+9
+5000
+10 - Select variable a
+variable v;
+Select v with v.varName = "a"
+a
+5000
+11 - Select constant 1
+constant c;
+Select c with c.value = 1
+1
+5000
+12 - Select read with varName = "z"
+read r;
+Select r with r.varName = "z"
+none
+5000
+13 - Select variable modified by TestWith3
+variable v; procedure p;
+Select v such that Modifies (p, v) with p.procName = "TestWith3"
+a, x, y
+5000
+14 - Select variable used by TestWith3
+variable v; procedure p;
+Select v such that Uses (p, v) with p.procName = "TestWith3"
+y
+5000
+15 - Select assignment with a line number which is not assignment statement
+assign a;
+Select a with a.stmt# = 3
+none
+5000
+16 - Select while with statement number equal to 3
+while w;
+Select w with w.stmt# = 3
+3
+5000
+17 - Select print with statement number equal to 9
+print p;
+Select p with p.stmt# = 9
+9
+5000
+18 - Select procedure that modifies x 
+procedure p;
+Select p such that Modifies (p, "x")
+TestWith, TestWith2, TestWith3
+5000
+19 - Select procedure that uses x
+procedure p;
+Select p such that Uses (p, "x")
+TestWith
+5000
+20 - Select procedure that modifies k
+procedure p;
+Select p such that Modifies (p, "k")
+none
+5000

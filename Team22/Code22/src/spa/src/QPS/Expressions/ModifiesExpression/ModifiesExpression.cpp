@@ -25,6 +25,12 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             auto *a1 = new StmtEntity(stoi(arg1));
             NamedEntity *a2;
 
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             if (arg2 == "_") {
                 a2 = new WildCardEntity();
             } else if (arg2.find('\"') != string::npos) {
@@ -48,6 +54,12 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             }
 
             NamedEntity *a2;
+
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
 
             if (arg2 == "_") {
                 a2 = new WildCardEntity();
@@ -130,7 +142,7 @@ ResultTable ModifiesPExpression::evaluate(PKB pkb) {
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), varName));
-        if (!res.getQueryResult().empty()) {
+        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty() && res.toString().find("none") == string::npos) {
             vector<string> ans = res.getQueryResult();
             sort(ans.begin(), ans.end());
             return ResultTable({{this->entities[1]->toString(), ans}});
@@ -156,7 +168,11 @@ ResultTable ModifiesPExpression::evaluate(PKB pkb) {
             if (isFirstWildCard) {
                 results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", var.getQueryEntityName())));
             } else {
-                results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+                if (this->entities[1]->getType() == "ident") {
+                    results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", var.getQueryEntityName())));
+                } else {
+                    results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+                }
             }
         }
         map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};

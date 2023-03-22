@@ -15,5 +15,5 @@ using namespace std;
 class AbstractionExtractor {
 public:
 	AbstractionExtractor() {};
-	void extractAbstraction(TNode root, PKB pkbinstance);
+	void extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
 };

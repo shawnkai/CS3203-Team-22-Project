@@ -22,8 +22,9 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  * @param currentParent The current parent statement of this list of statement, if there is no parent the value is 0.
+ * @param procedureName The name of the procedure.
  */
-void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent) {
+void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName) {
 
 	if (currentNode.nodeType != TokenType::STATEMENT_LIST) {
 		cout << "something went wrong" << endl;
@@ -80,20 +81,20 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 			TokenType tokenType1 = childstmt.nodeType;
 			if ((tokenType1 == TokenType::READ) || (tokenType1 == TokenType::PRINT)) {
 				ReadPrintExtractor readPrintExtractor;
-				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
 			else if (tokenType1 == TokenType::WHILE) {
 				WhileExtractor whileExtractor1;
-				whileExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				whileExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
 			else if (tokenType1 == TokenType::IF) {
 				IfExtractor ifExtractor1;
-				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 
 			}
 			else if (tokenType1 == TokenType::ASSIGN) {
 				AssignExtractor assignExtractor1;
-				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
 			else {}
 		}

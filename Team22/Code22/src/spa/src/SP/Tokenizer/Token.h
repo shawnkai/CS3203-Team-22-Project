@@ -9,6 +9,7 @@
 enum TokenType {
     NAME_IDENTIFIER, // ost, wes... variable names and procedure name
     PROCEDURE,
+    PROGRAM,
     READ,
     PRINT,
     ASSIGN,
@@ -30,6 +31,7 @@ inline const char* ToString(TokenType t) {
     switch (t) {
         case NAME_IDENTIFIER: return "NAME_IDENTIFIER";
         case PROCEDURE: return "PROCEDURE";
+        case PROGRAM: return "PROGRAM";
         case READ: return "READ";
         case PRINT: return "PRINT";
         case ASSIGN: return "ASSIGNMENT";

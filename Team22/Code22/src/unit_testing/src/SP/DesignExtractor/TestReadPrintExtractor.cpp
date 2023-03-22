@@ -17,7 +17,7 @@ TEST_CASE("Testcase1_ExtractPrintStatement_ShouldSuccess") {
     ifContainers.push_back(1);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    readPrintExtractor.extractAbstraction(print1, ifContainers, whileContainers, pkbinstance);
+    readPrintExtractor.extractAbstraction(print1, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
@@ -25,7 +25,7 @@ TEST_CASE("Testcase1_ExtractPrintStatement_ShouldSuccess") {
     REQUIRE(result2 == "USES:STATEMENT: y: 2, 1, ");
 }
 
-TEST_CASE("Testcase1_ExtractReadStatement_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractReadStatement_ShouldSuccess") {
 
     TNode variable = TNode(TokenType::NAME_IDENTIFIER, "y", 2, std::vector<TNode>(0));
     TNode read1 = TNode(TokenType::READ, "read", 2, std::vector<TNode>(0));
@@ -41,7 +41,7 @@ TEST_CASE("Testcase1_ExtractReadStatement_ShouldSuccess") {
     ifContainers.push_back(1);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    readPrintExtractor.extractAbstraction(read1, ifContainers, whileContainers, pkbinstance);
+    readPrintExtractor.extractAbstraction(read1, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "y")).toString();
