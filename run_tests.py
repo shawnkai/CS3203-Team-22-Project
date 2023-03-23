@@ -4,8 +4,10 @@ import re
 
 if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
     start = './Team22/Code22/cmake-build-debug/src'
-else:
+elif os.path.isdir('./Team22/Code22/build/src'):
     start = './Team22/Code22/build/src'
+else:
+    start = './Team22/Code22/out/build/x64-Debug/src'
 
 # Unit Testing
 print("Running Unit Tests...")
@@ -58,7 +60,7 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
                       ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt")]
 
-testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+ - ))*))")
+testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
 actualAnswerRegex = re.compile("(Your answer: (.)*)")
 missingAnswerRegex = re.compile("(Missing: (.)*)")
