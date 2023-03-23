@@ -8,7 +8,12 @@ env:
 
 jobs:
   build-project:
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+        
     steps:
       - name : Checkout
         uses : actions/checkout@v3
