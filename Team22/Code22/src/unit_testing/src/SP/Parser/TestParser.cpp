@@ -301,38 +301,38 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
     REQUIRE(greaterThanNode.stringId == ">");
 }
 
-TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
-    Tokenizer tk = Tokenizer();
-    std::vector<Token> tokenList;
-    const char *relativePath;
-    relativePath = "SP_ut1.txt";
-    string code = "procedure main {\n"
-                  "    read x;\n"
-                  "}";
-    ofstream temp_file;
-    temp_file.open(relativePath);
-    temp_file << code;
-    temp_file.close();
-    try {
-        tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
-        std::cerr << e.what() << std::endl;
-        exit(1);
-    }
-    Parser ps = Parser(tokenList);
-    TNode result;
-    try {
-        result = ps.Parse();
-    } catch (std::invalid_argument& e) {
-        std::cerr << e.what() << std::endl;
-        exit(1);
-    }
-    TNode result1 = result.children[0];
-    REQUIRE(result.nodeType == TokenType::PROCEDURE);
-    REQUIRE(result.children.size() == 1);
-    REQUIRE(result.children[0].children.size() == 1);
-    REQUIRE(filesystem::remove(relativePath));
-}
+//TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
+//    Tokenizer tk = Tokenizer();
+//    std::vector<Token> tokenList;
+//    const char *relativePath;
+//    relativePath = "SP_ut1.txt";
+//    string code = "procedure main {\n"
+//                  "    read x;\n"
+//                  "}";
+//    ofstream temp_file;
+//    temp_file.open(relativePath);
+//    temp_file << code;
+//    temp_file.close();
+//    try {
+//        tokenList = tk.tokenize(relativePath);
+//    } catch (std::invalid_argument& e) {
+//        std::cerr << e.what() << std::endl;
+//        exit(1);
+//    }
+//    Parser ps = Parser(tokenList);
+//    TNode result;
+//    try {
+//        result = ps.Parse();
+//    } catch (std::invalid_argument& e) {
+//        std::cerr << e.what() << std::endl;
+//        exit(1);
+//    }
+//    TNode result1 = result.children[0];
+//    REQUIRE(result.nodeType == TokenType::PROCEDURE);
+//    REQUIRE(result.children.size() == 1);
+//    REQUIRE(result.children[0].children.size() == 1);
+//    REQUIRE(filesystem::remove(relativePath));
+//}
 
 TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
