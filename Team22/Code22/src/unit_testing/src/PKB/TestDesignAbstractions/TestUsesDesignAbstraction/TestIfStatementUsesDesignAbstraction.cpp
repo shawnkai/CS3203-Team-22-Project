@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of IfStatementUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("IF", "uis1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of IfStatementUses Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("USES", make_tuple("uis1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent IfStatementUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("IF", "uis2"));
 
         REQUIRE(pkbResult.toString() == "USES:IF: uis2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("USES", "uis2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -102,5 +132,35 @@ TEST_CASE("Test 7: Populate The IfStatementUses Database And Call Clear All Data
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:IF: uis9: uis10, uis11, uis12, ")
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All IfStatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis13", "uis14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis15", "uis16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis17", "uis18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "IF");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By IfStatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis19", "uis20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis21", "uis22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "uis23", "uis24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "IF");
+
+        REQUIRE(result.size() == 3);
     }
 }

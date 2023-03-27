@@ -10,9 +10,18 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creation of Next Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a1", "a2"));
+
+        Result result = pkbTest.getDesignAbstraction("NEXT", make_pair("_", "a1"));
+
+        REQUIRE(((result.getQueryEntityName() == "a1") && (result.getQueryResult().size() != 0)));
+    }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("a1", "a2"));
 
         Result result = pkbTest.getDesignAbstraction("NEXT", make_pair("_", "a1"));
 
@@ -21,11 +30,20 @@ TEST_CASE("Test 1: Creation of Next Design Abstraction") {
 }
 
 TEST_CASE("Test 2: Retrieval of Next Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a3", "a4"));
 
         Result result = pkbTest.getDesignAbstraction("NEXT", make_pair("_", "a3"));
+
+        REQUIRE(result.toString() == "NEXT: a3: a4, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a3", "a4"));
+
+        Result result = pkbTest.getDesignAbstraction("NEXT", "a3");
 
         REQUIRE(result.toString() == "NEXT: a3: a4, ");
     }
@@ -85,5 +103,35 @@ TEST_CASE("Test 6: Populate The Next Database And Call Clear All Database using 
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "NEXT: a15: a16, a17, a18, ")
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 7: Retrieval of All Next Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a19", "a20"));
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a21", "a22"));
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a23", "a24"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("NEXT", "_");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 8: Retrieval of Variables Captured By Next Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a25", "a26"));
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a27", "a28"));
+        pkbTest.addDesignAbstraction("NEXT", make_tuple("_", "a29", "a30"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("NEXT", "_");
+
+        REQUIRE(result.size() == 3);
     }
 }

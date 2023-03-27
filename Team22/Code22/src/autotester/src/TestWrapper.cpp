@@ -32,7 +32,7 @@ void TestWrapper::parse(std::string filename) {
     // call your parser to do the parsing
     SPDriver driver;
     driver.parseSimpleProgram(filename);
-    PKB pkbinstance = PKB();
+
 }
 
 PKB pkb;

@@ -46,6 +46,7 @@ bool DesignAbstractionDatabase::isPresentInDatabase(string entityName) {
     if ((this->abstractionDatabase).find(entityName) == (this->abstractionDatabase).end()) {
         return false;
     }
+
     return true;
 }
 
@@ -87,3 +88,33 @@ Result DesignAbstractionDatabase::getFromDatabase(string entityName) {
     return Result("none", "none", none);
 }
 
+vector<Result> DesignAbstractionDatabase::getAllFromDatabase() {
+    vector<Result> result;
+
+    for (auto& [entityName, designAbstraction]: this->abstractionDatabase) {
+        result.emplace_back(
+                designAbstraction->getTypeOfAbstraction(),
+                designAbstraction->getEntityName(),
+                designAbstraction->getEntityOccurrence());
+    }
+
+    return result;
+}
+
+unordered_map<string, unordered_set<string>> DesignAbstractionDatabase::getAllVariablesCaptured() {
+    unordered_map<string, unordered_set<string>> result;
+
+    for (auto& [entityName, designAbstraction]: this->abstractionDatabase) {
+        for (int i = 0; i < designAbstraction->getEntityOccurrence().size(); i++) {
+            if (result.find(designAbstraction->getEntityOccurrence()[i]) == result.end()) {
+                result.insert(make_pair(designAbstraction->getEntityOccurrence()[i],
+                                        unordered_set<string> { designAbstraction->getEntityName() }));
+            } else {
+                auto iterator = result.find(designAbstraction->getEntityOccurrence()[i]);
+                iterator->second.insert(designAbstraction->getEntityName());
+            }
+        }
+    }
+
+    return result;
+}

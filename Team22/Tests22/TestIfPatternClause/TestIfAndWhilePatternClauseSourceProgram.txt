@@ -1,0 +1,97 @@
+procedure testIfPatternClause {
+    x = 10;
+    if (x > y) then {
+        print z;
+        while (y < x + z) {
+            y = y + 1;
+        }
+        if (z < y) then {
+            while (x > (y + z)) {
+                x = x - 1;
+                if (x == y) then {
+                    if (y == z) then {
+                        print z;
+                        while (x != 1) {
+                            x = x - z;
+                            if (z < 0) then {
+                                z = z + 1;
+                            } else {
+                                z = z * 10;
+                            }
+                        }
+                    } else {
+                        while (x != 0) {
+                            x = x - z;
+                        }
+                    }
+                } else {
+                    if (1 - 1 == 0) then {
+                        print a;
+                    } else {
+                        print b;
+                    }
+                }
+            }
+        } else {
+            while (x != y + 2) {
+                if (y < 0) then {
+                    y = y - 1;
+                } else {
+                    y = y * 1;
+                    while (y != 2 * z - a + (b - c)) {
+                        print a;
+                    }
+                }
+                x = x + 2;
+                if (x > 10) then {
+                    print x;
+                } else {
+                    if (x < 0) then {
+                        print x;
+                        while (1 != 1) {
+                            print y;
+                        }
+                    } else {
+                        print y;
+                        x = x + 1;
+                    }
+                }
+            }
+        }
+        while (a != b + 1) {
+            if (b == (x + 1)) then {
+                read b;
+            } else {
+                if (x == b) then {
+                    while (a != b) {
+                        a = a + 1;
+                        if (1 >= 2) then {
+                            while (3 < 4) {
+                                read x;
+                            }
+                        } else {
+                            read y;
+                            while (1 == 0) {
+                                while (y == 2) {
+                                    y = 2 - x;
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    while (a != b) {
+                        read b;
+                    }
+                }
+            }
+        }
+    } else {
+        read x;
+    }
+    print a;
+    if (b == 0) then {
+        print x;
+    } else {
+        print b;
+    }
+}

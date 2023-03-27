@@ -47,7 +47,7 @@ TEST_CASE("Testcase1_ExtractOneIfStatement_ShouldSuccess") {
     std::vector<int> ifContainers = std::vector<int>(0);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance);
+    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
@@ -55,7 +55,7 @@ TEST_CASE("Testcase1_ExtractOneIfStatement_ShouldSuccess") {
     REQUIRE(result2 == "USES:STATEMENT: y: 1, 3, ");
 }
 
-TEST_CASE("Testcase1_ExtractNestedIfStatement_ShouldSuccess") {
+TEST_CASE("Testcase2_ExtractNestedIfStatement_ShouldSuccess") {
 
     TNode variable8 = TNode(TokenType::NAME_IDENTIFIER, "y", 4, std::vector<TNode>(0));
     TNode print1 = TNode(TokenType::PRINT, "print", 4, std::vector<TNode>(0));
@@ -136,7 +136,7 @@ TEST_CASE("Testcase1_ExtractNestedIfStatement_ShouldSuccess") {
     std::vector<int> ifContainers = std::vector<int>(0);
     std::vector<int> whileContainers = std::vector<int>(0);
 
-    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance);
+    ifExtractor.extractAbstraction(ifNode, ifContainers, whileContainers, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();

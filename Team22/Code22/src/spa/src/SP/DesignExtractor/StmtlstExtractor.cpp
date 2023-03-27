@@ -22,8 +22,10 @@ using namespace std;
  * @param whileContainers The vector of line numbers of the while statements that the current statement is nested in.
  * @param pkbinstance An instance of Program Knowledge Base.
  * @param currentParent The current parent statement of this list of statement, if there is no parent the value is 0.
+ * @param procedureName The name of the procedure.
  */
-void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent) {
+void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName) {
+	std::string underlineStr = "_";
 
 	if (currentNode.nodeType != TokenType::STATEMENT_LIST) {
 		cout << "something went wrong" << endl;
@@ -40,10 +42,10 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 			int currentLineNo = currentStmt.stmtNumber;
 			std::string showFollows = "follows" + std::to_string(currentLineNo) + " " + std::to_string(nextStmt.stmtNumber);
 			cout << showFollows << endl;
-			pkbinstance.addDesignAbstraction("FOLLOWS", make_tuple("_", std::to_string(currentLineNo), std::to_string(nextStmt.stmtNumber)));
+			pkbinstance.addDesignAbstraction("FOLLOWS", make_tuple(underlineStr, std::to_string(currentLineNo), std::to_string(nextStmt.stmtNumber)));
 			for (int j = i + 1; j < childstmts.size(); j++) {
 				TNode stmt2 = childstmts[j];
-				pkbinstance.addDesignAbstraction("FOLLOWSSTAR", make_tuple("_", std::to_string(currentLineNo), std::to_string(stmt2.stmtNumber)));
+				pkbinstance.addDesignAbstraction("FOLLOWSSTAR", make_tuple(underlineStr, std::to_string(currentLineNo), std::to_string(stmt2.stmtNumber)));
 				std::string showFollowsStar = "followsstar" + std::to_string(currentLineNo) + " " + std::to_string(stmt2.stmtNumber);
 				cout << showFollowsStar << endl;
 			}
@@ -57,19 +59,19 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 				TNode currentStmt = childstmts[i];
 				std::string showParent = "parent" + std::to_string(currentParent) + " " + std::to_string(currentStmt.stmtNumber);
 				cout << showParent << endl;
-				pkbinstance.addDesignAbstraction("PARENT", make_tuple("_", std::to_string(currentParent), std::to_string(currentStmt.stmtNumber)));
+				pkbinstance.addDesignAbstraction("PARENT", make_tuple(underlineStr, std::to_string(currentParent), std::to_string(currentStmt.stmtNumber)));
 				if (whileContainers.size() != 0) {
 					for (int j = 0; j < whileContainers.size(); j++) {
 						std::string showParentWhileStar = "parentsstar" + std::to_string(whileContainers[j]) + " " + std::to_string(currentStmt.stmtNumber);
 						cout << showParentWhileStar << endl;
-						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple("_", std::to_string(whileContainers[j]), std::to_string(currentStmt.stmtNumber)));
+						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, std::to_string(whileContainers[j]), std::to_string(currentStmt.stmtNumber)));
 					}
 				}
 				if (ifContainers.size() != 0) {
 					for (int j = 0; j < ifContainers.size(); j++) {
 						std::string showParentIfStar = "parentstar" + std::to_string(ifContainers[j]) + " " + std::to_string(currentStmt.stmtNumber);
 						cout << showParentIfStar << endl;
-						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple("_", std::to_string(ifContainers[j]), std::to_string(currentStmt.stmtNumber)));
+						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, std::to_string(ifContainers[j]), std::to_string(currentStmt.stmtNumber)));
 					}
 				}
 			}
@@ -80,20 +82,20 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 			TokenType tokenType1 = childstmt.nodeType;
 			if ((tokenType1 == TokenType::READ) || (tokenType1 == TokenType::PRINT)) {
 				ReadPrintExtractor readPrintExtractor;
-				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
 			else if (tokenType1 == TokenType::WHILE) {
 				WhileExtractor whileExtractor1;
-				whileExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				whileExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
 			else if (tokenType1 == TokenType::IF) {
 				IfExtractor ifExtractor1;
-				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 
 			}
 			else if (tokenType1 == TokenType::ASSIGN) {
 				AssignExtractor assignExtractor1;
-				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance);
+				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
 			else {}
 		}

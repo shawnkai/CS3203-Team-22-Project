@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of StatementUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of StatementUses Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("USES", make_tuple("us1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent StatementUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us2"));
 
         REQUIRE(pkbResult.toString() == "USES:STATEMENT: us2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("USES", "us2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -102,5 +132,35 @@ TEST_CASE("Test 7: Populate The StatementUses Database And Call Clear All Databa
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "USES:STATEMENT: us9: us10, us11, us12, ")
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All StatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us13", "us14"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us15", "us16"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us17", "us18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By StatementUses Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us19", "us20"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us21", "us22"));
+        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us23", "us24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
     }
 }

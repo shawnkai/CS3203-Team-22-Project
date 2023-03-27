@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of AssignmentModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of AssignmentModifies Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ma1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent AssignmentModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma2"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:ASSIGNMENT: ma2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("MODIFIES", "ma2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -102,5 +132,35 @@ TEST_CASE("Test 7: Populate The AssignmentModifies Database And Call Clear All D
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:ASSIGNMENT: ma9: ma10, ma11, ma12, ")
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All AssignmentModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma13", "ma14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma15", "ma16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma17", "ma18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "ASSIGNMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By AssignmentModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma19", "ma20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma21", "ma22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma23", "ma24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "ASSIGNMENT");
+
+        REQUIRE(result.size() == 3);
     }
 }

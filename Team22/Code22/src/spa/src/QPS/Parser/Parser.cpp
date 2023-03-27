@@ -8,20 +8,20 @@ using namespace std;
 
 QueryParser::QueryParser() {}
 
-SelectExpression* QueryParser::parse(string query) {
-    vector<Expression*> conditions;
+SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditions;
 
     query = sanitiseQuery(query);
     query = replaceAnd(query);
 
     if (this->isDeclaration(query) || query.empty()) {
         this->extractDeclarations(query);
-        return new SelectExpression({}, conditions);
+        return NULL;
     } else if (this->isValidQuery(query)) {
         smatch sm;
         regex_search(query, sm, RETURNVALUEREGEX);
 
         DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
+        string attr = sm.str(2);
 
         if (ModifiesExpression::containsModifiesExpression(query)) {
             vector<ModifiesExpression*> modifiesConditions = ModifiesExpression::extractModifiesExpression(query, synonymTable);
@@ -44,8 +44,7 @@ SelectExpression* QueryParser::parse(string query) {
             }
         }
 
-        if (FollowsExpression::containsFollowsExpression(query)) {
-            vector<FollowsExpression*> followsConditions = FollowsExpression::extractFollowsExpression(query, synonymTable);
+        if (FollowsExpression::containsFollowsExpression(query)) {vector<FollowsExpression*> followsConditions = FollowsExpression::extractFollowsExpression(query, synonymTable);
             for (FollowsExpression *e : followsConditions) {
                 conditions.push_back(e);
             }
@@ -59,8 +58,7 @@ SelectExpression* QueryParser::parse(string query) {
         }
 
         if (ParentExpression::containsParentExpression(query)) {
-            vector<ParentExpression*> parentConditions = ParentExpression::extractParentExpression(query, synonymTable);
-            for (ParentExpression *e : parentConditions) {
+            vector<ParentExpression*> parentConditions = ParentExpression::extractParentExpression(query, synonymTable);for (ParentExpression *e : parentConditions) {
                 conditions.push_back(e);
             }
         }
@@ -72,7 +70,16 @@ SelectExpression* QueryParser::parse(string query) {
             }
         }
 
-        return new SelectExpression({arg}, conditions);
+        if (AttrCondExpression::containsAttrCondExpression(query)) {
+            vector<AttrCondExpression*> AttrCondClauses = AttrCondExpression::extractAttrCondExpression(query, synonymTable);
+            for (AttrCondExpression *e : AttrCondClauses) {
+                conditions.push_back(e);
+            }
+        }
+        if (attr.empty()) {
+            return new SelectExpression(arg, conditions);
+        }
+        return new SelectExpression(arg, conditions, attr);
     } else {
         throw SyntacticException();
     }
@@ -97,19 +104,30 @@ string QueryParser::replaceAnd(string query) {
 
     string result_query;
 
+    vector<string> subClauses = {"Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies",
+                                 "Calls", "Calls*", "Next", "Next*", "Affects", "Affects*"};
 
+    vector<string> split_tokens;
 
     for ( ; split_iterator != end; ++split_iterator) {
-        if (split_iterator->str() == "such-that" || split_iterator->str() == "pattern" || split_iterator->str() == "with") {
-            previousClause = split_iterator->str();
+        split_tokens.push_back(split_iterator->str());
+    }
+
+
+    for (int i = 0; i < split_tokens.size(); i++) {
+        if (split_tokens[i] == "such-that" || split_tokens[i] == "pattern" || split_tokens[i] == "with") {
+            previousClause = split_tokens[i];
             result_query += previousClause + " ";
-        } else if (split_iterator->str() == "and") {
+        } else if (split_tokens[i] == "and") {
             if (previousClause.empty()) {
                 throw SyntacticException();
             }
+            if (previousClause == "pattern" && std::find(subClauses.begin(), subClauses.end(), split_tokens[i + 1]) != subClauses.end()) {
+                previousClause = "such-that";
+            }
             result_query += previousClause + " ";
         } else {
-            result_query += (split_iterator->str()) + " ";
+            result_query += (split_tokens[i]) + " ";
         }
     }
 
@@ -135,9 +153,9 @@ void QueryParser::extractDeclarations(string query) {
         smatch match = *i;
         string type = match.str(2);
         string name =  match.str(3);
-
+        name = Utilities::removeAllOccurrences(name, ' ');
         unsigned long pos = 0;
-        string delimiter = ", ";
+        string delimiter = ",";
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);

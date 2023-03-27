@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of WhileStatementModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("WHILE", "mws1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of WhileStatementModifies Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("MODIFIES", make_tuple("mws1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent WhileStatementModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("WHILE", "mws2"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:WHILE: mws2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("MODIFIES", "mws2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -102,5 +132,35 @@ TEST_CASE("Test 7: Populate The WhileStatementModifies Database And Call Clear A
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:WHILE: mws9: mws10, mws11, mws12, ")
                  && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All WhileStatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws13", "mws14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws15", "mws16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws17", "mws18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "WHILE");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By WhileStatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws19", "mws20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws21", "mws22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mws23", "mws24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "WHILE");
+
+        REQUIRE(result.size() == 3);
     }
 }

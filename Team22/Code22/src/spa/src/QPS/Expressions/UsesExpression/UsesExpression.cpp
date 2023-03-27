@@ -18,10 +18,17 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
     while (regex_search(searchStart, query.cend(), sm, USESREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
-        ::printf("Arguments: %s, %s\n", arg1.c_str(), arg2.c_str());
+
         if (Utilities::isNumber(arg1)) {
             auto *a1 = new StmtEntity(stoi(arg1));
             NamedEntity *a2;
+
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             if (arg2 == "_") {
                 a2 = new WildCardEntity();
             } else if (arg2.find('\"') != string::npos) {
@@ -43,6 +50,12 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
                 throw SyntacticException();
             } else {
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
+            }
+
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
             }
 
             NamedEntity *a2;
@@ -95,7 +108,7 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
         Result res = pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), varName));
-        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty()) {
+        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty() && res.toString().find("none") == string::npos) {
             return ResultTable({{this->entities[1]->toString(), res.getQueryResult()}});
         }
         else {
@@ -121,7 +134,11 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
             if (isFirstWildCard) {
                 results.push_back(pkb.getDesignAbstraction("USES", make_pair("STATEMENT", var.getQueryEntityName())));
             } else {
-                results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+                if (this->entities[1]->getType() == "ident") {
+                    results.push_back(pkb.getDesignAbstraction("USES", make_pair("PROCEDURE", var.getQueryEntityName())));
+                } else {
+                    results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+                }
             }
         }
         map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
@@ -143,7 +160,7 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
 }
 
 UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {
-    if (target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
+    if (target->getType() != "CONSTANT" && target->getType() != "VARIABLE" && target->getType() != "ident" && target->getType() != "WILDCARD") {
         throw SemanticException();
     }
 }
