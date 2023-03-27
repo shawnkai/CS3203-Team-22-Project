@@ -37,6 +37,8 @@ class Expression {
         static regex PARENTREGEX;
         static regex PARENTSTARREGEX;
         static regex ATTRCONDREGEX;
+        static regex CALLSREGEX;
+        static regex CALLSSTARREGEX;
 
     public:
         static string QUERYVALIDATION;
