@@ -187,7 +187,7 @@ TEST_CASE("TestCase10_GetSingleColumnExists_Success") {
                                                   make_pair<string, vector<string>>("s1", {}),
                                           });
 
-    REQUIRE(table.getColumn("s1").equals(expectedTable));
+    REQUIRE(table.getColumns({"s1"}).equals(expectedTable));
 }
 
 TEST_CASE("TestCase10_GetSingleColumnWhichDoesNotExist_EmptyTable") {
@@ -197,6 +197,6 @@ TEST_CASE("TestCase10_GetSingleColumnWhichDoesNotExist_EmptyTable") {
 
     IntermediateResultTable expectedTable({});
 
-    REQUIRE(table.getColumn("s1").equals(expectedTable));
+    REQUIRE(table.getColumns({"s1"}).equals(expectedTable));
 }
 

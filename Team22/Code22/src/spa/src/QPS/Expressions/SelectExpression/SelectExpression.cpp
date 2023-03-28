@@ -103,65 +103,51 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string 
 
 
 ResultTable SelectExpression::evaluate(PKB pkb) {
-//    if (this->conditions.empty()) {
-//        auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
-//        vector<string> answer;
-//        for (auto res : results) {
-//            if (this->entities[0]->getType() == "VARIABLE" || this->entities[0]->getType() == "PROCEDURE" || this->entities[0]->getType() == "CONSTANT") {
-//                answer.push_back(res.getQueryEntityName());
-//            } else {
-//                for (string a : res.getQueryResult()) {
-//                    if (!Utilities::checkIfPresent(answer, a)) {
-//                        answer.push_back(a);
-//                    }
-//                }
-//            }
-//        }
-//        if (!this->synAttr.empty()) {
-//            return this->entities[0]->getAttrVal(this->synAttr, pkb);
-//        }
-//        return ResultTable({make_pair(this->entities[0]->toString(), answer)});
-//    } else {
-//        vector<ResultTable> all_results;
-//        for (Expression *exp : this->conditions) {
-//            ResultTable temp = exp->evaluate(pkb);
-//            all_results.push_back(temp);
-//        }
-//        ResultTable table = ResultTable::intersection(all_results);
-//        vector<string> tableColumns = table.getColumnNames();
-//        if (!Utilities::checkIfPresent(tableColumns, this->entities[0]->toString())) {
-//            if (table.getSize() == 0) {
-//                if (!this->synAttr.empty()) {
-//                    return ResultTable({{this->entities[0]->toString() + "." + this->synAttr, {}}});
-//                }
-//                return ResultTable({{this->entities[0]->toString(), {}}});
-//            }
-//            auto results = pkb.getAllDesignEntity(this->entities[0]->getType());
-//            vector<string> answer;
-//            for (auto res : results) {
-//                if (this->entities[0]->getType() == "VARIABLE" || this->entities[0]->getType() == "PROCEDURE" || this->entities[0]->getType() == "CONSTANT") {
-//                    answer.push_back(res.getQueryEntityName());
-//                } else {
-//                    for (const string& a : res.getQueryResult()) {
-//                        if (!Utilities::checkIfPresent(answer, a)) {
-//                            answer.push_back(a);
-//                        }
-//                    }
-//                }
-//            }
-//            if (!this->synAttr.empty()) {
-//                return ResultTable({make_pair(this->entities[0]->toString(), answer)})
-//                .intersection(this->entities[0]->getAttrVal(this->synAttr, pkb));
-//            }
-//            return ResultTable({make_pair(this->entities[0]->toString(), answer)});
-//        }
-//        if (!this->synAttr.empty()) {
-//            ResultTable temp = table.getColumn(this->entities[0]->toString()).intersection(this->entities[0]->getAttrVal(this->synAttr, pkb));
-//            temp.renameColumn("withCond", this->entities[0]->toString() + "." + this->synAttr);
-//            return temp.getColumn(this->entities[0]->toString() + "." + this->synAttr);
-//        }
-//        return table.getColumn(this->entities[0]->toString());
-//    }
-    return {};
+    map<string, vector<string>> finalResults;
+    vector<string> columns;
+    for (int i = 0; i < this->entities.size(); i++) {
+        DesignEntity *entity = this->entities[i];
+        string synAttr = this->synAttrs[i];
+        auto results = pkb.getAllDesignEntity(entity->getType());
+        vector<string> answer;
+        for (auto res : results) {
+            if (entity->getType() == "VARIABLE" || entity->getType() == "PROCEDURE" || entity->getType() == "CONSTANT") {
+                answer.push_back(res.getQueryEntityName());
+            } else {
+                for (const string& a : res.getQueryResult()) {
+                    if (!Utilities::checkIfPresent(answer, a)) {
+                        answer.push_back(a);
+                    }
+                }
+            }
+        }
+
+        finalResults.insert({entity->toString(), answer});
+
+        if (!synAttr.empty()) {
+            finalResults.insert({entity->toString() + "." + synAttr, entity->getAttrVal(synAttr, pkb).getValues("withCond")});
+            columns.push_back(entity->toString() + "." + synAttr);
+        } else {
+            columns.push_back(entity->toString());
+        }
+
+    }
+    ResultTable SelectResult = ResultTable(finalResults);
+
+    if (this->conditions.empty()) {
+        return SelectResult;
+    } else {
+
+        vector<ResultTable> allResults;
+        ::printf("Select Result:\n%s", SelectResult.toString().c_str());
+        for (Expression *exp : this->conditions) {
+            ResultTable temp = exp->evaluate(pkb);
+            allResults.push_back(temp);
+            ::printf("Query: %s\n%s", exp->toString().c_str(), temp.toString().c_str());
+        }
+        allResults.push_back(SelectResult);
+        ::printf("Merged:\n%s", ResultTable::intersection(allResults).toString().c_str());
+        return ResultTable::intersection(allResults).getColumns(columns);
+    }
 }
 

@@ -29,7 +29,9 @@ public:
 
     string toString();
 
-    ResultTable getColumn(string column);
+    ResultTable getColumns(const vector<string>& columns);
+
+    vector<string> getValues();
 
     vector<string> getValues(const string& column);
 

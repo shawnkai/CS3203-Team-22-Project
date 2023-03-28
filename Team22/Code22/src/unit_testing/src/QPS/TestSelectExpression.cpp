@@ -112,14 +112,18 @@ TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
 
     queryParser.parse(declaration);
 
-    SelectExpression *actualResult = queryParser.parse(query);
+    bool throwsException = false;
 
-    ::printf("%s\n", actualResult->toString().c_str());
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
 
-    REQUIRE(actualResult->toString() == query);
+    REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonyms_ShouldSuccess") {
+TEST_CASE("TestCase3_ParseSelectMultipleSynonyms_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select <s, s1, v> such that Uses(s, v)";
@@ -127,8 +131,6 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonyms_ShouldSuccess") {
     queryParser.parse(declaration);
 
     SelectExpression *actualResult = queryParser.parse(query);
-
-    ::printf("%s\n", actualResult->toString().c_str());
 
     REQUIRE(actualResult->toString() == query);
 }
@@ -161,7 +163,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrsWhitespaces_Should
     REQUIRE(actualResult->toString() == expected);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrsWhitespacesInAttr_SyntaxError") {
+TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithWhitespaces_SyntaxError") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select  <  s. stmt#  ,  s1  ,  v  ,  v.varName  ,  s1.stmt#  >   such that Uses(s, v)";
@@ -251,4 +253,8 @@ TEST_CASE("TestCase3_ParseSelectTupleInvalidSynonym_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-//#TODO: check for case where tuple contains identical synonyms
+//TODO: check for case where tuple contains identical synonyms
+//TODO: is BOOLEAN a reserved keyword
+//TODO: can a tuple contain BOOLEAN
+//TODO: behaviour when a clause evaluates to True/False but the return type is not boolean
+

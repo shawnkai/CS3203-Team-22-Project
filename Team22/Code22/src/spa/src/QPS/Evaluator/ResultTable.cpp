@@ -203,19 +203,39 @@ ResultTable ResultTable::intersection(vector<ResultTable> tables) {
     for (int i = 1; i < resultTables.size(); i++) {
         finalResult = finalResult.intersection(resultTables[i]);
     }
-
     return finalResult;
 }
 
 
-ResultTable ResultTable::getColumn(string column) {
-    if (!Utilities::checkIfPresent(this->getColumnNames(), column)) {
-        return {};
+ResultTable ResultTable::getColumns(const vector<string>& columns) {
+    map<string, vector<string>> mod;
+    for (const string& column : columns) {
+        if (!Utilities::checkIfPresent(this->getColumnNames(), column)) {
+            continue;
+        }
+        mod.insert({column, this->getValues(column)});
     }
-    vector<string> temp = this->getValues(column);
-    set<string> s(temp.begin(), temp.end());
-    temp.assign( s.begin(), s.end());
-    return ResultTable({{column, temp}});
+    return ResultTable(mod);
+}
+
+vector<string> ResultTable::getValues() {
+    vector<vector<string>> columnValues;
+    vector<string> columns = this->getColumnNames();
+    for (const string& column : columns) {
+        columnValues.push_back(this->getValues(column));
+    }
+    vector<string> result;
+    for (int i = 0; i < this->getSize(); i++) {
+        string row;
+        for (int j = 0; j < columns.size(); j++) {
+            row += columnValues[j][i] + " ";
+        }
+        row.pop_back();
+        result.push_back(row);
+    }
+    set<string> s(result.begin(), result.end());
+    result.assign( s.begin(), s.end());
+    return result;
 }
 
 vector<string> ResultTable::getValues(const string& column) {
