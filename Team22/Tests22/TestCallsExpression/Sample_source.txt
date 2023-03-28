@@ -1,0 +1,21 @@
+procedure First {
+    call Second;
+    call Fourth;
+}
+
+procedure Second {
+    call Third;
+}
+
+procedure Third {
+    x = 3;
+}
+
+procedure Fourth {
+    call Fifth;
+}
+
+procedure Fifth {
+    y = 5;
+}
+

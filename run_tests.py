@@ -56,7 +56,8 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
                       ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
                       ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
-                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt")]
+                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt"),
+                      ("TestCallsExpression/Sample_source.txt", "TestCallsExpression/Sample_queries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+ - ))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")

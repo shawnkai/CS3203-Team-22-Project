@@ -86,9 +86,99 @@ string CallsStarExpression::toString() {
 }
 
 ResultTable CallsExpression::evaluate(PKB pkb) {
-    return {{}};
+    vector<string> possibleCallers;
+    vector<string> possibleTargets;
+    vector<Result> procs = pkb.getAllDesignEntity("PROCEDURE");
+    if (this->entities[0]->getType() == "ident") {
+        possibleCallers.push_back(Utilities::removeAllOccurrences(this->entities[0]->toString(), '\"'));
+    } else {
+        for (Result r : procs) {
+            possibleCallers.push_back(r.getQueryEntityName());
+        }
+    }
+
+    if (this->entities[1]->getType() == "ident") {
+        possibleTargets.push_back(Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"'));
+    } else {
+        for (Result r : procs) {
+            possibleTargets.push_back(r.getQueryEntityName());
+        }
+    }
+
+    vector<string> callers;
+    vector<string> targets;
+    map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+    for (const string& p1 : possibleCallers) {
+        Result res = pkb.getDesignAbstraction("CALLS", make_pair("_", p1));
+        if (res.getQueryEntityName() == "none") {
+            continue;
+        }
+        vector<string> called;
+        for (const string& c : res.getQueryResult()) {
+            called.push_back(c);
+        }
+        vector<vector<string>> temp = {{called, possibleTargets}};
+        vector<string> result = Utilities::findIntersection(temp);
+        for (const string& r : result) {
+            resultMap.at(this->entities[0]->toString()).push_back(p1);
+            resultMap.at(this->entities[1]->toString()).push_back(r);
+        }
+    }
+    if (this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") {
+        resultMap.erase(this->entities[0]->toString());
+    }
+    if (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident") {
+        resultMap.erase(this->entities[1]->toString());
+    }
+
+    return ResultTable(resultMap);
 }
 
 ResultTable CallsStarExpression::evaluate(PKB pkb) {
-    return {{}};
+    vector<string> possibleCallers;
+    vector<string> possibleTargets;
+    vector<Result> procs = pkb.getAllDesignEntity("PROCEDURE");
+    if (this->entities[0]->getType() == "ident") {
+        possibleCallers.push_back(Utilities::removeAllOccurrences(this->entities[0]->toString(), '\"'));
+    } else {
+        for (Result r : procs) {
+            possibleCallers.push_back(r.getQueryEntityName());
+        }
+    }
+
+    if (this->entities[1]->getType() == "ident") {
+        possibleTargets.push_back(Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"'));
+    } else {
+        for (Result r : procs) {
+            possibleTargets.push_back(r.getQueryEntityName());
+        }
+    }
+
+    vector<string> callers;
+    vector<string> targets;
+    map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+    for (const string& p1 : possibleCallers) {
+        Result res = pkb.getDesignAbstraction("CALLSSTAR", make_pair("_", p1));
+        if (res.getQueryEntityName() == "none") {
+            continue;
+        }
+        vector<string> called;
+        for (const string& c : res.getQueryResult()) {
+            called.push_back(c);
+        }
+        vector<vector<string>> temp = {{called, possibleTargets}};
+        vector<string> result = Utilities::findIntersection(temp);
+        for (const string& r : result) {
+            resultMap.at(this->entities[0]->toString()).push_back(p1);
+            resultMap.at(this->entities[1]->toString()).push_back(r);
+        }
+    }
+    if (this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") {
+        resultMap.erase(this->entities[0]->toString());
+    }
+    if (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident") {
+        resultMap.erase(this->entities[1]->toString());
+    }
+
+    return ResultTable(resultMap);
 }

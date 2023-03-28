@@ -1,133 +1,49 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>22s2-cp-spa-team-22</name><parsing_time_taken>66.772000</parsing_time_taken>
+<name>22s2-cp-spa-team-22</name><parsing_time_taken>2.945000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Select all While statement numbers that use a variable in the conditional statement">1</id><querystr><![CDATA[while w; Select w pattern w (_, _)]]></querystr>
-<stuans>12,17,22,26,37,4,41,48,50,7</stuans>
-<correct>4,7,12,17,22,26,37,41,48,50</correct>
-<time_taken>2.408000</time_taken>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select Procedures that are Called">1</id><querystr><![CDATA[procedure p; Select p such that Calls(_, p)]]></querystr>
+<stuans>Fifth,Fourth,Second,Third</stuans>
+<correct>Second,Third,Fourth,Fifth</correct>
+<time_taken>2.886000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all While statement numbers that use a variable in the conditional statement (another way)">2</id><querystr><![CDATA[while w; variable v; Select w pattern w (v, _)]]></querystr>
-<stuans>12,17,22,26,37,4,41,48,50,7</stuans>
-<correct>4,7,12,17,22,26,37,41,48,50</correct>
-<time_taken>2.461000</time_taken>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Select Procedures that Call others">2</id><querystr><![CDATA[procedure p; Select p such that Calls(p, _)]]></querystr>
+<stuans>First,Fourth,Second</stuans>
+<correct>First,Second,Fourth</correct>
+<time_taken>2.600000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "a"">3</id><querystr><![CDATA[while w; Select w pattern w ("a", _)]]></querystr>
-<stuans>26,37,41,50</stuans>
-<correct>26,37,41,50</correct>
-<time_taken>2.268000</time_taken>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select Procedures that Call others">3</id><querystr><![CDATA[procedure p1, p2; Select p1 such that Calls(p1, p2)]]></querystr>
+<stuans>First,Fourth,Second</stuans>
+<correct>First,Second,Fourth</correct>
+<time_taken>3.040000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "b"">4</id><querystr><![CDATA[while w; Select w pattern w ("b", _)]]></querystr>
-<stuans>26,37,41,50</stuans>
-<correct>26,37,41,50</correct>
-<time_taken>2.980000</time_taken>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select Procedures that is Called by others">4</id><querystr><![CDATA[procedure p1, p2; Select p2 such that Calls(p1, p2)]]></querystr>
+<stuans>Fifth,Fourth,Second,Third</stuans>
+<correct>Second,Third,Fourth,Fifth</correct>
+<time_taken>2.826000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "c"">5</id><querystr><![CDATA[while w; Select w pattern w ("c", _)]]></querystr>
-<stuans>26</stuans>
-<correct>26</correct>
-<time_taken>2.466000</time_taken>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select Procedures that Called directly by First">5</id><querystr><![CDATA[procedure p; Select p such that Calls("First", p)]]></querystr>
+<stuans>Fourth,Second</stuans>
+<correct>Second,Fourth</correct>
+<time_taken>2.879000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "x"">6</id><querystr><![CDATA[while w; Select w pattern w ("x", _)]]></querystr>
-<stuans>12,17,22,4,7</stuans>
-<correct>4,7,12,17,22</correct>
-<time_taken>2.416000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "y"">7</id><querystr><![CDATA[while w; Select w pattern w ("y", _)]]></querystr>
-<stuans>22,26,4,48,7</stuans>
-<correct>4,7,22,26,48</correct>
-<time_taken>2.316000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "z"">8</id><querystr><![CDATA[while w; Select w pattern w ("z", _)]]></querystr>
-<stuans>26,4,7</stuans>
-<correct>4,7,26</correct>
-<time_taken>2.449000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "r"">8</id><querystr><![CDATA[while w; Select w pattern w ("r", _)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>2.176000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Using While Pattern Clause With Wrong Number of Arguments">101</id><querystr><![CDATA[while w; variable v; Select w pattern w (v, _, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.110000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With Variable v not defined">102</id><querystr><![CDATA[while w; Select w pattern w (v, _)]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>1.771000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With 2nd Argument as Variable Name">103</id><querystr><![CDATA[while w; Select w pattern w (_, "v")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.908000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With 2nd Argument as Variable Synonym">104</id><querystr><![CDATA[while w; variable v; Select w pattern w (_, v)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.790000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Using While Pattern Clause With Wildcards">105</id><querystr><![CDATA[while w; variable v; Select w pattern w (_"v"_, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.816000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Using While Pattern Clause With Both 1st and 2nd Argument Filled With Variable Synonym">106</id><querystr><![CDATA[while w; variable v; Select w pattern w (v, v)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>1.798000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Using While Pattern Clause With Both 1st and 2nd Argument Filled With Variable Name">107</id><querystr><![CDATA[while w; Select w pattern w ("v", "v")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.001000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With A Number as a Variable Name">108</id><querystr><![CDATA[while w; Select w pattern w (2, _)]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>1.846000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With A Different Design Entity">109</id><querystr><![CDATA[while w; procedure p; Select w pattern w (p, _)]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>2.030000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select Procedures that are Called directly and indirectly by First">6</id><querystr><![CDATA[procedure p; Select p such that Calls*("First", p)]]></querystr>
+<stuans>Fifth,Fourth,Second,Third</stuans>
+<correct>Second,Third,Fourth,Fifth</correct>
+<time_taken>2.936000</time_taken>
 <passed/>
 </query>
 </queries>
