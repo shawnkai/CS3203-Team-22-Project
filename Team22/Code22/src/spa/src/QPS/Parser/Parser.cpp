@@ -8,8 +8,9 @@ using namespace std;
 
 QueryParser::QueryParser() {}
 
-SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditions;
+SelectExpression* QueryParser::parse(string query) {
 
+    vector<Expression*> conditions;
     query = sanitiseQuery(query);
     query = replaceAnd(query);
 
@@ -20,69 +21,28 @@ SelectExpression* QueryParser::parse(string query) {vector<Expression*> conditio
         smatch sm;
         regex_search(query, sm, RETURNVALUEREGEX);
 
-        DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
-        string attr = sm.str(2);
+        pair<vector<DesignEntity*>, vector<string>> SynsAttrs = getReturnSynsAttrs(sm.str(1), synonymTable);
 
-        if (ModifiesExpression::containsModifiesExpression(query)) {
-            vector<ModifiesExpression*> modifiesConditions = ModifiesExpression::extractModifiesExpression(query, synonymTable);
-            for (ModifiesExpression *e : modifiesConditions) {
-                conditions.push_back(e);
-            }
-        }
+        Utilities::appendVectors(conditions, ModifiesExpression::extractModifiesExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, UsesExpression::extractUsesExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, PatternExpression::extractPatternExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, FollowsExpression::extractFollowsExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, FollowsStarExpression::extractFollowsStarExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, ParentExpression::extractParentExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, ParentStarExpression::extractParentStarExpression(query, synonymTable));
+        Utilities::appendVectors(conditions, AttrCondExpression::extractAttrCondExpression(query, synonymTable));
 
-        if (UsesExpression::containsUsesExpression(query)) {
-            vector<UsesExpression*> usesConditions = UsesExpression::extractUsesExpression(query, synonymTable);
-            for (UsesExpression *e : usesConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (PatternExpression::containsPatternExpression(query)) {
-            vector<PatternExpression*> patternConditions = PatternExpression::extractPatternExpression(query, synonymTable);
-            for (PatternExpression *e : patternConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (FollowsExpression::containsFollowsExpression(query)) {vector<FollowsExpression*> followsConditions = FollowsExpression::extractFollowsExpression(query, synonymTable);
-            for (FollowsExpression *e : followsConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (FollowsStarExpression::containsFollowsStarExpression(query)) {
-            vector<FollowsStarExpression*> followsStarConditions = FollowsStarExpression::extractFollowsStarExpression(query, synonymTable);
-            for (FollowsStarExpression *e : followsStarConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (ParentExpression::containsParentExpression(query)) {
-            vector<ParentExpression*> parentConditions = ParentExpression::extractParentExpression(query, synonymTable);for (ParentExpression *e : parentConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (ParentStarExpression::containsParentStarExpression(query)) {
-            vector<ParentStarExpression*> parentStarConditions = ParentStarExpression::extractParentStarExpression(query, synonymTable);
-            for (ParentStarExpression *e : parentStarConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (AttrCondExpression::containsAttrCondExpression(query)) {
-            vector<AttrCondExpression*> AttrCondClauses = AttrCondExpression::extractAttrCondExpression(query, synonymTable);
-            for (AttrCondExpression *e : AttrCondClauses) {
-                conditions.push_back(e);
-            }
-        }
-        if (attr.empty()) {
-            return new SelectExpression(arg, conditions);
-        }
-        return new SelectExpression(arg, conditions, attr);
+        return new SelectExpression(SynsAttrs.first, conditions, SynsAttrs.second);
     } else {
         throw SyntacticException();
     }
+}
+
+pair<vector<DesignEntity*>, vector<string>> QueryParser::getReturnSynsAttrs(string returnMatch, SynonymTable synonymTable) {
+    vector<DesignEntity*> entities = {};
+    vector<string> attrs = {};
+    //TODO
+    return pair(entities, attrs);
 }
 
 string QueryParser::sanitiseQuery(const string& query) {
@@ -90,8 +50,6 @@ string QueryParser::sanitiseQuery(const string& query) {
     result_query = regex_replace(result_query, std::regex(R"(\s+(?=(?:(?:[^"]*"){2})*[^"]*"[^"]*$))"), "$1");
     return result_query;
 }
-
-
 
 string QueryParser::replaceAnd(string query) {
     string previousClause;

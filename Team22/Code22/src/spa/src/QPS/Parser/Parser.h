@@ -42,6 +42,8 @@ public:
 
     SynonymTable getSynonymTable();
 
+    static pair<vector<DesignEntity*>, vector<string>> getReturnSynsAttrs(string returnMatch, SynonymTable synonymTable);
+
 };
 
 

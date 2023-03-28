@@ -29,6 +29,7 @@ public:
 class FollowsExpression: public FAPSExpression {
 private:
     string pkbAbstraction;
+    static bool containsFollowsExpression(string query);
 
 public:
     explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
@@ -36,11 +37,12 @@ public:
     string toString() override;
 
     static vector<FollowsExpression*> extractFollowsExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsFollowsExpression(string query);
 };
 
 class FollowsStarExpression: public FAPSExpression {
+private:
+    static bool containsFollowsStarExpression(string query);
+
 public:
     explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
 
@@ -48,29 +50,30 @@ public:
 
     static vector<FollowsStarExpression*> extractFollowsStarExpression(const string& query, const SynonymTable& synonymTable);
 
-    static bool containsFollowsStarExpression(string query);
 };
 
 class ParentExpression: public FAPSExpression {
+private:
+    static bool containsParentExpression(string query);
+
 public:
     explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
 
     static vector<ParentExpression*> extractParentExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsParentExpression(string query);
 };
 
 class ParentStarExpression: public FAPSExpression {
+private:
+    static bool containsParentStarExpression(string query);
+
 public:
     explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
 
     string toString() override;
 
     static vector<ParentStarExpression*> extractParentStarExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsParentStarExpression(string query);
 };
 
 

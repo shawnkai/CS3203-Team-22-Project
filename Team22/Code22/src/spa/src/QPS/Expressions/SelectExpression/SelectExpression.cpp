@@ -4,18 +4,42 @@
 
 #include "SelectExpression.h"
 
-SelectExpression::SelectExpression(DesignEntity* entity, vector<Expression*> conditions, string attribute) : Expression({entity}){
+SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<Expression*> conditions, vector<string> attributes) : Expression(entities){
     this->conditions = std::move(conditions);
-    if (!attribute.empty() && !entity->checkAttr(attribute)) {
-        throw SemanticException();
+
+    for (int i = 0; i < entities.size(); ++i) {
+        DesignEntity* entity = entities[i];
+        string attribute = attributes[i];
+        if (!attribute.empty() && !entity->checkAttr(attribute)) {
+            throw SemanticException();
+        }
+        this->synAttrs[i] = attribute;
     }
-    this->synAttr = attribute;
+
 }
 
 string SelectExpression::toString() {
-    string res = "Select " + this->entities[0]->toString();
-    if (!this->synAttr.empty())
-        res += "." + this->synAttr;
+    string res = "Select ";
+
+    if (entities.size() == 1) {
+        res += entities[0]->toString();
+        if (!synAttrs[0].empty()) {
+            res += "." + synAttrs[0];
+        }
+    } else {
+        res += "<";
+        for (int i = 0; i < entities.size(); ++i) {
+            DesignEntity* entity = entities[i];
+            string synAttr = synAttrs[i];
+            res += entity->toString();
+            if (!synAttr.empty())
+                res += "." + synAttr;
+            if (i < entities.size() - 1) {
+                res+=", ";
+            }
+        }
+        res += ">";
+    }
 
     if (!conditions.empty()) {
         res += " such that";

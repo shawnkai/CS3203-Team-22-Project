@@ -15,14 +15,14 @@ class PatternExpression : public Expression {
 private:
     NamedEntity *p1;
     string p2;
+    static bool containsPatternExpression(string query);
+
 public:
     explicit PatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
 
     string toString() override;
 
     ResultTable evaluate(PKB pkb) override;
-
-    static bool containsPatternExpression(string query);
 
     static vector<PatternExpression*> extractPatternExpression(const string& query, SynonymTable synonymTable);
 };

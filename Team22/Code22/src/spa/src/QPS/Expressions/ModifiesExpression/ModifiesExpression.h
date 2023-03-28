@@ -11,10 +11,11 @@ using namespace std;
 
 //Modifies Expression Classes
 class ModifiesExpression : public Expression {
+private:
+    static bool containsModifiesExpression(string query);
+
 public:
     explicit ModifiesExpression(NamedEntity* target);
-
-    static bool containsModifiesExpression(string query);
 
     static vector<ModifiesExpression*> extractModifiesExpression(const string& query, SynonymTable synonymTable);
 };

@@ -152,6 +152,10 @@ string ParentStarExpression::toString() {
 }
 
 vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsFollowsExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -171,6 +175,10 @@ vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const str
 }
 
 vector<FollowsStarExpression*> FollowsStarExpression::extractFollowsStarExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsFollowsStarExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -190,6 +198,10 @@ vector<FollowsStarExpression*> FollowsStarExpression::extractFollowsStarExpressi
 }
 
 vector<ParentExpression*> ParentExpression::extractParentExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsParentExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -209,6 +221,10 @@ vector<ParentExpression*> ParentExpression::extractParentExpression(const string
 }
 
 vector<ParentStarExpression*> ParentStarExpression::extractParentStarExpression(const string& query, const SynonymTable& synonymTable)  {
+    if (!containsParentStarExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());

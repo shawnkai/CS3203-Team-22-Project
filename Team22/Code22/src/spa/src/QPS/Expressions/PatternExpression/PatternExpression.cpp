@@ -55,6 +55,10 @@ bool PatternExpression::containsPatternExpression(string query) {
 }
 
 vector<PatternExpression*> PatternExpression::extractPatternExpression(const string& query, SynonymTable synonymTable) {
+    if (!containsPatternExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());

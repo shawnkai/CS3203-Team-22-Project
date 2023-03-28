@@ -9,6 +9,10 @@ bool UsesExpression::containsUsesExpression(string query) {
 }
 
 vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& query, SynonymTable synonymTable) {
+    if (!containsUsesExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());

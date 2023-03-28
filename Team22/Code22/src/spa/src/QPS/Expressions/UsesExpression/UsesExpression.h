@@ -16,10 +16,11 @@
 
 
 class UsesExpression : public Expression {
+private:
+    static bool containsUsesExpression(string query);
+
 public:
     explicit UsesExpression(DesignEntity* target);
-
-    static bool containsUsesExpression(string query);
 
     static vector<UsesExpression*> extractUsesExpression(const string& query, SynonymTable synonymTable);
 };

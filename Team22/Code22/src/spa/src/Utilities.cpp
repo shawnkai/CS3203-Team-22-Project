@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <regex>
 
+using namespace std;
+
 vector<string> Utilities::findIntersection(vector<vector<string>> &all_vectors) {
     vector<string> intersection;
     if (all_vectors.empty()) {

@@ -42,6 +42,10 @@ pair<DesignEntity*, pair<string, string>> AttrCondExpression::generateSynAndAttr
 }
 
 vector<AttrCondExpression*> AttrCondExpression::extractAttrCondExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsAttrCondExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());

@@ -11,6 +11,10 @@ bool ModifiesExpression::containsModifiesExpression(string query) {
 }
 
 vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const string& query, SynonymTable synonymTable) {
+    if (!containsModifiesExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
