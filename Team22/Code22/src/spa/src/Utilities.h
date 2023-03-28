@@ -34,7 +34,7 @@ public:
 
     template <typename T, typename U,
             typename = std::enable_if_t<std::is_convertible_v<U, T>>>
-    static void appendVectors(std::vector<T>& vec1, const std::vector<U>& vec2) {
+    static void concatenateVectors(std::vector<T>& vec1, const std::vector<U>& vec2) {
         vec1.insert(vec1.end(), vec2.begin(), vec2.end());
     }
 };

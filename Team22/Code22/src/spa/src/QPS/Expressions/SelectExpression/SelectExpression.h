@@ -15,14 +15,16 @@ class SelectExpression : public Expression {
 private:
     vector<Expression*> conditions;
     vector<string> synAttrs;
+    static regex SYNATTRREGEX;
+    static pair<DesignEntity*, string> extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable);
 
 public:
     explicit SelectExpression(vector<DesignEntity*> entity, vector<string> attributes, vector<Expression*> conditions);
-
+    static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(string query, SynonymTable synonymTable);
     string toString() override;
 
     ResultTable evaluate(PKB pkb) override;
 
 };
 
-#endif //SPA_SELECTEXPRESSION_H
+#endif //SPA_SELECTEXPRESSION_Hw

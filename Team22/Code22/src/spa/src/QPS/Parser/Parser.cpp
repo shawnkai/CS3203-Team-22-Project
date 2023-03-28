@@ -18,32 +18,23 @@ SelectExpression* QueryParser::parse(string query) {
         this->extractDeclarations(query);
         return NULL;
     } else if (this->isValidQuery(query)) {
-        pair<vector<DesignEntity*>, vector<string>> SynsAttrs = this->getReturnSynsAttrs(query);
+        pair<vector<DesignEntity*>, vector<string>> synonymsAndAttributes = SelectExpression::extractSynonymsAndAttributes(query, this->synonymTable);
 
-        Utilities::appendVectors(conditions, ModifiesExpression::extractModifiesExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, UsesExpression::extractUsesExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, PatternExpression::extractPatternExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, FollowsExpression::extractFollowsExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, FollowsStarExpression::extractFollowsStarExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, ParentExpression::extractParentExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, ParentStarExpression::extractParentStarExpression(query, synonymTable));
-        Utilities::appendVectors(conditions, AttrCondExpression::extractAttrCondExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, ModifiesExpression::extractModifiesExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, UsesExpression::extractUsesExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, PatternExpression::extractPatternExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, FollowsExpression::extractFollowsExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions,
+                                      FollowsStarExpression::extractFollowsStarExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, ParentExpression::extractParentExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions,
+                                      ParentStarExpression::extractParentStarExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, AttrCondExpression::extractAttrCondExpression(query, synonymTable));
 
-        return new SelectExpression(SynsAttrs.first, SynsAttrs.second, conditions);
+        return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, conditions);
     } else {
         throw SyntacticException();
     }
-}
-
-pair<vector<DesignEntity*>, vector<string>> QueryParser::getReturnSynsAttrs(string query) {
-    smatch sm;
-    regex_search(query, sm, RETURNVALUEREGEX);
-
-    vector<DesignEntity*> entities = {};
-    vector<string> attrs = {};
-
-    //TODO
-    return pair(entities, attrs);
 }
 
 string QueryParser::sanitiseQuery(const string& query) {
