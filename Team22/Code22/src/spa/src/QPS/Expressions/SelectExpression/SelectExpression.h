@@ -17,7 +17,7 @@ private:
     vector<string> synAttrs;
 
 public:
-    explicit SelectExpression(vector<DesignEntity*> entity, vector<Expression*> conditions, vector<string> attributes);
+    explicit SelectExpression(vector<DesignEntity*> entity, vector<string> attributes, vector<Expression*> conditions);
 
     string toString() override;
 

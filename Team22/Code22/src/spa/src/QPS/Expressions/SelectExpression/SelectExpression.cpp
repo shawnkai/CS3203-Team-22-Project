@@ -4,7 +4,7 @@
 
 #include "SelectExpression.h"
 
-SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<Expression*> conditions, vector<string> attributes) : Expression(entities){
+SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<string> attributes, vector<Expression*> conditions) : Expression(entities){
     this->conditions = std::move(conditions);
 
     for (int i = 0; i < entities.size(); ++i) {

@@ -18,10 +18,7 @@ SelectExpression* QueryParser::parse(string query) {
         this->extractDeclarations(query);
         return NULL;
     } else if (this->isValidQuery(query)) {
-        smatch sm;
-        regex_search(query, sm, RETURNVALUEREGEX);
-
-        pair<vector<DesignEntity*>, vector<string>> SynsAttrs = getReturnSynsAttrs(sm.str(1), synonymTable);
+        pair<vector<DesignEntity*>, vector<string>> SynsAttrs = this->getReturnSynsAttrs(query);
 
         Utilities::appendVectors(conditions, ModifiesExpression::extractModifiesExpression(query, synonymTable));
         Utilities::appendVectors(conditions, UsesExpression::extractUsesExpression(query, synonymTable));
@@ -32,15 +29,19 @@ SelectExpression* QueryParser::parse(string query) {
         Utilities::appendVectors(conditions, ParentStarExpression::extractParentStarExpression(query, synonymTable));
         Utilities::appendVectors(conditions, AttrCondExpression::extractAttrCondExpression(query, synonymTable));
 
-        return new SelectExpression(SynsAttrs.first, conditions, SynsAttrs.second);
+        return new SelectExpression(SynsAttrs.first, SynsAttrs.second, conditions);
     } else {
         throw SyntacticException();
     }
 }
 
-pair<vector<DesignEntity*>, vector<string>> QueryParser::getReturnSynsAttrs(string returnMatch, SynonymTable synonymTable) {
+pair<vector<DesignEntity*>, vector<string>> QueryParser::getReturnSynsAttrs(string query) {
+    smatch sm;
+    regex_search(query, sm, RETURNVALUEREGEX);
+
     vector<DesignEntity*> entities = {};
     vector<string> attrs = {};
+
     //TODO
     return pair(entities, attrs);
 }
