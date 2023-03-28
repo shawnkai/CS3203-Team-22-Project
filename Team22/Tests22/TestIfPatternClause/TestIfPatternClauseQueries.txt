@@ -1,0 +1,120 @@
+1 - Select all if statement numbers that use a variable in the conditional statement
+if ifs;
+Select ifs pattern ifs (_, _, _)
+2, 6, 9, 10, 14, 23, 29, 31, 38, 40, 54
+5000
+2 - Select all if statement numbers that use the variable "a"
+if ifs;
+Select ifs pattern ifs ("a", _, _)
+none
+5000
+3 - Select all if statement numbers that use the variable "b"
+if ifs;
+Select ifs pattern ifs ("b", _, _)
+38, 40, 54
+5000
+4 - Select all if statement numbers that use the variable "c"
+if ifs;
+Select ifs pattern ifs ("c", _, _)
+none
+5000
+5 - Select all if statement numbers that use the variable "x"
+if ifs;
+Select ifs pattern ifs ("x", _, _)
+2, 9, 29, 31, 38, 40
+5000
+6 - Select all if statement numbers that use the variable "y"
+if ifs;
+Select ifs pattern ifs ("y", _, _)
+2, 6, 9, 10, 23
+5000
+7 - Select all if statement numbers that use the variable "z"
+if ifs;
+Select ifs pattern ifs ("z", _, _)
+6, 10, 14
+5000
+7 - Select all if statement numbers that use the variable "r"
+if ifs;
+Select ifs pattern ifs ("r", _, _)
+none
+5000
+8 - Select all if statement numbers that use any variable(s) in the conditional statement
+if ifs; variable v;
+Select ifs pattern ifs (v, _, _)
+2, 6, 9, 10, 14, 23, 29, 31, 38, 40, 54
+5000
+101 - Using If Pattern Clause With Wrong Number of Arguments
+if ifs, variable v;
+Select ifs pattern ifs (v, _)
+SyntaxError
+5000
+102 - Using If Pattern Clause With Variable v not defined
+if ifs;
+Select ifs pattern ifs (v, _, _)
+SemanticError
+5000
+103 - Using If Pattern Clause With 2nd Argument as Variable Name
+if ifs;
+Select ifs pattern ifs (_, "v", _)
+SyntaxError
+5000
+104 - Using If Pattern Clause With 3rd Argument as Variable Name
+if ifs;
+Select ifs pattern ifs (_, _, "v")
+SyntaxError
+5000
+105 - Using If Pattern Clause With 2nd Argument as Variable Synonym
+if ifs; variable v;
+Select ifs pattern ifs (_, v, _)
+SyntaxError
+5000
+106 - Using If Pattern Clause With 3rd Argument as Variable Synonym
+if ifs, variable v;
+Select ifs pattern ifs (_, _, v)
+SyntaxError
+5000
+107 - Using If Pattern Clause With Wildcards
+if ifs; variable v;
+Select ifs pattern ifs (_"v"_, _, _)
+SyntaxError
+5000
+108 - Using If Pattern Clause With Both 1st and 2nd Argument Filled With Variable Synonym
+if ifs; variable v;
+Select ifs pattern ifs (v, v, _)
+SyntaxError
+5000
+109 - Using If Pattern Clause With Both 1st and 3rd Argument Filled With Variable Synonym
+if ifs; variable v;
+Select ifs pattern ifs (v, _, v)
+SyntaxError
+5000
+110 - Using If Pattern Clause With All 1st, 2nd and 3rd Argument Filled With Variable Synonym
+if ifs; variable v;
+Select ifs pattern ifs (v, v, v)
+SyntaxError
+5000
+111 - Using If Pattern Clause With Both 1st and 2nd Argument Filled With Variable Name
+if ifs;
+Select ifs pattern ifs ("v", "v", _)
+SyntaxError
+5000
+112 - Using If Pattern Clause With Both 1st and 3rd Argument Filled With Variable Name
+if ifs;
+Select ifs pattern ifs ("v", _, "v")
+SyntaxError
+5000
+112 - Using If Pattern Clause With All 1st, 2nd and 3rd Argument Filled With Variable Name
+if ifs;
+Select ifs pattern ifs ("v", "v", "v")
+SyntaxError
+5000
+114 - Using If Pattern Clause With A Number as a Variable Name
+if ifs;
+Select ifs pattern ifs (2, _, _)
+SemanticError
+5000
+114 - Using If Pattern Clause With A Different Design Entity
+if ifs; procedure p;
+Select ifs pattern ifs (p, _, _)
+SemanticError
+5000

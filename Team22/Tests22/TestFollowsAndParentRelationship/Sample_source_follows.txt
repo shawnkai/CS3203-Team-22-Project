@@ -40,6 +40,7 @@ procedure TestFollows {
             }
          }
        } else {
+           j = j + 1;
        }
      }  
   }

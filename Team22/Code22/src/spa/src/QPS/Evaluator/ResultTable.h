@@ -27,6 +27,14 @@ public:
 
     static ResultTable intersection(vector<ResultTable> resultTables);
 
+    ResultTable removeColumn(string column) {
+        auto it = this->table.find(column);
+        if (it != this->table.end()) {
+            this->table.erase(it);
+        }
+        return ResultTable(this->table);
+    }
+
     string toString();
 
     ResultTable getColumn(string column);

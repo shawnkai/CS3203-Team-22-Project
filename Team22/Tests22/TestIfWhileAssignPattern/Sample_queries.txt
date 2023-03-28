@@ -1,0 +1,50 @@
+1- test if pattern
+variable v; if i;
+Select v pattern i (v,  _, _)
+a, b
+5000
+2- test if all wildcard, multiple spaces
+variable v; if i;
+Select v pattern i (  _, _   , _)
+a, b, c, x
+5000
+3- test if semantic error
+variable v; if i;
+Select v pattern i (v, v, _)
+SyntaxError
+5000
+4- test if syntax error, missing parameter
+variable v; if i;
+Select v pattern i (v, _)
+SyntaxError
+5000
+5- test if another case
+variable v, v2; if i;
+Select v pattern i (v2, _, _)
+a, b, x, c
+5000
+6- test while simple case
+variable v; while w;
+Select v pattern w (v, _)
+a
+5000
+7- test while semantic error
+variable v; while w;
+Select v pattern w (_, v)
+SyntaxError
+5000
+8- test while general case
+variable v; while w;
+Select v pattern w (_,_)
+a, b, x, c
+5000
+9- test if while multiple clauses
+variable v; if i; while w;
+Select v pattern i (v, _, _) pattern w (v, _)
+a
+5000
+10- test if while assign multiple clauses
+variable v, v2, v3; if i; while w; assign a;
+Select v pattern w (v2, _) pattern i (v, _ , _ ) pattern a (v3, _)
+a, b
+5000

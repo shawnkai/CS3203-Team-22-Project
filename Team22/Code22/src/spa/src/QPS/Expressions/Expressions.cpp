@@ -12,7 +12,7 @@
 
 string MODIFIES = R"lit(Modifies\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string USES = R"lit(Uses\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
-string PATTERN = R"(pattern\s+(\w+)\s*\(\s*((?:\"?[\w]+\"?)|_)\s*,\s*((?:_?\"?[\w\+\-\*\s/%()]+\"?_?)|_)\s*\))";
+string PATTERN = R"(pattern\s+(\w+)\s*\(\s*((?:\"?[\w]+\"?)|_)\s*,\s*((?:_?\"[\w\+\-\*\s/%()]+\"_?)|_)(?:\s*,\s*(_))?\s*\))";
 string FOLLOWS = R"lit(Follows\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string FOLLOWSSTAR = R"lit(Follows\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string PARENT = R"lit(Parent\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
