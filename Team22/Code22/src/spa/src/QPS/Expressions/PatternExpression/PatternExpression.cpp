@@ -175,7 +175,7 @@ ResultTable IfWhilePatternExpression::evaluate(PKB pkb) {
             }
         }
         if (this->p1->getType() == "WILDCARD") {
-            return ResultTable(results).getColumn(col1);
+            return ResultTable(results).getColumns({col1});
         }
         return ResultTable(results);
     }
