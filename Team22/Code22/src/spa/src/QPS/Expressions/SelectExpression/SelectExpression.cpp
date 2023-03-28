@@ -137,17 +137,12 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
     if (this->conditions.empty()) {
         return SelectResult;
     } else {
-
         vector<ResultTable> allResults;
-        ::printf("Select Result:\n%s", SelectResult.toString().c_str());
         for (Expression *exp : this->conditions) {
             ResultTable temp = exp->evaluate(pkb);
             allResults.push_back(temp);
-            ::printf("Query: %s\n%s", exp->toString().c_str(), temp.toString().c_str());
         }
         allResults.push_back(SelectResult);
-        ::printf("Merged:\n%s", ResultTable::intersection(allResults).toString().c_str());
         return ResultTable::intersection(allResults).getColumns(columns);
     }
 }
-

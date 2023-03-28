@@ -7,6 +7,7 @@
 #include <queue>
 #include <sstream>
 #include <utility>
+#include <unordered_set>
 #include "TNode.h"
 
 using namespace std;
@@ -22,6 +23,7 @@ private:
     TNode parseStatement();
     TNode parseReadStatement();
     TNode parsePrintStatement();
+    TNode parseCallStatement();
     TNode parseAssignStatement();
     TNode parseWhileStatement();
     TNode parseConditionalExpr();

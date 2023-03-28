@@ -16,5 +16,5 @@ using namespace std;
 class WhileExtractor {
 public:
 	WhileExtractor() {};
-	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
+	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

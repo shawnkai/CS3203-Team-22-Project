@@ -44,11 +44,13 @@ public:
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
     unordered_map<string, unordered_map<string, string>> getAllRightHandExpressions();
 
-    // APIs Related to Control Flow Graph
+
+    // APIs Related to If and While Patterns
     void addPattern(string patternType, string lineNumber, string variableName);
     bool isVariableUsedInPattern(string patternType, string lineNumber, string variableName);
     unordered_set<string> getAllVariablesUsedInPattern(string patternType, string lineNumber);
 
+    // APIs Related to Control Flow Graph
     void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
                              map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);

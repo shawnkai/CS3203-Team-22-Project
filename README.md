@@ -16,7 +16,8 @@ C++ Standard | C++17
 
 ### Additional Build Instructions
 
-No additional instructions required.
+Kindly use Mac OS Machine + CLion 2022.3.1 with CMake + C++17 to compile run and test this project.
+Team22 may provide support for running and testing on a Windows machine, but this is NOT guaranteed.
 
 # Team Members
 

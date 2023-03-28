@@ -112,7 +112,7 @@ ResultTable UsesPExpression::evaluate(PKB pkb) {
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
         Result res = pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), varName));
-        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty()) {
+        if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty() && res.toString().find("none") == string::npos) {
             return ResultTable({{this->entities[1]->toString(), res.getQueryResult()}});
         }
         else {

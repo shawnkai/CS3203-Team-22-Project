@@ -47,9 +47,18 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestCombinationTwoClauses/Sample_source.txt", "TestCombinationTwoClauses/Sample_queries.txt"),
                       ("TestMultipleExpressions/Multiple_Expressions_Source.txt", "TestMultipleExpressions"
                                                                                   "/Multiple_Expressions_Queries.txt"),
-                      ("Ms2Testing/Milestone_2_Testing_Source.txt", "Ms2Testing/Milestone_2_Testing_Queries.txt")]
+                      ("Ms2Testing/Milestone_2_Testing_Source.txt", "Ms2Testing/Milestone_2_Testing_Queries.txt"),
+                      ("TestWithClause/Sample_source_with.txt", "TestWithClause/Sample_queries_with.txt"),
+                      ("TestWithClause/TestWithClauseSource.txt", "TestWithClause/TestWithClauseQueries.txt"),
+                      ("TestWithClause/TestWithClauseSource2.txt", "TestWithClause/TestWithClauseQueries2.txt"),
+                      ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
+                      ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
+                      ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
+                      ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
+                      ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
+                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt")]
 
-testCaseRegex = re.compile(R"(\n(\d+) - ((?:.|\n(?!\d+ - ))*))")
+testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+ - ))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
 actualAnswerRegex = re.compile("(Your answer: (.)*)")
 missingAnswerRegex = re.compile("(Missing: (.)*)")
@@ -62,6 +71,7 @@ for source, query in source_query_pairs:
     correct = []
     command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
                "./Team22/Tests22/Sample_out.xml"]
+
     result = subprocess.run(command, stdout=subprocess.PIPE)
     result = result.stdout.decode()
 
