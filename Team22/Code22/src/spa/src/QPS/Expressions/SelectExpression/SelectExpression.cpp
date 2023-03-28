@@ -73,12 +73,14 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
             pair<DesignEntity*, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm2.str(0), synonymTable);
             entities.push_back(synonymAndAttribute.first);
             attrs.push_back(synonymAndAttribute.second);
+            searchStart = sm2.suffix().first;
+            ::printf("%s, %s\n", synonymAndAttribute.first->toString().c_str(), synonymAndAttribute.second.c_str());
         }
     } else {
         throw SyntacticException();
     }
 
-    return {entities, attrs};
+    return make_pair(entities, attrs);
 }
 
 pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
@@ -96,7 +98,7 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string 
         throw SemanticException();
     }
 
-    return {entity, attr};
+    return make_pair(entity, attr);
 }
 
 
