@@ -15,7 +15,7 @@ SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<string
         if (!attribute.empty() && !entity->checkAttr(attribute)) {
             throw SemanticException();
         }
-        this->synAttrs[i] = attribute;
+        this->synAttrs.push_back(attribute);
     }
 }
 
