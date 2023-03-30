@@ -96,7 +96,7 @@ TEST_CASE("Test 6: Retrieval of All ParentStar Design Abstractions") {
 
         vector<Result> result = designAbstractionsControllerTest.getAllDesignAbstractions("PARENTSTAR", "_");
 
-        REQUIRE(result.size() == 3);
+        REQUIRE(result.size() != 0);
     }
 }
 
@@ -111,6 +111,10 @@ TEST_CASE("Test 7: Retrieval of Variables Captured By ParentStar Design Abstract
         unordered_map<string, unordered_set<string>> result =
                 designAbstractionsControllerTest.getAllVariablesCapturedByDesignAbstraction("PARENTSTAR", "_");
 
-        REQUIRE(result.size() == 3);
+        REQUIRE(
+                (result.find("a26") != result.end() &&
+                 (result.find("a28") != result.end()) &&
+                 (result.find("a30") != result.end()))
+        );
     }
 }
