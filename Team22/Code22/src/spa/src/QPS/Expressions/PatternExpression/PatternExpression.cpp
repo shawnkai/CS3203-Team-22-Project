@@ -36,7 +36,7 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
         arg3 = Utilities::removeAllOccurrences(arg3, ' ');
 
         string arg1 = sm.str(1);
-        auto *a1 = dynamic_cast<StmtEntity*>(synonymTable.get(arg1, "stmt"));
+        auto *a1 = dynamic_cast<StmtRef*>(synonymTable.get(arg1, "select"));
 
         //check for if
         if (!arg4.empty() && (arg4 != "_" || arg3 != "_")) {
@@ -79,7 +79,7 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
         if (arg2.find('\"') != string::npos) {
             a2 = new NamedEntity("ident", arg2);
         } else if (arg2 == "_") {
-            a2 = new WildCardEntity();
+            a2 = new WildcardNamedEntity();
         } else {
             a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
             if (a2->getType() != "VARIABLE") {

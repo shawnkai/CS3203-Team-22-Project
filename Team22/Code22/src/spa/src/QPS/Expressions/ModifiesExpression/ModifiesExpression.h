@@ -22,7 +22,7 @@ public:
 
 class ModifiesSExpression : public ModifiesExpression {
 public:
-    explicit ModifiesSExpression(StmtEntity* modifier, NamedEntity* target);
+    explicit ModifiesSExpression(StmtRef* modifier, NamedEntity* target);
 
     string toString() override;
 

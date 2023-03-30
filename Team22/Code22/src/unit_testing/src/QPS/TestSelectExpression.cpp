@@ -298,5 +298,3 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANWhitespaces_Success") {
 
     REQUIRE(actualResult->toString() == expected);
 }
-
-

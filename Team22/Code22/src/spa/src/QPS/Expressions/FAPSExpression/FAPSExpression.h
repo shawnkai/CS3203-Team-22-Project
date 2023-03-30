@@ -17,10 +17,10 @@ private:
     string pkbAbstraction;
 
 protected:
-    static tuple<StmtEntity*, StmtEntity*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
+    static tuple<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
 
 public:
-    explicit FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
+    explicit FAPSExpression(StmtRef* s1, StmtRef* s2, string pkbAbstraction);
 
     ResultTable evaluate(PKB pkb) override;
 
@@ -32,7 +32,7 @@ private:
     static bool containsFollowsExpression(string query);
 
 public:
-    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit FollowsExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
@@ -44,7 +44,7 @@ private:
     static bool containsFollowsStarExpression(string query);
 
 public:
-    explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit FollowsStarExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
@@ -57,7 +57,7 @@ private:
     static bool containsParentExpression(string query);
 
 public:
-    explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit ParentExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
@@ -69,7 +69,7 @@ private:
     static bool containsParentStarExpression(string query);
 
 public:
-    explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit ParentStarExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 

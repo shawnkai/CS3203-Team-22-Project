@@ -28,7 +28,7 @@ public:
 class UsesSExpression : public UsesExpression {
 
 public:
-    explicit UsesSExpression(StmtEntity* user, DesignEntity* target);
+    explicit UsesSExpression(StmtRef* user, DesignEntity* target);
 
     string toString() override;
 

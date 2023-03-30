@@ -24,7 +24,7 @@ public:
 
     static bool isNumber(string s);
 
-    static bool isAlphanumericString(string s);
+    static bool isValidVariableName(string str);
 
     static vector<string> findIntersection(vector<vector<string>>& all_vectors);
 

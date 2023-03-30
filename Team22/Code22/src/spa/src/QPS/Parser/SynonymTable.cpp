@@ -10,7 +10,7 @@ void SynonymTable::add(string type, const string& name) {
         throw SyntacticException();
     }
     if (type == "stmt") {
-        this->table[name] = new StmtEntity("STATEMENT", name);
+        this->table[name] = new SynonymStmtEntity(name);
     } else if (type == "read") {
         this->table[name] = new ReadEntity(name);
     } else if (type == "print") {
@@ -40,7 +40,7 @@ DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
     DesignEntity *entity = table[name];
 
     if (desiredType == "stmt") {
-        return new StmtEntity(entity->getType(), name);
+        return new SynonymStmtEntity(name);
     } else if (desiredType == "named") {
         return new NamedEntity(entity->getType(), name);
     } else if (desiredType == "select"){

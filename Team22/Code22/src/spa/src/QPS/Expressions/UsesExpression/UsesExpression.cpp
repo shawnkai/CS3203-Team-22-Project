@@ -34,10 +34,10 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             }
 
             if (arg2 == "_") {
-                a2 = new WildCardEntity();
+                a2 = new WildcardNamedEntity();
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
-            } else if (!Utilities::isAlphanumericString(arg2)) {
+            } else if (!Utilities::isValidVariableName(arg2)) {
                 throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
@@ -50,7 +50,7 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
                 throw SemanticException();
             } else if (arg1.find('\"') != string::npos) {
                 a1 = new NamedEntity("ident", arg1);
-            } else if (!Utilities::isAlphanumericString(arg1)) {
+            } else if (!Utilities::isValidVariableName(arg1)) {
                 throw SyntacticException();
             } else {
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
@@ -64,10 +64,10 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
 
             NamedEntity *a2;
             if (arg2 == "_") {
-                a2 = new WildCardEntity();
+                a2 = new WildcardNamedEntity();
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
-            } else if (!Utilities::isAlphanumericString(arg2)) {
+            } else if (!Utilities::isValidVariableName(arg2)) {
                 throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
@@ -169,7 +169,7 @@ UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {
     }
 }
 
-UsesSExpression::UsesSExpression(StmtEntity* user, DesignEntity* target) : UsesExpression(target) {
+UsesSExpression::UsesSExpression(StmtRef* user, DesignEntity* target) : UsesExpression(target) {
     this->entities.push_back(user);
 }
 
