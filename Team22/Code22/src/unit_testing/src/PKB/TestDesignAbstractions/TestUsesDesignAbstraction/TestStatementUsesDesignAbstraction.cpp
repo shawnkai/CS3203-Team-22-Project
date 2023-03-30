@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/PKB.h"
+#include "PKB/Interfaces/DesignAbstractionsController.h"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -13,9 +13,9 @@ using namespace std;
 
 TEST_CASE("Test 1: Creation of StatementUses Design Abstraction") {
     SECTION("Using API With A Tuple of Size 3") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us1", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us1"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us1", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us1"));
 
         Result expectedResult("USES:STATEMENT", "us1", vector<string>{"1"});
 
@@ -24,10 +24,10 @@ TEST_CASE("Test 1: Creation of StatementUses Design Abstraction") {
 
     SECTION("Using API With A Tuple of Size 2") {
         bool throwsException = false;
-        PKB pkbTest = PKB();
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
 
         try {
-            pkbTest.addDesignAbstraction("USES", make_tuple("us1", "1"));
+            designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("us1", "1"));
         } catch (InvalidAPICallException& e) {
             throwsException = true;
         }
@@ -38,21 +38,21 @@ TEST_CASE("Test 1: Creation of StatementUses Design Abstraction") {
 
 TEST_CASE("Test 2: Retrieval of an existent StatementUses Design Abstraction") {
     SECTION("Using API With A Tuple of Size 2") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us2", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us2"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us2", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us2"));
 
         REQUIRE(pkbResult.toString() == "USES:STATEMENT: us2: 1, ");
     }
 
     SECTION("Using API Without Tuple") {
         bool throwsException = false;
-        PKB pkbTest = PKB();
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
 
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us2", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us2", "1"));
 
         try {
-            Result result = pkbTest.getDesignAbstraction("USES", "us2");
+            Result result = designAbstractionsControllerTest.getDesignAbstraction("USES", "us2");
         } catch (InvalidAPICallException& e) {
             throwsException = true;
         }
@@ -63,9 +63,9 @@ TEST_CASE("Test 2: Retrieval of an existent StatementUses Design Abstraction") {
 
 TEST_CASE("Test 3: Retrieval of a non-existent StatementUses Design Abstraction") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us3", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us0"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us3", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us0"));
 
         REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
@@ -73,10 +73,10 @@ TEST_CASE("Test 3: Retrieval of a non-existent StatementUses Design Abstraction"
 
 TEST_CASE("Test 4: Retrieval of an StatementUses Design Abstraction When Multiple StatementUses Design Abstractions Are Stored") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us4", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us5", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us4"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us4", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us5", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us4"));
 
         REQUIRE(pkbResult.toString() == "USES:STATEMENT: us4: 1, ");
     }
@@ -84,17 +84,17 @@ TEST_CASE("Test 4: Retrieval of an StatementUses Design Abstraction When Multipl
 
 TEST_CASE("Test 5: Retrieval of an StatementUses Design Abstraction When Multiple Different Uses Design Abstractions Are Stored") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us6", "1"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us6", "1"));
 
-        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "us6", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "us6", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "us6", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("PRINT", "us6", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("WHILE", "us6", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("IF", "us6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "us6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("PROCEDURE", "us6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "us6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("PRINT", "us6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "us6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("IF", "us6", "1"));
 
-        Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us6"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us6"));
 
         REQUIRE(pkbResult.toString() == "USES:STATEMENT: us6: 1, ");
     }
@@ -102,65 +102,48 @@ TEST_CASE("Test 5: Retrieval of an StatementUses Design Abstraction When Multipl
 
 TEST_CASE("Test 6: Retrieval of an StatementUses Design Abstraction When Multiple Same Uses Design Abstractions Are Stored Including Duplicated Values") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us7", "1"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us7", "1"));
 
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us7", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us7", "2"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us8", "1"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us8", "3"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us7", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us7", "2"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us8", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us8", "3"));
 
-        Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us7"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us7"));
 
         REQUIRE(pkbResult.toString() == "USES:STATEMENT: us7: 1, 2, ");
     }
 }
 
-TEST_CASE("Test 7: Populate The StatementUses Database And Call Clear All Database using the clearAllDatabases() API") {
+TEST_CASE("Test 7: Retrieval of All StatementUses Design Abstractions") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us10"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us10"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us11"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us9", "us12"));
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us13", "us14"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us15", "us16"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us17", "us18"));
 
-        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us9"));
-
-        pkbTest.clearAllDatabases();
-
-        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("USES", make_pair("STATEMENT", "us9"));
-
-        REQUIRE(((pkbResultBeforeClearing.toString() == "USES:STATEMENT: us9: us10, us11, us12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
-    }
-}
-
-TEST_CASE("Test 9: Retrieval of All StatementUses Design Abstractions") {
-    SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us13", "us14"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us15", "us16"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us17", "us18"));
-
-        vector<Result> result = pkbTest.getAllDesignAbstractions("USES", "STATEMENT");
+        vector<Result> result = designAbstractionsControllerTest.getAllDesignAbstractions("USES", "STATEMENT");
 
         REQUIRE(result.size() == 3);
     }
 }
 
-TEST_CASE("Test 10: Retrieval of Variables Captured By StatementUses Design Abstractions") {
+TEST_CASE("Test 8: Retrieval of Variables Captured By StatementUses Design Abstractions") {
     SECTION("") {
-        PKB pkbTest = PKB();
+        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
 
-        pkbTest.clearAllDatabases();
-
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us19", "us20"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us21", "us22"));
-        pkbTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us23", "us24"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us19", "us20"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us21", "us22"));
+        designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("STATEMENT", "us23", "us24"));
 
         unordered_map<string, unordered_set<string>> result =
-                pkbTest.getAllVariablesCapturedByDesignAbstraction("USES", "STATEMENT");
+                designAbstractionsControllerTest.getAllVariablesCapturedByDesignAbstraction("USES", "STATEMENT");
 
-        REQUIRE(result.size() == 3);
+        REQUIRE(
+                ((result.find("us20") != result.end()) &&
+                 (result.find("us22") != result.end()) &&
+                 (result.find("us24") != result.end()))
+        );
     }
 }
