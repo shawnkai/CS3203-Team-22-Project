@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/PKB.h"
+#include "PKB/Interfaces/PatternsController.h"
 
 #include "PKB/Exceptions/InvalidPatternTypeException.cpp"
 #include "PKB/Exceptions/DatabaseNotFoundException.cpp"
@@ -13,86 +13,70 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creation of If Pattern") {
-    PKB pkbTest = PKB();
-    pkbTest.addPattern("IF", "1", "a");
+    PatternsController patternsControllerTest = PatternsController();
+    patternsControllerTest.addPattern("IF", "1", "a");
 
-    unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("IF", "1");
-
-    REQUIRE(result.size() == 1);
-}
-
-TEST_CASE("Test 2: Test clearAllDatabases() on If Pattern Database") {
-    PKB pkbTest = PKB();
-
-    pkbTest.addPattern("IF", "2", "a");
-
-    unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("IF", "2");
+    unordered_set<string> result = patternsControllerTest.getAllVariablesUsedInPattern("IF", "1");
 
     REQUIRE(result.size() == 1);
-
-    pkbTest.clearAllDatabases();
-
-    result = pkbTest.getAllVariablesUsedInPattern("IF", "2");
-
-    REQUIRE(result.size() == 0);
 }
 
 TEST_CASE("Test 3: Addition of Multiple Unique Variables in If Pattern") {
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
-    pkbTest.addPattern("IF", "3", "a");
-    pkbTest.addPattern("IF", "3", "b");
+    patternsControllerTest.addPattern("IF", "3", "a");
+    patternsControllerTest.addPattern("IF", "3", "b");
 
-    unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("IF", "3");
+    unordered_set<string> result = patternsControllerTest.getAllVariablesUsedInPattern("IF", "3");
 
     REQUIRE(result.size() == 2);
 }
 
 TEST_CASE("Test 4: Addition of Duplicate Variables in If Pattern") {
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
-    pkbTest.addPattern("IF", "4", "a");
-    pkbTest.addPattern("IF", "4", "b");
-    pkbTest.addPattern("IF", "4", "b");
+    patternsControllerTest.addPattern("IF", "4", "a");
+    patternsControllerTest.addPattern("IF", "4", "b");
+    patternsControllerTest.addPattern("IF", "4", "b");
 
-    unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("IF", "4");
+    unordered_set<string> result = patternsControllerTest.getAllVariablesUsedInPattern("IF", "4");
 
     REQUIRE(result.size() == 2);
 }
 
 TEST_CASE("Test 5: Addition of Same Variables on Different Lines in If Pattern") {
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
-    pkbTest.addPattern("IF", "5", "a");
-    pkbTest.addPattern("IF", "6", "a");
-    pkbTest.addPattern("IF", "6", "b");
+    patternsControllerTest.addPattern("IF", "5", "a");
+    patternsControllerTest.addPattern("IF", "6", "a");
+    patternsControllerTest.addPattern("IF", "6", "b");
 
-    unordered_set<string> resultFive = pkbTest.getAllVariablesUsedInPattern("IF", "5");
-    unordered_set<string> resultSix = pkbTest.getAllVariablesUsedInPattern("IF", "6");
+    unordered_set<string> resultFive = patternsControllerTest.getAllVariablesUsedInPattern("IF", "5");
+    unordered_set<string> resultSix = patternsControllerTest.getAllVariablesUsedInPattern("IF", "6");
 
     REQUIRE(((resultFive.size() == 1) && (resultSix.size() == 2)));
 }
 
 TEST_CASE("Test 6: Check Variable Is Used In If Pattern") {
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
-    pkbTest.addPattern("IF", "7", "a");
-    pkbTest.addPattern("IF", "7", "b");
-    pkbTest.addPattern("IF", "7", "c");
+    patternsControllerTest.addPattern("IF", "7", "a");
+    patternsControllerTest.addPattern("IF", "7", "b");
+    patternsControllerTest.addPattern("IF", "7", "c");
 
-    bool resultA = pkbTest.isVariableUsedInPattern("IF", "7", "a");
-    bool resultB = pkbTest.isVariableUsedInPattern("IF", "7", "b");
-    bool resultD = pkbTest.isVariableUsedInPattern("IF", "7", "d");
+    bool resultA = patternsControllerTest.isVariableUsedInPattern("IF", "7", "a");
+    bool resultB = patternsControllerTest.isVariableUsedInPattern("IF", "7", "b");
+    bool resultD = patternsControllerTest.isVariableUsedInPattern("IF", "7", "d");
 
     REQUIRE((resultA && resultB && (!(resultD))));
 }
 
 TEST_CASE("Test 7: IF: Creating An Invalid Type Of Pattern") {
     bool exceptionThrown = false;
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
     try {
-        pkbTest.addPattern("FAIL", "8", "a");
+        patternsControllerTest.addPattern("FAIL", "8", "a");
     } catch (InvalidPatternTypeException& e) {
         exceptionThrown = true;
     }
@@ -102,14 +86,14 @@ TEST_CASE("Test 7: IF: Creating An Invalid Type Of Pattern") {
 
 TEST_CASE("Test 8: IF: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
-    pkbTest.addPattern("IF", "9", "a");
-    pkbTest.addPattern("IF", "9", "b");
-    pkbTest.addPattern("IF", "9", "c");
+    patternsControllerTest.addPattern("IF", "9", "a");
+    patternsControllerTest.addPattern("IF", "9", "b");
+    patternsControllerTest.addPattern("IF", "9", "c");
 
     try {
-        bool resultA = pkbTest.isVariableUsedInPattern("FAIL", "9", "a");
+        bool resultA = patternsControllerTest.isVariableUsedInPattern("FAIL", "9", "a");
     } catch (DatabaseNotFoundException& e) {
         exceptionThrown = true;
     }
@@ -119,14 +103,14 @@ TEST_CASE("Test 8: IF: Calling isVariableUsedInPattern() With Invalid Pattern Ty
 
 TEST_CASE("Test 9: IF: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
-    PKB pkbTest = PKB();
+    PatternsController patternsControllerTest = PatternsController();
 
-    pkbTest.addPattern("IF", "10", "a");
-    pkbTest.addPattern("IF", "10", "b");
-    pkbTest.addPattern("IF", "10", "c");
+    patternsControllerTest.addPattern("IF", "10", "a");
+    patternsControllerTest.addPattern("IF", "10", "b");
+    patternsControllerTest.addPattern("IF", "10", "c");
 
     try {
-        unordered_set<string> result = pkbTest.getAllVariablesUsedInPattern("FAIL", "10");
+        unordered_set<string> result = patternsControllerTest.getAllVariablesUsedInPattern("FAIL", "10");
     } catch (DatabaseNotFoundException& e) {
         exceptionThrown = true;
     }
