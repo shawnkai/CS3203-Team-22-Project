@@ -16,6 +16,7 @@
 using namespace std;
 
 class DesignAbstractionsController {
+public:
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query);
     // Overloaded APIs, for all except modifies and uses
