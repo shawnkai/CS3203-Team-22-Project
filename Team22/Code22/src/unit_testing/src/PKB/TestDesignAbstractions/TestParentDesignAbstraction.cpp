@@ -120,7 +120,7 @@ TEST_CASE("Test 7: Retrieval of Variables Captured By Parent Design Abstractions
 //        }
 
         REQUIRE(
-                (result.find("a26") != result.end() &&
+                ((result.find("a26") != result.end()) &&
                 (result.find("a28") != result.end()) &&
                 (result.find("a30") != result.end()))
                 );

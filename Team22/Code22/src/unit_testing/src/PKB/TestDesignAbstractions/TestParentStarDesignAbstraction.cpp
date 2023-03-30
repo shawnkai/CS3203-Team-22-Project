@@ -112,7 +112,7 @@ TEST_CASE("Test 7: Retrieval of Variables Captured By ParentStar Design Abstract
                 designAbstractionsControllerTest.getAllVariablesCapturedByDesignAbstraction("PARENTSTAR", "_");
 
         REQUIRE(
-                (result.find("a26") != result.end() &&
+                ((result.find("a26") != result.end()) &&
                  (result.find("a28") != result.end()) &&
                  (result.find("a30") != result.end()))
         );
