@@ -22,7 +22,9 @@ SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<string
 string SelectExpression::toString() {
     string res = "Select ";
 
-    if (entities.size() == 1) {
+    if (entities.empty()) {
+        res += "BOOLEAN";
+    } else if (entities.size() == 1) {
         res += entities[0]->toString();
         if (!synAttrs[0].empty()) {
             res += "." + synAttrs[0];
@@ -59,10 +61,14 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
     regex_search(query, sm, Expression::RETURNVALUEREGEX);
 
     if (!sm.str(1).empty()) {
-        //is a synonym
-        pair<DesignEntity*, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm.str(1), synonymTable);
-        entities.push_back(synonymAndAttribute.first);
-        attrs.push_back(synonymAndAttribute.second);
+        if (sm.str(1) == "BOOLEAN") {
+            return make_pair(entities, attrs);
+        } else {
+            //is a synonym(attr)
+            pair<DesignEntity*, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm.str(1), synonymTable);
+            entities.push_back(synonymAndAttribute.first);
+            attrs.push_back(synonymAndAttribute.second);
+        }
     } else if (!sm.str(2).empty()) {
         //is a tuple
         smatch sm2;
@@ -84,7 +90,7 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
 }
 
 pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
-    if (!regex_match(synAttr, SYNATTRREGEX)) {
+    if (!regex_match(synAttr, SYNATTRREGEX) or synAttr=="BOOLEAN") {
         throw SyntacticException();
     }
 

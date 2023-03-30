@@ -253,8 +253,50 @@ TEST_CASE("TestCase3_ParseSelectTupleInvalidSynonym_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-//TODO: check for case where tuple contains identical synonyms
-//TODO: is BOOLEAN a reserved keyword
-//TODO: can a tuple contain BOOLEAN
-//TODO: behaviour when a clause evaluates to True/False but the return type is not boolean
+TEST_CASE("TestCase3_ParseSelectBOOLEANValid_Success") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select BOOLEAN such that Follows(1, 2)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select BOOLEAN such that Follows(1, 2)";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase3_ParseSelectReturnBOOLEANInTuple_SyntacticException") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select <s, BOOLEAN> such that Follows(s, 2)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectReturnBOOLEANWhitespaces_Success") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select    BOOLEAN   such that Follows(1, 2)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select BOOLEAN such that Follows(1, 2)";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
 
