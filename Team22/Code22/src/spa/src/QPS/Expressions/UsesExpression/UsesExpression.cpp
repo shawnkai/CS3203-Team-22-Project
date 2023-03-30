@@ -89,7 +89,7 @@ ResultTable UsesSExpression::evaluate(PKB pkb) {
     auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
     vector<Result> results;
     for (auto var : vars) {
-        results.push_back(pkb.getDesignAbstraction("USES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+        results.push_back(pkb.getDesignAbstraction("USES", make_pair("STATEMENT", var.getQueryEntityName())));
     }
     vector<string> result;
     for (auto res : results) {

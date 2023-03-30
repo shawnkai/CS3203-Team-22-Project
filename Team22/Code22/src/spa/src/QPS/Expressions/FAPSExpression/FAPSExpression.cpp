@@ -9,17 +9,14 @@ FAPSExpression::FAPSExpression(StmtRef* s1, StmtRef* s2, string pkbAbstraction) 
 }
 
 ResultTable FAPSExpression::evaluate(PKB pkb) {
-    if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
-        return ResultTable({{"_", {"-"}}});
-    }
-    else if (this->entities[0]->toString() == this->entities[1]->toString()) {
+    if (this->entities[0]->toString() == this->entities[1]->toString() && this->entities[0]->toString() != "_") {
         return ResultTable({{this->entities[0]->toString(), {}}});
     } else if (!dynamic_cast<StmtEntity*>(this->entities[0]) && !dynamic_cast<StmtEntity*>(this->entities[1])) {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
         auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
         vector<string> possibleLines;
         for (Result res : vars2) {
-            for (string l : res.getQueryResult()) {
+            for (const string& l : res.getQueryResult()) {
                 possibleLines.push_back(l);
             }
         }
@@ -42,15 +39,15 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
                 }
             }
         }
-        if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
+        if (dynamic_cast<WildcardStmtRef*>(this->entities[0]) && dynamic_cast<WildcardStmtRef*>(this->entities[1])) {
             if (!results.empty()) {
-                return ResultTable({{"True", {""}}});
+                return ResultTable({{"_", {"-"}}});
             } else {
                 return {{}};
             }
         } else if (dynamic_cast<WildcardStmtRef*>(this->entities[0])) {
             return ResultTable(results).getColumns({this->entities[1]->toString()});
-        } else if (this->entities[1]->toString() == "_") {
+        } else if (dynamic_cast<WildcardStmtRef*>(this->entities[1])) {
             return ResultTable(results).getColumns({this->entities[0]->toString()});
         }
         return ResultTable(results);

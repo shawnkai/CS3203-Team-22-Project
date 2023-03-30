@@ -37,7 +37,7 @@ DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
         throw SemanticException();
     }
 
-    DesignEntity *entity = table[name];
+    DesignEntity *entity = table.at(name);
 
     if (desiredType == "stmt") {
         return new SynonymStmtEntity(name);

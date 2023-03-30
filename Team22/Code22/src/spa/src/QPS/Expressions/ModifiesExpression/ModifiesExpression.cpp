@@ -115,7 +115,7 @@ ResultTable ModifiesSExpression::evaluate(PKB pkb) {
 
     vector<Result> results;
     for (auto var : vars) {
-        results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
+        results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", var.getQueryEntityName())));
     }
     vector<string> result;
     for (auto res: results) {
@@ -154,8 +154,6 @@ ResultTable ModifiesPExpression::evaluate(PKB pkb) {
             return ResultTable({{this->entities[1]->toString(), {}}});
         }
     } else {
-        bool isFirstWildCard = this->entities[1]->getType() == "WILDCARD";
-
         vector<Result> vars;
 
         if (this->entities[0]->getType() == "WILDCARD") {
@@ -169,20 +167,16 @@ ResultTable ModifiesPExpression::evaluate(PKB pkb) {
 
         vector<Result> results;
         for (auto var : vars) {
-            if (isFirstWildCard) {
-                results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", var.getQueryEntityName())));
+            if (this->entities[1]->getType() == "ident") {
+                results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", var.getQueryEntityName())));
             } else {
-                if (this->entities[1]->getType() == "ident") {
-                    results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", var.getQueryEntityName())));
-                } else {
-                    results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
-                }
+                results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(this->entities[1]->getType(), var.getQueryEntityName())));
             }
         }
         map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         int ind = 0;
         for (auto res: results) {
-            if ((isFirstWildCard && res.getQueryEntityName() != "none") || res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
+            if (res.getQueryEntityType() == "MODIFIES:" + dynamic_cast<NamedEntity*>(this->entities[1])->getType()) {
                 for (const auto& x : res.getQueryResult()) {
                     result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
                     result.find(this->entities[1]->toString())->second.push_back(x);
