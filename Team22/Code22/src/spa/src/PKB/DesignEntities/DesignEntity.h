@@ -1,6 +1,7 @@
 //
 // Created by Jai Lulla  on 2/2/23.
 //
+
 #pragma once
 
 #ifndef SPA_DESIGNENTITY_H
@@ -21,7 +22,6 @@ class DesignEntity {
     virtual bool isOccurrencePresent(string occurrence);
 
 public:
-
     explicit DesignEntity(tuple<string, string> entityDetails);
 
     virtual void addAdditionalOccurrence(string occurrence);
