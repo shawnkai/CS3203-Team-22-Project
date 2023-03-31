@@ -21,7 +21,7 @@ TEST_CASE("Test 1: Creation of If Pattern") {
     REQUIRE(result.size() == 1);
 }
 
-TEST_CASE("Test 3: Addition of Multiple Unique Variables in If Pattern") {
+TEST_CASE("Test 2: Addition of Multiple Unique Variables in If Pattern") {
     PatternsController patternsControllerTest = PatternsController();
 
     patternsControllerTest.addPattern("IF", "3", "a");
@@ -32,7 +32,7 @@ TEST_CASE("Test 3: Addition of Multiple Unique Variables in If Pattern") {
     REQUIRE(result.size() == 2);
 }
 
-TEST_CASE("Test 4: Addition of Duplicate Variables in If Pattern") {
+TEST_CASE("Test 3: Addition of Duplicate Variables in If Pattern") {
     PatternsController patternsControllerTest = PatternsController();
 
     patternsControllerTest.addPattern("IF", "4", "a");
@@ -44,7 +44,7 @@ TEST_CASE("Test 4: Addition of Duplicate Variables in If Pattern") {
     REQUIRE(result.size() == 2);
 }
 
-TEST_CASE("Test 5: Addition of Same Variables on Different Lines in If Pattern") {
+TEST_CASE("Test 4: Addition of Same Variables on Different Lines in If Pattern") {
     PatternsController patternsControllerTest = PatternsController();
 
     patternsControllerTest.addPattern("IF", "5", "a");
@@ -57,7 +57,7 @@ TEST_CASE("Test 5: Addition of Same Variables on Different Lines in If Pattern")
     REQUIRE(((resultFive.size() == 1) && (resultSix.size() == 2)));
 }
 
-TEST_CASE("Test 6: Check Variable Is Used In If Pattern") {
+TEST_CASE("Test 5: Check Variable Is Used In If Pattern") {
     PatternsController patternsControllerTest = PatternsController();
 
     patternsControllerTest.addPattern("IF", "7", "a");
@@ -71,7 +71,7 @@ TEST_CASE("Test 6: Check Variable Is Used In If Pattern") {
     REQUIRE((resultA && resultB && (!(resultD))));
 }
 
-TEST_CASE("Test 7: IF: Creating An Invalid Type Of Pattern") {
+TEST_CASE("Test 6: IF: Creating An Invalid Type Of Pattern") {
     bool exceptionThrown = false;
     PatternsController patternsControllerTest = PatternsController();
 
@@ -84,7 +84,7 @@ TEST_CASE("Test 7: IF: Creating An Invalid Type Of Pattern") {
     REQUIRE(exceptionThrown);
 }
 
-TEST_CASE("Test 8: IF: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
+TEST_CASE("Test 7: IF: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
     PatternsController patternsControllerTest = PatternsController();
 
@@ -101,7 +101,7 @@ TEST_CASE("Test 8: IF: Calling isVariableUsedInPattern() With Invalid Pattern Ty
     REQUIRE(exceptionThrown);
 }
 
-TEST_CASE("Test 9: IF: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
+TEST_CASE("Test 8: IF: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
     PatternsController patternsControllerTest = PatternsController();
 

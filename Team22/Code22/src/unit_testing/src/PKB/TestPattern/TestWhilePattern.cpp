@@ -22,7 +22,7 @@ TEST_CASE("Test 1: Creation of While Pattern") {
     REQUIRE(result.size() != 0);
 }
 
-TEST_CASE("Test 3: Addition of Multiple Unique Variables in While Pattern") {
+TEST_CASE("Test 2: Addition of Multiple Unique Variables in While Pattern") {
     PatternsController patternsController = PatternsController();
 
     patternsController.addPattern("WHILE", "3", "a");
@@ -33,7 +33,7 @@ TEST_CASE("Test 3: Addition of Multiple Unique Variables in While Pattern") {
     REQUIRE(result.size() == 2);
 }
 
-TEST_CASE("Test 4: Addition of Duplicate Variables in While Pattern") {
+TEST_CASE("Test 3: Addition of Duplicate Variables in While Pattern") {
     PatternsController patternsController = PatternsController();
 
     patternsController.addPattern("WHILE", "4", "a");
@@ -45,7 +45,7 @@ TEST_CASE("Test 4: Addition of Duplicate Variables in While Pattern") {
     REQUIRE(result.size() == 2);
 }
 
-TEST_CASE("Test 5: Addition of Same Variables on Different Lines in While Pattern") {
+TEST_CASE("Test 4: Addition of Same Variables on Different Lines in While Pattern") {
     PatternsController patternsController = PatternsController();
 
     patternsController.addPattern("WHILE", "5", "a");
@@ -58,7 +58,7 @@ TEST_CASE("Test 5: Addition of Same Variables on Different Lines in While Patter
     REQUIRE(((resultFive.size() == 1) && (resultSix.size() == 2)));
 }
 
-TEST_CASE("Test 6: Check Variable Is Used In While Pattern") {
+TEST_CASE("Test 5: Check Variable Is Used In While Pattern") {
     PatternsController patternsController = PatternsController();
 
     patternsController.addPattern("WHILE", "7", "a");
@@ -72,7 +72,7 @@ TEST_CASE("Test 6: Check Variable Is Used In While Pattern") {
     REQUIRE((resultA && resultB && (!(resultD))));
 }
 
-TEST_CASE("Test 7: WHILE: Creating An Invalid Type Of While Pattern") {
+TEST_CASE("Test 6: WHILE: Creating An Invalid Type Of While Pattern") {
     bool exceptionThrown = false;
     PatternsController patternsController = PatternsController();
 
@@ -85,7 +85,7 @@ TEST_CASE("Test 7: WHILE: Creating An Invalid Type Of While Pattern") {
     REQUIRE(exceptionThrown);
 }
 
-TEST_CASE("Test 8: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
+TEST_CASE("Test 7: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
     PatternsController patternsController = PatternsController();
 
@@ -102,7 +102,7 @@ TEST_CASE("Test 8: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern
     REQUIRE(exceptionThrown);
 }
 
-TEST_CASE("Test 9: WHILE: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
+TEST_CASE("Test 8: WHILE: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
     PatternsController patternsController = PatternsController();
 
