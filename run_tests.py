@@ -117,5 +117,5 @@ for source, query in source_query_pairs:
                   f"\n{q[1]}"
                   f"\n{q[2]}"
                   f"\n{q[3]}"
-                  f"\n{q[4]}")
+                  f"\n{q[4]}\n")
         exit(1)

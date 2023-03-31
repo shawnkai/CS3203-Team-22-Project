@@ -120,15 +120,35 @@ ResultTable CallsExpression::evaluate(PKB pkb) {
         vector<vector<string>> temp = {{called, possibleTargets}};
         vector<string> result = Utilities::findIntersection(temp);
         for (const string& r : result) {
-            resultMap.at(this->entities[0]->toString()).push_back(p1);
-            resultMap.at(this->entities[1]->toString()).push_back(r);
+            if (!((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident")
+                  && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident"))
+                && this->entities[0]->toString() == this->entities[1]->toString()) {
+                if (p1 == r) {
+                    ::printf("HERE\n");
+                    resultMap.at(this->entities[0]->toString()).push_back(p1);
+                } else {
+                    continue;
+                }
+            } else {
+                resultMap.at(this->entities[0]->toString()).push_back(p1);
+                resultMap.at(this->entities[1]->toString()).push_back(r);
+            }
         }
     }
+
+    ResultTable temp(resultMap);
+
     if (this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") {
         resultMap.erase(this->entities[0]->toString());
     }
     if (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident") {
         resultMap.erase(this->entities[1]->toString());
+    }
+
+    if (resultMap.empty()) {
+        if (temp.getSize() > 0) {
+            return ResultTable({{"_", {"-"}}});
+        }
     }
 
     return ResultTable(resultMap);
@@ -169,10 +189,31 @@ ResultTable CallsStarExpression::evaluate(PKB pkb) {
         vector<vector<string>> temp = {{called, possibleTargets}};
         vector<string> result = Utilities::findIntersection(temp);
         for (const string& r : result) {
-            resultMap.at(this->entities[0]->toString()).push_back(p1);
-            resultMap.at(this->entities[1]->toString()).push_back(r);
+            if (!((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident")
+                  && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident"))
+                  && this->entities[0]->toString() == this->entities[1]->toString()) {
+                if (p1 == r) {
+                    ::printf("HERE\n");
+                    resultMap.at(this->entities[0]->toString()).push_back(p1);
+                } else {
+                    continue;
+                }
+            } else {
+                resultMap.at(this->entities[0]->toString()).push_back(p1);
+                resultMap.at(this->entities[1]->toString()).push_back(r);
+            }
         }
     }
+
+    if ((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident")
+    && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident")) {
+        if (ResultTable(resultMap).getSize() > 0) {
+            return ResultTable({{"_", {"-"}}});
+        } else {
+            return {{}};
+        }
+    }
+
     if (this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") {
         resultMap.erase(this->entities[0]->toString());
     }

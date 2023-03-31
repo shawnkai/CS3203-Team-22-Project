@@ -51,6 +51,7 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
         for (Expression *exp : this->conditions) {
             ResultTable temp = exp->evaluate(pkb);
             all_results.push_back(temp);
+            ::printf("Query: %s\n%s\n", exp->toString().c_str(), temp.toString().c_str());
         }
         ResultTable table = ResultTable::intersection(all_results);
         vector<string> tableColumns = table.getColumnNames();
@@ -74,6 +75,7 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
                     }
                 }
             }
+            ::printf("Select Table:\n%s", ResultTable({make_pair(this->entities[0]->toString(), answer)}).toString().c_str());
             if (!this->synAttr.empty()) {
                 return ResultTable({make_pair(this->entities[0]->toString(), answer)})
                 .intersection(this->entities[0]->getAttrVal(this->synAttr, pkb));
