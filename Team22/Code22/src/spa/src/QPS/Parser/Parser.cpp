@@ -3,6 +3,7 @@
 #include "Parser.h"
 #include "Utilities.h"
 #include "QPS/Exceptions/Exceptions.h"
+#include "QPS/Expressions/CallsExpression/CallsExpression.h"
 
 using namespace std;
 
@@ -30,6 +31,8 @@ SelectExpression* QueryParser::parse(string query) {
         Utilities::concatenateVectors(conditions,
                                       ParentStarExpression::extractParentStarExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, AttrCondExpression::extractAttrCondExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, CallsExpression::extractCallsExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, CallsStarExpression::extractCallsStarExpression(query, synonymTable));
 
         return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, conditions);
     } else {

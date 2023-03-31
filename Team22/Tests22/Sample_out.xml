@@ -1,133 +1,763 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>22s2-cp-spa-team-22</name><parsing_time_taken>46.074000</parsing_time_taken>
+<name>22s2-cp-spa-team-22</name><parsing_time_taken>190.665000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Select all While statement numbers that use a variable in the conditional statement">1</id><querystr><![CDATA[while w; Select w pattern w (_, _)]]></querystr>
-<stuans>12,17,22,26,37,4,41,48,50,7</stuans>
-<correct>4,7,12,17,22,26,37,41,48,50</correct>
-<time_taken>3.539000</time_taken>
+<id ReturnTuple="1" UnnamedVar="2" SuchThat="1" CondNum="4" RelNum="0" comment="calls with small c with white spaces">1</id><querystr><![CDATA[procedure p; Select p such that calls     (   _, _    ) ]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>0.915000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all While statement numbers that use a variable in the conditional statement (another way)">2</id><querystr><![CDATA[while w; variable v; Select w pattern w (v, _)]]></querystr>
-<stuans>12,17,22,26,37,4,41,48,50,7</stuans>
-<correct>4,7,12,17,22,26,37,41,48,50</correct>
-<time_taken>1.761000</time_taken>
+<id ReturnTuple="1" UnnamedVar="2" SuchThat="1" CondNum="4" RelNum="0" comment="call instead of calls">2</id><querystr><![CDATA[procedure p; Select p such that Call     (   _   , _   )    ]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>0.908000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "a"">3</id><querystr><![CDATA[while w; Select w pattern w ("a", _)]]></querystr>
-<stuans>26,37,41,50</stuans>
-<correct>26,37,41,50</correct>
-<time_taken>2.876000</time_taken>
+<id ReturnTuple="1" Calls="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="missing (">3</id><querystr><![CDATA[procedure p;   Select  p  such  that  Calls   _   , _   )    ]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>0.857000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "b"">4</id><querystr><![CDATA[while w; Select w pattern w ("b", _)]]></querystr>
-<stuans>26,37,41,50</stuans>
-<correct>26,37,41,50</correct>
-<time_taken>2.852000</time_taken>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="proc not declared">4</id><querystr><![CDATA[procedure p; Select proc such that Calls(proc, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>0.857000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "c"">5</id><querystr><![CDATA[while w; Select w pattern w ("c", _)]]></querystr>
-<stuans>26</stuans>
-<correct>26</correct>
-<time_taken>1.305000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "x"">6</id><querystr><![CDATA[while w; Select w pattern w ("x", _)]]></querystr>
-<stuans>12,17,22,4,7</stuans>
-<correct>4,7,12,17,22</correct>
-<time_taken>1.383000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "y"">7</id><querystr><![CDATA[while w; Select w pattern w ("y", _)]]></querystr>
-<stuans>22,26,4,48,7</stuans>
-<correct>4,7,22,26,48</correct>
-<time_taken>2.990000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "z"">8</id><querystr><![CDATA[while w; Select w pattern w ("z", _)]]></querystr>
-<stuans>26,4,7</stuans>
-<correct>4,7,26</correct>
-<time_taken>2.018000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Select all while statement numbers that use the variable "r"">8</id><querystr><![CDATA[while w; Select w pattern w ("r", _)]]></querystr>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="actual process doesnt exist">5</id><querystr><![CDATA[procedure p; Select p such that Calls("none", p)]]></querystr>
 <stuans></stuans>
 <correct></correct>
+<time_taken>1.338000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">6</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(s, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.581000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">7</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(a, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.571000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">8</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(v, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.566000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">9</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, a)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.546000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">10</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, s)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.559000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">11</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.602000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" SuchThat="1" CondNum="4" RelNum="0" comment="calls* with small c with white spaces">12</id><querystr><![CDATA[procedure p; Select p such that calls*     (   _, _    ) ]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>0.865000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" SuchThat="1" CondNum="4" RelNum="0" comment="call* instead of calls*">13</id><querystr><![CDATA[procedure p; Select p such that Call* (   _   , _   )    ]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>0.856000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" UnnamedVar="2" SuchThat="1" CondNum="4" RelNum="0" comment="missing (">14</id><querystr><![CDATA[procedure p;   Select  p  such  that  Call*        _   , _   )    ]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>0.830000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="proc not declared">15</id><querystr><![CDATA[procedure p; Select proc such that Calls*(proc, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>0.867000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="actual process doesnt exist">16</id><querystr><![CDATA[procedure p; Select p such that Calls*("none", p)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.358000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">17</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(s, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.627000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">18</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(a, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.661000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">19</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(v, p)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.621000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">20</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, a)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.658000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">21</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, s)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.649000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="wrong argument">22</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, v)]]></querystr>
+<stuans>SemanticError</stuans>
+<correct>SemanticError</correct>
+<time_taken>1.641000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">23</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("A", "A")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.776000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">24</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("D", "D")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.710000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">25</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("A", "C")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.734000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">26</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("A", "B")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.755000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">27</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("A", "D")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.758000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">28</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("B", "A")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.754000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">29</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("g", "h")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.787000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls">30</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("h", "g")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.799000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">31</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("A", "A")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.809000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">32</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("D", "D")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.810000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">33</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("A", "C")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.810000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">34</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("A", "B")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.777000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">35</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("A", "D")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.745000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">36</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("B", "A")]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.767000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">37</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("g", "h")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.812000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls*">38</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("h", "g")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.836000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">39</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("A", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.773000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">40</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("B", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.733000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">41</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("C", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.706000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">42</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("D", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.756000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">43</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("e", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.723000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">44</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("f", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.735000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">45</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("g", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.716000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">46</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("h", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.699000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">47</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "A")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.770000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">48</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "B")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.765000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">49</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "C")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.759000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">50</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "D")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.798000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">51</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "e")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.746000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">52</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "f")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.727000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">53</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "g")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.709000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls">54</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, "h")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.711000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">55</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("A", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.719000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">56</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("B", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.754000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">57</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("C", _)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.742000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">58</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("D", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.716000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">59</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("e", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.753000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">60</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("f", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.725000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">61</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("g", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.733000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">62</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("h", _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.772000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">63</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "A")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.782000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">64</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "B")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.769000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">65</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "C")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.775000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">66</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "D")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.771000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">67</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "e")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.754000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">68</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "f")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.775000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">69</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "g")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.787000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Calls*">70</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, "h")]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.775000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="Calls both wildcard">71</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(_, _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.724000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" UnnamedVar="2" SuchThat="1" CondNum="5" RelNum="1" comment="Calls* both wildcard">72</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(_, _)]]></querystr>
+<stuans>A,B,C,D,e,f,g,h</stuans>
+<correct>A,B,C,D,e,f,g,h</correct>
+<time_taken>1.754000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">73</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("A", p)]]></querystr>
+<stuans>A,B</stuans>
+<correct>A,B</correct>
+<time_taken>1.738000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">74</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("B", p)]]></querystr>
+<stuans>C</stuans>
+<correct>C</correct>
+<time_taken>1.784000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">75</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("C", p)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.748000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">76</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("D", p)]]></querystr>
+<stuans>e</stuans>
+<correct>e</correct>
+<time_taken>1.792000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">77</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("e", p)]]></querystr>
+<stuans>f</stuans>
+<correct>f</correct>
+<time_taken>1.763000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">78</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("f", p)]]></querystr>
+<stuans>D</stuans>
+<correct>D</correct>
+<time_taken>1.799000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">79</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("g", p)]]></querystr>
+<stuans>g,h</stuans>
+<correct>g,h</correct>
+<time_taken>1.740000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">80</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls("h", p)]]></querystr>
+<stuans>g</stuans>
+<correct>g</correct>
+<time_taken>1.716000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">81</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "A")]]></querystr>
+<stuans>A</stuans>
+<correct>A</correct>
+<time_taken>1.731000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">82</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "B")]]></querystr>
+<stuans>A</stuans>
+<correct>A</correct>
+<time_taken>1.747000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">83</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "C")]]></querystr>
+<stuans>B</stuans>
+<correct>B</correct>
+<time_taken>1.768000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">84</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "D")]]></querystr>
+<stuans>f</stuans>
+<correct>f</correct>
+<time_taken>1.771000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">85</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "e")]]></querystr>
+<stuans>D</stuans>
+<correct>D</correct>
+<time_taken>1.740000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">86</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "f")]]></querystr>
+<stuans>e</stuans>
+<correct>e</correct>
+<time_taken>1.706000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">87</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "g")]]></querystr>
+<stuans>g,h</stuans>
+<correct>g,h</correct>
+<time_taken>1.847000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonym">88</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, "h")]]></querystr>
+<stuans>g</stuans>
+<correct>g</correct>
+<time_taken>1.817000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">89</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("A", p)]]></querystr>
+<stuans>A,B,C</stuans>
+<correct>A,B,C</correct>
+<time_taken>1.887000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">90</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("B", p)]]></querystr>
+<stuans>C</stuans>
+<correct>C</correct>
+<time_taken>1.835000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">91</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("C", p)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>1.800000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">92</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("D", p)]]></querystr>
+<stuans>D,e,f</stuans>
+<correct>D,e,f</correct>
+<time_taken>1.790000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">93</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("e", p)]]></querystr>
+<stuans>D,e,f</stuans>
+<correct>D,e,f</correct>
+<time_taken>1.804000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">94</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("f", p)]]></querystr>
+<stuans>D,e,f</stuans>
+<correct>D,e,f</correct>
 <time_taken>1.853000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Using While Pattern Clause With Wrong Number of Arguments">101</id><querystr><![CDATA[while w; variable v; Select w pattern w (v, _, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.692000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">95</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("g", p)]]></querystr>
+<stuans>g,h</stuans>
+<correct>g,h</correct>
+<time_taken>1.810000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With Variable v not defined">102</id><querystr><![CDATA[while w; Select w pattern w (v, _)]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>1.110000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">96</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*("h", p)]]></querystr>
+<stuans>g,h</stuans>
+<correct>g,h</correct>
+<time_taken>1.789000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With 2nd Argument as Variable Name">103</id><querystr><![CDATA[while w; Select w pattern w (_, "v")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.335000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">97</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "A")]]></querystr>
+<stuans>A</stuans>
+<correct>A</correct>
+<time_taken>1.799000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With 2nd Argument as Variable Synonym">104</id><querystr><![CDATA[while w; variable v; Select w pattern w (_, v)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.427000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">98</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "B")]]></querystr>
+<stuans>A</stuans>
+<correct>A</correct>
+<time_taken>1.759000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="Using While Pattern Clause With Wildcards">105</id><querystr><![CDATA[while w; variable v; Select w pattern w (_"v"_, _)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.350000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">99</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "C")]]></querystr>
+<stuans>A,B</stuans>
+<correct>A,B</correct>
+<time_taken>1.841000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Using While Pattern Clause With Both 1st and 2nd Argument Filled With Variable Synonym">106</id><querystr><![CDATA[while w; variable v; Select w pattern w (v, v)]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.211000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">100</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "D")]]></querystr>
+<stuans>D,e,f</stuans>
+<correct>D,e,f</correct>
+<time_taken>1.772000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Pattern="1" CondNum="2" RelNum="0" comment="Using While Pattern Clause With Both 1st and 2nd Argument Filled With Variable Name">107</id><querystr><![CDATA[while w; Select w pattern w ("v", "v")]]></querystr>
-<stuans>SyntaxError</stuans>
-<correct>SyntaxError</correct>
-<time_taken>2.286000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">101</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "e")]]></querystr>
+<stuans>D,e,f</stuans>
+<correct>D,e,f</correct>
+<time_taken>1.747000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With A Number as a Variable Name">108</id><querystr><![CDATA[while w; Select w pattern w (2, _)]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>0.854000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">102</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "f")]]></querystr>
+<stuans>D,e,f</stuans>
+<correct>D,e,f</correct>
+<time_taken>1.739000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="Using While Pattern Clause With A Different Design Entity">109</id><querystr><![CDATA[while w; procedure p; Select w pattern w (p, _)]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>1.166000</time_taken>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">103</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "g")]]></querystr>
+<stuans>g,h</stuans>
+<correct>g,h</correct>
+<time_taken>1.728000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonym">104</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, "h")]]></querystr>
+<stuans>g,h</stuans>
+<correct>g,h</correct>
+<time_taken>1.721000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonyms as both arguments">105</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls(p, p)]]></querystr>
+<stuans>A,g</stuans>
+<correct>A,g</correct>
+<time_taken>1.665000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls and procedure synonyms as both arguments">106</id><querystr><![CDATA[procedure p,proc; variable v; stmt s; assign a; Select p such that Calls(p, proc)]]></querystr>
+<stuans>A,B,D,e,f,g,h</stuans>
+<correct>A,B,D,e,f,g,h</correct>
+<time_taken>1.873000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonyms as both arguments">107</id><querystr><![CDATA[procedure p; variable v; stmt s; assign a; Select p such that Calls*(p, p)]]></querystr>
+<stuans>A,D,e,f,g,h</stuans>
+<correct>A,D,e,f,g,h</correct>
+<time_taken>1.774000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Calls* and procedure synonyms as both arguments">108</id><querystr><![CDATA[procedure p,proc; variable v; stmt s; assign a; Select p such that Calls*(p, proc)]]></querystr>
+<stuans>A,B,D,e,f,g,h</stuans>
+<correct>A,B,D,e,f,g,h</correct>
+<time_taken>1.940000</time_taken>
 <passed/>
 </query>
 </queries>

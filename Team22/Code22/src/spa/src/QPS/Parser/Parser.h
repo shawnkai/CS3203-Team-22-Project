@@ -13,6 +13,7 @@
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 #include "QPS/Expressions/AttrCondExpression/AttrCondExpression.h"
+#include "QPS/Expressions/CallsExpression/CallsExpression.h"
 
 using namespace std;
 
