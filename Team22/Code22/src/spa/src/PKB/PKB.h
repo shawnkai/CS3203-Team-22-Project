@@ -9,7 +9,7 @@
 #include <unordered_set>
 
 #include "Result.h"
-#include "Pattern/AssignPattern/AssignPattern.h"
+#include "QPS/Evaluator/ResultTable.h"
 
 using namespace std;
 
@@ -59,6 +59,13 @@ public:
     map<int, int> getStatementNumberToBlockDatabase(string procedureName);
     map<int, vector<int>> getBlockToBlockDatabase(string procedureName);
     unordered_set<int> getBlocksWithBackPointersDatabase(string procedureName);
+
+
+    // APIs Related To Cache
+    void addToCache(string accessKey, ResultTable* resultTable);
+    ResultTable* getResultTableFromCache(string accessKey);
+    unordered_map<string, ResultTable*> getCacheDatabase();
+    void clearCache();
 
     // API For Clearing All Databases
     void clearAllDatabases();

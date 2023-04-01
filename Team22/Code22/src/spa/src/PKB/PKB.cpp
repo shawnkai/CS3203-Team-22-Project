@@ -24,6 +24,8 @@ using namespace std;
 #include "Pattern//PatternFactory.h"
 #include "Pattern/PatternDatabaseFactory.h"
 
+#include "Cache/CacheManager.h"
+
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
 /**
@@ -244,6 +246,22 @@ unordered_set<string> PKB::getAllVariablesUsedInPattern(string patternType, stri
     PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
 
     return db->getAllVariablesBeingUsed(lineNumber);
+}
+
+void PKB::addToCache(string accessKey, ResultTable *resultTable) {
+    CacheManager::addToCache(accessKey, resultTable);
+}
+
+ResultTable *PKB::getResultTableFromCache(string accessKey) {
+    return CacheManager::getResultTableFromCache(accessKey);
+}
+
+unordered_map<string, ResultTable *> PKB::getCacheDatabase() {
+    return CacheManager::getCacheDatabase();
+}
+
+void PKB::clearCache() {
+    CacheManager::clearCache();
 }
 
 /**
