@@ -34,7 +34,9 @@ using namespace std;
  */
 void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
     DesignAbstraction* da = DesignAbstractionsFactory::createDesignAbstraction(designAbstraction, abstractionDetails);
-    da->addToDatabase();
+    DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(da);
+
+    db->addToDatabase(da);
 }
 
 /**
@@ -45,7 +47,9 @@ void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, s
  */
 void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
     DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
-    de->addToDatabase();
+    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(de);
+
+    db->addToDatabase(de);
 }
 
 /**
@@ -105,7 +109,9 @@ vector<Result> PKB::getAllDesignEntity(string entityType) {
 void PKB::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
     AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
                                                                              patternLineNumber);
-    assignPattern->addToDatabase();
+    AssignPatternDatabase* db = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+
+    db->addToDatabase(assignPattern);
 }
 
 /**
