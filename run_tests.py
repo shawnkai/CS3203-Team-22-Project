@@ -4,8 +4,10 @@ import re
 
 if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
     start = './Team22/Code22/cmake-build-debug/src'
-else:
+elif os.path.isdir('./Team22/Code22/build/src'):
     start = './Team22/Code22/build/src'
+else:
+    start = './Team22/Code22/out/build/x64-Debug/src'
 
 # Unit Testing
 print("Running Unit Tests...")
