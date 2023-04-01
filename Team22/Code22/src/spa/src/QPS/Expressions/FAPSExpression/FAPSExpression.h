@@ -22,7 +22,7 @@ protected:
 public:
     explicit FAPSExpression(StmtRef* s1, StmtRef* s2, string pkbAbstraction);
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 

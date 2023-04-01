@@ -61,7 +61,7 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
     regex_search(query, sm, Expression::RETURNVALUEREGEX);
 
     if (!sm.str(1).empty()) {
-        if (sm.str(1) == "BOOLEAN") {
+        if (isBooleanType(sm.str(1), synonymTable)) {
             return make_pair(entities, attrs);
         } else {
             //is a synonym(attr)
@@ -80,7 +80,6 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
             entities.push_back(synonymAndAttribute.first);
             attrs.push_back(synonymAndAttribute.second);
             searchStart = sm2.suffix().first;
-            ::printf("%s, %s\n", synonymAndAttribute.first->toString().c_str(), synonymAndAttribute.second.c_str());
         }
     } else {
         throw SyntacticException();
@@ -89,8 +88,12 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
     return make_pair(entities, attrs);
 }
 
+bool SelectExpression::isBooleanType(string synAttr, SynonymTable synonymTable) {
+    return synAttr=="BOOLEAN" && !synonymTable.exists("BOOLEAN");
+}
+
 pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
-    if (!regex_match(synAttr, SYNATTRREGEX) or synAttr=="BOOLEAN") {
+    if (!regex_match(synAttr, SYNATTRREGEX)) {
         throw SyntacticException();
     }
 
@@ -107,8 +110,7 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string 
     return make_pair(entity, attr);
 }
 
-
-ResultTable SelectExpression::evaluate(PKB pkb) {
+ResultTable* SelectExpression::evaluate(PKB pkb) {
     map<string, vector<string>> finalResults;
     vector<string> columns;
     for (int i = 0; i < this->entities.size(); i++) {
@@ -131,24 +133,36 @@ ResultTable SelectExpression::evaluate(PKB pkb) {
         finalResults.insert({entity->toString(), answer});
 
         if (!synAttr.empty()) {
-            finalResults.insert({entity->toString() + "." + synAttr, entity->getAttrVal(synAttr, pkb).getValues("withCond")});
+            finalResults.insert({entity->toString() + "." + synAttr, entity->getAttrVal(synAttr, pkb)->getValues("withCond")});
             columns.push_back(entity->toString() + "." + synAttr);
         } else {
             columns.push_back(entity->toString());
         }
 
     }
-    ResultTable SelectResult = ResultTable(finalResults);
-
+    auto* selectResult = new ResultTable(finalResults);
     if (this->conditions.empty()) {
-        return SelectResult;
+        return selectResult;
     } else {
-        vector<ResultTable> allResults;
+        vector<ResultTable*> allResults;
         for (Expression *exp : this->conditions) {
-            ResultTable temp = exp->evaluate(pkb);
+            ResultTable* temp = exp->evaluate(pkb);
             allResults.push_back(temp);
         }
-        allResults.push_back(SelectResult);
-        return ResultTable::intersection(allResults).getColumns(columns);
+        if (!this->entities.empty()) {
+            allResults.push_back(selectResult);
+            return ResultTable::intersection(allResults)->getColumns(columns);
+        }
+
+        ResultTable* finalTable = ResultTable::intersection(allResults);
+        if (this->entities.empty()) {
+            if (finalTable->getSize() > 0) {
+                return new BooleanTrueTable();
+            } else {
+                return new BooleanFalseTable();
+            }
+        } else {
+            return finalTable;
+        }
     }
 }

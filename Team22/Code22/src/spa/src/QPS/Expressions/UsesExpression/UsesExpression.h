@@ -32,7 +32,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -41,7 +41,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 

@@ -58,7 +58,7 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 				TNode currentStmt = childstmts[i];
 				std::string showParent = "parent" + std::to_string(currentParent) + " " + std::to_string(currentStmt.stmtNumber);
 				cout << showParent << endl;
-				pkbinstance.addDesignAbstraction("PARENT", make_tuple("_", std::to_string(currentParent), std::to_string(currentStmt.stmtNumber)));
+				                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          pkbinstance.addDesignAbstraction("PARENT", make_tuple("_", std::to_string(currentParent), std::to_string(currentStmt.stmtNumber)));
 				if (whileContainers.size() != 0) {
 					for (int j = 0; j < whileContainers.size(); j++) {
 						std::string showParentWhileStar = "parentsstar" + std::to_string(whileContainers[j]) + " " + std::to_string(currentStmt.stmtNumber);

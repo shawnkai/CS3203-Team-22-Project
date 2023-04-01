@@ -23,8 +23,8 @@ public:
         return "";
     };
 
-    virtual ResultTable evaluate(PKB pkb) {
-        return {{}};
+    virtual ResultTable* evaluate(PKB pkb) {
+        return new BooleanFalseTable();
     };
 
     static vector<PatternExpression*> extractPatternExpression(const string& query, SynonymTable synonymTable);
@@ -42,7 +42,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 
@@ -54,7 +54,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 

@@ -64,12 +64,12 @@ vector<AttrCondExpression*> AttrCondExpression::extractAttrCondExpression(const 
     return expressions;
 }
 
-ResultTable AttrCondExpression::evaluate(PKB pkb) {
+ResultTable* AttrCondExpression::evaluate(PKB pkb) {
     // Syn1
-    ResultTable syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
+    ResultTable* syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
     // Syn2
-    ResultTable syn2Table = this->entities[1]->getAttrVal(syn2attr, pkb);
-    return syn1Table.intersection(syn2Table).removeColumn("withCond");
+    ResultTable* syn2Table = this->entities[1]->getAttrVal(syn2attr, pkb);
+    return syn1Table->intersection(syn2Table)->removeColumn("withCond");
 }
 
 string AttrCondExpression::toString() {

@@ -22,8 +22,9 @@ public:
     explicit SelectExpression(vector<DesignEntity*> entity, vector<string> attributes, vector<Expression*> conditions);
     static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(string query, SynonymTable synonymTable);
     string toString() override;
+    static bool isBooleanType(string synAttr, SynonymTable synonymTable);
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 

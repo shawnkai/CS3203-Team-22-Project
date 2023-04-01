@@ -26,7 +26,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -35,7 +35,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 

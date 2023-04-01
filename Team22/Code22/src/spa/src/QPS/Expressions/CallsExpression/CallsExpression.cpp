@@ -93,7 +93,7 @@ string CallsStarExpression::toString() {
     return "Calls*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-ResultTable CallsExpression::evaluate(PKB pkb) {
+ResultTable* CallsExpression::evaluate(PKB pkb) {
     vector<string> possibleCallers;
     vector<string> possibleTargets;
     vector<Result> procs = pkb.getAllDesignEntity("PROCEDURE");
@@ -132,7 +132,6 @@ ResultTable CallsExpression::evaluate(PKB pkb) {
                   && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident"))
                 && this->entities[0]->toString() == this->entities[1]->toString()) {
                 if (p1 == r) {
-                    ::printf("HERE\n");
                     resultMap.at(this->entities[0]->toString()).push_back(p1);
                 } else {
                     continue;
@@ -155,14 +154,16 @@ ResultTable CallsExpression::evaluate(PKB pkb) {
 
     if (resultMap.empty()) {
         if (temp.getSize() > 0) {
-            return ResultTable({{"_", {"-"}}});
+            return new BooleanTrueTable();
+        } else {
+            return new BooleanFalseTable();
         }
     }
 
-    return ResultTable(resultMap);
+    return new ResultTable(resultMap);
 }
 
-ResultTable CallsStarExpression::evaluate(PKB pkb) {
+ResultTable* CallsStarExpression::evaluate(PKB pkb) {
     vector<string> possibleCallers;
     vector<string> possibleTargets;
     vector<Result> procs = pkb.getAllDesignEntity("PROCEDURE");
@@ -213,14 +214,7 @@ ResultTable CallsStarExpression::evaluate(PKB pkb) {
         }
     }
 
-    if ((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident")
-    && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident")) {
-        if (ResultTable(resultMap).getSize() > 0) {
-            return ResultTable({{"_", {"-"}}});
-        } else {
-            return {{}};
-        }
-    }
+    ResultTable temp(resultMap);
 
     if (this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") {
         resultMap.erase(this->entities[0]->toString());
@@ -229,5 +223,13 @@ ResultTable CallsStarExpression::evaluate(PKB pkb) {
         resultMap.erase(this->entities[1]->toString());
     }
 
-    return ResultTable(resultMap);
+    if (resultMap.empty()) {
+        if (temp.getSize() > 0) {
+            return new BooleanTrueTable();
+        } else {
+            return new BooleanFalseTable();
+        }
+    }
+
+    return new ResultTable(resultMap);
 }

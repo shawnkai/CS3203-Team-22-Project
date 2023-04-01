@@ -33,8 +33,8 @@ public:
         return "";
     }
 
-    virtual ResultTable getAttrVal(string attr, PKB pkb) {
-        return ResultTable({});
+    virtual ResultTable* getAttrVal(string attr, PKB pkb) {
+        return new ResultTable({});
     };
 
     virtual bool checkAttr(string attr) {
@@ -52,7 +52,7 @@ protected:
     explicit StmtRef(string type);
 
 public:
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 
 };
@@ -67,7 +67,7 @@ protected:
 public:
     string toString() override;
     explicit SynonymStmtEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -92,7 +92,7 @@ private:
 
 public:
     explicit ReadEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -102,7 +102,7 @@ private:
 
 public:
     explicit PrintEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -111,7 +111,7 @@ private:
     static vector<string> validAttrs;
 public:
     explicit AssignEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -121,7 +121,7 @@ private:
 
 public:
     explicit CallEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -131,7 +131,7 @@ private:
 
 public:
     explicit WhileEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -141,7 +141,7 @@ private:
 
 public:
     explicit IfEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -163,7 +163,7 @@ public:
 
     string toString() override;
 
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -173,7 +173,7 @@ private:
 
 public:
     explicit ProcedureEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -183,7 +183,7 @@ private:
 
 public:
     explicit VariableEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -193,7 +193,7 @@ private:
 
 public:
     explicit ConstantEntity(string synonym);
-    ResultTable getAttrVal(string attr, PKB pkb) override;
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 

@@ -20,7 +20,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
     static NamedEntity* generateNamedEntity(string s, SynonymTable synonymTable);
 };
@@ -35,7 +35,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 

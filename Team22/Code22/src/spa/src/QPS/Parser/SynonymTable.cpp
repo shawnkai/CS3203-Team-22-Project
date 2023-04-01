@@ -33,7 +33,7 @@ void SynonymTable::add(string type, const string& name) {
 }
 
 DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
-    if (!table.count(name)) {
+    if (!exists(name)) {
         throw SemanticException();
     }
 
@@ -49,7 +49,10 @@ DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
         string errorMsg = "unknown type: " + desiredType;
         throw std::runtime_error(errorMsg);
     }
+}
 
+bool SynonymTable::exists(string name) {
+    return table.count(name);
 }
 
 vector<tuple<string, string>> SynonymTable::getSimpleSynonymTable() {

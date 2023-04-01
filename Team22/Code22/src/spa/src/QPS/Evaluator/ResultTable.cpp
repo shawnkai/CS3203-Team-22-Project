@@ -13,18 +13,16 @@ ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     }
 }
 
-IntermediateResultTable::IntermediateResultTable(initializer_list<pair<string, vector<string>>> args) : ResultTable(args) {}
-
 ResultTable::ResultTable(const map<string, vector<string>>& table) {
     this->table = table;
 }
 
-bool ResultTable::equals(ResultTable table2) {
-    if (this->table.size() != table2.table.size()) {
+bool ResultTable::equals(ResultTable* table2) {
+    if (this->table.size() != table2->table.size()) {
         return false;
     }
 
-    if (this->table.size() == 0 & table2.table.size() == 0) {
+    if (this->table.size() == 0 & table2->table.size() == 0) {
         return true;
     }
 
@@ -34,7 +32,7 @@ bool ResultTable::equals(ResultTable table2) {
     for (const auto& kv: this->table) {
         key1.push_back(kv.first);
     }
-    for (const auto& kv: table2.table) {
+    for (const auto& kv: table2->table) {
         key2.push_back(kv.first);
     }
     if (key1 != key2) {
@@ -48,7 +46,7 @@ bool ResultTable::equals(ResultTable table2) {
         vector<string> t2_temp;
         for (const auto& k : key1) {
             t1_temp.push_back(this->table.find(k)->second[i]);
-            t2_temp.push_back(table2.table.find(k)->second[i]);
+            t2_temp.push_back(table2->table.find(k)->second[i]);
         }
         t1.push_back(t1_temp);
         t2.push_back(t2_temp);
@@ -93,38 +91,38 @@ string ResultTable::toString() {
     return result;
 }
 
-ResultTable ResultTable::crossProduct(ResultTable table2, const vector<string>& all_keys) {
+ResultTable* ResultTable::crossProduct(ResultTable* table2, const vector<string>& all_keys) {
     map<string, vector<string>> result;
     for (const string& key: all_keys) {
         result.insert({key, {}});
     }
 
     for(int i = 0; i < this->getSize(); i++) {
-        for (int j = 0; j < table2.getSize(); j++) {
+        for (int j = 0; j < table2->getSize(); j++) {
             for (const auto& kv1 : this->table) {
                 result.find(kv1.first)->second.push_back(kv1.second[i]);
             }
-            for (const auto& kv2 : table2.table) {
+            for (const auto& kv2 : table2->table) {
                 result.find(kv2.first)->second.push_back(kv2.second[j]);
             }
         }
     }
-    return ResultTable(result);
+    return new ResultTable(result);
 }
 
-ResultTable ResultTable:: naturalJoin(ResultTable table2, const vector<string>& all_keys, vector<string> common_keys) {
+ResultTable* ResultTable::naturalJoin(ResultTable* table2, const vector<string>& all_keys, vector<string> common_keys) {
     vector<int> target_indexes;
     map<int, vector<int>> index_map;
-    for (int i = 0; i < table2.getSize(); i ++) {
+    for (int i = 0; i < table2->getSize(); i ++) {
         target_indexes.push_back(i);
         index_map.insert({i, {}});
     }
 
     map<int, vector<int>> index_mapping;
 
-    for (int i = 0; i < table2.getSize(); i++) {
+    for (int i = 0; i < table2->getSize(); i++) {
         string key = common_keys[0];
-        string target_v = table2.table.find(key)->second[i];
+        string target_v = table2->table.find(key)->second[i];
         vector<string> targets = this->table.find(key)->second;
         vector<int> indices;
         int ind = 0;
@@ -132,7 +130,7 @@ ResultTable ResultTable:: naturalJoin(ResultTable table2, const vector<string>& 
             if (t == target_v) {
                 bool matched = true;
                 for (auto kv : this->table) {
-                    if (Utilities::checkIfPresent(common_keys, kv.first) && kv.second[ind] != table2.table.find(kv.first)->second[i]) {
+                    if (Utilities::checkIfPresent(common_keys, kv.first) && kv.second[ind] != table2->table.find(kv.first)->second[i]) {
                         matched = false;
                         break;
                     }
@@ -152,7 +150,7 @@ ResultTable ResultTable:: naturalJoin(ResultTable table2, const vector<string>& 
 
     for (const auto& ind_pair : index_map) {
         for (int i: ind_pair.second) {
-            for (auto kv : table2.table) {
+            for (auto kv : table2->table) {
                 result.find(kv.first)->second.push_back(kv.second[ind_pair.first]);
             }
             for (auto kv2: this->table) {
@@ -163,16 +161,16 @@ ResultTable ResultTable:: naturalJoin(ResultTable table2, const vector<string>& 
         }
     }
 
-    return ResultTable(result);
+    return new ResultTable(result);
 }
 
-ResultTable ResultTable::intersection(ResultTable table2) {
+ResultTable* ResultTable::intersection(ResultTable* table2) {
     vector<string> common_keys;
     vector<string> all_keys;
     for (const auto& kv : this->table) {
         all_keys.push_back(kv.first);
     }
-    for (const auto& kv : table2.table) {
+    for (const auto& kv : table2->table) {
         if (this->table.find(kv.first) != this->table.end()) {
             common_keys.push_back(kv.first);
             continue;
@@ -181,12 +179,12 @@ ResultTable ResultTable::intersection(ResultTable table2) {
     }
 
     if (common_keys.empty()) {
-        if (table2.getSize() == 0 || this->getSize() == 0) {
+        if (table2->getSize() == 0 || this->getSize() == 0) {
             map<string, vector<string>> empty_keys;
             for (const string& k : all_keys) {
                 empty_keys.insert({k, {}});
             }
-            return ResultTable(empty_keys);
+            return new ResultTable(empty_keys);
         } else {
             return this->crossProduct(table2, all_keys);
         }
@@ -195,19 +193,19 @@ ResultTable ResultTable::intersection(ResultTable table2) {
     }
 }
 
-ResultTable ResultTable::intersection(vector<ResultTable> tables) {
+ResultTable* ResultTable::intersection(vector<ResultTable*> tables) {
     vector resultTables = vector(std::move(tables));
 
-    ResultTable finalResult = resultTables[0];
+    ResultTable* finalResult = resultTables[0];
 
     for (int i = 1; i < resultTables.size(); i++) {
-        finalResult = finalResult.intersection(resultTables[i]);
+        finalResult = finalResult->intersection(resultTables[i]);
     }
     return finalResult;
 }
 
 
-ResultTable ResultTable::getColumns(const vector<string>& columns) {
+ResultTable* ResultTable::getColumns(const vector<string>& columns) {
     map<string, vector<string>> mod;
     for (const string& column : columns) {
         if (!Utilities::checkIfPresent(this->getColumnNames(), column)) {
@@ -215,7 +213,7 @@ ResultTable ResultTable::getColumns(const vector<string>& columns) {
         }
         mod.insert({column, this->getValues(column)});
     }
-    return ResultTable(mod);
+    return new ResultTable(mod);
 }
 
 vector<string> ResultTable::getValues() {
@@ -262,3 +260,16 @@ void ResultTable::renameColumn(const string& oldName, const string& newName) {
     this->table.insert({newName, data});
     this->table.erase(this->table.find(oldName));
 }
+
+BooleanTrueTable::BooleanTrueTable() : ResultTable({{"_", {"-"}}}) {}
+
+vector<string> BooleanTrueTable::getValues() {
+    return {"TRUE"};
+}
+
+BooleanFalseTable::BooleanFalseTable() : ResultTable({{"_", {}}}) {}
+
+vector<string> BooleanFalseTable::getValues() {
+    return {"FALSE"};
+}
+

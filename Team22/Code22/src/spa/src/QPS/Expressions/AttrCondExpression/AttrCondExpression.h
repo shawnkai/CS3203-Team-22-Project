@@ -27,7 +27,7 @@ public:
 
     static vector<AttrCondExpression*> extractAttrCondExpression(const string& query, const SynonymTable& synonymTable);
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 #endif //SPA_ATTRCONDEXPRESSION_H

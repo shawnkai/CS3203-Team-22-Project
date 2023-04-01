@@ -68,6 +68,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 						for (int j = 0; j < vector3.size(); j++) {
 							if (vector3[j] != "none") {
 								pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", vector3[j], std::to_string(lineNumOfVariable)));
+                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", nameOfVariable, vector3[j]));
+                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, vector3[j]));
 								cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector3[j] << endl;
 							}
 						}
@@ -78,6 +80,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					for (int i = 0; i < vector2.size(); i++) {
 						if (vector2[i] != "none") {
 							pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", vector2[i], std::to_string(lineNumOfVariable)));
+                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", nameOfVariable, vector2[i]));
+                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", nameOfVariable, vector2[i]));
 							cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector2[i] << endl;
 						}
 					}
@@ -121,6 +125,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 						for (int j = 0; j < vector3.size(); j++) {
 							if (vector3[j] != "none") {
 								pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector3[j], std::to_string(lineNumOfVariable)));
+                                pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", nameOfVariable, vector3[j]));
+                                pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, vector3[j]));
 								cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
 							}
 						}
@@ -131,6 +137,8 @@ void AssignExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifC
 					for (int i = 0; i < vector2.size(); i++) {
 						if (vector2[i] != "none") {
 							pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector2[i], std::to_string(lineNumOfVariable)));
+                            pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", nameOfVariable, vector2[i]));
+                            pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, vector2[i]));
 							cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
 						}
 					}
