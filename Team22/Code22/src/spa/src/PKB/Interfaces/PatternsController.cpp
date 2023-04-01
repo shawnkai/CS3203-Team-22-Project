@@ -23,7 +23,9 @@ using namespace std;
 void PatternsController::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
     AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
                                                                              patternLineNumber);
-    assignPattern->addToDatabase();
+    AssignPatternDatabase* db = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+
+    db->addToDatabase(assignPattern);
 }
 
 /**
