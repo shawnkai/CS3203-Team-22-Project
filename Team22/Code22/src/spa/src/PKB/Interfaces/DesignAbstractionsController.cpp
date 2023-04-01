@@ -22,7 +22,9 @@ using namespace std;
  */
 void DesignAbstractionsController::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
     DesignAbstraction* da = DesignAbstractionsFactory::createDesignAbstraction(designAbstraction, abstractionDetails);
-    da->addToDatabase();
+    DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(da);
+
+    db->addToDatabase(da);
 }
 
 void DesignAbstractionsController::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
