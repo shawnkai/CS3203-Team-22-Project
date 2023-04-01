@@ -20,7 +20,9 @@ using namespace std;
  */
 void DesignEntitiesController::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
     DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
-    de->addToDatabase();
+    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(de);
+
+    db->addToDatabase(de);
 }
 
 /**
