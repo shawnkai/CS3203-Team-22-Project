@@ -25,8 +25,6 @@ public:
     explicit DesignEntity(tuple<string, string> entityDetails);
 
     virtual void addAdditionalOccurrence(string occurrence);
-//    virtual void addToDatabase(DesignEntity designEntityCreated);
-    virtual void addToDatabase();
     virtual string getNameOfEntity();
     virtual vector<string> getOccurrenceOfEntity();
 
