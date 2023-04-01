@@ -38,14 +38,6 @@ bool DesignAbstraction::isOccurrencePresent(string entityOccurrence) {
 }
 
 /**
- * Adds the created Design Abstraction object to the database.
- */
-void DesignAbstraction::addToDatabase() {
-    DesignAbstractionDatabase* database = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(this);
-    database->addToDatabase(this);
-}
-
-/**
  * Adds the given additional occurrence of an entity. If it already exists in the database,
  * it is not added, as it is considered a duplicate.
  *

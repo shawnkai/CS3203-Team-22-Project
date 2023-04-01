@@ -22,7 +22,6 @@ class DesignAbstraction {
 public:
     explicit DesignAbstraction(tuple<string, string, string> abstractionDetails);
 
-    virtual void addToDatabase();
     virtual void addAdditionalOccurrence(string entityOccurrence);
     virtual string getEntityTypeBeingAbstracted();
     virtual string getEntityName();
