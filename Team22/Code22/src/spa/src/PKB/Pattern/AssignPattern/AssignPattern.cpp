@@ -21,11 +21,6 @@ bool AssignPattern::isLineNumberPresent(string patternLineNumber) {
     return !(this->rightHandExpressionByLineNumber.find(patternLineNumber) == this->rightHandExpressionByLineNumber.end());
 }
 
-void AssignPattern::addToDatabase() {
-    AssignPatternDatabase* db = AssignPatternDatabaseFactory::getAssignPatternDatabase();
-    db->addToDatabase(this);
-}
-
 void AssignPattern::addAdditionalRightHandExpression(string patternLineNumber, string prefixExpression) {
     this->rightHandExpressionByLineNumber.insert(make_pair(patternLineNumber, prefixExpression));
 }
