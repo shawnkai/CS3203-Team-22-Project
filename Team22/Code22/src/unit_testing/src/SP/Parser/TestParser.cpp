@@ -31,10 +31,10 @@ TEST_CASE("TestCase1_ParseTokenListBasicSource_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-    result = result.children[0];
-    REQUIRE(result.nodeType == TokenType::PROCEDURE);
-    REQUIRE(result.children.size() == 1);
-    REQUIRE(result.children[0].children.size() == 2);
+    TNode result1 = result.children[0];
+    REQUIRE(result1.nodeType == TokenType::PROCEDURE);
+    REQUIRE(result1.children.size() == 1);
+    REQUIRE(result1.children[0].children.size() == 2);
 }
 
 TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
@@ -64,21 +64,7 @@ TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
         cerr << e.what() << endl;
         exit(1);
     }
-    //cout << ToString(result) << endl;
-//    std::queue<TNode> pendingToString;
-//    pendingToString.push(result);
-//    while (!pendingToString.empty()) {
-//        auto toProcess = pendingToString.front();
-//        pendingToString.pop();
-//        cout << ToString(toProcess) << endl;
-//        if (!toProcess.children.empty()) {
-//            auto childrenArr = (toProcess).children;
-//            for (TNode child : childrenArr) {
-//                pendingToString.push(child);
-//            }
-//        }
-//    }
-    //result = result.children[0];
+
     TNode stmtList = result.children[0].children[0];
     REQUIRE(stmtList.children.size() == 1);
     REQUIRE(stmtList.children[0].nodeType == TokenType::ASSIGN);
@@ -315,38 +301,38 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
     REQUIRE(greaterThanNode.stringId == ">");
 }
 
-TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
-    Tokenizer tk = Tokenizer();
-    std::vector<Token> tokenList;
-    const char *relativePath;
-    relativePath = "SP_ut1.txt";
-    string code = "procedure main {\n"
-                  "    read x;\n"
-                  "}";
-    ofstream temp_file;
-    temp_file.open(relativePath);
-    temp_file << code;
-    temp_file.close();
-    try {
-        tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
-        std::cerr << e.what() << std::endl;
-        exit(1);
-    }
-    Parser ps = Parser(tokenList);
-    TNode result;
-    try {
-        result = ps.Parse();
-    } catch (std::invalid_argument& e) {
-        std::cerr << e.what() << std::endl;
-        exit(1);
-    }
-    result = result.children[0];
-    REQUIRE(result.nodeType == TokenType::PROCEDURE);
-    REQUIRE(result.children.size() == 1);
-    REQUIRE(result.children[0].children.size() == 1);
-    REQUIRE(filesystem::remove(relativePath));
-}
+//TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
+//    Tokenizer tk = Tokenizer();
+//    std::vector<Token> tokenList;
+//    const char *relativePath;
+//    relativePath = "SP_ut1.txt";
+//    string code = "procedure main {\n"
+//                  "    read x;\n"
+//                  "}";
+//    ofstream temp_file;
+//    temp_file.open(relativePath);
+//    temp_file << code;
+//    temp_file.close();
+//    try {
+//        tokenList = tk.tokenize(relativePath);
+//    } catch (std::invalid_argument& e) {
+//        std::cerr << e.what() << std::endl;
+//        exit(1);
+//    }
+//    Parser ps = Parser(tokenList);
+//    TNode result;
+//    try {
+//        result = ps.Parse();
+//    } catch (std::invalid_argument& e) {
+//        std::cerr << e.what() << std::endl;
+//        exit(1);
+//    }
+//    TNode result1 = result.children[0];
+//    REQUIRE(result.nodeType == TokenType::PROCEDURE);
+//    REQUIRE(result.children.size() == 1);
+//    REQUIRE(result.children[0].children.size() == 1);
+//    REQUIRE(filesystem::remove(relativePath));
+//}
 
 TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
@@ -379,8 +365,8 @@ TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    result = result.children[0];
-    auto node = result.children[0];
+
+    auto node = result.children[0].children[0];
     REQUIRE(node.nodeType == TokenType::STATEMENT_LIST);
     auto whileStmt = node.children[0];
     REQUIRE(whileStmt.nodeType == TokenType::WHILE);

@@ -13,12 +13,13 @@ using namespace std;
 #include "NextExtractor.h"
 
 void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
+	std::string underlineStr = "_";
 	if (blkToStmtMap.count(blkNo) > 0) {
 		vector<int> stmtInblk = blkToStmtMap.at(blkNo);
 		if (stmtInblk.size() > 1) {
 			for (int i = 0; i < stmtInblk.size() - 1; i++) {
 				int next1 = i + 1;
-				pkbinstance.addDesignAbstraction("NEXT", make_tuple("_", std::to_string(stmtInblk[0]), std::to_string(stmtInblk[next1])));
+				pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInblk[0]), std::to_string(stmtInblk[next1])));
 				cout << std::to_string(stmtInblk[0]) + " next is " + std::to_string(stmtInblk[next1]) << endl;
 			}
 		}
@@ -31,11 +32,12 @@ void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<
 };
 
 void NextExtractor::addBtwBlkNextAbstraction(int prevBlk, int nextBlk, std::map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
+	std::string underlineStr = "_";
 	if ((blkToStmtMap.count(prevBlk) > 0) && (blkToStmtMap.count(nextBlk) > 0)) {
 		vector<int> stmtInPrevblk = blkToStmtMap.at(prevBlk);
 		vector<int> stmtInNextblk = blkToStmtMap.at(nextBlk);
 		int lastIdx = stmtInPrevblk.size() - 1;
-		pkbinstance.addDesignAbstraction("NEXT", make_tuple("_", std::to_string(stmtInPrevblk[lastIdx]), std::to_string(stmtInNextblk[0])));
+		pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInPrevblk[lastIdx]), std::to_string(stmtInNextblk[0])));
 		cout << std::to_string(stmtInPrevblk[lastIdx]) + " next is " + std::to_string(stmtInNextblk[0]) << endl;
 	}
 	else {

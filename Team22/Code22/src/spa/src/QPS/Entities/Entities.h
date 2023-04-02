@@ -6,11 +6,18 @@
 #define INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
 
 #include <string>
+#include <Utilities.h>
+#include <list>
 #include <utility>
+#include "QPS/Evaluator/ResultTable.h"
+#include "PKB/PKB.h"
 
 using namespace std;
 
 class DesignEntity {
+
+private:
+    static vector<string> validAttrs;
 
 protected:
     string entityType;
@@ -25,77 +32,128 @@ public:
     virtual string toString() {
         return "";
     }
+
+    virtual ResultTable* getAttrVal(string attr, PKB pkb) {
+        return new ResultTable({});
+    };
+
+    virtual bool checkAttr(string attr) {
+        return false;
+    }
 };
 
 
-class StmtEntity : public DesignEntity {
-    /**
-     * StmtEntity Class is the super class for ReadEntity, PrintEntity, AssignEntity, CallEntity, IfEntity and WhileEntity
-     * it can be initialized with the specific type and its line number or the specific type and the synonym used in declaration
-     */
+class StmtRef : public DesignEntity {
+
+private:
+    static vector<string> validAttrs;
+
 protected:
-    int lineNumber = -1;
-    string synonym = "-1";
+    explicit StmtRef(string type);
+
 public:
-    StmtEntity(string type,  int lineNumber);
-    StmtEntity(string type, string synonym);
-    StmtEntity(string type);
-    StmtEntity(int lineNumber);
-    StmtEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 
-    int getLine();
+};
 
+class SynonymStmtEntity : public StmtRef {
+private:
+    static vector<string> validAttrs;
+
+protected:
+    string synonym;
+    SynonymStmtEntity(string type, string synonym);
+public:
+    string toString() override;
+    explicit SynonymStmtEntity(string synonym);
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
+};
+
+class WildcardStmtRef: public StmtRef {
+public:
+    WildcardStmtRef();
     string toString() override;
 };
 
-class ReadEntity : public StmtEntity {
+class StmtEntity: public StmtRef {
+private:
+    int lineNumber;
 public:
-    explicit ReadEntity(int lineNumber);
+    int getLine();
+    string toString() override;
+    explicit StmtEntity(int lineNumber);
+};
+
+class ReadEntity : public SynonymStmtEntity {
+private:
+    static vector<string> validAttrs;
+
+public:
     explicit ReadEntity(string synonym);
-    ReadEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
-class PrintEntity : public StmtEntity {
+class PrintEntity : public SynonymStmtEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
-    explicit PrintEntity(int lineNumber);
     explicit PrintEntity(string synonym);
-    PrintEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
-class AssignEntity : public StmtEntity {
+class AssignEntity : public SynonymStmtEntity {
+private:
+    static vector<string> validAttrs;
 public:
-    explicit AssignEntity(int lineNumber);
     explicit AssignEntity(string synonym);
-    AssignEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
-class CallEntity : public StmtEntity {
+class CallEntity : public SynonymStmtEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
-    explicit CallEntity(int lineNumber);
     explicit CallEntity(string synonym);
-    CallEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
-class WhileEntity : public StmtEntity {
+class WhileEntity : public SynonymStmtEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
-    explicit WhileEntity(int lineNumber);
     explicit WhileEntity(string synonym);
-    WhileEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
-class IfEntity : public StmtEntity {
+class IfEntity : public SynonymStmtEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
-    explicit IfEntity(int lineNumber);
     explicit IfEntity(string synonym);
-    IfEntity();
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
 
 class NamedEntity : public DesignEntity {
     /**
-     * NamedEntity class is the super class for ProcedureEntity, VariableEntity, ConstantEntity and WildCardEntity
+     * NamedEntity class is the super class for ProcedureEntity, VariableEntity, ConstantEntity and WildcardNamedEntity
      * This class stores the specific type of the NamedEntity and also its synonym
      */
+private:
+    static vector<string> validAttrs;
+
 protected:
     string synonym;
 public:
@@ -104,26 +162,47 @@ public:
     string getSynonym();
 
     string toString() override;
+
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
 class ProcedureEntity : public NamedEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
     explicit ProcedureEntity(string synonym);
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
 class VariableEntity : public NamedEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
     explicit VariableEntity(string synonym);
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
 class ConstantEntity : public NamedEntity {
+private:
+    static vector<string> validAttrs;
+
 public:
     explicit ConstantEntity(string synonym);
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    bool checkAttr(string attr) override;
 };
 
-class WildCardEntity : public NamedEntity {
+class WildcardNamedEntity : public NamedEntity {
+private:
+    static vector<string> validAttrs;
 public:
-    explicit WildCardEntity();
+    explicit WildcardNamedEntity();
+    bool checkAttr(string attr) override;
 };
 
 #endif //INC_22S2_CP_SPA_TEAM_22_ENTITIES_H

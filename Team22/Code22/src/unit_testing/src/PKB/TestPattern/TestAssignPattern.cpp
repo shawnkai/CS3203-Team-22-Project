@@ -14,7 +14,7 @@ TEST_CASE("Test 1: Creation of Assign Pattern") {
         PKB pkbTest = PKB();
         pkbTest.addAssignPattern("a", "123++", "2");
 
-        vector<AssignPattern*> result = pkbTest.getAllRightHandExpressions();
+        unordered_map<string, unordered_map<string, string>> result = pkbTest.getAllRightHandExpressions();
 
         REQUIRE(result.size() != 0);
     }

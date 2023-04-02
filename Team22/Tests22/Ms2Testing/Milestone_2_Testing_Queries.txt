@@ -1,0 +1,150 @@
+1 - multiple such that, pattern a and with clause
+assign a; variable v;  constant c; while w;
+Select a pattern a ("x", _) such that Parent* (w, a) and Follows*(6, a) with a.stmt# = c.value
+none
+5000
+2 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; stmt s;
+Select w pattern w ("i", _) such that Parent* (w, s) such that Follows*(a, s) with w.stmt# = c.value
+none
+5000
+3 - multiple such that, pattern while and with clause
+assign a, a1; variable v;  constant c; while w; if if;
+Select if pattern if ("x", _, _) such that Parent* (if, a) such that Follows*(a1, if) with if.stmt# = c.value
+8, 25
+5000
+4 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt;
+Select a pattern a ("x", _) such that Parent (w, a) such that Uses(a, "x") with a.stmt# = stmt.stmt#
+7,35
+5000
+5 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w ("i", _) such that Parent* (w, pn) such that Modifies(w, "a") with a.stmt# = stmt.stmt#
+6,26
+5000
+6 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re;
+Select if pattern if ("i", _, _) such that Parent (if, a) such that Uses(if, v) with v.varName = re.varName
+30
+5000
+7 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re;
+Select a pattern a ("x", _) such that Parent (w, a) and Modifies(a, "i") with a.stmt# = c.value
+none
+5000
+8 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w (v, _) such that Parent (w, a) and Modifies(a, v) with v.varName = pn.varName and v.varName = re.varName
+none
+5000
+9 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w ("a", _) and Parent (w, a) such that Modifies(a, v) with v.varName = pn.varName and v.varName = re.varName
+none
+5000
+10 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if pattern if ("x", _, _) such that Parent (w, if) such that Modifies(if, _) with if.stmt# =  c.value
+8
+5000
+11 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select v pattern a (v, _"x+y"_) such that Parent* (w, a) such that Uses(a, v) with v.varName = re.varName
+x
+5000
+12 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w (_, _) such that Follows* (w, a) such that Uses(w, "z")
+26
+5000
+13 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if such that Follows* (w, a) with a.stmt# = c.value pattern if ("x", _)
+SyntaxError
+5000
+14 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if pattern if ("x", _, v) such that Follows* (w, a) such that Uses(1, a) with a.stmt# = c.value
+SyntaxError
+5000
+15 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select a pattern a ("a", _) such that Parent (w, a) such that Modifies(w, "b") with v.varName = "a"
+27
+5000
+16 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w  such that Follows* (w, a) and Modifies(w, v) pattern w ("x", _)
+none
+5000
+17 - multiple such that, pattern while and with clause
+assign a; variable v, v1;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w (v, _) such that Follows* (w, a) and Modifies(w, v1) with v1.varName = re.varName
+26,29
+5000
+18 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w ("x", v) such that Follows* (w, a) and Modifies(w, a) with v.varName = pn.varName
+SyntaxError
+5000
+19 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if pattern if ("x", _, _) such that Follows* (w, a) pattern w ("i", _) such that Modifies(w, v)
+8,10,15,25
+5000
+20 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if pattern if ("x", _, _) such that Follows* (if, w) such that Modifies(w, v) with if.stmt# = c.value
+none
+5000
+21 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select a pattern a (_, _) such that Uses (a, v) such that Modifies(a, v) with a.stmt# = c.value
+7,9,11,19,21,23
+5000
+22 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select a pattern a (_, _"x+y"_) such that Uses (a, v) such that Modifies(a, v) with v.varName = v.varName
+11
+5000
+23 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w ("i", _) such that Uses (w, _) such that Modifies(w, v) with v.varName = re.varName
+6,26,28,29
+5000
+24 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w ("x", _) such that Uses (_, v) such that Modifies(w, v) with v.varName = re.varName
+SemanticError
+5000
+25 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if such that Uses (if, _) and Modifies(1, v) pattern if (v, _, _) with if.stmt# = c.value
+8,25
+5000
+26 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if such that Uses (if, _) and Modifies(1, a) pattern a ("x+y",_) with if.stmt# = c.value
+SyntaxError
+5000
+27 - multiple such that, pattern while and with clause
+assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select if such that Uses (if, _) and Modifies(1, a) pattern a ("x+y",_) with if.stmt# = v.varName
+SyntaxError
+5000
+28 - multiple such that, pattern while and with clause
+assign a; variable v, v1;  constant c; while w; if if; stmt stmt; read re; print pn;
+Select w pattern w (v, _) such that Follows* (w, a) and Modifies(w, v) with v.varName = re.varName
+none
+5000
+29 - multiple such that and and clause
+assign a; variable v; stmt s,s1,s2; if if; constant c;
+Select s such that Uses (s, v) and Modifies (s, "x") such that Follows (s, if) and Parent (s1, s) and Uses (s2, v) with s.stmt# = c.value
+7,9
+5000
+30 - multiple such that and and clause
+assign a, a1, a2; variable v, v1; stmt s, s1;
+Select s1 such that Uses (s1, v1) with a1.stmt# = 20 such that Parent (s1, s) pattern a2("a", _) and Modifies (s1, "x") and Modifies (a, v) pattern a (v, _"x"_)
+6,8,10,15,25,26,28
+5000

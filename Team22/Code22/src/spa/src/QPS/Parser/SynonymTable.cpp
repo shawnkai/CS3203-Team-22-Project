@@ -10,7 +10,7 @@ void SynonymTable::add(string type, const string& name) {
         throw SyntacticException();
     }
     if (type == "stmt") {
-        this->table[name] = new StmtEntity("STATEMENT", name);
+        this->table[name] = new SynonymStmtEntity(name);
     } else if (type == "read") {
         this->table[name] = new ReadEntity(name);
     } else if (type == "print") {
@@ -33,14 +33,14 @@ void SynonymTable::add(string type, const string& name) {
 }
 
 DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
-    if (!table.count(name)) {
+    if (!exists(name)) {
         throw SemanticException();
     }
 
-    DesignEntity *entity = table[name];
+    DesignEntity *entity = table.at(name);
 
     if (desiredType == "stmt") {
-        return new StmtEntity(entity->getType(), name);
+        return new SynonymStmtEntity(name);
     } else if (desiredType == "named") {
         return new NamedEntity(entity->getType(), name);
     } else if (desiredType == "select"){
@@ -49,7 +49,10 @@ DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
         string errorMsg = "unknown type: " + desiredType;
         throw std::runtime_error(errorMsg);
     }
+}
 
+bool SynonymTable::exists(string name) {
+    return table.count(name);
 }
 
 vector<tuple<string, string>> SynonymTable::getSimpleSynonymTable() {

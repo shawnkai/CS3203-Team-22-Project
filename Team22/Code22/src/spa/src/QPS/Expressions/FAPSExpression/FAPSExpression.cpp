@@ -4,44 +4,19 @@
 
 #include "FAPSExpression.h"
 
-FAPSExpression::FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction) : Expression({s1, s2}) {
+FAPSExpression::FAPSExpression(StmtRef* s1, StmtRef* s2, string pkbAbstraction) : Expression({s1, s2}) {
     this->pkbAbstraction = pkbAbstraction;
 }
 
-FollowsExpression::FollowsExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
-
-string FollowsExpression::toString() {
-    return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-FollowsStarExpression::FollowsStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "FOLLOWSSTAR") {}
-
-string FollowsStarExpression::toString() {
-    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-ParentExpression::ParentExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENT") {}
-string ParentExpression::toString() {
-    return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-ParentStarExpression::ParentStarExpression(StmtEntity* s1, StmtEntity* s2) : FAPSExpression(s1, s2, "PARENTSTAR") {}
-string ParentStarExpression::toString() {
-    return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
-
-ResultTable FAPSExpression::evaluate(PKB pkb) {
-    if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
-        return ResultTable({{"_", {"-"}}});
-    }
-    else if (this->entities[0]->toString() == this->entities[1]->toString()) {
-        return ResultTable({{this->entities[0]->toString(), {}}});
-    } else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1 && dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
+ResultTable* FAPSExpression::evaluate(PKB pkb) {
+    if (this->entities[0]->toString() == this->entities[1]->toString() && !dynamic_cast<WildcardStmtRef*>(this->entities[0])) {
+        return new ResultTable({{this->entities[0]->toString(), {}}});
+    } else if (!dynamic_cast<StmtEntity*>(this->entities[0]) && !dynamic_cast<StmtEntity*>(this->entities[1])) {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
         auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
         vector<string> possibleLines;
         for (Result res : vars2) {
-            for (string l : res.getQueryResult()) {
+            for (const string& l : res.getQueryResult()) {
                 possibleLines.push_back(l);
             }
         }
@@ -64,8 +39,19 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
                 }
             }
         }
-        return ResultTable(results);
-    } else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1) {
+        if (dynamic_cast<WildcardStmtRef*>(this->entities[0]) && dynamic_cast<WildcardStmtRef*>(this->entities[1])) {
+            if (!results.empty()) {
+                return new BooleanTrueTable();
+            } else {
+                return new BooleanFalseTable();
+            }
+        } else if (dynamic_cast<WildcardStmtRef*>(this->entities[0])) {
+            return (new ResultTable(results))->getColumns({this->entities[1]->toString()});
+        } else if (dynamic_cast<WildcardStmtRef*>(this->entities[1])) {
+            return (new ResultTable(results))->getColumns({this->entities[0]->toString()});
+        }
+        return new ResultTable(results);
+    } else if (!dynamic_cast<StmtEntity*>(this->entities[0])) {
         auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
         int nextLineInt = dynamic_cast<StmtEntity*>(this->entities[1])->getLine();
         string nextLine = to_string(nextLineInt);
@@ -78,8 +64,8 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
                 }
             }
         }
-        return ResultTable({{this->entities[0]->toString(), followedLines}});
-    } else if (dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
+        return new ResultTable({{this->entities[0]->toString(), followedLines}});
+    } else if (!dynamic_cast<StmtEntity*>(this->entities[1])) {
         int prevLineInt = dynamic_cast<StmtEntity*>(this->entities[0])->getLine();
         string prevLine = to_string(prevLineInt);
         Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", prevLine));
@@ -96,7 +82,7 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
                 followedLines.push_back(line);
             }
         }
-        return ResultTable({{this->entities[1]->toString(), followedLines}});
+        return new ResultTable({{this->entities[1]->toString(), followedLines}});
     } else {
         int prevLineInt = dynamic_cast<StmtEntity*>(this->entities[0])->getLine();
         string prevLine = to_string(prevLineInt);
@@ -104,23 +90,27 @@ ResultTable FAPSExpression::evaluate(PKB pkb) {
         string nextLine = to_string(nextLineInt);
         Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", prevLine));
         if (Utilities::checkIfPresent(follows.getQueryResult(), nextLine)) {
-            return ResultTable({{this->entities[0]->toString(), {this->entities[1]->toString()}}});
+            return new ResultTable({{this->entities[0]->toString(), {this->entities[1]->toString()}}});
         } else {
-            return ResultTable({{this->entities[0]->toString(), {}}});
+            return new BooleanFalseTable();
         }
     }
 }
 
-tuple<StmtEntity*, StmtEntity*> FAPSExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
-    StmtEntity *a1;
-    StmtEntity *a2;
+tuple<StmtRef*, StmtRef*> FAPSExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
+    StmtRef *a1;
+    StmtRef *a2;
 
     if (Utilities::isNumber(arg1)) {
         a1 = new StmtEntity(stoi(arg1));
     } else if (arg1 == "_") {
-        a1 = new StmtEntity();
+        a1 = new WildcardStmtRef();
     } else {
-        a1 = dynamic_cast<StmtEntity*>(synonymTable.get(arg1, "stmt"));
+        DesignEntity *temp = synonymTable.get(arg1, "select");
+        if (!dynamic_cast<StmtRef*>(temp)) {
+            throw SemanticException();
+        }
+        a1 = dynamic_cast<StmtRef*>(temp);
         if (a1->getType() == "VARIABLE" || a1->getType() == "PROCEDURE" || a1->getType() == "CONSTANT") {
             throw SemanticException();
         }
@@ -129,9 +119,13 @@ tuple<StmtEntity*, StmtEntity*> FAPSExpression::generateStmtEntityPair(string ar
     if (Utilities::isNumber(arg2)) {
         a2 = new StmtEntity(stoi(arg2));
     } else if (arg2 == "_") {
-        a2 = new StmtEntity();
+        a2 = new WildcardStmtRef();
     } else {
-        a2 = dynamic_cast<StmtEntity*>(synonymTable.get(arg2, "stmt"));
+        DesignEntity *temp = synonymTable.get(arg2, "select");
+        if (!dynamic_cast<StmtRef*>(temp)) {
+            throw SemanticException();
+        }
+        a2 = dynamic_cast<StmtRef*>(temp);
         if (a2->getType() == "VARIABLE" || a2->getType() == "PROCEDURE" || a2->getType() == "CONSTANT") {
             throw SemanticException();
         }
@@ -140,7 +134,33 @@ tuple<StmtEntity*, StmtEntity*> FAPSExpression::generateStmtEntityPair(string ar
     return std::make_tuple(a1, a2);
 }
 
+FollowsExpression::FollowsExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
+
+string FollowsExpression::toString() {
+    return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+FollowsStarExpression::FollowsStarExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "FOLLOWSSTAR") {}
+
+string FollowsStarExpression::toString() {
+    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+ParentExpression::ParentExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "PARENT") {}
+string ParentExpression::toString() {
+    return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
+ParentStarExpression::ParentStarExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "PARENTSTAR") {}
+string ParentStarExpression::toString() {
+    return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
+
 vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsFollowsExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -148,10 +168,10 @@ vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const str
     vector<FollowsExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSREGEX)) {
-        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
 
-        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-        StmtEntity* a2 = std::get<1>(stmtEntityPair);
+        StmtRef* a1 = std::get<0>(stmtEntityPair);
+        StmtRef* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new FollowsExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -160,6 +180,10 @@ vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const str
 }
 
 vector<FollowsStarExpression*> FollowsStarExpression::extractFollowsStarExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsFollowsStarExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -167,10 +191,10 @@ vector<FollowsStarExpression*> FollowsStarExpression::extractFollowsStarExpressi
     vector<FollowsStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSSTARREGEX)) {
-        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
 
-        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-        StmtEntity* a2 = std::get<1>(stmtEntityPair);
+        StmtRef* a1 = std::get<0>(stmtEntityPair);
+        StmtRef* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new FollowsStarExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -179,6 +203,10 @@ vector<FollowsStarExpression*> FollowsStarExpression::extractFollowsStarExpressi
 }
 
 vector<ParentExpression*> ParentExpression::extractParentExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsParentExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -186,10 +214,10 @@ vector<ParentExpression*> ParentExpression::extractParentExpression(const string
     vector<ParentExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PARENTREGEX)) {
-        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
 
-        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-        StmtEntity* a2 = std::get<1>(stmtEntityPair);
+        StmtRef* a1 = std::get<0>(stmtEntityPair);
+        StmtRef* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new ParentExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -198,6 +226,10 @@ vector<ParentExpression*> ParentExpression::extractParentExpression(const string
 }
 
 vector<ParentStarExpression*> ParentStarExpression::extractParentStarExpression(const string& query, const SynonymTable& synonymTable)  {
+    if (!containsParentStarExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
@@ -205,10 +237,10 @@ vector<ParentStarExpression*> ParentStarExpression::extractParentStarExpression(
     vector<ParentStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PARENTSTARREGEX)) {
-        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
 
-        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-        StmtEntity* a2 = std::get<1>(stmtEntityPair);
+        StmtRef* a1 = std::get<0>(stmtEntityPair);
+        StmtRef* a2 = std::get<1>(stmtEntityPair);
 
         expressions.push_back(new ParentStarExpression(a1, a2));
         searchStart = sm.suffix().first;

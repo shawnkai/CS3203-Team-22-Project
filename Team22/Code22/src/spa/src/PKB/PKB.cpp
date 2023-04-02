@@ -24,6 +24,8 @@ using namespace std;
 #include "Pattern//PatternFactory.h"
 #include "Pattern/PatternDatabaseFactory.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
@@ -140,7 +142,7 @@ unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string 
  *
  * @return A vector of AssignPattern pointer objects, or an empty vector, if nothing is stored.
  */
-vector<AssignPattern*> PKB::getAllRightHandExpressions() {
+unordered_map<string, unordered_map<string, string>> PKB::getAllRightHandExpressions() {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
@@ -162,6 +164,24 @@ PKB::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, st
 
 int PKB::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
+}
+
+void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
+    if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
+        throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
+    }
+
+    std::string underlineStr = "_";
+    this->addDesignAbstraction(designAbstraction,
+                               make_tuple(underlineStr, get<0>(abstractionDetails), get<1>(abstractionDetails)));
+}
+
+Result PKB::getDesignAbstraction(string abstractionType, string query) {
+    if (abstractionType == "USES" || abstractionType == "MODIFIES") {
+        throw InvalidAPICallException((abstractionType + " Cannot Be Accessed Via This API").data());
+    }
+
+    return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
 }
 
 void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,

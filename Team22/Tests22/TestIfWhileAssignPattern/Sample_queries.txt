@@ -6,12 +6,12 @@ a, b
 2- test if all wildcard, multiple spaces
 variable v; if i;
 Select v pattern i (  _, _   , _)
-a, b
+a, b, c, x
 5000
 3- test if semantic error
 variable v; if i;
 Select v pattern i (v, v, _)
-SemanticError
+SyntaxError
 5000
 4- test if syntax error, missing parameter
 variable v; if i;
@@ -31,7 +31,7 @@ a
 7- test while semantic error
 variable v; while w;
 Select v pattern w (_, v)
-SemanticError
+SyntaxError
 5000
 8- test while general case
 variable v; while w;

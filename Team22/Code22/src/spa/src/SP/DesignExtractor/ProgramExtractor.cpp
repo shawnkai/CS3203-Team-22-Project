@@ -28,6 +28,7 @@ vector<int> callStmts;
 void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 	std::map<std::string, std::vector<string>> mapOfCalls;
 	std::vector<string> vectorOfProcedureNames;
+	std::string underlineStr = "_";
 
 	if (root.nodeType != TokenType::PROGRAM) {
 		cout << "something went wrong" << endl;
@@ -62,7 +63,7 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 							vectorNew.push_back(procedureCalled);
 							mapOfCalls[procedureName] = vectorNew;
 						}
-						pkbinstance.addDesignAbstraction("CALLS", make_tuple("_", procedureName, procedureCalled));
+						pkbinstance.addDesignAbstraction("CALLS", make_tuple(underlineStr, procedureName, procedureCalled));
 						cout << procedureName + " calls " + procedureCalled << endl;
 						pkbinstance.addDesignEntity("CALL", make_tuple(procedureCalled, std::to_string(callLineNo)));
 						pkbinstance.addDesignEntity("STATEMENT", make_tuple(procedureCalled, std::to_string(callLineNo)));
@@ -129,8 +130,8 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 						}
 					}
 					for (int j = 0; j < vectorOfCallsSTAR.size(); j++) {
-						pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple("_", procedureName, vectorOfCallsSTAR[j]));
-						pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple("_", vectorOfCallsSTAR[j], procedureName));
+						pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple(underlineStr, procedureName, vectorOfCallsSTAR[j]));
+						pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple(underlineStr, vectorOfCallsSTAR[j], procedureName));
 						cout << procedureName + " callsStar " + vectorOfCallsSTAR[j] << endl;
 
 					}

@@ -3,76 +3,38 @@
 #include "Parser.h"
 #include "Utilities.h"
 #include "QPS/Exceptions/Exceptions.h"
+#include "QPS/Expressions/CallsExpression/CallsExpression.h"
 
 using namespace std;
 
 QueryParser::QueryParser() {}
 
 SelectExpression* QueryParser::parse(string query) {
-    vector<Expression*> conditions;
 
+    vector<Expression*> conditions;
     query = sanitiseQuery(query);
     query = replaceAnd(query);
 
     if (this->isDeclaration(query) || query.empty()) {
         this->extractDeclarations(query);
-        return new SelectExpression({}, conditions);
+        return NULL;
     } else if (this->isValidQuery(query)) {
-        smatch sm;
-        regex_search(query, sm, RETURNVALUEREGEX);
+        pair<vector<DesignEntity*>, vector<string>> synonymsAndAttributes = SelectExpression::extractSynonymsAndAttributes(query, this->synonymTable);
 
-        DesignEntity *arg = this->synonymTable.get(sm.str(1), "select");
+        Utilities::concatenateVectors(conditions, ModifiesExpression::extractModifiesExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, UsesExpression::extractUsesExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, PatternExpression::extractPatternExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, FollowsExpression::extractFollowsExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions,
+                                      FollowsStarExpression::extractFollowsStarExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, ParentExpression::extractParentExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions,
+                                      ParentStarExpression::extractParentStarExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, AttrCondExpression::extractAttrCondExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, CallsExpression::extractCallsExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, CallsStarExpression::extractCallsStarExpression(query, synonymTable));
 
-        if (ModifiesExpression::containsModifiesExpression(query)) {
-            vector<ModifiesExpression*> modifiesConditions = ModifiesExpression::extractModifiesExpression(query, synonymTable);
-            for (ModifiesExpression *e : modifiesConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (UsesExpression::containsUsesExpression(query)) {
-            vector<UsesExpression*> usesConditions = UsesExpression::extractUsesExpression(query, synonymTable);
-            for (UsesExpression *e : usesConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (PatternExpression::containsPatternExpression(query)) {
-            vector<PatternExpression*> patternConditions = PatternExpression::extractPatternExpression(query, synonymTable);
-            for (PatternExpression *e : patternConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (FollowsExpression::containsFollowsExpression(query)) {
-            vector<FollowsExpression*> followsConditions = FollowsExpression::extractFollowsExpression(query, synonymTable);
-            for (FollowsExpression *e : followsConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (FollowsStarExpression::containsFollowsStarExpression(query)) {
-            vector<FollowsStarExpression*> followsStarConditions = FollowsStarExpression::extractFollowsStarExpression(query, synonymTable);
-            for (FollowsStarExpression *e : followsStarConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (ParentExpression::containsParentExpression(query)) {
-            vector<ParentExpression*> parentConditions = ParentExpression::extractParentExpression(query, synonymTable);
-            for (ParentExpression *e : parentConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        if (ParentStarExpression::containsParentStarExpression(query)) {
-            vector<ParentStarExpression*> parentStarConditions = ParentStarExpression::extractParentStarExpression(query, synonymTable);
-            for (ParentStarExpression *e : parentStarConditions) {
-                conditions.push_back(e);
-            }
-        }
-
-        return new SelectExpression({arg}, conditions);
+        return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, conditions);
     } else {
         throw SyntacticException();
     }
@@ -83,8 +45,6 @@ string QueryParser::sanitiseQuery(const string& query) {
     result_query = regex_replace(result_query, std::regex(R"(\s+(?=(?:(?:[^"]*"){2})*[^"]*"[^"]*$))"), "$1");
     return result_query;
 }
-
-
 
 string QueryParser::replaceAnd(string query) {
     string previousClause;
@@ -97,19 +57,30 @@ string QueryParser::replaceAnd(string query) {
 
     string result_query;
 
+    vector<string> subClauses = {"Follows", "Follows*", "Parent", "Parent*", "Uses", "Modifies",
+                                 "Calls", "Calls*", "Next", "Next*", "Affects", "Affects*"};
 
+    vector<string> split_tokens;
 
     for ( ; split_iterator != end; ++split_iterator) {
-        if (split_iterator->str() == "such-that" || split_iterator->str() == "pattern" || split_iterator->str() == "with") {
-            previousClause = split_iterator->str();
+        split_tokens.push_back(split_iterator->str());
+    }
+
+
+    for (int i = 0; i < split_tokens.size(); i++) {
+        if (split_tokens[i] == "such-that" || split_tokens[i] == "pattern" || split_tokens[i] == "with") {
+            previousClause = split_tokens[i];
             result_query += previousClause + " ";
-        } else if (split_iterator->str() == "and") {
+        } else if (split_tokens[i] == "and") {
             if (previousClause.empty()) {
                 throw SyntacticException();
             }
+            if (previousClause == "pattern" && std::find(subClauses.begin(), subClauses.end(), split_tokens[i + 1]) != subClauses.end()) {
+                previousClause = "such-that";
+            }
             result_query += previousClause + " ";
         } else {
-            result_query += (split_iterator->str()) + " ";
+            result_query += (split_tokens[i]) + " ";
         }
     }
 
@@ -135,9 +106,9 @@ void QueryParser::extractDeclarations(string query) {
         smatch match = *i;
         string type = match.str(2);
         string name =  match.str(3);
-
+        name = Utilities::removeAllOccurrences(name, ' ');
         unsigned long pos = 0;
-        string delimiter = ", ";
+        string delimiter = ",";
         if (name.find(delimiter) != std::string::npos) {
             while ((pos = name.find(delimiter)) != std::string::npos) {
                 string subname = name.substr(0, pos);

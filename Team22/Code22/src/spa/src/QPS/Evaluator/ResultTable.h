@@ -17,45 +17,58 @@ class ResultTable {
     map<string, vector<string>> table;
 
 public:
-    ResultTable(initializer_list<pair<string, vector<string>>> args);
+    explicit ResultTable(initializer_list<pair<string, vector<string>>> args);
 
     explicit ResultTable(const map<string, vector<string>>& table);
 
     ::size_t getSize();
 
-    ResultTable intersection(ResultTable table2);
+    ResultTable* intersection(ResultTable* table2);
 
-    static ResultTable intersection(vector<ResultTable> resultTables);
+    static ResultTable* intersection(vector<ResultTable*> resultTables);
+
+    ResultTable* removeColumn(string column) {
+        auto it = this->table.find(column);
+        if (it != this->table.end()) {
+            this->table.erase(it);
+        }
+        return new ResultTable(this->table);
+    }
 
     string toString();
 
-    ResultTable getColumn(string column);
+    ResultTable* getColumns(const vector<string>& columns);
+
+    virtual vector<string> getValues();
 
     vector<string> getValues(const string& column);
 
     vector<string> getColumnNames();
 
-    bool equals(ResultTable table2);
+    void renameColumn(const string& oldName, const string& newName);
+
+    bool equals(ResultTable* table2);
 
 private:
 
-    ResultTable crossProduct(ResultTable table2, const vector<string>& all_keys);
+    ResultTable* crossProduct(ResultTable* table2, const vector<string>& all_keys);
 
-    ResultTable naturalJoin(ResultTable table2, const vector<string>& all_keys, vector<string> common_keys);
+    ResultTable* naturalJoin(ResultTable* table2, const vector<string>& all_keys, vector<string> common_keys);
 
 };
 
-class IntermediateResultTable : public ResultTable {
+class BooleanTrueTable : public ResultTable {
 public:
-    IntermediateResultTable(initializer_list<pair<string, vector<string>>> args);
+    BooleanTrueTable();
 
-
+    vector<string> getValues();
 };
 
-class FinalResultTable : public ResultTable {
-    //FinalResultTable();
+class BooleanFalseTable : public ResultTable {
+public:
+    BooleanFalseTable();
 
-    //static IntermediateResultTable intersection(IntermediateResultTable table1, IntermediateResultTable table2);
+    vector<string> getValues();
 };
 
 #endif //SPA_RESULTTABLE_H
