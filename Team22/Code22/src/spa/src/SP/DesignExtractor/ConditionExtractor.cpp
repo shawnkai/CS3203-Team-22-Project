@@ -28,6 +28,11 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 	std::string nodeType1 = ToString(currentNode.nodeType);
 	queue<TNode> queue1;
 	queue1.push(currentNode);
+	std::string statementStr = "STATEMENT";
+	std::string procedureStr = "PROCEDURE";
+	std::string procedurecallStr = "PROCEDURECALL";
+	std::string ifStr = "IF";
+	std::string whileStr = "WHILE";
 	while (queue1.size() != 0) {
 		TNode currentNode1 = queue1.front();
 		TokenType tokenType1 = currentNode1.nodeType;
@@ -35,22 +40,41 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			std::string nameOfVariable = currentNode1.stringId;
 			int lineNumOfVariable = currentNode1.stmtNumber;
 			cout << currentNode1.stringId << endl;
-			pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", procedureName, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, procedureName, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, nameOfVariable, procedureName));
 			cout << std::to_string(lineNumOfVariable) + " uses procedure " + procedureName << endl;
+			cout << nameOfVariable + " uses procedure " + procedureName << endl;
 
 			Result result1 = pkbinstance.getDesignAbstraction("INVERSECALLS", make_pair("_", procedureName));
 			std::vector<std::string> vector1 = result1.getQueryResult();
 			for (int i = 0; i < vector1.size(); i++) {
 				if (vector1[i] != "none") {
-					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURE", vector1[i], std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, vector1[i], std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, nameOfVariable, vector1[i]));
 					cout << std::to_string(lineNumOfVariable) + " uses procedure " + vector1[i] << endl;
+					cout << nameOfVariable + " uses procedure " + vector1[i] << endl;
 				}
 				Result result3 = pkbinstance.getDesignEntity("CALL", vector1[i]);
 				std::vector<std::string> vector3 = result3.getQueryResult();
 				for (int j = 0; j < vector3.size(); j++) {
 					if (vector3[j] != "none") {
 						pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector3[j], std::to_string(lineNumOfVariable)));
+						pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", nameOfVariable, vector3[j]));
+						pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, vector3[j]));
+						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
+
+						if (mapOfUsedVarforCalls.count(vector3[j]) > 0) {
+							vector<string> usedVars = mapOfUsedVarforCalls.at(vector3[j]);
+							usedVars.push_back(nameOfVariable);
+							mapOfUsedVarforCalls[vector3[j]] = usedVars;
+						}
+						else {
+							vector<string> usedVars;
+							usedVars.push_back(nameOfVariable);
+							mapOfUsedVarforCalls[vector3[j]] = usedVars;
+						}
+
 						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
 					}
 				}
@@ -61,6 +85,21 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			for (int i = 0; i < vector2.size(); i++) {
 				if (vector2[i] != "none") {
 					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector2[i], std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", nameOfVariable, vector2[i]));
+					pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, vector2[i]));
+					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
+
+					if (mapOfUsedVarforCalls.count(vector2[i]) > 0) {
+						vector<string> usedVars = mapOfUsedVarforCalls.at(vector2[i]);
+						usedVars.push_back(nameOfVariable);
+						mapOfUsedVarforCalls[vector2[i]] = usedVars;
+					}
+					else {
+						vector<string> usedVars;
+						usedVars.push_back(nameOfVariable);
+						mapOfUsedVarforCalls[vector2[i]] = usedVars;
+					}
+
 					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
 				}
 			}
@@ -80,15 +119,15 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {
 					cout << std::to_string(whileContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("USES", make_tuple("WHILE", nameOfVariable, std::to_string(whileContainers[i])));
-					pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(whileContainers[i])));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, nameOfVariable, std::to_string(whileContainers[i])));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(whileContainers[i])));
 				}
 			}
 			if (ifContainers.size() != 0) {
 				for (int i = 0; i < ifContainers.size(); i++) {
 					cout << std::to_string(ifContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("USES", make_tuple("IF", nameOfVariable, std::to_string(ifContainers[i])));
-					pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", nameOfVariable, std::to_string(ifContainers[i])));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, nameOfVariable, std::to_string(ifContainers[i])));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(ifContainers[i])));
 				}
 			}
 
