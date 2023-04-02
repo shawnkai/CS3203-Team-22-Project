@@ -66,10 +66,9 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 				std::vector<std::string> vector3 = result3.getQueryResult();		
 				for (int j = 0; j < vector3.size(); j++) {
 					if (vector3[j] != "none") {
-						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", vector3[j], std::to_string(lineNumOfVariable)));
-						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", variableName, vector3[j]));
-						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, vector3[j]));
-						cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector3[j] << endl;
+						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, vector3[j], std::to_string(lineNumOfVariable)));
+						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, variableName, vector3[j]));
+						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, vector3[j]));
 
 						if (mapOfModifiedVarforCalls.count(vector3[j]) > 0) {
 							vector<string> modifiedVars = mapOfModifiedVarforCalls.at(vector3[j]);
@@ -91,10 +90,9 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			std::vector<std::string> vector2 = result2.getQueryResult();
 			for (int i = 0; i < vector2.size(); i++) {
 				if (vector2[i] != "none") {
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", vector2[i], std::to_string(lineNumOfVariable)));
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", variableName, vector2[i]));
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", variableName, vector2[i]));
-					cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector2[i] << endl;
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, vector2[i], std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, variableName, vector2[i]));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, vector2[i]));
 
 					if (mapOfModifiedVarforCalls.count(vector2[i]) > 0) {
 						vector<string> modifiedVars = mapOfModifiedVarforCalls.at(vector2[i]);
@@ -151,10 +149,9 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 				std::vector<std::string> vector3 = result3.getQueryResult();
 				for (int j = 0; j < vector3.size(); j++) {
 					if (vector3[j] != "none") {
-						pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector3[j], std::to_string(lineNumOfVariable)));
-						pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", variableName, vector3[j]));
-						pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", variableName, vector3[j]));
-						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
+						pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, vector3[j], std::to_string(lineNumOfVariable)));
+						pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, variableName, vector3[j]));
+						pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, vector3[j]));
 
 						if (mapOfUsedVarforCalls.count(vector3[j]) > 0) {
 							vector<string> usedVars = mapOfUsedVarforCalls.at(vector3[j]);
@@ -176,10 +173,9 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			std::vector<std::string> vector2 = result2.getQueryResult();
 			for (int i = 0; i < vector2.size(); i++) {
 				if (vector2[i] != "none") {
-					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", vector2[i], std::to_string(lineNumOfVariable)));
-					pkbinstance.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", variableName, vector2[i]));
-					pkbinstance.addDesignAbstraction("USES", make_tuple("STATEMENT", variableName, vector2[i]));
-					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
+					pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, vector2[i], std::to_string(lineNumOfVariable)));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, variableName, vector2[i]));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, vector2[i]));
 
 					if (mapOfUsedVarforCalls.count(vector2[i]) > 0) {
 						vector<string> usedVars = mapOfUsedVarforCalls.at(vector2[i]);
