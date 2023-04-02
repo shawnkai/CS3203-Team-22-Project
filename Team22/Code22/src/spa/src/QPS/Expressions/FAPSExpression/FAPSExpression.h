@@ -17,60 +17,63 @@ private:
     string pkbAbstraction;
 
 protected:
-    static tuple<StmtEntity*, StmtEntity*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
+    static tuple<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
 
 public:
-    explicit FAPSExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
+    explicit FAPSExpression(StmtRef* s1, StmtRef* s2, string pkbAbstraction);
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 
 class FollowsExpression: public FAPSExpression {
 private:
     string pkbAbstraction;
+    static bool containsFollowsExpression(string query);
 
 public:
-    explicit FollowsExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit FollowsExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
     static vector<FollowsExpression*> extractFollowsExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsFollowsExpression(string query);
 };
 
 class FollowsStarExpression: public FAPSExpression {
+private:
+    static bool containsFollowsStarExpression(string query);
+
 public:
-    explicit FollowsStarExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit FollowsStarExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
     static vector<FollowsStarExpression*> extractFollowsStarExpression(const string& query, const SynonymTable& synonymTable);
 
-    static bool containsFollowsStarExpression(string query);
 };
 
 class ParentExpression: public FAPSExpression {
+private:
+    static bool containsParentExpression(string query);
+
 public:
-    explicit ParentExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit ParentExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
     static vector<ParentExpression*> extractParentExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsParentExpression(string query);
 };
 
 class ParentStarExpression: public FAPSExpression {
+private:
+    static bool containsParentStarExpression(string query);
+
 public:
-    explicit ParentStarExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit ParentStarExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
 
     static vector<ParentStarExpression*> extractParentStarExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsParentStarExpression(string query);
 };
 
 

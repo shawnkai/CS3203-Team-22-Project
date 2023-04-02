@@ -36,7 +36,7 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
         arg3 = Utilities::removeAllOccurrences(arg3, ' ');
 
         string arg1 = sm.str(1);
-        auto *a1 = dynamic_cast<StmtEntity*>(synonymTable.get(arg1, "stmt"));
+        auto *a1 = dynamic_cast<StmtRef*>(synonymTable.get(arg1, "select"));
 
         //check for if
         if (!arg4.empty() && (arg4 != "_" || arg3 != "_")) {
@@ -79,7 +79,7 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
         if (arg2.find('\"') != string::npos) {
             a2 = new NamedEntity("ident", arg2);
         } else if (arg2 == "_") {
-            a2 = new WildCardEntity();
+            a2 = new WildcardNamedEntity();
         } else {
             a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
             if (a2->getType() != "VARIABLE") {
@@ -109,7 +109,7 @@ vector<PatternExpression*> PatternExpression::extractPatternExpression(const str
     return expressions;
 }
 
-ResultTable AssignPatternExpression::evaluate(PKB pkb) {
+ResultTable* AssignPatternExpression::evaluate(PKB pkb) {
     string prefix_expr = p2;
     prefix_expr = Utilities::removeAllOccurrences(prefix_expr, '\"');
     prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
@@ -131,9 +131,9 @@ ResultTable AssignPatternExpression::evaluate(PKB pkb) {
             }
         }
         if (p1->getSynonym() == "_") {
-            return ResultTable({make_pair(this->entities[0]->toString(), altResults.find(this->entities[0]->toString())->second)});
+            return new ResultTable({make_pair(this->entities[0]->toString(), altResults.find(this->entities[0]->toString())->second)});
         }
-        return ResultTable(altResults);
+        return new ResultTable(altResults);
     } else {
         auto key_values = pkb.getAllRightHandExpressionsOfAVariable(p1->getSynonym());
         vector<string> result;
@@ -142,11 +142,11 @@ ResultTable AssignPatternExpression::evaluate(PKB pkb) {
                 result.push_back(pair.first);
             }
         }
-        return ResultTable({make_pair(this->entities[0]->toString(), result)});
+        return new ResultTable({make_pair(this->entities[0]->toString(), result)});
     }
 }
 
-ResultTable IfWhilePatternExpression::evaluate(PKB pkb) {
+ResultTable* IfWhilePatternExpression::evaluate(PKB pkb) {
     vector<Result> all_entities = pkb.getAllDesignEntity(this->entities[0]->getType());
     string col1 = this->entities[0]->toString();
     string col2 = this->p1->toString();
@@ -161,7 +161,7 @@ ResultTable IfWhilePatternExpression::evaluate(PKB pkb) {
                 }
             }
         }
-        return ResultTable(results);
+        return new ResultTable(results);
     } else {
         map<string, vector<string>> results = {{col1, {}}, {col2, {}}};
         vector<string> matches;
@@ -175,12 +175,11 @@ ResultTable IfWhilePatternExpression::evaluate(PKB pkb) {
             }
         }
         if (this->p1->getType() == "WILDCARD") {
-            return ResultTable(results).getColumn(col1);
+            return ResultTable(results).getColumns({col1});
         }
-        return ResultTable(results);
+        return new ResultTable(results);
     }
 }
-
 
 string AssignPatternExpression::toString() {
     return "pattern " + this->entities[0]->toString() + "(" + this->p1->getSynonym() + ", " + this->p2 + ")";

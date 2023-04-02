@@ -229,6 +229,7 @@ TEST_CASE("TestCase10_EvaluateSelectStatementWithPatternExactMatching_ShouldSucc
     pkb.clearAllDatabases();
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v6", "8"));
+    pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "8"));
     pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v6", "8"));
     pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v7", "8"));
     pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v8", "8"));
@@ -254,6 +255,7 @@ TEST_CASE("TestCase11_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess")
     pkb.clearAllDatabases();
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v6", "9"));
+    pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "9"));
     pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v6", "9"));
     pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v7", "9"));
     pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v8", "9"));
@@ -274,6 +276,11 @@ TEST_CASE("TestCase11_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess")
 
     vector<string> res1 = queryEvaluator.evaluate(exp1);
     vector<string> res2 = queryEvaluator.evaluate(exp2);
+
+    for (string r: res1) {
+        ::printf("%s, ", r.c_str());
+    }
+    ::printf("\n");
 
     REQUIRE(Utilities::checkIfPresent(res1, "9"));
     REQUIRE(Utilities::checkIfPresent(res2, "9"));

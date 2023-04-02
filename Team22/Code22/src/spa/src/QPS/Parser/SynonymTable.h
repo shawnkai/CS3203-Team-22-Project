@@ -19,6 +19,8 @@ private:
 public:
     vector<tuple<string, string>> getSimpleSynonymTable();
 
+    bool exists(string name);
+
     void add(string type, const string& name);
 
     bool isEquivalentTo(const map<string, string>& expectedTable);
