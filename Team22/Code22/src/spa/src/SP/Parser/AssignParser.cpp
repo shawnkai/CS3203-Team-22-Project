@@ -4,7 +4,7 @@
 
 #include "AssignParser.h"
 
-TreeNode AssignParser::parse() {
+std::shared_ptr<TreeNode> AssignParser::parse() {
     Token currToken = tokenList[pos];
     TNode assignNode;
     assignNode.nodeType = TokenType::ASSIGN;

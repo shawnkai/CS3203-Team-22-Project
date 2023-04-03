@@ -11,7 +11,7 @@
 class ProcedureParser : public MainParser{
 public:
     using MainParser::MainParser;
-    TreeNode parse() override;
+    std::shared_ptr<TreeNode> parse() override;
 };
 
 

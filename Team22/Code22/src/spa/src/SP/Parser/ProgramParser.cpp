@@ -1,7 +1,7 @@
 
 #include "ProgramParser.h"
 
-TreeNode ProgramParser::parse() {
+std::shared_ptr<TreeNode> ProgramParser::parse() {
     Token currToken = tokenList[*pos];
     if (currToken.type != TokenType::PROCEDURE) {
         cout << "Expecting keyword procedure for a legal SIMPLE program" << endl;
@@ -14,11 +14,11 @@ TreeNode ProgramParser::parse() {
     while (*pos < tokenList.size() && tokenList[*pos].type == TokenType::PROCEDURE) {
         ProcedureParserFactory procedureParserFactory;
         auto procedureParser = procedureParserFactory.createParser(tokenList, pos);
-        TreeNode procedureNode = procedureParser->parse();
+        std::shared_ptr<TreeNode> procedureNode = procedureParser->parse();
         programNode.children.push_back(procedureNode);
     }
     if (*pos != tokenList.size()) {
         cout << "Tangling tokens outside the last procedure are ignored" << endl;
     }
-    return programNode;
+    return make_shared<TreeNode>(programNode);
 }

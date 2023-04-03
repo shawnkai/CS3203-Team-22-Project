@@ -3,7 +3,7 @@
 //
 #include "IfParser.h"
 
-TreeNode IfParser::parse() {
+std::shared_ptr<TreeNode> IfParser::parse() {
     TNode ifNode;
     if (!(tokenList[pos].type == TokenType::IF && tokenList[pos].value == "if")) {
         cout << "Expected 'if' keyword but instead got: " << tokenList[pos].value << endl;

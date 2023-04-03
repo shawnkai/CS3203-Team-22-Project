@@ -33,7 +33,7 @@ class MainParser {
 public:
     MainParser(const std::vector<Token>& tokenList, std::shared_ptr<int> pos) : tokenList(tokenList), pos(std::move(pos)) {}
 
-    virtual TreeNode parse() {
+    virtual std::shared_ptr<TreeNode> parse() {
         std::cout << "Main Parser's parse should never be called" << std::endl;
         throw std::runtime_error("Should not call MainParser's parse");
     }

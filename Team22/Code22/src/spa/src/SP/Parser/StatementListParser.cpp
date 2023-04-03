@@ -4,7 +4,7 @@
 
 #include "StatementListParser.h"
 
-TreeNode StatementListParser::parse() {
+std::shared_ptr<TreeNode> StatementListParser::parse() {
     if (*pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
@@ -27,15 +27,21 @@ TreeNode StatementListParser::parse() {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         if (tokenList[*pos].type == TokenType::READ) {
-            auto childNode = parseReadStatement();
+            ReadParserFactory readParserFactory;
+            auto readParser = readParserFactory.createParser(tokenList, pos);
+            auto childNode = readParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::PRINT) {
-            auto childNode = parsePrintStatement();
+            PrintParserFactory printParserFactory;
+            auto printParser = printParserFactory.createParser(tokenList, pos);
+            auto childNode = printParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::WHILE) {
-            auto childNode = parseWhileStatement();
+            WhileParserFactory whileParserFactory;
+            auto whileParser = whileParserFactory.createParser(tokenList, pos);
+            auto childNode = whileParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::IF) {

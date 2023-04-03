@@ -4,7 +4,7 @@
 
 #include "CallParser.h"
 
-TreeNode CallParser::parse() {
+std::shared_ptr<TreeNode> CallParser::parse() {
     Token currToken = tokenList[pos];
     ++ pos;
     TNode callNode;

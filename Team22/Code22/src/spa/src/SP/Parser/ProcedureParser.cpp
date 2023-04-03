@@ -4,7 +4,7 @@
 
 #include "ProcedureParser.h"
 
-TreeNode ProcedureParser::parse() {
+std::shared_ptr<TreeNode> ProcedureParser::parse() {
     Token currToken = tokenList[*pos];
     ProcedureNode node;
     node.nodeType = TokenType::PROCEDURE;
@@ -45,5 +45,5 @@ TreeNode ProcedureParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
-    return node;
+    return make_shared<TreeNode>(node);
 }

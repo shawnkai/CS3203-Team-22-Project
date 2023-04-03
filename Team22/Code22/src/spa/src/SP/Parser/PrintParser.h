@@ -10,7 +10,7 @@ class PrintParser : public MainParser{
 public:
     using MainParser::MainParser;
 
-    TreeNode parse() override;
+    std::shared_ptr<TreeNode> parse() override;
 };
 
 #endif //SPA_PRINTPARSER_H

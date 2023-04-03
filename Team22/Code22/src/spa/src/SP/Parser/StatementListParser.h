@@ -7,12 +7,15 @@
 
 #include "StatementListNode.h"
 #include "MainParser.h"
+#include "ReadParserFactory.h"
+#include "PrintParserFactory.h"
+#include "WhileParserFactory.h"
 
 class StatementListParser : public MainParser{
 public:
     using MainParser::MainParser;
 
-    TreeNode parse() override;
+    std::shared_ptr<TreeNode> parse() override;
 };
 
 

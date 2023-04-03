@@ -1,9 +1,9 @@
 
 #include "WhileParser.h"
 
-TreeNode WhileParser::parse() {
-    Token currToken = tokenList[pos];
-    TNode whileNode;
+std::shared_ptr<TreeNode> WhileParser::parse() {
+    Token currToken = tokenList[*pos];
+    TreeNode whileNode;
     whileNode.nodeType = currToken.type;
     whileNode.stringId = currToken.value;
     whileNode.stmtNumber = currToken.lineNumber;
@@ -11,13 +11,14 @@ TreeNode WhileParser::parse() {
         cout << "Expected 'while' keyword for the statement but instead got: " << currToken.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    Token next = tokenList[++ pos];
+    Token next = tokenList[++ *pos];
     if (next.type != TokenType::LEFT_ROUND_BRACKET) {
         cout << "Expected '(' after while keyword but instead got: " << next.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++ pos;
-    TNode condChild = parseConditionalExpr();
+    ++ *pos;
+
+    TreeNode condChild = parseConditionalExpr();
     if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
         cout << "Expected ')' after conditional expr in 'while' but instead got: " << tokenList[pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
