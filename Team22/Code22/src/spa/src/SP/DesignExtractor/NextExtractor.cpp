@@ -20,7 +20,7 @@ void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<
 			for (int i = 0; i < stmtInblk.size() - 1; i++) {
 				int next1 = i + 1;
 				pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInblk[i]), std::to_string(stmtInblk[next1])));
-				cout << std::to_string(stmtInblk[0]) + " next is " + std::to_string(stmtInblk[next1]) << endl;
+				cout << std::to_string(stmtInblk[i]) + " next is " + std::to_string(stmtInblk[next1]) << endl;
 			}
 		}
 		else {
