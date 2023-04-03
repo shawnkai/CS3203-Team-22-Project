@@ -1,0 +1,5 @@
+1 - comment
+stmt s;
+Select s such that Uses(s, _)
+3
+5000
