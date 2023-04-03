@@ -4,6 +4,9 @@
 
 #include "Utilities.h"
 #include <algorithm>
+#include <regex>
+
+using namespace std;
 
 vector<string> Utilities::findIntersection(vector<vector<string>> &all_vectors) {
     vector<string> intersection;
@@ -42,16 +45,19 @@ bool Utilities::isNumber(string s)
 }
 
 /**
- * Checks if a String is alphanumeric
+ * Checks if a String is valid variable variable name
+ * i.e. alphanumberic characters which may/may not be followed by a number
  *
  * @param str input
  * @return true if String is alphanumeric else false
  */
-bool Utilities::isAlphanumericString(string str) {
-    return std::all_of(
-            str.begin(),
-            str.end(),
-            [](char c){return std::isalnum(c);});
+bool Utilities::isValidVariableName(string str) {
+    static const std::regex pattern("[a-zA-Z_][a-zA-Z0-9_]*");
+    bool temp = std::regex_match(str, pattern);
+    if (!temp) {
+        ::printf("WRONG: %s\n", str.c_str());
+    }
+    return temp;
 }
 
 string Utilities::removeAllOccurrences(string str, char c) {
@@ -124,6 +130,50 @@ string Utilities::infixToPrefix(string exp) {
 
     return prefix;
 }
+
+bool Utilities::checkInfixExpression(string str) {
+    std::stack<char> stk;
+    bool prevIsOperand = false; // to check if the previous character was an operand
+    str = Utilities::removeAllOccurrences(str, ' ');
+    str = regex_replace(str, regex("(\\w){2,}"), "$1");
+    for (char c : str) {
+        if (isalpha(c)) {
+            if (prevIsOperand) {
+                return false; // two operands in a row
+            }
+            prevIsOperand = true;
+        } else if (isdigit(c)) {
+            if (prevIsOperand) {
+                return false; // two operands in a row
+            }
+            prevIsOperand = true;
+        } else if (c == '(' || c == '[' || c == '{') {
+            stk.push(c);
+            prevIsOperand = false;
+        } else if (c == ')' || c == ']' || c == '}') {
+            if (stk.empty()) {
+                return false;
+            }
+            char top = stk.top();
+            stk.pop();
+            if ((c == ')' && top != '(') ||
+                (c == ']' && top != '[') ||
+                (c == '}' && top != '{')) {
+                return false;
+            }
+            prevIsOperand = true;
+        } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
+            if (!prevIsOperand) {
+                return false; // an operator must be preceded by an operand
+            }
+            prevIsOperand = false;
+        } else {
+            return false; // invalid character
+        }
+    }
+    return stk.empty();
+}
+
 
 bool Utilities::checkIfPresent(vector<string> list, string value) {
     for (string v : list) {

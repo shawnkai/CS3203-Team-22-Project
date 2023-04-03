@@ -276,10 +276,10 @@ std::vector<Token> Tokenizer::tokenize(const char* fileName) {
     int currLineNum = 0;
     std::string currLine;
     while (std::getline(inputSimpleProgram, currLine)) {
-        if (currLine.find("while") != std::string::npos
-        || currLine.find("if") != std::string::npos
+        if ((currLine.find("while") != std::string::npos && currLine.find("procedure") == std::string::npos)
+        || (currLine.find("if") != std::string::npos && currLine.find("procedure") == std::string::npos)
         || currLine.find(';') != std::string::npos) {
-            currLineNum++;
+            currLineNum ++;
         }
         int charPos = 0;
         while (charPos < currLine.length()) {

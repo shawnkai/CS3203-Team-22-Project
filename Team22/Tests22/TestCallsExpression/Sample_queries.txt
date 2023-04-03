@@ -1,0 +1,30 @@
+1 - Select Procedures that are Called
+procedure p;
+Select p such that Calls(_, p)
+Second, Third, Fourth, Fifth
+5000
+2 - Select Procedures that Call others
+procedure p;
+Select p such that Calls(p, _)
+First, Second, Fourth
+5000
+3 - Select Procedures that Call others
+procedure p1, p2;
+Select p1 such that Calls(p1, p2)
+First, Second, Fourth
+5000
+4 - Select Procedures that is Called by others
+procedure p1, p2;
+Select p2 such that Calls(p1, p2)
+Second, Third, Fourth, Fifth
+5000
+5 - Select Procedures that Called directly by First
+procedure p;
+Select p such that Calls("First", p)
+Second, Fourth
+5000
+6 - Select Procedures that are Called directly and indirectly by First
+procedure p;
+Select p such that Calls*("First", p)
+Second, Third, Fourth, Fifth
+5000

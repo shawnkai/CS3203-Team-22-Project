@@ -110,13 +110,13 @@ unordered_map<string, string> AssignPatternDatabase::getAllRightHandExpressionsO
  * Variable parameter is a wildcard. An empty vector might be returned, if
  * the database is not populated.
  *
- * @return A vector consisting of all Assignment Patterns.
+ * @return An unordered map consisting of all Assignment Patterns.
  */
-vector<AssignPattern*> AssignPatternDatabase::getAllRightHandExpressionsFromDatabase() {
-    vector<AssignPattern*> result;
+unordered_map<string, unordered_map<string, string>> AssignPatternDatabase::getAllRightHandExpressionsFromDatabase() {
+    unordered_map<string, unordered_map<string, string>> result;
 
-    for (auto& [patternLineNumber, assignPattern]: this->database) {
-        result.push_back(assignPattern);
+    for (auto& [leftHandVariableName, assignPattern]: this->database) {
+        result.insert(make_pair(leftHandVariableName, assignPattern->getAllRightHandExpressions()));
     }
 
     return result;

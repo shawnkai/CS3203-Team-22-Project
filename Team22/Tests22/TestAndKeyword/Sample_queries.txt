@@ -29,8 +29,8 @@ Select v pattern w (_,_) and i (_, _, _)
 x, a, b, c
 5000
 7- and for such that, more clauses
-variable v;
-Select v such that Modifies(_, v) and Uses(_, v) and Modifies(_, _) and Uses(_, _)
+variable v; stmt s;
+Select v such that Modifies(s, v) and Uses(s, v) and Modifies(s, _) and Uses(s, _)
 x, b
 5000
 8- and for a mixture of such that and pattern

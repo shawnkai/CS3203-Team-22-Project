@@ -12,6 +12,8 @@
 #include "QPS/Expressions/PatternExpression/PatternExpression.h"
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
+#include "QPS/Expressions/AttrCondExpression/AttrCondExpression.h"
+#include "QPS/Expressions/CallsExpression/CallsExpression.h"
 
 using namespace std;
 
@@ -19,9 +21,8 @@ class QueryParser {
 private:
     static string sanitiseQuery(const string& query);
 
-    regex ISDECLARATIONREGEX = regex(R"lit(((^|;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))+;)lit");
-    regex RETURNVALUEREGEX = regex(R"lit(Select\s*(\w+))lit");
-    regex EXTRACTDECLARATIONREGEX = regex(R"((^| |;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s+?)+))");
+    regex ISDECLARATIONREGEX = regex(R"lit(((^|;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s*)+))+;)lit");
+    regex EXTRACTDECLARATIONREGEX = regex(R"((^| |;\s?)\s*(stmt|read|print|call|while|if|assign|variable|constant|procedure)\s+((\w|,\s*)+))");
 
 protected:
     SynonymTable synonymTable;

@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of AssignmentUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of AssignmentUses Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("USES", make_tuple("ua1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent AssignmentUses Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("USES", make_pair("ASSIGNMENT", "ua2"));
 
         REQUIRE(pkbResult.toString() == "USES:ASSIGNMENT: ua2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("USES", make_tuple("ASSIGNMENT", "ua2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("USES", "ua2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
