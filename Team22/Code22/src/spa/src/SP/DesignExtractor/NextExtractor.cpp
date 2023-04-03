@@ -19,7 +19,7 @@ void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<
 		if (stmtInblk.size() > 1) {
 			for (int i = 0; i < stmtInblk.size() - 1; i++) {
 				int next1 = i + 1;
-				pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInblk[0]), std::to_string(stmtInblk[next1])));
+				pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInblk[i]), std::to_string(stmtInblk[next1])));
 				cout << std::to_string(stmtInblk[0]) + " next is " + std::to_string(stmtInblk[next1]) << endl;
 			}
 		}
@@ -265,7 +265,7 @@ void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, ve
 			}
 		}
 		if (vector1.size() == 0) {
-			cout << "no blks stored" << endl;
+			cout << "no path" << endl;
 		}
 		else if (vector1.size() == 1) {
 			deque<int> path2 = vector1[0];
