@@ -1,84 +1,84 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>22s2-cp-spa-team-22</name><parsing_time_taken>18.363000</parsing_time_taken>
+<name>22s2-cp-spa-team-22</name><parsing_time_taken>28.000000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnBoolean="1" Calls="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Check if a procedures calls another procedure">1</id><querystr><![CDATA[procedure p, q; Select BOOLEAN such that Calls (p, _)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>3.242000</time_taken>
+<time_taken>7.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Check if a procedures calls another procedure">2</id><querystr><![CDATA[procedure p, q; Select BOOLEAN such that Calls (p, q)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>2.899000</time_taken>
+<time_taken>5.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Calls="1" Modifies="1" SuchThat="2" With="1" CondNum="6" RelNum="2" comment="Check if a procedure directly calls procedure "Third" and modify the variable "i"">3</id><querystr><![CDATA[procedure p, q; Select BOOLEAN such that Calls (p, q) with q.procName = "Third" such that Modifies (p, "i")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>7.072000</time_taken>
+<time_taken>9.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Calls="1" Modifies="1" SuchThat="1" CondNum="4" RelNum="2" comment="Check if a procedure directly calls procedure "Third" and modify the variable "i"">4</id><querystr><![CDATA[procedure p; Select BOOLEAN such that Calls (p, "Third") and Modifies (p, "i")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>4.594000</time_taken>
+<time_taken>7.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Check if a procedure calls procedure "Third" directly or indirectly">5</id><querystr><![CDATA[procedure p; Select BOOLEAN such that Calls* (p, "Third")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>2.701000</time_taken>
+<time_taken>5.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Calls="1" Parent="1" SuchThat="1" With="1" CondNum="5" RelNum="2" comment="Check if a procedure is called from "Second" in a while loop">6</id><querystr><![CDATA[procedure p; call c; while w; Select BOOLEAN such that Calls ("Second", p) and Parent (w, c) with c.procName = p.procName]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>7.259000</time_taken>
+<time_taken>9.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Check if Line 1 modifies variable y">7</id><querystr><![CDATA[procedure p; call c; while w; Select BOOLEAN such that Modifies(1, "y")]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>3.126000</time_taken>
+<time_taken>6.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Uses="1" SuchThat="1" CondNum="3" RelNum="1" comment="Check if Line 3 uses variable v">8</id><querystr><![CDATA[procedure p; call c; while w; Select BOOLEAN such that Uses(3, "v")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>2.728000</time_taken>
+<time_taken>6.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Check if procedure First modifies variable y">9</id><querystr><![CDATA[procedure p; call c; while w; Select BOOLEAN such that Modifies("First", "y")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>4.000000</time_taken>
+<time_taken>7.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Modifies="1" SuchThat="1" CondNum="3" RelNum="1" comment="Check if procedure Third modifies variable y">10</id><querystr><![CDATA[procedure p; call c; while w; Select BOOLEAN such that Modifies("Third", "y")]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>3.771000</time_taken>
+<time_taken>6.000000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" UnnamedVar="1" Uses="1" SuchThat="1" CondNum="4" RelNum="1" comment="Check if there are call statements that uses variable">11</id><querystr><![CDATA[procedure p; call c; while w; Select BOOLEAN such that Uses(c, _)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>2.798000</time_taken>
+<time_taken>6.000000</time_taken>
 <passed/>
 </query>
 </queries>

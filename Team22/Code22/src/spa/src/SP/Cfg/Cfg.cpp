@@ -139,6 +139,7 @@ vector<int> Cfg::handleLinkingBackBlocks(vector<int> pendingHandling, vector<int
         } else {
             auto existing = itr->second;
             existing.insert(existing.end(), neighbours.begin(), neighbours.end());
+            itr->second = existing;
         }
         neighbours.clear();
     }
