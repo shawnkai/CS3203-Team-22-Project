@@ -13,13 +13,14 @@ using namespace std;
 #include "NextExtractor.h"
 
 void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
+	std::string underlineStr = "_";
 	if (blkToStmtMap.count(blkNo) > 0) {
 		vector<int> stmtInblk = blkToStmtMap.at(blkNo);
 		if (stmtInblk.size() > 1) {
 			for (int i = 0; i < stmtInblk.size() - 1; i++) {
 				int next1 = i + 1;
-				pkbinstance.addDesignAbstraction("NEXT", make_tuple("_", std::to_string(stmtInblk[0]), std::to_string(stmtInblk[next1])));
-				cout << std::to_string(stmtInblk[0]) + " next is " + std::to_string(stmtInblk[next1]) << endl;
+				pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInblk[i]), std::to_string(stmtInblk[next1])));
+				cout << std::to_string(stmtInblk[i]) + " next is " + std::to_string(stmtInblk[next1]) << endl;
 			}
 		}
 		else {
@@ -31,11 +32,12 @@ void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<
 };
 
 void NextExtractor::addBtwBlkNextAbstraction(int prevBlk, int nextBlk, std::map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
+	std::string underlineStr = "_";
 	if ((blkToStmtMap.count(prevBlk) > 0) && (blkToStmtMap.count(nextBlk) > 0)) {
 		vector<int> stmtInPrevblk = blkToStmtMap.at(prevBlk);
 		vector<int> stmtInNextblk = blkToStmtMap.at(nextBlk);
 		int lastIdx = stmtInPrevblk.size() - 1;
-		pkbinstance.addDesignAbstraction("NEXT", make_tuple("_", std::to_string(stmtInPrevblk[lastIdx]), std::to_string(stmtInNextblk[0])));
+		pkbinstance.addDesignAbstraction("NEXT", make_tuple(underlineStr, std::to_string(stmtInPrevblk[lastIdx]), std::to_string(stmtInNextblk[0])));
 		cout << std::to_string(stmtInPrevblk[lastIdx]) + " next is " + std::to_string(stmtInNextblk[0]) << endl;
 	}
 	else {
@@ -47,6 +49,7 @@ vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int
 	vector<deque<int>> allPaths;
 	
 	if (currBlk == 0) {
+		cout << "reach 0" << endl;
 		deque<int> finalPath;
 		finalPath.push_back(0);
 		allPaths.push_back(finalPath);
@@ -56,6 +59,8 @@ vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int
 			vector<int> nextBlks = blkToBlkMap.at(currBlk);
 			int size2 = nextBlks.size();
 			if ((size2 > 1)&&(setOfWhile.count(currBlk)==0)) {
+				cout << "enter if" << endl;
+				cout << std::to_string(currBlk) << endl;
 				vector<deque<int>> pathOfIf = findPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[0]);
 				vector<deque<int>> pathOfElse = findPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[1]);
 				for (int i = 0; i < pathOfIf.size(); i++) {
@@ -71,14 +76,21 @@ vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int
 
 			}
 			else if (setOfWhile.count(currBlk) > 0) {
+				cout << "enter while" << endl;
+				cout << std::to_string(currBlk) << endl;
 				vector<deque<int>> returned = findWhilePath(orderedBlks, blkToBlkMap, setOfWhile, nextBlks[0], currBlk);
 				vector<deque<int>> path2 = findPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[1]);
 				for (int j = 0; j < path2.size(); j++) {
 					for (int q = 0; q < returned.size(); q++) {
 						deque<int> returned1 = returned[q];
 						deque<int> path22 = path2[j];
-						for (int i = returned1.size() - 1; i >= 0; i--) {
-							path22.push_front(returned1[i]);
+						if (returned1.size() == 1) {
+							path22.push_front(returned1[0]);
+						}
+						else {
+							for (int i = returned1.size() - 1; i >= 0; i--) {
+								path22.push_front(returned1[i]);
+							}
 						}
 						path22.push_front(currBlk);
 						allPaths.push_back(path22);
@@ -99,6 +111,8 @@ vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int
 					
 			}
 			else {
+				cout << "go to next blk" << endl;
+				cout << std::to_string(currBlk) << endl;
 				vector<deque<int>> nextPath = findPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[0]);
 				for (int j = 0; j < nextPath.size(); j++) {
 					deque<int> nextPath1 = nextPath[j];
@@ -122,10 +136,17 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 	vector<deque<int>> allPaths;
 	if (currBlk == 0) {
 		cout << "return 0 in while stmtlist" << endl;
+		if (currBlk == exitWhile) {
+			deque<int> result;
+			result.push_back(currBlk);
+			allPaths.push_back(result);
+		}
 	}
 	else if (currBlk == exitWhile) {
+		cout << "while: exit a while" << endl;
+		cout << std::to_string(currBlk) << endl;
 		deque<int> result;
-		result.push_back(exitWhile);
+		result.push_back(currBlk);
 		allPaths.push_back(result);
 	}
 	else {
@@ -133,6 +154,8 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 			vector<int> nextBlks = blkToBlkMap.at(currBlk);
 			int size2 = nextBlks.size();
 			if ((size2 > 1) && (setOfWhile.count(currBlk) == 0)) {
+				cout << "while: enter if" << endl;
+				cout << std::to_string(currBlk) << endl;
 				vector<deque<int>> pathOfIf = findWhileStmtlstPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[0], exitWhile);
 				vector<deque<int>> pathOfElse = findWhileStmtlstPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[1], exitWhile);
 				for (int i = 0; i < pathOfIf.size(); i++) {
@@ -140,7 +163,7 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 					pathOfIf1.push_front(currBlk);
 					allPaths.push_back(pathOfIf1);
 				}
-				for (int i = 0; i < pathOfIf.size(); i++) {
+				for (int i = 0; i < pathOfElse.size(); i++) {
 					deque<int> pathOfElse1 = pathOfElse[i];
 					pathOfElse1.push_front(currBlk);
 					allPaths.push_back(pathOfElse1);
@@ -148,14 +171,21 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 
 			}
 			else if (setOfWhile.count(currBlk) > 0) {
+				cout << "while: enter while" << endl;
+				cout << std::to_string(currBlk) << endl;
 				vector<deque<int>> returned = findWhileStmtlstPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[0], currBlk);
 				vector<deque<int>> path2 = findWhileStmtlstPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[1], exitWhile);
 				for (int j = 0; j < path2.size(); j++) {
 					for (int q = 0; q < returned.size(); q++) {
 						deque<int> returned1 = returned[q];
 						deque<int> path22 = path2[j];
-						for (int i = returned1.size() - 1; i >= 0; i--) {
-							path22.push_front(returned1[i]);
+						if (returned1.size() == 1) {
+							path22.push_front(returned1[0]);
+						}
+						else {
+							for (int i = returned1.size() - 1; i >= 0; i--) {
+								path22.push_front(returned1[i]);
+							}
 						}
 						path22.push_front(currBlk);
 						allPaths.push_back(path22);
@@ -168,6 +198,8 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 				}
 			}
 			else {
+				cout << "while: go to next" << endl;
+				cout << std::to_string(currBlk) << endl;
 				vector<deque<int>> nextPath = findWhileStmtlstPath(orderedBlks, blkToBlkMap, setOfWhile, nextBlk, nextBlks[0], exitWhile);
 					
 				for (int j = 0; j < nextPath.size(); j++) {
@@ -216,6 +248,7 @@ void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, ve
 		if (orderedBlks.size() == 1) {
 			deque<int> path1;
 			path1.push_back(orderedBlks[0]);
+			path1.push_back(0);
 			vector1.push_back(path1);
 			cout << "only 1 block" << endl;
 		}
@@ -232,7 +265,7 @@ void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, ve
 			}
 		}
 		if (vector1.size() == 0) {
-			cout << "no blks stored" << endl;
+			cout << "no path" << endl;
 		}
 		else if (vector1.size() == 1) {
 			deque<int> path2 = vector1[0];
@@ -253,7 +286,7 @@ void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, ve
 		}
 		else {
 			for (int i = 0; i < vector1.size(); i++) {
-				deque<int> path2 = vector1[0];
+				deque<int> path2 = vector1[i];
 				if (path2.size() == 2) {
 					addWithinBlkNextAbstraction(path2[0], blkToStmtMap, pkbinstance);
 				}

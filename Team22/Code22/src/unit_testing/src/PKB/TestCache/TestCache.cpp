@@ -36,7 +36,7 @@ TEST_CASE("Test 2: Retrieval Of Data From Cache When Single Result Table is Stor
     cacheController.addToCache("AccessKey_2", resultTable);
     ResultTable* result = cacheController.getResultTableFromCache("AccessKey_2");
 
-    REQUIRE(result->equals(*resultTable));
+    REQUIRE(result->equals(resultTable));
 }
 
 TEST_CASE("Test 3: Retrieval Of Data From Cache When Multiple Result Tables are Stored") {
@@ -57,7 +57,7 @@ TEST_CASE("Test 3: Retrieval Of Data From Cache When Multiple Result Tables are 
     ResultTable* resultOne = cacheController.getResultTableFromCache("AccessKey_3");
     ResultTable* resultTwo = cacheController.getResultTableFromCache("AccessKey_4");
 
-    REQUIRE(((resultOne->equals(*resultTableOne)) && (resultTwo->equals(*resultTableTwo))));
+    REQUIRE(((resultOne->equals(resultTableOne)) && (resultTwo->equals(resultTableTwo))));
 }
 
 TEST_CASE("Test 4: Retrieval Of Data From Cache Which Does Not Exist") {
@@ -92,7 +92,7 @@ TEST_CASE("Test 5: Retrieval Of Cache Database") {
     unordered_map<string, ResultTable*> db = cacheController.getCacheDatabase();
     ResultTable* result = db.find("AccessKey_6")->second;
 
-    REQUIRE(result->equals(*resultTable));
+    REQUIRE(result->equals(resultTable));
 }
 
 TEST_CASE("Test 6: Test clearCacheAPI()") {
@@ -113,7 +113,7 @@ TEST_CASE("Test 6: Test clearCacheAPI()") {
     ResultTable* resultOne = cacheController.getResultTableFromCache("AccessKey_7");
     ResultTable* resultTwo = cacheController.getResultTableFromCache("AccessKey_8");
 
-    bool obtainedCorrectDatabaseBeforeClearing = ((resultOne->equals(*resultTableOne)) && (resultTwo->equals(*resultTableTwo)));
+    bool obtainedCorrectDatabaseBeforeClearing = ((resultOne->equals(resultTableOne)) && (resultTwo->equals(resultTableTwo)));
 
     cacheController.clearCache();
 

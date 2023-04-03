@@ -179,8 +179,9 @@ void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> a
         throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
     }
 
+    std::string underlineStr = "_";
     this->addDesignAbstraction(designAbstraction,
-                               make_tuple("_", get<0>(abstractionDetails), get<1>(abstractionDetails)));
+                               make_tuple(underlineStr, get<0>(abstractionDetails), get<1>(abstractionDetails)));
 }
 
 Result PKB::getDesignAbstraction(string abstractionType, string query) {

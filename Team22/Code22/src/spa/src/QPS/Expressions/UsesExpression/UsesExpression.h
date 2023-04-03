@@ -16,10 +16,11 @@
 
 
 class UsesExpression : public Expression {
+private:
+    static bool containsUsesExpression(string query);
+
 public:
     explicit UsesExpression(DesignEntity* target);
-
-    static bool containsUsesExpression(string query);
 
     static vector<UsesExpression*> extractUsesExpression(const string& query, SynonymTable synonymTable);
 };
@@ -27,11 +28,11 @@ public:
 class UsesSExpression : public UsesExpression {
 
 public:
-    explicit UsesSExpression(StmtEntity* user, DesignEntity* target);
+    explicit UsesSExpression(StmtRef* user, DesignEntity* target);
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 class UsesPExpression : public UsesExpression {
@@ -40,7 +41,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 
