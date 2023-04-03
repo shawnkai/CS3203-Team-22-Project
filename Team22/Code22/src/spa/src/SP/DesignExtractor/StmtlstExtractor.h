@@ -15,6 +15,10 @@
 
 using namespace std;
 
+extern std::map<int, vector<int>> mapOfWhileForCallStmts;
+extern std::map<int, vector<int>> mapOfIfForCallStmts;
+extern vector<int> callStmts;
+
 class StmtlstExtractor {
 public:
 	StmtlstExtractor() {};

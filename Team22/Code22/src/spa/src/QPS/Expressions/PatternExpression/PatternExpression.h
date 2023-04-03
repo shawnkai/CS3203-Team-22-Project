@@ -13,6 +13,8 @@ using namespace std;
 class PatternExpression : public Expression {
 protected:
     NamedEntity *p1;
+    string p2;
+    static bool containsPatternExpression(string query);
 
 public:
     explicit PatternExpression(DesignEntity *entity, NamedEntity *p1);
@@ -21,11 +23,9 @@ public:
         return "";
     };
 
-    virtual ResultTable evaluate(PKB pkb) {
-        return {{}};
+    virtual ResultTable* evaluate(PKB pkb) {
+        return new BooleanFalseTable();
     };
-
-    static bool containsPatternExpression(string query);
 
     static vector<PatternExpression*> extractPatternExpression(const string& query, SynonymTable synonymTable);
 };
@@ -42,7 +42,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 
@@ -54,7 +54,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 
 };
 

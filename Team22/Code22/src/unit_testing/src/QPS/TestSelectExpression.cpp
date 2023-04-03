@@ -104,3 +104,238 @@ throwsException = true;
 
 REQUIRE(throwsException);
 }
+
+TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "stmt s; variable v;";
+    string query = "Select <s> such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectMultipleSynonyms_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select <s, s1, v> such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult->toString() == query);
+}
+
+TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrs_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select <s.stmt#, s1, v, v.varName, s1.stmt#> such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    ::printf("%s\n", actualResult->toString().c_str());
+
+    REQUIRE(actualResult->toString() == query);
+}
+
+TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrsWhitespaces_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select  <  s.stmt#  ,  s1  ,  v  ,  v.varName  ,  s1.stmt#  >   such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select <s.stmt#, s1, v, v.varName, s1.stmt#> such that Uses(s, v)";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithWhitespaces_SyntaxError") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select  <  s. stmt#  ,  s1  ,  v  ,  v.varName  ,  s1.stmt#  >   such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+    REQUIRE(throwsException);
+}
+
+
+TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithInvalidAttrs_SemanticError") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select <s.stmt#, s1, v, v.stmt#, s1.varName> such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectTupleNoSynonyms_SyntaxError") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select < > such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectTupleNoSynonymsWithComma_SyntaxError") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select < , , > such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectTupleInvalidSynonym_SyntaxError") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select < 1.varName > such that Uses(s, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SyntacticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectBOOLEANValid_Success") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select BOOLEAN such that Follows(1, 2)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select BOOLEAN such that Follows(1, 2)";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase3_ParseSelectReturnBOOLEANInTuple_SemanticException") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select <s, BOOLEAN> such that Follows(s, 2)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase3_ParseSelectReturnBOOLEANWhitespaces_Success") {
+    QueryParser queryParser;
+    string declaration = "stmt s, s1; variable v;";
+    string query = "Select    BOOLEAN   such that Follows(1, 2)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    string expected = "Select BOOLEAN such that Follows(1, 2)";
+
+    REQUIRE(actualResult->toString() == expected);
+}
+
+TEST_CASE("TestCase3_ParseSelectReturnBOOLEANDeclaredAsStmt_Success") {
+    QueryParser queryParser;
+    string declaration = "stmt BOOLEAN; assign a1;";
+
+    queryParser.parse(declaration);
+
+    SECTION("inside tuple") {
+        string query = "Select <BOOLEAN, a1> such that Follows(1, 2)";
+        string expected = "Select <BOOLEAN, a1> such that Follows(1, 2)";
+        SelectExpression *actualResult = queryParser.parse(query);
+        REQUIRE(actualResult->toString() == expected);
+    }
+
+    SECTION("accessing stmt#") {
+        string query = "Select BOOLEAN.stmt# such that Follows(1, 2)";
+        string expected = "Select BOOLEAN.stmt# such that Follows(1, 2)";
+        SelectExpression *actualResult = queryParser.parse(query);
+        REQUIRE(actualResult->toString() == expected);
+    }
+
+}
+
+TEST_CASE("TestCase3_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
+    QueryParser queryParser;
+    string declaration = "assign a1;";
+
+    queryParser.parse(declaration);
+
+    string query = "Select BOOLEAN.stmt# such that Follows(1, 2)";
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}

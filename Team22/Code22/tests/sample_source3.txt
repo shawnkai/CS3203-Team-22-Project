@@ -1,0 +1,31 @@
+procedure p1 {
+ x = 1;
+ y = 1;
+ while (z < 2) {
+   q = 0;
+   left = 0;
+   }
+ }
+ procedure p2 {
+ while (a < 2) {
+  if (c < 3) then {
+   while (d < 1) {
+   call p1;
+   }
+  } else {
+   e = 1;
+  }
+   
+  }
+ }
+ procedure p3 {
+ while (a < 2) {
+ while (f < 2) {
+ while (q < 2) {
+ while (g < 2) {
+  call p2;
+ }
+ }
+ }
+ }
+ }

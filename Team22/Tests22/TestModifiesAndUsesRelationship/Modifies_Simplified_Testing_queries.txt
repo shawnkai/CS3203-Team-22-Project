@@ -66,7 +66,7 @@ SemanticError
 14 - valid meaningless query return all variables <---- valid meaningless query should return all variables
 variable v; assign a;
 Select v such that Modifies(7, "x")
-x, z, a, b, i
+x, z, a, b, i, y
 5000
 15 - invalid meaningless query return nothing <---- should return nothing instead of error 
 variable v; assign a;
@@ -76,7 +76,7 @@ none
 16 - modifiesS with wildcard as argument 2 <----- valid query, should return all variables
 variable v;
 Select v such that Modifies(7, _)
-x, z, a, b, i
+x, z, a, b, i, y
 5000
 17 - modifiesS with variable synonym as argument 2
 variable v;
