@@ -1,123 +1,78 @@
+#include "NextExpression.h"
 
+ResultTable* NextExpression::evaluate(PKB pkb) {
+    vector<string> firstLine;
+    vector<string> secondLine;
 
-#include "NEXTExpression.h"
-
-NextsExpression::NextsExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction) : Expression({ s1, s2 }) {
-    this->pkbAbstraction = pkbAbstraction;
-}
-
-ResultTable NextsExpression::evaluate(PKB pkb) {
-    if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
-        return ResultTable({ {"_", {"-"}} });
-    }
-    else if (this->entities[0]->toString() == this->entities[1]->toString()) {
-        return ResultTable({ {this->entities[0]->toString(), {}} });
-    }
-    else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1 && dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
+    if (dynamic_cast<StmtEntity*>(this->entities[0])) {
+        firstLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[0])->getLine()));
+    } else {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
-        auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
-        vector<string> possibleLines;
-        for (Result res : vars2) {
-            for (string l : res.getQueryResult()) {
-                possibleLines.push_back(l);
-            }
-        }
-        vector<string> followedLines;
-        map<string, vector<string>> results = { {this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}} };
-        vector<pair<string, string>> seen;
         for (Result res : vars1) {
             for (const string& line : res.getQueryResult()) {
-                Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", line));
-                vector<vector<string>> all_vectors;
-                all_vectors.push_back(possibleLines);
-                all_vectors.push_back(follows.getQueryResult());
-                vector<string> followsSatisfied = Utilities::findIntersection(all_vectors);
-                for (const string& r : followsSatisfied) {
-                    if (find(seen.begin(), seen.end(), make_pair(line, r)) == seen.cend()) {
-                        results.find(this->entities[0]->toString())->second.push_back(line);
-                        results.find(this->entities[1]->toString())->second.push_back(r);
-                        seen.emplace_back(line, r);
-                    }
-                }
+                firstLine.push_back(line);
             }
         }
-        if (this->entities[0]->toString() == "_" && this->entities[1]->toString() == "_") {
-            if (!results.empty()) {
-                return ResultTable({ {"True", {""}} });
-            }
-            else {
-                return { {} };
-            }
-        }
-        else if (this->entities[0]->toString() == "_") {
-            return ResultTable(results).getColumn(this->entities[1]->toString());
-        }
-        else if (this->entities[1]->toString() == "_") {
-            return ResultTable(results).getColumn(this->entities[0]->toString());
-        }
-        return ResultTable(results);
     }
-    else if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() == -1) {
-        auto vars = pkb.getAllDesignEntity(this->entities[0]->getType());
-        int nextLineInt = dynamic_cast<StmtEntity*>(this->entities[1])->getLine();
-        string nextLine = to_string(nextLineInt);
-        vector<string> followedLines;
-        for (Result res : vars) {
+
+    if (dynamic_cast<StmtEntity*>(this->entities[1])) {
+        secondLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()));
+    } else {
+        auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
+        for (Result res : vars2) {
             for (const string& line : res.getQueryResult()) {
-                Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", line));
-                if (Utilities::checkIfPresent(follows.getQueryResult(), nextLine)) {
-                    followedLines.push_back(line);
-                }
+                secondLine.push_back(line);
             }
         }
-        return ResultTable({ {this->entities[0]->toString(), followedLines} });
     }
-    else if (dynamic_cast<StmtEntity*>(this->entities[1])->getLine() == -1) {
-        int prevLineInt = dynamic_cast<StmtEntity*>(this->entities[0])->getLine();
-        string prevLine = to_string(prevLineInt);
-        Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", prevLine));
-        auto vars = pkb.getAllDesignEntity(this->entities[1]->getType());
-        vector<string> possibleLines;
-        for (Result res : vars) {
-            for (string l : res.getQueryResult()) {
-                possibleLines.push_back(l);
+
+    map<string, vector<string>> results = { {this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}} };
+    vector<pair<string, string>> seen;
+    for (const string& line : firstLine) {
+        Result next = pkb.getDesignAbstraction("NEXT", make_tuple("_", line));
+        vector<vector<string>> all_vectors;
+        all_vectors.push_back(secondLine);
+        all_vectors.push_back(next.getQueryResult());
+        vector<string> followsSatisfied = Utilities::findIntersection(all_vectors);
+        for (const string& r : followsSatisfied) {
+            if (find(seen.begin(), seen.end(), make_pair(line, r)) == seen.cend()) {
+                results.find(this->entities[0]->toString())->second.push_back(line);
+                results.find(this->entities[1]->toString())->second.push_back(r);
+                seen.emplace_back(line, r);
             }
         }
-        vector<string> followedLines;
-        for (const string& line : possibleLines) {
-            if (Utilities::checkIfPresent(follows.getQueryResult(), line)) {
-                followedLines.push_back(line);
-            }
-        }
-        return ResultTable({ {this->entities[1]->toString(), followedLines} });
     }
-    else {
-        int prevLineInt = dynamic_cast<StmtEntity*>(this->entities[0])->getLine();
-        string prevLine = to_string(prevLineInt);
-        int nextLineInt = dynamic_cast<StmtEntity*>(this->entities[1])->getLine();
-        string nextLine = to_string(nextLineInt);
-        Result follows = pkb.getDesignAbstraction(this->pkbAbstraction, make_tuple("_", prevLine));
-        if (Utilities::checkIfPresent(follows.getQueryResult(), nextLine)) {
-            return ResultTable({ {this->entities[0]->toString(), {this->entities[1]->toString()}} });
+
+    if (dynamic_cast<SynonymStmtEntity*>(this->entities[0]) && dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
+        if (!results.empty()) {
+            return new BooleanTrueTable();
         }
         else {
-            return ResultTable({ {this->entities[0]->toString(), {}} });
+            return new BooleanFalseTable();
         }
     }
+    else if (dynamic_cast<SynonymStmtEntity*>(this->entities[0])) {
+        return (new ResultTable(results))->getColumns({this->entities[1]->toString()});
+    }
+    else if (dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
+        return (new ResultTable(results))->getColumns({this->entities[0]->toString()});
+    }
+    return new ResultTable(results);
+
 }
 
-tuple<StmtEntity*, StmtEntity*> NextsExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
-    StmtEntity* a1;
-    StmtEntity* a2;
+tuple<StmtRef*, StmtRef*> NextExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
+    StmtRef* a1;
+    StmtRef* a2;
 
     if (Utilities::isNumber(arg1)) {
         a1 = new StmtEntity(stoi(arg1));
     }
     else if (arg1 == "_") {
-        a1 = new StmtEntity();
+        a1 = new WildcardStmtRef();
     }
     else {
-        a1 = dynamic_cast<StmtEntity*>(synonymTable.get(arg1, "stmt"));
+        a1 = dynamic_cast<SynonymStmtEntity*>(synonymTable.get(arg1, "select"));
         if (a1->getType() == "VARIABLE" || a1->getType() == "PROCEDURE" || a1->getType() == "CONSTANT") {
             throw SemanticException();
         }
@@ -127,10 +82,10 @@ tuple<StmtEntity*, StmtEntity*> NextsExpression::generateStmtEntityPair(string a
         a2 = new StmtEntity(stoi(arg2));
     }
     else if (arg2 == "_") {
-        a2 = new StmtEntity();
+        a2 = new WildcardStmtRef();
     }
     else {
-        a2 = dynamic_cast<StmtEntity*>(synonymTable.get(arg2, "stmt"));
+        a2 = dynamic_cast<SynonymStmtEntity*>(synonymTable.get(arg2, "select"));
         if (a2->getType() == "VARIABLE" || a2->getType() == "PROCEDURE" || a2->getType() == "CONSTANT") {
             throw SemanticException();
         }
@@ -139,64 +94,68 @@ tuple<StmtEntity*, StmtEntity*> NextsExpression::generateStmtEntityPair(string a
     return std::make_tuple(a1, a2);
 }
 
-NextExpression::NextExpression(StmtEntity* s1, StmtEntity* s2) : NextsExpression(s1, s2, "FOLLOWS") {}
+NextExpression::NextExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
 string NextExpression::toString() {
-    return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+    return "Next(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-NextStarExpression::NextStarExpression(StmtEntity* s1, StmtEntity* s2) : NextsExpression(s1, s2, "FOLLOWSSTAR") {}
-
-string NextStarExpression::toString() {
-    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-}
+//NextStarExpression::NextStarExpression(StmtEntity* s1, StmtEntity* s2) : NextsExpression(s1, s2, "FOLLOWSSTAR") {}
+//
+//string NextStarExpression::toString() {
+//    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+//}
 
 
 vector<NextExpression*> NextExpression::extractNextExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsNextExpression(query)) {
+        return {};
+    }
+
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
 
     vector<NextExpression*> expressions;
 
-    while (regex_search(searchStart, query.cend(), sm, NEXTREGEX)) {
-        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+    while (regex_search(searchStart, query.cend(), sm, Expression::NEXTREGEX)) {
+        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
 
-        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-        StmtEntity* a2 = std::get<1>(stmtEntityPair);
+        StmtRef* a1 = std::get<0>(stmtEntityPair);
+        StmtRef* a2 = std::get<1>(stmtEntityPair);
 
-        expressions.push_back(new FollowsExpression(a1, a2));
+        expressions.push_back(new NextExpression(a1, a2));
         searchStart = sm.suffix().first;
     }
     return expressions;
 }
 
-vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const string& query, const SynonymTable& synonymTable) {
-    smatch sm;
-
-    string::const_iterator searchStart(query.begin());
-
-    vector<NextStarExpression*> expressions;
-
-    while (regex_search(searchStart, query.cend(), sm, NEXTSTARREGEX)) {
-        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-        StmtEntity* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new NextStarExpression(a1, a2));
-        searchStart = sm.suffix().first;
-    }
-    return expressions;
-}
+//vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const string& query, const SynonymTable& synonymTable) {
+//    smatch sm;
+//
+//    string::const_iterator searchStart(query.begin());
+//
+//    vector<NextStarExpression*> expressions;
+//
+//    while (regex_search(searchStart, query.cend(), sm, NEXTSTARREGEX)) {
+//        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+//
+//        StmtEntity* a1 = std::get<0>(stmtEntityPair);
+//        StmtEntity* a2 = std::get<1>(stmtEntityPair);
+//
+//        expressions.push_back(new NextStarExpression(a1, a2));
+//        searchStart = sm.suffix().first;
+//    }
+//    return expressions;
+//}
 
 
 bool NextExpression::containsNextExpression(string query) {
-    return distance(sregex_iterator(query.begin(), query.end(), NEXTREGEX), std::sregex_iterator()) > 0;
+    return distance(sregex_iterator(query.begin(), query.end(), Expression::NEXTREGEX), std::sregex_iterator()) > 0;
 }
 
-bool NextStarExpression::containsNextStarExpression(string query) {
-    return distance(sregex_iterator(query.begin(), query.end(), NEXTSTARREGEX), std::sregex_iterator()) > 0;
-}
-
+//bool NextStarExpression::containsNextStarExpression(string query) {
+//    return distance(sregex_iterator(query.begin(), query.end(), NEXTSTARREGEX), std::sregex_iterator()) > 0;
+//}
+//
 

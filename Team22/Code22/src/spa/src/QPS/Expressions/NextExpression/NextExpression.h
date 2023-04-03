@@ -4,44 +4,31 @@
 
 #include "QPS/Expressions/Expressions.h"
 
-class NextsExpression : public Expression {
-
-private:
-    string pkbAbstraction;
-
-protected:
-    static tuple<StmtEntity*, StmtEntity*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
+class NextExpression : public Expression {
 
 public:
-    explicit NextsExpression(StmtEntity* s1, StmtEntity* s2, string pkbAbstraction);
-
-    ResultTable evaluate(PKB pkb) override;
-
-};
-
-class NextExpression : public NextsExpression {
-private:
-    string pkbAbstraction;
-
-public:
-    explicit NextExpression(StmtEntity* s1, StmtEntity* s2);
+    explicit NextExpression(StmtRef* s1, StmtRef* s2);
 
     string toString() override;
+
+    static tuple<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
 
     static vector<NextExpression*> extractNextExpression(const string& query, const SynonymTable& synonymTable);
 
     static bool containsNextExpression(string query);
+
+    ResultTable* evaluate(PKB pkb) override;
 };
 
-class NextStarExpression : public NextsExpression {
-public:
-    explicit NextStarExpression(StmtEntity* s1, StmtEntity* s2);
-
-    string toString() override;
-
-    static vector<NextStarExpression*> extractNextStarExpression(const string& query, const SynonymTable& synonymTable);
-
-    static bool containsNextStarExpression(string query);
-};
+//class NextStarExpression : public Expression {
+//public:
+//    explicit NextStarExpression(StmtEntity* s1, StmtEntity* s2);
+//
+//    string toString() override;
+//
+//    static vector<NextStarExpression*> extractNextStarExpression(const string& query, const SynonymTable& synonymTable);
+//
+//    static bool containsNextStarExpression(string query);
+//};
 
 #endif //SPA_NEXTEXPRESSION_H
