@@ -6,7 +6,11 @@
 
 class IfNode: public TreeNode {
 public:
-    void accept(DesignExtractor &de);
+    IfNode() {
+        nodeType = TokenType::IF;
+    }
+
+    void accept(DesignExtractor &de) ;
 };
 
 #endif //SPA_IFNODE_H

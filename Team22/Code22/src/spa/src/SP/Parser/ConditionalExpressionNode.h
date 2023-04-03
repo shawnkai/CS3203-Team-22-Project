@@ -6,6 +6,10 @@
 
 class ConditionalExpressionNode: public TreeNode {
 public:
+    ConditionalExpressionNode() {
+        nodeType = TokenType::OPERATOR;
+    }
+
     void accept(DesignExtractor &de);
 };
 

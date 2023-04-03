@@ -7,6 +7,10 @@ using namespace std;
 class ProgramNode: public TreeNode
 {
 public:
+    ProgramNode() {
+        nodeType = TokenType::PROGRAM;
+    }
+
     void accept(DesignExtractor &de);
 };
 #endif //SPA_PROGRAMNODE_H

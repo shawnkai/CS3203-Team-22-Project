@@ -6,6 +6,10 @@
 
 class CallNode: public TreeNode {
 public:
+    CallNode() {
+        nodeType = TokenType::CALL;
+    }
+
     void accept(DesignExtractor &de);
 };
 #endif //SPA_CALLNODE_H

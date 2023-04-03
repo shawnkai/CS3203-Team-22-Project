@@ -6,6 +6,9 @@
 
 class ProcedureNode: public TreeNode {
 public:
+    ProcedureNode() {
+        nodeType = TokenType::PROCEDURE;
+    }
     void accept(DesignExtractor &de);
 };
 

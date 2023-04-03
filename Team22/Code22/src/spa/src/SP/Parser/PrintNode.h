@@ -4,6 +4,9 @@
 #include "TreeNode.h"
 class PrintNode: public TreeNode{
 public:
+    PrintNode() {
+        nodeType = TokenType::PRINT;
+    }
     void accept(DesignExtractor &de);
 };
 #endif //SPA_PRINTNODE_H

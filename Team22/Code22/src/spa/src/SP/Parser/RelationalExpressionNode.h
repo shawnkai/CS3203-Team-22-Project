@@ -6,6 +6,9 @@
 
 class RelationalExpressionNode: public TreeNode {
 public:
+    RelationalExpressionNode() {
+        nodeType = TokenType::OPERATOR;
+    }
     void accept(DesignExtractor &de);
 };
 
