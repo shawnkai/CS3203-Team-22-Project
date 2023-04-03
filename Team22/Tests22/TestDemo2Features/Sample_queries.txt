@@ -3,23 +3,35 @@ variable v; procedure p, q;
 Select p such that Calls(p, q) with q.procName = "test1" such that Modifies(p, v)
 Example, test2
 5000
-2- Select boolean, calls
-
+2 - Select boolean, calls
 Select BOOLEAN such that Calls("Example", "test1") and Calls("Example", "Shift") and Calls("Example", "test2")
 TRUE
 5000
-3- Select boolean, next
-
+3 - Select boolean, next
 Select BOOLEAN such that Next(1,2) and Next(2,3) and Next(3, 4) and Next (4, 14)
 TRUE
 5000
 4 - Select boolean, next, false
-
 Select BOOLEAN such that Next(1,2) and Next(2,3) and Next(3, 4) and Next (1, 3)
 FALSE
 5000
-5- Select tuple
+5 - Select tuple
 procedure p, q;
 Select <p, q> such that Calls(p, q)
 Example test1, Example Shift, Example test2, test2 test1
+5000
+6 - Select Multiple Calls Clauses Using "and"
+procedure p;
+Select p such that Calls(p, "test1") and Calls(p, "test2")
+Example
+5000
+7 - Select Multiple Uses Clauses Using "and"
+variable v;
+Select v such that Uses("Example", v) and Uses("test1", v)
+None
+5000
+8 - Select Multiple Pattern Clauses Using "and"
+assign a;
+Select a pattern a ("x", _) and a (_, _"x"_)
+5
 5000
