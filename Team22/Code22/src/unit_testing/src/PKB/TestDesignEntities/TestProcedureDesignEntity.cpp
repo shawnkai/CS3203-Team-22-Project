@@ -5,13 +5,13 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignEntitiesController.h"
+#include "PKB/Interfaces/DesignEntitiesInterface.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation of Procedure Design Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p1", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("PROCEDURE", "p1");
 
@@ -23,7 +23,7 @@ TEST_CASE("Test 1: Creation of Procedure Design Entity") {
 
 TEST_CASE("Test 2: Procedure Design Entity, Query for Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p2", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("PROCEDURE", "p2");
 
@@ -35,7 +35,7 @@ TEST_CASE("Test 2: Procedure Design Entity, Query for Same Type, Same Entity Nam
 
 TEST_CASE("Test 3: Procedure Design Entity, Query for Same Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p3", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("PROCEDURE", "p3");
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 3: Procedure Design Entity, Query for Same Type, Same Entity Nam
 
 TEST_CASE("Test 4: Procedure Design Entity, Query for Same Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p4", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("PROCEDURE", "p0");
 
@@ -59,7 +59,7 @@ TEST_CASE("Test 4: Procedure Design Entity, Query for Same Type, Different Entit
 
 TEST_CASE("Test 5: Procedure Design Entity, Query for Different Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p5", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "p5");
 
@@ -71,7 +71,7 @@ TEST_CASE("Test 5: Procedure Design Entity, Query for Different Type, Same Entit
 
 TEST_CASE("Test 6: Procedure Design Entity, Query for Different Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p6", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "p0");
 
@@ -83,7 +83,7 @@ TEST_CASE("Test 6: Procedure Design Entity, Query for Different Type, Different 
 
 TEST_CASE("Test 7: Procedure Design Entity, Query for Different Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p7", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "p0");
 
@@ -95,7 +95,7 @@ TEST_CASE("Test 7: Procedure Design Entity, Query for Different Type, Different 
 
 TEST_CASE("Test 8: Procedure Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p8", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "p8");
 
@@ -107,7 +107,7 @@ TEST_CASE("Test 8: Procedure Design Entity, Query for Different Type, Same Entit
 
 TEST_CASE("Test 9: Procedure Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p9", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("PROCEDURE", "p0");
 
@@ -119,7 +119,7 @@ TEST_CASE("Test 9: Procedure Design Entity, Query for Same Type, Different Entit
 
 TEST_CASE("Test 10: Procedure Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p10", "1"));
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p10", "1"));
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p10", "2"));
@@ -135,7 +135,7 @@ TEST_CASE("Test 10: Procedure Design Entity, Check for Duplication Filtering Whe
 
 TEST_CASE("Test 11: Procedure Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p12", "1"));
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p12", "1"));
         designEntitiesController.addDesignEntity("PROCEDURE", make_tuple("p12", "2"));

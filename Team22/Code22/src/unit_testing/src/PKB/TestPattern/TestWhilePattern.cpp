@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/PatternsController.h"
+#include "PKB/Interfaces/PatternsInterface.h"
 
 #include "PKB/Exceptions/InvalidPatternTypeException.cpp"
 #include "PKB/Exceptions/DatabaseNotFoundException.cpp"
@@ -13,7 +13,7 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creation of While Pattern") {
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
     patternsController.addPattern("WHILE", "1", "a");
 
     unordered_set<string> result = patternsController.getAllVariablesUsedInPattern("WHILE", "1");
@@ -23,7 +23,7 @@ TEST_CASE("Test 1: Creation of While Pattern") {
 }
 
 TEST_CASE("Test 2: Addition of Multiple Unique Variables in While Pattern") {
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     patternsController.addPattern("WHILE", "3", "a");
     patternsController.addPattern("WHILE", "3", "b");
@@ -34,7 +34,7 @@ TEST_CASE("Test 2: Addition of Multiple Unique Variables in While Pattern") {
 }
 
 TEST_CASE("Test 3: Addition of Duplicate Variables in While Pattern") {
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     patternsController.addPattern("WHILE", "4", "a");
     patternsController.addPattern("WHILE", "4", "b");
@@ -46,7 +46,7 @@ TEST_CASE("Test 3: Addition of Duplicate Variables in While Pattern") {
 }
 
 TEST_CASE("Test 4: Addition of Same Variables on Different Lines in While Pattern") {
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     patternsController.addPattern("WHILE", "5", "a");
     patternsController.addPattern("WHILE", "6", "a");
@@ -59,7 +59,7 @@ TEST_CASE("Test 4: Addition of Same Variables on Different Lines in While Patter
 }
 
 TEST_CASE("Test 5: Check Variable Is Used In While Pattern") {
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     patternsController.addPattern("WHILE", "7", "a");
     patternsController.addPattern("WHILE", "7", "b");
@@ -74,7 +74,7 @@ TEST_CASE("Test 5: Check Variable Is Used In While Pattern") {
 
 TEST_CASE("Test 6: WHILE: Creating An Invalid Type Of While Pattern") {
     bool exceptionThrown = false;
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     try {
         patternsController.addPattern("FAIL", "8", "a");
@@ -87,7 +87,7 @@ TEST_CASE("Test 6: WHILE: Creating An Invalid Type Of While Pattern") {
 
 TEST_CASE("Test 7: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     patternsController.addPattern("WHILE", "9", "a");
     patternsController.addPattern("WHILE", "9", "b");
@@ -104,7 +104,7 @@ TEST_CASE("Test 7: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern
 
 TEST_CASE("Test 8: WHILE: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
-    PatternsController patternsController = PatternsController();
+    PatternsInterface patternsController = PatternsInterface();
 
     patternsController.addPattern("WHILE", "10", "a");
     patternsController.addPattern("WHILE", "10", "b");

@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignAbstractionsController.h"
+#include "PKB/Interfaces/DesignAbstractionsInterface.h"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -13,7 +13,7 @@ using namespace std;
 
 TEST_CASE("Test 1: Creation of WhileStatementUses Design Abstraction") {
     SECTION("Using API With A Tuple of Size 3") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws1", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("WHILE", "uws1"));
 
@@ -24,7 +24,7 @@ TEST_CASE("Test 1: Creation of WhileStatementUses Design Abstraction") {
 
     SECTION("Using API With A Tuple of Size 2") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("uws1", "1"));
@@ -38,7 +38,7 @@ TEST_CASE("Test 1: Creation of WhileStatementUses Design Abstraction") {
 
 TEST_CASE("Test 2: Retrieval of an existent WhileStatementUses Design Abstraction") {
     SECTION("Using API With A Tuple of Size 2") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws2", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("WHILE", "uws2"));
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 2: Retrieval of an existent WhileStatementUses Design Abstractio
 
     SECTION("Using API Without Tuple") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws2", "1"));
 
@@ -63,7 +63,7 @@ TEST_CASE("Test 2: Retrieval of an existent WhileStatementUses Design Abstractio
 
 TEST_CASE("Test 3: Retrieval of a non-existent WhileStatementUses Design Abstraction") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws3", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("WHILE", "uws0"));
 
@@ -73,7 +73,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent WhileStatementUses Design Abstrac
 
 TEST_CASE("Test 4: Retrieval of an WhileStatementUses Design Abstraction When Multiple WhileStatementUses Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws4", "1"));
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws5", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("USES", make_pair("WHILE", "uws4"));
@@ -84,7 +84,7 @@ TEST_CASE("Test 4: Retrieval of an WhileStatementUses Design Abstraction When Mu
 
 TEST_CASE("Test 5: Retrieval of an WhileStatementUses Design Abstraction When Multiple Different Uses Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws6", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("PROCEDURECALL", "uws6", "1"));
@@ -102,7 +102,7 @@ TEST_CASE("Test 5: Retrieval of an WhileStatementUses Design Abstraction When Mu
 
 TEST_CASE("Test 6: Retrieval of an WhileStatementUses Design Abstraction When Multiple Same Uses Design Abstractions Are Stored Including Duplicated Values") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws7", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws7", "1"));
@@ -118,7 +118,7 @@ TEST_CASE("Test 6: Retrieval of an WhileStatementUses Design Abstraction When Mu
 
 TEST_CASE("Test 9: Retrieval of All WhileStatementUses Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws13", "uws14"));
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws15", "uws16"));
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws17", "uws18"));
@@ -131,7 +131,7 @@ TEST_CASE("Test 9: Retrieval of All WhileStatementUses Design Abstractions") {
 
 TEST_CASE("Test 10: Retrieval of Variables Captured By WhileStatementUses Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws19", "uws20"));
         designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("WHILE", "uws21", "uws22"));

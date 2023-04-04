@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "DesignAbstractionsController.h"
+#include "DesignAbstractionsInterface.h"
 
 #include "PKB/DesignAbstractions/DesignAbstractionsFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
@@ -20,14 +20,14 @@ using namespace std;
  * @param designAbstraction The type of Abstraction that is to be added.
  * @param abstractionDetails A tuple, which takes in 3 strings. which contains the details about the Abstraction.
  */
-void DesignAbstractionsController::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
+void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
     DesignAbstraction* da = DesignAbstractionsFactory::createDesignAbstraction(designAbstraction, abstractionDetails);
     DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(da);
 
     db->addToDatabase(da);
 }
 
-void DesignAbstractionsController::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
+void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
     if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
         throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
     }
@@ -44,7 +44,7 @@ void DesignAbstractionsController::addDesignAbstraction(string designAbstraction
  * @param query Query contains the Design Entity type being abstracted along with the Entity Name.
  * @return Result object with the result or "None" if the result does not exist.
  */
-Result DesignAbstractionsController::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
+Result DesignAbstractionsInterface::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
     DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(abstractionType,
                                                                                               get<0>(query));
     Result queryResult = db->getFromDatabase(get<1>(query));
@@ -52,7 +52,7 @@ Result DesignAbstractionsController::getDesignAbstraction(string abstractionType
     return queryResult;
 }
 
-Result DesignAbstractionsController::getDesignAbstraction(string abstractionType, string query) {
+Result DesignAbstractionsInterface::getDesignAbstraction(string abstractionType, string query) {
     if (abstractionType == "USES" || abstractionType == "MODIFIES") {
         throw InvalidAPICallException((abstractionType + " Cannot Be Accessed Via This API").data());
     }
@@ -60,7 +60,7 @@ Result DesignAbstractionsController::getDesignAbstraction(string abstractionType
     return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
 }
 
-vector<Result> DesignAbstractionsController::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
+vector<Result> DesignAbstractionsInterface::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
     DesignAbstractionDatabase* db =
             DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
                                                                       entityTypeBeingAbstracted);
@@ -68,7 +68,7 @@ vector<Result> DesignAbstractionsController::getAllDesignAbstractions(string des
 }
 
 unordered_map<string, unordered_set<string>>
-DesignAbstractionsController::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
+DesignAbstractionsInterface::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
     DesignAbstractionDatabase* db =
             DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
                                                                       entityTypeBeingAbstracted);

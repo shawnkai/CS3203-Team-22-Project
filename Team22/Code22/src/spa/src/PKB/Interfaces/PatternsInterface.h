@@ -4,8 +4,8 @@
 
 #pragma once
 
-#ifndef SPA_PATTERNSCONTROLLER_H
-#define SPA_PATTERNSCONTROLLER_H
+#ifndef SPA_PATTERNSINTERFACE_H
+#define SPA_PATTERNSINTERFACE_H
 
 #include <iostream>
 #include <unordered_map>
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class PatternsController {
+class PatternsInterface {
 public:
     void addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
     string getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName,
@@ -26,4 +26,4 @@ public:
     unordered_set<string> getAllVariablesUsedInPattern(string patternType, string lineNumber);
 };
 
-#endif //SPA_PATTERNSCONTROLLER_H
+#endif //SPA_PATTERNSINTERFACE_H

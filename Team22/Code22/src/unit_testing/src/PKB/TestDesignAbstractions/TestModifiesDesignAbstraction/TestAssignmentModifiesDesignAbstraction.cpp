@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignAbstractionsController.h"
+#include "PKB/Interfaces/DesignAbstractionsInterface.h"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -13,7 +13,7 @@ using namespace std;
 
 TEST_CASE("Test 1: Creation of AssignmentModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 3") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma1", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma1"));
 
@@ -24,7 +24,7 @@ TEST_CASE("Test 1: Creation of AssignmentModifies Design Abstraction") {
 
     SECTION("Using API With A Tuple of Size 2") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ma1", "1"));
@@ -38,7 +38,7 @@ TEST_CASE("Test 1: Creation of AssignmentModifies Design Abstraction") {
 
 TEST_CASE("Test 2: Retrieval of an existent AssignmentModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 2") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma2", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma2"));
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 2: Retrieval of an existent AssignmentModifies Design Abstractio
 
     SECTION("Using API Without Tuple") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma2", "1"));
 
@@ -63,7 +63,7 @@ TEST_CASE("Test 2: Retrieval of an existent AssignmentModifies Design Abstractio
 
 TEST_CASE("Test 3: Retrieval of a non-existent AssignmentModifies Design Abstraction") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma3", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma0"));
 
@@ -73,7 +73,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent AssignmentModifies Design Abstrac
 
 TEST_CASE("Test 4: Retrieval of an AssignmentModifies Design Abstraction When Multiple AssignmentModifies Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma4", "1"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma5", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("ASSIGNMENT", "ma4"));
@@ -84,7 +84,7 @@ TEST_CASE("Test 4: Retrieval of an AssignmentModifies Design Abstraction When Mu
 
 TEST_CASE("Test 5: Retrieval of an AssignmentModifies Design Abstraction When Multiple Different Modifies Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma6", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "ma6", "1"));
@@ -102,7 +102,7 @@ TEST_CASE("Test 5: Retrieval of an AssignmentModifies Design Abstraction When Mu
 
 TEST_CASE("Test 6: Retrieval of an AssignmentModifies Design Abstraction When Multiple Same Modifies Design Abstractions Are Stored Including Duplicated Values") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma7", "1"));
@@ -118,7 +118,7 @@ TEST_CASE("Test 6: Retrieval of an AssignmentModifies Design Abstraction When Mu
 
 TEST_CASE("Test 7: Retrieval of All AssignmentModifies Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma13", "ma14"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma15", "ma16"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma17", "ma18"));
@@ -131,7 +131,7 @@ TEST_CASE("Test 7: Retrieval of All AssignmentModifies Design Abstractions") {
 
 TEST_CASE("Test 8: Retrieval of Variables Captured By AssignmentModifies Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma19", "ma20"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "ma21", "ma22"));

@@ -4,8 +4,8 @@
 
 #pragma once
 
-#ifndef SPA_CACHECONTROLLER_H
-#define SPA_CACHECONTROLLER_H
+#ifndef SPA_CACHEINTERFACE_H
+#define SPA_CACHEINTERFACE_H
 
 #include <iostream>
 #include <unordered_map>
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class CacheController {
+class CacheInterface {
 public:
     void addToCache(string accessKey, ResultTable* resultTable);
     ResultTable* getResultTableFromCache(string accessKey);
@@ -22,4 +22,4 @@ public:
     void clearCache();
 };
 
-#endif //SPA_CACHECONTROLLER_H
+#endif //SPA_CACHEINTERFACE_H

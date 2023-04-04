@@ -5,22 +5,22 @@
 #include <iostream>
 
 #include "PKB/Cache/CacheManager.h"
-#include "CacheController.h"
+#include "CacheInterface.h"
 
 using namespace std;
 
-void CacheController::addToCache(string accessKey, ResultTable *resultTable) {
+void CacheInterface::addToCache(string accessKey, ResultTable *resultTable) {
     CacheManager::addToCache(accessKey, resultTable);
 }
 
-ResultTable *CacheController::getResultTableFromCache(string accessKey) {
+ResultTable *CacheInterface::getResultTableFromCache(string accessKey) {
     return CacheManager::getResultTableFromCache(accessKey);
 }
 
-unordered_map<string, ResultTable *> CacheController::getCacheDatabase() {
+unordered_map<string, ResultTable *> CacheInterface::getCacheDatabase() {
     return CacheManager::getCacheDatabase();
 }
 
-void CacheController::clearCache() {
+void CacheInterface::clearCache() {
     CacheManager::clearCache();
 }

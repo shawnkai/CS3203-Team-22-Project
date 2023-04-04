@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "DesignEntitiesController.h"
+#include "DesignEntitiesInterface.h"
 
 #include "PKB/DesignEntities/DesignEntitiesFactory.h"
 #include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
@@ -18,7 +18,7 @@ using namespace std;
  * @param designEntity The type of Design Entity that is to be added.
  * @param entityDetails A tuple, which takes in 2 strings, which contains the details about the Design Entity.
  */
-void DesignEntitiesController::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
+void DesignEntitiesInterface::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
     DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
     DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(de);
 
@@ -33,7 +33,7 @@ void DesignEntitiesController::addDesignEntity(string designEntity, tuple<string
  * @param entityName The name of the Design Entity to be extracted.
  * @return Result object with the result or "None" if the result does not exist.
  */
-Result DesignEntitiesController::getDesignEntity(string entityType, string entityName) {
+Result DesignEntitiesInterface::getDesignEntity(string entityType, string entityName) {
     DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
     Result queryResult = db->getFromDatabase(entityName);
 
@@ -47,7 +47,7 @@ Result DesignEntitiesController::getDesignEntity(string entityType, string entit
  * @param entityType The type of Design Entity to obtain.
  * @return A vector<Result> with each Result Object containing the details of that Design Entity type.
  */
-vector<Result> DesignEntitiesController::getAllDesignEntity(string entityType) {
+vector<Result> DesignEntitiesInterface::getAllDesignEntity(string entityType) {
     vector<Result> queryResult;
 
     DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
@@ -56,6 +56,6 @@ vector<Result> DesignEntitiesController::getAllDesignEntity(string entityType) {
     return queryResult;
 }
 
-int DesignEntitiesController::getNumberOfDesignEntity(string entityType) {
+int DesignEntitiesInterface::getNumberOfDesignEntity(string entityType) {
     return this->getAllDesignEntity(entityType).size();
 }

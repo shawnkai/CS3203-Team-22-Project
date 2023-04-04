@@ -6,12 +6,12 @@
 
 #include "catch.hpp"
 
-#include "PKB/Interfaces/ControlFlowGraphController.h"
+#include "PKB/Interfaces/ControlFlowGraphInterface.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation and Retrieval of Control Flow Graph") {
-    ControlFlowGraphController controlFlowGraphController = ControlFlowGraphController();
+    ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("test",
                                                    vector<int> {1},
@@ -34,7 +34,7 @@ TEST_CASE("Test 1: Creation and Retrieval of Control Flow Graph") {
 }
 
 TEST_CASE("Test 2: Retrieval of Non Existent Control Flow Graph") {
-    ControlFlowGraphController controlFlowGraphController = ControlFlowGraphController();
+    ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("test",
                                                    vector<int> {1},
@@ -57,7 +57,7 @@ TEST_CASE("Test 2: Retrieval of Non Existent Control Flow Graph") {
 }
 
 TEST_CASE("Test 3: Retrieval of Control Flow Graph When Multiple Unique Are Present") {
-    ControlFlowGraphController controlFlowGraphController = ControlFlowGraphController();
+    ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("testOne",
                                                    vector<int> {1},
@@ -99,7 +99,7 @@ TEST_CASE("Test 3: Retrieval of Control Flow Graph When Multiple Unique Are Pres
 }
 
 TEST_CASE("Test 4: Retrieval of Control Flow Graph When The Same Procedure Name Is Added Twice With Different Data") {
-    ControlFlowGraphController controlFlowGraphController = ControlFlowGraphController();
+    ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("testOne",
                                                    vector<int> {1},

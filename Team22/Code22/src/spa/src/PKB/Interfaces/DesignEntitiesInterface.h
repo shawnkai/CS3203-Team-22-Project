@@ -4,8 +4,8 @@
 
 #pragma once
 
-#ifndef SPA_DESIGNENTITIESCONTROLLER_H
-#define SPA_DESIGNENTITIESCONTROLLER_H
+#ifndef SPA_DESIGNENTITIESINTERFACE_H
+#define SPA_DESIGNENTITIESINTERFACE_H
 
 #include <iostream>
 
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class DesignEntitiesController {
+class DesignEntitiesInterface {
 public:
     void addDesignEntity(string designEntity, tuple<string, string> entityDetails);
     Result getDesignEntity(string entityType, string entityName);
@@ -21,4 +21,4 @@ public:
     int getNumberOfDesignEntity(string entityType);
 };
 
-#endif //SPA_DESIGNENTITIESCONTROLLER_H
+#endif //SPA_DESIGNENTITIESINTERFACE_H

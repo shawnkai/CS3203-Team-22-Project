@@ -4,8 +4,8 @@
 
 #pragma once
 
-#ifndef SPA_CONTROLFLOWGRAPHCONTROLLER_H
-#define SPA_CONTROLFLOWGRAPHCONTROLLER_H
+#ifndef SPA_CONTROLFLOWGRAPHINTERFACE_H
+#define SPA_CONTROLFLOWGRAPHINTERFACE_H
 
 #include <iostream>
 #include <map>
@@ -14,7 +14,7 @@
 
 using namespace std;
 
-class ControlFlowGraphController {
+class ControlFlowGraphInterface {
 public:
     void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
@@ -26,4 +26,4 @@ public:
     unordered_set<int> getBlocksWithBackPointersDatabase(string procedureName);
 };
 
-#endif //SPA_CONTROLFLOWGRAPHCONTROLLER_H
+#endif //SPA_CONTROLFLOWGRAPHINTERFACE_H

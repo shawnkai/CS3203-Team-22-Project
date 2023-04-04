@@ -9,7 +9,7 @@
 #include "PKB/Pattern//PatternFactory.h"
 #include "PKB/Pattern/PatternDatabaseFactory.h"
 
-#include "PatternsController.h"
+#include "PatternsInterface.h"
 
 using namespace std;
 
@@ -20,7 +20,7 @@ using namespace std;
  * @param prefixExpression The expression on the right hand side, which has been converted into its prefix form.
  * @param patternLineNumber The line number at which this assignment pattern can be observed.
  */
-void PatternsController::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
+void PatternsInterface::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
     AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
                                                                              patternLineNumber);
     AssignPatternDatabase* db = AssignPatternDatabaseFactory::getAssignPatternDatabase();
@@ -38,7 +38,7 @@ void PatternsController::addAssignPattern(string leftHandVariableName, string pr
  * @return A string containing the Right Hand Prefix Expression or an empty string.
  */
 string
-PatternsController::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber) {
+PatternsInterface::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber) {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase
             ->getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(leftHandVariableName, patternLineNumber);
@@ -51,7 +51,7 @@ PatternsController::getRightHandExpressionOfAVariableOnAParticularLineNumber(str
  * @param leftHandVariableName The variable, which has been assigned, to be looked for.
  * @return An unordered map containing all the Right Hand Prefix Expressions associated to the given variable.
  */
-unordered_map<string, string> PatternsController::getAllRightHandExpressionsOfAVariable(string leftHandVariableName) {
+unordered_map<string, string> PatternsInterface::getAllRightHandExpressionsOfAVariable(string leftHandVariableName) {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsOfAVariableFromDatabase(leftHandVariableName);
 }
@@ -62,25 +62,25 @@ unordered_map<string, string> PatternsController::getAllRightHandExpressionsOfAV
  *
  * @return A vector of AssignPattern pointer objects, or an empty vector, if nothing is stored.
  */
-unordered_map<string, unordered_map<string, string>> PatternsController::getAllRightHandExpressions() {
+unordered_map<string, unordered_map<string, string>> PatternsInterface::getAllRightHandExpressions() {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
 
-void PatternsController::addPattern(string patternType, string lineNumber, string variableName) {
+void PatternsInterface::addPattern(string patternType, string lineNumber, string variableName) {
     Pattern* patternToBeStored = PatternFactory::createPattern(patternType, lineNumber, variableName);
     PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
 
     db->addToDatabase(patternToBeStored);
 }
 
-bool PatternsController::isVariableUsedInPattern(string patternType, string lineNumber, string variableName) {
+bool PatternsInterface::isVariableUsedInPattern(string patternType, string lineNumber, string variableName) {
     PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
 
     return db->isVariableNamePresentOnLineNumber(lineNumber, variableName);
 }
 
-unordered_set<string> PatternsController::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
+unordered_set<string> PatternsInterface::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
     PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
 
     return db->getAllVariablesBeingUsed(lineNumber);

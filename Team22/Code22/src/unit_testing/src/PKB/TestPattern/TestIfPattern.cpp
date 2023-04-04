@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/PatternsController.h"
+#include "PKB/Interfaces/PatternsInterface.h"
 
 #include "PKB/Exceptions/InvalidPatternTypeException.cpp"
 #include "PKB/Exceptions/DatabaseNotFoundException.cpp"
@@ -13,7 +13,7 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creation of If Pattern") {
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
     patternsControllerTest.addPattern("IF", "1", "a");
 
     unordered_set<string> result = patternsControllerTest.getAllVariablesUsedInPattern("IF", "1");
@@ -22,7 +22,7 @@ TEST_CASE("Test 1: Creation of If Pattern") {
 }
 
 TEST_CASE("Test 2: Addition of Multiple Unique Variables in If Pattern") {
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     patternsControllerTest.addPattern("IF", "3", "a");
     patternsControllerTest.addPattern("IF", "3", "b");
@@ -33,7 +33,7 @@ TEST_CASE("Test 2: Addition of Multiple Unique Variables in If Pattern") {
 }
 
 TEST_CASE("Test 3: Addition of Duplicate Variables in If Pattern") {
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     patternsControllerTest.addPattern("IF", "4", "a");
     patternsControllerTest.addPattern("IF", "4", "b");
@@ -45,7 +45,7 @@ TEST_CASE("Test 3: Addition of Duplicate Variables in If Pattern") {
 }
 
 TEST_CASE("Test 4: Addition of Same Variables on Different Lines in If Pattern") {
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     patternsControllerTest.addPattern("IF", "5", "a");
     patternsControllerTest.addPattern("IF", "6", "a");
@@ -58,7 +58,7 @@ TEST_CASE("Test 4: Addition of Same Variables on Different Lines in If Pattern")
 }
 
 TEST_CASE("Test 5: Check Variable Is Used In If Pattern") {
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     patternsControllerTest.addPattern("IF", "7", "a");
     patternsControllerTest.addPattern("IF", "7", "b");
@@ -73,7 +73,7 @@ TEST_CASE("Test 5: Check Variable Is Used In If Pattern") {
 
 TEST_CASE("Test 6: IF: Creating An Invalid Type Of Pattern") {
     bool exceptionThrown = false;
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     try {
         patternsControllerTest.addPattern("FAIL", "8", "a");
@@ -86,7 +86,7 @@ TEST_CASE("Test 6: IF: Creating An Invalid Type Of Pattern") {
 
 TEST_CASE("Test 7: IF: Calling isVariableUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     patternsControllerTest.addPattern("IF", "9", "a");
     patternsControllerTest.addPattern("IF", "9", "b");
@@ -103,7 +103,7 @@ TEST_CASE("Test 7: IF: Calling isVariableUsedInPattern() With Invalid Pattern Ty
 
 TEST_CASE("Test 8: IF: Calling getAllVariablesUsedInPattern() With Invalid Pattern Type") {
     bool exceptionThrown = false;
-    PatternsController patternsControllerTest = PatternsController();
+    PatternsInterface patternsControllerTest = PatternsInterface();
 
     patternsControllerTest.addPattern("IF", "10", "a");
     patternsControllerTest.addPattern("IF", "10", "b");

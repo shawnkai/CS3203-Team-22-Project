@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignAbstractionsController.h"
+#include "PKB/Interfaces/DesignAbstractionsInterface.h"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -13,7 +13,7 @@ using namespace std;
 
 TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 3") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr1", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr1"));
 
@@ -24,7 +24,7 @@ TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
 
     SECTION("Using API With A Tuple of Size 2") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("mr1", "1"));
@@ -38,7 +38,7 @@ TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
 
 TEST_CASE("Test 2: Retrieval of an existent ReadModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 2") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr2"));
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 2: Retrieval of an existent ReadModifies Design Abstraction") {
 
     SECTION("Using API Without Tuple") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
 
@@ -63,7 +63,7 @@ TEST_CASE("Test 2: Retrieval of an existent ReadModifies Design Abstraction") {
 
 TEST_CASE("Test 3: Retrieval of a non-existent ReadModifies Design Abstraction") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr3", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr0"));
 
@@ -73,7 +73,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ReadModifies Design Abstraction")
 
 TEST_CASE("Test 4: Retrieval of an ReadModifies Design Abstraction When Multiple ReadModifies Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr4", "1"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr5", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr4"));
@@ -84,7 +84,7 @@ TEST_CASE("Test 4: Retrieval of an ReadModifies Design Abstraction When Multiple
 
 TEST_CASE("Test 5: Retrieval of an ReadModifies Design Abstraction When Multiple Different Modifies Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr6", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mr6", "1"));
@@ -102,7 +102,7 @@ TEST_CASE("Test 5: Retrieval of an ReadModifies Design Abstraction When Multiple
 
 TEST_CASE("Test 6: Retrieval of an ReadModifies Design Abstraction When Multiple Same Modifies Design Abstractions Are Stored Including Duplicated Values") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "1"));
@@ -118,7 +118,7 @@ TEST_CASE("Test 6: Retrieval of an ReadModifies Design Abstraction When Multiple
 
 TEST_CASE("Test 7: Retrieval of All ReadModifies Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr13", "mr14"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr15", "mr16"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr17", "mr18"));
@@ -131,7 +131,7 @@ TEST_CASE("Test 7: Retrieval of All ReadModifies Design Abstractions") {
 
 TEST_CASE("Test 8: Retrieval of Variables Captured By ReadModifies Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr19", "mr20"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr21", "mr22"));

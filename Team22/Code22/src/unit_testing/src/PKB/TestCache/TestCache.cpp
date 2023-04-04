@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/CacheController.h"
+#include "PKB/Interfaces/CacheInterface.h"
 
 #include "PKB/Exceptions/DataNotFoundInCacheException.cpp"
 
@@ -17,7 +17,7 @@ TEST_CASE("Test 1: Addition Of Data To Cache") {
     try {
         ResultTable resultTable = ResultTable(map<string, vector<string>> {});
 
-        CacheController cacheController = CacheController();
+        CacheInterface cacheController = CacheInterface();
         cacheController.addToCache("AccessKey_1", &resultTable);
     } catch (exception& e) {
         anyExceptionThrown = true;
@@ -32,7 +32,7 @@ TEST_CASE("Test 2: Retrieval Of Data From Cache When Single Result Table is Stor
                 make_pair("sample", vector<string> {"sample"})
             });
 
-    CacheController cacheController = CacheController();
+    CacheInterface cacheController = CacheInterface();
     cacheController.addToCache("AccessKey_2", resultTable);
     ResultTable* result = cacheController.getResultTableFromCache("AccessKey_2");
 
@@ -50,7 +50,7 @@ TEST_CASE("Test 3: Retrieval Of Data From Cache When Multiple Result Tables are 
                     make_pair("sample2", vector<string> {"sample2"})
             });
 
-    CacheController cacheController = CacheController();
+    CacheInterface cacheController = CacheInterface();
     cacheController.addToCache("AccessKey_3", resultTableOne);
     cacheController.addToCache("AccessKey_4", resultTableTwo);
 
@@ -68,7 +68,7 @@ TEST_CASE("Test 4: Retrieval Of Data From Cache Which Does Not Exist") {
                     make_pair("sample", vector<string> {"sample"})
             });
 
-    CacheController cacheController = CacheController();
+    CacheInterface cacheController = CacheInterface();
     cacheController.addToCache("AccessKey_5", resultTable);
 
     try {
@@ -86,7 +86,7 @@ TEST_CASE("Test 5: Retrieval Of Cache Database") {
                     make_pair("sample1", vector<string> {"sample1"})
             });
 
-    CacheController cacheController = CacheController();
+    CacheInterface cacheController = CacheInterface();
     cacheController.addToCache("AccessKey_6", resultTable);
 
     unordered_map<string, ResultTable*> db = cacheController.getCacheDatabase();
@@ -106,7 +106,7 @@ TEST_CASE("Test 6: Test clearCacheAPI()") {
                     make_pair("sample2", vector<string> {"sample2"})
             });
 
-    CacheController cacheController = CacheController();
+    CacheInterface cacheController = CacheInterface();
     cacheController.addToCache("AccessKey_7", resultTableOne);
     cacheController.addToCache("AccessKey_8", resultTableTwo);
 

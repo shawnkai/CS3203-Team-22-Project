@@ -5,13 +5,13 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignEntitiesController.h"
+#include "PKB/Interfaces/DesignEntitiesInterface.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation of WhileStatement Design Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws1", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("WHILE", "ws1");
 
@@ -23,7 +23,7 @@ TEST_CASE("Test 1: Creation of WhileStatement Design Entity") {
 
 TEST_CASE("Test 2: WhileStatement Design Entity, Query for Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws2", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("WHILE", "ws2");
 
@@ -35,7 +35,7 @@ TEST_CASE("Test 2: WhileStatement Design Entity, Query for Same Type, Same Entit
 
 TEST_CASE("Test 3: WhileStatement Design Entity, Query for Same Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws3", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("WHILE", "ws3");
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 3: WhileStatement Design Entity, Query for Same Type, Same Entit
 
 TEST_CASE("Test 4: WhileStatement Design Entity, Query for Same Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws4", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("WHILE", "ws0");
 
@@ -59,7 +59,7 @@ TEST_CASE("Test 4: WhileStatement Design Entity, Query for Same Type, Different 
 
 TEST_CASE("Test 5: WhileStatement Design Entity, Query for Different Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws5", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "ws5");
 
@@ -71,7 +71,7 @@ TEST_CASE("Test 5: WhileStatement Design Entity, Query for Different Type, Same 
 
 TEST_CASE("Test 6: WhileStatement Design Entity, Query for Different Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws6", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "ws0");
 
@@ -83,7 +83,7 @@ TEST_CASE("Test 6: WhileStatement Design Entity, Query for Different Type, Diffe
 
 TEST_CASE("Test 7: WhileStatement Design Entity, Query for Different Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws7", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "ws0");
 
@@ -95,7 +95,7 @@ TEST_CASE("Test 7: WhileStatement Design Entity, Query for Different Type, Diffe
 
 TEST_CASE("Test 8: WhileStatement Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws8", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "ws8");
 
@@ -107,7 +107,7 @@ TEST_CASE("Test 8: WhileStatement Design Entity, Query for Different Type, Same 
 
 TEST_CASE("Test 9: WhileStatement Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws9", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("WHILE", "ws0");
 
@@ -119,7 +119,7 @@ TEST_CASE("Test 9: WhileStatement Design Entity, Query for Same Type, Different 
 
 TEST_CASE("Test 10: WhileStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws10", "1"));
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws10", "1"));
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws10", "2"));
@@ -135,7 +135,7 @@ TEST_CASE("Test 10: WhileStatement Design Entity, Check for Duplication Filterin
 
 TEST_CASE("Test 11: WhileStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws12", "1"));
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws12", "1"));
         designEntitiesController.addDesignEntity("WHILE", make_tuple("ws12", "2"));

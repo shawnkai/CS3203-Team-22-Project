@@ -5,13 +5,13 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignEntitiesController.h"
+#include "PKB/Interfaces/DesignEntitiesInterface.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation of AssignmentStatement Design Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as1", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("ASSIGNMENT", "as1");
 
@@ -23,7 +23,7 @@ TEST_CASE("Test 1: Creation of AssignmentStatement Design Entity") {
 
 TEST_CASE("Test 2: AssignmentStatement Design Entity, Query for Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as2", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("ASSIGNMENT", "as2");
 
@@ -35,7 +35,7 @@ TEST_CASE("Test 2: AssignmentStatement Design Entity, Query for Same Type, Same 
 
 TEST_CASE("Test 3: AssignmentStatement Design Entity, Query for Same Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as3", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("ASSIGNMENT", "as3");
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 3: AssignmentStatement Design Entity, Query for Same Type, Same 
 
 TEST_CASE("Test 4: AssignmentStatement Design Entity, Query for Same Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as4", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("ASSIGNMENT", "as0");
 
@@ -59,7 +59,7 @@ TEST_CASE("Test 4: AssignmentStatement Design Entity, Query for Same Type, Diffe
 
 TEST_CASE("Test 5: AssignmentStatement Design Entity, Query for Different Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as5", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "as5");
 
@@ -71,7 +71,7 @@ TEST_CASE("Test 5: AssignmentStatement Design Entity, Query for Different Type, 
 
 TEST_CASE("Test 6: AssignmentStatement Design Entity, Query for Different Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as6", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "as0");
 
@@ -83,7 +83,7 @@ TEST_CASE("Test 6: AssignmentStatement Design Entity, Query for Different Type, 
 
 TEST_CASE("Test 7: AssignmentStatement Design Entity, Query for Different Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as7", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "as0");
 
@@ -95,7 +95,7 @@ TEST_CASE("Test 7: AssignmentStatement Design Entity, Query for Different Type, 
 
 TEST_CASE("Test 8: AssignmentStatement Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as8", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "as8");
 
@@ -107,7 +107,7 @@ TEST_CASE("Test 8: AssignmentStatement Design Entity, Query for Different Type, 
 
 TEST_CASE("Test 9: AssignmentStatement Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as9", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("ASSIGNMENT", "as0");
 
@@ -119,7 +119,7 @@ TEST_CASE("Test 9: AssignmentStatement Design Entity, Query for Same Type, Diffe
 
 TEST_CASE("Test 10: AssignmentStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as10", "1"));
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as10", "1"));
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as10", "2"));
@@ -135,7 +135,7 @@ TEST_CASE("Test 10: AssignmentStatement Design Entity, Check for Duplication Fil
 
 TEST_CASE("Test 12: AssignmentStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as12", "1"));
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as12", "1"));
         designEntitiesController.addDesignEntity("ASSIGNMENT", make_tuple("as12", "2"));

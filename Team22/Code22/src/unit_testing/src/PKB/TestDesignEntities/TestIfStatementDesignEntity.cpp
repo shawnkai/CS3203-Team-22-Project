@@ -5,13 +5,13 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignEntitiesController.h"
+#include "PKB/Interfaces/DesignEntitiesInterface.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation of IfStatement Design Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is1", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("IF", "is1");
 
@@ -23,7 +23,7 @@ TEST_CASE("Test 1: Creation of IfStatement Design Entity") {
 
 TEST_CASE("Test 2: IfStatement Design Entity, Query for Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is2", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("IF", "is2");
 
@@ -35,7 +35,7 @@ TEST_CASE("Test 2: IfStatement Design Entity, Query for Same Type, Same Entity N
 
 TEST_CASE("Test 3: IfStatement Design Entity, Query for Same Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is3", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("IF", "is3");
 
@@ -47,7 +47,7 @@ TEST_CASE("Test 3: IfStatement Design Entity, Query for Same Type, Same Entity N
 
 TEST_CASE("Test 4: IfStatement Design Entity, Query for Same Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is4", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("IF", "is0");
 
@@ -59,7 +59,7 @@ TEST_CASE("Test 4: IfStatement Design Entity, Query for Same Type, Different Ent
 
 TEST_CASE("Test 5: IfStatement Design Entity, Query for Different Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is5", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "is5");
 
@@ -71,7 +71,7 @@ TEST_CASE("Test 5: IfStatement Design Entity, Query for Different Type, Same Ent
 
 TEST_CASE("Test 6: IfStatement Design Entity, Query for Different Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is6", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "is0");
 
@@ -83,7 +83,7 @@ TEST_CASE("Test 6: IfStatement Design Entity, Query for Different Type, Differen
 
 TEST_CASE("Test 7: IfStatement Design Entity, Query for Different Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is7", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "is0");
 
@@ -95,7 +95,7 @@ TEST_CASE("Test 7: IfStatement Design Entity, Query for Different Type, Differen
 
 TEST_CASE("Test 8: IfStatement Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is8", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "is8");
 
@@ -107,7 +107,7 @@ TEST_CASE("Test 8: IfStatement Design Entity, Query for Different Type, Same Ent
 
 TEST_CASE("Test 9: IfStatement Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is9", "1"));
         Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("IF", "is0");
 
@@ -119,7 +119,7 @@ TEST_CASE("Test 9: IfStatement Design Entity, Query for Same Type, Different Ent
 
 TEST_CASE("Test 10: IfStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is10", "1"));
         designEntitiesController.addDesignEntity("IF", make_tuple("is10", "1"));
         designEntitiesController.addDesignEntity("IF", make_tuple("is10", "2"));
@@ -135,7 +135,7 @@ TEST_CASE("Test 10: IfStatement Design Entity, Check for Duplication Filtering W
 
 TEST_CASE("Test 11: IfStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
     SECTION("") {
-        DesignEntitiesController designEntitiesController = DesignEntitiesController();
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
         designEntitiesController.addDesignEntity("IF", make_tuple("is12", "1"));
         designEntitiesController.addDesignEntity("IF", make_tuple("is12", "1"));
         designEntitiesController.addDesignEntity("IF", make_tuple("is12", "2"));

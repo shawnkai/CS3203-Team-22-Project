@@ -4,8 +4,8 @@
 
 #pragma once
 
-#ifndef SPA_DESIGNABSTRACTIONSCONTROLLER_H
-#define SPA_DESIGNABSTRACTIONSCONTROLLER_H
+#ifndef SPA_DESIGNABSTRACTIONSINTERFACE_H
+#define SPA_DESIGNABSTRACTIONSINTERFACE_H
 
 #include <iostream>
 #include <unordered_map>
@@ -15,7 +15,7 @@
 
 using namespace std;
 
-class DesignAbstractionsController {
+class DesignAbstractionsInterface {
 public:
     void addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
     Result getDesignAbstraction(string abstractionType, tuple<string, string> query);
@@ -27,4 +27,4 @@ public:
             string designAbstractionType, string entityTypeBeingAbstracted);
 };
 
-#endif //SPA_DESIGNABSTRACTIONSCONTROLLER_H
+#endif //SPA_DESIGNABSTRACTIONSINTERFACE_H

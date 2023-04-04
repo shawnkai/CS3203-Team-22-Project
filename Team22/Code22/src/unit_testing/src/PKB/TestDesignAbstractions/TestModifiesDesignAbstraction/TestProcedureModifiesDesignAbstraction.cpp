@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/Interfaces/DesignAbstractionsController.h"
+#include "PKB/Interfaces/DesignAbstractionsInterface.h"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -14,7 +14,7 @@ using namespace std;
 
 TEST_CASE("Test 1: Creation of ProcedureModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 3") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp1", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp1"));
 
@@ -25,7 +25,7 @@ TEST_CASE("Test 1: Creation of ProcedureModifies Design Abstraction") {
 
     SECTION("Using API With A Tuple of Size 2") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("mp1", "1"));
@@ -39,7 +39,7 @@ TEST_CASE("Test 1: Creation of ProcedureModifies Design Abstraction") {
 
 TEST_CASE("Test 2: Retrieval of an existent ProcedureModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 2") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp2", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp2"));
 
@@ -48,7 +48,7 @@ TEST_CASE("Test 2: Retrieval of an existent ProcedureModifies Design Abstraction
 
     SECTION("Using API Without Tuple") {
         bool throwsException = false;
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp2", "1"));
 
@@ -64,7 +64,7 @@ TEST_CASE("Test 2: Retrieval of an existent ProcedureModifies Design Abstraction
 
 TEST_CASE("Test 3: Retrieval of a non-existent ProcedureModifies Design Abstraction") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp3", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp0"));
 
@@ -74,7 +74,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent ProcedureModifies Design Abstract
 
 TEST_CASE("Test 4: Retrieval of an ProcedureModifies Design Abstraction When Multiple ProcedureModifies Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp4", "1"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp5", "1"));
         Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", "mp4"));
@@ -85,7 +85,7 @@ TEST_CASE("Test 4: Retrieval of an ProcedureModifies Design Abstraction When Mul
 
 TEST_CASE("Test 5: Retrieval of an ProcedureModifies Design Abstraction When Multiple Different Modifies Design Abstractions Are Stored") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp6", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mp6", "1"));
@@ -103,7 +103,7 @@ TEST_CASE("Test 5: Retrieval of an ProcedureModifies Design Abstraction When Mul
 
 TEST_CASE("Test 6: Retrieval of an ProcedureModifies Design Abstraction When Multiple Same Modifies Design Abstractions Are Stored Including Duplicated Values") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp7", "1"));
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp7", "1"));
@@ -119,7 +119,7 @@ TEST_CASE("Test 6: Retrieval of an ProcedureModifies Design Abstraction When Mul
 
 TEST_CASE("Test 7: Retrieval of All ProcedureModifies Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp13", "mp14"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp15", "mp16"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp17", "mp18"));
@@ -132,7 +132,7 @@ TEST_CASE("Test 7: Retrieval of All ProcedureModifies Design Abstractions") {
 
 TEST_CASE("Test 8: Retrieval of Variables Captured By ProcedureModifies Design Abstractions") {
     SECTION("") {
-        DesignAbstractionsController designAbstractionsControllerTest = DesignAbstractionsController();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp19", "mp20"));
         designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mp21", "mp22"));
