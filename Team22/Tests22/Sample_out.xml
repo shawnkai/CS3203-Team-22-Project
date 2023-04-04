@@ -1,112 +1,168 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>autotester</name><parsing_time_taken>38.228000</parsing_time_taken>
+<name>autotester</name><parsing_time_taken>38.381000</parsing_time_taken>
 </info>
 <queries>
 <query>
 <id ReturnTuple="1" Calls="1" Modifies="1" SuchThat="2" With="1" CondNum="6" RelNum="2" comment="Select procedure, Calls">1</id><querystr><![CDATA[variable v; procedure p, q; Select p such that Calls(p, q) with q.procName = "test1" such that Modifies(p, v)]]></querystr>
 <stuans>Example,test2</stuans>
 <correct>Example,test2</correct>
-<time_taken>12.769000</time_taken>
+<time_taken>12.502000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Calls="3" SuchThat="1" CondNum="5" RelNum="3" comment="Select boolean, calls">2</id><querystr><![CDATA[ Select BOOLEAN such that Calls("Example", "test1") and Calls("Example", "Shift") and Calls("Example", "test2")]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>11.490000</time_taken>
+<time_taken>12.066000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="4" SuchThat="1" CondNum="6" RelNum="4" comment="Select boolean, next">3</id><querystr><![CDATA[ Select BOOLEAN such that Next(1,2) and Next(2,3) and Next(3, 4) and Next (4, 14)]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>9.498000</time_taken>
+<time_taken>9.811000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnBoolean="1" Next="4" SuchThat="1" CondNum="6" RelNum="4" comment="Select boolean, next, false">4</id><querystr><![CDATA[ Select BOOLEAN such that Next(1,2) and Next(2,3) and Next(3, 4) and Next (1, 3)]]></querystr>
 <stuans>FALSE</stuans>
 <correct>FALSE</correct>
-<time_taken>9.108000</time_taken>
+<time_taken>9.218000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select tuple">5</id><querystr><![CDATA[procedure p, q; Select <p, q> such that Calls(p, q)]]></querystr>
 <stuans>Example Shift,Example test1,Example test2,test2 test1</stuans>
 <correct>Example test1,Example Shift,Example test2,test2 test1</correct>
-<time_taken>5.167000</time_taken>
+<time_taken>5.247000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Calls="2" SuchThat="1" CondNum="4" RelNum="2" comment="Select Multiple Calls Clauses Using "and"">6</id><querystr><![CDATA[procedure p; Select p such that Calls(p, "test1") and Calls(p, "test2")]]></querystr>
 <stuans>Example</stuans>
 <correct>Example</correct>
-<time_taken>6.993000</time_taken>
+<time_taken>7.102000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Uses="2" SuchThat="1" CondNum="4" RelNum="2" comment="Select Multiple Uses Clauses Using "and"">7</id><querystr><![CDATA[variable v; Select v such that Uses("Example", v) and Uses("test1", v)]]></querystr>
 <stuans></stuans>
 <correct></correct>
-<time_taken>7.666000</time_taken>
+<time_taken>7.292000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" UnnamedVar="3" Pattern="1" CondNum="5" RelNum="0" comment="Select Multiple Pattern Clauses Using "and"">8</id><querystr><![CDATA[assign a; Select a pattern a ("x", _) and a (_, _"x"_)]]></querystr>
 <stuans>5</stuans>
 <correct>5</correct>
-<time_taken>6.462000</time_taken>
+<time_taken>6.369000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Next="1" UnnamedVar="2" Pattern="1" SuchThat="1" CondNum="6" RelNum="1" comment="Select if pattern such that next relationship holds">9</id><querystr><![CDATA[if i; Select i pattern i ("x", _, _) such that Next (i, 9)]]></querystr>
 <stuans>7</stuans>
 <correct>7</correct>
-<time_taken>6.362000</time_taken>
+<time_taken>6.294000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Next="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select while pattern such that next relationship holds">10</id><querystr><![CDATA[while w; Select w pattern w ("w", _) such that Next (w, 21)]]></querystr>
 <stuans>20</stuans>
 <correct>20</correct>
-<time_taken>5.959000</time_taken>
+<time_taken>6.224000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Modifies="1" UnnamedVar="1" Pattern="1" SuchThat="1" CondNum="5" RelNum="1" comment="Select while pattern such that it modifies variable modified by called procedure">11</id><querystr><![CDATA[while w; Select w pattern w ("w", _) such that Modifies (w, "left")]]></querystr>
 <stuans>20</stuans>
 <correct>20</correct>
-<time_taken>6.926000</time_taken>
+<time_taken>6.937000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Next="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment pattern such that it is next to an if statement">12</id><querystr><![CDATA[if i; assign a; Select a such that Next(i, a)]]></querystr>
 <stuans>8,9</stuans>
 <correct>8,9</correct>
-<time_taken>4.786000</time_taken>
+<time_taken>4.735000</time_taken>
 <passed/>
 </query>
 <query>
 <id ReturnTuple="1" Next="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select assignment pattern such that it is next to an if statement">13</id><querystr><![CDATA[if i; assign a; Select <i, a> such that Next(i, a)]]></querystr>
 <stuans>7 8,7 9</stuans>
 <correct>7 8,7 9</correct>
-<time_taken>5.144000</time_taken>
+<time_taken>5.332000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Modifies="1" Next="1" UnnamedVar="6" Uses="1" Pattern="2" SuchThat="3" CondNum="15" RelNum="3" comment="Select if such that it has x as a control variable and is before an assignment that modifies z and uses x and after a while that has i as a control variable">14</id><querystr><![CDATA[if i; assign a; while w; Select i such that Next(i, a) pattern i("x", _, _) and i(_, _, _) such that Modifies(a, "z") such that Uses(a, "x") pattern w("i", _)]]></querystr>
+<id ReturnTuple="1" Modifies="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Select All Variables Used and Modified in Procedure "Example"">13</id><querystr><![CDATA[variable v; Select v such that Uses("Procedure", v) and Modifies("Procedure", v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>8.396000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" Uses="1" SuchThat="1" CondNum="4" RelNum="2" comment="Select All Variables Used and Modified in Procedure "Shift"">14</id><querystr><![CDATA[variable v; Select v such that Uses("Shift", v) and Modifies("Shift", v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>7.865000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Parent="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select All Statements Who Are Parents of Line 6">15</id><querystr><![CDATA[stmt s; Select s such that Parent(s, 6)]]></querystr>
+<stuans>4</stuans>
+<correct>4</correct>
+<time_taken>4.279000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Followsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Select All Statements Who Follow Line 6">16</id><querystr><![CDATA[stmt s; Select s such that Follows*(6, s)]]></querystr>
+<stuans>11,12,13,7</stuans>
+<correct>7,11,12,13</correct>
+<time_taken>4.503000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Follows="1" Parent="1" SuchThat="1" CondNum="4" RelNum="2" comment="Select All Statements Who Follow Line 6 and Are Parent of Line 6">17</id><querystr><![CDATA[stmt s; Select s such that Follows(6, s) and Parent(s, 6)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>6.321000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Uses="3" SuchThat="1" CondNum="5" RelNum="3" comment="Select All Variables Used and Printed In The Program">18</id><querystr><![CDATA[print p; assign a; variable v; stmt s; Select v such that Uses(p, v) and Uses(a, v) and Uses(s, v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>9.388000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="3" SuchThat="1" CondNum="5" RelNum="3" comment="Select All Variables Modified and Read In The Program">19</id><querystr><![CDATA[read r; assign a; variable v; stmt s; Select v such that Modifies(r, v) and Modifies(a, v) and Modifies(s, v)]]></querystr>
+<stuans></stuans>
+<correct></correct>
+<time_taken>10.310000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" Parent="1" Uses="1" SuchThat="1" CondNum="5" RelNum="3" comment="Select All Variables Being Modified and Used In Line 7 If Statement Container">20</id><querystr><![CDATA[variable v; stmt s; Select v such that Modifies(s, v) and Uses(s, v) and Parent(7, s)]]></querystr>
+<stuans>b,c</stuans>
+<correct>b,c</correct>
+<time_taken>10.940000</time_taken>
+<passed/>
+</query>
+<query>
+<id ReturnTuple="1" Modifies="1" Next="1" UnnamedVar="6" Uses="1" Pattern="2" SuchThat="3" CondNum="15" RelNum="3" comment="Select if such that it has x as a control variable and is before an assignment that modifies z and uses x and after a while that has i as a control variable">21</id><querystr><![CDATA[if i; assign a; while w; Select i such that Next(i, a) pattern i("x", _, _) and i(_, _, _) such that Modifies(a, "z") such that Uses(a, "x") pattern w("i", _)]]></querystr>
 <stuans>7</stuans>
 <correct>7</correct>
-<time_taken>18.178000</time_taken>
+<time_taken>18.025000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnBoolean="1" Callsstar="1" SuchThat="1" With="2" CondNum="5" RelNum="1" comment="Select boolean, calls">15</id><querystr><![CDATA[procedure proc, proc1; Select BOOLEAN with proc.procName = "Example" such that Calls*(proc, proc1) with proc1.procName = "test1"]]></querystr>
+<id ReturnBoolean="1" Callsstar="1" SuchThat="1" With="2" CondNum="5" RelNum="1" comment="Select boolean, calls">22</id><querystr><![CDATA[procedure proc, proc1; Select BOOLEAN with proc.procName = "Example" such that Calls*(proc, proc1) with proc1.procName = "test1"]]></querystr>
 <stuans>TRUE</stuans>
 <correct>TRUE</correct>
-<time_taken>13.165000</time_taken>
+<time_taken>12.817000</time_taken>
 <passed/>
 </query>
 </queries>
