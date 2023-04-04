@@ -48,7 +48,7 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                        "TestModifiesAndUsesRelationship/Uses_Simplified_Testing_queries.txt"),
                       ("TestCombinationTwoClauses/Sample_source.txt", "TestCombinationTwoClauses/Sample_queries.txt"),
                       ("TestMultipleExpressions/Multiple_Expressions_Source.txt", "TestMultipleExpressions"
-                                                                                  "/Multiple_Expressions_Queries.txt"),
+                       "/Multiple_Expressions_Queries.txt"),
                       ("Ms2Testing/Milestone_2_Testing_Source.txt", "Ms2Testing/Milestone_2_Testing_Queries.txt"),
                       ("TestWithClause/Sample_source_with.txt", "TestWithClause/Sample_queries_with.txt"),
                       ("TestWithClause/TestWithClauseSource.txt", "TestWithClause/TestWithClauseQueries.txt"),

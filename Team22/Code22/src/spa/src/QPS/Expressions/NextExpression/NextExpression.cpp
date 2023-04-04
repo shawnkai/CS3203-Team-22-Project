@@ -61,37 +61,8 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
 
 }
 
-tuple<StmtRef*, StmtRef*> NextExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
-    StmtRef* a1;
-    StmtRef* a2;
-
-    if (Utilities::isNumber(arg1)) {
-        a1 = new StmtEntity(stoi(arg1));
-    }
-    else if (arg1 == "_") {
-        a1 = new WildcardStmtRef();
-    }
-    else {
-        a1 = dynamic_cast<SynonymStmtEntity*>(synonymTable.get(arg1, "select"));
-        if (a1->getType() == "VARIABLE" || a1->getType() == "PROCEDURE" || a1->getType() == "CONSTANT") {
-            throw SemanticException();
-        }
-    }
-
-    if (Utilities::isNumber(arg2)) {
-        a2 = new StmtEntity(stoi(arg2));
-    }
-    else if (arg2 == "_") {
-        a2 = new WildcardStmtRef();
-    }
-    else {
-        a2 = dynamic_cast<SynonymStmtEntity*>(synonymTable.get(arg2, "select"));
-        if (a2->getType() == "VARIABLE" || a2->getType() == "PROCEDURE" || a2->getType() == "CONSTANT") {
-            throw SemanticException();
-        }
-    }
-
-    return std::make_tuple(a1, a2);
+ResultTable* NextStarExpression::evaluate(PKB pkb) {
+    return new BooleanFalseTable();
 }
 
 NextExpression::NextExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
@@ -100,12 +71,11 @@ string NextExpression::toString() {
     return "Next(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-//NextStarExpression::NextStarExpression(StmtEntity* s1, StmtEntity* s2) : NextsExpression(s1, s2, "FOLLOWSSTAR") {}
-//
-//string NextStarExpression::toString() {
-//    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-//}
+NextStarExpression::NextStarExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
+string NextStarExpression::toString() {
+    return "Next*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
 
 vector<NextExpression*> NextExpression::extractNextExpression(const string& query, const SynonymTable& synonymTable) {
     if (!containsNextExpression(query)) {
@@ -130,32 +100,36 @@ vector<NextExpression*> NextExpression::extractNextExpression(const string& quer
     return expressions;
 }
 
-//vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const string& query, const SynonymTable& synonymTable) {
-//    smatch sm;
-//
-//    string::const_iterator searchStart(query.begin());
-//
-//    vector<NextStarExpression*> expressions;
-//
-//    while (regex_search(searchStart, query.cend(), sm, NEXTSTARREGEX)) {
-//        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-//
-//        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-//        StmtEntity* a2 = std::get<1>(stmtEntityPair);
-//
-//        expressions.push_back(new NextStarExpression(a1, a2));
-//        searchStart = sm.suffix().first;
-//    }
-//    return expressions;
-//}
+vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsNextStarExpression(query)) {
+        return {};
+    }
+
+    smatch sm;
+
+    string::const_iterator searchStart(query.begin());
+
+    vector<NextStarExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, Expression::NEXTSTARREGEX)) {
+        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+
+        StmtRef* a1 = std::get<0>(stmtEntityPair);
+        StmtRef* a2 = std::get<1>(stmtEntityPair);
+
+        expressions.push_back(new NextStarExpression(a1, a2));
+        searchStart = sm.suffix().first;
+    }
+    return expressions;
+}
 
 
 bool NextExpression::containsNextExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), Expression::NEXTREGEX), std::sregex_iterator()) > 0;
 }
 
-//bool NextStarExpression::containsNextStarExpression(string query) {
-//    return distance(sregex_iterator(query.begin(), query.end(), NEXTSTARREGEX), std::sregex_iterator()) > 0;
-//}
-//
+bool NextStarExpression::containsNextStarExpression(string query) {
+    return distance(sregex_iterator(query.begin(), query.end(), NEXTSTARREGEX), std::sregex_iterator()) > 0;
+}
+
 
