@@ -38,17 +38,17 @@ assign a;
 Select a pattern a ("x", _) and a (_, _"x"_)
 5
 5000
-9 - Select if pattern such that next relationship holds 
+9 - Select if pattern such that next relationship holds
 if i;
 Select i pattern i ("x", _, _) such that Next (i, 9)
 7
 5000
-10 - Select while pattern such that next relationship holds 
+10 - Select while pattern such that next relationship holds
 while w;
 Select w pattern w ("w", _) such that Next (w, 21)
 20
 5000
-11 - Select while pattern such that it modifies variable modified by called procedure 
+11 - Select while pattern such that it modifies variable modified by called procedure
 while w;
 Select w pattern w ("w", _) such that Modifies (w, "left")
 20
@@ -58,7 +58,7 @@ if i; assign a;
 Select a such that Next(i, a)
 8, 9
 5000
-12 - Select assignment pattern such that it is next to an if statement
+13 - Select assignment pattern such that it is next to an if statement
 if i; assign a;
 Select <i, a> such that Next(i, a)
 7 8, 7 9
@@ -102,4 +102,14 @@ none
 variable v, stmt s;
 Select v such that Modifies(s, v) and Uses(s, v) and Parent(7, s)
 z, x
+5000
+21 - Select if such that it has x as a control variable and is before an assignment that modifies z and uses x and after a while that has i as a control variable
+if i; assign a; while w;
+Select i such that Next(i, a) pattern i("x", _, _) and i(_, _, _) such that Modifies(a, "z") such that Uses(a, "x") pattern w("i", _)
+7
+5000
+22 - Select boolean, calls
+procedure proc, proc1;
+Select BOOLEAN with proc.procName = "Example" such that Calls*(proc, proc1) with proc1.procName = "test1"
+TRUE
 5000
