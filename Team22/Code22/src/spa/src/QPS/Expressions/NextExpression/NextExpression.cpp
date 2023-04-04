@@ -89,12 +89,8 @@ vector<NextExpression*> NextExpression::extractNextExpression(const string& quer
     vector<NextExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, Expression::NEXTREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new NextExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new NextExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
     return expressions;
@@ -106,18 +102,13 @@ vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const 
     }
 
     smatch sm;
-
     string::const_iterator searchStart(query.begin());
 
     vector<NextStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, Expression::NEXTSTARREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new NextStarExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new NextStarExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
     return expressions;

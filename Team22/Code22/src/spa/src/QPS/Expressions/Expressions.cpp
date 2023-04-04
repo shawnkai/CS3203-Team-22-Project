@@ -50,7 +50,7 @@ vector<DesignEntity*> Expression::getAllEntities() {
     return this->entities;
 }
 
-tuple<StmtRef*, StmtRef*> Expression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
+pair<StmtRef*, StmtRef*> Expression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
     StmtRef *a1;
     StmtRef *a2;
 

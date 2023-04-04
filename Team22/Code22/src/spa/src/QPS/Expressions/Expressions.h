@@ -43,9 +43,9 @@ class Expression {
         static regex NEXTSTARREGEX;
         static regex RETURNVALUEREGEX;
 
-        static tuple<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
+        static pair<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
 
-    public:
+public:
         static string QUERYVALIDATION;
         static regex QUERYVALIDATIONREGEX;
 
