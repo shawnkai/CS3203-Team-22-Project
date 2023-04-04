@@ -43,18 +43,18 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
         }
     }
 
-    if (dynamic_cast<SynonymStmtEntity*>(this->entities[0]) && dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
-        if (!results.empty()) {
+    if (!dynamic_cast<SynonymStmtEntity*>(this->entities[0]) && !dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
+        if ((new ResultTable(results))->getSize() != 0) {
             return new BooleanTrueTable();
         }
         else {
             return new BooleanFalseTable();
         }
     }
-    else if (dynamic_cast<SynonymStmtEntity*>(this->entities[0])) {
+    else if (!dynamic_cast<SynonymStmtEntity*>(this->entities[0])) {
         return (new ResultTable(results))->getColumns({this->entities[1]->toString()});
     }
-    else if (dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
+    else if (!dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
         return (new ResultTable(results))->getColumns({this->entities[0]->toString()});
     }
     return new ResultTable(results);
