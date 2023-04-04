@@ -59,21 +59,21 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
     } else if (designAbstractionType == "USES") {
         return getUsesDatabase(entityTypeBeingAbstracted);
     } else if (designAbstractionType == "FOLLOWS") {
-        return getFollowsDatabase();
+        return followsDatabase;
     } else if (designAbstractionType == "FOLLOWSSTAR") {
-        return getFollowsStarDatabase();
+        return followsStarDatabase;
     } else if (designAbstractionType == "PARENT") {
-        return getParentDatabase();
+        return parentDatabase;
     } else if (designAbstractionType == "PARENTSTAR") {
-        return getParentStarDatabase();
+        return parentStarDatabase;
     } else if (designAbstractionType == "CALLS") {
-        return getCallsDatabase();
+        return callsDatabase;
     } else if (designAbstractionType == "CALLSSTAR") {
-        return getCallsStarDatabase();
+        return callsStarDatabase;
     } else if (designAbstractionType == "NEXT") {
-        return getNextDatabase();
+        return nextDatabase;
     } else if (designAbstractionType == "INVERSECALLS") {
-        return getInverseCallsAbstraction();
+        return inverseCallsDatabase;
     }
 
     throw DatabaseNotFoundException(("Database for " + designAbstractionType + " could not be found").data());
@@ -89,7 +89,25 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getAbstractionData
  */
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabase(string entityTypeBeingAbstracted) {
     transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
-    return ModifiesDatabaseFactory::getModifiesDatabase(entityTypeBeingAbstracted);
+
+    if (entityTypeBeingAbstracted == "ASSIGNMENT") {
+        return assignmentModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "READ") {
+        return readModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "STATEMENT") {
+        return statementModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURE") {
+        return procedureModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURECALL") {
+        return procedureCallModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "WHILE") {
+        return whileStatementModifiesDatabase;
+    } else if (entityTypeBeingAbstracted == "IF") {
+        return ifStatementModifiesDatabase;
+    }
+    // add others as they are implemented (possibly wildcard?)
+
+    throw DatabaseNotFoundException(("Database for Modifies " + entityTypeBeingAbstracted + " could not be found").data());
 }
 
 /**
@@ -101,121 +119,128 @@ DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getModifiesDatabas
  * @return A DesignAbstractionDatabase pointer, of some Uses Abstraction database.
  */
 DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getUsesDatabase(string entityTypeBeingAbstracted) {
-    transform(entityTypeBeingAbstracted.begin(), entityTypeBeingAbstracted.end(), entityTypeBeingAbstracted.begin(), ::toupper);
-    return UsesDatabaseFactory::getUsesDatabase(entityTypeBeingAbstracted);
-}
+    if (entityTypeBeingAbstracted == "ASSIGNMENT") {
+        return assignmentUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PRINT") {
+        return printUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURE") {
+        return procedureUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "STATEMENT") {
+        return statementUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "PROCEDURECALL") {
+        return procedureCallUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "WHILE") {
+        return whileStatementUsesDatabase;
+    } else if (entityTypeBeingAbstracted == "IF") {
+        return ifStatementUsesDatabase;
+    }
 
-/**
- * Returns a DesignAbstractionDatabase pointer, of Follows Abstraction database.
- *
- * @return A DesignAbstractionDatabase pointer, of Follows Abstraction database.
- */
-DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsDatabase() {
-    return FollowsDatabaseFactory::getFollowsDatabase();
-}
-
-/**
- * Returns a DesignAbstractionDatabase pointer, of FollowsStar Abstraction database.
- *
- * @return A DesignAbstractionDatabase pointer, of FollowsStar Abstraction database.
- */
-DesignAbstractionDatabase* DesignAbstractionsDatabaseFactory::getFollowsStarDatabase() {
-    return FollowsStarDatabaseFactory::getFollowsStarDatabase();
-}
-
-/**
- * Returns a DesignAbstractionDatabase pointer, of Parent Abstraction database.
- *
- * @return A DesignAbstractionDatabase pointer, of Parent Abstraction database.
- */
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentDatabase() {
-    return ParentDatabaseFactory::getParentDatabase();
-}
-
-/**
- * Returns a DesignAbstractionDatabase pointer, of ParentStar Abstraction database.
- *
- * @return A DesignAbstractionDatabase pointer, of ParentStar Abstraction database.
- */
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getParentStarDatabase() {
-    return ParentStarDatabaseFactory::getParentStarDatabase();
-}
-
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsDatabase() {
-    return CallsDatabaseFactory::getCallsDatabase();
-}
-
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getCallsStarDatabase() {
-    return CallsStarDatabaseFactory::getCallsStarDatabaseDatabase();
-}
-
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getNextDatabase() {
-    return NextDatabaseFactory::getNextDatabase();
-}
-
-DesignAbstractionDatabase *DesignAbstractionsDatabaseFactory::getInverseCallsAbstraction() {
-    return InverseCallsDatabaseFactory::getInverseCallsDatabase();
+    throw DatabaseNotFoundException(("Database for Uses " + entityTypeBeingAbstracted + " could not be found").data());
 }
 
 /**
  * Clears all the Modifies Design Abstraction databases.
  */
 void DesignAbstractionsDatabaseFactory::clearModifiesDatabase() {
-    ModifiesDatabaseFactory::clearDatabase();
+    delete assignmentModifiesDatabase;
+    delete readModifiesDatabase;
+    delete statementModifiesDatabase;
+    delete procedureModifiesDatabase;
+    delete procedureCallModifiesDatabase;
+    delete whileStatementModifiesDatabase;
+    delete ifStatementModifiesDatabase;
+
+    assignmentModifiesDatabase = new AssignmentModifiesDatabase();
+    readModifiesDatabase = new ReadModifiesDatabase();
+    statementModifiesDatabase = new StatementModifiesDatabase();
+    procedureModifiesDatabase = new ProcedureModifiesDatabase();
+    procedureCallModifiesDatabase = new ProcedureCallModifiesDatabase();
+    whileStatementModifiesDatabase = new WhileStatementModifiesDatabase();
+    ifStatementModifiesDatabase = new IfStatementModifiesDatabase();
 }
 
 /**
  * Clears all the Uses Design Abstraction databases.
  */
 void DesignAbstractionsDatabaseFactory::clearUsesDatabase() {
-    UsesDatabaseFactory::clearDatabase();
+    delete assignmentUsesDatabase;
+    delete printUsesDatabase;
+    delete procedureUsesDatabase;
+    delete statementUsesDatabase;
+    delete procedureCallUsesDatabase;
+    delete whileStatementUsesDatabase;
+    delete ifStatementUsesDatabase;
+
+    assignmentUsesDatabase = new AssignmentUsesDatabase();
+    printUsesDatabase = new PrintUsesDatabase();
+    procedureUsesDatabase = new ProcedureUsesDatabase();
+    statementUsesDatabase = new StatementUsesDatabase();
+    procedureCallUsesDatabase = new ProcedureCallUsesDatabase();
+    whileStatementUsesDatabase = new WhileStatementUsesDatabase();
+    ifStatementUsesDatabase = new IfStatementUsesDatabase();
 }
 
 /**
  * Clears the Follows Design Abstraction database.
  */
 void DesignAbstractionsDatabaseFactory::clearFollowsDatabase() {
-    FollowsDatabaseFactory::clearDatabase();
+    delete followsDatabase;
+
+    followsDatabase = new FollowsDatabase();
 }
 
 /**
  * Clears the FollowsStar Design Abstraction database.
  */
 void DesignAbstractionsDatabaseFactory::clearFollowsStarDatabase() {
-    FollowsStarDatabaseFactory::clearDatabase();
+    delete followsStarDatabase;
+
+    followsStarDatabase = new FollowsStarDatabase();
 }
 
 /**
  * Clears the Parent Design Abstraction database.
  */
 void DesignAbstractionsDatabaseFactory::clearParentDatabase() {
-    ParentDatabaseFactory::clearDatabase();
+    delete parentDatabase;
+
+    parentDatabase = new ParentDatabase();
 }
 
 /**
  * Clears the ParentStar Design Abstraction database.
  */
 void DesignAbstractionsDatabaseFactory::clearParentStarDatabase() {
-    ParentStarDatabaseFactory::clearDatabase();
+    delete parentStarDatabase;
+
+    parentStarDatabase = new ParentStarDatabase();
 }
 
 /**
  * Clears the Calls Design Abstraction database.
  */
 void DesignAbstractionsDatabaseFactory::clearCallsDatabase() {
-    CallsDatabaseFactory::clearDatabase();
+    delete callsDatabase;
+
+    callsDatabase = new CallsDatabase();
 }
 
 void DesignAbstractionsDatabaseFactory::clearCallsStarDatabase() {
-    CallsStarDatabaseFactory::clearDatabase();
+    delete callsStarDatabase;
+
+    callsStarDatabase = new CallsStarDatabase();
 }
 
 void DesignAbstractionsDatabaseFactory::clearNextDatabase() {
-    NextDatabaseFactory::clearDatabase();
+    delete nextDatabase;
+
+    nextDatabase = new NextDatabase();
 }
 
 void DesignAbstractionsDatabaseFactory::clearInverseCallsDatabase() {
-    InverseCallsDatabaseFactory::clearDatabase();
+    delete inverseCallsDatabase;
+
+    inverseCallsDatabase = new InverseCallsDatabase();
 }
 
 /**
