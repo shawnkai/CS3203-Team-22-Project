@@ -63,3 +63,43 @@ if i; assign a;
 Select <i, a> such that Next(i, a)
 7 8, 7 9
 5000
+13 - Select All Variables Used and Modified in Procedure "Example"
+variable v;
+Select v such that Uses("Procedure", v) and Modifies("Procedure", v)
+x, z, i
+5000
+14 - Select All Variables Used and Modified in Procedure "Shift"
+variable v;
+Select v such that Uses("Shift", v) and Modifies("Shift", v)
+none
+5000
+15 - Select All Statements Who Are Parents of Line 6
+stmt s;
+Select s such that Parent(s, 6)
+5
+5000
+16 - Select All Statements Who Follow Line 6
+stmt s;
+Select s such that Follows(6, s)
+7, 11, 12, 13
+5000
+17 - Select All Statements Who Follow Line 6 and Are Parent of Line 6
+stmt s;
+Select s such that Follows(6, s) and Parent(s, 6)
+none
+5000
+18 - Select All Variables Used and Printed In The Program
+print p, assign a, variable v, stmt s;
+Select v such that Uses(p, v) and Uses(a, v) and Uses(s, v)
+none
+5000
+19 - Select All Variables Modified and Read In The Program
+read r, assign a, variable v, stmt s;
+Select v such that Modifies(r, v) and Modifies(a, v) and Modifies(s, v)
+none
+5000
+20 - Select All Variables Being Modified and Used In Line 7 If Statement Container
+variable v, stmt s;
+Select v such that Modifies(s, v) and Uses(s, v) and Parent(7, s)
+z, x
+5000
