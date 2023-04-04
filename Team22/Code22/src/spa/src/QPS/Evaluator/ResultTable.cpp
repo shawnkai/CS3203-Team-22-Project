@@ -10,11 +10,20 @@
 ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     for (pair<string, vector<string>> p : args) {
         table.insert(p);
+        this->columns.push_back(p.first);
     }
 }
 
 ResultTable::ResultTable(const map<string, vector<string>>& table) {
     this->table = table;
+    for (const auto& kv : table) {
+        this->columns.push_back(kv.first);
+    }
+}
+
+ResultTable::ResultTable(const map<string, vector<string>> &table, vector<string> columns) {
+    this->table = table;
+    this->columns = std::move(columns);
 }
 
 bool ResultTable::equals(ResultTable* table2) {
@@ -213,13 +222,12 @@ ResultTable* ResultTable::getColumns(const vector<string>& columns) {
         }
         mod.insert({column, this->getValues(column)});
     }
-    return new ResultTable(mod);
+    return new ResultTable(mod, columns);
 }
 
 vector<string> ResultTable::getValues() {
     vector<vector<string>> columnValues;
-    vector<string> columns = this->getColumnNames();
-    for (const string& column : columns) {
+    for (const string& column : this->columns) {
         columnValues.push_back(this->getValues(column));
     }
     vector<string> result;

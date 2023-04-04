@@ -111,9 +111,10 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string 
 }
 
 ResultTable* SelectExpression::evaluate(PKB pkb) {
-    map<string, vector<string>> finalResults;
     vector<string> columns;
+    vector<ResultTable*> selectEntityTables;
     for (int i = 0; i < this->entities.size(); i++) {
+        map<string, vector<string>> finalResults;
         DesignEntity *entity = this->entities[i];
         string synAttr = this->synAttrs[i];
         auto results = pkb.getAllDesignEntity(entity->getType());
@@ -138,9 +139,12 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
         } else {
             columns.push_back(entity->toString());
         }
-
+        selectEntityTables.push_back(new ResultTable(finalResults));
     }
-    auto* selectResult = new ResultTable(finalResults);
+    auto *selectResult = new ResultTable({});
+    if (!selectEntityTables.empty()) {
+        selectResult = ResultTable::intersection(selectEntityTables);
+    }
     if (this->conditions.empty()) {
         return selectResult;
     } else {
@@ -151,7 +155,8 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
         }
         if (!this->entities.empty()) {
             allResults.push_back(selectResult);
-            return ResultTable::intersection(allResults)->getColumns(columns);
+            ResultTable* t = ResultTable::intersection(allResults)->getColumns(columns);
+            return t;
         }
 
         ResultTable* finalTable = ResultTable::intersection(allResults);

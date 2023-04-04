@@ -14,12 +14,14 @@ using namespace std;
 
 
 class ResultTable {
+    vector<string> columns;
     map<string, vector<string>> table;
 
 public:
     explicit ResultTable(initializer_list<pair<string, vector<string>>> args);
 
     explicit ResultTable(const map<string, vector<string>>& table);
+    explicit ResultTable(const map<string, vector<string>>& table, vector<string> columns);
 
     ::size_t getSize();
 
