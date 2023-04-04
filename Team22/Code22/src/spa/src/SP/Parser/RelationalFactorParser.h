@@ -6,6 +6,7 @@
 #include "MainParser.h"
 #include "VarNode.h"
 #include "ConstantNode.h"
+#include "ConditionalExpressionParserFactory.h"
 
 class RelationalFactorParser : public MainParser {
 public:

@@ -3,10 +3,10 @@
 
 std::shared_ptr<TreeNode> RelationalExprParser::parse() {
     TreeNode node = parseRelationalFactor();
-    TNode relationalNode;
-    while (tokenList[pos].type == TokenType::OPERATOR &&
-           (tokenList[pos].value == ">" || tokenList[pos].value == "<" || tokenList[pos].value == ">="
-            || tokenList[pos].value == "<=" || tokenList[pos].value == "==" || tokenList[pos].value == "!=")) {
+    TreeNode relationalNode;
+    while (tokenList[*pos].type == TokenType::OPERATOR &&
+           (tokenList[*pos].value == ">" || tokenList[*pos].value == "<" || tokenList[*pos].value == ">="
+            || tokenList[*pos].value == "<=" || tokenList[*pos].value == "==" || tokenList[*pos].value == "!=")) {
         relationalNode.nodeType = TokenType::OPERATOR;
         relationalNode.stringId = tokenList[pos].value;
         relationalNode.stmtNumber = tokenList[pos].lineNumber;

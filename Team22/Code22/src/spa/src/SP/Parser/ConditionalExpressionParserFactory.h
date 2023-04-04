@@ -4,6 +4,7 @@
 
 #ifndef SPA_CONDITIONALEXPRESSIONPARSERFACTORY_H
 #define SPA_CONDITIONALEXPRESSIONPARSERFACTORY_H
+
 #include "ParserFactory.h"
 #include "ConditionalExpressionParser.h"
 
