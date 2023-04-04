@@ -36,7 +36,7 @@ procedure yes {
             print y; }
           else {
             y = y + 1;
-            call yes; }
+            call yes1; }
           i = 25 + 27 + i + 17;
           read b;
           }
@@ -98,7 +98,7 @@ procedure NO {
   else {
     z = 1;
   }
-  call NO;
+  call yes1;
 }
 
 procedure example {
@@ -148,5 +148,39 @@ procedure example {
     }
   else {
     z = 1;
+  }
+}
+
+procedure yes1 {
+  x = 2;
+  z = 3;
+  a = 1;
+  b = 0;
+  i = 5;
+  while (i!=0) {
+    x = x - 7;
+    if (x==1) then {
+      x = x + 8;
+      if (x==1) then {
+        x = x + y;
+        read y;
+        read x;
+        print x;
+        if (x==1) then {
+          print b;
+          read b; 
+        } else {
+          x = x + 9; 
+        }
+          
+      } else {
+        x = x + 11; 
+      }
+    } else {
+      y = z + x;
+    }
+    z = z + 23 + x + i + 12;
+    read y;
+    i = i + 13;
   }
 }
