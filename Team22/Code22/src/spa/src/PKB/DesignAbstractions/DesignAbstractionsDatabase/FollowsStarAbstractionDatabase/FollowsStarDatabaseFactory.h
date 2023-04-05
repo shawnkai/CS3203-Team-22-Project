@@ -22,5 +22,4 @@ public:
     static void clearDatabase();
 };
 
-
 #endif //SPA_FOLLOWSSTARDATABASEFACTORY_H

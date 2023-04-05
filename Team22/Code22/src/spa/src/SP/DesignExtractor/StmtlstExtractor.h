@@ -15,8 +15,12 @@
 
 using namespace std;
 
+extern std::map<int, vector<int>> mapOfWhileForCallStmts;
+extern std::map<int, vector<int>> mapOfIfForCallStmts;
+extern vector<int> callStmts;
+
 class StmtlstExtractor {
 public:
 	StmtlstExtractor() {};
-	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent);
+	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName);
 };

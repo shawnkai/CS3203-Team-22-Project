@@ -11,8 +11,10 @@
 
 using namespace std;
 
+extern std::map<string, vector<string>> mapOfUsedVarforCalls;
+
 class ConditionExtractor {
 public:
 	ConditionExtractor() {};
-	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance);
+	void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName, TNode prevNode);
 };

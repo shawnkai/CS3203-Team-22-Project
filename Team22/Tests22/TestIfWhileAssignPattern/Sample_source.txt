@@ -1,0 +1,12 @@
+procedure testAndKeyword {
+  x = x + 1;
+  while (a > 0) {
+    if ((b == 0) && (a == 1)) then {
+      read b;
+    } else {
+      print a;
+      b = b + c;
+      x = x + 2;
+    }
+  }
+}

@@ -13,18 +13,27 @@ using namespace std;
 #include "TNode.h"
 
 /**
- * Entry point of parsing.
+ * Entry point of parsing. Handles multiple procedures.
  *
  * @return an AST representation of the SIMPLE Source
  */
 TNode Parser::Parse() {
     Token currToken = tokenList[pos];
-    ++pos;
     if (currToken.type != TokenType::PROCEDURE) {
         cout << "Expecting keyword procedure for a legal SIMPLE program" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    return parseProcedure();
+    TNode programNode;
+    programNode.nodeType = TokenType::PROGRAM;
+    programNode.stringId = currToken.value;
+    programNode.stmtNumber = currToken.lineNumber;
+    while (pos < tokenList.size() && tokenList[pos].type == TokenType::PROCEDURE) {
+        programNode.children.push_back(parseProcedure());
+    }
+    if (pos != tokenList.size()) {
+        cout << "Tangling tokens outside the last procedure are ignored" << endl;
+    }
+    return programNode;
 }
 
 /**
@@ -36,12 +45,13 @@ TNode Parser::parseProcedure() {
     Token currToken = tokenList[pos];
     TNode node;
     node.nodeType = TokenType::PROCEDURE;
-    node.stringId = currToken.value;
-    node.stmtNumber = currToken.lineNumber;
-    if (currToken.type != TokenType::NAME_IDENTIFIER) {
+    ++ pos;
+    if (tokenList[pos].type != TokenType::NAME_IDENTIFIER) {
         cout << "Expecting function name for a procedure, got something else" << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
+    node.stringId = tokenList[pos].value;
+    node.stmtNumber = tokenList[pos].lineNumber;
     ++ pos;
     if (pos >= tokenList.size()) {
         cout << "SIMPLE source end unexpectedly after a procedure name" << endl;
@@ -70,9 +80,6 @@ TNode Parser::parseProcedure() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
      ++ pos;
-    if (pos != tokenList.size()) {
-        cout << "Dangling tokens outside a SIMPLE Source procedure are ignored" << endl;
-    }
     return node;
 }
 
@@ -123,11 +130,40 @@ TNode Parser::parseStatement() {
             auto childNode = parseAssignStatement();
             stmtNode.children.push_back(childNode);
         }
+        else if (tokenList[pos].type == TokenType::CALL) {
+            auto childNode = parseCallStatement();
+            stmtNode.children.push_back(childNode);
+        }
         else {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Unrecognized Token");
         }
     }
     return stmtNode;
+}
+
+/**
+ * Parse one single call statement. The string Id of the call node records the procedure being called.
+ *
+ * @return
+ */
+TNode Parser::parseCallStatement() {
+    Token currToken = tokenList[pos];
+    ++ pos;
+    TNode callNode;
+    callNode.nodeType = TokenType::CALL;
+    callNode.stmtNumber = currToken.lineNumber;
+    if (tokenList[pos].type != TokenType::NAME_IDENTIFIER) {
+        cout << "Expected procedure name for a CALL stmt but instead got: " << tokenList[pos].value << endl;
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
+    }
+    callNode.stringId = tokenList[pos].value;
+    ++ pos;
+    if (tokenList[pos].type != TokenType::STATEMENT_TERMINAL) {
+        cout << "Expected statement terminal ';' but instead got: " << tokenList[pos].value << endl;
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
+    }
+    ++ pos;
+    return callNode;
 }
 
 /**
@@ -496,8 +532,17 @@ TNode Parser::parseRelationalFactor() {
     TNode node;
     Token currToken = tokenList[pos];
     if (currToken.type == TokenType::NAME_IDENTIFIER || currToken.type == TokenType::INTEGER) {
-        node = constructVarNode(currToken);
-        ++ pos;
+        int peekPos = pos + 1;
+        if (tokenList[peekPos].type == TokenType::RIGHT_ROUND_BRACKET ||
+        (tokenList[peekPos].type == TokenType::OPERATOR && (tokenList[peekPos].value == ">" ||
+        tokenList[peekPos].value == ">="|| tokenList[peekPos].value == "<=" ||tokenList[peekPos].value == "<"
+        || tokenList[peekPos].value == "==" || tokenList[peekPos].value == "!="))) {
+            node = constructVarNode(currToken);
+            ++pos;
+        }
+        else {
+            node = parseExpression();
+        }
     } else {
         node = parseExpression();
     }

@@ -89,7 +89,7 @@ Result DesignEntityDatabase::getFromDatabase(string entityName) {
     }
 
     // Return None, as it was not found in Database (or throw an error)?
-    vector<string> none{"None"};
+    vector<string> none{"none"};
     return Result("none", "none", none);
 }
 

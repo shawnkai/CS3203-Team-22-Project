@@ -1,0 +1,210 @@
+1 - double connected wildcard return syntax error <---- This should be a syntax error as double wildcard is not valid syntax
+variable v;
+Select v such that Modifies(v, __)
+SyntaxError
+5000
+2 - double separated wildcard return syntax error <---- This should be a syntax error as double separated wildcard is not valid syntax
+variable v;
+Select v such that Modifies(v, _ _)
+SyntaxError
+5000
+3 - empty " " return syntax error 
+variable v;
+Select v such that Modifies(v, "")
+SyntaxError
+5000
+4 - empty " " with whitespace return syntax error
+variable v;
+Select v such that Modifies(v, " ")
+SyntaxError
+5000
+5 - wildcard with " " return syntax error
+variable v;
+Select v such that Modifies(v, "_")
+SyntaxError
+5000
+6 - Modifies spelled as ModifiesS return syntax error
+variable v;
+Select v such that ModifiesS(1, _)
+SyntaxError
+5000
+7 - Modifies spelled as ModifiesP return syntax error
+variable v;
+Select v such that ModifiesP(1, _)
+SyntaxError
+5000
+8 - both argument is wildcard return semantic error 
+variable v;
+Select v such that Modifies(_, _)
+SemanticError
+5000
+9 - argument 1 is wildcard return semantic error
+variable v;
+Select v such that Modifies(_, v)
+SemanticError
+5000
+10 - argument 2 is non-variable synonym return semantic error <---- This should be a semantic error as second argument has to refer to a variable
+assign v;
+Select v such that Modifies(1, v)
+SemanticError
+5000
+11 - undeclared synonym as argument 1 return semantic error
+assign a;
+Select v such that Modifies(v, "x")
+SemanticError
+5000
+12 - undeclared synonym as argument 2 return semantic error
+assign a;
+Select v such that Modifies(1, v)
+SemanticError
+5000
+//13 - argument 1 using actual variable return semantic error <---- error not handled
+//variable v;
+//Select v such that Modifies("x", v)
+//SemanticError
+//5000
+14 - valid meaningless query return all variables <---- valid meaningless query should return all variables
+variable v; assign a;
+Select v such that Modifies(7, "x")
+x, z, a, b, i, y
+5000
+15 - invalid meaningless query return nothing <---- should return nothing instead of error 
+variable v; assign a;
+Select v such that Modifies(7, "z")
+none
+5000
+16 - modifiesS with wildcard as argument 2 <----- valid query, should return all variables
+variable v;
+Select v such that Modifies(7, _)
+x, z, a, b, i, y
+5000
+17 - modifiesS with variable synonym as argument 2
+variable v;
+Select v such that Modifies(7, v) 
+x
+5000
+18 - modifiesP with assign synonym as argument 1 and wildcard as argument 2
+assign a;
+Select a such that Modifies(a, _)
+1, 2, 3, 4, 5, 7, 9, 11, 14, 15, 16, 17, 18
+5000
+19 - modifiesP with assign synonym as argument 1 and variable synonym as argument 2
+assign a; variable v;
+Select a such that Modifies(a, v)
+1, 2, 3, 4, 5, 7, 9, 11, 14, 15, 16, 17, 18
+5000
+20 - modifiesP with assign synonym as argument 1 and actual variable as argument 2 
+assign a; variable v;
+Select a such that Modifies(a, "x")
+1, 7, 14, 15
+5000
+21 - modifiesP with statement synonym as argument 1 and wildcard as argument 2
+stmt s; variable v;
+Select s such that Modifies(s, _)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
+5000
+22 - modifiesP with statement synonym as argument 1 and variable synonym as argument 2
+stmt s; variable v;
+Select s such that Modifies(s, v)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
+5000
+23 - modifiesP with statement synonym as argument 1 and actual variable as argument 2
+stmt s; variable v;
+Select s such that Modifies(s, "i")
+5, 6, 18
+5000
+24 - modifiesP with read synonym as argument 1 and wildcard as argument 2
+read re; variable v;
+Select re such that Modifies(re, _)
+13
+5000
+25 - modifiesP with read synonym as argument 1 and variable synonym as argument 2
+read re; variable v;
+Select re such that Modifies(re, v)
+13
+5000
+26 - modifiesP with read synonym as argument 1 and actual variable as argument 2 <--- returned None instead of none
+read re; variable v;
+Select re such that Modifies(re, "a")
+none
+5000
+27 - modifiesP with read synonym as argument 1 and actual variable as argument 2
+read re; variable v;
+Select re such that Modifies(re, "b")
+13
+5000
+28 - modifiesP with if synonym as argument 1 and wildcard as argument 2
+if if; variable v;
+Select if such that Modifies(if, _)
+8, 10, 12
+5000
+29 - modifiesP with if synonym as argument 1 and variable synonym as argument 2
+if if; variable v;
+Select if such that Modifies(if, v)
+8, 10, 12
+5000
+30 - modifiesP with if synonym as argument 1 and actual variable as argument 2
+if if; variable v;
+Select if such that Modifies(if, "b")
+8, 10, 12
+5000
+31 - modifiesP with while synonym as argument 1 and wildcard as argument 2
+while w; variable v;
+Select w such that Modifies(w, _)
+6
+5000
+32 - modifiesP with while synonym as argument 1 and variable synonym as argument 2
+while w; variable v;
+Select w such that Modifies(w, v)
+6
+5000
+33 - modifiesP with while synonym as argument 1 and actual variable as argument 2
+while w; variable v;
+Select w such that Modifies(w, "b")
+6
+5000
+34 - modifiesP with procedure synonym as argument 1 and wildcard as argument 2 <--- returned nothing instead of procedure name
+procedure p; variable v;
+Select p such that Modifies(p, _)
+Example
+5000
+35 - modifiesP with procedure synonym as argument 1 and variable synonym as argument 2  <--- returned nothing instead of procedure name
+procedure p; variable v;
+Select p such that Modifies(p, v)
+Example
+5000
+36 - modifiesP with procedure synonym as argument 1 and actual variable as argument 2  <--- returned None instead of procedure name
+procedure p; variable v;
+Select p such that Modifies(p, "b")
+Example
+5000
+37 - modifies with whitespace before parentheses
+while w; variable v;
+Select w such that Modifies (w, "b")
+6
+5000
+38 - modifies with whitespace before argument 1
+while w; variable v;
+Select w such that Modifies( w, "b")
+6
+5000
+39 - modifies with whitespace after argument 1
+while w; variable v;
+Select w such that Modifies(w , "b")
+6
+5000
+40 - modifies with no whitespace before argument 2
+while w; variable v;
+Select w such that Modifies(w,"b")
+6
+5000
+41 - modifies with whitespace after argument 2
+while w; variable v;
+Select w such that Modifies(w, "b" )
+6
+5000
+42 - modifies with multiple additional whitespaces
+while w; variable v;
+Select w such that Modifies (  w , "b"   )  
+6
+5000

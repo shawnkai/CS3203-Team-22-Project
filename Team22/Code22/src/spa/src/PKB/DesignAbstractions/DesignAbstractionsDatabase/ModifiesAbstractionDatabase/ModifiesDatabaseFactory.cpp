@@ -7,6 +7,8 @@
 
 #include "ModifiesDatabaseFactory.h"
 
+#include "PKB/Exceptions/DatabaseNotFoundException.cpp"
+
 using namespace std;
 
 /**
@@ -37,8 +39,7 @@ DesignAbstractionDatabase *ModifiesDatabaseFactory::getModifiesDatabase(string e
     }
     // add others as they are implemented (possibly wildcard?)
 
-    // Return null pointer, in case of invalid type of entity to be abstracted.
-    return nullptr;
+    throw DatabaseNotFoundException(("Database for Modifies " + entityTypeBeingAbstracted + " could not be found").data());
 }
 
 /**

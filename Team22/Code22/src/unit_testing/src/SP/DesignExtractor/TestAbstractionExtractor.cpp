@@ -22,7 +22,7 @@ TEST_CASE("Testcase1_ExtractOneStatement_ShouldSuccess") {
     pkbinstance.clearAllDatabases();
     AbstractionExtractor abstractionExtractor;
 
-    abstractionExtractor.extractAbstraction(root, pkbinstance);
+    abstractionExtractor.extractAbstraction(root, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
@@ -91,7 +91,7 @@ TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
     pkbinstance.clearAllDatabases();
     AbstractionExtractor abstractionExtractor;
 
-    abstractionExtractor.extractAbstraction(root, pkbinstance);
+    abstractionExtractor.extractAbstraction(root, pkbinstance, "procedure1");
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();

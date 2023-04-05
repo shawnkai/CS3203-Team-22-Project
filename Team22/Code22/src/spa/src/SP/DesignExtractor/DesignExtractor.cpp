@@ -19,7 +19,8 @@ using namespace std;
  * @param pkbinstance An instance of Program Knowledge Base.
  */
 void DesignExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
-	AbstractionExtractor abstractionExtractor;
-	abstractionExtractor.extractAbstraction(root, pkbinstance);
+	ProgramExtractor programExtractor;
+	programExtractor.extractAbstraction(root, pkbinstance);
+	programExtractor.extractCallAbstraction(pkbinstance);
 };
 

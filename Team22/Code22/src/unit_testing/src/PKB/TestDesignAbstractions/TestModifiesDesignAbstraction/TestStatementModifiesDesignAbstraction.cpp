@@ -7,10 +7,12 @@
 #include "catch.hpp"
 #include "PKB/PKB.h"
 
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 using namespace std;
 
 TEST_CASE("Test 1: Creation of StatementModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 3") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms1", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms1"));
@@ -19,15 +21,43 @@ TEST_CASE("Test 1: Creation of StatementModifies Design Abstraction") {
 
         REQUIRE(pkbResult.areEqual(expectedResult));
     }
+
+    SECTION("Using API With A Tuple of Size 2") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        try {
+            pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ms1", "1"));
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
 }
 
 TEST_CASE("Test 2: Retrieval of an existent StatementModifies Design Abstraction") {
-    SECTION("") {
+    SECTION("Using API With A Tuple of Size 2") {
         PKB pkbTest = PKB();
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms2", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms2"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:STATEMENT: ms2: 1, ");
+    }
+
+    SECTION("Using API Without Tuple") {
+        bool throwsException = false;
+        PKB pkbTest = PKB();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms2", "1"));
+
+        try {
+            Result result = pkbTest.getDesignAbstraction("MODIFIES", "ms2");
+        } catch (InvalidAPICallException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
     }
 }
 
@@ -37,7 +67,7 @@ TEST_CASE("Test 3: Retrieval of a non-existent StatementModifies Design Abstract
         pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms3", "1"));
         Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms0"));
 
-        REQUIRE(pkbResult.toString() == "none: none: None, ");
+        REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
 }
 
@@ -101,6 +131,36 @@ TEST_CASE("Test 7: Populate The StatementModifies Database And Call Clear All Da
         Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", "ms9"));
 
         REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:STATEMENT: ms9: ms10, ms11, ms12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: None, ")));
+                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+    }
+}
+
+TEST_CASE("Test 9: Retrieval of All StatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms13", "ms14"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms15", "ms16"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms17", "ms18"));
+
+        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
+    }
+}
+
+TEST_CASE("Test 10: Retrieval of Variables Captured By StatementModifies Design Abstractions") {
+    SECTION("") {
+        PKB pkbTest = PKB();
+
+        pkbTest.clearAllDatabases();
+
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms19", "ms20"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms21", "ms22"));
+        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "ms23", "ms24"));
+
+        unordered_map<string, unordered_set<string>> result =
+                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "STATEMENT");
+
+        REQUIRE(result.size() == 3);
     }
 }

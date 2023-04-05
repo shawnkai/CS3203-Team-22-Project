@@ -275,3 +275,28 @@ TEST_CASE("TestCase7_TokenizeIllegalSimpleSource_ShouldThrowException") {
     REQUIRE(isExceptionThrown);
     REQUIRE(filesystem::remove(relativePath));
 }
+
+TEST_CASE("TestCase8_TokenizeProcedureWithTab_ShouldSuccess") {
+    Tokenizer tk = Tokenizer();
+    std::vector<Token> tokenList;
+    const char *relativePath;
+    relativePath = "SP_ut8.txt";
+    string code = "procedure main {\n"
+                  "\tread x;\n"
+                  "\t }";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+    try {
+        tokenList = tk.tokenize(relativePath);
+    } catch (std::invalid_argument& e) {
+        std::cerr << e.what() << std::endl;
+        exit(1);
+    }
+    REQUIRE(tokenList.size() == 7);
+    REQUIRE(tokenList[0].type == TokenType::PROCEDURE);
+    REQUIRE(tokenList[1].type == TokenType::NAME_IDENTIFIER);
+    REQUIRE(tokenList[6].type == TokenType::RIGHT_CURLY_BRACKET);
+    REQUIRE(filesystem::remove(relativePath)) ;
+}

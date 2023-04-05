@@ -18,6 +18,14 @@ using namespace std;
 #include "Pattern/AssignPattern/AssignPatternFactory.h"
 #include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
 
+#include "ControlFlowGraph/ControlFlowGraphFactory.h"
+#include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
+
+#include "Pattern//PatternFactory.h"
+#include "Pattern/PatternDatabaseFactory.h"
+
+#include "PKB/Exceptions/InvalidAPICallException.cpp"
+
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
  *
@@ -134,9 +142,103 @@ unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string 
  *
  * @return A vector of AssignPattern pointer objects, or an empty vector, if nothing is stored.
  */
-vector<AssignPattern*> PKB::getAllRightHandExpressions() {
+unordered_map<string, unordered_map<string, string>> PKB::getAllRightHandExpressions() {
     AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
+}
+
+vector<Result> PKB::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
+    DesignAbstractionDatabase* db =
+            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
+                                                                      entityTypeBeingAbstracted);
+    return db->getAllFromDatabase();
+}
+
+unordered_map<string, unordered_set<string>>
+PKB::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
+    DesignAbstractionDatabase* db =
+            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
+                                                                      entityTypeBeingAbstracted);
+    return db->getAllVariablesCaptured();
+}
+
+int PKB::getNumberOfDesignEntity(string entityType) {
+    return this->getAllDesignEntity(entityType).size();
+}
+
+void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
+    if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
+        throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
+    }
+
+    std::string underlineStr = "_";
+    this->addDesignAbstraction(designAbstraction,
+                               make_tuple(underlineStr, get<0>(abstractionDetails), get<1>(abstractionDetails)));
+}
+
+Result PKB::getDesignAbstraction(string abstractionType, string query) {
+    if (abstractionType == "USES" || abstractionType == "MODIFIES") {
+        throw InvalidAPICallException((abstractionType + " Cannot Be Accessed Via This API").data());
+    }
+
+    return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
+}
+
+void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
+                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
+                              map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers) {
+    ControlFlowGraph* controlFlowGraph = ControlFlowGraphFactory::createControlFlowGraph(procedureName,
+                                                                                         topologicallySortedElements,
+                                                                                         blockToStatementNumbers,
+                                                                                         statementNumberToBlock,
+                                                                                         blockToBlock,
+                                                                                         blocksWithBackPointers);
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    db->addToDatabase(controlFlowGraph);
+}
+
+vector<int> PKB::getTopologicallySortedElementsDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getTopologicallySortedBlockNumbersDatabaseFromDatabase(procedureName);
+}
+
+map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlockToStatementNumberDatabaseFromDatabase(procedureName);
+}
+
+map<int, int> PKB::getStatementNumberToBlockDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getStatementNumberToBlockDatabaseFromDatabase(procedureName);
+}
+
+map<int, vector<int>> PKB::getBlockToBlockDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlockToBlockDatabaseFromDatabase(procedureName);
+}
+
+unordered_set<int> PKB::getBlocksWithBackPointersDatabase(string procedureName) {
+    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
+    return db->getBlocksWithBackPointersDatabaseFromDatabase(procedureName);
+}
+
+void PKB::addPattern(string patternType, string lineNumber, string variableName) {
+    Pattern* patternToBeStored = PatternFactory::createPattern(patternType, lineNumber, variableName);
+    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+
+    db->addToDatabase(patternToBeStored);
+}
+
+bool PKB::isVariableUsedInPattern(string patternType, string lineNumber, string variableName) {
+    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+
+    return db->isVariableNamePresentOnLineNumber(lineNumber, variableName);
+}
+
+unordered_set<string> PKB::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
+    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+
+    return db->getAllVariablesBeingUsed(lineNumber);
 }
 
 /**
@@ -163,6 +265,14 @@ void PKB::clearDesignAbstractionDatabase() {
     DesignAbstractionsDatabaseFactory::clearDatabase();
 }
 
+void PKB::clearControlFlowGraphDatabase() {
+    ControlFlowGraphDatabaseFactory::clearDatabase();
+}
+
+void PKB::clearPatternDatabase() {
+    PatternDatabaseFactory::clearDatabase();
+}
+
 /**
  * Clears the databases. Implemented to improve testing, as PKB storage is
  * static in nature, and to avoid cross-linkage among test cases.
@@ -171,4 +281,6 @@ void PKB::clearAllDatabases() {
     this->clearDesignAbstractionDatabase();
     this->clearDesignEntityDatabase();
     this->clearAssignPatternDatabase();
+    this->clearControlFlowGraphDatabase();
+    this->clearPatternDatabase();
 }
