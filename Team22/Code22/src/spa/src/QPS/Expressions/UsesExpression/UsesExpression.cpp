@@ -172,6 +172,11 @@ ResultTable* UsesPExpression::evaluate(PKB pkb) {
         }
         map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         int ind = 0;
+
+        if (type == "ident") {
+            type = "PROCEDURE";
+        }
+
         for (auto res : results) {
             if (res.getQueryEntityType() == "USES:" + type) {
                 for (const auto& x : res.getQueryResult()) {
