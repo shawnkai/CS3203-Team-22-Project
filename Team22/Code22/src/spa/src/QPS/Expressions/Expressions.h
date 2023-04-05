@@ -41,6 +41,8 @@ class Expression {
         static regex CALLSSTARREGEX;
         static regex NEXTREGEX;
         static regex NEXTSTARREGEX;
+        static regex AFFECTSREGEX;
+        static regex AFFECTSSTARREGEX;
         static regex RETURNVALUEREGEX;
 
         static pair<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);

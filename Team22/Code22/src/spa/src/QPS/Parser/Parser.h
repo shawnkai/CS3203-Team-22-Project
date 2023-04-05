@@ -16,7 +16,8 @@
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 #include "QPS/Expressions/AttrCondExpression/AttrCondExpression.h"
 #include "QPS/Expressions/CallsExpression/CallsExpression.h"
-#include "QPS/Expressions/NextExpression//NextExpression.h"
+#include "QPS/Expressions/NextExpression/NextExpression.h"
+#include "QPS/Expressions/AffectsExpression/AffectsExpression.h"
 
 using namespace std;
 

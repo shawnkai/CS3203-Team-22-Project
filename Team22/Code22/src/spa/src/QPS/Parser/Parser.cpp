@@ -32,6 +32,8 @@ SelectExpression* QueryParser::parse(string query) {
         Utilities::concatenateVectors(conditions, CallsStarExpression::extractCallsStarExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, NextExpression::extractNextExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, NextStarExpression::extractNextStarExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, AffectsExpression::extractAffectsExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, AffectsStarExpression::extractAffectsStarExpression(query, synonymTable));
 
         return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, conditions);
     } else {

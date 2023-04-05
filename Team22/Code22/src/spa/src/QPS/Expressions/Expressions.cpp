@@ -22,8 +22,10 @@ string CALLS = R"(Calls\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string CALLSSTAR = R"(Calls\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string NEXT = R"(Next\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string NEXTSTAR = R"(Next\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
+string AFFECTS = R"(Affects\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
+string AFFECTSSTAR = R"(Affects\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string RETURNVALUE = R"lit(Select\s+(?:([\w]+(?:\.(?:(?:\w|#)+))?)|<\s*((?:([\w]+)(?:\.((?:\w|#)+))?)\s*(\s*,\s*([\w]+)(?:\.((?:\w|#)+))?)+)\s*>))lit";
-string Expression::QUERYVALIDATION = RETURNVALUE + R"lit((\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + "|" + CALLS + "|" + CALLSSTAR + "|" + NEXT + "|" + NEXTSTAR + ")|\\s+" + PATTERN + "|\\s+" + ATTRCOND + ")*";
+string Expression::QUERYVALIDATION = RETURNVALUE + R"lit((\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + "|" + CALLS + "|" + CALLSSTAR + "|" + NEXT + "|" + NEXTSTAR + "|" + AFFECTS + "|" + AFFECTSSTAR + ")|\\s+" + PATTERN + "|\\s+" + ATTRCOND + ")*";
 
 // Regexes
 regex Expression::QUERYVALIDATIONREGEX = regex(QUERYVALIDATION);
@@ -39,6 +41,8 @@ regex Expression::CALLSREGEX = regex(CALLS);
 regex Expression::CALLSSTARREGEX = regex(CALLSSTAR);
 regex Expression::NEXTREGEX = regex(NEXT);
 regex Expression::NEXTSTARREGEX = regex(NEXTSTAR);
+regex Expression::AFFECTSREGEX = regex(AFFECTS);
+regex Expression::AFFECTSSTARREGEX = regex(AFFECTSSTAR);
 regex Expression::RETURNVALUEREGEX = regex(RETURNVALUE);
 
 // Function Definitions

@@ -102,15 +102,6 @@ void NextStarExpression::traversal(int current, map<int, vector<int>> &graph, ve
 }
 
 ResultTable* NextStarExpression::evaluate(PKB pkb) {
-    for (string entity : {"ASSIGNMENT", "WHILE", "IF", "CALL", "READ", "PRINT"}) {
-        vector<Result> entityRes = pkb.getAllDesignEntity(entity);
-        for (Result res : entityRes) {
-            for (const string& line : res.getQueryResult()) {
-                this->stmtTypes.insert({stoi(line), entity});
-            }
-        }
-    }
-
     vector<string> firstLine;
     vector<string> secondLine;
 
