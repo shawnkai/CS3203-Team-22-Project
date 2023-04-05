@@ -10,12 +10,14 @@
 #include <iostream>
 
 #include "PatternDatabase.h"
+#include "PKB/Pattern/IfPattern/IfPatternDatabase.h"
+#include "PKB/Pattern/WhilePattern/WhilePatternDatabase.h"
 
 using namespace std;
 
 class PatternDatabaseFactory {
-    static PatternDatabase* getIfPatternDatabase();
-    static PatternDatabase* getWhilePatternDatabase();
+    static inline PatternDatabase* ifPatternDatabase = new IfPatternDatabase();
+    static inline PatternDatabase* whilePatternDatabase = new WhilePatternDatabase();
 
     static void clearIfPatternFactory();
     static void clearWhilePatternFactory();

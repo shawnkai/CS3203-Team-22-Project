@@ -4,7 +4,7 @@
 
 #include <iostream>
 
-#include "AssignPatternDatabaseFactory.h"
+#include "AssignPatternDatabaseManager.h"
 
 using namespace std;
 
@@ -13,14 +13,14 @@ using namespace std;
  *
  * @return A AssignPatternDatabase pointer, that points to the Assignment Patterns database.
  */
-AssignPatternDatabase *AssignPatternDatabaseFactory::getAssignPatternDatabase() {
+AssignPatternDatabase *AssignPatternDatabaseManager::getAssignPatternDatabase() {
     return assignPatternDatabase;
 }
 
 /*
  * Clears the Assignment Patterns database.
  */
-void AssignPatternDatabaseFactory::clearDatabase() {
+void AssignPatternDatabaseManager::clearDatabase() {
     delete assignPatternDatabase;
 
     assignPatternDatabase = new AssignPatternDatabase();

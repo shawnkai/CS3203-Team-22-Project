@@ -10,7 +10,7 @@ using namespace std;
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
 // Remove These After clearAllDatabases has been removed;
-#include "PKB/Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
+#include "PKB/Pattern/AssignPattern/AssignPatternDatabaseManager.h"
 #include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
 #include "PKB/ControlFlowGraph/ControlFlowGraphDatabaseManager.h"
@@ -202,7 +202,7 @@ void PKB::clearCache() {
  * from the user.
  */
 void PKB::clearAssignPatternDatabase() {
-    AssignPatternDatabaseFactory::clearDatabase();
+    AssignPatternDatabaseManager::clearDatabase();
 }
 
 /**

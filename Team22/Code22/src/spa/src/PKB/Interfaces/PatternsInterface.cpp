@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "PKB/Pattern/AssignPattern/AssignPatternFactory.h"
-#include "PKB/Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
+#include "PKB/Pattern/AssignPattern/AssignPatternDatabaseManager.h"
 #include "PKB/Pattern//PatternFactory.h"
 #include "PKB/Pattern/PatternDatabaseFactory.h"
 
@@ -23,7 +23,7 @@ using namespace std;
 void PatternsInterface::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
     AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
                                                                              patternLineNumber);
-    AssignPatternDatabase* db = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    AssignPatternDatabase* db = AssignPatternDatabaseManager::getAssignPatternDatabase();
 
     db->addToDatabase(assignPattern);
 }
@@ -39,7 +39,7 @@ void PatternsInterface::addAssignPattern(string leftHandVariableName, string pre
  */
 string
 PatternsInterface::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber) {
-    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseManager::getAssignPatternDatabase();
     return assignPatternDatabase
             ->getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(leftHandVariableName, patternLineNumber);
 }
@@ -52,7 +52,7 @@ PatternsInterface::getRightHandExpressionOfAVariableOnAParticularLineNumber(stri
  * @return An unordered map containing all the Right Hand Prefix Expressions associated to the given variable.
  */
 unordered_map<string, string> PatternsInterface::getAllRightHandExpressionsOfAVariable(string leftHandVariableName) {
-    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseManager::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsOfAVariableFromDatabase(leftHandVariableName);
 }
 
@@ -63,7 +63,7 @@ unordered_map<string, string> PatternsInterface::getAllRightHandExpressionsOfAVa
  * @return A vector of AssignPattern pointer objects, or an empty vector, if nothing is stored.
  */
 unordered_map<string, unordered_map<string, string>> PatternsInterface::getAllRightHandExpressions() {
-    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
+    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseManager::getAssignPatternDatabase();
     return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
 }
 

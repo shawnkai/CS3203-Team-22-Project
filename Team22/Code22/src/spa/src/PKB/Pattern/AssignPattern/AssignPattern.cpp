@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "AssignPattern.h"
-#include "AssignPatternDatabaseFactory.h"
+#include "AssignPatternDatabaseManager.h"
 
 using namespace std;
 

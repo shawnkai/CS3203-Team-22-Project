@@ -4,8 +4,8 @@
 
 #pragma once
 
-#ifndef SPA_ASSIGNPATTERNDATABASEFACTORY_H
-#define SPA_ASSIGNPATTERNDATABASEFACTORY_H
+#ifndef SPA_ASSIGNPATTERNDATABASEMANAGER_H
+#define SPA_ASSIGNPATTERNDATABASEMANAGER_H
 
 #include <iostream>
 
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class AssignPatternDatabaseFactory {
+class AssignPatternDatabaseManager {
     static inline AssignPatternDatabase* assignPatternDatabase = new AssignPatternDatabase();
 
 public:
@@ -23,4 +23,4 @@ public:
     static void clearDatabase();
 };
 
-#endif //SPA_ASSIGNPATTERNDATABASEFACTORY_H
+#endif //SPA_ASSIGNPATTERNDATABASEMANAGER_H
