@@ -26,7 +26,7 @@ TRUE
 6 - Test boolean with if pattern
 if if; while w; assign a; stmt s; variable v;
 Select BOOLEAN pattern if("i",_,_)
-TRUE
+FALSE
 5000
 7 - Test boolean with if pattern
 if if; while w; assign a; stmt s; variable v;
@@ -146,7 +146,7 @@ TRUE
 30 - Test boolean with while pattern and if pattern
 if if; while w; assign a; stmt s; variable v;
 Select BOOLEAN pattern w(v,_) pattern if("i",_,_)
-TRUE
+FALSE
 5000
 31 - Test boolean with while pattern and if pattern
 if if; while w; assign a; stmt s; variable v;
@@ -171,7 +171,7 @@ SyntaxError
 35 - Test boolean with while pattern and if pattern
 if if; while w; assign a; stmt s; variable v;
 Select BOOLEAN pattern w(_,_) pattern if(_ ,_ ,_) pattern w("i",_) pattern if("i",_,_)
-TRUE
+FALSE
 5000
 36 - Test boolean with while pattern and if pattern
 if if; while w; assign a; stmt s; variable v;
@@ -245,8 +245,8 @@ SyntaxError
 5000 
 50 - Test boolean with assign pattern
 if if; while w; assign a; stmt s; variable v,v1;
-Select BOOLEAN pattern a(v,v1) 
-SyntaxError
+Select BOOLEAN pattern a(v1,"x") 
+TRUE
 5000 
 51 - Test boolean with assign pattern
 if if; while w; assign a; stmt s; variable v,v1;
@@ -295,38 +295,38 @@ SyntaxError
 5000 
 60 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1;
-Select BOOLEAN pattern if(v,_,_) pattern w(v,_) pattern a(_,_) pattern a(v,v1) 
-SyntaxError
+Select BOOLEAN pattern if(v,_,_) pattern w(v,_) pattern a(_,_) pattern a(_,v1) 
+FALSE
 5000 
 61 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1;
-Select BOOLEAN pattern if(v,_,_) pattern w(_,_) pattern a(v,v) pattern a(v,v1) 
-SyntaxError
+Select BOOLEAN pattern if(v,_,_) pattern w(_,_) pattern a(v,"x") pattern a(v1,"x") 
+TRUE
 5000 
 62 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1;
-Select BOOLEAN pattern if(v1,_,_) pattern w(v,_) pattern a(v,v) pattern a1(v,v1) 
-SyntaxError
+Select BOOLEAN pattern if(v1,_,_) pattern w(v,_) pattern a(v,"x") pattern a1(v1,"x") 
+FALSE
 5000 
 63 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;
-Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a(v2,v3) pattern a1(v4,v5) 
+Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a(v2,_) pattern a1(v4,v5) 
 SyntaxError
 5000 
 64 - Test boolean with all 3 patterns
 if if,if1,if2,if3,if4,if5; while w,w1,w2; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;
-Select BOOLEAN pattern if(v,_,_) pattern w("i",_) pattern a(v2,v3) pattern a1(v4,v5) pattern if1(_,_,_) pattern if2("x",_,_) pattern if3(v1,_,_) pattern w1(_,_) pattern w2(v2,_)
-SyntaxError
+Select BOOLEAN pattern if(v,_,_) pattern w("i",_) pattern a(v2,_) pattern a1(v3,_) pattern if1(_,_,_) pattern if2("x",_,_) pattern if3(v1,_,_) pattern w1(_,_) pattern w2(v2,_)
+TRUE
 5000 
 65 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;
-Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"z+x"_) pattern a1(v4,v5) 
-SyntaxError
+Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"z+x"_) pattern a1(_,v5) 
+TRUE
 5000 
 66 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;
-Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"x+i"_) pattern a1(v4,v5) 
-SyntaxError
+Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"x+i"_) pattern a1(_,v5) 
+FALSE
 5000 
 67 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;

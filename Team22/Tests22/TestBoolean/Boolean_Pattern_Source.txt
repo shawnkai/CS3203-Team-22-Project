@@ -33,7 +33,7 @@ procedure A {
       a = z * 14 + 16 * y;
       while (i<=1) {
         while (i>=2) {
-          if (i<3) then {
+          if (x<3) then {
             print b; }
           else {
             y = y + 1;
