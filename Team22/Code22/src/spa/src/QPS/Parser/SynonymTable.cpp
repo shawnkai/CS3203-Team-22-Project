@@ -63,9 +63,9 @@ vector<tuple<string, string>> SynonymTable::getSimpleSynonymTable() {
     return result;
 }
 
-bool SynonymTable::isEquivalentTo(const map<string, string>& expectedTable) {
+bool SynonymTable::isEquivalentTo(const unordered_map<string, string>& expectedTable) {
     vector<tuple<string, string>> result = this->getSimpleSynonymTable();
-    map<string, string> actualTable;
+   unordered_map<string, string> actualTable;
     for (auto & i : result) {
         actualTable[std::get<0>(i)] = std::get<1>(i);
     }

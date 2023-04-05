@@ -21,7 +21,7 @@ ResultTable* FAPSExpression::evaluate(PKB pkb) {
             }
         }
         vector<string> followedLines;
-        map<string, vector<string>> results = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+       unordered_map<string, vector<string>> results = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         vector<pair<string, string>> seen;
         for (Result res : vars1) {
             for (const string& line : res.getQueryResult()) {

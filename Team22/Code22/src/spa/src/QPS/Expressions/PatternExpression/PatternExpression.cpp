@@ -121,7 +121,7 @@ ResultTable* AssignPatternExpression::evaluate(PKB pkb) {
     if (p1->getSynonym() == "_" || p1->getType() == "VARIABLE") {
         auto key_values = pkb.getAllRightHandExpressions();
         vector<string> results;
-        map<string, vector<string>> altResults = {{this->entities[0]->toString(), {}}, {p1->getSynonym(), {}}};
+       unordered_map<string, vector<string>> altResults = {{this->entities[0]->toString(), {}}, {p1->getSynonym(), {}}};
         for (const auto& pattern : key_values) {
             for (const auto& line_exp: pattern.second) {
                 if (regex_match(line_exp.second, right_expr)) {
@@ -152,7 +152,7 @@ ResultTable* IfWhilePatternExpression::evaluate(PKB pkb) {
     string col2 = this->p1->toString();
 
     if (this->p1->getType() == "ident") {
-        map<string, vector<string>> results = {{col1, {}}};
+       unordered_map<string, vector<string>> results = {{col1, {}}};
         string var = Utilities::removeAllOccurrences(col2, '\"');
         for (Result entity : all_entities) {
             for (const string& line : entity.getQueryResult()) {
@@ -163,7 +163,7 @@ ResultTable* IfWhilePatternExpression::evaluate(PKB pkb) {
         }
         return new ResultTable(results);
     } else {
-        map<string, vector<string>> results = {{col1, {}}, {col2, {}}};
+       unordered_map<string, vector<string>> results = {{col1, {}}, {col2, {}}};
         vector<string> matches;
         for (Result entity : all_entities) {
             for (const string& line : entity.getQueryResult()) {

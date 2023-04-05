@@ -6,7 +6,7 @@
 
 #include "Utilities.h"
 
-map<string, string> AttrCondExpression::attrToType = {{"varName", "STRING"}, {"stmt#", "INT"}, {"procName", "STRING"}, {"value", "INT"}};
+unordered_map<string, string> AttrCondExpression::attrToType = {{"varName", "STRING"}, {"stmt#", "INT"}, {"procName", "STRING"}, {"value", "INT"}};
 
 AttrCondExpression::AttrCondExpression(DesignEntity *syn1, string syn1attr, DesignEntity *syn2, string syn2attr) : Expression({syn1, syn2}) {
     this->syn1attr = std::move(syn1attr);

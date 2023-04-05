@@ -1,5 +1,8 @@
 #include "NextExpression.h"
 
+#include <chrono>
+using namespace std::chrono;
+
 ResultTable* NextExpression::evaluate(PKB pkb) {
     vector<string> firstLine;
     vector<string> secondLine;
@@ -26,7 +29,7 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
         }
     }
 
-    map<string, vector<string>> results = { {this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}} };
+   unordered_map<string, vector<string>> results = { {this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}} };
     vector<pair<string, string>> seen;
     for (const string& line : firstLine) {
         Result next = pkb.getDesignAbstraction("NEXT", make_tuple("_", line));
@@ -62,7 +65,7 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
 }
 
 void NextStarExpression::traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                              map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, map<int, int> &seen, vector<string> prevs) {
+                             unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen, vector<string> prevs) {
     //end of graph
     if (current == 0) {
         return;
@@ -139,19 +142,23 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
         procs.push_back(res.getQueryEntityName());
     }
 
-    map<string, vector<string>> finalResult = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+   unordered_map<string, vector<string>> finalResult = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
 
     for (const string& proc : procs) {
+        auto startTime = high_resolution_clock::now();
         auto graph = pkb.getBlockToBlockDatabase(proc);
         auto blockStatements = pkb.getBlockToStatementNumbersDatabase(proc);
+        if (graph.empty()) {
+            continue;
+        }
         vector<int> blocks;
         for (const auto& kv : graph) {
             blocks.push_back(kv.first);
             vector<int> stmts = blockStatements.at(kv.first);
         }
         int start = *min_element(blocks.begin(), blocks.end());
-        map<int, set<int>> results = {};
-        map<int, int> seen;
+       unordered_map<int, set<int>> results = {};
+       unordered_map<int, int> seen;
         traversal(start, graph, firstLine, secondLine, results, blockStatements, seen, {});
         for (const auto& kv : results) {
             for (int v : kv.second) {
@@ -159,6 +166,9 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
                 finalResult.at(this->entities[1]->toString()).push_back(to_string(v));
             }
         }
+        auto stopTime = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stopTime - startTime);
+        ::printf("Traversal Time: %f ms\n", duration.count() * 0.001);
     }
 
     if (!dynamic_cast<SynonymStmtEntity*>(this->entities[0]) && !dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {

@@ -21,10 +21,10 @@ public:
 
 class NextStarExpression : public Expression {
 private:
-    map<int, string> stmtTypes;
+   unordered_map<int, string> stmtTypes;
 
     void traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                   map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, map<int, int> &seen, vector<string> prevs);
+                  unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen, vector<string> prevs);
 
 public:
 

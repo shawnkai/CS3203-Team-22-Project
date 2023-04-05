@@ -62,7 +62,8 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestCallsExpression/Sample_source.txt", "TestCallsExpression/Sample_queries.txt"),
                       ("TestCallsExpression/Calls_Testing_Source.txt", "TestCallsExpression/Calls_Testing_Queries.txt"),
                       ("TestBoolean/Simple_Test_Source.txt", "TestBoolean/Simple_Test_Queries.txt"),
-                      ("TestDemo2Features/Sample_source.txt", "/TestDemo2Features/Sample_queries.txt")]
+                      ("TestDemo2Features/Sample_source.txt", "/TestDemo2Features/Sample_queries.txt"),
+                      ("TestNextStar/Sample_source.txt", "TestNextStar/Sample_queries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
