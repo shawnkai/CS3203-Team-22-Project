@@ -1,5 +1,0 @@
-1 - Invalid inputs
-if if; while w; assign a; stmt s;
-Select BOOLEAN pattern if(_,s,_)
-SyntaxError
-5000
