@@ -21,5 +21,6 @@ using namespace std;
 void DesignExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 	ProgramExtractor programExtractor;
 	programExtractor.extractAbstraction(root, pkbinstance);
+	programExtractor.extractCallAbstraction(pkbinstance);
 };
 

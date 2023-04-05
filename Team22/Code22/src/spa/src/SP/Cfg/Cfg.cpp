@@ -139,6 +139,7 @@ vector<int> Cfg::handleLinkingBackBlocks(vector<int> pendingHandling, vector<int
         } else {
             auto existing = itr->second;
             existing.insert(existing.end(), neighbours.begin(), neighbours.end());
+            itr->second = existing;
         }
         neighbours.clear();
     }
@@ -175,6 +176,7 @@ int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess,
     currentStmts.push_back(statementListToProcess.children[pointer].children[0].stmtNumber);
     basicBlock.push_back(currentBlk);
     int exitingNumber = currentBlk;
+    blockPointingBackward.insert(exitingNumber);
     blockToStatement.insert(pair<int, vector<int> >(currentBlk, currentStmts));
     for (auto stmt : currentStmts) {
         statementNumberToBlock.insert(pair<int, int>(stmt, currentBlk));
@@ -192,7 +194,6 @@ int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess,
     // link the exiting node in the stmtList of while back to the conditional node
     map<int, vector<int> >::iterator itr;
     for (int linkingBack: exitingBlk) {
-        blockPointingBackward.insert(linkingBack);
         itr = blockGraph.find(linkingBack);
         if (itr != blockGraph.end()) {
             auto existing = itr->second;

@@ -1,0 +1,41 @@
+procedure Example {
+  x = 2;
+  z = 3;
+  i = 5;
+  while (i!=0) {
+    x = x - 1;
+    call test1;
+    if (x==1) then {
+      z = x + 1;
+    }
+    else {
+      y = z + x;
+      call Shift;
+    }
+    z = z + x + i;
+    read q;
+    i = i - 1;
+  }
+  call test2;
+  print p;
+}
+
+procedure test1 {
+  j = ((1 + 2) * (3 + 4) + 5) % 6 / 7 ;
+  left = 1;
+  right = 1;
+  mid = 1;
+}
+
+procedure test2 {
+  while (w == 0) {
+    iter = z + q % 1;
+    call test1;
+  }
+}
+
+procedure Shift {
+  a = b;
+  b = c;
+  c = 1;
+}

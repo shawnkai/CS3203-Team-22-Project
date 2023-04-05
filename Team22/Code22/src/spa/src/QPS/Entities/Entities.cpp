@@ -17,83 +17,73 @@ string DesignEntity::getType() {
 
 DesignEntity::DesignEntity() {}
 
-//Stmt Entity and its children
-StmtEntity::StmtEntity(string type, int lineNumber) : DesignEntity(std::move(type)) {
+StmtRef::StmtRef(string type) : DesignEntity(std::move(type)) {}
+
+WildcardStmtRef::WildcardStmtRef() : StmtRef("STATEMENT") {}
+
+string WildcardStmtRef::toString() {
+    return "_";
+}
+
+StmtEntity::StmtEntity(int lineNumber) : StmtRef("STMTENTITY") {
     if (lineNumber <= 0) {
         throw SemanticException();
     }
     this->lineNumber = lineNumber;
 }
-
-StmtEntity::StmtEntity(string type, string synonym) : DesignEntity(std::move(type)) {
-    if (!Utilities::isAlphanumericString(synonym)) {
-        throw SyntacticException();
-    }
-    this->synonym = std::move(synonym);
-}
-
-StmtEntity::StmtEntity(string type) : DesignEntity(std::move(type)) {}
-
-StmtEntity::StmtEntity(int lineNumber) : DesignEntity("STATEMENT") {
-    if (lineNumber <= 0) {
-        throw SemanticException();
-    }
-    this->lineNumber = lineNumber;
-}
-
-StmtEntity::StmtEntity() : DesignEntity("STATEMENT") {}
-
-vector<string> StmtEntity::validAttrs = {"stmt#"};
 
 int StmtEntity::getLine() {
     return this->lineNumber;
 }
 
-string StmtEntity::toString() {
-    if (this->getLine() == -1 && this->synonym == "-1") {
-        return "_";
-    } else if (this->getLine() == -1) {
-        return this->synonym;
-    } else {
-        return to_string(this->getLine());
+SynonymStmtEntity::SynonymStmtEntity(string type, string synonym) : StmtRef(std::move(type)) {
+    if (!Utilities::isValidVariableName(synonym)) {
+        throw SyntacticException();
     }
+    this->synonym = std::move(synonym);
 }
 
-ReadEntity::ReadEntity(int lineNumber) : StmtEntity("READ", lineNumber) {}
-ReadEntity::ReadEntity() : StmtEntity("READ") {}
-ReadEntity::ReadEntity(string synonym) : StmtEntity("READ", std::move(synonym)) {}
+SynonymStmtEntity::SynonymStmtEntity(string synonym) : StmtRef("STATEMENT") {
+    if (!Utilities::isValidVariableName(synonym)) {
+        throw SyntacticException();
+    }
+    this->synonym = std::move(synonym);
+}
+
+string SynonymStmtEntity::toString() {
+    return this->synonym;
+}
+
+vector<string> StmtRef::validAttrs = {"stmt#"};
+
+string StmtEntity::toString() {
+    return to_string(this->getLine());
+}
+
+ReadEntity::ReadEntity(string synonym) : SynonymStmtEntity("READ", std::move(synonym)) {}
 vector<string> ReadEntity::validAttrs = {"varName", "stmt#"};
 
-PrintEntity::PrintEntity(int lineNumber) : StmtEntity("PRINT", lineNumber) {}
-PrintEntity::PrintEntity() : StmtEntity("PRINT") {}
-PrintEntity::PrintEntity(string synonym) : StmtEntity("PRINT", std::move(synonym)) {}
+PrintEntity::PrintEntity(string synonym) : SynonymStmtEntity("PRINT", std::move(synonym)) {}
 vector<string>  PrintEntity::validAttrs = {"varName", "stmt#"};
 
-AssignEntity::AssignEntity(int lineNumber) : StmtEntity("ASSIGNMENT", lineNumber) {}
-AssignEntity::AssignEntity() : StmtEntity("ASSIGNMENT") {}
-AssignEntity::AssignEntity(string synonym) : StmtEntity("ASSIGNMENT", std::move(synonym)) {}
+AssignEntity::AssignEntity(string synonym) : SynonymStmtEntity("ASSIGNMENT", std::move(synonym)) {}
 vector<string>  AssignEntity::validAttrs = {"stmt#"};
 
-CallEntity::CallEntity(int lineNumber) : StmtEntity("CALL", lineNumber) {}
-CallEntity::CallEntity() : StmtEntity("CALL") {}
-CallEntity::CallEntity(string synonym) : StmtEntity("CALL", std::move(synonym)) {}
+CallEntity::CallEntity(string synonym) : SynonymStmtEntity("CALL", std::move(synonym)) {}
 vector<string>  CallEntity::validAttrs = {"procName", "stmt#"};
 
-WhileEntity::WhileEntity(int lineNumber) : StmtEntity("WHILE", lineNumber) {}
-WhileEntity::WhileEntity() : StmtEntity("WHILE") {}
-WhileEntity::WhileEntity(string synonym) : StmtEntity("WHILE", std::move(synonym)) {}
+WhileEntity::WhileEntity(string synonym) : SynonymStmtEntity("WHILE", std::move(synonym)) {}
 vector<string>  WhileEntity::validAttrs = {"stmt#"};
 
-IfEntity::IfEntity(int lineNumber) : StmtEntity("IF", lineNumber) {}
-IfEntity::IfEntity() : StmtEntity("IF") {}
-IfEntity::IfEntity(string synonym) : StmtEntity("IF", std::move(synonym)) {}
+IfEntity::IfEntity(string synonym) : SynonymStmtEntity("IF", std::move(synonym)) {}
 vector<string>  IfEntity::validAttrs = {"stmt#"};
 
+vector<string> SynonymStmtEntity::validAttrs = {"stmt#"};
 
 // Named Entities and its children
 NamedEntity::NamedEntity(const string& type, string synonym) : DesignEntity(type) {
     string synonym_removed = Utilities::removeAllOccurrences(synonym, '\"');
-    if (!Utilities::isAlphanumericString(synonym_removed) && synonym != "_") {
+    if (!Utilities::isValidVariableName(synonym_removed) && synonym != "_" && !Utilities::isNumber(synonym_removed)) {
         throw SyntacticException();
     }
     if (type == "ident" && (synonym[0] != '\"' || synonym[synonym.size() - 1] != '\"')) {
@@ -123,9 +113,9 @@ vector<string>  VariableEntity::validAttrs = {"varName"};
 ConstantEntity::ConstantEntity(string synonym) : NamedEntity("CONSTANT", std::move(synonym)) {}
 vector<string>  ConstantEntity::validAttrs = {"value"};
 
-WildCardEntity::WildCardEntity() : NamedEntity("WILDCARD", "_") {}
+WildcardNamedEntity::WildcardNamedEntity() : NamedEntity("WILDCARD", "_") {}
 
-ResultTable StmtEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* StmtRef::getAttrVal(string attr, PKB pkb) {
     if (attr == "stmt#") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         vector<string> column;
@@ -134,7 +124,7 @@ ResultTable StmtEntity::getAttrVal(string attr, PKB pkb) {
                 column.push_back(l);
             }
         }
-        return ResultTable({{"withCond", column}, {this->toString(), column}});
+        return new ResultTable({{"withCond", column}, {this->toString(), column}});
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -142,7 +132,7 @@ ResultTable StmtEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable ProcedureEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* ProcedureEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "procName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         vector<string> column;
@@ -150,7 +140,7 @@ ResultTable ProcedureEntity::getAttrVal(string attr, PKB pkb) {
         for (Result r: results) {
             column.push_back(r.getQueryEntityName());
         }
-        return ResultTable({{"withCond", column}, {this->toString(), column}});
+        return new ResultTable({{"withCond", column}, {this->toString(), column}});
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -158,7 +148,7 @@ ResultTable ProcedureEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable CallEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* CallEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "procName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
@@ -168,9 +158,9 @@ ResultTable CallEntity::getAttrVal(string attr, PKB pkb) {
                 data["withCond"].push_back(r.getQueryEntityName());
             }
         }
-        return ResultTable(data);
+        return new ResultTable(data);
     } else if (attr == "stmt#"){
-        return StmtEntity::getAttrVal(attr, pkb);
+        return StmtRef::getAttrVal(attr, pkb);
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -178,7 +168,7 @@ ResultTable CallEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable VariableEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* VariableEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "varName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         vector<string> column;
@@ -186,7 +176,7 @@ ResultTable VariableEntity::getAttrVal(string attr, PKB pkb) {
         for (Result r: results) {
             column.push_back(r.getQueryEntityName());
         }
-        return ResultTable({{"withCond", column}, {this->toString(), column}});
+        return new ResultTable({{"withCond", column}, {this->toString(), column}});
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -194,7 +184,7 @@ ResultTable VariableEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable ReadEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* ReadEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "varName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
@@ -204,9 +194,9 @@ ResultTable ReadEntity::getAttrVal(string attr, PKB pkb) {
                 data["withCond"].push_back(r.getQueryEntityName());
             }
         }
-        return ResultTable(data);
+        return new ResultTable(data);
     } else if (attr == "stmt#"){
-        return StmtEntity::getAttrVal(attr, pkb);
+        return StmtRef::getAttrVal(attr, pkb);
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -214,7 +204,7 @@ ResultTable ReadEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable PrintEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* PrintEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "varName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
@@ -224,9 +214,9 @@ ResultTable PrintEntity::getAttrVal(string attr, PKB pkb) {
                 data["withCond"].push_back(r.getQueryEntityName());
             }
         }
-        return ResultTable(data);
+        return new ResultTable(data);
     } else if (attr == "stmt#"){
-        return StmtEntity::getAttrVal(attr, pkb);
+        return StmtRef::getAttrVal(attr, pkb);
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -234,7 +224,7 @@ ResultTable PrintEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable ConstantEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* ConstantEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "value") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
         vector<string> column;
@@ -242,7 +232,7 @@ ResultTable ConstantEntity::getAttrVal(string attr, PKB pkb) {
         for (Result r: results) {
             column.push_back(r.getQueryEntityName());
         }
-        return ResultTable({{"withCond", column}, {this->toString(), column}});
+        return new ResultTable({{"withCond", column}, {this->toString(), column}});
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid attr : %s", attr.c_str());
@@ -250,9 +240,9 @@ ResultTable ConstantEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable NamedEntity::getAttrVal(string attr, PKB pkb) {
+ResultTable* NamedEntity::getAttrVal(string attr, PKB pkb) {
     if (this->getType() == "ident" || this->getType() == "int") {
-        return ResultTable({{"withCond", {Utilities::removeAllOccurrences(this->toString(), '\"')}}});
+        return new ResultTable({{"withCond", {Utilities::removeAllOccurrences(this->toString(), '\"')}}});
     } else {
         ::printf("incorrect validation\n");
         ::printf("invalid type : %s", this->getType().c_str());
@@ -260,25 +250,34 @@ ResultTable NamedEntity::getAttrVal(string attr, PKB pkb) {
     }
 }
 
-ResultTable WhileEntity::getAttrVal(string attr, PKB pkb) {
-    return StmtEntity::getAttrVal(attr, pkb);
+ResultTable* WhileEntity::getAttrVal(string attr, PKB pkb) {
+    return StmtRef::getAttrVal(attr, pkb);
 }
 
-ResultTable IfEntity::getAttrVal(string attr, PKB pkb) {
-    return StmtEntity::getAttrVal(attr, pkb);
+ResultTable* IfEntity::getAttrVal(string attr, PKB pkb) {
+    return StmtRef::getAttrVal(attr, pkb);
 }
 
-ResultTable AssignEntity::getAttrVal(string attr, PKB pkb) {
-    return StmtEntity::getAttrVal(attr, pkb);
+ResultTable* AssignEntity::getAttrVal(string attr, PKB pkb) {
+    return StmtRef::getAttrVal(attr, pkb);
+}
+
+ResultTable* SynonymStmtEntity::getAttrVal(string attr, PKB pkb) {
+    return StmtRef::getAttrVal(attr, pkb);
 }
 
 bool NamedEntity::checkAttr(string attr) {
     return false;
 }
 
-bool StmtEntity::checkAttr(string attr) {
-    return Utilities::checkIfPresent(StmtEntity::validAttrs, attr);
+bool StmtRef::checkAttr(string attr) {
+    return Utilities::checkIfPresent(StmtRef::validAttrs, attr);
 }
+
+bool SynonymStmtEntity::checkAttr(string attr) {
+    return Utilities::checkIfPresent(SynonymStmtEntity::validAttrs, attr);
+}
+
 bool ProcedureEntity::checkAttr(string attr) {
     return Utilities::checkIfPresent(ProcedureEntity::validAttrs, attr);
 }
@@ -315,6 +314,6 @@ bool ReadEntity::checkAttr(string attr) {
     return Utilities::checkIfPresent(ReadEntity::validAttrs, attr);
 }
 
-bool WildCardEntity::checkAttr(string attr) {
+bool WildcardNamedEntity::checkAttr(string attr) {
     return false;
 }

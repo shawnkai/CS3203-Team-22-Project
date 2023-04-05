@@ -40,7 +40,7 @@ none
 5000
 9 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w ("a", _) and Parent (w, a) such that Modifies(a, v) with v.varName = pn.varName and v.varName = re.varName 
+Select w pattern w ("a", _) and Parent (w, a) such that Modifies(a, v) with v.varName = pn.varName and v.varName = re.varName
 none
 5000
 10 - multiple such that, pattern while and with clause
@@ -110,12 +110,12 @@ Select a pattern a (_, _"x+y"_) such that Uses (a, v) such that Modifies(a, v) w
 5000
 23 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w ("i", _) such that Uses (w, _) such that Modifies(w, v) with v.varName = re.varName 
+Select w pattern w ("i", _) such that Uses (w, _) such that Modifies(w, v) with v.varName = re.varName
 6,26,28,29
 5000
 24 - multiple such that, pattern while and with clause
 assign a; variable v;  constant c; while w; if if; stmt stmt; read re; print pn;
-Select w pattern w ("x", _) such that Uses (_, v) such that Modifies(w, v) with v.varName = re.varName 
+Select w pattern w ("x", _) such that Uses (_, v) such that Modifies(w, v) with v.varName = re.varName
 SemanticError
 5000
 25 - multiple such that, pattern while and with clause

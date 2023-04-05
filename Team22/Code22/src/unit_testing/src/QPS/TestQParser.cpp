@@ -97,12 +97,26 @@ TEST_CASE("TestCase5_ParsingDeclarationRedeclaredSynonyms_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase6_ParsingDeclarationNonAlphanumericSynonym_SyntaxError") {
+TEST_CASE("TestCase6_ParsingDeclarationSynonymEndingWithUnderscore_Success") {
     QueryParser queryParser;
 
     string declaration = "stmt s; assign a_;";
 
-    REQUIRE(queryParser.isDeclaration(declaration));
+    queryParser.parse(declaration);
+
+    SynonymTable resultTable = queryParser.getSynonymTable();
+
+    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"a_", "ASSIGNMENT"}};
+
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
+}
+
+TEST_CASE("TestCase6_ParsingDeclarationSynonymWith*InMiddle_SyntaxError") {
+    QueryParser queryParser;
+
+    string declaration = "stmt s; assign a*b;";
+
+    REQUIRE(!queryParser.isDeclaration(declaration));
 
     bool throwsException = false;
 

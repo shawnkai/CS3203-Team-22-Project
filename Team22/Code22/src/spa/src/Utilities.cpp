@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <regex>
 
+using namespace std;
+
 vector<string> Utilities::findIntersection(vector<vector<string>> &all_vectors) {
     vector<string> intersection;
     if (all_vectors.empty()) {
@@ -43,16 +45,19 @@ bool Utilities::isNumber(string s)
 }
 
 /**
- * Checks if a String is alphanumeric
+ * Checks if a String is valid variable variable name
+ * i.e. alphanumberic characters which may/may not be followed by a number
  *
  * @param str input
  * @return true if String is alphanumeric else false
  */
-bool Utilities::isAlphanumericString(string str) {
-    return std::all_of(
-            str.begin(),
-            str.end(),
-            [](char c){return std::isalnum(c);});
+bool Utilities::isValidVariableName(string str) {
+    static const std::regex pattern("[a-zA-Z_][a-zA-Z0-9_]*");
+    bool temp = std::regex_match(str, pattern);
+    if (!temp) {
+        ::printf("WRONG: %s\n", str.c_str());
+    }
+    return temp;
 }
 
 string Utilities::removeAllOccurrences(string str, char c) {

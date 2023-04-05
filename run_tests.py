@@ -4,8 +4,10 @@ import re
 
 if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
     start = './Team22/Code22/cmake-build-debug/src'
-else:
+elif os.path.isdir('./Team22/Code22/build/src'):
     start = './Team22/Code22/build/src'
+else:
+    start = './Team22/Code22/out/build/x64-Debug/src'
 
 # Unit Testing
 print("Running Unit Tests...")
@@ -56,9 +58,13 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
                       ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
                       ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
-                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt")]
+                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt"),
+                      ("TestCallsExpression/Sample_source.txt", "TestCallsExpression/Sample_queries.txt"),
+                      ("TestCallsExpression/Calls_Testing_Source.txt", "TestCallsExpression/Calls_Testing_Queries.txt"),
+                      ("TestBoolean/Simple_Test_Source.txt", "TestBoolean/Simple_Test_Queries.txt"),
+                      ("TestDemo2Features/Sample_source.txt", "/TestDemo2Features/Sample_queries.txt")]
 
-testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+ - ))*))")
+testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
 actualAnswerRegex = re.compile("(Your answer: (.)*)")
 missingAnswerRegex = re.compile("(Missing: (.)*)")
@@ -116,5 +122,5 @@ for source, query in source_query_pairs:
                   f"\n{q[1]}"
                   f"\n{q[2]}"
                   f"\n{q[3]}"
-                  f"\n{q[4]}")
+                  f"\n{q[4]}\n")
         exit(1)

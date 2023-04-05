@@ -37,14 +37,18 @@ class Expression {
         static regex PARENTREGEX;
         static regex PARENTSTARREGEX;
         static regex ATTRCONDREGEX;
+        static regex CALLSREGEX;
+        static regex CALLSSTARREGEX;
+        static regex NEXTREGEX;
+        static regex RETURNVALUEREGEX;
 
-    public:
+public:
         static string QUERYVALIDATION;
         static regex QUERYVALIDATIONREGEX;
 
     explicit Expression(vector<DesignEntity*> entities);
 
-        virtual ResultTable evaluate(PKB pkb) = 0;
+        virtual ResultTable* evaluate(PKB pkb) = 0;
 
         vector<DesignEntity*> getAllEntities();
 
