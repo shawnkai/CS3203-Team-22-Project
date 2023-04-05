@@ -39,6 +39,7 @@ class Expression {
         static regex ATTRCONDREGEX;
         static regex CALLSREGEX;
         static regex CALLSSTARREGEX;
+        static regex NEXTREGEX;
         static regex RETURNVALUEREGEX;
 
 public:
