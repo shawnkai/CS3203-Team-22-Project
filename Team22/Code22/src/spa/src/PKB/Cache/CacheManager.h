@@ -17,9 +17,8 @@ class CacheManager {
     static inline CacheDatabase* cacheDatabase = new CacheDatabase;
 
 public:
-    static void addToCache(string accessKey, ResultTable *resultTable);
-    static ResultTable* getResultTableFromCache(string accessKey);
-    static unordered_map<string, ResultTable*> getCacheDatabase();
+    static CacheDatabase* getCacheDatabase();
+
     static void clearCache();
 };
 

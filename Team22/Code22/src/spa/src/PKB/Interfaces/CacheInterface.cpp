@@ -10,15 +10,18 @@
 using namespace std;
 
 void CacheInterface::addToCache(string accessKey, ResultTable *resultTable) {
-    CacheManager::addToCache(accessKey, resultTable);
+    CacheDatabase* db = CacheManager::getCacheDatabase();
+    db->addToCache(accessKey, resultTable);
 }
 
 ResultTable *CacheInterface::getResultTableFromCache(string accessKey) {
-    return CacheManager::getResultTableFromCache(accessKey);
+    CacheDatabase* db = CacheManager::getCacheDatabase();
+    return db->getResultTableFromCache(accessKey);
 }
 
 unordered_map<string, ResultTable *> CacheInterface::getCacheDatabase() {
-    return CacheManager::getCacheDatabase();
+    CacheDatabase* db = CacheManager::getCacheDatabase();
+    return db->getCacheDatabase();
 }
 
 void CacheInterface::clearCache() {

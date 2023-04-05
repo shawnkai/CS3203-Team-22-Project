@@ -8,16 +8,8 @@
 
 using namespace std;
 
-void CacheManager::addToCache(string accessKey, ResultTable *resultTable) {
-    cacheDatabase->addToCache(accessKey, resultTable);
-}
-
-ResultTable *CacheManager::getResultTableFromCache(string accessKey) {
-    return cacheDatabase->getResultTableFromCache(accessKey);
-}
-
-unordered_map<string, ResultTable*> CacheManager::getCacheDatabase() {
-    return cacheDatabase->getCacheDatabase();
+CacheDatabase* CacheManager::getCacheDatabase() {
+    return cacheDatabase;
 }
 
 void CacheManager::clearCache() {
