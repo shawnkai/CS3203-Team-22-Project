@@ -13,7 +13,7 @@ using namespace std;
 #include "PKB/Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
 #include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
-#include "PKB/ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
+#include "PKB/ControlFlowGraph/ControlFlowGraphDatabaseManager.h"
 #include "PKB/Pattern/PatternDatabaseFactory.h"
 
 /**
@@ -222,7 +222,7 @@ void PKB::clearDesignAbstractionDatabase() {
 }
 
 void PKB::clearControlFlowGraphDatabase() {
-    ControlFlowGraphDatabaseFactory::clearDatabase();
+    ControlFlowGraphDatabaseManager::clearDatabase();
 }
 
 void PKB::clearPatternDatabase() {
