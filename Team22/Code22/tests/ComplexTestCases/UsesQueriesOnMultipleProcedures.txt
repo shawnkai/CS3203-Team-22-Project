@@ -1,0 +1,155 @@
+1 - Get All Variables Used In If Statement at Line 2
+variable v;
+Select v such that Uses (2, v)
+x, a, b, c, d, y
+5000
+2 - Get All Variables Used In Procedure One
+variable v;
+Select v such that Uses ("One", v)
+x, a, b, c, d, y
+5000
+3 - Get All Variables Used In Procedure Two
+variable v;
+Select v such that Uses ("Two", v)
+x, a
+5000
+4 - Get All Variables Used In Procedure Three
+variable v;
+Select v such that Uses ("Three", v)
+x, a, b, c, d
+5000
+5 - Get All Variables Used In Procedure Four
+variable v;
+Select v such that Uses ("Four", v)
+x, a, b, c, d
+5000
+6 - Get All Variables Used In Procedure Five
+variable v;
+Select v such that Uses ("Five", v)
+x, a
+5000
+7 - Get All Variables Used In Procedure Six
+variable v;
+Select v such that Uses ("Six", v)
+a, b, c, d
+5000
+8 - Get All Variables Used In Procedure Five and Procedure Six
+variable v;
+Select v such that Uses ("Six", v) and Uses ("Five", v)
+a, b, c, d, x
+5000
+9 - Get All Variables Used In Container Statement on Line 22 While Loop
+variable v;
+Select v such that Uses (22, v)
+c
+5000
+10 - Get All Variables Used In Container Statement on Line 32 While Loop
+variable v;
+Select v such that Uses (32, v)
+y, a, x
+5000
+11 - Get All Variables Used In Container Statement on Line 37 Assignment Statement
+variable v;
+Select v such that Uses (37, v)
+y, a, x
+5000
+12 - Get All Variables Used In Container Statement on Line 39 Call Statement
+variable v;
+Select v such that Uses (39, v)
+a, x
+5000
+13 - Get All Variables Used In Container Statement on Line 43 While Loop
+variable v;
+Select v such that Uses (43, v)
+a, x
+5000
+14 - Get All Variables Used In Container Statement on Line 44 Print Statement
+variable v;
+Select v such that Uses (44, v)
+a
+5000
+15 - Get All Variables Used In Container Statement on Line 49 If Statement
+variable v;
+Select v such that Uses (49, v)
+a, x, b, c, d
+5000
+16 - Get All Variables Used In Container Statement on Line 56 Assignment Statement
+variable v;
+Select v such that Uses (56, v)
+x
+5000
+16 - Get All Variables Used In Container Statement on Line 58 Read Statement
+variable v;
+Select v such that Uses (58, v)
+none
+5000
+17 - Get All Variables Used In Container Statement on Line 69 Assignment Statement
+variable v;
+Select v such that Uses (69, v)
+a, x
+5000
+18 - Get All Variables Used In Container Statement on Line 71 Call Statement
+variable v;
+Select v such that Uses (71, v)
+a, b, c, d, x
+5000
+19 - Get All Variables Used In Container Statement on Line 72 Call Statement
+variable v;
+Select v such that Uses (72, v)
+a, x
+5000
+20 - Get All Variables Used In Container Statement on Line 73 Call Statement
+variable v;
+Select v such that Uses (73, v)
+a, b, c, d
+5000
+21 - Get All Variables Used In Container Statement on Line 83 If Statement
+variable v;
+Select v such that Uses (83, v)
+a, b, c, d
+5000
+22 - Get All Variables Used In Container Statement on Line 89 Assignment Statement
+variable v;
+Select v such that Uses (89, v)
+a, b
+5000
+23 - Get All Variables Used In Container Statement on Line 99 If Statement
+variable v;
+Select v such that Uses (99, v)
+a, b, c, d
+5000
+23 - Get All Variables Used In Container Statement on Line 103 While Statement
+variable v;
+Select v such that Uses (103, v)
+a
+5000
+24 - Get All Variables Used In Procedure "Two" and Procedure "Five"
+variable v;
+Select v such that Uses ("Two", v) and Uses ("Five", v)
+a, x
+5000
+25 - Get All Variables Used In Procedure "Two" and Procedure "Five"
+variable v, v1;
+Select <v, v1> such that Uses ("Two", v) and Uses ("Five", v1)
+a a, a x, x a, x x
+5000
+26 - Is Variable "a" being Used in Procedure "One"
+variable v, v1;
+Select BOOLEAN such that Uses ("One", "a")
+TRUE
+5000
+27 - Is Variable "z" being Used in Procedure "One"
+variable v, v1;
+Select BOOLEAN such that Uses ("One", "z")
+FALSE
+5000
+28 - Are Variables "a" and "z" being Used in Procedure "One"
+variable v, v1;
+Select BOOLEAN such that Uses ("One", "z") and Uses ("One", "a")
+FALSE
+5000
+29 - Are Variables "a" and "b" being Used in Procedure "One"
+variable v, v1;
+Select BOOLEAN such that Uses ("One", "b") and Uses ("One", "a")
+TRUE
+5000
