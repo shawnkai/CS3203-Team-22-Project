@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
+
 #include "PKB/ControlFlowGraph/ControlFlowGraphDatabaseManager.h"
 
 using namespace std;

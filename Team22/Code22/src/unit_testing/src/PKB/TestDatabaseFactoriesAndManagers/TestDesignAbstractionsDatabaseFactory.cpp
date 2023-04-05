@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/PKB.h"
+
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
 
