@@ -7,7 +7,6 @@
 #include <utility>
 #include <set>
 #include <unordered_set>
-#include <parallel.h>
 
 ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     for (pair<string, vector<string>> p : args) {
@@ -131,6 +130,7 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const unordered_set<s
     }
 
    unordered_map<int, vector<int>> index_mapping;
+
 
     for (int i = 0; i < table2->getSize(); i++) {
         string key = *common_keys.begin();
