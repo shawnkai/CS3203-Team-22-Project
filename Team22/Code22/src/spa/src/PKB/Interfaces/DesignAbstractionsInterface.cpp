@@ -20,14 +20,16 @@ using namespace std;
  * @param designAbstraction The type of Abstraction that is to be added.
  * @param abstractionDetails A tuple, which takes in 3 strings. which contains the details about the Abstraction.
  */
-void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
+void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction,
+                                                       tuple<string, string, string> abstractionDetails) {
     DesignAbstraction* da = DesignAbstractionsFactory::createDesignAbstraction(designAbstraction, abstractionDetails);
     DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(da);
 
     db->addToDatabase(da);
 }
 
-void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
+void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction,
+                                                       tuple<string, string> abstractionDetails) {
     if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
         throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
     }
@@ -60,7 +62,8 @@ Result DesignAbstractionsInterface::getDesignAbstraction(string abstractionType,
     return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
 }
 
-vector<Result> DesignAbstractionsInterface::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
+vector<Result> DesignAbstractionsInterface::getAllDesignAbstractions(string designAbstractionType,
+                                                                     string entityTypeBeingAbstracted) {
     DesignAbstractionDatabase* db =
             DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
                                                                       entityTypeBeingAbstracted);
@@ -68,7 +71,8 @@ vector<Result> DesignAbstractionsInterface::getAllDesignAbstractions(string desi
 }
 
 unordered_map<string, unordered_set<string>>
-DesignAbstractionsInterface::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
+DesignAbstractionsInterface::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType,
+                                                                        string entityTypeBeingAbstracted) {
     DesignAbstractionDatabase* db =
             DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
                                                                       entityTypeBeingAbstracted);
