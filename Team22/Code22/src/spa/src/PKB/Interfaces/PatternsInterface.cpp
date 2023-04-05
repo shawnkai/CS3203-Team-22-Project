@@ -6,8 +6,8 @@
 
 #include "PKB/Pattern/AssignPattern/AssignPatternFactory.h"
 #include "PKB/Pattern/AssignPattern/AssignPatternDatabaseManager.h"
-#include "PKB/Pattern//PatternFactory.h"
-#include "PKB/Pattern/PatternDatabaseFactory.h"
+#include "PKB/Pattern//PatternsFactory.h"
+#include "PKB/Pattern/PatternsDatabaseFactory.h"
 
 #include "PatternsInterface.h"
 
@@ -68,20 +68,20 @@ unordered_map<string, unordered_map<string, string>> PatternsInterface::getAllRi
 }
 
 void PatternsInterface::addPattern(string patternType, string lineNumber, string variableName) {
-    Pattern* patternToBeStored = PatternFactory::createPattern(patternType, lineNumber, variableName);
-    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+    Pattern* patternToBeStored = PatternsFactory::createPattern(patternType, lineNumber, variableName);
+    PatternDatabase* db = PatternsDatabaseFactory::getPatternDatabase(patternType);
 
     db->addToDatabase(patternToBeStored);
 }
 
 bool PatternsInterface::isVariableUsedInPattern(string patternType, string lineNumber, string variableName) {
-    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+    PatternDatabase* db = PatternsDatabaseFactory::getPatternDatabase(patternType);
 
     return db->isVariableNamePresentOnLineNumber(lineNumber, variableName);
 }
 
 unordered_set<string> PatternsInterface::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
-    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+    PatternDatabase* db = PatternsDatabaseFactory::getPatternDatabase(patternType);
 
     return db->getAllVariablesBeingUsed(lineNumber);
 }

@@ -14,7 +14,7 @@ using namespace std;
 #include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
 #include "PKB/ControlFlowGraph/ControlFlowGraphDatabaseManager.h"
-#include "PKB/Pattern/PatternDatabaseFactory.h"
+#include "PKB/Pattern/PatternsDatabaseFactory.h"
 
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
@@ -226,7 +226,7 @@ void PKB::clearControlFlowGraphDatabase() {
 }
 
 void PKB::clearPatternDatabase() {
-    PatternDatabaseFactory::clearDatabase();
+    PatternsDatabaseFactory::clearDatabase();
 }
 
 /**
