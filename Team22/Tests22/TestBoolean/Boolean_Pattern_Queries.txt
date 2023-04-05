@@ -295,7 +295,7 @@ SyntaxError
 5000 
 60 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1;
-Select BOOLEAN pattern if(v,_,_) pattern w(v,_) pattern a(_,_) pattern a(_,v1) 
+Select BOOLEAN pattern if(v,_,_) pattern w(v,_) pattern a(_,_) pattern a(v1,_) 
 FALSE
 5000 
 61 - Test boolean with all 3 patterns
@@ -320,12 +320,12 @@ TRUE
 5000 
 65 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;
-Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"z+x"_) pattern a1(_,v5) 
+Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"z+x"_) pattern a1(v5,_) 
 TRUE
 5000 
 66 - Test boolean with all 3 patterns
 if if; while w; assign a,a1; stmt s; variable v,v1,v2,v3,v4,v5;
-Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"x+i"_) pattern a1(_,v5) 
+Select BOOLEAN pattern if(v,_,_) pattern w(v1,_) pattern a("z",_"x+i"_) pattern a1(v5,_) 
 FALSE
 5000 
 67 - Test boolean with all 3 patterns
