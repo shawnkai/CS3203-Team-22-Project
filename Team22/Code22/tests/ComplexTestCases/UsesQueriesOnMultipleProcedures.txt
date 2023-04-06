@@ -36,7 +36,7 @@ a, b, c, d
 8 - Get All Variables Used In Procedure Five and Procedure Six
 variable v;
 Select v such that Uses ("Six", v) and Uses ("Five", v)
-a, b, c, d, x
+a
 5000
 9 - Get All Variables Used In Container Statement on Line 22 While Loop
 variable v;
