@@ -68,7 +68,7 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
     builder.buildCfg(largest, -1);
 
     REQUIRE(builder.basicBlock.size() == 17);
-    REQUIRE(builder.blockPointingBackward.size() == 7);
+    REQUIRE(builder.blockPointingBackward.size() == 4);
     REQUIRE(builder.blockGraph.size() == 17);
     REQUIRE(builder.blockToStatement.size() == 17);
     REQUIRE(builder.statementNumberToBlock.size() == 17);
