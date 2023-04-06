@@ -16,17 +16,17 @@ x, a
 4 - Get All Variables Modified In Procedure Three
 variable v;
 Select v such that Modifies ("Three", v)
-a, b, c, d
+a, b, c, d, x
 5000
 5 - Get All Variables Modified In Procedure Four
 variable v;
 Select v such that Modifies ("Four", v)
-a, b, c, d
+a, b, c, d, x
 5000
 6 - Get All Variables Modified In Procedure Five
 variable v;
 Select v such that Modifies ("Five", v)
-a
+a, x
 5000
 7 - Get All Variables Modified In Procedure Six
 variable v;
