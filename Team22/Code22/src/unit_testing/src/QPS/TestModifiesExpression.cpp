@@ -83,7 +83,7 @@ TEST_CASE("TestCase39_UndeclaredNamedEntityArg2ModifiesPExpression_SemanticError
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 

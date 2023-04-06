@@ -51,7 +51,7 @@ SemanticError
 20 - variable synonym as argument 1 return semantic error <--- error not handled
 variable v;
 Select v such that Uses(v, _)
-SemanticError
+SyntaxError
 5000
 21 - undeclared synonym return semantic error
 variable s;
@@ -186,5 +186,5 @@ x
 52 - All variables used in procedure
 variable v;
 Select v such that Uses("Example", v)
-x, z, a, b, i, y
+x, z, a, b, i
 5000

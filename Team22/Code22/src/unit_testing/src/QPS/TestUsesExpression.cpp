@@ -45,8 +45,8 @@ TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithWildCard_ShouldSuccess") {
 TEST_CASE("TestCase36_UndeclaredNamedEntityArg2UsesSExpression_SemanticError") {
 QueryParser queryParser;
 
-string declaration = "variable v; read r;";
-string query = "Select v such that Uses(r, a)";
+string declaration = "variable v; print p;";
+string query = "Select v such that Uses(p, a)";
 
 queryParser.parse(declaration);
 
@@ -73,7 +73,7 @@ bool throwsException = false;
 
 try {
 Expression *exp1 = queryParser.parse(query);
-} catch (SemanticException& e) {
+} catch (SyntacticException& e) {
 throwsException = true;
 }
 

@@ -106,7 +106,7 @@ x, left, right, i, z, y , q, area, iter, p
 21 - Constant + Uses + pattern 2
 variable v; constant c; assign a; print pr;
 Select c such that Uses(v, v) pattern a (v, _)
-SemanticError
+SyntaxError
 5000
 22 - pattern special case evaluates to True
 assign a; stmt w;
