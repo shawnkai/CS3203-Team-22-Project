@@ -60,52 +60,52 @@ TestTwo, TestThree, TestFour, TestFive
 5000
 13 - Return Any Procedures That Call "TestOne"
 procedure p;
-Select p such that Calls (_, "TestOne")
+Select p such that Calls (p, "TestOne")
 none
 5000
 14 - Return Any Procedures That Call "TestTwo"
 procedure p;
-Select p such that Calls (_, "TestTwo")
+Select p such that Calls (p, "TestTwo")
 TestOne
 5000
 15 - Return Any Procedures That Call "TestThree"
 procedure p;
-Select p such that Calls (_, "TestThree")
+Select p such that Calls (p, "TestThree")
 TestOne
 5000
 16 - Return Any Procedures That Call "TestFour"
 procedure p;
-Select p such that Calls (_, "TestFour")
+Select p such that Calls (p, "TestFour")
 TestOne, TestTwo, TestThree
 5000
 17 - Return Any Procedures That Call "TestFive"
 procedure p;
-Select p such that Calls (_, "TestFive")
+Select p such that Calls (p, "TestFive")
 TestThree
 5000
 18 - Return Any Procedures Called By "TestOne"
 procedure p;
-Select p such that Calls ("TestOne", _)
+Select p such that Calls ("TestOne", p)
 TestTwo, TestThree, TestFour
 5000
 19 - Return Any Procedures Called By "TestTwo"
 procedure p;
-Select p such that Calls ("TestTwo", _)
+Select p such that Calls ("TestTwo", p)
 TestFour
 5000
 20 - Return Any Procedures Called By "TestThree"
 procedure p;
-Select p such that Calls ("TestThree", _)
+Select p such that Calls ("TestThree", p)
 TestFour, TestFive
 5000
 22 - Return Any Procedures Called By "TestFour"
 procedure p;
-Select p such that Calls ("TestFour", _)
+Select p such that Calls ("TestFour", p)
 none
 5000
 23 - Return Any Procedures Called By "TestFive"
 procedure p;
-Select p such that Calls ("TestFive", _)
+Select p such that Calls ("TestFive", p)
 none
 5000
 24 - Return Any Procedures That Call Themselves
@@ -113,10 +113,10 @@ procedure p;
 Select p such that Calls (p, p)
 none
 5000
-25 - Return Any Procedures That Call Any Other Procedure or Are Called By Any Procedure
+25 - Return Any Procedures That Call Any Other Procedure
 procedure p;
-Select p such that Calls (_, _)
-TestOne, TestTwo, TestThree, TestFour, TestFive
+Select p such that Calls (p, _)
+TestOne, TestTwo, TestThree
 5000
 101 - Using Invalid Design Entity Type In Calls
 variable p;
@@ -125,6 +125,6 @@ SemanticError
 5000
 102 - Test Calls With Extra Space in Argument
 procedure p;
-Select p such that Calls (" TestOne ", _)
-TestOne, TestTwo, TestThree
+Select p such that Calls (" TestOne ", p)
+TestTwo, TestThree, TestFour
 5000
