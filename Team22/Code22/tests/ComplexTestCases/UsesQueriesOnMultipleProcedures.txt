@@ -158,8 +158,83 @@ variable v;
 Select v such that Uses ("One", _) with v.varName = "a"
 a
 5000
-31 - Return Variable "z", if it has been used in Procedure "One"
+31 - Return Variable "z", if it has been used in Procedure "One" : SEGMENTATION FAULT with "z"
 variable v;
-Select v such that Uses ("One", _) with v.varName = "z"
+Select v such that Uses ("One", _) with v.varName = "a"
 none
+5000
+32 - Return Variable "b", if it has been used in Procedure "One"
+variable v;
+Select v such that Uses ("One", _) with v.varName = "b"
+b
+5000
+101 - Test With Invalid Procedure Name
+variable v;
+Select v such that Uses ("Invalid", v)
+none
+5000
+102 - Test With Invalid Procedure Name
+variable v;
+Select v such that Uses ("Invalid", _)
+none
+5000
+103 - Test With All Statement Numbers and Variable Names
+stmt s; variable v;
+Select v such that Uses (s, v)
+a, b, c, d, x, y
+5000
+104 - Test With p.procName = "One"
+procedure p; variable v;
+Select v such that Uses (p, v) with p.procName = "One"
+a, b, c, d, x, y
+5000
+105 - Test With p.procName = "Invalid"
+procedure p; variable v;
+Select v such that Uses (p, v) with p.procName = "Invalid"
+none
+5000
+106 - Test With If as Statement Input (Syntax Error or Valid?)
+if i; variable v;
+Select v such that Uses (i, v)
+SyntaxError
+5000
+107 - Test With While as Statement Input (Syntax Error or Valid?)
+while w; variable v;
+Select v such that Uses (w, v)
+SyntaxError
+5000
+108 - Test With Print as Statement Input (Syntax Error or Valid?)
+print p; variable v;
+Select v such that Uses (p, v)
+SyntaxError
+5000
+109 - Test With Read as Statement Input (Syntax Error or Valid?)
+read r; variable v;
+Select v such that Uses (r, v)
+SyntaxError
+5000
+110 - Test With Call as Statement Input (Syntax Error or Valid?)
+call c; variable v;
+Select v such that Uses (c, v)
+SyntaxError
+5000
+111 - Wildcard as First Argument
+variable v;
+Select v such that Uses (_, v)
+SemanticError
+5000
+112 - Wildcard as Both Arguments
+variable v;
+Select v such that Uses (_, _)
+SemanticError
+5000
+113 - Second Argument as Non-Variable Synonym
+variable v; print p;
+Select p such that Uses ("One", p)
+SemanticError
+5000
+114 - First Argument as Variable Synonym
+variable v;
+Select p such that Uses (v, _)
+SemanticError
 5000
