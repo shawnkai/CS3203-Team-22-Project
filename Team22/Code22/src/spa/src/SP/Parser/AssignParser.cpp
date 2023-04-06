@@ -32,5 +32,5 @@ std::shared_ptr<TreeNode> AssignParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
-    return std::make_shared<TreeNode>(assignNode);
+    return std::make_shared<AssignNode>(assignNode);
 }

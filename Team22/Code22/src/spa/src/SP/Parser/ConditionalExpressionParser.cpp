@@ -23,7 +23,7 @@ std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ *pos;
-        return std::make_shared<TreeNode>(condNode);
+        return std::make_shared<ConditionalExpressionNode>(condNode);
     } else if (tokenList[*pos].type == TokenType::LEFT_ROUND_BRACKET) {
         // find matching right round bracket and check if it is && or || operator
         int recorder = -1;
@@ -48,8 +48,6 @@ std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
             return factory.createParser(RELATIONAL_EXPR, tokenList, pos)->parse();
         }
         ++ *pos;
-
-        // TODO: verify if condNode is a conditional expression node
         auto condNodeLeft = parse();
         if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
             cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << endl;
@@ -74,7 +72,7 @@ std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             ++ *pos;
-            return std::make_shared<TreeNode>(andNode);
+            return std::make_shared<ConditionalExpressionNode>(andNode);
         } else {
             if (tokenList[*pos].value != "||") {
                 cout << "Expected '&&' or '||' operator but instead got: " << tokenList[*pos].value << endl;
@@ -97,7 +95,7 @@ std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             ++ *pos;
-            return std::make_shared<TreeNode>(orNode);
+            return std::make_shared<ConditionalExpressionNode>(orNode);
         }
     } else {
         ParserFactory factory;

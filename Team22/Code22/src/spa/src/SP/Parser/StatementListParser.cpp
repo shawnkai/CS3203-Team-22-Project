@@ -66,5 +66,5 @@ std::shared_ptr<TreeNode> StatementListParser::parse() {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Unrecognized Token");
         }
     }
-    return std::make_shared<TreeNode>(stmtNode);
+    return std::make_shared<StatementListNode>(stmtNode);
 }

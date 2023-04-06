@@ -20,5 +20,5 @@ std::shared_ptr<TreeNode> ProgramParser::parse() {
     if (*pos != tokenList.size()) {
         cout << "Tangling tokens outside the last procedure are ignored" << endl;
     }
-    return make_shared<TreeNode>(programNode);
+    return make_shared<ProgramNode>(programNode);
 }

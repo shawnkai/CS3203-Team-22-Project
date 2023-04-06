@@ -33,5 +33,5 @@ std::shared_ptr<TreeNode> ReadParser::parse() {
     // increment pos by 2 because we have verified the existence of statement terminal ';'
     *pos += 2;
     node.children.push_back(std::make_shared<TreeNode>(childNode));
-    return std::make_shared<TreeNode>(node);
+    return std::make_shared<ReadNode>(node);
 }

@@ -45,5 +45,5 @@ std::shared_ptr<TreeNode> ProcedureParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
-    return make_shared<TreeNode>(node);
+    return make_shared<ProcedureNode>(node);
 }

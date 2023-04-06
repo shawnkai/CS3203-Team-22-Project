@@ -21,5 +21,5 @@ std::shared_ptr<TreeNode> CallParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
-    return std::make_shared<TreeNode>(callNode);
+    return std::make_shared<CallNode>(callNode);
 }

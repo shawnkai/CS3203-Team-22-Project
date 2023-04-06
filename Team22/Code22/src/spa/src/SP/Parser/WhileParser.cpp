@@ -38,5 +38,5 @@ std::shared_ptr<TreeNode> WhileParser::parse() {
     ++ *pos;
     whileNode.children.push_back(condChild);
     whileNode.children.push_back(whileBody);
-    return std::make_shared<TreeNode>(whileNode);
+    return std::make_shared<WhileNode>(whileNode);
 }

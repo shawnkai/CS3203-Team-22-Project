@@ -33,5 +33,5 @@ std::shared_ptr<TreeNode> PrintParser::parse() {
     child.stmtNumber = varNameToken.lineNumber;
     node.children.push_back(std::make_shared<TreeNode>(child));
     *pos += 2;
-    return make_shared<TreeNode>(node);
+    return make_shared<PrintNode>(node);
 }

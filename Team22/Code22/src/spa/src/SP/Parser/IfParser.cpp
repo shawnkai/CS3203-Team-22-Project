@@ -60,5 +60,5 @@ std::shared_ptr<TreeNode> IfParser::parse() {
     ifNode.children.push_back(condChild);
     ifNode.children.push_back(thenBody);
     ifNode.children.push_back(elseBody);
-    return std::make_shared<TreeNode>(ifNode);
+    return std::make_shared<IfNode>(ifNode);
 }

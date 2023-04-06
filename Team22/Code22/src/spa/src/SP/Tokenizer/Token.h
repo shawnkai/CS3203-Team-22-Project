@@ -52,6 +52,12 @@ inline const char* ToString(TokenType t) {
         case RIGHT_ROUND_BRACKET: return "RIGHT_ROUND_BRACKET";
         case LEFT_CURLY_BRACKET: return "LEFT_CURLY_BRACKET";
         case RIGHT_CURLY_BRACKET: return "RIGHT_CURLY_BRACKET";
+        case CONDITIONAL_EXPR: return "CONDITIONAL_EXPR";
+        case EXPR: return "EXPR";
+        case RELATIONAL_EXPR: return "RELATIONAL_EXPR";
+        case RELATIONAL_FACTOR: return "RELATIONAL_FACTOR";
+        case TERM: return "TERM";
+        case FACTOR: return "FACTOR";
         default: return "UNKNOWN_TOKEN_TYPE";
     }
 }
