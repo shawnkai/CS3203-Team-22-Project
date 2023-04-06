@@ -8,6 +8,8 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <unordered_set>
+#include <unordered_map>
 #include "Utilities.h"
 
 using namespace std;
@@ -15,13 +17,13 @@ using namespace std;
 
 class ResultTable {
     vector<string> columns;
-    map<string, vector<string>> table;
+    unordered_map<string, vector<string>> table;
 
 public:
-    explicit ResultTable(initializer_list<pair<string, vector<string>>> args);
+    ResultTable(initializer_list<pair<string, vector<string>>> args);
 
-    explicit ResultTable(const map<string, vector<string>>& table);
-    explicit ResultTable(const map<string, vector<string>>& table, vector<string> columns);
+    explicit ResultTable(const unordered_map<string, vector<string>>& table);
+    explicit ResultTable(const unordered_map<string, vector<string>>& table, vector<string> columns);
 
     ::size_t getSize();
 
@@ -53,9 +55,9 @@ public:
 
 private:
 
-    ResultTable* crossProduct(ResultTable* table2, const vector<string>& all_keys);
+    ResultTable* crossProduct(ResultTable* table2, const unordered_set<string>& all_keys);
 
-    ResultTable* naturalJoin(ResultTable* table2, const vector<string>& all_keys, vector<string> common_keys);
+    ResultTable* naturalJoin(ResultTable* table2, const unordered_set<string>& all_keys, unordered_set<string> common_keys);
 
 };
 

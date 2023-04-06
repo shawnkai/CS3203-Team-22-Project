@@ -17,7 +17,7 @@ TEST_CASE("TestCase1_ParsingDeclarationStatement_ShouldCreateDesignEntityForEach
 
     SynonymTable actualTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
@@ -35,7 +35,7 @@ TEST_CASE("TestCase2_ParsingDeclarationStatementSwitchedOrder_Success") {
 
     SynonymTable actualTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
@@ -106,7 +106,7 @@ TEST_CASE("TestCase6_ParsingDeclarationSynonymEndingWithUnderscore_Success") {
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"a_", "ASSIGNMENT"}};
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"a_", "ASSIGNMENT"}};
 
     REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
@@ -138,7 +138,7 @@ TEST_CASE("TestCase7_ParsingDeclarationStatementSynonymNameSameAsType_Success") 
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"stmt", "STATEMENT"}, {"s1", "STATEMENT"}, {"assign", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+    unordered_map<string, string> expectedTable = {{"stmt", "STATEMENT"}, {"s1", "STATEMENT"}, {"assign", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"while", "WHILE"}, {"if", "IF"}, {"variable", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"procedure", "PROCEDURE"}, {"q", "PROCEDURE"}, {"constant", "CONSTANT"}, {"read", "READ"},
                                          {"print", "PRINT"}, {"call", "CALL"}};
@@ -155,7 +155,7 @@ TEST_CASE("TestCase8_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Succe
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
@@ -263,7 +263,7 @@ TEST_CASE("TestCase13_ParsingDeclarationStatementMoreWhitespacesInserted_Success
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
@@ -281,7 +281,7 @@ TEST_CASE("TestCase14_ParsingDeclarationStatementMoreWhitespacesInserted_Success
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
                                          {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
                                          {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
                                          {"pn", "PRINT"}, {"cl", "CALL"}};
@@ -357,7 +357,7 @@ TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace_Succe
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"}};
+    unordered_map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"}};
 
     REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
@@ -371,7 +371,7 @@ TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace2_Succ
 
     SynonymTable resultTable = queryParser.getSynonymTable();
 
-    map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"}, {"v", "VARIABLE"}};
+    unordered_map<string, string> expectedTable = {{"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"}, {"v", "VARIABLE"}};
 
     REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }

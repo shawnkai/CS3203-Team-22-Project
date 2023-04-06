@@ -21,7 +21,7 @@ ResultTable* FAPSExpression::evaluate(PKB pkb) {
             }
         }
         vector<string> followedLines;
-        map<string, vector<string>> results = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+       unordered_map<string, vector<string>> results = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         vector<pair<string, string>> seen;
         for (Result res : vars1) {
             for (const string& line : res.getQueryResult()) {
@@ -97,43 +97,6 @@ ResultTable* FAPSExpression::evaluate(PKB pkb) {
     }
 }
 
-tuple<StmtRef*, StmtRef*> FAPSExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
-    StmtRef *a1;
-    StmtRef *a2;
-
-    if (Utilities::isNumber(arg1)) {
-        a1 = new StmtEntity(stoi(arg1));
-    } else if (arg1 == "_") {
-        a1 = new WildcardStmtRef();
-    } else {
-        DesignEntity *temp = synonymTable.get(arg1, "select");
-        if (!dynamic_cast<StmtRef*>(temp)) {
-            throw SemanticException();
-        }
-        a1 = dynamic_cast<StmtRef*>(temp);
-        if (a1->getType() == "VARIABLE" || a1->getType() == "PROCEDURE" || a1->getType() == "CONSTANT") {
-            throw SemanticException();
-        }
-    }
-
-    if (Utilities::isNumber(arg2)) {
-        a2 = new StmtEntity(stoi(arg2));
-    } else if (arg2 == "_") {
-        a2 = new WildcardStmtRef();
-    } else {
-        DesignEntity *temp = synonymTable.get(arg2, "select");
-        if (!dynamic_cast<StmtRef*>(temp)) {
-            throw SemanticException();
-        }
-        a2 = dynamic_cast<StmtRef*>(temp);
-        if (a2->getType() == "VARIABLE" || a2->getType() == "PROCEDURE" || a2->getType() == "CONSTANT") {
-            throw SemanticException();
-        }
-    }
-
-    return std::make_tuple(a1, a2);
-}
-
 FollowsExpression::FollowsExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
 
 string FollowsExpression::toString() {
@@ -168,14 +131,11 @@ vector<FollowsExpression*> FollowsExpression::extractFollowsExpression(const str
     vector<FollowsExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new FollowsExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new FollowsExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
+
     return expressions;
 }
 
@@ -191,14 +151,11 @@ vector<FollowsStarExpression*> FollowsStarExpression::extractFollowsStarExpressi
     vector<FollowsStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, FOLLOWSSTARREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new FollowsStarExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new FollowsStarExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
+
     return expressions;
 }
 
@@ -214,12 +171,8 @@ vector<ParentExpression*> ParentExpression::extractParentExpression(const string
     vector<ParentExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PARENTREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new ParentExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new ParentExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
     return expressions;
@@ -237,12 +190,8 @@ vector<ParentStarExpression*> ParentStarExpression::extractParentStarExpression(
     vector<ParentStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PARENTSTARREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new ParentStarExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new ParentStarExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
     return expressions;

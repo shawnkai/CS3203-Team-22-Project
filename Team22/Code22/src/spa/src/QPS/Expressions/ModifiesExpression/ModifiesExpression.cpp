@@ -191,7 +191,7 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
                 results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair(type, var.getQueryEntityName())));
             }
         }
-        map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+       unordered_map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         int ind = 0;
         for (auto res : results) {
             if (res.getQueryEntityType() == "MODIFIES:" + type) {

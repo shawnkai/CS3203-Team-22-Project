@@ -6,6 +6,7 @@
 
 #include <utility>
 #include <set>
+#include <unordered_set>
 
 ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     for (pair<string, vector<string>> p : args) {
@@ -14,14 +15,14 @@ ResultTable::ResultTable(initializer_list<pair<string, vector<string>>> args) {
     }
 }
 
-ResultTable::ResultTable(const map<string, vector<string>>& table) {
+ResultTable::ResultTable(const unordered_map<string, vector<string>>& table) {
     this->table = table;
     for (const auto& kv : table) {
         this->columns.push_back(kv.first);
     }
 }
 
-ResultTable::ResultTable(const map<string, vector<string>> &table, vector<string> columns) {
+ResultTable::ResultTable(const unordered_map<string, vector<string>> &table, vector<string> columns) {
     this->table = table;
     this->columns = std::move(columns);
 }
@@ -35,15 +36,16 @@ bool ResultTable::equals(ResultTable* table2) {
         return true;
     }
 
-    vector<string> key1;
-    vector<string> key2;
+    unordered_set<string> key1;
+    unordered_set<string> key2;
 
     for (const auto& kv: this->table) {
-        key1.push_back(kv.first);
+        key1.insert(kv.first);
     }
     for (const auto& kv: table2->table) {
-        key2.push_back(kv.first);
+        key2.insert(kv.first);
     }
+
     if (key1 != key2) {
         return false;
     }
@@ -100,8 +102,8 @@ string ResultTable::toString() {
     return result;
 }
 
-ResultTable* ResultTable::crossProduct(ResultTable* table2, const vector<string>& all_keys) {
-    map<string, vector<string>> result;
+ResultTable* ResultTable::crossProduct(ResultTable* table2, const unordered_set<string>& all_keys) {
+    unordered_map<string, vector<string>> result;
     for (const string& key: all_keys) {
         result.insert({key, {}});
     }
@@ -119,18 +121,19 @@ ResultTable* ResultTable::crossProduct(ResultTable* table2, const vector<string>
     return new ResultTable(result);
 }
 
-ResultTable* ResultTable::naturalJoin(ResultTable* table2, const vector<string>& all_keys, vector<string> common_keys) {
+ResultTable* ResultTable::naturalJoin(ResultTable* table2, const unordered_set<string>& all_keys, unordered_set<string> common_keys) {
     vector<int> target_indexes;
-    map<int, vector<int>> index_map;
+   unordered_map<int, vector<int>> index_map;
     for (int i = 0; i < table2->getSize(); i ++) {
         target_indexes.push_back(i);
         index_map.insert({i, {}});
     }
 
-    map<int, vector<int>> index_mapping;
+   unordered_map<int, vector<int>> index_mapping;
+
 
     for (int i = 0; i < table2->getSize(); i++) {
-        string key = common_keys[0];
+        string key = *common_keys.begin();
         string target_v = table2->table.find(key)->second[i];
         vector<string> targets = this->table.find(key)->second;
         vector<int> indices;
@@ -139,7 +142,7 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const vector<string>&
             if (t == target_v) {
                 bool matched = true;
                 for (auto kv : this->table) {
-                    if (Utilities::checkIfPresent(common_keys, kv.first) && kv.second[ind] != table2->table.find(kv.first)->second[i]) {
+                    if (common_keys.find(kv.first) != common_keys.end() && kv.second[ind] != table2->table.find(kv.first)->second[i]) {
                         matched = false;
                         break;
                     }
@@ -152,9 +155,17 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const vector<string>&
         }
     }
 
-    map<string, vector<string>> result;
+   unordered_map<string, vector<string>> result;
     for (const string& key: all_keys) {
         result.insert({key, {}});
+    }
+
+    vector<int> indices;
+    vector<vector<int>> target_indices;
+
+    for (const auto& ind_pair : index_map) {
+        indices.push_back(ind_pair.first);
+        target_indices.push_back(ind_pair.second);
     }
 
     for (const auto& ind_pair : index_map) {
@@ -163,7 +174,7 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const vector<string>&
                 result.find(kv.first)->second.push_back(kv.second[ind_pair.first]);
             }
             for (auto kv2: this->table) {
-                if (!Utilities::checkIfPresent(common_keys, kv2.first)) {
+                if (common_keys.find(kv2.first) == common_keys.end()) {
                     result.find(kv2.first)->second.push_back(kv2.second[i]);
                 }
             }
@@ -174,26 +185,22 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const vector<string>&
 }
 
 ResultTable* ResultTable::intersection(ResultTable* table2) {
-    vector<string> common_keys;
-    vector<string> all_keys;
+    unordered_set<string> common_keys;
+    unordered_set<string> all_keys;
     for (const auto& kv : this->table) {
-        all_keys.push_back(kv.first);
+        all_keys.insert(kv.first);
     }
     for (const auto& kv : table2->table) {
         if (this->table.find(kv.first) != this->table.end()) {
-            common_keys.push_back(kv.first);
+            common_keys.insert(kv.first);
             continue;
         }
-        all_keys.push_back(kv.first);
+        all_keys.insert(kv.first);
     }
 
     if (common_keys.empty()) {
         if (table2->getSize() == 0 || this->getSize() == 0) {
-            map<string, vector<string>> empty_keys;
-            for (const string& k : all_keys) {
-                empty_keys.insert({k, {}});
-            }
-            return new ResultTable(empty_keys);
+            return new BooleanFalseTable();
         } else {
             return this->crossProduct(table2, all_keys);
         }
@@ -215,7 +222,7 @@ ResultTable* ResultTable::intersection(vector<ResultTable*> tables) {
 
 
 ResultTable* ResultTable::getColumns(const vector<string>& columns) {
-    map<string, vector<string>> mod;
+   unordered_map<string, vector<string>> mod;
     for (const string& column : columns) {
         if (!Utilities::checkIfPresent(this->getColumnNames(), column)) {
             continue;

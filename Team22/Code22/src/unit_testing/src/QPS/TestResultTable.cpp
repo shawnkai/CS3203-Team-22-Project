@@ -137,13 +137,8 @@ TEST_CASE("TestCase8_NoMatchingColumnsOneTableEmpty") {
                                            make_pair<string, vector<string>>("s1", {"1", "2"}),
                                            make_pair<string, vector<string>>("s2", {"6", "7"})});
 
-    auto* expectedTable = new ResultTable({
-                                                  make_pair<string, vector<string>>("s1", {}),
-                                                  make_pair<string, vector<string>>("s2", {}),
-                                                  make_pair<string, vector<string>>("s3", {})});
-
-    REQUIRE(expectedTable->equals(table1->intersection(table2)));
-    REQUIRE(expectedTable->equals(table2->intersection(table1)));
+    REQUIRE((new BooleanFalseTable())->equals(table1->intersection(table2)));
+    REQUIRE((new BooleanFalseTable())->equals(table2->intersection(table1)));
 }
 
 TEST_CASE("TestCase9_NoMatchingColumnsBothTablesEmpty_ReturnFirstTable") {
@@ -153,12 +148,8 @@ TEST_CASE("TestCase9_NoMatchingColumnsBothTablesEmpty_ReturnFirstTable") {
                                            make_pair<string, vector<string>>("s1", {}),
                                            make_pair<string, vector<string>>("s2", {})});
 
-    auto* expectedTable = new ResultTable({make_pair<string, vector<string>>("s1", {}),
-                                           make_pair<string, vector<string>>("s2", {}),
-                                           make_pair<string, vector<string>>("s3", {})});
-
-    REQUIRE(expectedTable->equals(table1->intersection(table2)));
-    REQUIRE(expectedTable->equals(table2->intersection(table1)));
+    REQUIRE((new BooleanFalseTable())->equals(table1->intersection(table2)));
+    REQUIRE((new BooleanFalseTable())->equals(table2->intersection(table1)));
 }
 
 TEST_CASE("TestCase10_MatchingColumnsBothTablesEmpty") {
@@ -172,7 +163,6 @@ TEST_CASE("TestCase10_MatchingColumnsBothTablesEmpty") {
                                                   make_pair<string, vector<string>>("s1", {}),
                                                   make_pair<string, vector<string>>("s2", {}),
                                           });
-
     REQUIRE(expectedTable->equals(table1->intersection(table2)));
     REQUIRE(expectedTable->equals(table2->intersection(table1)));
 }

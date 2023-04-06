@@ -15,7 +15,7 @@ TEST_CASE("Test 1: Addition Of Data To Cache") {
     bool anyExceptionThrown = false;
 
     try {
-        ResultTable resultTable = ResultTable(map<string, vector<string>> {});
+        ResultTable resultTable = ResultTable(unordered_map<string, vector<string>> {});
 
         CacheInterface cacheController = CacheInterface();
         cacheController.addToCache("AccessKey_1", &resultTable);
@@ -28,7 +28,7 @@ TEST_CASE("Test 1: Addition Of Data To Cache") {
 
 TEST_CASE("Test 2: Retrieval Of Data From Cache When Single Result Table is Stored") {
     ResultTable* resultTable = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                 make_pair("sample", vector<string> {"sample"})
             });
 
@@ -41,12 +41,12 @@ TEST_CASE("Test 2: Retrieval Of Data From Cache When Single Result Table is Stor
 
 TEST_CASE("Test 3: Retrieval Of Data From Cache When Multiple Result Tables are Stored") {
     ResultTable* resultTableOne = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                     make_pair("sample1", vector<string> {"sample1"})
             });
 
     ResultTable* resultTableTwo = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                     make_pair("sample2", vector<string> {"sample2"})
             });
 
@@ -64,7 +64,7 @@ TEST_CASE("Test 4: Retrieval Of Data From Cache Which Does Not Exist") {
     bool exceptionThrown = false;
 
     ResultTable* resultTable = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                     make_pair("sample", vector<string> {"sample"})
             });
 
@@ -82,7 +82,7 @@ TEST_CASE("Test 4: Retrieval Of Data From Cache Which Does Not Exist") {
 
 TEST_CASE("Test 5: Retrieval Of Cache Database") {
     ResultTable* resultTable = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                     make_pair("sample1", vector<string> {"sample1"})
             });
 
@@ -97,12 +97,12 @@ TEST_CASE("Test 5: Retrieval Of Cache Database") {
 
 TEST_CASE("Test 6: Test clearCacheAPI()") {
     ResultTable* resultTableOne = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                     make_pair("sample1", vector<string> {"sample1"})
             });
 
     ResultTable* resultTableTwo = new ResultTable(
-            map<string, vector<string>> {
+            unordered_map<string, vector<string>> {
                     make_pair("sample2", vector<string> {"sample2"})
             });
 

@@ -3,6 +3,8 @@
 //
 
 #include "SelectExpression.h"
+#include <chrono>
+using namespace std::chrono;
 
 regex SelectExpression::SYNATTRREGEX = regex(R"(([\w]+)(?:\.((?:\w|#)+))?)");
 
@@ -114,7 +116,7 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
     vector<string> columns;
     vector<ResultTable*> selectEntityTables;
     for (int i = 0; i < this->entities.size(); i++) {
-        map<string, vector<string>> finalResults;
+       unordered_map<string, vector<string>> finalResults;
         DesignEntity *entity = this->entities[i];
         string synAttr = this->synAttrs[i];
         auto results = pkb.getAllDesignEntity(entity->getType());
@@ -155,7 +157,11 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
         }
         if (!this->entities.empty()) {
             allResults.push_back(selectResult);
+            auto startTime = high_resolution_clock::now();
             ResultTable* t = ResultTable::intersection(allResults)->getColumns(columns);
+            auto stopTime = high_resolution_clock::now();
+            auto duration = duration_cast<microseconds>(stopTime - startTime);
+            ::printf("Intersection Time: %f ms\n", duration.count() * 0.001);
             return t;
         }
 

@@ -1,5 +1,8 @@
 #include "NextExpression.h"
 
+#include <chrono>
+using namespace std::chrono;
+
 ResultTable* NextExpression::evaluate(PKB pkb) {
     vector<string> firstLine;
     vector<string> secondLine;
@@ -26,7 +29,7 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
         }
     }
 
-    map<string, vector<string>> results = { {this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}} };
+   unordered_map<string, vector<string>> results = { {this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}} };
     vector<pair<string, string>> seen;
     for (const string& line : firstLine) {
         Result next = pkb.getDesignAbstraction("NEXT", make_tuple("_", line));
@@ -61,37 +64,119 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
 
 }
 
-tuple<StmtRef*, StmtRef*> NextExpression::generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable) {
-    StmtRef* a1;
-    StmtRef* a2;
+void NextStarExpression::traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
+                             unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen, vector<string> prevs) {
+    //end of graph
+    if (current == 0) {
+        return;
+    }
 
-    if (Utilities::isNumber(arg1)) {
-        a1 = new StmtEntity(stoi(arg1));
+    //process any statements at most twice
+    if (seen.find(current) != seen.end()) {
+        if (seen.find(current)->second == 2) {
+            return;
+        } else {
+            seen.find(current)->second += 1;
+        }
+    } else {
+        seen.insert({current, 1});
     }
-    else if (arg1 == "_") {
-        a1 = new WildcardStmtRef();
+
+    for (int stmt : stmtsInBlock.find(current)->second) {
+        if (Utilities::checkIfPresent(end, to_string(stmt))) {
+            for (const auto& kv : results) {
+                if (Utilities::checkIfPresent(prevs, to_string(kv.first))) {
+                    results[kv.first].insert(stmt);
+                }
+            }
+        }
+        if (Utilities::checkIfPresent(first, to_string(stmt)) && results.find(stmt) == results.end()) {
+            results.insert({stmt, {}});
+        }
+        prevs.push_back(to_string(stmt));
     }
-    else {
-        a1 = dynamic_cast<SynonymStmtEntity*>(synonymTable.get(arg1, "select"));
-        if (a1->getType() == "VARIABLE" || a1->getType() == "PROCEDURE" || a1->getType() == "CONSTANT") {
-            throw SemanticException();
+
+    for (int block : graph.find(current)->second) {
+        traversal(block, graph, first, end, results, stmtsInBlock, seen, prevs);
+    }
+}
+
+ResultTable* NextStarExpression::evaluate(PKB pkb) {
+    vector<string> firstLine;
+    vector<string> secondLine;
+
+    if (dynamic_cast<StmtEntity*>(this->entities[0])) {
+        firstLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[0])->getLine()));
+    } else {
+        auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
+        for (Result res : vars1) {
+            for (const string& line : res.getQueryResult()) {
+                firstLine.push_back(line);
+            }
         }
     }
 
-    if (Utilities::isNumber(arg2)) {
-        a2 = new StmtEntity(stoi(arg2));
-    }
-    else if (arg2 == "_") {
-        a2 = new WildcardStmtRef();
-    }
-    else {
-        a2 = dynamic_cast<SynonymStmtEntity*>(synonymTable.get(arg2, "select"));
-        if (a2->getType() == "VARIABLE" || a2->getType() == "PROCEDURE" || a2->getType() == "CONSTANT") {
-            throw SemanticException();
+    if (dynamic_cast<StmtEntity*>(this->entities[1])) {
+        secondLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()));
+    } else {
+        auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
+        for (Result res : vars2) {
+            for (const string& line : res.getQueryResult()) {
+                secondLine.push_back(line);
+            }
         }
     }
 
-    return std::make_tuple(a1, a2);
+    vector<Result> procResults = pkb.getAllDesignEntity("PROCEDURE");
+    vector<string> procs;
+    for (auto res : procResults) {
+        procs.push_back(res.getQueryEntityName());
+    }
+
+   unordered_map<string, vector<string>> finalResult = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+
+    for (const string& proc : procs) {
+        auto startTime = high_resolution_clock::now();
+        auto graph = pkb.getBlockToBlockDatabase(proc);
+        auto blockStatements = pkb.getBlockToStatementNumbersDatabase(proc);
+        if (graph.empty()) {
+            continue;
+        }
+        vector<int> blocks;
+        for (const auto& kv : graph) {
+            blocks.push_back(kv.first);
+            vector<int> stmts = blockStatements.at(kv.first);
+        }
+        int start = *min_element(blocks.begin(), blocks.end());
+       unordered_map<int, set<int>> results = {};
+       unordered_map<int, int> seen;
+        traversal(start, graph, firstLine, secondLine, results, blockStatements, seen, {});
+        for (const auto& kv : results) {
+            for (int v : kv.second) {
+                finalResult.at(this->entities[0]->toString()).push_back(to_string(kv.first));
+                finalResult.at(this->entities[1]->toString()).push_back(to_string(v));
+            }
+        }
+        auto stopTime = high_resolution_clock::now();
+        auto duration = duration_cast<microseconds>(stopTime - startTime);
+        ::printf("Traversal Time: %f ms\n", duration.count() * 0.001);
+    }
+
+    if (!dynamic_cast<SynonymStmtEntity*>(this->entities[0]) && !dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
+        if ((new ResultTable(finalResult))->getSize() != 0) {
+            return new BooleanTrueTable();
+        }
+        else {
+            return new BooleanFalseTable();
+        }
+    }
+    else if (!dynamic_cast<SynonymStmtEntity*>(this->entities[0])) {
+        return (new ResultTable(finalResult))->getColumns({this->entities[1]->toString()});
+    }
+    else if (!dynamic_cast<SynonymStmtEntity*>(this->entities[1])) {
+        return (new ResultTable(finalResult))->getColumns({this->entities[0]->toString()});
+    }
+    return new ResultTable(finalResult);
 }
 
 NextExpression::NextExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
@@ -100,12 +185,11 @@ string NextExpression::toString() {
     return "Next(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-//NextStarExpression::NextStarExpression(StmtEntity* s1, StmtEntity* s2) : NextsExpression(s1, s2, "FOLLOWSSTAR") {}
-//
-//string NextStarExpression::toString() {
-//    return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
-//}
+NextStarExpression::NextStarExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
+string NextStarExpression::toString() {
+    return "Next*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
+}
 
 vector<NextExpression*> NextExpression::extractNextExpression(const string& query, const SynonymTable& synonymTable) {
     if (!containsNextExpression(query)) {
@@ -119,43 +203,38 @@ vector<NextExpression*> NextExpression::extractNextExpression(const string& quer
     vector<NextExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, Expression::NEXTREGEX)) {
-        tuple<StmtRef*, StmtRef*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-
-        StmtRef* a1 = std::get<0>(stmtEntityPair);
-        StmtRef* a2 = std::get<1>(stmtEntityPair);
-
-        expressions.push_back(new NextExpression(a1, a2));
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new NextExpression(stmtEntityPair.first, stmtEntityPair.second));
         searchStart = sm.suffix().first;
     }
     return expressions;
 }
 
-//vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const string& query, const SynonymTable& synonymTable) {
-//    smatch sm;
-//
-//    string::const_iterator searchStart(query.begin());
-//
-//    vector<NextStarExpression*> expressions;
-//
-//    while (regex_search(searchStart, query.cend(), sm, NEXTSTARREGEX)) {
-//        tuple<StmtEntity*, StmtEntity*> stmtEntityPair = generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-//
-//        StmtEntity* a1 = std::get<0>(stmtEntityPair);
-//        StmtEntity* a2 = std::get<1>(stmtEntityPair);
-//
-//        expressions.push_back(new NextStarExpression(a1, a2));
-//        searchStart = sm.suffix().first;
-//    }
-//    return expressions;
-//}
+vector<NextStarExpression*> NextStarExpression::extractNextStarExpression(const string& query, const SynonymTable& synonymTable) {
+    if (!containsNextStarExpression(query)) {
+        return {};
+    }
+
+    smatch sm;
+    string::const_iterator searchStart(query.begin());
+
+    vector<NextStarExpression*> expressions;
+
+    while (regex_search(searchStart, query.cend(), sm, Expression::NEXTSTARREGEX)) {
+        pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
+        expressions.push_back(new NextStarExpression(stmtEntityPair.first, stmtEntityPair.second));
+        searchStart = sm.suffix().first;
+    }
+    return expressions;
+}
 
 
 bool NextExpression::containsNextExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), Expression::NEXTREGEX), std::sregex_iterator()) > 0;
 }
 
-//bool NextStarExpression::containsNextStarExpression(string query) {
-//    return distance(sregex_iterator(query.begin(), query.end(), NEXTSTARREGEX), std::sregex_iterator()) > 0;
-//}
-//
+bool NextStarExpression::containsNextStarExpression(string query) {
+    return distance(sregex_iterator(query.begin(), query.end(), NEXTSTARREGEX), std::sregex_iterator()) > 0;
+}
+
 

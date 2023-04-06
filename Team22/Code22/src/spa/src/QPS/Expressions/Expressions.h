@@ -40,13 +40,18 @@ class Expression {
         static regex CALLSREGEX;
         static regex CALLSSTARREGEX;
         static regex NEXTREGEX;
+        static regex NEXTSTARREGEX;
+        static regex AFFECTSREGEX;
+        static regex AFFECTSSTARREGEX;
         static regex RETURNVALUEREGEX;
+
+        static pair<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
 
 public:
         static string QUERYVALIDATION;
         static regex QUERYVALIDATIONREGEX;
 
-    explicit Expression(vector<DesignEntity*> entities);
+        explicit Expression(vector<DesignEntity*> entities);
 
         virtual ResultTable* evaluate(PKB pkb) = 0;
 

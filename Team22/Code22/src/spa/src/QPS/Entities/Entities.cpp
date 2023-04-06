@@ -151,7 +151,7 @@ ResultTable* ProcedureEntity::getAttrVal(string attr, PKB pkb) {
 ResultTable* CallEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "procName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
-        map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
+       unordered_map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
         for (Result r: results) {
             for (string l : r.getQueryResult()) {
                 data[this->toString()].push_back(l);
@@ -187,7 +187,7 @@ ResultTable* VariableEntity::getAttrVal(string attr, PKB pkb) {
 ResultTable* ReadEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "varName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
-        map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
+       unordered_map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
         for (Result r: results) {
             for (string l : r.getQueryResult()) {
                 data[this->toString()].push_back(l);
@@ -207,7 +207,7 @@ ResultTable* ReadEntity::getAttrVal(string attr, PKB pkb) {
 ResultTable* PrintEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "varName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
-        map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
+       unordered_map<string, vector<string>> data = {{this->toString(), {}}, {"withCond", {}}};
         for (Result r: results) {
             for (string l : r.getQueryResult()) {
                 data[this->toString()].push_back(l);

@@ -16,7 +16,7 @@ private:
     string syn1attr;
     string syn2attr;
 
-    static map<string, string> attrToType;
+    static unordered_map<string, string> attrToType;
     static pair<DesignEntity*, pair<string, string>> generateSynAndAttrName(string ref, SynonymTable synonymTable);
     static bool containsAttrCondExpression(string query);
 

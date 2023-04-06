@@ -351,6 +351,29 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output17.find('6') == std::string::npos);
     }
 
+    SECTION("TestCase1: Select a such that Next*(4, a)"){
+        string declaration17 = "assign a; while w;";
+        string query17 = "Select a such that Next*(w, a)";
+        parser = QueryParser();
+        parser.parse(declaration17);
+        auto exp17 = parser.parse(query17);
+        vector<string> res_17 = evaluator.evaluate(exp17);
+        string output17;
+        for (const string &r: res_17) {
+            output17 += r + ",";
+        }
+        ::printf("Result: %s\n", output17.c_str());
+        REQUIRE(output17.find('5') != std::string::npos);
+        REQUIRE(output17.find('6') == std::string::npos);
+        REQUIRE(output17.find('7') != std::string::npos);
+        REQUIRE(output17.find('8') != std::string::npos);
+        REQUIRE(output17.find('9') != std::string::npos);
+        REQUIRE(output17.find("10") == std::string::npos);
+        REQUIRE(output17.find("11") != std::string::npos);
+
+    }
+
+
     REQUIRE(filesystem::remove(inputFilePath));
 }
 

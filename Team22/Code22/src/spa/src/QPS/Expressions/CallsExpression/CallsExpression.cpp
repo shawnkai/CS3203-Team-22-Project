@@ -115,7 +115,7 @@ ResultTable* CallsExpression::evaluate(PKB pkb) {
 
     vector<string> callers;
     vector<string> targets;
-    map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+   unordered_map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
     for (const string& p1 : possibleCallers) {
         Result res = pkb.getDesignAbstraction("CALLS", make_pair("_", p1));
         if (res.getQueryEntityName() == "none") {
@@ -185,7 +185,7 @@ ResultTable* CallsStarExpression::evaluate(PKB pkb) {
 
     vector<string> callers;
     vector<string> targets;
-    map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+   unordered_map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
     for (const string& p1 : possibleCallers) {
         Result res = pkb.getDesignAbstraction("CALLSSTAR", make_pair("_", p1));
         if (res.getQueryEntityName() == "none") {

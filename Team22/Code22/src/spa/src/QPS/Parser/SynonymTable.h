@@ -14,7 +14,7 @@
 
 class SynonymTable {
 private:
-    map<string, DesignEntity*> table;
+   unordered_map<string, DesignEntity*> table;
 
 public:
     vector<tuple<string, string>> getSimpleSynonymTable();
@@ -23,7 +23,7 @@ public:
 
     void add(string type, const string& name);
 
-    bool isEquivalentTo(const map<string, string>& expectedTable);
+    bool isEquivalentTo(const unordered_map<string, string>& expectedTable);
 
     DesignEntity *get(const string& name, const string& desiredType);
 };

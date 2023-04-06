@@ -133,7 +133,3 @@ TEST_CASE("TestCase4_SynonymStmtEntitySynonymStartsWithNumber_SyntaxError") {
 
     REQUIRE(throwsException);
 }
-
-
-
-
