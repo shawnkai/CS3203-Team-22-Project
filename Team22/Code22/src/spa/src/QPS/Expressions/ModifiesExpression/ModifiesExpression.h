@@ -11,21 +11,22 @@ using namespace std;
 
 //Modifies Expression Classes
 class ModifiesExpression : public Expression {
+private:
+    static bool containsModifiesExpression(string query);
+
 public:
     explicit ModifiesExpression(NamedEntity* target);
-
-    static bool containsModifiesExpression(string query);
 
     static vector<ModifiesExpression*> extractModifiesExpression(const string& query, SynonymTable synonymTable);
 };
 
 class ModifiesSExpression : public ModifiesExpression {
 public:
-    explicit ModifiesSExpression(StmtEntity* modifier, NamedEntity* target);
+    explicit ModifiesSExpression(StmtRef* modifier, NamedEntity* target);
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
@@ -34,7 +35,7 @@ public:
 
     string toString() override;
 
-    ResultTable evaluate(PKB pkb) override;
+    ResultTable* evaluate(PKB pkb) override;
 };
 
 

@@ -58,7 +58,10 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestIfWhileAssignPattern/Sample_source.txt", "TestIfWhileAssignPattern/Sample_queries.txt"),
                       ("TestAndKeyword/Sample_source.txt", "TestAndKeyword/Sample_queries.txt"),
                       ("TestIfPatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestIfPatternClause/TestIfPatternClauseQueries.txt"),
-                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt")]
+                      ("TestWhilePatternClause/TestIfAndWhilePatternClauseSourceProgram.txt", "TestWhilePatternClause/TestWhilePatternClauseQueries.txt"),
+                      ("TestCallsExpression/Sample_source.txt", "TestCallsExpression/Sample_queries.txt"),
+                      ("TestCallsExpression/Calls_Testing_Source.txt", "TestCallsExpression/Calls_Testing_Queries.txt"),
+                      ("TestBoolean/Simple_Test_Source.txt", "TestBoolean/Simple_Test_Queries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
@@ -118,5 +121,5 @@ for source, query in source_query_pairs:
                   f"\n{q[1]}"
                   f"\n{q[2]}"
                   f"\n{q[3]}"
-                  f"\n{q[4]}")
+                  f"\n{q[4]}\n")
         exit(1)

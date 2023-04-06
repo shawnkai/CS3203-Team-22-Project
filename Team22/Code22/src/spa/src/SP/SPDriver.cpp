@@ -69,6 +69,24 @@ void SPDriver::parseSimpleProgram(std::string filename) {
 //                                        controlFlowGraph.statementNumberToBlock,
 //                                        controlFlowGraph.blockGraph,
 //                                        controlFlowGraph.blockPointingBackward);
+//        cout << controlFlowGraph.toString() << endl;
+//        NextExtractor nextExtractor;
+//        nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement, controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph, controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
+
+//    PKB pkbinstance = PKB();
+//    DesignExtractor designExtractor;
+//    designExtractor.extractAbstraction(result, pkbinstance);
+//
+//    vector<Cfg> controlFlowGraphs;
+//    for (auto procedure: result.children) {
+//        Cfg controlFlowGraph = Cfg(procedure);
+//        controlFlowGraph.buildCfg(procedure, -1);
+//        controlFlowGraphs.push_back(controlFlowGraph);
+//        pkbinstance.addControlFlowGraph(procedure.stringId,controlFlowGraph.basicBlock,
+//                                        controlFlowGraph.blockToStatement,
+//                                        controlFlowGraph.statementNumberToBlock,
+//                                        controlFlowGraph.blockGraph,
+//                                        controlFlowGraph.blockPointingBackward);
 //
 //    }
 //    for (auto graph: controlFlowGraphs) {

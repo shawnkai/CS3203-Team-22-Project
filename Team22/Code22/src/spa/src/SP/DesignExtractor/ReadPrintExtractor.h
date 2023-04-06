@@ -12,6 +12,9 @@
 
 using namespace std;
 
+extern std::map<string, vector<string>> mapOfModifiedVarforCalls;
+extern std::map<string, vector<string>> mapOfUsedVarforCalls;
+
 class ReadPrintExtractor {
 public:
 	ReadPrintExtractor() {};

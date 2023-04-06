@@ -141,7 +141,7 @@ Select w such that Modifies(w, v)  such that Uses(w, v)
 34 - modifies with assign and variable synonym and uses with assign and wildcard
 assign a; variable v; stmt s; while w; 
 Select a such that Modifies(a, v)  such that Uses(a, _) 
-1,2,3,4,5,7,9,11,14,15,16,17,18,22,27,28,30,31,32
+7,9,11,14,15,16,17,18,22,27,28,30,31
 5000
 35 - modifies with statement and wildcard and uses with statement and actual variable
 assign a; variable v; stmt s; while w; 
@@ -235,32 +235,32 @@ none
 5000
 56 - assign for modifies, uses, if for parent
 assign a; variable v; stmt s; if if; print pn;
-Select a such that Modifies(a, v) such that Uses(a, v) such that Parent(if, a)
+Select a such that Modifies(a, v) such that Uses(a, v) such that Parent*(if, a)
 14,15,27,28,30,31
 5000
 57 - assign for modifies, uses, while for parent
 assign a; variable v; stmt s; if if; print pn; while w;
-Select a such that Modifies(a, v) such that Uses(a, v) such that Parent(w, a)
+Select a such that Modifies(a, v) such that Uses(a, v) such that Parent*(w, a)
 7,14,15,17,18,27,28,30
 5000
 58 - stmt for modifies, uses, while for parent
 assign a; variable v; stmt s; if if; print pn; while w;
-Select s such that Modifies(s, v) such that Uses(s, v) such that Parent(w, s)
+Select s such that Modifies(s, v) such that Uses(s, v) such that Parent*(w, s)
 7,8,10,12,14,15,17,18,,23,24,25,27,28,30
 5000
 59 - stmt for modifies, uses, if for parent
 assign a; variable v; stmt s; if if; print pn; while w;
-Select s such that Modifies(s, v) such that Uses(s, v) such that Parent(if, s)
-10,12,14,15,17,18,21,23,24,25,27,28,30,31
+Select s such that Modifies(s, v) such that Uses(s, v) such that Parent*(if, s)
+10,12,14,15,21,23,24,25,27,28,30,31
 5000
 60 - read for modifies, if for parent
 assign a; variable v; stmt s; if if; read re; while w;
-Select re such that Modifies(re, v) such that Parent(if, re)
+Select re such that Modifies(re, v) such that Parent*(if, re)
 13,29
 5000
 61 - read for modifies, w for parent
 assign a; variable v; stmt s; if if; read re; while w;
-Select re such that Modifies(re, v) such that Parent(w, re)
+Select re such that Modifies(re, v) such that Parent*(w, re)
 13,29
 5000
 62 - print for uses, if for parent
@@ -270,7 +270,7 @@ Select pn such that Uses(pn, v) such that Parent(if, pn)
 5000
 63 - print for uses, while for parent
 assign a; variable v; stmt s; if if; print pn; while w;
-Select pn such that Uses(pn, v) such that Parent(w, pn)
+Select pn such that Uses(pn, v) such that Parent*(w, pn)
 26
 5000
 64 - if for modifies, uses, if for parent, return nothing
@@ -281,16 +281,16 @@ none
 65 - if for modifies, uses, if for parent
 assign a; variable v; stmt s; if if, if2; print pn; while w;
 Select if such that Modifies(if, v) such that Uses(if, v) such that Parent(if2, if)
-10,12,25
+10,12
 5000
 66 - if for modifies, uses, while for parent
 assign a; variable v; stmt s; if if, if2; print pn; while w;
 Select if such that Modifies(if, v) such that Uses(if, v) such that Parent(w, if)
-8,10,12,25
+8,25
 5000
 67 - while for modifies, uses, if for parent
 assign a; variable v; stmt s; if if, if2; print pn; while w;
-Select w such that Modifies(w, v) such that Uses(w, v) such that Parent(if, w)
+Select w such that Modifies(w, v) such that Uses(w, v) such that Parent*(if, w)
 21,23,24
 5000
 68 - while for modifies, uses, while for parent

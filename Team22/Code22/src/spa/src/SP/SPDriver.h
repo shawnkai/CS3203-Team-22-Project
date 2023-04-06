@@ -14,6 +14,7 @@
 #include "SP/Parser/ParserFactory.h"
 #include "SP/Parser/MainParser.h"
 #include "SP/Cfg/Cfg.h"
+#include "SP/DesignExtractor/NextExtractor.h"
 
 class SPDriver {
 public:

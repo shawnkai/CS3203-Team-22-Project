@@ -97,6 +97,17 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 				AssignExtractor assignExtractor1;
 				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
 			}
+			else if (tokenType1 == TokenType::CALL) {
+				int callStmtNo = childstmt.stmtNumber;
+				if (mapOfWhileForCallStmts.count(callStmtNo) > 0) {
+
+				}
+				else {
+					callStmts.push_back(callStmtNo);
+					mapOfWhileForCallStmts[callStmtNo] = whileContainers;
+					mapOfIfForCallStmts[callStmtNo] = ifContainers;
+				}
+			}
 			else {}
 		}
 
