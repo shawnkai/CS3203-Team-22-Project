@@ -12,7 +12,7 @@ using namespace std;
  * @param exitParent Records whether the current statement list is inside a container node
  * @return a vector of int indicating the exiting node(s) from the current basic block
  */
-vector<int> Cfg::buildCfg(TNode root, int exitParent) {
+vector<int> Cfg::buildCfg(TreeNode root, int exitParent) {
     TokenType initial = root.nodeType;
     if (initial != TokenType::PROCEDURE && initial != TokenType::STATEMENT_LIST) {
         cout << "something went wrong" << endl;
@@ -20,20 +20,20 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
     cout << "checking passed, start building cfg" << endl;
     vector<int> currStmts;
     vector<int> thisBlkNeighbour;
-    TNode statementListToProcess;
+    TreeNode statementListToProcess;
     if (initial == TokenType::PROCEDURE) {
-        statementListToProcess = root.children[0];
+        statementListToProcess = *root.children[0];
     }
     else {
         statementListToProcess = root;
     }
     vector<int> pendingLinkingBack;
     for (int i = 0; i < statementListToProcess.children.size(); ++ i) {
-        cout << "processing node " + ToString(statementListToProcess.children[i]) << endl;
+        cout << "processing node " + ToString(*statementListToProcess.children[i]) << endl;
         if (i < statementListToProcess.children.size() &&
-        statementListToProcess.children[i].nodeType != TokenType::WHILE &&
-        statementListToProcess.children[i].nodeType != TokenType::IF) {
-            currStmts.push_back(statementListToProcess.children[i].stmtNumber);
+                statementListToProcess.children[i]->nodeType != TokenType::WHILE &&
+                statementListToProcess.children[i]->nodeType != TokenType::IF) {
+            currStmts.push_back(statementListToProcess.children[i]->stmtNumber);
             continue;
         }
         if (!currStmts.empty()) {
@@ -51,7 +51,7 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
             pendingLinkingBack.push_back(exitingBlk);
         }
         if (i < statementListToProcess.children.size() &&
-        statementListToProcess.children[i].nodeType == TokenType::WHILE) {
+        statementListToProcess.children[i]->nodeType == TokenType::WHILE) {
             thisBlkNeighbour.clear();
             currStmts.clear();
             if (!pendingLinkingBack.empty()) {
@@ -68,7 +68,7 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
             pendingLinkingBack.push_back(exitingBlk);
         }
         if (i < statementListToProcess.children.size() &&
-        statementListToProcess.children[i].nodeType == TokenType::IF) {
+        statementListToProcess.children[i]->nodeType == TokenType::IF) {
             thisBlkNeighbour.clear();
             currStmts.clear();
             if (!pendingLinkingBack.empty()) {
@@ -171,9 +171,9 @@ int Cfg::buildBasicNode(const vector<int>& currentStmts) {
  * @param pointer indicates which statement inside the statement list node we are current at
  * @return the basic block number of the condition node of while
  */
-int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess, int pointer) {
+int Cfg::buildWhileNode( vector<int> currentStmts, TreeNode statementListToProcess, int pointer) {
     //build a conditional node's basic block
-    currentStmts.push_back(statementListToProcess.children[pointer].children[0].stmtNumber);
+    currentStmts.push_back((statementListToProcess.children[pointer])->children[0]->stmtNumber);
     basicBlock.push_back(currentBlk);
     int exitingNumber = currentBlk;
     blockPointingBackward.insert(exitingNumber);
@@ -182,7 +182,7 @@ int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess,
         statementNumberToBlock.insert(pair<int, int>(stmt, currentBlk));
     }
     ++ currentBlk;
-    auto subTree = statementListToProcess.children[pointer].children[1];
+    auto subTree = *statementListToProcess.children[pointer]->children[1];
     vector<int> condNodeNeighbour;
     condNodeNeighbour.push_back(currentBlk);
     //insert the conditional node's info
@@ -216,9 +216,9 @@ int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess,
  * @param pointer indicates which statement inside the statement list node we are current at
  * @return exiting blocks from the if node to be linking to child
  */
-vector<int> Cfg::buildIfNode(vector<int> currentStmts, TNode statementListToProcess, int pointer) {
+vector<int> Cfg::buildIfNode(vector<int> currentStmts, TreeNode statementListToProcess, int pointer) {
     // process the conditional node of if
-    currentStmts.push_back(statementListToProcess.children[pointer].children[0].stmtNumber);
+    currentStmts.push_back(statementListToProcess.children[pointer]->children[0]->stmtNumber);
     basicBlock.push_back(currentBlk);
     int cond = currentBlk;
     blockToStatement.insert(pair<int, vector<int> >(currentBlk, currentStmts));
@@ -226,8 +226,8 @@ vector<int> Cfg::buildIfNode(vector<int> currentStmts, TNode statementListToProc
         statementNumberToBlock.insert(pair<int, int>(stmt, currentBlk));
     }
     ++ currentBlk;
-    auto ifSubTree = statementListToProcess.children[pointer].children[1];
-    auto elseSubTree = statementListToProcess.children[pointer].children[2];
+    auto ifSubTree = *statementListToProcess.children[pointer]->children[1];
+    auto elseSubTree = *statementListToProcess.children[pointer]->children[2];
     vector<int> condNodeNeighbour;
     condNodeNeighbour.push_back(currentBlk);
     vector<int> ifExitingNumber = buildCfg(ifSubTree, currentBlk - 1);
