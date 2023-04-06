@@ -6,7 +6,7 @@
 
 class RelationalFactorNode: public TreeNode {
 public:
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 
 #endif //SPA_RELATIONALFACTORNODE_H

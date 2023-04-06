@@ -10,6 +10,6 @@ public:
         nodeType = TokenType::WHILE;
     }
 
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_WHILENODE_H

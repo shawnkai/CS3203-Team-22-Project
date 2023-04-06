@@ -9,7 +9,7 @@ public:
     RelationalExpressionNode() {
         nodeType = TokenType::OPERATOR;
     }
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 
 #endif //SPA_RELATIONALEXPRESSIONNODE_H

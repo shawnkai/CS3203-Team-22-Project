@@ -6,6 +6,6 @@
 
 class FactorNode: public TreeNode {
 public:
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_FACTORNODE_H

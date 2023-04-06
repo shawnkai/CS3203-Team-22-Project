@@ -10,6 +10,6 @@ public:
         nodeType = TokenType::CALL;
     }
 
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_CALLNODE_H

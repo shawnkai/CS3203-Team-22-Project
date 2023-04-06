@@ -31,7 +31,7 @@ public:
         }
     };
 
-    void accept(class DesignExtractor &de);
+    virtual void accept(class DesignExtractor &de);
 
 };
 

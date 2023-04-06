@@ -10,7 +10,7 @@ public:
         nodeType = TokenType::IF;
     }
 
-    void accept(DesignExtractor &de) ;
+    void accept(DesignExtractor &de) override;
 };
 
 #endif //SPA_IFNODE_H

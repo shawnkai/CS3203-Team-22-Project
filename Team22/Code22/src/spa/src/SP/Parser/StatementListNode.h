@@ -11,7 +11,7 @@ public:
     StatementListNode() {
         nodeType = TokenType::STATEMENT_LIST;
     }
-    void accept(DesignExtractor& de);
+    void accept(DesignExtractor& de) override;
 };
 
 

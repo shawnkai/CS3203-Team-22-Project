@@ -7,6 +7,6 @@ public:
     ReadNode() {
         nodeType = TokenType::READ;
     }
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_READNODE_H

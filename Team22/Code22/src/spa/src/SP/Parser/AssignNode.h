@@ -8,6 +8,6 @@ public:
     AssignNode() {
         nodeType = TokenType::ASSIGN;
     }
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_ASSIGNNODE_H

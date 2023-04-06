@@ -28,7 +28,7 @@ void SPDriver::parseSimpleProgram(std::string filename) {
         std::cout << "Token" << ToString(token) << std::endl;
     }
     ParserFactory factory;
-    auto parser = factory.createParser(TokenType::PROGRAM, tokenList, 0);
+    auto parser = factory.createParser(TokenType::PROGRAM, tokenList, make_shared<int>(0));
     std::shared_ptr<TreeNode> result;
     try {
         result = parser->parse();
@@ -42,6 +42,7 @@ void SPDriver::parseSimpleProgram(std::string filename) {
     }
     std::queue<std::shared_ptr<TreeNode> > pendingToString;
     pendingToString.push(result);
+
     while (!pendingToString.empty()) {
         auto toProcess = pendingToString.front();
         pendingToString.pop();

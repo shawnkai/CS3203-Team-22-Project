@@ -7,6 +7,6 @@ public:
     PrintNode() {
         nodeType = TokenType::PRINT;
     }
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_PRINTNODE_H

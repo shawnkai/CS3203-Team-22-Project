@@ -11,6 +11,6 @@ public:
         nodeType = TokenType::PROGRAM;
     }
 
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 #endif //SPA_PROGRAMNODE_H

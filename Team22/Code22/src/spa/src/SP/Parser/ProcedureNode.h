@@ -9,7 +9,7 @@ public:
     ProcedureNode() {
         nodeType = TokenType::PROCEDURE;
     }
-    void accept(DesignExtractor &de);
+    void accept(DesignExtractor &de) override;
 };
 
 #endif //SPA_PROCEDURENODE_H
