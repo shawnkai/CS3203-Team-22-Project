@@ -183,3 +183,8 @@ variable v;
 Select v such that Uses(7, v)
 x
 5000
+52 - All variables used in procedure
+variable v;
+Select v such that Uses("Example", v)
+x, z, a, b, i, y
+5000

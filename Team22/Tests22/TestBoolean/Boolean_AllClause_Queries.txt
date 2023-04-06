@@ -1,0 +1,55 @@
+1 - boolean for such that clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; 
+Select BOOLEAN such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+TRUE
+5000
+2 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; 
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+TRUE
+5000
+3 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; 
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" such that Modifies(c1, "gg")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+FALSE
+5000
+4 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; 
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" such that Modifies(c1, "gg")  such that Uses(c2, "wp") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+FALSE
+5000
+5 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; 
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" and pn.varName = "x" and pn.stmt# = 15 such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+TRUE
+5000
+6 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; 
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" and pn.varName = "x" pattern a("x", _"x"_) and a("x", "x") with pn.stmt# = 15 such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+TRUE
+5000
+7 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2,c3; 
+Select BOOLEAN such that Calls*("BOOLEAN", "FALSE") with c3.procName = "FALSE" with c1.procName = "DD01" and c2.procName = "DD01" and pn.varName = "x" pattern a("x", _"x"_) and a("x", "x") with pn.stmt# = 15 such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+TRUE
+5000
+8 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2,c3; procedure proc,proc1;
+Select BOOLEAN such that Calls*("BOOLEAN", "FALSE") with c3.procName = "FALSE" and proc.procName = "FALSE" and proc1.procName = "BOOLEAN" with c1.procName = "DD01" and c2.procName = "DD01" and pn.varName = "x" pattern a("x", _"x"_) and a("x", "x") with pn.stmt# = 15 such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+TRUE
+5000
+9 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2,c3; procedure proc,proc1;
+Select BOOLEAN such that Calls*("BOOLEAN", "FALSE") with c3.procName = "FALSE" and proc.procName = "TRUE" and proc.procName = "BOOLEAN" with c1.procName = "DD01" and c2.procName = "DD01" and pn.varName = "x" pattern a("x", _"x"_) and a("x", "x") with pn.stmt# = 15 such that Modifies(c1, "f")  such that Uses(c2, "e") such that Calls*("C001", "E11")  such that Parent*(6, 19) such that Follows*(6,19)
+FALSE
+5000
+10 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; procedure proc,proc1;
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" and proc.procName = "assign" with proc1.procName = "with"
+TRUE
+5000
+11 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; procedure proc,proc1,proc2;
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" and proc.procName = "assign" with proc1.procName = "with" such that Calls*("C001", "with") and Calls*("F11111111111111111", "with") with proc2.procName = "F11111111111111111"
+TRUE
+5000

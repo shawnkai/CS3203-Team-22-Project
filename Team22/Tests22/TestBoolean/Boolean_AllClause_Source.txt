@@ -33,7 +33,7 @@ procedure A {
       a = z * 14 + 16 * y;
       while (i<=1) {
         while (i>=2) {
-          if (x<3) then {
+          if (i<3) then {
             print b; }
           else {
             y = y + 1;
@@ -76,3 +76,43 @@ procedure B001 {
     i = i - 1;
     print b; 
     x = x;}}
+
+procedure C001 {
+  e = 2;
+  call DD01;
+}
+
+procedure DD01 {
+  f = e;
+  call E11;
+}
+
+procedure E11 {
+  gg = wp;
+}
+
+procedure F11111111111111111 {
+  x = x;
+  call BOOLEAN;
+}
+
+procedure BOOLEAN{
+  y = x;
+  call TRUE;
+}
+
+procedure TRUE{
+  call FALSE;
+}
+
+procedure FALSE{
+  call assign;
+}
+
+procedure assign{
+  call with;
+}
+
+procedure with{
+  hi = hello;
+}

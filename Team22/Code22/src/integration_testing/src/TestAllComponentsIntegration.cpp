@@ -373,6 +373,67 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
     }
 
+    SECTION("TestCase1: Select <s1, s2> such that Affects(s1, s2)") {
+        string declaration = "stmt s1, s2;";
+        string query = "Select <s1, s2> such that Affects(s1, s2)";
+        parser = QueryParser();
+        parser.parse(declaration);
+        auto exp = parser.parse(query);
+        vector<string> res = evaluator.evaluate(exp);
+        string output;
+        for (const string &r: res) {
+            output += r + ", ";
+        }
+        ::printf("Output: %s\n", output.c_str());
+        REQUIRE(output.find("1 5") != std::string::npos);
+        REQUIRE(output.find("1 7") == std::string::npos);
+        REQUIRE(output.find("1 8") == std::string::npos);
+        REQUIRE(output.find("11 11") != std::string::npos);
+        REQUIRE(output.find("11 9") != std::string::npos);
+        REQUIRE(output.find("2 8") != std::string::npos);
+        REQUIRE(output.find("3 11") != std::string::npos);
+        REQUIRE(output.find("3 8") == std::string::npos);
+        REQUIRE(output.find("3 9") != std::string::npos);
+        REQUIRE(output.find("5 5") != std::string::npos);
+        REQUIRE(output.find("5 7") != std::string::npos);
+        REQUIRE(output.find("5 8") != std::string::npos);
+        REQUIRE(output.find("5 9") != std::string::npos);
+        REQUIRE(output.find("7 8") == std::string::npos);
+        REQUIRE(output.find("7 9") != std::string::npos);
+        REQUIRE(output.find("9 8") != std::string::npos);
+    }
+
+    SECTION("TestCase1: Select <s1, s2> such that Affects*(s1, s2)") {
+        string declaration = "stmt s1, s2;";
+        string query = "Select <s1, s2> such that Affects*(s1, s2)";
+        parser = QueryParser();
+        parser.parse(declaration);
+        auto exp = parser.parse(query);
+        vector<string> res = evaluator.evaluate(exp);
+        string output;
+        for (const string &r: res) {
+            output += r + ", ";
+        }
+        ::printf("Output: %s\n", output.c_str());
+        REQUIRE(output.find("1 5") != std::string::npos);
+        REQUIRE(output.find("1 7") != std::string::npos);
+        REQUIRE(output.find("1 8") != std::string::npos);
+        REQUIRE(output.find("1 9") != std::string::npos);
+        REQUIRE(output.find("11 11") != std::string::npos);
+        REQUIRE(output.find("11 9") != std::string::npos);
+        REQUIRE(output.find("2 8") != std::string::npos);
+        REQUIRE(output.find("3 11") != std::string::npos);
+        REQUIRE(output.find("3 8") != std::string::npos);
+        REQUIRE(output.find("3 9") != std::string::npos);
+        REQUIRE(output.find("5 5") != std::string::npos);
+        REQUIRE(output.find("5 7") != std::string::npos);
+        REQUIRE(output.find("5 8") != std::string::npos);
+        REQUIRE(output.find("5 9") != std::string::npos);
+        REQUIRE(output.find("7 8") != std::string::npos);
+        REQUIRE(output.find("7 9") != std::string::npos);
+        REQUIRE(output.find("9 8") != std::string::npos);
+    }
+
 
     REQUIRE(filesystem::remove(inputFilePath));
 }
@@ -609,4 +670,5 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     REQUIRE(output10.find('7') != std::string::npos);
     REQUIRE(output10.find('9') != std::string::npos);
     REQUIRE(output10.find('1') == std::string::npos);
+
 }

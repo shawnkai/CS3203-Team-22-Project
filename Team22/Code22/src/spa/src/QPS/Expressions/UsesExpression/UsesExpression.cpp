@@ -172,16 +172,22 @@ ResultTable* UsesPExpression::evaluate(PKB pkb) {
         }
        unordered_map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         int ind = 0;
-
+        string val;
         if (type == "ident") {
             type = "PROCEDURE";
+            val = Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"');
         }
-
         for (auto res : results) {
             if (res.getQueryEntityType() == "USES:" + type) {
                 for (const auto& x : res.getQueryResult()) {
-                    result.find(this->entities[1]->toString())->second.push_back(x);
-                    result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
+                    if (this->entities[1]->getType() == "ident" && x == val) {
+                        result.find(this->entities[1]->toString())->second.push_back(x);
+                        result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
+                    } else if (this->entities[1]->getType() != "ident")  {
+                        result.find(this->entities[1]->toString())->second.push_back(x);
+                        result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
+                    }
+
                 }
             }
             ind += 1;
