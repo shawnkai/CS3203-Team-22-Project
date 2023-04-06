@@ -161,7 +161,7 @@ a
 31 - Return Variable "z", if it has been used in Procedure "One" : SEGMENTATION FAULT with "z"
 variable v;
 Select v such that Uses ("One", _) with v.varName = "a"
-none
+a
 5000
 32 - Return Variable "b", if it has been used in Procedure "One"
 variable v;
@@ -193,30 +193,30 @@ procedure p; variable v;
 Select v such that Uses (p, v) with p.procName = "Invalid"
 none
 5000
-106 - Test With If as Statement Input (Syntax Error or Valid?)
+106 - Test With If as Statement Input
 if i; variable v;
 Select v such that Uses (i, v)
-SyntaxError
+a, b, c, d, x, y
 5000
-107 - Test With While as Statement Input (Syntax Error or Valid?)
+107 - Test With While as Statement Input
 while w; variable v;
 Select v such that Uses (w, v)
-SyntaxError
+a, b, c, d, x, y
 5000
-108 - Test With Print as Statement Input (Syntax Error or Valid?)
+108 - Test With Print as Statement Input
 print p; variable v;
 Select v such that Uses (p, v)
-SyntaxError
+a, b, c, d, x, y
 5000
-109 - Test With Read as Statement Input (Syntax Error or Valid?)
+109 - Test With Read as Statement Input (Syntax Error)
 read r; variable v;
 Select v such that Uses (r, v)
 SyntaxError
 5000
-110 - Test With Call as Statement Input (Syntax Error or Valid?)
+110 - Test With Call as Statement Input
 call c; variable v;
 Select v such that Uses (c, v)
-SyntaxError
+a, b, c, d, x
 5000
 111 - Wildcard as First Argument
 variable v;

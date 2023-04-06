@@ -55,6 +55,9 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
                 throw SyntacticException();
             } else {
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
+                if (a1->getType() == "READ" || a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
+                    throw SyntacticException();
+                }
             }
 
             NamedEntity *a2;
@@ -165,7 +168,20 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
                     return new BooleanFalseTable();
                 }
             }
-            return new ResultTable({{this->entities[1]->toString(), ans}});
+
+            ResultTable *temp = new ResultTable({{this->entities[1]->toString(), ans}});
+
+            if (this->entities[1]->getType() == "ident") {
+                if (temp->getSize() == 0) {
+                    return new BooleanFalseTable();
+                } else {
+                    return new BooleanTrueTable();
+                }
+            }
+            if (temp->getSize() == 0) {
+                return new BooleanFalseTable();
+            }
+            return temp;
         } else {
             return new BooleanFalseTable();
         }
@@ -213,6 +229,14 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
             }
             ind += 1;
         }
-        return new ResultTable(result);
+
+        if (this->entities[1]->getType() == "ident") {
+            result.erase(this->entities[1]->toString());
+        }
+        ResultTable *temp = new ResultTable(result);
+        if (temp->getSize() == 0) {
+            return new BooleanFalseTable();
+        }
+        return temp;
     }
 }

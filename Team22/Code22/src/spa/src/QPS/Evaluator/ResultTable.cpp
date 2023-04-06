@@ -233,6 +233,9 @@ ResultTable* ResultTable::getColumns(const vector<string>& columns) {
 }
 
 vector<string> ResultTable::getValues() {
+    if (this->getSize() == 0) {
+        return {};
+    }
     vector<vector<string>> columnValues;
     for (const string& column : this->columns) {
         columnValues.push_back(this->getValues(column));
