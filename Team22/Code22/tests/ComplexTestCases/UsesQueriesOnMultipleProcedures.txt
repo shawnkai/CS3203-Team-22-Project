@@ -153,3 +153,13 @@ variable v, v1;
 Select BOOLEAN such that Uses ("One", "b") and Uses ("One", "a")
 TRUE
 5000
+30 - Return Variable "a", if it has been used in Procedure "One"
+variable v;
+Select v such that Uses ("One", _) with v.varName = "a"
+a
+5000
+31 - Return Variable "z", if it has been used in Procedure "One"
+variable v;
+Select v such that Uses ("One", _) with v.varName = "z"
+none
+5000
