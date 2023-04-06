@@ -48,3 +48,8 @@ assign a; variable v; stmt s; read re; print pn; call c1,c2; procedure proc,proc
 Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" and proc.procName = "assign" with proc1.procName = "with"
 TRUE
 5000
+11 - boolean for all clauses
+assign a; variable v; stmt s; read re; print pn; call c1,c2; procedure proc,proc1,proc2;
+Select BOOLEAN with c1.procName = "DD01" and c2.procName = "DD01" and proc.procName = "assign" with proc1.procName = "with" such that Calls*("C001", "with") and Calls*("F11111111111111111", "with") with proc2.procName = "F11111111111111111"
+TRUE
+5000
