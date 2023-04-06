@@ -6,6 +6,7 @@
 #define SPA_CONDITIONALEXPRESSIONPARSER_H
 
 #include "MainParser.h"
+#include "ParserFactory.h"
 
 class ConditionalExpressionParser : public MainParser {
 public:

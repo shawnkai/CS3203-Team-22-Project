@@ -3,7 +3,7 @@
 
 std::shared_ptr<TreeNode> WhileParser::parse() {
     Token currToken = tokenList[*pos];
-    TreeNode whileNode;
+    WhileNode whileNode;
     whileNode.nodeType = currToken.type;
     whileNode.stringId = currToken.value;
     whileNode.stmtNumber = currToken.lineNumber;
@@ -17,26 +17,26 @@ std::shared_ptr<TreeNode> WhileParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
-
-    TreeNode condChild = parseConditionalExpr();
-    if (tokenList[pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-        cout << "Expected ')' after conditional expr in 'while' but instead got: " << tokenList[pos].value << endl;
+    ParserFactory factory;
+    auto condChild = factory.createParser(CONDITIONAL_EXPR, tokenList, pos)->parse();
+    if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
+        cout << "Expected ')' after conditional expr in 'while' but instead got: " << tokenList[*pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
 
-    ++ pos;
-    if (tokenList[pos].type != TokenType::LEFT_CURLY_BRACKET) {
-        cout << "Expected '{' after conditional expr in 'while' but instead got: " << tokenList[pos].value << endl;
+    ++ *pos;
+    if (tokenList[*pos].type != TokenType::LEFT_CURLY_BRACKET) {
+        cout << "Expected '{' after conditional expr in 'while' but instead got: " << tokenList[*pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++ pos;
-    TNode whileBody = parseStatement();
-    if (tokenList[pos].type != TokenType::RIGHT_CURLY_BRACKET) {
-        cout << "Expected '}' after stmtList in 'while' but instead got: " << tokenList[pos].value << endl;
+    ++ *pos;
+    auto whileBody = factory.createParser(STATEMENT_LIST, tokenList, pos)->parse();
+    if (tokenList[*pos].type != TokenType::RIGHT_CURLY_BRACKET) {
+        cout << "Expected '}' after stmtList in 'while' but instead got: " << tokenList[*pos].value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++ pos;
+    ++ *pos;
     whileNode.children.push_back(condChild);
     whileNode.children.push_back(whileBody);
-    return whileNode;
+    return std::make_shared<TreeNode>(whileNode);
 }

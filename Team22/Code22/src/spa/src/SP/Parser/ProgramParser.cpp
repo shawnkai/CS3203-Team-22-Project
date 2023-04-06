@@ -12,8 +12,8 @@ std::shared_ptr<TreeNode> ProgramParser::parse() {
     programNode.stringId = currToken.value;
     programNode.stmtNumber = currToken.lineNumber;
     while (*pos < tokenList.size() && tokenList[*pos].type == TokenType::PROCEDURE) {
-        ProcedureParserFactory procedureParserFactory;
-        auto procedureParser = procedureParserFactory.createParser(tokenList, pos);
+        ParserFactory procedureParserFactory;
+        auto procedureParser = procedureParserFactory.createParser(PROCEDURE, tokenList, pos);
         std::shared_ptr<TreeNode> procedureNode = procedureParser->parse();
         programNode.children.push_back(procedureNode);
     }

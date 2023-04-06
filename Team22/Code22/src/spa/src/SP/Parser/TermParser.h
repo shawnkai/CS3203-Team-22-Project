@@ -1,18 +1,20 @@
 //
-// Created by Yi Zhang on 3/4/23.
+// Created by Yi Zhang on 6/4/23.
 //
 
-#ifndef SPA_IFPARSER_H
-#define SPA_IFPARSER_H
+#ifndef SPA_TERMPARSER_H
+#define SPA_TERMPARSER_H
+
 
 #include "MainParser.h"
 #include "ParserFactory.h"
 
-class IfParser : public MainParser {
+class TermParser : public MainParser {
 public:
     using MainParser::MainParser;
 
     std::shared_ptr<TreeNode> parse() override;
 };
 
-#endif //SPA_IFPARSER_H
+
+#endif //SPA_TERMPARSER_H

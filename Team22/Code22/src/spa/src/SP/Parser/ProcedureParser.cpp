@@ -32,8 +32,8 @@ std::shared_ptr<TreeNode> ProcedureParser::parse() {
     }
     Token stmtToken = tokenList[*pos];
     // Recursion happens in the stmtList node
-    StatementListParserFactory stmtListParserFactory;
-    auto stmtParser = stmtListParserFactory.createParser(tokenList, pos);
+    ParserFactory stmtListParserFactory;
+    auto stmtParser = stmtListParserFactory.createParser(STATEMENT_LIST, tokenList, pos);
     auto child = stmtParser->parse();
     node.children.push_back(child);
     if (*pos >= tokenList.size()) {

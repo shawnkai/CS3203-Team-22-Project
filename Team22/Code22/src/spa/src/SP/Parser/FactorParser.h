@@ -1,15 +1,15 @@
 //
-// Created by Yi Zhang on 3/4/23.
+// Created by Yi Zhang on 6/4/23.
 //
 
-#ifndef SPA_CALLPARSER_H
-#define SPA_CALLPARSER_H
+#ifndef SPA_FACTORPARSER_H
+#define SPA_FACTORPARSER_H
 
 
 #include "MainParser.h"
 #include "ParserFactory.h"
 
-class CallParser : public MainParser {
+class FactorParser : public MainParser {
 public:
     using MainParser::MainParser;
 
@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif //SPA_CALLPARSER_H
+#endif //SPA_FACTORPARSER_H

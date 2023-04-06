@@ -6,20 +6,18 @@
 
 std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
     Token currToken = tokenList[*pos];
-    TreeNode condNode;
+    ConditionalExpressionNode condNode;
     if (tokenList[*pos].type == TokenType::OPERATOR && currToken.value == "!") {
         condNode.nodeType = currToken.type;
         condNode.stringId = "neg";
         condNode.stmtNumber = currToken.lineNumber;
         ++ *pos;
         if (tokenList[*pos].type != TokenType::LEFT_ROUND_BRACKET) {
-            cout << "Expected '(' after negation sign '!' but instead got: " << tokenList[pos].value << endl;
+            cout << "Expected '(' after negation sign '!' but instead got: " << tokenList[*pos].value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ *pos;
-        ConditionalExpressionParserFactory conditionalExpressionParserFactory;
-        auto condParser = conditionalExpressionParserFactory.createParser(tokenList, pos);
-        condNode.children.push_back(condParser->parse());
+        condNode.children.push_back(parse());
         if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
             cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
@@ -45,18 +43,21 @@ std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
             }
         }
         // otherwise, return relational expression node
+        ParserFactory factory;
         if(!(tokenList[recorder].value == "&&" || tokenList[recorder].value == "||")) {
-            return parseRelationalExpr();
+            return factory.createParser(RELATIONAL_EXPR, tokenList, pos)->parse();
         }
         ++ *pos;
-        condNode = parseConditionalExpr();
+
+        // TODO: verify if condNode is a conditional expression node
+        auto condNodeLeft = parse();
         if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
             cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ *pos;
         if (tokenList[*pos].type == TokenType::OPERATOR && tokenList[*pos].value == "&&") {
-            TNode andNode;
+            ConditionalExpressionNode andNode;
             andNode.nodeType = TokenType::OPERATOR;
             andNode.stringId = "and";
             andNode.stmtNumber = tokenList[*pos].lineNumber;
@@ -65,40 +66,41 @@ std::shared_ptr<TreeNode> ConditionalExpressionParser::parse() {
                 cout << "Expected '(' after '&&' operator but instead got: " << tokenList[*pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
-            andNode.children.push_back(condNode);
+            andNode.children.push_back(condNodeLeft);
             ++ *pos;
-            andNode.children.push_back(parseConditionalExpr());
+            andNode.children.push_back(parse());
             if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
+                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             ++ *pos;
-            return andNode;
+            return std::make_shared<TreeNode>(andNode);
         } else {
             if (tokenList[*pos].value != "||") {
                 cout << "Expected '&&' or '||' operator but instead got: " << tokenList[*pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
-            TNode orNode;
+            ConditionalExpressionNode orNode;
             orNode.nodeType = TokenType::OPERATOR;
             orNode.stringId = "or";
             orNode.stmtNumber = tokenList[*pos].lineNumber;
             ++ *pos;
             if (tokenList[*pos].type != TokenType::LEFT_ROUND_BRACKET) {
-                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
+                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
-            orNode.children.push_back(condNode);
+            orNode.children.push_back(condNodeLeft);
             ++ *pos;
-            orNode.children.push_back(parseConditionalExpr());
+            orNode.children.push_back(parse());
             if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
-                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[pos].value << endl;
+                cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             ++ *pos;
-            return orNode;
+            return std::make_shared<TreeNode>(orNode);
         }
     } else {
-        return parseRelationalExpr();
+        ParserFactory factory;
+        return factory.createParser(RELATIONAL_EXPR, tokenList, pos)->parse();
     }
 }

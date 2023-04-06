@@ -4,6 +4,7 @@
 
 
 #include "MainParser.h"
+#include "ParserFactory.h"
 
 class ExpressionParser : public MainParser {
 public:

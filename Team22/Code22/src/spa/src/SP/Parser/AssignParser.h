@@ -7,6 +7,7 @@
 
 
 #include "MainParser.h"
+#include "ParserFactory.h"
 
 class AssignParser : public MainParser {
 public:

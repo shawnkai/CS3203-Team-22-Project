@@ -26,6 +26,7 @@
 #include "TermNode.h"
 #include "ProcedureNode.h"
 #include "ProgramNode.h"
+#include "StatementListNode.h"
 #include "VarNode.h"
 #include "ConstantNode.h"
 
@@ -35,7 +36,7 @@ public:
 
     virtual std::shared_ptr<TreeNode> parse() {
         std::cout << "Main Parser's parse should never be called" << std::endl;
-        throw std::runtime_error("Should not call MainParser's parse");
+        throw std::runtime_error("Should not call Main Parser's parse");
     }
 
 protected:

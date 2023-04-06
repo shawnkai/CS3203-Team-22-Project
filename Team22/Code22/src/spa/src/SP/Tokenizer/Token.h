@@ -24,6 +24,12 @@ enum TokenType {
     RIGHT_ROUND_BRACKET,
     LEFT_CURLY_BRACKET,
     RIGHT_CURLY_BRACKET,
+    CONDITIONAL_EXPR,
+    EXPR,
+    FACTOR,
+    RELATIONAL_EXPR,
+    RELATIONAL_FACTOR,
+    TERM,
     UNKNOWN
 };
 
@@ -47,6 +53,29 @@ inline const char* ToString(TokenType t) {
         case LEFT_CURLY_BRACKET: return "LEFT_CURLY_BRACKET";
         case RIGHT_CURLY_BRACKET: return "RIGHT_CURLY_BRACKET";
         default: return "UNKNOWN_TOKEN_TYPE";
+    }
+}
+
+inline int ToIntegral(TokenType t) {
+    switch (t) {
+        case PROGRAM: return 1;
+        case PROCEDURE: return 2;
+        case STATEMENT_LIST: return 3;
+        case IF: return 4;
+        case WHILE: return 5;
+        case ASSIGN: return 6;
+        case CALL: return 7;
+        case PRINT: return 8;
+        case READ: return 9;
+        case CONDITIONAL_EXPR: return 10;
+        case RELATIONAL_EXPR: return 11;
+        case RELATIONAL_FACTOR: return 12;
+        case EXPR: return 13;
+        case TERM: return 14;
+        case FACTOR: return 15;
+        case NAME_IDENTIFIER: return 16;
+        case INTEGER: return 17;
+        default: return 999;
     }
 }
 

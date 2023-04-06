@@ -6,7 +6,7 @@
 #define SPA_PROGRAMPARSER_H
 
 #include "MainParser.h"
-#include "ProcedureParserFactory.h"
+#include "ParserFactory.h"
 
 class ProgramParser : public MainParser {
 public:

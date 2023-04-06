@@ -5,8 +5,9 @@
 #include "RelationalFactorParser.h"
 
 std::shared_ptr<TreeNode> RelationalFactorParser::parse() {
-    TreeNode node;
+    RelationalFactorNode node;
     Token currToken = tokenList[*pos];
+    ParserFactory factory;
     if (currToken.type == TokenType::NAME_IDENTIFIER || currToken.type == TokenType::INTEGER) {
         int peekPos = *pos + 1;
         if (tokenList[peekPos].type == TokenType::RIGHT_ROUND_BRACKET ||
@@ -14,18 +15,17 @@ std::shared_ptr<TreeNode> RelationalFactorParser::parse() {
             (tokenList[peekPos].value == ">" || tokenList[peekPos].value == ">="
             || tokenList[peekPos].value == "<=" ||tokenList[peekPos].value == "<"
             || tokenList[peekPos].value == "==" || tokenList[peekPos].value == "!="))) {
-            TreeNode varNode;
+            RelationalFactorNode varNode;
             varNode.nodeType = currToken.type;
             varNode.stringId = currToken.value;
             varNode.stmtNumber = currToken.lineNumber;
             node = varNode;
             ++ *pos;
-        }
-        else {
-            node = parseExpression();
+            return std::make_shared<TreeNode>(node);
+        } else {
+            return factory.createParser(EXPR, tokenList, pos)->parse();
         }
     } else {
-        node = parseExpression();
+        return factory.createParser(EXPR, tokenList, pos)->parse();
     }
-    return std::make_shared<TreeNode>(node);
 }

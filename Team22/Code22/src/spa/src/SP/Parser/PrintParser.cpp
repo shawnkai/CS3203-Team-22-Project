@@ -6,7 +6,7 @@
 
 std::shared_ptr<TreeNode> PrintParser::parse() {
     Token currToken = tokenList[*pos];
-    TreeNode node;
+    PrintNode node;
     node.nodeType = currToken.type;
     node.stringId = currToken.value;
     node.stmtNumber = currToken.lineNumber;
@@ -27,7 +27,7 @@ std::shared_ptr<TreeNode> PrintParser::parse() {
     }
 
     Token varNameToken = tokenList[++ *pos];
-    TreeNode child;
+    VarNode child;
     child.nodeType = varNameToken.type;
     child.stringId = varNameToken.value;
     child.stmtNumber = varNameToken.lineNumber;

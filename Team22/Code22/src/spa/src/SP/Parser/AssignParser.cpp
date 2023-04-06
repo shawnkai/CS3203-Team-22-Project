@@ -5,28 +5,32 @@
 #include "AssignParser.h"
 
 std::shared_ptr<TreeNode> AssignParser::parse() {
-    Token currToken = tokenList[pos];
-    TNode assignNode;
+    Token currToken = tokenList[*pos];
+    AssignNode assignNode;
     assignNode.nodeType = TokenType::ASSIGN;
     assignNode.stringId = "assign";
     assignNode.stmtNumber = currToken.lineNumber;
     //lhs, var Node
-    TNode lhs = constructVarNode(currToken);
-    assignNode.children.push_back(lhs);
-    Token assignOperator = tokenList[++ pos];
+    VarNode lhs;
+    lhs.nodeType = currToken.type;
+    lhs.stringId = currToken.value;
+    lhs.stmtNumber = currToken.lineNumber;
+    assignNode.children.push_back(std::make_shared<TreeNode>(lhs));
+    Token assignOperator = tokenList[++ *pos];
     if (assignOperator.type != TokenType::OPERATOR || assignOperator.value != "=") {
         cout << "Expected '=' sign for the assignment statement but instead got: " << assignOperator.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     //rhs, expr Node
-    ++ pos;
-    auto rhs = parseExpression();
+    ++ *pos;
+    ParserFactory factory;
+    auto rhs = factory.createParser(EXPR, tokenList, pos)->parse();
     assignNode.children.push_back(rhs);
-    Token following = tokenList[pos];
+    Token following = tokenList[*pos];
     if (following.type != TokenType::STATEMENT_TERMINAL) {
         cout << "Expected statement terminal ';' but instead got: " << following.value << endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++ pos;
-    return assignNode;
+    ++ *pos;
+    return std::make_shared<TreeNode>(assignNode);
 }

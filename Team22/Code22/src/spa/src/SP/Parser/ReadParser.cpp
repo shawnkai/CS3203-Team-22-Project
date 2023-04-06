@@ -6,7 +6,7 @@
 
 std::shared_ptr<TreeNode> ReadParser::parse() {
     Token currToken = tokenList[*pos];
-    TreeNode node;
+    ReadNode node;
     node.nodeType = currToken.type;
     node.stringId = currToken.value;
     node.stmtNumber = currToken.lineNumber;
@@ -26,7 +26,7 @@ std::shared_ptr<TreeNode> ReadParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token varNameToken = tokenList[++ *pos];
-    TreeNode childNode;
+    VarNode childNode;
     childNode.nodeType = varNameToken.type;
     childNode.stringId = varNameToken.value;
     childNode.stmtNumber = varNameToken.lineNumber;

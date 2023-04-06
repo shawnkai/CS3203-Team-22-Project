@@ -8,10 +8,11 @@
 #include <memory>
 #include <string>
 #include "SP/Tokenizer/Tokenizer.h"
-#include "SP/Parser/TNode.h"
+//#include "SP/Parser/TNode.h"
 #include "SP/DesignExtractor/DesignExtractor.h"
 #include "SP/SPDriver.h"
-#include "SP/Parser/Parser.h"
+#include "SP/Parser/ParserFactory.h"
+#include "SP/Parser/MainParser.h"
 #include "SP/Cfg/Cfg.h"
 
 class SPDriver {

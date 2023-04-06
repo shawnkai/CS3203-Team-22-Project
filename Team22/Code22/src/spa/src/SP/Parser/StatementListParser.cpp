@@ -21,44 +21,50 @@ std::shared_ptr<TreeNode> StatementListParser::parse() {
         stmtNode.stringId = "stmtList";
         stmtNode.stmtNumber = currToken.lineNumber;
     }
-    while (tokenList[*pos].type != TokenType::RIGHT_CURLY_BRACKET && pos < tokenList.size()) {
+    while (tokenList[*pos].type != TokenType::RIGHT_CURLY_BRACKET && *pos < tokenList.size()) {
         if (*pos >= tokenList.size()) {
             cout << "SIMPLE source procedure ends unexpectedly without right curly bracket" << endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         if (tokenList[*pos].type == TokenType::READ) {
-            ReadParserFactory readParserFactory;
-            auto readParser = readParserFactory.createParser(tokenList, pos);
+            ParserFactory readParserFactory;
+            auto readParser = readParserFactory.createParser(READ, tokenList, pos);
             auto childNode = readParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::PRINT) {
-            PrintParserFactory printParserFactory;
-            auto printParser = printParserFactory.createParser(tokenList, pos);
+            ParserFactory printParserFactory;
+            auto printParser = printParserFactory.createParser(PRINT, tokenList, pos);
             auto childNode = printParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::WHILE) {
-            WhileParserFactory whileParserFactory;
-            auto whileParser = whileParserFactory.createParser(tokenList, pos);
+            ParserFactory whileParserFactory;
+            auto whileParser = whileParserFactory.createParser(WHILE, tokenList, pos);
             auto childNode = whileParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::IF) {
-            auto childNode = parseIfStatement();
+            ParserFactory ifParserFactory;
+            auto ifParser = ifParserFactory.createParser(IF, tokenList, pos);
+            auto childNode = ifParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::NAME_IDENTIFIER) {
-            auto childNode = parseAssignStatement();
+            ParserFactory assignParserFactory;
+            auto assignParser = assignParserFactory.createParser(ASSIGN, tokenList, pos);
+            auto childNode = assignParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else if (tokenList[*pos].type == TokenType::CALL) {
-            auto childNode = parseCallStatement();
+            ParserFactory callParserFactory;
+            auto callParser = callParserFactory.createParser(CALL, tokenList, pos);
+            auto childNode = callParser->parse();
             stmtNode.children.push_back(childNode);
         }
         else {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Unrecognized Token");
         }
     }
-    return stmtNode;
+    return std::make_shared<TreeNode>(stmtNode);
 }
