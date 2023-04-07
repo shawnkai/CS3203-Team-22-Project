@@ -8,12 +8,26 @@
 #include <map>
 #include <unordered_set>
 
+#include "PKB/Interfaces/CacheInterface.h"
+#include "PKB/Interfaces/ControlFlowGraphInterface.h"
+#include "PKB/Interfaces/DesignAbstractionsInterface.h"
+#include "PKB/Interfaces/DesignEntitiesInterface.h"
+#include "PKB/Interfaces/PatternsInterface.h"
+
 #include "Result.h"
-#include "Pattern/AssignPattern/AssignPattern.h"
+
+#include "QPS/Evaluator/ResultTable.h"
 
 using namespace std;
 
 class PKB {
+    CacheInterface* cacheInterface = new CacheInterface();
+    ControlFlowGraphInterface* controlFlowGraphInterface = new ControlFlowGraphInterface();
+    DesignAbstractionsInterface* designAbstractionsInterface = new DesignAbstractionsInterface();
+    DesignEntitiesInterface* designEntitiesInterface = new DesignEntitiesInterface();
+    PatternsInterface* patternsInterface = new PatternsInterface();
+
+    // Remove These after clearAllDatabase APIs have been removed
     void clearDesignAbstractionDatabase();
     void clearDesignEntityDatabase();
     void clearAssignPatternDatabase();
@@ -59,6 +73,13 @@ public:
     map<int, int> getStatementNumberToBlockDatabase(string procedureName);
     map<int, vector<int>> getBlockToBlockDatabase(string procedureName);
     unordered_set<int> getBlocksWithBackPointersDatabase(string procedureName);
+
+
+    // APIs Related To Cache
+    void addToCache(string accessKey, ResultTable* resultTable);
+    ResultTable* getResultTableFromCache(string accessKey);
+    unordered_map<string, ResultTable*> getCacheDatabase();
+    void clearCache();
 
     // API For Clearing All Databases
     void clearAllDatabases();

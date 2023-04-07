@@ -7,24 +7,14 @@ using namespace std;
 
 #include "PKB.h"
 
-#include "DesignAbstractions/DesignAbstractionsFactory.h"
-#include "DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
-#include "DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
-
-#include "DesignEntities/DesignEntitiesFactory.h"
-#include "DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
-#include "DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
-
-#include "Pattern/AssignPattern/AssignPatternFactory.h"
-#include "Pattern/AssignPattern/AssignPatternDatabaseFactory.h"
-
-#include "ControlFlowGraph/ControlFlowGraphFactory.h"
-#include "ControlFlowGraph/ControlFlowGraphDatabaseFactory.h"
-
-#include "Pattern//PatternFactory.h"
-#include "Pattern/PatternDatabaseFactory.h"
-
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
+
+// Remove These After clearAllDatabases has been removed;
+#include "PKB/Pattern/AssignPattern/AssignPatternDatabaseManager.h"
+#include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
+#include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionsDatabaseFactory.h"
+#include "PKB/ControlFlowGraph/ControlFlowGraphDatabaseManager.h"
+#include "PKB/Pattern/PatternsDatabaseFactory.h"
 
 /**
  * This method allows to add a Design Abstraction to the Program Knowledge Base.
@@ -33,8 +23,7 @@ using namespace std;
  * @param abstractionDetails A tuple, which takes in 3 strings. which contains the details about the Abstraction.
  */
 void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails) {
-    DesignAbstraction* da = DesignAbstractionsFactory::createDesignAbstraction(designAbstraction, abstractionDetails);
-    da->addToDatabase();
+    this->designAbstractionsInterface->addDesignAbstraction(designAbstraction, abstractionDetails);
 }
 
 /**
@@ -44,8 +33,7 @@ void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string, s
  * @param entityDetails A tuple, which takes in 2 strings, which contains the details about the Design Entity.
  */
 void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
-    DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
-    de->addToDatabase();
+    this->designEntitiesInterface->addDesignEntity(designEntity, entityDetails);
 }
 
 /**
@@ -57,11 +45,7 @@ void PKB::addDesignEntity(string designEntity, tuple<string, string> entityDetai
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> query) {
-    DesignAbstractionDatabase* db = DesignAbstractionsDatabaseFactory::getAbstractionDatabase(abstractionType,
-                                                                                              get<0>(query));
-    Result queryResult = db->getFromDatabase(get<1>(query));
-
-    return queryResult;
+    return this->designAbstractionsInterface->getDesignAbstraction(abstractionType, query);
 }
 
 /**
@@ -73,10 +57,7 @@ Result PKB::getDesignAbstraction(string abstractionType, tuple<string, string> q
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result PKB::getDesignEntity(string entityType, string entityName) {
-    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
-    Result queryResult = db->getFromDatabase(entityName);
-
-    return queryResult;
+    return this->designEntitiesInterface->getDesignEntity(entityType, entityName);
 }
 
 /**
@@ -87,12 +68,7 @@ Result PKB::getDesignEntity(string entityType, string entityName) {
  * @return A vector<Result> with each Result Object containing the details of that Design Entity type.
  */
 vector<Result> PKB::getAllDesignEntity(string entityType) {
-    vector<Result> queryResult;
-
-    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
-    queryResult = db->getAllFromDatabase();
-
-    return queryResult;
+    return this->designEntitiesInterface->getAllDesignEntity(entityType);
 }
 
 /**
@@ -103,9 +79,7 @@ vector<Result> PKB::getAllDesignEntity(string entityType) {
  * @param patternLineNumber The line number at which this assignment pattern can be observed.
  */
 void PKB::addAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber) {
-    AssignPattern* assignPattern = AssignPatternFactory::createAssignPattern(leftHandVariableName, prefixExpression,
-                                                                             patternLineNumber);
-    assignPattern->addToDatabase();
+    this->patternsInterface->addAssignPattern(leftHandVariableName, prefixExpression, patternLineNumber);
 }
 
 /**
@@ -119,9 +93,8 @@ void PKB::addAssignPattern(string leftHandVariableName, string prefixExpression,
  */
 string
 PKB::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVariableName, string patternLineNumber) {
-    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
-    return assignPatternDatabase
-    ->getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(leftHandVariableName, patternLineNumber);
+    return this->patternsInterface->getRightHandExpressionOfAVariableOnAParticularLineNumber(leftHandVariableName,
+                                                                                             patternLineNumber);
 }
 
 /**
@@ -132,8 +105,7 @@ PKB::getRightHandExpressionOfAVariableOnAParticularLineNumber(string leftHandVar
  * @return An unordered map containing all the Right Hand Prefix Expressions associated to the given variable.
  */
 unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string leftHandVariableName) {
-    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
-    return assignPatternDatabase->getAllRightHandExpressionsOfAVariableFromDatabase(leftHandVariableName);
+    return this->patternsInterface->getAllRightHandExpressionsOfAVariable(leftHandVariableName);
 }
 
 /**
@@ -143,102 +115,86 @@ unordered_map<string, string> PKB::getAllRightHandExpressionsOfAVariable(string 
  * @return A vector of AssignPattern pointer objects, or an empty vector, if nothing is stored.
  */
 unordered_map<string, unordered_map<string, string>> PKB::getAllRightHandExpressions() {
-    AssignPatternDatabase* assignPatternDatabase = AssignPatternDatabaseFactory::getAssignPatternDatabase();
-    return assignPatternDatabase->getAllRightHandExpressionsFromDatabase();
+    return this->patternsInterface->getAllRightHandExpressions();
 }
 
 vector<Result> PKB::getAllDesignAbstractions(string designAbstractionType, string entityTypeBeingAbstracted) {
-    DesignAbstractionDatabase* db =
-            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
-                                                                      entityTypeBeingAbstracted);
-    return db->getAllFromDatabase();
+    return this->designAbstractionsInterface->getAllDesignAbstractions(designAbstractionType,
+                                                                       entityTypeBeingAbstracted);
 }
 
 unordered_map<string, unordered_set<string>>
 PKB::getAllVariablesCapturedByDesignAbstraction(string designAbstractionType, string entityTypeBeingAbstracted) {
-    DesignAbstractionDatabase* db =
-            DesignAbstractionsDatabaseFactory::getAbstractionDatabase(designAbstractionType,
-                                                                      entityTypeBeingAbstracted);
-    return db->getAllVariablesCaptured();
+    return this->designAbstractionsInterface->getAllVariablesCapturedByDesignAbstraction(designAbstractionType,
+                                                                                         entityTypeBeingAbstracted);
 }
 
 int PKB::getNumberOfDesignEntity(string entityType) {
-    return this->getAllDesignEntity(entityType).size();
+    return this->designEntitiesInterface->getNumberOfDesignEntity(entityType);
 }
 
 void PKB::addDesignAbstraction(string designAbstraction, tuple<string, string> abstractionDetails) {
-    if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
-        throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
-    }
-
-    std::string underlineStr = "_";
-    this->addDesignAbstraction(designAbstraction,
-                               make_tuple(underlineStr, get<0>(abstractionDetails), get<1>(abstractionDetails)));
+    this->designAbstractionsInterface->addDesignAbstraction(designAbstraction, abstractionDetails);
 }
 
 Result PKB::getDesignAbstraction(string abstractionType, string query) {
-    if (abstractionType == "USES" || abstractionType == "MODIFIES") {
-        throw InvalidAPICallException((abstractionType + " Cannot Be Accessed Via This API").data());
-    }
-
-    return this->getDesignAbstraction(abstractionType, make_tuple("_", query));
+    return this->designAbstractionsInterface->getDesignAbstraction(abstractionType, query);
 }
 
 void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
                               map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
                               map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers) {
-    ControlFlowGraph* controlFlowGraph = ControlFlowGraphFactory::createControlFlowGraph(procedureName,
-                                                                                         topologicallySortedElements,
-                                                                                         blockToStatementNumbers,
-                                                                                         statementNumberToBlock,
-                                                                                         blockToBlock,
-                                                                                         blocksWithBackPointers);
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
-    db->addToDatabase(controlFlowGraph);
+    this->controlFlowGraphInterface->addControlFlowGraph(procedureName, topologicallySortedElements,
+                                                         blockToStatementNumbers, statementNumberToBlock,
+                                                         blockToBlock, blocksWithBackPointers);
 }
 
 vector<int> PKB::getTopologicallySortedElementsDatabase(string procedureName) {
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
-    return db->getTopologicallySortedBlockNumbersDatabaseFromDatabase(procedureName);
+    return this->controlFlowGraphInterface->getTopologicallySortedElementsDatabase(procedureName);
 }
 
 map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase(string procedureName) {
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
-    return db->getBlockToStatementNumberDatabaseFromDatabase(procedureName);
+    return this->controlFlowGraphInterface->getBlockToStatementNumbersDatabase(procedureName);
 }
 
 map<int, int> PKB::getStatementNumberToBlockDatabase(string procedureName) {
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
-    return db->getStatementNumberToBlockDatabaseFromDatabase(procedureName);
+    return this->controlFlowGraphInterface->getStatementNumberToBlockDatabase(procedureName);
 }
 
 map<int, vector<int>> PKB::getBlockToBlockDatabase(string procedureName) {
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
-    return db->getBlockToBlockDatabaseFromDatabase(procedureName);
+    return this->controlFlowGraphInterface->getBlockToBlockDatabase(procedureName);
 }
 
 unordered_set<int> PKB::getBlocksWithBackPointersDatabase(string procedureName) {
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseFactory::getControlFlowGraphDatabase();
-    return db->getBlocksWithBackPointersDatabaseFromDatabase(procedureName);
+    return this->controlFlowGraphInterface->getBlocksWithBackPointersDatabase(procedureName);
 }
 
 void PKB::addPattern(string patternType, string lineNumber, string variableName) {
-    Pattern* patternToBeStored = PatternFactory::createPattern(patternType, lineNumber, variableName);
-    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
-
-    db->addToDatabase(patternToBeStored);
+    this->patternsInterface->addPattern(patternType, lineNumber, variableName);
 }
 
 bool PKB::isVariableUsedInPattern(string patternType, string lineNumber, string variableName) {
-    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
-
-    return db->isVariableNamePresentOnLineNumber(lineNumber, variableName);
+    return this->patternsInterface->isVariableUsedInPattern(patternType, lineNumber, variableName);
 }
 
 unordered_set<string> PKB::getAllVariablesUsedInPattern(string patternType, string lineNumber) {
-    PatternDatabase* db = PatternDatabaseFactory::getPatternDatabase(patternType);
+    return this->patternsInterface->getAllVariablesUsedInPattern(patternType, lineNumber);
+}
 
-    return db->getAllVariablesBeingUsed(lineNumber);
+void PKB::addToCache(string accessKey, ResultTable *resultTable) {
+    this->cacheInterface->addToCache(accessKey, resultTable);
+}
+
+ResultTable *PKB::getResultTableFromCache(string accessKey) {
+    return this->cacheInterface->getResultTableFromCache(accessKey);
+}
+
+unordered_map<string, ResultTable *> PKB::getCacheDatabase() {
+    return this->cacheInterface->getCacheDatabase();
+}
+
+void PKB::clearCache() {
+    this->cacheInterface->clearCache();
 }
 
 /**
@@ -246,7 +202,7 @@ unordered_set<string> PKB::getAllVariablesUsedInPattern(string patternType, stri
  * from the user.
  */
 void PKB::clearAssignPatternDatabase() {
-    AssignPatternDatabaseFactory::clearDatabase();
+    AssignPatternDatabaseManager::clearDatabase();
 }
 
 /**
@@ -266,11 +222,11 @@ void PKB::clearDesignAbstractionDatabase() {
 }
 
 void PKB::clearControlFlowGraphDatabase() {
-    ControlFlowGraphDatabaseFactory::clearDatabase();
+    ControlFlowGraphDatabaseManager::clearDatabase();
 }
 
 void PKB::clearPatternDatabase() {
-    PatternDatabaseFactory::clearDatabase();
+    PatternsDatabaseFactory::clearDatabase();
 }
 
 /**

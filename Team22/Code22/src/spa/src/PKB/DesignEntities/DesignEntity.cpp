@@ -38,19 +38,6 @@ void DesignEntity::addAdditionalOccurrence(string occurrence) {
 }
 
 /**
- * Adds the Design Entity to the Database. If the Design Entity is already
- * present in the Database, the Database manages it, and calls the
- * addAdditionalOccurrence(string occurrence) to append
- * additional occurrences.
- */
-void DesignEntity::addToDatabase() {
-    // call storage/database factory and add, let storage check if there,
-    // and update or add
-    DesignEntityDatabase* database = DesignEntitiesDatabaseFactory::getEntityDatabase(this);
-    database->addToDatabase(this);
-}
-
-/**
  * Returns the name of the Entity.
  *
  * @return The name of the Entity.
