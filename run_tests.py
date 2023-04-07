@@ -64,7 +64,6 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestBoolean/Simple_Test_Source.txt", "TestBoolean/Simple_Test_Queries.txt"),
                       ("TestDemo2Features/Sample_source.txt", "TestDemo2Features/Sample_queries.txt"),
                       ("TestNextStar/Sample_source.txt", "TestNextStar/Sample_queries.txt"),
-                      ("ComplexParentTest/ComplexSource.txt", "ComplexParentTest/ParentQueriesOnMultipleProcedures.txt"),
                       ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/ParentQueriesOnMultipleProcedures.txt"),
                       ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/FollowsQueriesOnMultipleProcedures.txt"),
                       ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/ModifiesQueriesOnMultipleProcedures.txt"),

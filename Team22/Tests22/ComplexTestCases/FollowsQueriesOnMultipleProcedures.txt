@@ -236,7 +236,7 @@ Select s such that Follows (s, _)
 106 - Test With Call Synonym Type
 call s;
 Select s such that Follows (s, _)
-none
+4, 16, 19, 31, 34, 38, 39, 46, 48, 50, 52, 55, 72
 5000
 107 - Test With Procedure Synonym Type
 procedure s;
