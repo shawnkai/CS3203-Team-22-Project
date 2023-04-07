@@ -339,3 +339,48 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
 
     REQUIRE(throwsException);
 }
+
+TEST_CASE("TestCase3_ParseInvalidInteger") {
+    QueryParser queryParser;
+    string declaration = "stmt s; assign a;";
+
+    queryParser.parse(declaration);
+
+    SECTION ("InvalidIntInDesignEntity_SyntaxError") {
+        string query = "Select s such that Follows(s, 06)";
+
+        bool throwsException = false;
+
+        try {
+            Expression *exp1 = queryParser.parse(query);
+        } catch (SyntacticException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
+
+    SECTION ("InvalidIntInAttrCond_SyntaxError") {
+        string query = "Select s such that s.stmt# = 06";
+
+        bool throwsException = false;
+
+        try {
+            Expression *exp1 = queryParser.parse(query);
+        } catch (SyntacticException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
+
+    SECTION ("InvalidIntInIdent_Success") {
+        string query = R"(Select s pattern a(_,_"x + 01"_))";
+        string expected = R"(Select s such that pattern a(_, _+x01_))";
+
+        SelectExpression *actualResult = queryParser.parse(query);
+        REQUIRE(actualResult->toString() == expected);
+    }
+
+}
+

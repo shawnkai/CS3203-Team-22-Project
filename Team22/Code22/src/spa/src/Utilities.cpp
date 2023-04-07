@@ -5,6 +5,7 @@
 #include "Utilities.h"
 #include <algorithm>
 #include <regex>
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -37,9 +38,15 @@ bool Utilities::isOperator(char c) {
 // Returns true if s is a number else false
 bool Utilities::isNumber(string s)
 {
-    for (int i = 0; i < s.length(); i++)
-        if (isdigit(s[i]) == false)
+    if (s[0] == '0' && s.size() != 1) {
+        throw SyntacticException();
+    }
+
+    for (char i : s) {
+        if (isdigit(i) == false) {
             return false;
+        }
+    }
 
     return true;
 }
