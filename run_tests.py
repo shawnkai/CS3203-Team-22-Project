@@ -62,9 +62,15 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                       ("TestCallsExpression/Sample_source.txt", "TestCallsExpression/Sample_queries.txt"),
                       ("TestCallsExpression/Calls_Testing_Source.txt", "TestCallsExpression/Calls_Testing_Queries.txt"),
                       ("TestBoolean/Simple_Test_Source.txt", "TestBoolean/Simple_Test_Queries.txt"),
-                      ("TestDemo2Features/Sample_source.txt", "/TestDemo2Features/Sample_queries.txt"),
+                      ("TestDemo2Features/Sample_source.txt", "TestDemo2Features/Sample_queries.txt"),
                       ("TestNextStar/Sample_source.txt", "TestNextStar/Sample_queries.txt"),
-                      ("ComplexParentTest/ComplexSource.txt", "ComplexParentTest/ParentQueriesOnMultipleProcedures.txt")]
+                      ("ComplexParentTest/ComplexSource.txt", "ComplexParentTest/ParentQueriesOnMultipleProcedures.txt"),
+                      ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/ParentQueriesOnMultipleProcedures.txt"),
+                      ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/FollowsQueriesOnMultipleProcedures.txt"),
+                      ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/ModifiesQueriesOnMultipleProcedures.txt"),
+                      ("ComplexTestCases/ComplexSource.txt", "ComplexTestCases/UsesQueriesOnMultipleProcedures.txt"),
+                      ("ComplexTestCases/TestCallAndCallStarSourceProgram.txt", "ComplexTestCases/TestCallDesignAbstractionQueries.txt"),
+                      ("ComplexTestCases/TestCallAndCallStarSourceProgram.txt", "ComplexTestCases/TestCallStarDesignAbstractionQueries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
@@ -113,7 +119,7 @@ for source, query in source_query_pairs:
                 [matchQuery.group(2) + "\n" + matchQuery.group(3), matchCorrect.group(0), matchActual.group(0),
                  matchMissing.group(0), matchAdditional.group(0)])
 
-    print(f"Test Stats for {source}:"
+    print(f"Test Stats for {query}:"
           f"\nCorrect Evaluations: {len(correct)}"
           f"\nIncorrect Evaluations: {len(wrong)}\n")
 
