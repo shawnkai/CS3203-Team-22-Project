@@ -60,6 +60,9 @@ public:
         virtual string toString() const = 0;
 
         bool operator==(Expression const& expression) const;
+
+        bool operator<(const Expression& t) const;
+
 };
 
 #endif //SPA_EXPRESSIONS_H

@@ -123,47 +123,47 @@ variable v;
 Select v such that Uses (103, v)
 a
 5000
-24 - Get All Variables Used In Procedure "Two" and Procedure "Five"
+24 - Get All Variables Used In Procedure Two and Procedure Five
 variable v;
 Select v such that Uses ("Two", v) and Uses ("Five", v)
 a, x
 5000
-25 - Get All Variables Used In Procedure "Two" and Procedure "Five"
+25 - Get All Variables Used In Procedure Two and Procedure Five
 variable v, v1;
 Select <v, v1> such that Uses ("Two", v) and Uses ("Five", v1)
 a a, a x, x a, x x
 5000
-26 - Is Variable "a" being Used in Procedure "One"
+26 - Is Variable a being Used in Procedure One
 variable v, v1;
 Select BOOLEAN such that Uses ("One", "a")
 TRUE
 5000
-27 - Is Variable "z" being Used in Procedure "One"
+27 - Is Variable z being Used in Procedure One
 variable v, v1;
 Select BOOLEAN such that Uses ("One", "z")
 FALSE
 5000
-28 - Are Variables "a" and "z" being Used in Procedure "One"
+28 - Are Variables a and z being Used in Procedure One
 variable v, v1;
 Select BOOLEAN such that Uses ("One", "z") and Uses ("One", "a")
 FALSE
 5000
-29 - Are Variables "a" and "b" being Used in Procedure "One"
+29 - Are Variables a and b being Used in Procedure One
 variable v, v1;
 Select BOOLEAN such that Uses ("One", "b") and Uses ("One", "a")
 TRUE
 5000
-30 - Return Variable "a", if it has been used in Procedure "One"
+30 - Return Variable a, if it has been used in Procedure One
 variable v;
 Select v such that Uses ("One", _) with v.varName = "a"
 a
 5000
-31 - Return Variable "z", if it has been used in Procedure "One" : SEGMENTATION FAULT with "z"
+31 - Return Variable z, if it has been used in Procedure One : SEGMENTATION FAULT with z
 variable v;
 Select v such that Uses ("One", _) with v.varName = "a"
 a
 5000
-32 - Return Variable "b", if it has been used in Procedure "One"
+32 - Return Variable b, if it has been used in Procedure One
 variable v;
 Select v such that Uses ("One", _) with v.varName = "b"
 b
@@ -183,12 +183,12 @@ stmt s; variable v;
 Select v such that Uses (s, v)
 a, b, c, d, x, y
 5000
-104 - Test With p.procName = "One"
+104 - Test With p.procName = One
 procedure p; variable v;
 Select v such that Uses (p, v) with p.procName = "One"
 a, b, c, d, x, y
 5000
-105 - Test With p.procName = "Invalid"
+105 - Test With p.procName = Invalid
 procedure p; variable v;
 Select v such that Uses (p, v) with p.procName = "Invalid"
 none

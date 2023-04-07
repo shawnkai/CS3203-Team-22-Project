@@ -158,37 +158,37 @@ variable v;
 Select v such that Modifies (103, v)
 none
 5000
-32 - Does Line Number 103 Modify Variable "a"
+32 - Does Line Number 103 Modify Variable a
 variable v;
 Select BOOLEAN such that Modifies (103, "a")
 FALSE
 5000
-33 - Does Procedure "One" Modify Variable "a"
+33 - Does Procedure One Modify Variable a
 variable v;
 Select BOOLEAN such that Modifies ("One", "a")
 TRUE
 5000
-34 - Does Procedure "One" Modify Variable "z"
+34 - Does Procedure One Modify Variable z
 variable v;
 Select BOOLEAN such that Modifies ("One", "z")
 FALSE
 5000
-35 - Get Pairs of Variables Modified in Procedure "Five" and "Six"
+35 - Get Pairs of Variables Modified in Procedure Five and Six
 variable v, v1;
 Select <v, v1> such that Modifies ("Five", v) and Modifies("Six", v1)
 a a, a b, a c, a d, x a, x b, x c, x d
 5000
-36 - Return Variable "b", if it has been Modified in Procedure "One"
+36 - Return Variable b, if it has been Modified in Procedure One
 variable v;
 Select v such that Modifies ("One", v) with v.varName = "b"
 b
 5000
-37 - Return Variable "d", if it has been Modified in Procedure "Six"
+37 - Return Variable d, if it has been Modified in Procedure Six
 variable v;
 Select v such that Modifies ("One", v) with v.varName = "d"
 d
 5000
-38 - Does Procedure "One" Modify Any Variable
+38 - Does Procedure One Modify Any Variable
 variable v;
 Select BOOLEAN such that Modifies ("One", _)
 TRUE
