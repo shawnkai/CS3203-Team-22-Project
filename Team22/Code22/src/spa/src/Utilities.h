@@ -16,8 +16,14 @@ using namespace std;
 template <typename T>
 struct Hasher {
     std::size_t operator()(const T& obj) const {
-        ::printf("%s: %d\n", obj->toString().c_str(), std::hash<string>{}(obj->toString()));
         return std::hash<string>{}(obj->toString());
+    }
+};
+
+template <typename T>
+struct Equalizer {
+    bool operator()(const T& val1, const T& val2) const{
+        return val1->toString() == val2->toString();
     }
 };
 
@@ -50,10 +56,9 @@ public:
 
     template <typename T>
     static std::vector<T> getUniqueElements(const std::vector<T>& input) {
-        std::unordered_set<T, Hasher<T>> seenElements; // Keep track of seen elements
+        std::unordered_set<T, Hasher<T>, Equalizer<T>> seenElements; // Keep track of seen elements
         std::vector<T> output; // Output vector to store unique elements
         for (const T& elem : input) {
-            ::printf("%d\n", seenElements.count(elem));
             if (seenElements.count(elem) == 0) { // If element is not seen before, add it to output vector and mark as seen
                 auto p = seenElements.insert(elem);
                 output.push_back(elem);

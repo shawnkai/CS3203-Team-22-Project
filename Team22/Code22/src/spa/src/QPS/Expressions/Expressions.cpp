@@ -90,21 +90,3 @@ pair<StmtRef*, StmtRef*> Expression::generateStmtEntityPair(string arg1, string 
 
     return {a1, a2};
 }
-
-bool Expression::operator==(Expression const& expression) const {
-    return this->toString() == expression.toString();
-}
-
-
-
-// Define a specialization of std::hash for Expression
-template<>
-struct hash<Expression> {
-    std::size_t operator()(const Expression& obj) const {
-        return std::hash<string>{}(obj.toString());
-    }
-};
-
-bool Expression::operator<(const Expression& t) const {
-    return (this->toString() < t.toString());
-}
