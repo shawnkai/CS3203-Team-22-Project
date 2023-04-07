@@ -121,11 +121,16 @@ TEST_CASE("Test 1: Test clearAllDatabases() API With Correct Key") {
 
         pkb.clearAllDatabases(accessKey);
 
-        vector<int> topologicallySortedElementsAfterClearing = pkb.getTopologicallySortedElementsDatabase("Test");
-        unordered_map<int, vector<int>> blockToStatementNumberElementsAfterClearing = pkb.getBlockToStatementNumbersDatabase("Test");
-        unordered_map<int, int> statementNumberToBlockElementsAfterClearing = pkb.getStatementNumberToBlockDatabase("Test");
-        unordered_map<int, vector<int>> blockToBlockElementsAfterClearing = pkb.getBlockToBlockDatabase("Test");
-        unordered_set<int> blocksWithBackPointersElementsAfterClearing = pkb.getBlocksWithBackPointersDatabase("Test");
+        vector<int> topologicallySortedElementsAfterClearing =
+                pkb.getTopologicallySortedElementsDatabase("Test");
+        unordered_map<int, vector<int>> blockToStatementNumberElementsAfterClearing =
+                pkb.getBlockToStatementNumbersDatabase("Test");
+        unordered_map<int, int> statementNumberToBlockElementsAfterClearing =
+                pkb.getStatementNumberToBlockDatabase("Test");
+        unordered_map<int, vector<int>> blockToBlockElementsAfterClearing =
+                pkb.getBlockToBlockDatabase("Test");
+        unordered_set<int> blocksWithBackPointersElementsAfterClearing =
+                pkb.getBlocksWithBackPointersDatabase("Test");
 
         REQUIRE(topologicallySortedElementsAfterClearing.size() == 1);
         REQUIRE(blockToStatementNumberElementsAfterClearing.size() == 1);
