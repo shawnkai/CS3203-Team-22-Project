@@ -10,7 +10,7 @@ TEST_CASE("Testcase1_ExtractPath_ShouldSuccess") {
 	orderedBlks.push_back(5);
 	orderedBlks.push_back(6);
 	orderedBlks.push_back(7);
-	std::map<int, vector<int>> blkToBlkMap;
+	std::unordered_map<int, vector<int>> blkToBlkMap;
 	vector<int> v1;
 	v1.push_back(2);
 	blkToBlkMap[1] = v1;
