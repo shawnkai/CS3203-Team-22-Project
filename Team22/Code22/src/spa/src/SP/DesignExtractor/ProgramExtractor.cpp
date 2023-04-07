@@ -130,6 +130,9 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
 						}
 					}
 					for (int j = 0; j < vectorOfCallsSTAR.size(); j++) {
+						if (procedureName == vectorOfCallsSTAR[j]) {
+							throw std::invalid_argument("SIMPLE source is invalid because procedure calls itself");
+						}
 						pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple(underlineStr, procedureName, vectorOfCallsSTAR[j]));
 						pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple(underlineStr, vectorOfCallsSTAR[j], procedureName));
 						cout << procedureName + " callsStar " + vectorOfCallsSTAR[j] << endl;
