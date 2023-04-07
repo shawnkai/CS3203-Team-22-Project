@@ -57,7 +57,9 @@ public:
 
         vector<DesignEntity*> getAllEntities();
 
-        virtual string toString() = 0;
+        virtual string toString() const = 0;
+
+        bool operator==(Expression const& expression) const;
 };
 
 #endif //SPA_EXPRESSIONS_H

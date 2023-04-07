@@ -21,7 +21,7 @@ SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<string
     }
 }
 
-string SelectExpression::toString() {
+string SelectExpression::toString() const {
     string res = "Select ";
 
     if (entities.empty()) {

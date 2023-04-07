@@ -25,7 +25,7 @@ public:
     explicit ResultTable(const unordered_map<string, vector<string>>& table);
     explicit ResultTable(const unordered_map<string, vector<string>>& table, vector<string> columns);
 
-    ::size_t getSize();
+    ::size_t getSize() const;
 
     ResultTable* intersection(ResultTable* table2);
 
@@ -39,7 +39,7 @@ public:
         return new ResultTable(this->table);
     }
 
-    string toString();
+    string toString() const;
 
     ResultTable* getColumns(const vector<string>& columns);
 

@@ -229,7 +229,7 @@ UsesSExpression::UsesSExpression(StmtRef* user, DesignEntity* target) : UsesExpr
     this->entities.push_back(user);
 }
 
-string UsesSExpression::toString() {
+string UsesSExpression::toString() const {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
@@ -237,6 +237,6 @@ UsesPExpression::UsesPExpression(NamedEntity* user, DesignEntity* target) : Uses
     this->entities.push_back(user);
 }
 
-string UsesPExpression::toString() {
+string UsesPExpression::toString() const {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }

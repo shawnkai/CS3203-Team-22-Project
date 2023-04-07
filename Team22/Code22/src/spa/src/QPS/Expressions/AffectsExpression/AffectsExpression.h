@@ -21,7 +21,7 @@ private:
 public:
     explicit AffectsExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<AffectsExpression*> extractAffectsExpression(const string& query, const SynonymTable& synonymTable);
 
@@ -44,7 +44,7 @@ public:
 
     explicit AffectsStarExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<AffectsStarExpression*> extractAffectsStarExpression(const string& query, const SynonymTable& synonymTable);
 

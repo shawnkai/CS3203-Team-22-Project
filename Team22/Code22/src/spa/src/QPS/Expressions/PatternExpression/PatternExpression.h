@@ -19,7 +19,7 @@ protected:
 public:
     explicit PatternExpression(DesignEntity *entity, NamedEntity *p1);
 
-    virtual string toString() {
+    virtual string toString() const {
         return "";
     };
 
@@ -40,7 +40,7 @@ private:
 public:
     explicit AssignPatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 
@@ -52,7 +52,7 @@ public:
 
     IfWhilePatternExpression(DesignEntity *entity, NamedEntity *p1);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 

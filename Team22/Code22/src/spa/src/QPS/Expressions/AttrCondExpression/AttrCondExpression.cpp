@@ -72,7 +72,7 @@ ResultTable* AttrCondExpression::evaluate(PKB pkb) {
     return syn1Table->intersection(syn2Table)->removeColumn("withCond");
 }
 
-string AttrCondExpression::toString() {
+string AttrCondExpression::toString() const {
     string res = "with ";
     if (!this->syn1attr.empty()) {
         res += this->entities[0]->toString() + "." + this->syn1attr;

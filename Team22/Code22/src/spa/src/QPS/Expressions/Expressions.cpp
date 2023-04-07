@@ -88,5 +88,9 @@ pair<StmtRef*, StmtRef*> Expression::generateStmtEntityPair(string arg1, string 
         }
     }
 
-    return std::make_pair(a1, a2);
+    return {a1, a2};
+}
+
+bool Expression::operator==(Expression const& expression) const {
+    return this->toString() == expression.toString();
 }

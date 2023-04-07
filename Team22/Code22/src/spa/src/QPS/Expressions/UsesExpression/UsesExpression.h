@@ -30,7 +30,7 @@ class UsesSExpression : public UsesExpression {
 public:
     explicit UsesSExpression(StmtRef* user, DesignEntity* target);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 };
@@ -39,7 +39,7 @@ class UsesPExpression : public UsesExpression {
 public:
     explicit UsesPExpression(NamedEntity* user, DesignEntity* target);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 };

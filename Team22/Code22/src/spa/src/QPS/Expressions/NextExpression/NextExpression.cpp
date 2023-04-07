@@ -181,13 +181,13 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
 
 NextExpression::NextExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
-string NextExpression::toString() {
+string NextExpression::toString() const {
     return "Next(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 NextStarExpression::NextStarExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
-string NextStarExpression::toString() {
+string NextStarExpression::toString() const {
     return "Next*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
