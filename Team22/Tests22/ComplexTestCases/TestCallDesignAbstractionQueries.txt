@@ -58,52 +58,52 @@ procedure p, q;
 Select q such that Calls (p, q)
 TestTwo, TestThree, TestFour, TestFive
 5000
-13 - Return Any Procedures That Call "TestOne"
+13 - Return Any Procedures That Call TestOne
 procedure p;
 Select p such that Calls (p, "TestOne")
 none
 5000
-14 - Return Any Procedures That Call "TestTwo"
+14 - Return Any Procedures That Call TestTwo
 procedure p;
 Select p such that Calls (p, "TestTwo")
 TestOne
 5000
-15 - Return Any Procedures That Call "TestThree"
+15 - Return Any Procedures That Call TestThree
 procedure p;
 Select p such that Calls (p, "TestThree")
 TestOne
 5000
-16 - Return Any Procedures That Call "TestFour"
+16 - Return Any Procedures That Call TestFour
 procedure p;
 Select p such that Calls (p, "TestFour")
 TestOne, TestTwo, TestThree
 5000
-17 - Return Any Procedures That Call "TestFive"
+17 - Return Any Procedures That Call TestFive
 procedure p;
 Select p such that Calls (p, "TestFive")
 TestThree
 5000
-18 - Return Any Procedures Called By "TestOne"
+18 - Return Any Procedures Called By TestOne
 procedure p;
 Select p such that Calls ("TestOne", p)
 TestTwo, TestThree, TestFour
 5000
-19 - Return Any Procedures Called By "TestTwo"
+19 - Return Any Procedures Called By TestTwo
 procedure p;
 Select p such that Calls ("TestTwo", p)
 TestFour
 5000
-20 - Return Any Procedures Called By "TestThree"
+20 - Return Any Procedures Called By TestThree
 procedure p;
 Select p such that Calls ("TestThree", p)
 TestFour, TestFive
 5000
-22 - Return Any Procedures Called By "TestFour"
+22 - Return Any Procedures Called By TestFour
 procedure p;
 Select p such that Calls ("TestFour", p)
 none
 5000
-23 - Return Any Procedures Called By "TestFive"
+23 - Return Any Procedures Called By TestFive
 procedure p;
 Select p such that Calls ("TestFive", p)
 none
@@ -117,6 +117,46 @@ none
 procedure p;
 Select p such that Calls (p, _)
 TestOne, TestTwo, TestThree
+5000
+26 - Return Any Procedures That Are Called
+procedure p;
+Select p such that Calls (_, p)
+TestTwo, TestThree, TestFour, TestFive
+5000
+27 - Return Any Procedures That Call Any Other Procedure
+procedure p;
+Select p such that Calls (p, _)
+TestOne, TestTwo, TestThree
+5000
+28 - Does Procedure One Call Procedure Two Directly
+
+Select BOOLEAN such that Calls ("TestOne", "TestTwo")
+TRUE
+5000
+29 - Does Procedure One Call Procedure Three Directly
+
+Select BOOLEAN such that Calls* ("TestOne", "TestThree")
+TRUE
+5000
+30 - Does Procedure One Call Procedure Four Directly
+
+Select BOOLEAN such that Calls* ("TestOne", "TestFour")
+TRUE
+5000
+31 - Does Procedure One Call Procedure Five Directly
+
+Select BOOLEAN such that Calls* ("TestOne", "TestFive")
+FALSE
+5000
+32 - Does Procedure Two Call Procedure Five Directly
+
+Select BOOLEAN such that Calls* ("TestTwo", "TestFive")
+FALSE
+5000
+33 - Does Procedure Three Call Procedure Five Directly
+
+Select BOOLEAN such that Calls* ("TestThree", "TestFive")
+TRUE
 5000
 101 - Using Invalid Design Entity Type In Calls
 variable p;
