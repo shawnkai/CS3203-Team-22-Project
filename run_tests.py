@@ -150,7 +150,9 @@ if __name__ == "__main__":
                           ("ComplexTestCases/TestCallsAndCallsStarSourceProgram.txt",
                            "ComplexTestCases/TestCallsStarDesignAbstractionQueries.txt"),
                           ("ComplexTestCases/ComplexSource.txt",
-                           "ComplexTestCases/FollowsStarQueriesOnMultipleProcedures.txt"),]
+                           "ComplexTestCases/FollowsStarQueriesOnMultipleProcedures.txt"),
+                          ("ComplexTestCases/ComplexSource.txt",
+                           "ComplexTestCases/ParentStarQueriesOnMultipleProcedures.txt"),]
     with Pool() as pool:
         for correct in pool.map(process_file, source_query_pairs):
             if not correct:
