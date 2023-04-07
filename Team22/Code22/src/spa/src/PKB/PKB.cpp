@@ -233,10 +233,14 @@ void PKB::clearPatternDatabase() {
  * Clears the databases. Implemented to improve testing, as PKB storage is
  * static in nature, and to avoid cross-linkage among test cases.
  */
-void PKB::clearAllDatabases() {
-    this->clearDesignAbstractionDatabase();
-    this->clearDesignEntityDatabase();
-    this->clearAssignPatternDatabase();
-    this->clearControlFlowGraphDatabase();
-    this->clearPatternDatabase();
+void PKB::clearAllDatabases(string authenticationKey) {
+    string passKey = "CalledForTestingPurposes";
+
+    if (authenticationKey.compare(passKey) == 0) {
+        this->clearDesignAbstractionDatabase();
+        this->clearDesignEntityDatabase();
+        this->clearAssignPatternDatabase();
+        this->clearControlFlowGraphDatabase();
+        this->clearPatternDatabase();
+    }
 }

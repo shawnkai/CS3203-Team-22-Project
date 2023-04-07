@@ -82,5 +82,5 @@ public:
     void clearCache();
 
     // API For Clearing All Databases
-    void clearAllDatabases();
+    void clearAllDatabases(string authenticationKey);
 };
