@@ -1,0 +1,14 @@
+procedure Transform {
+    weight = 1;
+    tmp = 100;
+    if (x == 0) then {
+        ac = 1;
+    } else {
+        ac = 2;
+    }
+}
+
+procedure Shift {
+    top = x2 - x1 * incre;
+    bottom = y2 * y2 - decrement;
+}

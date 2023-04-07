@@ -55,22 +55,32 @@ void SPDriver::parseSimpleProgram(std::string filename) {
         }
     }
 
-    PKB pkbinstance = PKB();
-    DesignExtractor designExtractor;
-    //designExtractor.extractAbstraction(result, pkbinstance);
-
-    vector<Cfg> controlFlowGraphs;
-    for (auto procedure: result->children) {
-        Cfg controlFlowGraph = Cfg(*procedure);
-        controlFlowGraph.buildCfg(*procedure, -1);
-        controlFlowGraphs.push_back(controlFlowGraph);
-        pkbinstance.addControlFlowGraph(procedure->stringId, controlFlowGraph.basicBlock,
-                                        controlFlowGraph.blockToStatement,
-                                        controlFlowGraph.statementNumberToBlock,
-                                        controlFlowGraph.blockGraph,
-                                        controlFlowGraph.blockPointingBackward);
-        cout << controlFlowGraph.toString() << endl;
-    }
+//    PKB pkbinstance = PKB();
+//    DesignExtractor designExtractor;
+//
+//    //designExtractor.extractAbstraction(result, pkbinstance);
+//
+//    try {
+//        designExtractor.extractAbstraction(result, pkbinstance);
+//    }
+//    catch (std::invalid_argument& theException) {
+//        std::cerr << theException.what() << endl;
+//        ::exit(1);
+//    }
+//
+//
+//    vector<Cfg> controlFlowGraphs;
+//    for (auto procedure: result->children) {
+//        Cfg controlFlowGraph = Cfg(*procedure);
+//        controlFlowGraph.buildCfg(*procedure, -1);
+//        controlFlowGraphs.push_back(controlFlowGraph);
+//        pkbinstance.addControlFlowGraph(procedure->stringId, controlFlowGraph.basicBlock,
+//                                        controlFlowGraph.blockToStatement,
+//                                        controlFlowGraph.statementNumberToBlock,
+//                                        controlFlowGraph.blockGraph,
+//                                        controlFlowGraph.blockPointingBackward);
+//        cout << controlFlowGraph.toString() << endl;
+//    }
 //        NextExtractor nextExtractor;
 //        nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement, controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph, controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
 

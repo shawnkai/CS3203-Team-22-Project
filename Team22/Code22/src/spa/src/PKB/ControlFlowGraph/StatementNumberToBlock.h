@@ -8,20 +8,20 @@
 #define SPA_STATEMENTNUMBERTOBLOCK_H
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
 class StatementNumberToBlock {
-    map<int, int> statementNumbersToBlockDatabase;
+    unordered_map<int, int> statementNumbersToBlockDatabase;
 
 public:
-    explicit StatementNumberToBlock(map<int, int> statementNumbersToBlockDatabase);
+    explicit StatementNumberToBlock(unordered_map<int, int> statementNumbersToBlockDatabase);
     explicit StatementNumberToBlock();
 
     void addToDatabase(int statementNumber, int block);
-    map<int, int> getStatementNumbersToBlockDatabase();
-    void copyStatementNumberToBlockDatabase(map<int, int> statementNumberToBlock);
+    unordered_map<int, int> getStatementNumbersToBlockDatabase();
+    void copyStatementNumberToBlockDatabase(unordered_map<int, int> statementNumberToBlock);
     void clearDatabase();
 };
 

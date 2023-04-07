@@ -12,7 +12,7 @@ using namespace std;
 
 #include "NextExtractor.h"
 
-void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
+void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::unordered_map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
 	std::string underlineStr = "_";
 	if (blkToStmtMap.count(blkNo) > 0) {
 		vector<int> stmtInblk = blkToStmtMap.at(blkNo);
@@ -31,7 +31,7 @@ void NextExtractor::addWithinBlkNextAbstraction(int blkNo, std::map<int, vector<
 
 };
 
-void NextExtractor::addBtwBlkNextAbstraction(int prevBlk, int nextBlk, std::map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
+void NextExtractor::addBtwBlkNextAbstraction(int prevBlk, int nextBlk, std::unordered_map<int, vector<int>> blkToStmtMap, PKB pkbinstance) {
 	std::string underlineStr = "_";
 	if ((blkToStmtMap.count(prevBlk) > 0) && (blkToStmtMap.count(nextBlk) > 0)) {
 		vector<int> stmtInPrevblk = blkToStmtMap.at(prevBlk);
@@ -45,7 +45,7 @@ void NextExtractor::addBtwBlkNextAbstraction(int prevBlk, int nextBlk, std::map<
 
 };
 
-vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk) {
+vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::unordered_map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk) {
 	vector<deque<int>> allPaths;
 	
 	if (currBlk == 0) {
@@ -132,7 +132,7 @@ vector<deque<int>> NextExtractor::findPath(vector<int> orderedBlks, std::map<int
 	return allPaths;
 };
 
-vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk, int exitWhile) {
+vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, std::unordered_map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int nextBlk, int currBlk, int exitWhile) {
 	vector<deque<int>> allPaths;
 	if (currBlk == 0) {
 		cout << "return 0 in while stmtlist" << endl;
@@ -220,7 +220,7 @@ vector<deque<int>> NextExtractor::findWhileStmtlstPath(vector<int> orderedBlks, 
 	return allPaths;
 };
 
-vector<deque<int>> NextExtractor::findWhilePath(vector<int> orderedBlks, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int currBlk, int whileBlk) {
+vector<deque<int>> NextExtractor::findWhilePath(vector<int> orderedBlks, std::unordered_map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, int currBlk, int whileBlk) {
 	return findWhileStmtlstPath(orderedBlks, blkToBlkMap, setOfWhile, whileBlk, currBlk, whileBlk);
 			
 		
@@ -238,7 +238,7 @@ vector<deque<int>> NextExtractor::findWhilePath(vector<int> orderedBlks, std::ma
  * @param pkbinstance The instance of Program Knowledge Base.
  * @param procedureName The name of the procedure.
  */
-void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::map<int, vector<int>> blkToStmtMap, std::map<int, int> stmtToBlkMap, std::map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, PKB pkbinstance, std::string procedureName) {
+void NextExtractor::extractAbstraction(vector<int> orderedBlks, std::unordered_map<int, vector<int>> blkToStmtMap, std::unordered_map<int, int> stmtToBlkMap, std::unordered_map<int, vector<int>> blkToBlkMap, std::unordered_set<int> setOfWhile, PKB pkbinstance, std::string procedureName) {
 
 	if (orderedBlks.size() == 0) {
 		cout << "no blks stored" << endl;

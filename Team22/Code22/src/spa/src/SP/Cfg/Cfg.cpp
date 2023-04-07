@@ -109,7 +109,7 @@ vector<int> Cfg::handleTerminalBlocks(const vector<int>& pendingToTerminate) {
     vector<int> end;
     end.push_back(0);
     for(int ending: pendingToTerminate) {
-        map<int, vector<int> >::iterator itr;
+        unordered_map<int, vector<int> >::iterator itr;
         itr = blockGraph.find(ending);
         if (itr == blockGraph.end()) {
             blockGraph.insert(pair<int, vector<int> >(ending, end));
@@ -132,7 +132,7 @@ vector<int> Cfg::handleTerminalBlocks(const vector<int>& pendingToTerminate) {
 vector<int> Cfg::handleLinkingBackBlocks(vector<int> pendingHandling, vector<int> neighbours) {
     for (int entry: pendingHandling) {
         neighbours.push_back(currentBlk);
-        map<int, vector<int> >::iterator itr;
+        unordered_map<int, vector<int> >::iterator itr;
         itr = blockGraph.find(entry);
         if (itr == blockGraph.end()) {
             blockGraph.insert(pair<int, vector<int> >(entry, neighbours));
@@ -192,7 +192,7 @@ int Cfg::buildWhileNode( vector<int> currentStmts, TreeNode statementListToProce
         cout << "end node returned to While, something went wrong" << endl;
     }
     // link the exiting node in the stmtList of while back to the conditional node
-    map<int, vector<int> >::iterator itr;
+    unordered_map<int, vector<int> >::iterator itr;
     for (int linkingBack: exitingBlk) {
         itr = blockGraph.find(linkingBack);
         if (itr != blockGraph.end()) {

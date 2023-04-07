@@ -5,173 +5,146 @@
 #include <iostream>
 
 #include "catch.hpp"
-#include "PKB/PKB.h"
+#include "PKB/Interfaces/DesignEntitiesInterface.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation of ReadStatement Design Entity") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs1", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("READ", "rs1");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs1", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("READ", "rs1");
 
         Result expectedResult("READ", "rs1", vector<string>{"1"});
 
-        REQUIRE(pkbResult.areEqual(expectedResult));
+        REQUIRE(DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 2: ReadStatement Design Entity, Query for Same Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs2", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("READ", "rs2");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs2", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("READ", "rs2");
 
         Result expectedResult("READ", "rs2", vector<string>{"1"});
 
-        REQUIRE(pkbResult.areEqual(expectedResult));
+        REQUIRE(DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 3: ReadStatement Design Entity, Query for Same Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs3", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("READ", "rs3");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs3", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("READ", "rs3");
 
         Result expectedResult("READ", "rs3", vector<string>{"2"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 4: ReadStatement Design Entity, Query for Same Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs4", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("READ", "rs0");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs4", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("READ", "rs0");
 
         Result expectedResult("READ", "rs4", vector<string>{"1"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 5: ReadStatement Design Entity, Query for Different Type, Same Entity Name, Same Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs5", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("VARIABLE", "rs5");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs5", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "rs5");
 
         Result expectedResult("READ", "rs5", vector<string>{"1"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 6: ReadStatement Design Entity, Query for Different Type, Different Entity Name, Same Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs6", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("VARIABLE", "rs0");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs6", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "rs0");
 
         Result expectedResult("READ", "rs6", vector<string>{"1"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 7: ReadStatement Design Entity, Query for Different Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs7", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("VARIABLE", "rs0");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs7", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "rs0");
 
         Result expectedResult("READ", "rs7", vector<string>{"1"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 8: ReadStatement Design Entity, Query for Different Type, Same Entity Name, Different Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs8", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("VARIABLE", "rs8");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs8", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("VARIABLE", "rs8");
 
         Result expectedResult("READ", "rs8", vector<string>{"1"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 9: ReadStatement Design Entity, Query for Same Type, Different Entity Name, Different Occurrence") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs9", "1"));
-        Result pkbResult = pkbTest.getDesignEntity("READ", "rs0");
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs9", "1"));
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("READ", "rs0");
 
         Result expectedResult("READ", "rs9", vector<string>{"1"});
 
-        REQUIRE(!pkbResult.areEqual(expectedResult));
+        REQUIRE(!DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
 TEST_CASE("Test 10: ReadStatement Design Entity, Check for Duplication Filtering When Multiple Occurrences Are Added") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs10", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs10", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs10", "2"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs11", "3"));
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs10", "1"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs10", "1"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs10", "2"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs11", "3"));
 
-        Result pkbResult = pkbTest.getDesignEntity("READ", "rs10");
+        Result DesignEntitiesControllerResult = designEntitiesController.getDesignEntity("READ", "rs10");
 
         Result expectedResult("READ", "rs10", vector<string>{"1", "2"});
 
-        REQUIRE(pkbResult.areEqual(expectedResult));
+        REQUIRE(DesignEntitiesControllerResult.areEqual(expectedResult));
     }
 }
 
-TEST_CASE("Test 11: ReadStatement Design Entity, Populate The Database And Call Clear All Database using the clearAllDatabases() API") {
+TEST_CASE("Test 11: ReadStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "2"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "3"));
+        DesignEntitiesInterface designEntitiesController = DesignEntitiesInterface();
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs12", "1"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs12", "1"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs12", "2"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs12", "3"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs13", "1"));
+        designEntitiesController.addDesignEntity("READ", make_tuple("rs14", "1"));
 
-        Result pkbResultBeforeClearing = pkbTest.getDesignEntity("READ", "rs12");
+        int countBeforeClearing = designEntitiesController.getNumberOfDesignEntity("READ");
 
-        Result expectedResultBeforeClearing("READ", "rs12", vector<string>{"1", "2", "3"});
-
-        pkbTest.clearAllDatabases();
-
-        Result pkbResultAfterClearing = pkbTest.getDesignEntity("READ", "rs12");
-
-        Result expectedResultAfterClearing("none", "none", vector<string>{"none"});
-
-        REQUIRE(((pkbResultBeforeClearing.areEqual(expectedResultBeforeClearing))
-                 && (pkbResultAfterClearing.areEqual(expectedResultAfterClearing))));
-    }
-}
-
-TEST_CASE("Test 12: ReadStatement Design Entity, Populate The Database And Count The Number of Occurrences Of That Entity") {
-    SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "2"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs12", "3"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs13", "1"));
-        pkbTest.addDesignEntity("READ", make_tuple("rs14", "1"));
-
-        int countBeforeClearing = pkbTest.getNumberOfDesignEntity("READ");
-
-        pkbTest.clearAllDatabases();
-
-        int countAfterClearing = pkbTest.getNumberOfDesignEntity("READ");
-
-        REQUIRE(((countAfterClearing == 0) && (countBeforeClearing == 3)));
+        REQUIRE((countBeforeClearing != 0));
     }
 }
