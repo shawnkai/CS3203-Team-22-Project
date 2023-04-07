@@ -5,6 +5,8 @@
 #ifndef SPA_PARSER_H
 #define SPA_PARSER_H
 
+#include "Utilities.h"
+#include "QPS/Exceptions/Exceptions.h"
 #include "QPS/Expressions/Expressions.h"
 #include "QPS/Expressions/SelectExpression/SelectExpression.h"
 #include "QPS/Expressions/ModifiesExpression/ModifiesExpression.h"
@@ -14,6 +16,7 @@
 #include "QPS/Expressions/FAPSExpression/FAPSExpression.h"
 #include "QPS/Expressions/AttrCondExpression/AttrCondExpression.h"
 #include "QPS/Expressions/CallsExpression/CallsExpression.h"
+#include "QPS/Expressions/NextExpression//NextExpression.h"
 
 using namespace std;
 
