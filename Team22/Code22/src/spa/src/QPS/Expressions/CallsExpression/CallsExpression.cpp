@@ -85,11 +85,11 @@ NamedEntity* CallsExpression::generateNamedEntity(string s, SynonymTable synonym
     return a;
 }
 
-string CallsExpression::toString() {
+string CallsExpression::toString() const {
     return "Calls(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-string CallsStarExpression::toString() {
+string CallsStarExpression::toString() const {
     return "Calls*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 

@@ -24,7 +24,7 @@ class ModifiesSExpression : public ModifiesExpression {
 public:
     explicit ModifiesSExpression(StmtRef* modifier, NamedEntity* target);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 };
@@ -33,7 +33,7 @@ class ModifiesPExpression : public ModifiesExpression {
 public:
     explicit ModifiesPExpression(NamedEntity* modifier, NamedEntity* target);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 };

@@ -11,7 +11,7 @@ DesignEntity::DesignEntity(string entityType) {
     this->entityType = std::move(entityType);
 };
 
-string DesignEntity::getType() {
+string DesignEntity::getType() const {
     return this->entityType;
 }
 
@@ -21,7 +21,7 @@ StmtRef::StmtRef(string type) : DesignEntity(std::move(type)) {}
 
 WildcardStmtRef::WildcardStmtRef() : StmtRef("STATEMENT") {}
 
-string WildcardStmtRef::toString() {
+string WildcardStmtRef::toString() const {
     return "_";
 }
 
@@ -32,7 +32,7 @@ StmtEntity::StmtEntity(int lineNumber) : StmtRef("STMTENTITY") {
     this->lineNumber = lineNumber;
 }
 
-int StmtEntity::getLine() {
+int StmtEntity::getLine() const {
     return this->lineNumber;
 }
 
@@ -50,13 +50,13 @@ SynonymStmtEntity::SynonymStmtEntity(string synonym) : StmtRef("STATEMENT") {
     this->synonym = std::move(synonym);
 }
 
-string SynonymStmtEntity::toString() {
+string SynonymStmtEntity::toString() const {
     return this->synonym;
 }
 
 vector<string> StmtRef::validAttrs = {"stmt#"};
 
-string StmtEntity::toString() {
+string StmtEntity::toString() const {
     return to_string(this->getLine());
 }
 
@@ -93,11 +93,11 @@ NamedEntity::NamedEntity(const string& type, string synonym) : DesignEntity(type
     this->synonym = synonym_removed;
 }
 
-string NamedEntity::getSynonym() {
+string NamedEntity::getSynonym() const {
     return this->synonym;
 }
 
-string NamedEntity::toString() {
+string NamedEntity::toString() const {
     if (this->getType() == "ident") {
         return "\"" + this->getSynonym() + "\"";
     }

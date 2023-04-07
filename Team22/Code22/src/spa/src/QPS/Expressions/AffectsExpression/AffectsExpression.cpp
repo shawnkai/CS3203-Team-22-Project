@@ -8,13 +8,13 @@ using namespace std::chrono;
 
 AffectsExpression::AffectsExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
-string AffectsExpression::toString() {
+string AffectsExpression::toString() const {
     return "Affects(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 AffectsStarExpression::AffectsStarExpression(StmtRef* s1, StmtRef* s2) : Expression({s1, s2}) {}
 
-string AffectsStarExpression::toString() {
+string AffectsStarExpression::toString() const {
     return "Affects*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 

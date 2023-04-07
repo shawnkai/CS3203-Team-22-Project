@@ -181,11 +181,11 @@ ResultTable* IfWhilePatternExpression::evaluate(PKB pkb) {
     }
 }
 
-string AssignPatternExpression::toString() {
+string AssignPatternExpression::toString() const {
     return "pattern " + this->entities[0]->toString() + "(" + this->p1->getSynonym() + ", " + this->p2 + ")";
 }
 
-string IfWhilePatternExpression::toString() {
+string IfWhilePatternExpression::toString() const {
     if (this->entities[0]->getType() == "IF") {
         return "pattern " + this->entities[0]->toString() + "(" + this->p1->getSynonym() + ", _, _)";
     }

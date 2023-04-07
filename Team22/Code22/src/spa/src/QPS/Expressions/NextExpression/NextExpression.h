@@ -10,7 +10,7 @@ class NextExpression : public Expression {
 public:
     explicit NextExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<NextExpression*> extractNextExpression(const string& query, const SynonymTable& synonymTable);
 
@@ -28,7 +28,7 @@ public:
 
     explicit NextStarExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<NextStarExpression*> extractNextStarExpression(const string& query, const SynonymTable& synonymTable);
 

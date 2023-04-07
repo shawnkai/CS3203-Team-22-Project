@@ -99,7 +99,7 @@ ModifiesSExpression::ModifiesSExpression(StmtRef *modifier, NamedEntity *target)
     this->entities.push_back(modifier);
 }
 
-string ModifiesSExpression::toString() {
+string ModifiesSExpression::toString() const {
     return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
@@ -145,7 +145,7 @@ ModifiesPExpression::ModifiesPExpression(NamedEntity *modifier, NamedEntity *tar
     this->entities.push_back(modifier);
 }
 
-string ModifiesPExpression::toString() {
+string ModifiesPExpression::toString() const {
     return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 

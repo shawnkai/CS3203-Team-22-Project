@@ -74,6 +74,7 @@ def process_file(file_pair):
     print("", end='', flush=True)
     return True
 
+
 if __name__ == "__main__":
     # Unit Testing
     print("Running Unit Tests...")
@@ -142,7 +143,8 @@ if __name__ == "__main__":
                           ("ComplexTestCases/ComplexSource.txt",
                            "ComplexTestCases/ModifiesQueriesOnMultipleProcedures.txt"),
                           (
-                          "ComplexTestCases/ComplexSource.txt", "ComplexTestCases/UsesQueriesOnMultipleProcedures.txt"),
+                              "ComplexTestCases/ComplexSource.txt",
+                              "ComplexTestCases/UsesQueriesOnMultipleProcedures.txt"),
                           ("ComplexTestCases/TestCallAndCallStarSourceProgram.txt",
                            "ComplexTestCases/TestCallDesignAbstractionQueries.txt"),
                           ("ComplexTestCases/TestCallAndCallStarSourceProgram.txt",

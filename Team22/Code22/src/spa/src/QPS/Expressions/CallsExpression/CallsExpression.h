@@ -18,7 +18,7 @@ public:
 
     static vector<CallsExpression*> extractCallsExpression(const string& query, SynonymTable synonymTable);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 
@@ -33,7 +33,7 @@ public:
 
     static vector<CallsStarExpression*> extractCallsStarExpression(const string& query, SynonymTable synonymTable);
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* evaluate(PKB pkb) override;
 };
