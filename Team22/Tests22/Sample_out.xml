@@ -1,190 +1,87 @@
 <?xml-stylesheet type="text/xsl" href="analysis.xsl"?>
 <test_results>
 <info>
-<name>22s2-cp-spa-team-22</name><parsing_time_taken>664.869000</parsing_time_taken>
+<name>22s2-cp-spa-team-22</name><parsing_time_taken>28.143000</parsing_time_taken>
 </info>
 <queries>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures Called By Procedure TestOne">1</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestOne", p)]]></querystr>
-<stuans>TestFive,TestFour,TestThree,TestTwo</stuans>
-<correct>TestTwo,TestThree,TestFour,TestFive</correct>
-<time_taken>21.530000</time_taken>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="test if pattern">1</id><querystr><![CDATA[variable v; if i; Select v pattern i (v,  _, _)]]></querystr>
+<stuans>a,b</stuans>
+<correct>a,b</correct>
+<time_taken>13.128000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures Called By Procedure TestTwo">2</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestTwo", p)]]></querystr>
-<stuans>TestFour</stuans>
-<correct>TestFour</correct>
-<time_taken>19.499000</time_taken>
+<id ReturnTuple="1" UnnamedVar="3" Pattern="1" CondNum="5" RelNum="0" comment="test if all wildcard, multiple spaces">2</id><querystr><![CDATA[variable v; if i; Select v pattern i (  _, _   , _)]]></querystr>
+<stuans>a,b,c,x</stuans>
+<correct>a,b,c,x</correct>
+<time_taken>13.937000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures Called By Procedure TestThree">3</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestThree", p)]]></querystr>
-<stuans>TestFive,TestFour</stuans>
-<correct>TestFour,TestFive</correct>
-<time_taken>20.992000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="test if semantic error">3</id><querystr><![CDATA[variable v; if i; Select v pattern i (v, v, _)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>7.663000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures Called By Procedure TestFour">4</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestFour", p)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>19.382000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="test if syntax error, missing parameter">4</id><querystr><![CDATA[variable v; if i; Select v pattern i (v, _)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>9.545000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures Called By Procedure TestFive">5</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestFive", p)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>19.056000</time_taken>
+<id ReturnTuple="1" UnnamedVar="2" Pattern="1" CondNum="4" RelNum="0" comment="test if another case">5</id><querystr><![CDATA[variable v, v2; if i; Select v pattern i (v2, _, _)]]></querystr>
+<stuans>a,b,c,x</stuans>
+<correct>a,b,x,c</correct>
+<time_taken>12.477000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Call TestOne">6</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestOne")]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>21.377000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="test while simple case">6</id><querystr><![CDATA[variable v; while w; Select v pattern w (v, _)]]></querystr>
+<stuans>a</stuans>
+<correct>a</correct>
+<time_taken>11.298000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Call TestTwo">7</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestTwo")]]></querystr>
-<stuans>TestOne</stuans>
-<correct>TestOne</correct>
-<time_taken>17.358000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="test while semantic error">7</id><querystr><![CDATA[variable v; while w; Select v pattern w (_, v)]]></querystr>
+<stuans>SyntaxError</stuans>
+<correct>SyntaxError</correct>
+<time_taken>7.529000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Call TestThree">8</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestThree")]]></querystr>
-<stuans>TestOne</stuans>
-<correct>TestOne</correct>
-<time_taken>20.969000</time_taken>
+<id ReturnTuple="1" UnnamedVar="1" Pattern="1" CondNum="3" RelNum="0" comment="test while general case">8</id><querystr><![CDATA[variable v; while w; Select v pattern w (_,_)]]></querystr>
+<stuans>a,b,c,x</stuans>
+<correct>a,b,x,c</correct>
+<time_taken>9.993000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Call TestFour">9</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestFour")]]></querystr>
-<stuans>TestOne,TestThree,TestTwo</stuans>
-<correct>TestOne,TestTwo,TestThree</correct>
-<time_taken>17.895000</time_taken>
+<id ReturnTuple="1" UnnamedVar="3" Pattern="2" CondNum="6" RelNum="0" comment="test if while multiple clauses">9</id><querystr><![CDATA[variable v; if i; while w; Select v pattern i (v, _, _) pattern w (v, _)]]></querystr>
+<stuans>a</stuans>
+<correct>a</correct>
+<time_taken>17.191000</time_taken>
 <passed/>
 </query>
 <query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Call TestFive">10</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestFive")]]></querystr>
-<stuans>TestOne,TestThree</stuans>
-<correct>TestOne,TestThree</correct>
-<time_taken>21.030000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Call Another One">11</id><querystr><![CDATA[procedure p, q; Select p such that Calls* (p, q)]]></querystr>
-<stuans>TestOne,TestThree,TestTwo</stuans>
-<correct>TestOne,TestTwo,TestThree</correct>
-<time_taken>17.806000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return All Procedures That Are Called By Another">12</id><querystr><![CDATA[procedure p, q; Select q such that Calls* (p, q)]]></querystr>
-<stuans>TestFive,TestFour,TestThree,TestTwo</stuans>
-<correct>TestTwo,TestThree,TestFour,TestFive</correct>
-<time_taken>15.779000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures That Call "TestOne"">13</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestOne")]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>19.227000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures That Call "TestTwo"">14</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestTwo")]]></querystr>
-<stuans>TestOne</stuans>
-<correct>TestOne</correct>
-<time_taken>17.143000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures That Call "TestThree"">15</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestThree")]]></querystr>
-<stuans>TestOne</stuans>
-<correct>TestOne</correct>
-<time_taken>19.273000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures That Call "TestFour"">16</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestFour")]]></querystr>
-<stuans>TestOne,TestThree,TestTwo</stuans>
-<correct>TestOne,TestTwo,TestThree</correct>
-<time_taken>18.829000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures That Call "TestFive"">17</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, "TestFive")]]></querystr>
-<stuans>TestOne,TestThree</stuans>
-<correct>TestOne,TestThree</correct>
-<time_taken>19.312000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures Called By "TestOne"">18</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestOne", p)]]></querystr>
-<stuans>TestFive,TestFour,TestThree,TestTwo</stuans>
-<correct>TestTwo,TestThree,TestFour,TestFive</correct>
-<time_taken>17.605000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures Called By "TestTwo"">19</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestTwo", p)]]></querystr>
-<stuans>TestFour</stuans>
-<correct>TestFour</correct>
-<time_taken>17.878000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures Called By "TestThree"">20</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestThree", p)]]></querystr>
-<stuans>TestFive,TestFour</stuans>
-<correct>TestFour,TestFive</correct>
-<time_taken>20.690000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures Called By "TestFour"">22</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestFour", p)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>15.574000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures Called By "TestFive"">23</id><querystr><![CDATA[procedure p; Select p such that Calls* ("TestFive", p)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>16.333000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Return Any Procedures That Call Themselves">24</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, p)]]></querystr>
-<stuans></stuans>
-<correct></correct>
-<time_taken>14.063000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Return Any Procedures That Call Any Other Procedure">25</id><querystr><![CDATA[procedure p; Select p such that Calls* (p, _)]]></querystr>
-<stuans>TestOne,TestThree,TestTwo</stuans>
-<correct>TestOne,TestTwo,TestThree</correct>
-<time_taken>14.906000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" SuchThat="1" CondNum="3" RelNum="1" comment="Using Invalid Design Entity Type In Calls*">101</id><querystr><![CDATA[variable p; Select p such that Calls* (p, "TestOne")]]></querystr>
-<stuans>SemanticError</stuans>
-<correct>SemanticError</correct>
-<time_taken>16.554000</time_taken>
-<passed/>
-</query>
-<query>
-<id ReturnTuple="1" Callsstar="1" UnnamedVar="1" SuchThat="1" CondNum="4" RelNum="1" comment="Test Calls* With Extra Space in Argument">102</id><querystr><![CDATA[procedure p; Select p such that Calls* (" TestOne ", _)]]></querystr>
-<stuans>TestFive,TestFour,TestOne,TestThree,TestTwo</stuans>
-<correct>TestOne,TestTwo,TestThree,TestFour,TestFive</correct>
-<time_taken>16.306000</time_taken>
-<passed/>
+<id ReturnTuple="1" UnnamedVar="4" Pattern="3" CondNum="8" RelNum="0" comment="test if while assign multiple clauses">10</id><querystr><![CDATA[variable v, v2, v3; if i; while w; assign a; Select v pattern w (v2, _) pattern i (v, _ , _ ) pattern a (v3, _)]]></querystr>
+<stuans>a,b</stuans>
+<correct>a,c</correct>
+<time_taken>25.980000</time_taken>
+<failed>
+<missing>c</missing>
+<additional>b</additional>
+<summary>
+<expected>2</expected>
+<matched>1</matched>
+<missing>1</missing>
+<additional>1</additional>
+</summary>
+</failed>
 </query>
 </queries>
 </test_results>
