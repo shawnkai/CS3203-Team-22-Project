@@ -5,7 +5,7 @@
 #ifndef SPA_CFG_H
 #define SPA_CFG_H
 #include <utility>
-#include <map>
+#include <unordered_map>
 #include <unordered_set>
 #include "queue"
 #include <algorithm>
