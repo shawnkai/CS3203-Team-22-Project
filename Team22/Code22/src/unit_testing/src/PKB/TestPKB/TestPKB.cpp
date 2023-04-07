@@ -102,15 +102,15 @@ TEST_CASE("Test 1: Test clearAllDatabases() API With Correct Key") {
         PKB pkb = PKB();
         pkb.addControlFlowGraph("Test",
                                 vector<int> {1},
-                                map<int, vector<int>> {make_pair(1, vector<int> {1})},
-                                map<int, int> {make_pair(1, 1)},
-                                map<int, vector<int>> {make_pair(1, vector<int> {1})},
+                                unordered_map<int, vector<int>> {make_pair(1, vector<int> {1})},
+                                unordered_map<int, int> {make_pair(1, 1)},
+                                unordered_map<int, vector<int>> {make_pair(1, vector<int> {1})},
                                 unordered_set<int> {1});
 
         vector<int> topologicallySortedElements = pkb.getTopologicallySortedElementsDatabase("Test");
-        map<int, vector<int>> blockToStatementNumberElements = pkb.getBlockToStatementNumbersDatabase("Test");
-        map<int, int> statementNumberToBlockElements = pkb.getStatementNumberToBlockDatabase("Test");
-        map<int, vector<int>> blockToBlockElements = pkb.getBlockToBlockDatabase("Test");
+        unordered_map<int, vector<int>> blockToStatementNumberElements = pkb.getBlockToStatementNumbersDatabase("Test");
+        unordered_map<int, int> statementNumberToBlockElements = pkb.getStatementNumberToBlockDatabase("Test");
+        unordered_map<int, vector<int>> blockToBlockElements = pkb.getBlockToBlockDatabase("Test");
         unordered_set<int> blocksWithBackPointersElements = pkb.getBlocksWithBackPointersDatabase("Test");
 
         REQUIRE(topologicallySortedElements.size() == 1);
@@ -122,9 +122,9 @@ TEST_CASE("Test 1: Test clearAllDatabases() API With Correct Key") {
         pkb.clearAllDatabases(accessKey);
 
         vector<int> topologicallySortedElementsAfterClearing = pkb.getTopologicallySortedElementsDatabase("Test");
-        map<int, vector<int>> blockToStatementNumberElementsAfterClearing = pkb.getBlockToStatementNumbersDatabase("Test");
-        map<int, int> statementNumberToBlockElementsAfterClearing = pkb.getStatementNumberToBlockDatabase("Test");
-        map<int, vector<int>> blockToBlockElementsAfterClearing = pkb.getBlockToBlockDatabase("Test");
+        unordered_map<int, vector<int>> blockToStatementNumberElementsAfterClearing = pkb.getBlockToStatementNumbersDatabase("Test");
+        unordered_map<int, int> statementNumberToBlockElementsAfterClearing = pkb.getStatementNumberToBlockDatabase("Test");
+        unordered_map<int, vector<int>> blockToBlockElementsAfterClearing = pkb.getBlockToBlockDatabase("Test");
         unordered_set<int> blocksWithBackPointersElementsAfterClearing = pkb.getBlocksWithBackPointersDatabase("Test");
 
         REQUIRE(topologicallySortedElementsAfterClearing.size() == 1);
