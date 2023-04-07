@@ -34,7 +34,7 @@ private:
 public:
     explicit FollowsExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<FollowsExpression*> extractFollowsExpression(const string& query, const SynonymTable& synonymTable);
 };
@@ -46,7 +46,7 @@ private:
 public:
     explicit FollowsStarExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<FollowsStarExpression*> extractFollowsStarExpression(const string& query, const SynonymTable& synonymTable);
 
@@ -59,7 +59,7 @@ private:
 public:
     explicit ParentExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<ParentExpression*> extractParentExpression(const string& query, const SynonymTable& synonymTable);
 };
@@ -71,7 +71,7 @@ private:
 public:
     explicit ParentStarExpression(StmtRef* s1, StmtRef* s2);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<ParentStarExpression*> extractParentStarExpression(const string& query, const SynonymTable& synonymTable);
 };

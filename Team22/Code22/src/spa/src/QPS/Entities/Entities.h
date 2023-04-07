@@ -27,9 +27,9 @@ public:
 
     DesignEntity();
 
-    string getType();
+    string getType() const;
 
-    virtual string toString() {
+    virtual string toString() const {
         return "";
     }
 
@@ -65,7 +65,7 @@ protected:
     string synonym;
     SynonymStmtEntity(string type, string synonym);
 public:
-    string toString() override;
+    string toString() const override;
     explicit SynonymStmtEntity(string synonym);
     ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
@@ -74,15 +74,15 @@ public:
 class WildcardStmtRef: public StmtRef {
 public:
     WildcardStmtRef();
-    string toString() override;
+    string toString() const override;
 };
 
 class StmtEntity: public StmtRef {
 private:
     int lineNumber;
 public:
-    int getLine();
-    string toString() override;
+    int getLine() const;
+    string toString() const override;
     explicit StmtEntity(int lineNumber);
 };
 
@@ -159,9 +159,9 @@ protected:
 public:
     NamedEntity(const string& type, string synonym);
 
-    string getSynonym();
+    string getSynonym() const;
 
-    string toString() override;
+    string toString() const override;
 
     ResultTable* getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;

@@ -27,7 +27,7 @@ Result::Result(string entityType, string entityName, vector<string> result) {
  *
  * @return A string with the details of the Result object.
  */
-string Result::toString() {
+string Result::toString() const {
     string resultString = (this->entityType) + ": " + (this->entityName) + ": ";
 
     for (auto item: this->result) {

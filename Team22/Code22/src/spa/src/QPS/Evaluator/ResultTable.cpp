@@ -82,7 +82,7 @@ bool ResultTable::equals(ResultTable* table2) {
     return true;
 }
 
-string ResultTable::toString() {
+string ResultTable::toString() const {
     size_t length = this->getSize();
     string result;
     for (const auto& kv: this->table) {
@@ -266,7 +266,7 @@ vector<string> ResultTable::getColumnNames() {
     return columns;
 }
 
-::size_t ResultTable::getSize() {
+::size_t ResultTable::getSize() const {
     if (this->table.empty()) {
         return 0;
     }

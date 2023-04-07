@@ -24,7 +24,7 @@ using namespace std;
 class Cfg {
 public:
     vector<int> buildCfg(TNode root, int exitParent);
-    std::string toString();
+    std::string toString() const;
     std::vector<int> basicBlock;
     std::map<int, std::vector<int> > blockToStatement;
     std::map<int, int> statementNumberToBlock;

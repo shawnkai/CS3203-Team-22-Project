@@ -99,23 +99,23 @@ ResultTable* FAPSExpression::evaluate(PKB pkb) {
 
 FollowsExpression::FollowsExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "FOLLOWS") {}
 
-string FollowsExpression::toString() {
+string FollowsExpression::toString() const {
     return "Follows(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 FollowsStarExpression::FollowsStarExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "FOLLOWSSTAR") {}
 
-string FollowsStarExpression::toString() {
+string FollowsStarExpression::toString() const {
     return "Follows*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 ParentExpression::ParentExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "PARENT") {}
-string ParentExpression::toString() {
+string ParentExpression::toString() const {
     return "Parent(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
 ParentStarExpression::ParentStarExpression(StmtRef* s1, StmtRef* s2) : FAPSExpression(s1, s2, "PARENTSTAR") {}
-string ParentStarExpression::toString() {
+string ParentStarExpression::toString() const {
     return "Parent*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 

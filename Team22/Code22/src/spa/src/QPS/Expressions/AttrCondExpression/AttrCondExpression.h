@@ -23,7 +23,7 @@ private:
 public:
     AttrCondExpression(DesignEntity* syn1, string syn1attr, DesignEntity* syn2, string syn2attr);
 
-    string toString() override;
+    string toString() const override;
 
     static vector<AttrCondExpression*> extractAttrCondExpression(const string& query, const SynonymTable& synonymTable);
 
