@@ -135,27 +135,27 @@ TRUE
 5000
 29 - Does Procedure One Call Procedure Three Directly
 
-Select BOOLEAN such that Calls* ("TestOne", "TestThree")
+Select BOOLEAN such that Calls ("TestOne", "TestThree")
 TRUE
 5000
 30 - Does Procedure One Call Procedure Four Directly
 
-Select BOOLEAN such that Calls* ("TestOne", "TestFour")
+Select BOOLEAN such that Calls ("TestOne", "TestFour")
 TRUE
 5000
 31 - Does Procedure One Call Procedure Five Directly
 
-Select BOOLEAN such that Calls* ("TestOne", "TestFive")
+Select BOOLEAN such that Calls ("TestOne", "TestFive")
 FALSE
 5000
 32 - Does Procedure Two Call Procedure Five Directly
 
-Select BOOLEAN such that Calls* ("TestTwo", "TestFive")
+Select BOOLEAN such that Calls ("TestTwo", "TestFive")
 FALSE
 5000
 33 - Does Procedure Three Call Procedure Five Directly
 
-Select BOOLEAN such that Calls* ("TestThree", "TestFive")
+Select BOOLEAN such that Calls ("TestThree", "TestFive")
 TRUE
 5000
 101 - Using Invalid Design Entity Type In Calls
