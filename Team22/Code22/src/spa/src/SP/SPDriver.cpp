@@ -13,7 +13,7 @@ SPDriver::SPDriver() {}
  *
  * @param filename The filename of the SIMPLE program.
  */
-void SPDriver::parseSimpleProgram(std::string filename) {
+void SPDriver::parseSimpleProgram(const std::string& filename) {
     Tokenizer tokenizer = Tokenizer();
     std::vector<Token> tokenList;
     try {
