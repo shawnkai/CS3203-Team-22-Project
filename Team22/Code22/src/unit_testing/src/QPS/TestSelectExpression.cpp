@@ -384,3 +384,21 @@ TEST_CASE("TestCase3_ParseInvalidInteger") {
 
 }
 
+//TEST_CASE("TestCase3_DuplicateClauseElimination") {
+//    QueryParser queryParser;
+//    string declaration = "stmt s; assign a;";
+//
+//    queryParser.parse(declaration);
+//
+//    SECTION ("RepeatedPatters_Success") {
+//        string query = R"(Select s pattern a(_,_"x + 01"_) pattern a(_,_"x + 01"_) pattern a(_,_"x + 01"_))";
+//        string expected = R"(Select s such that pattern a(_, _+x01_))";
+//
+//        SelectExpression *actualResult = queryParser.parse(query);
+//        REQUIRE(actualResult->toString() == expected);
+//    }
+//
+//}
+
+
+

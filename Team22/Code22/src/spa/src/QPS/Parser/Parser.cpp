@@ -35,7 +35,9 @@ SelectExpression* QueryParser::parse(string query) {
         Utilities::concatenateVectors(conditions, AffectsExpression::extractAffectsExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, AffectsStarExpression::extractAffectsStarExpression(query, synonymTable));
 
-        return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, conditions);
+        vector<Expression*> uniqueConditions = Utilities::getUniqueElements(conditions);
+
+        return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, uniqueConditions);
     } else {
         throw SyntacticException();
     }
