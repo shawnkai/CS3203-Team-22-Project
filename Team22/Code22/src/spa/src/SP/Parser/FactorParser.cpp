@@ -4,17 +4,17 @@
 
 #include "FactorParser.h"
 
-std::shared_ptr<TreeNode> FactorParser::parse() {
-    FactorNode node;
+TNode FactorParser::parse() {
+    TNode node;
     Token currToken = tokenList[*pos];
     if (currToken.type == TokenType::LEFT_ROUND_BRACKET) {
         ++ *pos;
         ParserFactory expressionParserFactory;
         auto exprParser = expressionParserFactory.createParser(EXPR, tokenList, pos);
-        std::shared_ptr<TreeNode> node1 = exprParser->parse();
+        TNode node1 = exprParser->parse();
         currToken = tokenList[*pos];
         if (currToken.type != TokenType::RIGHT_ROUND_BRACKET) {
-            cout << "in factor parser Expected closing bracket ')' but instead got: " << currToken.value << endl;
+            std::cout << "in factor parser Expected closing bracket ')' but instead got: " << currToken.value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         ++ *pos;
@@ -28,7 +28,7 @@ std::shared_ptr<TreeNode> FactorParser::parse() {
     }
     else {
         if (currToken.type != TokenType::INTEGER) {
-            cout << "Expected constant or variable but instead got: " << currToken.value << endl;
+            std::cout << "Expected constant or variable but instead got: " << currToken.value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         node.nodeType = currToken.type;
@@ -36,5 +36,5 @@ std::shared_ptr<TreeNode> FactorParser::parse() {
         node.stmtNumber = currToken.lineNumber;
         ++ *pos;
     }
-    return std::make_shared<TreeNode>(node);
+    return node;
 }

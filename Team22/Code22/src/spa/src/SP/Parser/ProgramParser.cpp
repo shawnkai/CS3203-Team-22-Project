@@ -1,24 +1,24 @@
 
 #include "ProgramParser.h"
 
-std::shared_ptr<TreeNode> ProgramParser::parse() {
+TNode ProgramParser::parse() {
     Token currToken = tokenList[*pos];
     if (currToken.type != TokenType::PROCEDURE) {
-        cout << "Expecting keyword procedure for a legal SIMPLE program" << endl;
+        std::cout << "Expecting keyword procedure for a legal SIMPLE program" << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ProgramNode programNode;
+    TNode programNode;
     programNode.nodeType = TokenType::PROGRAM;
     programNode.stringId = currToken.value;
     programNode.stmtNumber = currToken.lineNumber;
     while (*pos < tokenList.size() && tokenList[*pos].type == TokenType::PROCEDURE) {
         ParserFactory procedureParserFactory;
         auto procedureParser = procedureParserFactory.createParser(PROCEDURE, tokenList, pos);
-        std::shared_ptr<TreeNode> procedureNode = procedureParser->parse();
+        TNode procedureNode = procedureParser->parse();
         programNode.children.push_back(procedureNode);
     }
     if (*pos != tokenList.size()) {
-        cout << "Tangling tokens outside the last procedure are ignored" << endl;
+        std::cout << "Tangling tokens outside the last procedure are ignored" << std::endl;
     }
-    return make_shared<ProgramNode>(programNode);
+    return programNode;
 }

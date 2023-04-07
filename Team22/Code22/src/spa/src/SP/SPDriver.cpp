@@ -29,7 +29,7 @@ void SPDriver::parseSimpleProgram(std::string filename) {
     }
     ParserFactory factory;
     auto parser = factory.createParser(TokenType::PROGRAM, tokenList, make_shared<int>(0));
-    std::shared_ptr<TreeNode> result;
+    TNode result;
     try {
         result = parser->parse();
     }
@@ -37,71 +37,57 @@ void SPDriver::parseSimpleProgram(std::string filename) {
         std::cerr << e.what() << endl;
         ::exit(1);
     }
-    if (result->children.empty()) {
+    if (result.children.empty()) {
         cout << "Null pointer returned, use debug mode to find out why" << endl;
     }
-    std::queue<std::shared_ptr<TreeNode> > pendingToString;
+    std::queue<TNode> pendingToString;
     pendingToString.push(result);
 
     while (!pendingToString.empty()) {
         auto toProcess = pendingToString.front();
         pendingToString.pop();
-        cout << ToString(*toProcess.get()) << endl;
-        if (!toProcess->children.empty()) {
-            auto childrenArr = (toProcess)->children;
+        cout << ToString(toProcess) << endl;
+        if (!toProcess.children.empty()) {
+            auto childrenArr = (toProcess).children;
             for (auto child : childrenArr) {
                 pendingToString.push(child);
             }
         }
     }
 
-//    PKB pkbinstance = PKB();
-//    DesignExtractor designExtractor;
-//
-//    //designExtractor.extractAbstraction(result, pkbinstance);
-//
-//    try {
-//        designExtractor.extractAbstraction(result, pkbinstance);
-//    }
-//    catch (std::invalid_argument& theException) {
-//        std::cerr << theException.what() << endl;
-//        ::exit(1);
-//    }
-//
-//
-//    vector<Cfg> controlFlowGraphs;
-//    for (auto procedure: result->children) {
-//        Cfg controlFlowGraph = Cfg(*procedure);
-//        controlFlowGraph.buildCfg(*procedure, -1);
-//        controlFlowGraphs.push_back(controlFlowGraph);
-//        pkbinstance.addControlFlowGraph(procedure->stringId, controlFlowGraph.basicBlock,
-//                                        controlFlowGraph.blockToStatement,
-//                                        controlFlowGraph.statementNumberToBlock,
-//                                        controlFlowGraph.blockGraph,
-//                                        controlFlowGraph.blockPointingBackward);
-//        cout << controlFlowGraph.toString() << endl;
-//    }
-//        NextExtractor nextExtractor;
-//        nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement, controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph, controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
+    PKB pkbinstance = PKB();
+    DesignExtractor designExtractor;
 
-//    PKB pkbinstance = PKB();
-//    DesignExtractor designExtractor;
-//    designExtractor.extractAbstraction(result, pkbinstance);
-//
-//    vector<Cfg> controlFlowGraphs;
-//    for (auto procedure: result.children) {
-//        Cfg controlFlowGraph = Cfg(procedure);
-//        controlFlowGraph.buildCfg(procedure, -1);
-//        controlFlowGraphs.push_back(controlFlowGraph);
-//        pkbinstance.addControlFlowGraph(procedure.stringId,controlFlowGraph.basicBlock,
-//                                        controlFlowGraph.blockToStatement,
-//                                        controlFlowGraph.statementNumberToBlock,
-//                                        controlFlowGraph.blockGraph,
-//                                        controlFlowGraph.blockPointingBackward);
-//
-//    }
-//    for (auto graph: controlFlowGraphs) {
-//        cout << graph.toString() << endl;
-//    }
-//
+    designExtractor.extractAbstraction(result, pkbinstance);
+
+    try {
+        designExtractor.extractAbstraction(result, pkbinstance);
+    }
+    catch (std::invalid_argument& theException) {
+        std::cerr << theException.what() << endl;
+        ::exit(1);
+    }
+
+    vector<Cfg> controlFlowGraphs;
+    for (const auto& procedure: result.children) {
+        Cfg controlFlowGraph = Cfg(procedure);
+        controlFlowGraph.buildCfg(procedure, -1);
+        controlFlowGraphs.push_back(controlFlowGraph);
+        pkbinstance.addControlFlowGraph(procedure.stringId, controlFlowGraph.basicBlock,
+                                        controlFlowGraph.blockToStatement,
+                                        controlFlowGraph.statementNumberToBlock,
+                                        controlFlowGraph.blockGraph,
+                                        controlFlowGraph.blockPointingBackward);
+        cout << controlFlowGraph.toString() << endl;
+
+        NextExtractor nextExtractor;
+        nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement,
+                                         controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph,
+                                         controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
+    }
+
+    for (auto graph: controlFlowGraphs) {
+        cout << graph.toString() << endl;
+    }
+
 }

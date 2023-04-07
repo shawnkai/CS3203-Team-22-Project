@@ -24,6 +24,6 @@
 
 class ParserFactory {
 public:
-    shared_ptr<MainParser> createParser(TokenType type, const std::vector<Token>& tokenList, std::shared_ptr<int> pos);
+    std::shared_ptr<MainParser> createParser(TokenType type, const std::vector<Token>& tokenList, std::shared_ptr<int> pos);
 };
 #endif //SPA_PARSERFACTORY_H

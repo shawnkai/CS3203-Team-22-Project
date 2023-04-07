@@ -4,13 +4,14 @@
 
 #ifndef SPA_PRINTPARSER_H
 #define SPA_PRINTPARSER_H
+
 #include "MainParser.h"
 
 class PrintParser : public MainParser{
 public:
     using MainParser::MainParser;
 
-    std::shared_ptr<TreeNode> parse() override;
+    TNode parse() override;
 };
 
 #endif //SPA_PRINTPARSER_H

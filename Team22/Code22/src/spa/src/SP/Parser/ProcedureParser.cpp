@@ -4,30 +4,30 @@
 
 #include "ProcedureParser.h"
 
-std::shared_ptr<TreeNode> ProcedureParser::parse() {
+TNode ProcedureParser::parse() {
     Token currToken = tokenList[*pos];
-    ProcedureNode node;
+    TNode node;
     node.nodeType = TokenType::PROCEDURE;
     ++ *pos;
     if (tokenList[*pos].type != TokenType::NAME_IDENTIFIER) {
-        cout << "Expecting function name for a procedure, got something else" << endl;
+        std::cout << "Expecting function name for a procedure, got something else" << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     node.stringId = tokenList[*pos].value;
     node.stmtNumber = tokenList[*pos].lineNumber;
     ++ *pos;
     if (*pos >= tokenList.size()) {
-        cout << "SIMPLE source end unexpectedly after a procedure name" << endl;
+        std::cout << "SIMPLE source end unexpectedly after a procedure name" << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token nextToken = tokenList[*pos];
     if (nextToken.type != TokenType::LEFT_CURLY_BRACKET) {
-        cout << "Expecting '{' after procedure name declaration but got:" << nextToken.value <<endl;
+        std::cout << "Expecting '{' after procedure name declaration but got:" << nextToken.value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
     if (*pos >= tokenList.size()) {
-        cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
+        std::cout << "SIMPLE source end unexpectedly after left curly bracket" << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token stmtToken = tokenList[*pos];
@@ -37,13 +37,13 @@ std::shared_ptr<TreeNode> ProcedureParser::parse() {
     auto child = stmtParser->parse();
     node.children.push_back(child);
     if (*pos >= tokenList.size()) {
-        cout << "SIMPLE source end unexpectedly without right curly bracket" << endl;
+        std::cout << "SIMPLE source end unexpectedly without right curly bracket" << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     if (tokenList[*pos].type != TokenType::RIGHT_CURLY_BRACKET) {
-        cout << "Expected '}' at the end of a procedure but instead got: " << tokenList[*pos].value << endl;
+        std::cout << "Expected '}' at the end of a procedure but instead got: " << tokenList[*pos].value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     ++ *pos;
-    return make_shared<ProcedureNode>(node);
+    return node;
 }

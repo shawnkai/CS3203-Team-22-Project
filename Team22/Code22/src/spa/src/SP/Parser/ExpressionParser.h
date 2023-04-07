@@ -10,7 +10,7 @@ class ExpressionParser : public MainParser {
 public:
     using MainParser::MainParser;
 
-    std::shared_ptr<TreeNode> parse() override;
+    TNode parse() override;
 
 };
 

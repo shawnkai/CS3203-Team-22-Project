@@ -4,13 +4,13 @@
 
 #include "StatementListParser.h"
 
-std::shared_ptr<TreeNode> StatementListParser::parse() {
+TNode StatementListParser::parse() {
     if (*pos >= tokenList.size()) {
-        cout << "SIMPLE source end unexpectedly after left curly bracket" << endl;
+        std::cout << "SIMPLE source end unexpectedly after left curly bracket" << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token currToken = tokenList[*pos];
-    StatementListNode stmtNode;
+    TNode stmtNode;
     stmtNode.nodeType = TokenType::STATEMENT_LIST;
     int checkerPos = *pos - 2;
     if (tokenList[checkerPos].type == TokenType::IF &&
@@ -23,7 +23,7 @@ std::shared_ptr<TreeNode> StatementListParser::parse() {
     }
     while (tokenList[*pos].type != TokenType::RIGHT_CURLY_BRACKET && *pos < tokenList.size()) {
         if (*pos >= tokenList.size()) {
-            cout << "SIMPLE source procedure ends unexpectedly without right curly bracket" << endl;
+            std::cout << "SIMPLE source procedure ends unexpectedly without right curly bracket" << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
         if (tokenList[*pos].type == TokenType::READ) {
@@ -66,5 +66,5 @@ std::shared_ptr<TreeNode> StatementListParser::parse() {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Unrecognized Token");
         }
     }
-    return std::make_shared<StatementListNode>(stmtNode);
+    return stmtNode;
 }

@@ -4,8 +4,8 @@
 
 #include "RelationalFactorParser.h"
 
-std::shared_ptr<TreeNode> RelationalFactorParser::parse() {
-    RelationalFactorNode node;
+TNode RelationalFactorParser::parse() {
+    TNode node;
     Token currToken = tokenList[*pos];
     ParserFactory factory;
     if (currToken.type == TokenType::NAME_IDENTIFIER || currToken.type == TokenType::INTEGER) {
@@ -15,13 +15,13 @@ std::shared_ptr<TreeNode> RelationalFactorParser::parse() {
             (tokenList[peekPos].value == ">" || tokenList[peekPos].value == ">="
             || tokenList[peekPos].value == "<=" ||tokenList[peekPos].value == "<"
             || tokenList[peekPos].value == "==" || tokenList[peekPos].value == "!="))) {
-            RelationalFactorNode varNode;
+            TNode varNode;
             varNode.nodeType = currToken.type;
             varNode.stringId = currToken.value;
             varNode.stmtNumber = currToken.lineNumber;
             node = varNode;
             ++ *pos;
-            return std::make_shared<TreeNode>(node);
+            return node;
         } else {
             return factory.createParser(EXPR, tokenList, pos)->parse();
         }

@@ -11,30 +11,13 @@
 #include <utility>
 #include <unordered_set>
 #include "memory"
-#include "TreeNode.h"
-#include "IfNode.h"
-#include "WhileNode.h"
-#include "PrintNode.h"
-#include "CallNode.h"
-#include "AssignNode.h"
-#include "ReadNode.h"
-#include "ConditionalExpressionNode.h"
-#include "ExpressionNode.h"
-#include "RelationalExpressionNode.h"
-#include "RelationalFactorNode.h"
-#include "FactorNode.h"
-#include "TermNode.h"
-#include "ProcedureNode.h"
-#include "ProgramNode.h"
-#include "StatementListNode.h"
-#include "VarNode.h"
-#include "ConstantNode.h"
+#include "TNode.h"
 
 class MainParser {
 public:
     MainParser(const std::vector<Token>& tokenList, std::shared_ptr<int> pos) : tokenList(tokenList), pos(std::move(pos)) {}
 
-    virtual std::shared_ptr<TreeNode> parse() {
+    virtual TNode parse() {
         std::cout << "Main Parser's parse should never be called" << std::endl;
         throw std::runtime_error("Should not call Main Parser's parse");
     }

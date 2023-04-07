@@ -4,34 +4,34 @@
 
 #include "PrintParser.h"
 
-std::shared_ptr<TreeNode> PrintParser::parse() {
+TNode PrintParser::parse() {
     Token currToken = tokenList[*pos];
-    PrintNode node;
+    TNode node;
     node.nodeType = currToken.type;
     node.stringId = currToken.value;
     node.stmtNumber = currToken.lineNumber;
 
     if (currToken.type != TokenType::PRINT) {
-        cout << "Expected print keyword for the statement but instead got: " << currToken.value << endl;
+        std::cout << "Expected print keyword for the statement but instead got: " << currToken.value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     int checkerPos = *pos + 2;
     if (checkerPos >= tokenList.size()) {
-        cout << "SIMPLE source end unexpectedly after print keyword, with no ';' " << endl;
+        std::cout << "SIMPLE source end unexpectedly after print keyword, with no ';' " << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     Token pendingCheckTerminalToken = tokenList[checkerPos];
     if (pendingCheckTerminalToken.type != TokenType::STATEMENT_TERMINAL) {
-        cout << "Expected stmt terminal ';' after variable name, but got " << pendingCheckTerminalToken.value << endl;
+        std::cout << "Expected stmt terminal ';' after variable name, but got " << pendingCheckTerminalToken.value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
 
     Token varNameToken = tokenList[++ *pos];
-    VarNode child;
+    TNode child;
     child.nodeType = varNameToken.type;
     child.stringId = varNameToken.value;
     child.stmtNumber = varNameToken.lineNumber;
-    node.children.push_back(std::make_shared<TreeNode>(child));
+    node.children.push_back(child);
     *pos += 2;
-    return make_shared<PrintNode>(node);
+    return node;
 }

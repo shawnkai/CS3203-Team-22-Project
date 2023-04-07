@@ -12,7 +12,7 @@ class ProgramParser : public MainParser {
 public:
     using MainParser::MainParser;
 
-    std::shared_ptr<TreeNode> parse() override;
+    TNode parse() override;
 };
 
 #endif //SPA_PROGRAMPARSER_H

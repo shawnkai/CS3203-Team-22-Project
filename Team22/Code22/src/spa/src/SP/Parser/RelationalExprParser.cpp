@@ -1,10 +1,10 @@
 
 #include "RelationalExprParser.h"
 
-std::shared_ptr<TreeNode> RelationalExprParser::parse() {
+TNode RelationalExprParser::parse() {
     ParserFactory factory;
     auto node = factory.createParser(RELATIONAL_FACTOR, tokenList, pos)->parse();
-    RelationalExpressionNode relationalNode;
+    TNode relationalNode;
     while (tokenList[*pos].type == TokenType::OPERATOR &&
            (tokenList[*pos].value == ">" || tokenList[*pos].value == "<" || tokenList[*pos].value == ">="
             || tokenList[*pos].value == "<=" || tokenList[*pos].value == "==" || tokenList[*pos].value == "!=")) {
@@ -15,5 +15,5 @@ std::shared_ptr<TreeNode> RelationalExprParser::parse() {
         ++ *pos;
         relationalNode.children.push_back(factory.createParser(RELATIONAL_FACTOR, tokenList, pos)->parse());
     }
-    return std::make_shared<TreeNode>(relationalNode);
+    return relationalNode;
 }

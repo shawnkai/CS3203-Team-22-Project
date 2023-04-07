@@ -4,21 +4,21 @@
 
 #include "TermParser.h"
 
-std::shared_ptr<TreeNode> TermParser::parse() {
+TNode TermParser::parse() {
     ParserFactory factorParserFactory;
     auto factorParser = factorParserFactory.createParser(FACTOR, tokenList, pos);
     auto node = factorParser->parse();
     while (tokenList[*pos].type == TokenType::OPERATOR &&
            (tokenList[*pos].value == "*" || tokenList[*pos].value == "/" || tokenList[*pos].value == "%")) {
         Token currToken = tokenList[*pos];
-        TermNode termNode;
+        TNode termNode;
         termNode.nodeType = TokenType::OPERATOR;
         termNode.stringId = currToken.value;
         termNode.stmtNumber = currToken.lineNumber;
         termNode.children.push_back(node);
         ++ *pos;
         termNode.children.push_back(factorParser->parse());
-        node = std::make_shared<TreeNode>(termNode);
+        node = termNode;
     }
     return node;
 }
