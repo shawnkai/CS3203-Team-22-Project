@@ -72,6 +72,7 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
 //    REQUIRE(builder.blockGraph.size() == 17);
 //    REQUIRE(builder.blockToStatement.size() == 17);
 //    REQUIRE(builder.statementNumberToBlock.size() == 17);
+
 }
 
 TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
@@ -167,4 +168,5 @@ TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
 //    itr = simplestGraph.find(1);
 //    REQUIRE(itr->second.size() == 1);
 //    REQUIRE(itr->second[0] == 0);
+
 }
