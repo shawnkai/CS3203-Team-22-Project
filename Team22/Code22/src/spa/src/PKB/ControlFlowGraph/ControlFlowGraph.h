@@ -27,21 +27,23 @@ class ControlFlowGraph {
     BlocksWithBackPointers* blocksWithBackPointersDatabase = new BlocksWithBackPointers();
 
 public:
-    explicit ControlFlowGraph(string procedureName, vector<int> topologicallySortedBlockNumbers, map<int,
-            vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
-            map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
+    explicit ControlFlowGraph(string procedureName, vector<int> topologicallySortedBlockNumbers,
+                              unordered_map<int, vector<int>> blockToStatementNumbers,
+                              unordered_map<int, int> statementNumberToBlock,
+                              unordered_map<int, vector<int>> blockToBlock,
+                              unordered_set<int> blocksWithBackPointers);
 
     string getProcedureName();
     vector<int> getTopologicallySortedBlockNumbersDatabase();
-    map<int, vector<int>> getBlockToStatementNumbersDatabase();
-    map<int, int> getStatementNumberToBlockDatabase();
-    map<int, vector<int>> getBlockToBlockDatabase();
+    unordered_map<int, vector<int>> getBlockToStatementNumbersDatabase();
+    unordered_map<int, int> getStatementNumberToBlockDatabase();
+    unordered_map<int, vector<int>> getBlockToBlockDatabase();
     unordered_set<int> getBlocksWithBackPointersDatabase();
 
     void updateTopologicallySortedBlockNumbersDatabase(vector<int> newTopologicallySortedBlockNumbersDatabase);
-    void updateBlockToStatementNumbersDatabase(map<int, vector<int>> newBlockToStatementNumbersDatabase);
-    void updateStatementNumberToBlockDatabase(map<int, int> newStatementNumberToBlockDatabase);
-    void updateBlockToBlockDatabase(map<int, vector<int>> newBlockToBlockDatabase);
+    void updateBlockToStatementNumbersDatabase(unordered_map<int, vector<int>> newBlockToStatementNumbersDatabase);
+    void updateStatementNumberToBlockDatabase(unordered_map<int, int> newStatementNumberToBlockDatabase);
+    void updateBlockToBlockDatabase(unordered_map<int, vector<int>> newBlockToBlockDatabase);
     void updateBlocksWithBackPointers(unordered_set<int> newBlocksWithBackPointersDatabase);
 };
 

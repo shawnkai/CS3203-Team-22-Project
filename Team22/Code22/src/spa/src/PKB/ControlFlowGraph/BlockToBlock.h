@@ -8,21 +8,21 @@
 #define SPA_BLOCKTOBLOCK_H
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
 
 class BlockToBlock {
-    map<int, vector<int>> blockToBlockDatabase;
+    unordered_map<int, vector<int>> blockToBlockDatabase;
 
 public:
-    explicit BlockToBlock(map<int, vector<int>> blockToBlockDatabase);
+    explicit BlockToBlock(unordered_map<int, vector<int>> blockToBlockDatabase);
     explicit BlockToBlock();
 
     void addToDatabase(int block, vector<int> nextBlock);
-    map<int, vector<int>> getBlockToBlockDatabase();
-    void copyBlockToBlockDatabase(map<int, vector<int>> blockToBlock);
+    unordered_map<int, vector<int>> getBlockToBlockDatabase();
+    void copyBlockToBlockDatabase(unordered_map<int, vector<int>> blockToBlock);
     void clearDatabase();
 };
 
