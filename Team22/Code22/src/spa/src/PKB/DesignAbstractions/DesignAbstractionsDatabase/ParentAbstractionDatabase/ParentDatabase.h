@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class ParentDatabase: public DesignAbstractionDatabase {
+class ParentDatabase : public DesignAbstractionDatabase {
 public:
-
 };
 
-#endif //SPA_PARENTDATABASE_H
+#endif//SPA_PARENTDATABASE_H

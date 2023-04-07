@@ -15,7 +15,7 @@ using namespace std;
 
 class ModifiesFactory {
 public:
-    static DesignAbstraction* createModifiesAbstraction(tuple<string, string, string> abstractionDetails);
+    static DesignAbstraction *createModifiesAbstraction(tuple<string, string, string> abstractionDetails);
 };
 
-#endif //SPA_MODIFIESFACTORY_H
+#endif//SPA_MODIFIESFACTORY_H

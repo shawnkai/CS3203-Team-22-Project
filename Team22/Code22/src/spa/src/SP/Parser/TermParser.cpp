@@ -16,7 +16,7 @@ TNode TermParser::parse() {
         termNode.stringId = currToken.value;
         termNode.stmtNumber = currToken.lineNumber;
         termNode.children.push_back(node);
-        ++ *pos;
+        ++*pos;
         termNode.children.push_back(factorParser->parse());
         node = termNode;
     }

@@ -26,7 +26,7 @@ TNode PrintParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
 
-    Token varNameToken = tokenList[++ *pos];
+    Token varNameToken = tokenList[++*pos];
     TNode child;
     child.nodeType = varNameToken.type;
     child.stringId = varNameToken.value;

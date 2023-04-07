@@ -14,7 +14,7 @@ BlockToStatementNumbers::BlockToStatementNumbers(
 }
 
 BlockToStatementNumbers::BlockToStatementNumbers() {
-    this->blockToStatementNumbersDatabase = unordered_map<int, vector<int>> {};
+    this->blockToStatementNumbersDatabase = unordered_map<int, vector<int>>{};
 }
 
 void BlockToStatementNumbers::addToDatabase(int blockNumber, vector<int> statementNumbers) {
@@ -26,10 +26,11 @@ unordered_map<int, vector<int>> BlockToStatementNumbers::getBlockToStatementNumb
 }
 
 void BlockToStatementNumbers::copyBlockToStatementNumbersDatabase(unordered_map<int,
-                                                                  vector<int>> blockToStatementNumbers) {
+                                                                                vector<int>>
+                                                                          blockToStatementNumbers) {
     this->blockToStatementNumbersDatabase = blockToStatementNumbers;
 }
 
 void BlockToStatementNumbers::clearDatabase() {
-    this->blockToStatementNumbersDatabase = unordered_map<int, vector<int>> {};
+    this->blockToStatementNumbersDatabase = unordered_map<int, vector<int>>{};
 }

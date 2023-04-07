@@ -9,8 +9,7 @@
 using namespace std;
 
 AssignmentStatement::AssignmentStatement(tuple<string, string> entityDetails)
-: Statement(entityDetails) {
-
+    : Statement(entityDetails) {
 }
 
 string AssignmentStatement::getTypeOfEntity() {

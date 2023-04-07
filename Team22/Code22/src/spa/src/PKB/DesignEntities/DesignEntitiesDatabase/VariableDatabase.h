@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class VariableDatabase: public DesignEntityDatabase {
+class VariableDatabase : public DesignEntityDatabase {
 public:
-
 };
 
-#endif //SPA_VARIABLEDATABASE_H
+#endif//SPA_VARIABLEDATABASE_H

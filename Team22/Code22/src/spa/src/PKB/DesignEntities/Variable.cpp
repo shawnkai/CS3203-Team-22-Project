@@ -14,8 +14,7 @@ using namespace std;
  * @param entityDetails This encompasses the details of the Variable Entity to be created.
  */
 Variable::Variable(tuple<string, string> entityDetails)
-: DesignEntity(entityDetails) {
-
+    : DesignEntity(entityDetails) {
 }
 
 /**

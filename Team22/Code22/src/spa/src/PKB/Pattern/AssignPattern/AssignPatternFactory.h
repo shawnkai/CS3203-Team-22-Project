@@ -15,7 +15,7 @@ using namespace std;
 
 class AssignPatternFactory {
 public:
-    static AssignPattern* createAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
+    static AssignPattern *createAssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
 };
 
-#endif //SPA_ASSIGNPATTERNFACTORY_H
+#endif//SPA_ASSIGNPATTERNFACTORY_H

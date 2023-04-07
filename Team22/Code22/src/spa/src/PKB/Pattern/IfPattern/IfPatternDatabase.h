@@ -15,18 +15,18 @@
 
 using namespace std;
 
-class IfPatternDatabase: public PatternDatabase {
-    unordered_map<string, IfPattern*> database;
+class IfPatternDatabase : public PatternDatabase {
+    unordered_map<string, IfPattern *> database;
 
     bool isLineNumberPresent(string lineNumber) override;
-    void updatePatternInDatabase(Pattern* patternToBeStored) override;
+    void updatePatternInDatabase(Pattern *patternToBeStored) override;
 
-    bool isValidPatternType(Pattern* patternToBeStored);
+    bool isValidPatternType(Pattern *patternToBeStored);
 
 public:
-    void addToDatabase(Pattern* patternToBeStored) override;
+    void addToDatabase(Pattern *patternToBeStored) override;
     unordered_set<string> getAllVariablesBeingUsed(string lineNumber) override;
     bool isVariableNamePresentOnLineNumber(string lineNumber, string variableName) override;
 };
 
-#endif //SPA_IFPATTERNDATABASE_H
+#endif//SPA_IFPATTERNDATABASE_H

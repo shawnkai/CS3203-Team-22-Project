@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //SPA_ASSIGNPARSER_H
+#endif//SPA_ASSIGNPARSER_H

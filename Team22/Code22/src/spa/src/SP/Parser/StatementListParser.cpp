@@ -31,38 +31,32 @@ TNode StatementListParser::parse() {
             auto readParser = readParserFactory.createParser(READ, tokenList, pos);
             auto childNode = readParser->parse();
             stmtNode.children.push_back(childNode);
-        }
-        else if (tokenList[*pos].type == TokenType::PRINT) {
+        } else if (tokenList[*pos].type == TokenType::PRINT) {
             ParserFactory printParserFactory;
             auto printParser = printParserFactory.createParser(PRINT, tokenList, pos);
             auto childNode = printParser->parse();
             stmtNode.children.push_back(childNode);
-        }
-        else if (tokenList[*pos].type == TokenType::WHILE) {
+        } else if (tokenList[*pos].type == TokenType::WHILE) {
             ParserFactory whileParserFactory;
             auto whileParser = whileParserFactory.createParser(WHILE, tokenList, pos);
             auto childNode = whileParser->parse();
             stmtNode.children.push_back(childNode);
-        }
-        else if (tokenList[*pos].type == TokenType::IF) {
+        } else if (tokenList[*pos].type == TokenType::IF) {
             ParserFactory ifParserFactory;
             auto ifParser = ifParserFactory.createParser(IF, tokenList, pos);
             auto childNode = ifParser->parse();
             stmtNode.children.push_back(childNode);
-        }
-        else if (tokenList[*pos].type == TokenType::NAME_IDENTIFIER) {
+        } else if (tokenList[*pos].type == TokenType::NAME_IDENTIFIER) {
             ParserFactory assignParserFactory;
             auto assignParser = assignParserFactory.createParser(ASSIGN, tokenList, pos);
             auto childNode = assignParser->parse();
             stmtNode.children.push_back(childNode);
-        }
-        else if (tokenList[*pos].type == TokenType::CALL) {
+        } else if (tokenList[*pos].type == TokenType::CALL) {
             ParserFactory callParserFactory;
             auto callParser = callParserFactory.createParser(CALL, tokenList, pos);
             auto childNode = callParser->parse();
             stmtNode.children.push_back(childNode);
-        }
-        else {
+        } else {
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Unrecognized Token");
         }
     }

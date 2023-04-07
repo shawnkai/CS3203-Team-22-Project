@@ -13,7 +13,7 @@ TopologicallySortedBlockNumbers::TopologicallySortedBlockNumbers(vector<int> top
 }
 
 TopologicallySortedBlockNumbers::TopologicallySortedBlockNumbers() {
-    this->topologicallySortedBlockNumbersDatabase = vector<int> {};
+    this->topologicallySortedBlockNumbersDatabase = vector<int>{};
 }
 
 void TopologicallySortedBlockNumbers::addBlockNumber(int blockNumber) {
@@ -29,5 +29,5 @@ vector<int> TopologicallySortedBlockNumbers::getTopologicallySortedBlockNumbersD
 }
 
 void TopologicallySortedBlockNumbers::clearDatabase() {
-    this->topologicallySortedBlockNumbersDatabase = vector<int> {};
+    this->topologicallySortedBlockNumbersDatabase = vector<int>{};
 }

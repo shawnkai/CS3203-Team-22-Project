@@ -13,8 +13,8 @@
 
 using namespace std;
 
-class WhileStatementModifiesDatabase: public StatementModifiesDatabase {
+class WhileStatementModifiesDatabase : public StatementModifiesDatabase {
 public:
 };
 
-#endif //SPA_WHILESTATEMENTMODIFIESDATABASE_H
+#endif//SPA_WHILESTATEMENTMODIFIESDATABASE_H

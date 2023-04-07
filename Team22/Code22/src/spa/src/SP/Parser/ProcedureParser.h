@@ -9,11 +9,11 @@
 #include "MainParser.h"
 #include "ParserFactory.h"
 
-class ProcedureParser : public MainParser{
+class ProcedureParser : public MainParser {
 public:
     using MainParser::MainParser;
     TNode parse() override;
 };
 
 
-#endif //SPA_PROCEDUREPARSER_H
+#endif//SPA_PROCEDUREPARSER_H

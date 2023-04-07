@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif //SPA_TERMPARSER_H
+#endif//SPA_TERMPARSER_H

@@ -5,8 +5,8 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/DesignAbstractionsInterface.h"
+#include "catch.hpp"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -29,7 +29,7 @@ TEST_CASE("Test 1: Creation of ProcedureModifies Design Abstraction") {
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("mp1", "1"));
-        } catch (InvalidAPICallException& e) {
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -54,7 +54,7 @@ TEST_CASE("Test 2: Retrieval of an existent ProcedureModifies Design Abstraction
 
         try {
             Result result = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", "mp2");
-        } catch (InvalidAPICallException& e) {
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -144,7 +144,6 @@ TEST_CASE("Test 8: Retrieval of Variables Captured By ProcedureModifies Design A
         REQUIRE(
                 ((result.find("mp20") != result.end()) &&
                  (result.find("mp22") != result.end()) &&
-                 (result.find("mp24") != result.end()))
-        );
+                 (result.find("mp24") != result.end())));
     }
 }

@@ -8,8 +8,8 @@
 #define SPA_BLOCKTOSTATEMENTNUMBERS_H
 
 #include <iostream>
-#include <vector>
 #include <unordered_map>
+#include <vector>
 
 using namespace std;
 
@@ -26,4 +26,4 @@ public:
     void clearDatabase();
 };
 
-#endif //SPA_BLOCKTOSTATEMENTNUMBERS_H
+#endif//SPA_BLOCKTOSTATEMENTNUMBERS_H

@@ -4,11 +4,11 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/PatternsInterface.h"
+#include "catch.hpp"
 
-#include "PKB/Exceptions/InvalidPatternTypeException.cpp"
 #include "PKB/Exceptions/DatabaseNotFoundException.cpp"
+#include "PKB/Exceptions/InvalidPatternTypeException.cpp"
 
 using namespace std;
 
@@ -78,7 +78,7 @@ TEST_CASE("Test 6: WHILE: Creating An Invalid Type Of While Pattern") {
 
     try {
         patternsController.addPattern("FAIL", "8", "a");
-    } catch (InvalidPatternTypeException& e) {
+    } catch (InvalidPatternTypeException &e) {
         exceptionThrown = true;
     }
 
@@ -95,7 +95,7 @@ TEST_CASE("Test 7: WHILE: Calling isVariableUsedInPattern() With Invalid Pattern
 
     try {
         bool resultA = patternsController.isVariableUsedInPattern("FAIL", "9", "a");
-    } catch (DatabaseNotFoundException& e) {
+    } catch (DatabaseNotFoundException &e) {
         exceptionThrown = true;
     }
 
@@ -112,7 +112,7 @@ TEST_CASE("Test 8: WHILE: Calling getAllVariablesUsedInPattern() With Invalid Pa
 
     try {
         unordered_set<string> result = patternsController.getAllVariablesUsedInPattern("FAIL", "10");
-    } catch (DatabaseNotFoundException& e) {
+    } catch (DatabaseNotFoundException &e) {
         exceptionThrown = true;
     }
 

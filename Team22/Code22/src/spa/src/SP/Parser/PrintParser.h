@@ -7,11 +7,11 @@
 
 #include "MainParser.h"
 
-class PrintParser : public MainParser{
+class PrintParser : public MainParser {
 public:
     using MainParser::MainParser;
 
     TNode parse() override;
 };
 
-#endif //SPA_PRINTPARSER_H
+#endif//SPA_PRINTPARSER_H

@@ -15,7 +15,7 @@ TNode ExpressionParser::parse() {
         opNode.stringId = currToken.value;
         opNode.stmtNumber = currToken.lineNumber;
         opNode.children.push_back(node);
-        ++ *pos;
+        ++*pos;
         opNode.children.push_back(termParser->parse());
         node = opNode;
     }

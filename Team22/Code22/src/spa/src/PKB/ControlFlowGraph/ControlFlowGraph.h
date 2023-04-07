@@ -9,22 +9,22 @@
 
 #include <iostream>
 
-#include "TopologicallySortedBlockNumbers.h"
-#include "BlockToStatementNumbers.h"
-#include "StatementNumberToBlock.h"
 #include "BlockToBlock.h"
+#include "BlockToStatementNumbers.h"
 #include "BlocksWithBackPointers.h"
+#include "StatementNumberToBlock.h"
+#include "TopologicallySortedBlockNumbers.h"
 
 using namespace std;
 
 class ControlFlowGraph {
     string procedureName;
 
-    TopologicallySortedBlockNumbers* topologicallySortedBlockNumbersDatabase = new TopologicallySortedBlockNumbers();
-    BlockToStatementNumbers* blockToStatementNumbersDatabase = new BlockToStatementNumbers();
-    StatementNumberToBlock* statementNumberToBlockDatabase = new StatementNumberToBlock();
-    BlockToBlock* blockToBlockDatabase = new BlockToBlock();
-    BlocksWithBackPointers* blocksWithBackPointersDatabase = new BlocksWithBackPointers();
+    TopologicallySortedBlockNumbers *topologicallySortedBlockNumbersDatabase = new TopologicallySortedBlockNumbers();
+    BlockToStatementNumbers *blockToStatementNumbersDatabase = new BlockToStatementNumbers();
+    StatementNumberToBlock *statementNumberToBlockDatabase = new StatementNumberToBlock();
+    BlockToBlock *blockToBlockDatabase = new BlockToBlock();
+    BlocksWithBackPointers *blocksWithBackPointersDatabase = new BlocksWithBackPointers();
 
 public:
     explicit ControlFlowGraph(string procedureName, vector<int> topologicallySortedBlockNumbers,
@@ -47,4 +47,4 @@ public:
     void updateBlocksWithBackPointers(unordered_set<int> newBlocksWithBackPointersDatabase);
 };
 
-#endif //SPA_CONTROLFLOWGRAPH_H
+#endif//SPA_CONTROLFLOWGRAPH_H

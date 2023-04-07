@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class WhileStatementUsesDatabase: public StatementUsesDatabase {
+class WhileStatementUsesDatabase : public StatementUsesDatabase {
 public:
-
 };
 
-#endif //SPA_WHILESTATEMENTUSESDATABASE_H
+#endif//SPA_WHILESTATEMENTUSESDATABASE_H

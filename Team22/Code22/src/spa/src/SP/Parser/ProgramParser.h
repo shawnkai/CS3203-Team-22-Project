@@ -15,4 +15,4 @@ public:
     TNode parse() override;
 };
 
-#endif //SPA_PROGRAMPARSER_H
+#endif//SPA_PROGRAMPARSER_H

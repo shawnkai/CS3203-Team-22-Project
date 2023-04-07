@@ -27,4 +27,4 @@ public:
     virtual string getTypeOfPattern() = 0;
 };
 
-#endif //SPA_PATTERN_H
+#endif//SPA_PATTERN_H

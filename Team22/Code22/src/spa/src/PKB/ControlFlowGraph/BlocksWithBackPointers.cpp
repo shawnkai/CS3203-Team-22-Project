@@ -13,7 +13,7 @@ BlocksWithBackPointers::BlocksWithBackPointers(unordered_set<int> blocksWithBack
 }
 
 BlocksWithBackPointers::BlocksWithBackPointers() {
-    this->blocksWithBackPointersDatabase = unordered_set<int> {};
+    this->blocksWithBackPointersDatabase = unordered_set<int>{};
 }
 
 void BlocksWithBackPointers::addToDatabase(int blockWithBackPointer) {
@@ -29,5 +29,5 @@ unordered_set<int> BlocksWithBackPointers::getBlocksWithBackPointersDatabase() {
 }
 
 void BlocksWithBackPointers::clearDatabase() {
-    this->blocksWithBackPointersDatabase = unordered_set<int> {};
+    this->blocksWithBackPointersDatabase = unordered_set<int>{};
 }

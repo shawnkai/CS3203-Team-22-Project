@@ -25,7 +25,7 @@ TNode ReadParser::parse() {
         std::cout << "Expected stmt terminal ';' after variable name, but got " << pendingCheckTerminalToken.value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    Token varNameToken = tokenList[++ *pos];
+    Token varNameToken = tokenList[++*pos];
     TNode childNode;
     childNode.nodeType = varNameToken.type;
     childNode.stringId = varNameToken.value;

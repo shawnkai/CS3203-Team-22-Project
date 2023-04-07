@@ -11,31 +11,31 @@ TNode ConditionalExpressionParser::parse() {
         condNode.nodeType = currToken.type;
         condNode.stringId = "neg";
         condNode.stmtNumber = currToken.lineNumber;
-        ++ *pos;
+        ++*pos;
         if (tokenList[*pos].type != TokenType::LEFT_ROUND_BRACKET) {
             std::cout << "Expected '(' after negation sign '!' but instead got: " << tokenList[*pos].value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
-        ++ *pos;
+        ++*pos;
         condNode.children.push_back(parse());
         if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
             std::cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
-        ++ *pos;
+        ++*pos;
         return condNode;
     } else if (tokenList[*pos].type == TokenType::LEFT_ROUND_BRACKET) {
         // find matching right round bracket and check if it is && or || operator
         int recorder = -1;
         int stack = 0;
         bool flag = false;
-        for (int i = *pos; i < tokenList.size(); i++ ) {
+        for (int i = *pos; i < tokenList.size(); i++) {
             Token underExamine = tokenList[i];
             if (underExamine.type == TokenType::LEFT_ROUND_BRACKET) {
-                ++ stack;
+                ++stack;
                 flag = true;
             } else if (underExamine.type == TokenType::RIGHT_ROUND_BRACKET) {
-                -- stack;
+                --stack;
             }
             if (stack == 0 && flag) {
                 recorder = i + 1;
@@ -44,34 +44,34 @@ TNode ConditionalExpressionParser::parse() {
         }
         // otherwise, return relational expression node
         ParserFactory factory;
-        if(!(tokenList[recorder].value == "&&" || tokenList[recorder].value == "||")) {
+        if (!(tokenList[recorder].value == "&&" || tokenList[recorder].value == "||")) {
             return factory.createParser(RELATIONAL_EXPR, tokenList, pos)->parse();
         }
-        ++ *pos;
+        ++*pos;
         auto condNodeLeft = parse();
         if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
             std::cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
-        ++ *pos;
+        ++*pos;
         if (tokenList[*pos].type == TokenType::OPERATOR && tokenList[*pos].value == "&&") {
             TNode andNode;
             andNode.nodeType = TokenType::OPERATOR;
             andNode.stringId = "and";
             andNode.stmtNumber = tokenList[*pos].lineNumber;
-            ++ *pos;
+            ++*pos;
             if (tokenList[*pos].type != TokenType::LEFT_ROUND_BRACKET) {
                 std::cout << "Expected '(' after '&&' operator but instead got: " << tokenList[*pos].value << std::endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             andNode.children.push_back(condNodeLeft);
-            ++ *pos;
+            ++*pos;
             andNode.children.push_back(parse());
             if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
                 std::cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << std::endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
-            ++ *pos;
+            ++*pos;
             return andNode;
         } else {
             if (tokenList[*pos].value != "||") {
@@ -82,19 +82,19 @@ TNode ConditionalExpressionParser::parse() {
             orNode.nodeType = TokenType::OPERATOR;
             orNode.stringId = "or";
             orNode.stmtNumber = tokenList[*pos].lineNumber;
-            ++ *pos;
+            ++*pos;
             if (tokenList[*pos].type != TokenType::LEFT_ROUND_BRACKET) {
                 std::cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << std::endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
             orNode.children.push_back(condNodeLeft);
-            ++ *pos;
+            ++*pos;
             orNode.children.push_back(parse());
             if (tokenList[*pos].type != TokenType::RIGHT_ROUND_BRACKET) {
                 std::cout << "Expected ')' after a conditional expr but instead got: " << tokenList[*pos].value << std::endl;
                 throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
             }
-            ++ *pos;
+            ++*pos;
             return orNode;
         }
     } else {

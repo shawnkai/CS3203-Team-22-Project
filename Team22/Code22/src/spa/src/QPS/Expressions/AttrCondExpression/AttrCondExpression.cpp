@@ -17,22 +17,22 @@ bool AttrCondExpression::containsAttrCondExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), ATTRCONDREGEX), std::sregex_iterator()) > 0;
 }
 
-pair<DesignEntity*, pair<string, string>> AttrCondExpression::generateSynAndAttrName(string ref, SynonymTable synonymTable) {
+pair<DesignEntity *, pair<string, string>> AttrCondExpression::generateSynAndAttrName(string ref, SynonymTable synonymTable) {
     if (regex_match(ref, regex("[\\w]+\\.(?:\\w|#)+"))) {
-    //attribute ref
+        //attribute ref
         string syn_string = ::strtok(ref.data(), ".");
         string attr = ::strtok(NULL, ".");
-        DesignEntity* syn = synonymTable.get(syn_string, "select");
+        DesignEntity *syn = synonymTable.get(syn_string, "select");
         if (!syn->checkAttr(attr)) {
             throw SemanticException();
         }
         return {syn, {attr, AttrCondExpression::attrToType[attr]}};
     } else if (regex_match(ref, regex(R"(\"\w+\")"))) {
-    //ident
+        //ident
         DesignEntity *syn = new NamedEntity("ident", ref);
         return {syn, {"", "STRING"}};
     } else if (regex_match(ref, regex("\\d+"))) {
-    //integer
+        //integer
         DesignEntity *syn = new NamedEntity("int", ref);
         return {syn, {"", "INT"}};
     } else {
@@ -40,7 +40,7 @@ pair<DesignEntity*, pair<string, string>> AttrCondExpression::generateSynAndAttr
     }
 }
 
-vector<AttrCondExpression*> AttrCondExpression::extractAttrCondExpression(const string& query, const SynonymTable& synonymTable) {
+vector<AttrCondExpression *> AttrCondExpression::extractAttrCondExpression(const string &query, const SynonymTable &synonymTable) {
     if (!containsAttrCondExpression(query)) {
         return {};
     }
@@ -49,11 +49,11 @@ vector<AttrCondExpression*> AttrCondExpression::extractAttrCondExpression(const 
 
     string::const_iterator searchStart(query.begin());
 
-    vector<AttrCondExpression*> expressions;
+    vector<AttrCondExpression *> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, ATTRCONDREGEX)) {
-        pair<DesignEntity*, pair<string, string>> arg1 = AttrCondExpression::generateSynAndAttrName(sm.str(1), synonymTable);
-        pair<DesignEntity*, pair<string, string>> arg2 = AttrCondExpression::generateSynAndAttrName(sm.str(2), synonymTable);
+        pair<DesignEntity *, pair<string, string>> arg1 = AttrCondExpression::generateSynAndAttrName(sm.str(1), synonymTable);
+        pair<DesignEntity *, pair<string, string>> arg2 = AttrCondExpression::generateSynAndAttrName(sm.str(2), synonymTable);
         if (arg1.second.second != arg2.second.second) {
             throw SemanticException();
         }
@@ -64,11 +64,11 @@ vector<AttrCondExpression*> AttrCondExpression::extractAttrCondExpression(const 
     return expressions;
 }
 
-ResultTable* AttrCondExpression::evaluate(PKB pkb) {
+ResultTable *AttrCondExpression::evaluate(PKB pkb) {
     // Syn1
-    ResultTable* syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
+    ResultTable *syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
     // Syn2
-    ResultTable* syn2Table = this->entities[1]->getAttrVal(syn2attr, pkb);
+    ResultTable *syn2Table = this->entities[1]->getAttrVal(syn2attr, pkb);
     return syn1Table->intersection(syn2Table)->removeColumn("withCond");
 }
 

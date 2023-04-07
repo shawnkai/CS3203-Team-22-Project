@@ -17,4 +17,4 @@ public:
 };
 
 
-#endif //SPA_FACTORPARSER_H
+#endif//SPA_FACTORPARSER_H

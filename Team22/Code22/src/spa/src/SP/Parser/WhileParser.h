@@ -13,4 +13,4 @@ public:
 };
 
 
-#endif //SPA_WHILEPARSER_H
+#endif//SPA_WHILEPARSER_H

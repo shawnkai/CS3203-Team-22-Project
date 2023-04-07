@@ -8,7 +8,7 @@
 #include "MainParser.h"
 #include "ParserFactory.h"
 
-class StatementListParser : public MainParser{
+class StatementListParser : public MainParser {
 public:
     using MainParser::MainParser;
 
@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //SPA_STATEMENTLISTPARSER_H
+#endif//SPA_STATEMENTLISTPARSER_H

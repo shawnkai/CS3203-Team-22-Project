@@ -11,8 +11,7 @@ public:
     using MainParser::MainParser;
 
     TNode parse() override;
-
 };
 
 
-#endif //SPA_EXPRESSIONPARSER_H
+#endif//SPA_EXPRESSIONPARSER_H

@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 11/3/23.
 //
 
+#include "QPS/Exceptions/Exceptions.h"
 #include "QPS/Parser/Parser.h"
 #include "catch.hpp"
-#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -132,7 +132,7 @@ TEST_CASE("TestCase9_ParseSelectWithWithMismatchingStringInt_SemanticError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SemanticException &e) {
         throwsException = true;
     }
 
@@ -151,7 +151,7 @@ TEST_CASE("TestCase10_ParseSelectWithWithMismatchingIntString_SemanticError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SemanticException &e) {
         throwsException = true;
     }
 
@@ -170,7 +170,7 @@ TEST_CASE("TestCase11_ParseSelectWithWithMismatchingIntString_SemanticError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SemanticException &e) {
         throwsException = true;
     }
 
@@ -188,7 +188,7 @@ TEST_CASE("TestCase12_ParseSelectWithWithWrongAttrType_SemanticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SemanticException &e) {
         throwsException = true;
     }
 
@@ -206,7 +206,7 @@ TEST_CASE("TestCase13_ParseSelectWithWithInvalidAttr_SemanticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SemanticException &e) {
         throwsException = true;
     }
 
@@ -224,7 +224,7 @@ TEST_CASE("TestCase14_ParseSelectWithWithPeriodInAttr_SyntacticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException& e) {
+    } catch (SyntacticException &e) {
         throwsException = true;
     }
 
@@ -242,7 +242,7 @@ TEST_CASE("TestCase15_ParseSelectWithWithInvalidLiteral_SyntacticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException& e) {
+    } catch (SyntacticException &e) {
         throwsException = true;
     }
 
@@ -261,7 +261,7 @@ TEST_CASE("TestCase16_ParseSelectWithWithClauseWithThreeEquals_SyntacticExceptio
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException& e) {
+    } catch (SyntacticException &e) {
         throwsException = true;
     }
 

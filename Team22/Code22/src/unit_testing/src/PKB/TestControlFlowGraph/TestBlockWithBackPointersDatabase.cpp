@@ -11,7 +11,7 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creating BlocksWithBackPointers With Default Constructor") {
-    BlocksWithBackPointers* blocksWithBackPointers = new BlocksWithBackPointers();
+    BlocksWithBackPointers *blocksWithBackPointers = new BlocksWithBackPointers();
     unordered_set<int> database = blocksWithBackPointers->getBlocksWithBackPointersDatabase();
 
     REQUIRE((database.size() == 0));
@@ -22,14 +22,14 @@ TEST_CASE("Test 2: Creating BlocksWithBackPointers With Parameterised Constructo
     sampleSet.insert(1);
     sampleSet.insert(2);
 
-    BlocksWithBackPointers* blocksWithBackPointers = new BlocksWithBackPointers(sampleSet);
+    BlocksWithBackPointers *blocksWithBackPointers = new BlocksWithBackPointers(sampleSet);
     unordered_set<int> database = blocksWithBackPointers->getBlocksWithBackPointersDatabase();
 
     REQUIRE((database.size() != 0));
 }
 
 TEST_CASE("Test 3: Adding An Individual Block Number In BlocksWithBackPointers Database") {
-    BlocksWithBackPointers* blocksWithBackPointers = new BlocksWithBackPointers();
+    BlocksWithBackPointers *blocksWithBackPointers = new BlocksWithBackPointers();
     blocksWithBackPointers->addToDatabase(1);
 
     unordered_set<int> database = blocksWithBackPointers->getBlocksWithBackPointersDatabase();
@@ -38,7 +38,7 @@ TEST_CASE("Test 3: Adding An Individual Block Number In BlocksWithBackPointers D
 }
 
 TEST_CASE("Test 4: Copying A New Block With Back Pointers Database") {
-    BlocksWithBackPointers* blocksWithBackPointers = new BlocksWithBackPointers();
+    BlocksWithBackPointers *blocksWithBackPointers = new BlocksWithBackPointers();
     blocksWithBackPointers->addToDatabase(1);
 
     unordered_set<int> oldDatabase = blocksWithBackPointers->getBlocksWithBackPointersDatabase();
@@ -55,7 +55,7 @@ TEST_CASE("Test 4: Copying A New Block With Back Pointers Database") {
 }
 
 TEST_CASE("Test 5: Clearing BlocksWithBackPointers Database") {
-    BlocksWithBackPointers* blocksWithBackPointers = new BlocksWithBackPointers();
+    BlocksWithBackPointers *blocksWithBackPointers = new BlocksWithBackPointers();
     blocksWithBackPointers->addToDatabase(1);
 
     blocksWithBackPointers->clearDatabase();

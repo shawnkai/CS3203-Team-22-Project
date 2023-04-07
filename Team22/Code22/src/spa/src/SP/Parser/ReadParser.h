@@ -16,4 +16,4 @@ public:
 };
 
 
-#endif //SPA_READPARSER_H
+#endif//SPA_READPARSER_H

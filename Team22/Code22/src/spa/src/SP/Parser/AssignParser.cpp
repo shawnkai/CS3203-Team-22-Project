@@ -16,13 +16,13 @@ TNode AssignParser::parse() {
     lhs.stringId = currToken.value;
     lhs.stmtNumber = currToken.lineNumber;
     assignNode.children.push_back(lhs);
-    Token assignOperator = tokenList[++ *pos];
+    Token assignOperator = tokenList[++*pos];
     if (assignOperator.type != TokenType::OPERATOR || assignOperator.value != "=") {
         std::cout << "Expected '=' sign for the assignment statement but instead got: " << assignOperator.value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     //rhs, expr Node
-    ++ *pos;
+    ++*pos;
     ParserFactory factory;
     auto rhs = factory.createParser(EXPR, tokenList, pos)->parse();
     assignNode.children.push_back(rhs);
@@ -31,6 +31,6 @@ TNode AssignParser::parse() {
         std::cout << "Expected statement terminal ';' but instead got: " << following.value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++ *pos;
+    ++*pos;
     return assignNode;
 }

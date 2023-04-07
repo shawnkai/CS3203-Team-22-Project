@@ -14,8 +14,7 @@ public:
     using MainParser::MainParser;
 
     TNode parse() override;
-
 };
 
 
-#endif //SPA_RELATIONALEXPRPARSER_H
+#endif//SPA_RELATIONALEXPRPARSER_H

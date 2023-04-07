@@ -9,8 +9,7 @@
 using namespace std;
 
 IfPattern::IfPattern(string lineNumber, string variableName)
-: Pattern(lineNumber, variableName) {
-
+    : Pattern(lineNumber, variableName) {
 }
 
 string IfPattern::getTypeOfPattern() {

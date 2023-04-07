@@ -6,7 +6,7 @@
 
 TNode CallParser::parse() {
     Token currToken = tokenList[*pos];
-    ++ *pos;
+    ++*pos;
     TNode callNode;
     callNode.nodeType = TokenType::CALL;
     callNode.stmtNumber = currToken.lineNumber;
@@ -15,11 +15,11 @@ TNode CallParser::parse() {
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
     callNode.stringId = tokenList[*pos].value;
-    ++ *pos;
+    ++*pos;
     if (tokenList[*pos].type != TokenType::STATEMENT_TERMINAL) {
         std::cout << "Expected statement terminal ';' but instead got: " << tokenList[*pos].value << std::endl;
         throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
     }
-    ++ *pos;
+    ++*pos;
     return callNode;
 }

@@ -2,12 +2,12 @@
 // Created by Jai Lulla  on 18/3/23.
 //
 
+#include <algorithm>// For Windows
 #include <iostream>
-#include <algorithm> // For Windows
 
-#include "PatternsFactory.h"
 #include "PKB/Pattern/IfPattern/IfPatternFactory.h"
 #include "PKB/Pattern/WhilePattern/WhilePatternFactory.h"
+#include "PatternsFactory.h"
 
 #include "PKB/Exceptions/InvalidPatternTypeException.cpp"
 

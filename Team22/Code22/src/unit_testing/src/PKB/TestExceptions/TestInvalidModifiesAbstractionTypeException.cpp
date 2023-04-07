@@ -19,7 +19,6 @@ TEST_CASE("Test 1: Catch InvalidModifiesAbstractionTypeException In ModifiesFact
         ModifiesFactory::createModifiesAbstraction(make_tuple("INVALID", "INVALID", "INVALID"));
     } catch (InvalidModifiesAbstractionTypeException &e) {
         exceptionThrown = true;
-
     }
     REQUIRE(exceptionThrown);
 }

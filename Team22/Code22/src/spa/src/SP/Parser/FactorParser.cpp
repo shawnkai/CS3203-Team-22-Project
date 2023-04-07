@@ -8,7 +8,7 @@ TNode FactorParser::parse() {
     TNode node;
     Token currToken = tokenList[*pos];
     if (currToken.type == TokenType::LEFT_ROUND_BRACKET) {
-        ++ *pos;
+        ++*pos;
         ParserFactory expressionParserFactory;
         auto exprParser = expressionParserFactory.createParser(EXPR, tokenList, pos);
         TNode node1 = exprParser->parse();
@@ -17,16 +17,15 @@ TNode FactorParser::parse() {
             std::cout << "in factor parser Expected closing bracket ')' but instead got: " << currToken.value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
         }
-        ++ *pos;
+        ++*pos;
         return node1;
     }
     if (currToken.type == TokenType::NAME_IDENTIFIER) {
         node.stringId = currToken.value;
         node.stmtNumber = currToken.lineNumber;
         node.nodeType = currToken.type;
-        ++ *pos;
-    }
-    else {
+        ++*pos;
+    } else {
         if (currToken.type != TokenType::INTEGER) {
             std::cout << "Expected constant or variable but instead got: " << currToken.value << std::endl;
             throw std::invalid_argument("Illegal SIMPLE Source Programme: Syntax error");
@@ -34,7 +33,7 @@ TNode FactorParser::parse() {
         node.nodeType = currToken.type;
         node.stringId = currToken.value;
         node.stmtNumber = currToken.lineNumber;
-        ++ *pos;
+        ++*pos;
     }
     return node;
 }

@@ -27,4 +27,4 @@ public:
     virtual unordered_map<string, string> getAllRightHandExpressions();
 };
 
-#endif //SPA_ASSIGNPATTERN_H
+#endif//SPA_ASSIGNPATTERN_H

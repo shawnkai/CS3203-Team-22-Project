@@ -14,8 +14,7 @@ using namespace std;
  * @param entityDetails This encompasses the details of the Read Entity to be created.
  */
 ReadStatement::ReadStatement(tuple<string, string> entityDetails)
-: Statement(entityDetails) {
-
+    : Statement(entityDetails) {
 }
 
 /**
