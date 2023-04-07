@@ -27,7 +27,6 @@ class PKB {
     DesignEntitiesInterface* designEntitiesInterface = new DesignEntitiesInterface();
     PatternsInterface* patternsInterface = new PatternsInterface();
 
-    // Remove These after clearAllDatabase APIs have been removed
     void clearDesignAbstractionDatabase();
     void clearDesignEntityDatabase();
     void clearAssignPatternDatabase();

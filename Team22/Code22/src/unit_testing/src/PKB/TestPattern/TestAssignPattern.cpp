@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "catch.hpp"
+
 #include "PKB/Interfaces/PatternsInterface.h"
 
 using namespace std;
