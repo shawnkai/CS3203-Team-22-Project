@@ -142,8 +142,10 @@ Result PKB::getDesignAbstraction(string abstractionType, string query) {
 }
 
 void PKB::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
-                              map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
-                              map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers) {
+                              unordered_map<int, vector<int>> blockToStatementNumbers,
+                              unordered_map<int, int> statementNumberToBlock,
+                              unordered_map<int, vector<int>> blockToBlock,
+                              unordered_set<int> blocksWithBackPointers) {
     this->controlFlowGraphInterface->addControlFlowGraph(procedureName, topologicallySortedElements,
                                                          blockToStatementNumbers, statementNumberToBlock,
                                                          blockToBlock, blocksWithBackPointers);
@@ -153,15 +155,15 @@ vector<int> PKB::getTopologicallySortedElementsDatabase(string procedureName) {
     return this->controlFlowGraphInterface->getTopologicallySortedElementsDatabase(procedureName);
 }
 
-map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase(string procedureName) {
+unordered_map<int, vector<int>> PKB::getBlockToStatementNumbersDatabase(string procedureName) {
     return this->controlFlowGraphInterface->getBlockToStatementNumbersDatabase(procedureName);
 }
 
-map<int, int> PKB::getStatementNumberToBlockDatabase(string procedureName) {
+unordered_map<int, int> PKB::getStatementNumberToBlockDatabase(string procedureName) {
     return this->controlFlowGraphInterface->getStatementNumberToBlockDatabase(procedureName);
 }
 
-map<int, vector<int>> PKB::getBlockToBlockDatabase(string procedureName) {
+unordered_map<int, vector<int>> PKB::getBlockToBlockDatabase(string procedureName) {
     return this->controlFlowGraphInterface->getBlockToBlockDatabase(procedureName);
 }
 

@@ -12,8 +12,10 @@
 using namespace std;
 
 void ControlFlowGraphInterface::addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
-                                                    map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
-                                                    map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers) {
+                                                    unordered_map<int, vector<int>> blockToStatementNumbers,
+                                                    unordered_map<int, int> statementNumberToBlock,
+                                                    unordered_map<int, vector<int>> blockToBlock,
+                                                    unordered_set<int> blocksWithBackPointers) {
     ControlFlowGraph* controlFlowGraph = ControlFlowGraphFactory::createControlFlowGraph(procedureName,
                                                                                          topologicallySortedElements,
                                                                                          blockToStatementNumbers,
@@ -29,17 +31,17 @@ vector<int> ControlFlowGraphInterface::getTopologicallySortedElementsDatabase(st
     return db->getTopologicallySortedBlockNumbersDatabaseFromDatabase(procedureName);
 }
 
-map<int, vector<int>> ControlFlowGraphInterface::getBlockToStatementNumbersDatabase(string procedureName) {
+unordered_map<int, vector<int>> ControlFlowGraphInterface::getBlockToStatementNumbersDatabase(string procedureName) {
     ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase();
     return db->getBlockToStatementNumberDatabaseFromDatabase(procedureName);
 }
 
-map<int, int> ControlFlowGraphInterface::getStatementNumberToBlockDatabase(string procedureName) {
+unordered_map<int, int> ControlFlowGraphInterface::getStatementNumberToBlockDatabase(string procedureName) {
     ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase();
     return db->getStatementNumberToBlockDatabaseFromDatabase(procedureName);
 }
 
-map<int, vector<int>> ControlFlowGraphInterface::getBlockToBlockDatabase(string procedureName) {
+unordered_map<int, vector<int>> ControlFlowGraphInterface::getBlockToBlockDatabase(string procedureName) {
     ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase();
     return db->getBlockToBlockDatabaseFromDatabase(procedureName);
 }

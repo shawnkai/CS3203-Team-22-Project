@@ -16,9 +16,9 @@ using namespace std;
 class ControlFlowGraphFactory {
 public:
     static ControlFlowGraph* createControlFlowGraph(string procedureName, vector<int> topologicallySortedBlockNumbers,
-                                                    map<int, vector<int>> blockToStatementNumbers,
-                                                    map<int, int> statementNumberToBlock,
-                                                    map<int, vector<int>> blockToBlock,
+                                                    unordered_map<int, vector<int>> blockToStatementNumbers,
+                                                    unordered_map<int, int> statementNumberToBlock,
+                                                    unordered_map<int, vector<int>> blockToBlock,
                                                     unordered_set<int> blocksWithBackPointers);
 };
 

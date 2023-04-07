@@ -8,26 +8,26 @@
 
 using namespace std;
 
-BlockToBlock::BlockToBlock(map<int, vector<int>> blockToBlockDatabase) {
+BlockToBlock::BlockToBlock(unordered_map<int, vector<int>> blockToBlockDatabase) {
     this->blockToBlockDatabase = blockToBlockDatabase;
 }
 
 BlockToBlock::BlockToBlock() {
-    this->blockToBlockDatabase = map<int, vector<int>> {};
+    this->blockToBlockDatabase = unordered_map<int, vector<int>> {};
 }
 
 void BlockToBlock::addToDatabase(int block, vector<int> nextBlock) {
     this->blockToBlockDatabase.insert(make_pair(block, nextBlock));
 }
 
-void BlockToBlock::copyBlockToBlockDatabase(map<int, vector<int>> blockToBlock) {
+void BlockToBlock::copyBlockToBlockDatabase(unordered_map<int, vector<int>> blockToBlock) {
     this->blockToBlockDatabase = blockToBlock;
 }
 
-map<int, vector<int>> BlockToBlock::getBlockToBlockDatabase() {
+unordered_map<int, vector<int>> BlockToBlock::getBlockToBlockDatabase() {
     return this->blockToBlockDatabase;
 }
 
 void BlockToBlock::clearDatabase() {
-    this->blockToBlockDatabase = map<int, vector<int>> {};
+    this->blockToBlockDatabase = unordered_map<int, vector<int>> {};
 }

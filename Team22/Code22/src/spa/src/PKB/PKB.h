@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
-#include <map>
 #include <unordered_set>
 
 #include "PKB/Interfaces/CacheInterface.h"
@@ -65,12 +64,14 @@ public:
 
     // APIs Related to Control Flow Graph
     void addControlFlowGraph(string procedureName, vector<int> topologicallySortedElements,
-                             map<int, vector<int>> blockToStatementNumbers, map<int, int> statementNumberToBlock,
-                             map<int, vector<int>> blockToBlock, unordered_set<int> blocksWithBackPointers);
+                             unordered_map<int, vector<int>> blockToStatementNumbers,
+                             unordered_map<int, int> statementNumberToBlock,
+                             unordered_map<int, vector<int>> blockToBlock,
+                             unordered_set<int> blocksWithBackPointers);
     vector<int> getTopologicallySortedElementsDatabase(string procedureName);
-    map<int, vector<int>> getBlockToStatementNumbersDatabase(string procedureName);
-    map<int, int> getStatementNumberToBlockDatabase(string procedureName);
-    map<int, vector<int>> getBlockToBlockDatabase(string procedureName);
+    unordered_map<int, vector<int>> getBlockToStatementNumbersDatabase(string procedureName);
+    unordered_map<int, int> getStatementNumberToBlockDatabase(string procedureName);
+    unordered_map<int, vector<int>> getBlockToBlockDatabase(string procedureName);
     unordered_set<int> getBlocksWithBackPointersDatabase(string procedureName);
 
 
