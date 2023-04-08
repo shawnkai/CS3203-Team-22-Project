@@ -1,40 +1,107 @@
 import subprocess
 import os
 import re
+from multiprocessing import Pool
 
-if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
-    start = './Team22/Code22/cmake-build-debug/src'
-elif os.path.isdir('./Team22/Code22/build/src'):
-    start = './Team22/Code22/build/src'
-else:
-    start = './Team22/Code22/out/build/x64-Debug/src'
+def process_file(file_pair):
+    start, source, query = file_pair
+    testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
+    correctAnswerRegex = re.compile("(Correct answer: (.)*)")
+    actualAnswerRegex = re.compile("(Your answer: (.)*)")
+    missingAnswerRegex = re.compile("(Missing: (.)*)")
+    additionalAnswerRegex = re.compile("(Additional: (.)*)")
+    queryRegex = re.compile(R"(\n.*\n(.*)\n(.*))")
+    wrong = []
+    queries = []
+    correct = []
+    command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
+               f"./Team22/Tests22/out/{query.split('/')[-1].replace('.txt', '')}_out.xml"]
 
-# Unit Testing
-print("Running Unit Tests...")
-result = subprocess.run([start + '/unit_testing/unit_testing'], stdout=subprocess.PIPE)
+    result = subprocess.run(command, stdout=subprocess.PIPE)
+    result = result.stdout.decode()
 
-result = result.stdout.decode()
+    for case in re.finditer(testCaseRegex, result):
+        arg1 = case.group(2)
+        arg2 = case.group(1)
 
-if "All tests passed" not in result:
-    print(result)
-    exit(1)
+        matchCorrect = re.search(correctAnswerRegex, arg2)
 
-print("Unit Tests Passed")
+        matchActual = re.search(actualAnswerRegex, arg2)
 
-# Integration Testing
-print("Running Integration Tests...")
-result = subprocess.run([start + '/integration_testing/integration_testing'], stdout=subprocess.PIPE)
+        matchAdditional = re.search(additionalAnswerRegex, arg2)
 
-result = result.stdout.decode()
+        matchMissing = re.search(missingAnswerRegex, arg2)
 
-if "All tests passed" not in result:
-    exit(1)
+        matchQuery = re.search(queryRegex, arg2)
 
-print("Integration Tests Passed")
+        if matchMissing is None and matchAdditional is None and "<exception/>" not in arg2:
+            correct.append(arg1)
+        elif "<exception/>" in arg2:
+            wrong.append(arg1)
+            queries.append(
+                [matchQuery.group(2) + "\n" + matchQuery.group(3), "Throws Exception", "Throws Exception",
+                 "Throws Exception", "Throws Exception"])
+        else:
+            missing = matchMissing.group(0)
 
-# System Testing
-print("Running System Tests...")
-source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_source2.txt",
+            additional = matchAdditional.group(0)
+
+            wrong.append(arg1)
+            queries.append(
+                [matchQuery.group(2) + "\n" + matchQuery.group(3), matchCorrect.group(0), matchActual.group(0),
+                 matchMissing.group(0), matchAdditional.group(0)])
+
+    print(f"Test Stats for {query}:"
+          f"\nCorrect Evaluations: {len(correct)}"
+          f"\nIncorrect Evaluations: {len(wrong)}\n")
+
+    if len(queries) != 0:
+        print("Incorrect Tests:")
+        for q in queries:
+            print(f"Query: {q[0]}"
+                  f"\n{q[1]}"
+                  f"\n{q[2]}"
+                  f"\n{q[3]}"
+                  f"\n{q[4]}\n", flush=True)
+        return False, len(correct), len(wrong)
+    print("", end='', flush=True)
+    return True, len(correct), len(wrong)
+
+
+if __name__ == "__main__":
+    if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
+        start = './Team22/Code22/cmake-build-debug/src'
+    elif os.path.isdir('./Team22/Code22/build/src'):
+        start = './Team22/Code22/build/src'
+    else:
+        start = './Team22/Code22/out/build/x64-Debug/src'
+    # Unit Testing
+    print("Running Unit Tests...")
+    result = subprocess.run([start + '/unit_testing/unit_testing'], stdout=subprocess.PIPE)
+
+    result = result.stdout.decode()
+
+    if "All tests passed" not in result:
+        print(result)
+        exit(1)
+
+    print("Unit Tests Passed")
+
+    # Integration Testing
+    print("Running Integration Tests...")
+    result = subprocess.run([start + '/integration_testing/integration_testing'], stdout=subprocess.PIPE)
+
+    result = result.stdout.decode()
+
+    if "All tests passed" not in result:
+        print(result)
+        exit(1)
+
+    print("Integration Tests Passed")
+
+    # System Testing
+    print("Running System Tests...")
+    source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_source2.txt",
                            "TestBasicQueriesInitialSubmissionForMilestone1/Sample_queries2.txt"),
                           ("TestAssignmentPatternClause/TestAssignmentPatternSourceProgram.txt",
                            "TestAssignmentPatternClause/TestAssignmentPatternQueries.txt"),
@@ -97,81 +164,19 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                        "TestCallStarDesignAbstraction/TestCallStarDesignAbstractionQueries.txt"),
                       ("TestNextStar/Next_Testing_Source.txt", "TestNextStar/Next_Testing_Queries.txt"),
                       ("TestNextStar/Website_Given_Source.txt", "TestNextStar/Website_Given_Queries.txt")]
+    with Pool() as pool:
+        total_correct = 0
+        total_failed = 0
+        for correct, correct_count, failed_count in pool.map(process_file, [(start, ) + p for p in source_query_pairs]):
+            total_correct += correct_count
+            total_failed += failed_count
 
-testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
-correctAnswerRegex = re.compile("(Correct answer: (.)*)")
-actualAnswerRegex = re.compile("(Your answer: (.)*)")
-missingAnswerRegex = re.compile("(Missing: (.)*)")
-additionalAnswerRegex = re.compile("(Additional: (.)*)")
-queryRegex = re.compile(R"(\n.*\n(.*)\n(.*))")
+        print(f"\nTotal Number of Queries: {total_correct + total_failed}"
+              f"\nTotal Number of Correct Queries: {total_correct}"
+              f"\nTotal Number of Incorrect Queries: {total_failed}")
 
-success = True
-total_correct = 0
-total_incorrect = 0
+        if failed_count:
+            print("System Tests Failed")
+            exit(1)
 
-if not os.path.exists("./Team22/Tests22/out/"):
-    os.makedirs("./Team22/Tests22/out/")
-
-for source, query in source_query_pairs:
-    wrong = []
-    queries = []
-    correct = []
-    command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
-               f"./Team22/Tests22/out/{query.split('/')[-1].replace('.txt', '')}_out.xml"]
-
-    result = subprocess.run(command, stdout=subprocess.PIPE)
-    result = result.stdout.decode()
-
-    for case in re.finditer(testCaseRegex, result):
-        arg1 = case.group(2)
-        arg2 = case.group(1)
-
-        matchCorrect = re.search(correctAnswerRegex, arg2)
-
-        matchActual = re.search(actualAnswerRegex, arg2)
-
-        matchAdditional = re.search(additionalAnswerRegex, arg2)
-
-        matchMissing = re.search(missingAnswerRegex, arg2)
-
-        matchQuery = re.search(queryRegex, arg2)
-
-        if matchMissing is None and matchAdditional is None and "<exception/>" not in arg2:
-            correct.append(arg1)
-        elif "<exception/>" in arg2:
-            wrong.append(arg1)
-            queries.append(
-                [matchQuery.group(2) + "\n" + matchQuery.group(3), "Throws Exception", "Throws Exception", "Throws Exception", "Throws Exception"])
-        else:
-            missing = matchMissing.group(0)
-
-            additional = matchAdditional.group(0)
-
-            wrong.append(arg1)
-            queries.append(
-                [matchQuery.group(2) + "\n" + matchQuery.group(3), matchCorrect.group(0), matchActual.group(0),
-                 matchMissing.group(0), matchAdditional.group(0)])
-
-    print(f"Test Stats for {query}:"
-          f"\nCorrect Evaluations: {len(correct)}"
-          f"\nIncorrect Evaluations: {len(wrong)}\n")
-
-    total_correct += len(correct)
-    total_incorrect += len(wrong)
-
-    if len(queries) != 0:
-        print("Incorrect Tests:")
-        for q in queries:
-            print(f"Query: {q[0]}"
-                  f"\n{q[1]}"
-                  f"\n{q[2]}"
-                  f"\n{q[3]}"
-                  f"\n{q[4]}\n")
-        success = False
-
-print(f"\nTotal Number of Queries: {total_correct + total_incorrect}"
-      f"\nTotal Number of Correct Queries: {total_correct}"
-      f"\nTotal Number of Incorrect Queries: {total_incorrect}")
-
-if not success:
-    exit(1)
+        print("System Tests Passed")
