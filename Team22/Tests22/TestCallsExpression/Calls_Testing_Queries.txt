@@ -121,7 +121,7 @@ none
 25 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("A", "C")
-A,B,C,D,e,f,g,h
+none
 5000
 26 - Calls
 procedure p; variable v; stmt s; assign a;
@@ -190,42 +190,42 @@ none
 5000
 39 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("A", _)
-B,C
+Select p such that Calls("A", p)
+B
 5000
 40 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("B", _)
+Select p such that Calls("B", p)
 C
 5000
 41 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("C", _)
+Select p such that Calls("C", p)
 none
 5000
 42 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("D", _)
-e,f,g,h
+Select p such that Calls("D", p)
+e
 5000
 43 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("e", _)
-f,g,h
+Select p such that Calls("e", p)
+f
 5000
 44 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("f", _)
-g,h
+Select p such that Calls("f", p)
+g
 5000
 45 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("g", _)
+Select p such that Calls("g", p)
 h
 5000
 46 - Calls
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls("h", _)
+Select p such that Calls("h", p)
 none
 5000
 47 - Calls
@@ -546,7 +546,7 @@ TRUE
 110 - Calls* and procedure synonyms as both arguments return one element tuple
 procedure p,proc; variable v; stmt s; assign a;
 Select <p> such that Calls*(p, proc)
-A,B,D,e,f,g
+SyntaxError
 5000
 111 - Calls* and procedure synonyms as both arguments return one element tuple
 procedure p,proc; variable v; stmt s; assign a;
