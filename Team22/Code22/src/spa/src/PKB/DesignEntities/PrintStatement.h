@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class PrintStatement: public Statement {
+class PrintStatement : public Statement {
 public:
     explicit PrintStatement(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_PRINTSTATEMENT_H
+#endif//SPA_PRINTSTATEMENT_H

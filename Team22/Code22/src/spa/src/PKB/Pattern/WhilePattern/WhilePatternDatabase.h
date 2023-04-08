@@ -10,23 +10,23 @@
 #include <iostream>
 #include <unordered_map>
 
-#include "WhilePattern.h"
 #include "PKB/Pattern/PatternDatabase.h"
+#include "WhilePattern.h"
 
 using namespace std;
 
-class WhilePatternDatabase: public PatternDatabase {
-    unordered_map<string, WhilePattern*> database;
+class WhilePatternDatabase : public PatternDatabase {
+    unordered_map<string, WhilePattern *> database;
 
     bool isLineNumberPresent(string lineNumber) override;
-    void updatePatternInDatabase(Pattern* patternToBeStored) override;
+    void updatePatternInDatabase(Pattern *patternToBeStored) override;
 
-    bool isValidPatternType(Pattern* patternToBeStored);
+    bool isValidPatternType(Pattern *patternToBeStored);
 
 public:
-    void addToDatabase(Pattern* patternToBeStored) override;
+    void addToDatabase(Pattern *patternToBeStored) override;
     unordered_set<string> getAllVariablesBeingUsed(string lineNumber) override;
     bool isVariableNamePresentOnLineNumber(string lineNumber, string variableName) override;
 };
 
-#endif //SPA_WHILEPATTERNDATABASE_H
+#endif//SPA_WHILEPATTERNDATABASE_H

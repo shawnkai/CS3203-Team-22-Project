@@ -15,7 +15,7 @@ using namespace std;
 
 class NextFactory {
 public:
-    static DesignAbstraction* createNextAbstraction(tuple<string, string, string> abstractionDetails);
+    static DesignAbstraction *createNextAbstraction(tuple<string, string, string> abstractionDetails);
 };
 
-#endif //SPA_NEXTFACTORY_H
+#endif//SPA_NEXTFACTORY_H

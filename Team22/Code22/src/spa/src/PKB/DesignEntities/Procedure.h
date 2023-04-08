@@ -11,12 +11,11 @@
 
 #include "DesignEntity.h"
 
-class Procedure: public DesignEntity {
+class Procedure : public DesignEntity {
 public:
     explicit Procedure(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
-
 };
 
-#endif //SPA_PROCEDURE_H
+#endif//SPA_PROCEDURE_H

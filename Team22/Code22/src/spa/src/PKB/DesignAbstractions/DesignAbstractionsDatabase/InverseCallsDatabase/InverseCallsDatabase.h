@@ -13,8 +13,7 @@
 
 using namespace std;
 
-class InverseCallsDatabase: public DesignAbstractionDatabase {
-
+class InverseCallsDatabase : public DesignAbstractionDatabase {
 };
 
-#endif //SPA_INVERSECALLSDATABASE_H
+#endif//SPA_INVERSECALLSDATABASE_H

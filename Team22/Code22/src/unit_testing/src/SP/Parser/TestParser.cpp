@@ -1,8 +1,8 @@
 //
 // Created by Yi Zhang on 30/1/23.
 //
-#include "SP/Parser/TNode.h"
 #include "SP/Parser/Parser.h"
+#include "SP/Parser/TNode.h"
 #include "SP/Tokenizer/Tokenizer.h"
 #include "catch.hpp"
 #include <filesystem>
@@ -27,7 +27,7 @@ TEST_CASE("TestCase1_ParseTokenListBasicSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (invalid_argument& e) {
+    } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
     }
@@ -60,7 +60,7 @@ TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (invalid_argument& e) {
+    } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
     }
@@ -118,7 +118,7 @@ TEST_CASE("TestCase3_ParseTokenListWhileStatement_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (invalid_argument& e) {
+    } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
     }
@@ -175,7 +175,7 @@ TEST_CASE("TestCase4_ParseTokenListWhileStatementExpr2_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (invalid_argument& e) {
+    } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
     }
@@ -227,7 +227,7 @@ TEST_CASE("TestCase5_ParseTokenListWhileStatementExpr3_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (invalid_argument& e) {
+    } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
     }
@@ -276,7 +276,7 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (invalid_argument& e) {
+    } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
     }
@@ -353,7 +353,7 @@ TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
     temp_file.close();
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -361,7 +361,7 @@ TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -394,7 +394,7 @@ TEST_CASE("TestCase9_ParseIfStmtSource_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -402,7 +402,7 @@ TEST_CASE("TestCase9_ParseIfStmtSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -440,7 +440,7 @@ TEST_CASE("TestCase10_ParseReadPrintStmtSource_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -448,7 +448,7 @@ TEST_CASE("TestCase10_ParseReadPrintStmtSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -482,7 +482,7 @@ TEST_CASE("TestCase11_ParseAssignStmtSource_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -490,7 +490,7 @@ TEST_CASE("TestCase11_ParseAssignStmtSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -504,7 +504,7 @@ TEST_CASE("TestCase11_ParseAssignStmtSource_ShouldSuccess") {
     auto node3 = node2.children[1];
     REQUIRE(node3.nodeType == TokenType::OPERATOR);
     REQUIRE(node3.stringId == "/");
-    REQUIRE(filesystem::remove(relativePath)) ;
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase12_ParseIfWhileCombinedMix1_ShouldSuccess") {
@@ -533,7 +533,7 @@ TEST_CASE("TestCase12_ParseIfWhileCombinedMix1_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -541,7 +541,7 @@ TEST_CASE("TestCase12_ParseIfWhileCombinedMix1_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -589,7 +589,7 @@ TEST_CASE("TestCase13_ParseIfWhileCombinedMix2_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -597,7 +597,7 @@ TEST_CASE("TestCase13_ParseIfWhileCombinedMix2_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -642,7 +642,7 @@ TEST_CASE("TestCase14_ParseIfWhileCombinedMix3_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -650,7 +650,7 @@ TEST_CASE("TestCase14_ParseIfWhileCombinedMix3_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -706,7 +706,7 @@ TEST_CASE("TestCase15_ParseDeepNestingSource_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -714,7 +714,7 @@ TEST_CASE("TestCase15_ParseDeepNestingSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -755,7 +755,7 @@ TEST_CASE("TestCase16_ParseComplexConditionalStmt_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -763,7 +763,7 @@ TEST_CASE("TestCase16_ParseComplexConditionalStmt_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -797,7 +797,7 @@ TEST_CASE("TestCase17_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -805,7 +805,7 @@ TEST_CASE("TestCase17_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -866,7 +866,7 @@ TEST_CASE("TestCase18_ParseGrandSimpleSource_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -874,7 +874,7 @@ TEST_CASE("TestCase18_ParseGrandSimpleSource_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -927,7 +927,7 @@ TEST_CASE("TestCase19_ParseIllegalToken_ShouldThrowException") {
     bool isThrownException = false;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         isThrownException = true;
     }
@@ -979,7 +979,7 @@ TEST_CASE("TestCase20_ParseIllegalGrammar_ShouldThrowException") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -988,7 +988,7 @@ TEST_CASE("TestCase20_ParseIllegalGrammar_ShouldThrowException") {
     bool isThrownException = false;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         isThrownException = true;
     }
@@ -1039,7 +1039,7 @@ TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -1047,7 +1047,7 @@ TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -1124,7 +1124,7 @@ TEST_CASE("TestCase22_ParseLongProcedure_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -1132,7 +1132,7 @@ TEST_CASE("TestCase22_ParseLongProcedure_ShouldSuccess") {
     TNode result;
     try {
         result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }

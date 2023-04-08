@@ -11,9 +11,9 @@
 using namespace std;
 
 TEST_CASE("Test 1: Get Control Flow Graph Database") {
-    ControlFlowGraphDatabase* db = ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase();
+    ControlFlowGraphDatabase *db = ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase();
 
-    ControlFlowGraphDatabase* cfgdb = dynamic_cast<ControlFlowGraphDatabase*>(db);
+    ControlFlowGraphDatabase *cfgdb = dynamic_cast<ControlFlowGraphDatabase *>(db);
 
-    REQUIRE (cfgdb != nullptr);
+    REQUIRE(cfgdb != nullptr);
 }

@@ -13,12 +13,11 @@
 
 using namespace std;
 
-class PrintUses: public Uses {
+class PrintUses : public Uses {
 public:
     explicit PrintUses(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
-
 };
 
-#endif //SPA_PRINTUSES_H
+#endif//SPA_PRINTUSES_H

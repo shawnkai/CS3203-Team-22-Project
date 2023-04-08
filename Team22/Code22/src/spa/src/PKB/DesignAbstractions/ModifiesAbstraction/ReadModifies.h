@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class ReadModifies: public Modifies {
+class ReadModifies : public Modifies {
 public:
     explicit ReadModifies(tuple<string, string, string> abstractionDetails);
 
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //SPA_READMODIFIES_H
+#endif//SPA_READMODIFIES_H

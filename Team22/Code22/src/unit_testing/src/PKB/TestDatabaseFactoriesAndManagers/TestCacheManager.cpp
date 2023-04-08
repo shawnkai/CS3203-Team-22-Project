@@ -11,9 +11,9 @@
 using namespace std;
 
 TEST_CASE("Test 1: Get Cache Database") {
-    CacheDatabase* db = CacheManager::getCacheDatabase();
+    CacheDatabase *db = CacheManager::getCacheDatabase();
 
-    CacheDatabase* cdb = dynamic_cast<CacheDatabase*>(db);
+    CacheDatabase *cdb = dynamic_cast<CacheDatabase *>(db);
 
-    REQUIRE (cdb != nullptr);
+    REQUIRE(cdb != nullptr);
 }

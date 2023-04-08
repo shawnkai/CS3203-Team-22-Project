@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Statement: public DesignEntity {
+class Statement : public DesignEntity {
 public:
     explicit Statement(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_STATEMENT_H
+#endif//SPA_STATEMENT_H

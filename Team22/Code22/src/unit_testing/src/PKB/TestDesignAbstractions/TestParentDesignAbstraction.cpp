@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/DesignAbstractionsInterface.h"
+#include "catch.hpp"
 
 using namespace std;
 
@@ -111,18 +111,17 @@ TEST_CASE("Test 7: Retrieval of Variables Captured By Parent Design Abstractions
         unordered_map<string, unordered_set<string>> result =
                 designAbstractionsControllerTest.getAllVariablesCapturedByDesignAbstraction("PARENT", "_");
 
-//        for (auto& [first, second]: result) {
-//            cout << first << endl;
-//            for (auto& i: second) {
-//                cout << i;
-//            }
-//            cout << endl;
-//        }
+        //        for (auto& [first, second]: result) {
+        //            cout << first << endl;
+        //            for (auto& i: second) {
+        //                cout << i;
+        //            }
+        //            cout << endl;
+        //        }
 
         REQUIRE(
                 ((result.find("a26") != result.end()) &&
-                (result.find("a28") != result.end()) &&
-                (result.find("a30") != result.end()))
-                );
+                 (result.find("a28") != result.end()) &&
+                 (result.find("a30") != result.end())));
     }
 }

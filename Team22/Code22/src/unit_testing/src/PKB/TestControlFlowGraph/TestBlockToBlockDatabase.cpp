@@ -11,7 +11,7 @@
 using namespace std;
 
 TEST_CASE("Test 1: Creating BlockToBlock With Default Constructor") {
-    BlockToBlock* blockToBlock = new BlockToBlock();
+    BlockToBlock *blockToBlock = new BlockToBlock();
     unordered_map<int, vector<int>> database = blockToBlock->getBlockToBlockDatabase();
 
     REQUIRE((database.size() == 0));
@@ -19,18 +19,18 @@ TEST_CASE("Test 1: Creating BlockToBlock With Default Constructor") {
 
 TEST_CASE("Test 2: Creating BlockToBlock With Parameterised Constructor") {
     unordered_map<int, vector<int>> sampleMap;
-    sampleMap.insert(make_pair(1, vector<int> {1, 2}));
-    sampleMap.insert(make_pair(2, vector<int> {3}));
+    sampleMap.insert(make_pair(1, vector<int>{1, 2}));
+    sampleMap.insert(make_pair(2, vector<int>{3}));
 
-    BlockToBlock* blockToBlock = new BlockToBlock(sampleMap);
+    BlockToBlock *blockToBlock = new BlockToBlock(sampleMap);
     unordered_map<int, vector<int>> database = blockToBlock->getBlockToBlockDatabase();
 
     REQUIRE((database.size() != 0));
 }
 
 TEST_CASE("Test 3: Adding An Individual Block Number And Block Number") {
-    BlockToBlock* blockToBlock = new BlockToBlock();
-    blockToBlock->addToDatabase(1, vector<int> {1});
+    BlockToBlock *blockToBlock = new BlockToBlock();
+    blockToBlock->addToDatabase(1, vector<int>{1});
 
     unordered_map<int, vector<int>> database = blockToBlock->getBlockToBlockDatabase();
 
@@ -38,14 +38,14 @@ TEST_CASE("Test 3: Adding An Individual Block Number And Block Number") {
 }
 
 TEST_CASE("Test 4: Copying A New Block Number To Block Database") {
-    BlockToBlock* blockToBlock = new BlockToBlock();
-    blockToBlock->addToDatabase(1, vector<int> {1});
+    BlockToBlock *blockToBlock = new BlockToBlock();
+    blockToBlock->addToDatabase(1, vector<int>{1});
 
     unordered_map<int, vector<int>> oldDatabase = blockToBlock->getBlockToBlockDatabase();
 
     unordered_map<int, vector<int>> sampleMap;
-    sampleMap.insert(make_pair(1, vector<int> {1, 2}));
-    sampleMap.insert(make_pair(2, vector<int> {3}));
+    sampleMap.insert(make_pair(1, vector<int>{1, 2}));
+    sampleMap.insert(make_pair(2, vector<int>{3}));
 
     blockToBlock->copyBlockToBlockDatabase(sampleMap);
 
@@ -55,8 +55,8 @@ TEST_CASE("Test 4: Copying A New Block Number To Block Database") {
 }
 
 TEST_CASE("Test 5: Clearing BlockToBlock Database") {
-    BlockToBlock* blockToBlock = new BlockToBlock();
-    blockToBlock->addToDatabase(1, vector<int> {1});
+    BlockToBlock *blockToBlock = new BlockToBlock();
+    blockToBlock->addToDatabase(1, vector<int>{1});
 
     blockToBlock->clearDatabase();
 

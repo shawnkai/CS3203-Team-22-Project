@@ -15,7 +15,7 @@ TEST_CASE("Test 1: Catch DataNotFoundInCacheException") {
     bool exceptionThrown = false;
 
     try {
-        CacheDatabase* cacheDatabase = new CacheDatabase;
+        CacheDatabase *cacheDatabase = new CacheDatabase;
         cacheDatabase->addToCache("Test", nullptr);
 
         cacheDatabase->getResultTableFromCache("INVALID");

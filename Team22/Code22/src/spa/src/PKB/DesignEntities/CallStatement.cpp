@@ -9,8 +9,7 @@
 using namespace std;
 
 CallStatement::CallStatement(tuple<string, string> entityDetails)
-: Statement(entityDetails) {
-
+    : Statement(entityDetails) {
 }
 
 string CallStatement::getTypeOfEntity() {

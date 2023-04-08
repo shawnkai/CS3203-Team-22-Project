@@ -11,7 +11,7 @@
 using namespace std;
 
 bool IfPatternDatabase::isValidPatternType(Pattern *patternToBeStored) {
-    IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
+    IfPattern *ifPatternToBeStored = dynamic_cast<IfPattern *>(patternToBeStored);
 
     if (ifPatternToBeStored == nullptr) {
         return false;
@@ -24,14 +24,14 @@ bool IfPatternDatabase::isLineNumberPresent(string lineNumber) {
     return (this->database.find(lineNumber) != this->database.end());
 }
 
-void IfPatternDatabase::updatePatternInDatabase(Pattern* patternToBeStored) {
+void IfPatternDatabase::updatePatternInDatabase(Pattern *patternToBeStored) {
     if (!(this->isValidPatternType(patternToBeStored))) {
         // Throw Error
         throw InvalidPatternTypeException(
                 ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
     }
 
-    IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
+    IfPattern *ifPatternToBeStored = dynamic_cast<IfPattern *>(patternToBeStored);
 
     auto elementToAdd = *(ifPatternToBeStored->getVariableNamesUsed().begin());
 
@@ -45,7 +45,7 @@ void IfPatternDatabase::addToDatabase(Pattern *patternToBeStored) {
                 ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: IfPattern Type Here").data());
     }
 
-    IfPattern* ifPatternToBeStored = dynamic_cast<IfPattern*>(patternToBeStored);
+    IfPattern *ifPatternToBeStored = dynamic_cast<IfPattern *>(patternToBeStored);
 
     if (this->isLineNumberPresent(ifPatternToBeStored->getLineNumber())) {
         this->updatePatternInDatabase(patternToBeStored);
@@ -59,7 +59,7 @@ unordered_set<string> IfPatternDatabase::getAllVariablesBeingUsed(string lineNum
         return this->database.find(lineNumber)->second->getVariableNamesUsed();
     }
 
-    return unordered_set<string> {};
+    return unordered_set<string>{};
 }
 
 bool IfPatternDatabase::isVariableNamePresentOnLineNumber(string lineNumber, string variableName) {

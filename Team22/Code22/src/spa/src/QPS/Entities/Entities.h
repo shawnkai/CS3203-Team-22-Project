@@ -5,12 +5,12 @@
 #ifndef INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
 #define INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
 
-#include <string>
+#include "PKB/PKB.h"
+#include "QPS/Evaluator/ResultTable.h"
 #include <Utilities.h>
 #include <list>
+#include <string>
 #include <utility>
-#include "QPS/Evaluator/ResultTable.h"
-#include "PKB/PKB.h"
 
 using namespace std;
 
@@ -33,7 +33,7 @@ public:
         return "";
     }
 
-    virtual ResultTable* getAttrVal(string attr, PKB pkb) {
+    virtual ResultTable *getAttrVal(string attr, PKB pkb) {
         return new ResultTable({});
     };
 
@@ -52,9 +52,8 @@ protected:
     explicit StmtRef(string type);
 
 public:
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
-
 };
 
 class SynonymStmtEntity : public StmtRef {
@@ -64,22 +63,24 @@ private:
 protected:
     string synonym;
     SynonymStmtEntity(string type, string synonym);
+
 public:
     string toString() override;
     explicit SynonymStmtEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
-class WildcardStmtRef: public StmtRef {
+class WildcardStmtRef : public StmtRef {
 public:
     WildcardStmtRef();
     string toString() override;
 };
 
-class StmtEntity: public StmtRef {
+class StmtEntity : public StmtRef {
 private:
     int lineNumber;
+
 public:
     int getLine();
     string toString() override;
@@ -92,7 +93,7 @@ private:
 
 public:
     explicit ReadEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -102,16 +103,17 @@ private:
 
 public:
     explicit PrintEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
 class AssignEntity : public SynonymStmtEntity {
 private:
     static vector<string> validAttrs;
+
 public:
     explicit AssignEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -121,7 +123,7 @@ private:
 
 public:
     explicit CallEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -131,7 +133,7 @@ private:
 
 public:
     explicit WhileEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -141,7 +143,7 @@ private:
 
 public:
     explicit IfEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -156,14 +158,15 @@ private:
 
 protected:
     string synonym;
+
 public:
-    NamedEntity(const string& type, string synonym);
+    NamedEntity(const string &type, string synonym);
 
     string getSynonym();
 
     string toString() override;
 
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -173,7 +176,7 @@ private:
 
 public:
     explicit ProcedureEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -183,7 +186,7 @@ private:
 
 public:
     explicit VariableEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
@@ -193,16 +196,17 @@ private:
 
 public:
     explicit ConstantEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
+    ResultTable *getAttrVal(string attr, PKB pkb) override;
     bool checkAttr(string attr) override;
 };
 
 class WildcardNamedEntity : public NamedEntity {
 private:
     static vector<string> validAttrs;
+
 public:
     explicit WildcardNamedEntity();
     bool checkAttr(string attr) override;
 };
 
-#endif //INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
+#endif//INC_22S2_CP_SPA_TEAM_22_ENTITIES_H

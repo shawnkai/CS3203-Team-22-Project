@@ -9,8 +9,7 @@
 using namespace std;
 
 ParentStar::ParentStar(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails) {
-
+    : DesignAbstraction(abstractionDetails) {
 }
 
 string ParentStar::getTypeOfAbstraction() {

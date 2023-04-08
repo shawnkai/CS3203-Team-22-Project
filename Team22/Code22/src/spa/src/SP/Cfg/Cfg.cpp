@@ -31,8 +31,8 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
     for (int i = 0; i < statementListToProcess.children.size(); ++ i) {
         cout << "processing node " + ToString(statementListToProcess.children[i]) << endl;
         if (i < statementListToProcess.children.size() &&
-        statementListToProcess.children[i].nodeType != TokenType::WHILE &&
-        statementListToProcess.children[i].nodeType != TokenType::IF) {
+                statementListToProcess.children[i].nodeType != TokenType::WHILE &&
+                statementListToProcess.children[i].nodeType != TokenType::IF) {
             currStmts.push_back(statementListToProcess.children[i].stmtNumber);
             continue;
         }
@@ -109,7 +109,7 @@ vector<int> Cfg::handleTerminalBlocks(const vector<int>& pendingToTerminate) {
     vector<int> end;
     end.push_back(0);
     for(int ending: pendingToTerminate) {
-        map<int, vector<int> >::iterator itr;
+        unordered_map<int, vector<int> >::iterator itr;
         itr = blockGraph.find(ending);
         if (itr == blockGraph.end()) {
             blockGraph.insert(pair<int, vector<int> >(ending, end));
@@ -132,7 +132,7 @@ vector<int> Cfg::handleTerminalBlocks(const vector<int>& pendingToTerminate) {
 vector<int> Cfg::handleLinkingBackBlocks(vector<int> pendingHandling, vector<int> neighbours) {
     for (int entry: pendingHandling) {
         neighbours.push_back(currentBlk);
-        map<int, vector<int> >::iterator itr;
+        unordered_map<int, vector<int> >::iterator itr;
         itr = blockGraph.find(entry);
         if (itr == blockGraph.end()) {
             blockGraph.insert(pair<int, vector<int> >(entry, neighbours));
@@ -173,7 +173,7 @@ int Cfg::buildBasicNode(const vector<int>& currentStmts) {
  */
 int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess, int pointer) {
     //build a conditional node's basic block
-    currentStmts.push_back(statementListToProcess.children[pointer].children[0].stmtNumber);
+    currentStmts.push_back((statementListToProcess.children[pointer]).children[0].stmtNumber);
     basicBlock.push_back(currentBlk);
     int exitingNumber = currentBlk;
     blockPointingBackward.insert(exitingNumber);
@@ -192,7 +192,7 @@ int Cfg::buildWhileNode( vector<int> currentStmts, TNode statementListToProcess,
         cout << "end node returned to While, something went wrong" << endl;
     }
     // link the exiting node in the stmtList of while back to the conditional node
-    map<int, vector<int> >::iterator itr;
+    unordered_map<int, vector<int> >::iterator itr;
     for (int linkingBack: exitingBlk) {
         itr = blockGraph.find(linkingBack);
         if (itr != blockGraph.end()) {

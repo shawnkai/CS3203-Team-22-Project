@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Constant: public DesignEntity {
+class Constant : public DesignEntity {
 public:
     explicit Constant(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_CONSTANT_H
+#endif//SPA_CONSTANT_H

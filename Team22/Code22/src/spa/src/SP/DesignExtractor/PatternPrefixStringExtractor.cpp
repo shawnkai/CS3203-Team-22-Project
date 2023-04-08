@@ -9,7 +9,7 @@ using namespace std;
  * @param instance the PKB entry point for storage
  */
 void PatternPrefixStringExtractor::extractPrefixString(TNode root, PKB instance) {
-    
+
     TNode lhs = root.children[0];
     TNode rhs = root.children[1];
     string lhsString = lhs.stringId;
@@ -31,7 +31,7 @@ string PatternPrefixStringExtractor::handlePrefixGeneration(TNode node, string r
     bool isTerminalOperator = true;
     for (TNode checker: myChildren) {
         isTerminalOperator = (isTerminalOperator &&
-                (checker.nodeType == TokenType::NAME_IDENTIFIER || checker.nodeType == TokenType::INTEGER));
+                              (checker.nodeType == TokenType::NAME_IDENTIFIER || checker.nodeType == TokenType::INTEGER));
     }
     if (isTerminalOperator) {
         string childrenCombined;
@@ -45,13 +45,10 @@ string PatternPrefixStringExtractor::handlePrefixGeneration(TNode node, string r
         TNode rhs = node.children[1];
         if (rhs.nodeType == TokenType::NAME_IDENTIFIER || rhs.nodeType == TokenType::INTEGER) {
             result = node.stringId + handlePrefixGeneration(lhs, result) + rhs.stringId;
-        }
-        else if (lhs.nodeType == TokenType::NAME_IDENTIFIER || rhs.nodeType == TokenType::INTEGER) {
+        } else if (lhs.nodeType == TokenType::NAME_IDENTIFIER || rhs.nodeType == TokenType::INTEGER) {
             result = node.stringId + lhs.stringId + handlePrefixGeneration(rhs, result);
-        }
-        else {
-            result = node.stringId + handlePrefixGeneration(lhs, result)
-                    + handlePrefixGeneration(rhs, result);
+        } else {
+            result = node.stringId + handlePrefixGeneration(lhs, result) + handlePrefixGeneration(rhs, result);
         }
         return result;
     }

@@ -4,12 +4,12 @@
 
 #include "catch.hpp"
 
-#include "SP/SPDriver.h"
 #include "PKB/PKB.h"
+#include "SP/SPDriver.h"
 
 TEST_CASE("TestCase1_TestSPPKBIntegration_ShouldSuccess") {
     PKB standardExampleSIMPLESourceChecker = PKB();
-    standardExampleSIMPLESourceChecker.clearAllDatabases();
+    standardExampleSIMPLESourceChecker.clearAllDatabases("CalledForTestingPurposes");
     SPDriver driver;
     std::string inputFilePath;
 
@@ -55,12 +55,12 @@ TEST_CASE("TestCase1_TestSPPKBIntegration_ShouldSuccess") {
     //PKB standardExampleSIMPLESourceChecker = PKB();
     Result pkbResult = standardExampleSIMPLESourceChecker.getDesignAbstraction("MODIFIES",
                                                                                make_tuple("ASSIGNMENT", "x"));
-    Result expectedResult("MODIFIES:ASSIGNMENT", "x", vector<string> {"1", "9"});
+    Result expectedResult("MODIFIES:ASSIGNMENT", "x", vector<string>{"1", "9"});
     REQUIRE(pkbResult.areEqual(expectedResult));
 
     Result pkbResult2 = standardExampleSIMPLESourceChecker.getDesignAbstraction("USES",
                                                                                 make_tuple("ASSIGNMENT", "x"));
-    Result expectedResult2("USES:ASSIGNMENT", "x", vector<string>{ "4", "5", "7", "9"});
+    Result expectedResult2("USES:ASSIGNMENT", "x", vector<string>{"4", "5", "7", "9"});
     REQUIRE(pkbResult2.areEqual(expectedResult2));
 
     vector<int> resultOne = standardExampleSIMPLESourceChecker.getTopologicallySortedElementsDatabase("Example");

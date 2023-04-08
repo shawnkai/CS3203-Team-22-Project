@@ -16,13 +16,13 @@
 using namespace std;
 
 class ControlFlowGraphDatabase {
-    unordered_map<string, ControlFlowGraph*> controlFlowGraphDatabase;
+    unordered_map<string, ControlFlowGraph *> controlFlowGraphDatabase;
 
     bool isPresentInDatabase(string procedureName);
-    void updateControlFlowGraphInDatabase(ControlFlowGraph* controlFlowGraphToBeStored);
+    void updateControlFlowGraphInDatabase(ControlFlowGraph *controlFlowGraphToBeStored);
 
 public:
-    void addToDatabase(ControlFlowGraph* controlFlowGraphToBeStored);
+    void addToDatabase(ControlFlowGraph *controlFlowGraphToBeStored);
 
     vector<int> getTopologicallySortedBlockNumbersDatabaseFromDatabase(string procedureName);
     unordered_map<int, vector<int>> getBlockToStatementNumberDatabaseFromDatabase(string procedureName);
@@ -31,4 +31,4 @@ public:
     unordered_set<int> getBlocksWithBackPointersDatabaseFromDatabase(string procedureName);
 };
 
-#endif //SPA_CONTROLFLOWGRAPHDATABASE_H
+#endif//SPA_CONTROLFLOWGRAPHDATABASE_H

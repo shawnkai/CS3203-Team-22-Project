@@ -9,8 +9,7 @@
 using namespace std;
 
 IfStatementUses::IfStatementUses(tuple<string, string, string> abstractionDetails)
-: StatementUses(abstractionDetails) {
-
+    : StatementUses(abstractionDetails) {
 }
 
 string IfStatementUses::getTypeOfAbstraction() {

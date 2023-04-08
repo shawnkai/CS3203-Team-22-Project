@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/DesignAbstractionsInterface.h"
+#include "catch.hpp"
 
 using namespace std;
 
@@ -114,7 +114,6 @@ TEST_CASE("Test 7: Retrieval of Variables Captured By Next Design Abstractions")
         REQUIRE(
                 ((result.find("a26") != result.end()) &&
                  (result.find("a28") != result.end()) &&
-                 (result.find("a30") != result.end()))
-        );
+                 (result.find("a30") != result.end())));
     }
 }

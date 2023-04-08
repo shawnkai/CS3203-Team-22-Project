@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Variable: public DesignEntity {
+class Variable : public DesignEntity {
 public:
     explicit Variable(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_VARIABLE_H
+#endif//SPA_VARIABLE_H

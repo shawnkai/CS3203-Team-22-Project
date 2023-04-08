@@ -14,11 +14,11 @@ TEST_CASE("Test 1: Creation and Retrieval of Control Flow Graph") {
     ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("test",
-                                                   vector<int> {1},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_map<int, int> {{1, 1}},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_set<int> {1});
+                                                   vector<int>{1},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_map<int, int>{{1, 1}},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_set<int>{1});
 
     vector<int> resultOne = controlFlowGraphController.getTopologicallySortedElementsDatabase("test");
     unordered_map<int, vector<int>> resultTwo = controlFlowGraphController.getBlockToStatementNumbersDatabase("test");
@@ -37,11 +37,11 @@ TEST_CASE("Test 2: Retrieval of Non Existent Control Flow Graph") {
     ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("test",
-                                                   vector<int> {1},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_map<int, int> {{1, 1}},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_set<int> {1});
+                                                   vector<int>{1},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_map<int, int>{{1, 1}},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_set<int>{1});
 
     vector<int> resultOne = controlFlowGraphController.getTopologicallySortedElementsDatabase("nonExistent");
     unordered_map<int, vector<int>> resultTwo = controlFlowGraphController.getBlockToStatementNumbersDatabase("nonExistent");
@@ -60,18 +60,18 @@ TEST_CASE("Test 3: Retrieval of Control Flow Graph When Multiple Unique Are Pres
     ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("testOne",
-                                                   vector<int> {1},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_map<int, int> {{1, 1}},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_set<int> {1});
+                                                   vector<int>{1},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_map<int, int>{{1, 1}},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_set<int>{1});
 
     controlFlowGraphController.addControlFlowGraph("testTwo",
-                                                   vector<int> {1},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_map<int, int> {{1, 1}},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_set<int> {1});
+                                                   vector<int>{1},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_map<int, int>{{1, 1}},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_set<int>{1});
 
     vector<int> resultOne = controlFlowGraphController.getTopologicallySortedElementsDatabase("testTwo");
     unordered_map<int, vector<int>> resultTwo = controlFlowGraphController.getBlockToStatementNumbersDatabase("testTwo");
@@ -102,11 +102,11 @@ TEST_CASE("Test 4: Retrieval of Control Flow Graph When The Same Procedure Name 
     ControlFlowGraphInterface controlFlowGraphController = ControlFlowGraphInterface();
 
     controlFlowGraphController.addControlFlowGraph("testOne",
-                                                   vector<int> {1},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_map<int, int> {{1, 1}},
-                                                   unordered_map<int, vector<int>> {{1, vector<int> {1}}},
-                                                   unordered_set<int> {1});
+                                                   vector<int>{1},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_map<int, int>{{1, 1}},
+                                                   unordered_map<int, vector<int>>{{1, vector<int>{1}}},
+                                                   unordered_set<int>{1});
 
     vector<int> resultOne = controlFlowGraphController.getTopologicallySortedElementsDatabase("testOne");
     unordered_map<int, vector<int>> resultTwo = controlFlowGraphController.getBlockToStatementNumbersDatabase("testOne");
@@ -121,11 +121,11 @@ TEST_CASE("Test 4: Retrieval of Control Flow Graph When The Same Procedure Name 
     REQUIRE(resultFive.find(1) != resultFive.end());
 
     controlFlowGraphController.addControlFlowGraph("testOne",
-                                                   vector<int> {2},
-                                                   unordered_map<int, vector<int>> {{2, vector<int> {2}}},
-                                                   unordered_map<int, int> {{2, 2}},
-                                                   unordered_map<int, vector<int>> {{2, vector<int> {2}}},
-                                                   unordered_set<int> {2});
+                                                   vector<int>{2},
+                                                   unordered_map<int, vector<int>>{{2, vector<int>{2}}},
+                                                   unordered_map<int, int>{{2, 2}},
+                                                   unordered_map<int, vector<int>>{{2, vector<int>{2}}},
+                                                   unordered_set<int>{2});
 
     resultOne = controlFlowGraphController.getTopologicallySortedElementsDatabase("testOne");
     resultTwo = controlFlowGraphController.getBlockToStatementNumbersDatabase("testOne");

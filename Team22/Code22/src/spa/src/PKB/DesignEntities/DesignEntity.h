@@ -31,4 +31,4 @@ public:
     virtual string getTypeOfEntity() = 0;
 };
 
-#endif //SPA_DESIGNENTITY_H
+#endif//SPA_DESIGNENTITY_H

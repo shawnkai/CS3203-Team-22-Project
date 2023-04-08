@@ -13,7 +13,7 @@ using namespace std;
  *
  * @param designEntityToBeStored The Design Entity "Reference" Object to be stored.
  */
-void DesignEntityDatabase::addToDatabase(DesignEntity* designEntityToBeStored) {
+void DesignEntityDatabase::addToDatabase(DesignEntity *designEntityToBeStored) {
     // First find the variable if it exists in db, if not, add.
     // If it does exist, then just retrieve and add to the vector<string> occurrence list
 
@@ -31,7 +31,7 @@ void DesignEntityDatabase::addToDatabase(DesignEntity* designEntityToBeStored) {
  * @param designEntityToBeStored The Design Entity that is to be stored, and to be checked for.
  * @return A boolean, true, if the Entity already exists in the database.
  */
-bool DesignEntityDatabase::isPresentInDatabase(DesignEntity* designEntityToBeStored) {
+bool DesignEntityDatabase::isPresentInDatabase(DesignEntity *designEntityToBeStored) {
     return this->isPresentInDatabase(designEntityToBeStored->getNameOfEntity());
 }
 
@@ -40,17 +40,17 @@ bool DesignEntityDatabase::isPresentInDatabase(DesignEntity* designEntityToBeSto
  *
  * @param designEntityToBeStored The Design Entity that is to be stored and/or updated.
  */
-void DesignEntityDatabase::updateEntityInDatabase(DesignEntity* designEntityToBeStored) {
+void DesignEntityDatabase::updateEntityInDatabase(DesignEntity *designEntityToBeStored) {
     // insert new set of value
-//    (this->database)[designEntityToBeStored.getNameOfEntity()];
+    //    (this->database)[designEntityToBeStored.getNameOfEntity()];
 
     auto iterator = (this->database).find(designEntityToBeStored->getNameOfEntity());
     (iterator->second)->addAdditionalOccurrence(designEntityToBeStored->getOccurrenceOfEntity()[0]);
     // Should the above line only copy the 0th index or copy the entire vector,
     // by indexing through it?
 
-//    vector<string> toBeUpdated = (iterator->second).getOccurrenceOfEntity();
-//    toBeUpdated.push_back(designEntityToBeStored.getOccurrenceOfEntity()[0]);
+    //    vector<string> toBeUpdated = (iterator->second).getOccurrenceOfEntity();
+    //    toBeUpdated.push_back(designEntityToBeStored.getOccurrenceOfEntity()[0]);
 }
 
 /**
@@ -102,10 +102,10 @@ Result DesignEntityDatabase::getFromDatabase(string entityName) {
 vector<Result> DesignEntityDatabase::getAllFromDatabase() {
     vector<Result> resultVector;
 
-    for (auto& [entityName, designEntity]: this->database) {
-         resultVector.emplace_back(designEntity->getTypeOfEntity(),
-                                   designEntity->getNameOfEntity(),
-                                   designEntity->getOccurrenceOfEntity());
+    for (auto &[entityName, designEntity]: this->database) {
+        resultVector.emplace_back(designEntity->getTypeOfEntity(),
+                                  designEntity->getNameOfEntity(),
+                                  designEntity->getOccurrenceOfEntity());
     }
 
     return resultVector;

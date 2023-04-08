@@ -13,7 +13,7 @@ BlockToBlock::BlockToBlock(unordered_map<int, vector<int>> blockToBlockDatabase)
 }
 
 BlockToBlock::BlockToBlock() {
-    this->blockToBlockDatabase = unordered_map<int, vector<int>> {};
+    this->blockToBlockDatabase = unordered_map<int, vector<int>>{};
 }
 
 void BlockToBlock::addToDatabase(int block, vector<int> nextBlock) {
@@ -29,5 +29,5 @@ unordered_map<int, vector<int>> BlockToBlock::getBlockToBlockDatabase() {
 }
 
 void BlockToBlock::clearDatabase() {
-    this->blockToBlockDatabase = unordered_map<int, vector<int>> {};
+    this->blockToBlockDatabase = unordered_map<int, vector<int>>{};
 }

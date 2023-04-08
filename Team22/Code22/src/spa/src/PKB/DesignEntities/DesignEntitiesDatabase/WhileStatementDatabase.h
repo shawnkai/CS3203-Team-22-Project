@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class WhileStatementDatabase: public StatementDatabase {
+class WhileStatementDatabase : public StatementDatabase {
 public:
-
 };
 
-#endif //SPA_WHILESTATEMENTDATABASE_H
+#endif//SPA_WHILESTATEMENTDATABASE_H

@@ -15,13 +15,13 @@
 using namespace std;
 
 class CacheDatabase {
-    unordered_map<string, ResultTable*> cacheDatabase;
+    unordered_map<string, ResultTable *> cacheDatabase;
 
 public:
-    void addToCache(string accessKey, ResultTable* resultTable);
-    ResultTable* getResultTableFromCache(string accessKey);
-    unordered_map<string, ResultTable*> getCacheDatabase();
+    void addToCache(string accessKey, ResultTable *resultTable);
+    ResultTable *getResultTableFromCache(string accessKey);
+    unordered_map<string, ResultTable *> getCacheDatabase();
     void clearCache();
 };
 
-#endif //SPA_CACHEDATABASE_H
+#endif//SPA_CACHEDATABASE_H

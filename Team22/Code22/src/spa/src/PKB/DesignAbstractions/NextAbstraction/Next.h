@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Next: public DesignAbstraction {
+class Next : public DesignAbstraction {
 public:
     explicit Next(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_NEXT_H
+#endif//SPA_NEXT_H

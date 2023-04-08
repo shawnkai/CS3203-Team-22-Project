@@ -15,7 +15,7 @@ using namespace std;
 
 class InverseCallsFactory {
 public:
-    static DesignAbstraction* createInverseCallsAbstraction(tuple<string, string, string> abstractionDetails);
+    static DesignAbstraction *createInverseCallsAbstraction(tuple<string, string, string> abstractionDetails);
 };
 
-#endif //SPA_INVERSECALLSFACTORY_H
+#endif//SPA_INVERSECALLSFACTORY_H

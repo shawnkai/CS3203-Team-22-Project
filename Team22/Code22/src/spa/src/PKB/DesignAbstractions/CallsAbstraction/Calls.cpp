@@ -9,8 +9,7 @@
 using namespace std;
 
 Calls::Calls(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails) {
-
+    : DesignAbstraction(abstractionDetails) {
 }
 
 string Calls::getTypeOfAbstraction() {
