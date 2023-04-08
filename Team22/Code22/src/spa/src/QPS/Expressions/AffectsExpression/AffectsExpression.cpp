@@ -31,7 +31,18 @@ vector<AffectsExpression*> AffectsExpression::extractAffectsExpression(const str
 
     while (regex_search(searchStart, query.cend(), sm, Expression::AFFECTSREGEX)) {
         pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-        expressions.push_back(new AffectsExpression(stmtEntityPair.first, stmtEntityPair.second));
+
+        StmtRef* arg1 = stmtEntityPair.first;
+        StmtRef* arg2 = stmtEntityPair.second;
+
+        if (arg1->getType() != "STMTENTITY" && !(arg1->getType() == "ASSIGNMENT" || arg1->getType() == "STATEMENT")) {
+            throw SemanticException();
+        }
+        if (arg2->getType() != "STMTENTITY" && !(arg2->getType() == "ASSIGNMENT" || arg2->getType() == "STATEMENT")) {
+            throw SemanticException();
+        }
+
+        expressions.push_back(new AffectsExpression(arg1, arg2));
         searchStart = sm.suffix().first;
     }
     return expressions;
@@ -49,7 +60,18 @@ vector<AffectsStarExpression*> AffectsStarExpression::extractAffectsStarExpressi
 
     while (regex_search(searchStart, query.cend(), sm, Expression::AFFECTSSTARREGEX)) {
         pair<StmtRef*, StmtRef*> stmtEntityPair = Expression::generateStmtEntityPair(sm.str(1), sm.str(2), synonymTable);
-        expressions.push_back(new AffectsStarExpression(stmtEntityPair.first, stmtEntityPair.second));
+
+        StmtRef* arg1 = stmtEntityPair.first;
+        StmtRef* arg2 = stmtEntityPair.second;
+
+        if (arg1->getType() != "STMTENTITY" && !(arg1->getType() == "ASSIGNMENT" || arg1->getType() == "STATEMENT")) {
+            throw SemanticException();
+        }
+        if (arg2->getType() != "STMTENTITY" && !(arg2->getType() == "ASSIGNMENT" || arg2->getType() == "STATEMENT")) {
+            throw SemanticException();
+        }
+
+        expressions.push_back(new AffectsStarExpression(arg1, arg2));
         searchStart = sm.suffix().first;
     }
     return expressions;
