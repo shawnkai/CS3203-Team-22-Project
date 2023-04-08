@@ -27,7 +27,7 @@ private:
      * @return a pair, with the first element representing a DesignEntity pointer
      * and the second element representing a string representing the attribute for the entity
      */
-    static pair<DesignEntity*, string> extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable);
+    static pair<DesignEntity*, string> extractSynonymAndAttribute(const string& synAttr, SynonymTable synonymTable);
 
 public:
     /**
@@ -48,7 +48,7 @@ public:
      *
      * @return a pair of vectors, with the first vector containing DesignEntity pointers and the second vector containing strings representing the attributes for each entity
      */
-    static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(string query, SynonymTable synonymTable);
+    static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(const string& query, const SynonymTable& synonymTable);
     string toString() const override;
 
     /**
@@ -59,7 +59,7 @@ public:
      *
      * @return true if the given synonym attribute is a BOOLEAN type
      */
-    static bool isBooleanType(string synAttr, SynonymTable synonymTable);
+    static bool isBooleanType(const string& synAttr, SynonymTable synonymTable);
 
     /**
      * Evaluates this SelectExpression object and returns a ResultTable pointer representing the result of the query.

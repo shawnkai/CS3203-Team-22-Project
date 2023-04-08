@@ -5,6 +5,8 @@
 #include "SelectExpression.h"
 #include <chrono>
 #include <queue>
+#include "QPS/Optimizer/Optimizer.h"
+#include "QPS/Optimizer/parallel.h"
 #include "QPS/Optimizer/ConcurrentVector.h"
 
 using namespace std::chrono;
@@ -226,8 +228,4 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
             return finalTable;
         }
     }
-}
-
-vector<Expression *> SelectExpression::getConditions() {
-    return this->conditions;
 }
