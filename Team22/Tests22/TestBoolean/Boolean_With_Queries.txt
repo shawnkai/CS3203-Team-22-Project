@@ -301,17 +301,17 @@ SyntaxError
 61 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
 Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and v.varName = "1x"
-SemanticError
+SyntaxError
 5000
 62 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
 Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and pn.stmt# = TRUE123
-SemanticError
+SyntaxError
 5000
 63 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
 Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and c.value = 00
-SemanticError
+SyntaxError
 5000
 64 - multiple with clauses return true
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
