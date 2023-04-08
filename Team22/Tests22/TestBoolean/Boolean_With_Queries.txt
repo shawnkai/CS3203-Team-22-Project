@@ -26,7 +26,7 @@ SyntaxError
 6 - Invalid inputs
 stmt s; read re; print pn;
 Select BOOLEAN with pn.stmt# = "haha"
-SyntaxError
+SemanticError
 5000
 7 - Invalid inputs
 stmt s; read re; call call;
@@ -86,7 +86,7 @@ SyntaxError
 18 - Invalid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
 Select BOOLEAN with re.varName = c.value
-SyntaxError
+SemanticError
 5000
 19 - Invalid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
