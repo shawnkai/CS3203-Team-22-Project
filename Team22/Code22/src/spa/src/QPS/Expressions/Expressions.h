@@ -15,7 +15,7 @@
 #include "PKB/PKB.h"
 #include "QPS/Evaluator/ResultTable.h"
 #include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/SynonymTable.h"
+#include "QPS/QueryParser/SynonymTable.h"
 #include "Result.h"
 #include "Utilities.h"
 

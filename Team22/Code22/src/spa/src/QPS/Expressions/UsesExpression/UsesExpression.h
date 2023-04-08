@@ -12,7 +12,7 @@
 #include "Utilities.h"
 #include "QPS/Expressions/Expressions.h"
 #include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/SynonymTable.h"
+#include "QPS/QueryParser/SynonymTable.h"
 
 
 class UsesExpression : public Expression {

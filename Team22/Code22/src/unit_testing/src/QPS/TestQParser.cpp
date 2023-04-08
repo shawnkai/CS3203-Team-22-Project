@@ -2,7 +2,7 @@
 // Created by Atin Sakkeer Hussain on 04/02/2023.
 //
 
-#include "QPS/Parser/Parser.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "catch.hpp"
 #include "QPS/Exceptions/Exceptions.h"
 

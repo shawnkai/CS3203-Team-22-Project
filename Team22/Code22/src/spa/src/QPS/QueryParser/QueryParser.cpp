@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-#include "Parser.h"
+#include "QueryParser.h"
 
 using namespace std;
 
