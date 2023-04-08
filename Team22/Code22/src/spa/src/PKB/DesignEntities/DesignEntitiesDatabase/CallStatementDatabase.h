@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class CallStatementDatabase: public StatementDatabase {
+class CallStatementDatabase : public StatementDatabase {
 public:
-
 };
 
-#endif //SPA_CALLSTATEMENTDATABASE_H
+#endif//SPA_CALLSTATEMENTDATABASE_H

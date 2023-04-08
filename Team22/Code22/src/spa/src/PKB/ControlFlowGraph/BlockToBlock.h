@@ -26,4 +26,4 @@ public:
     void clearDatabase();
 };
 
-#endif //SPA_BLOCKTOBLOCK_H
+#endif//SPA_BLOCKTOBLOCK_H

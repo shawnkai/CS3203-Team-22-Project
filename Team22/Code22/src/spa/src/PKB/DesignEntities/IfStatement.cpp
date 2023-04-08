@@ -9,8 +9,7 @@
 using namespace std;
 
 IfStatement::IfStatement(tuple<string, string> entityDetails)
-: Statement(entityDetails) {
-
+    : Statement(entityDetails) {
 }
 
 string IfStatement::getTypeOfEntity() {

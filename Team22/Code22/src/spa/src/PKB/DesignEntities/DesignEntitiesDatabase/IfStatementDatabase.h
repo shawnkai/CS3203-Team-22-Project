@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class IfStatementDatabase: public StatementDatabase {
+class IfStatementDatabase : public StatementDatabase {
 public:
-
 };
 
-#endif //SPA_IFSTATEMENTDATABASE_H
+#endif//SPA_IFSTATEMENTDATABASE_H

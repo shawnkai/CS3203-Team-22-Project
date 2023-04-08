@@ -14,11 +14,11 @@
 
 using namespace std;
 
-class WhilePattern: public Pattern {
+class WhilePattern : public Pattern {
 public:
     explicit WhilePattern(string lineNumber, string variableName);
 
     string getTypeOfPattern() override;
 };
 
-#endif //SPA_WHILEPATTERN_H
+#endif//SPA_WHILEPATTERN_H

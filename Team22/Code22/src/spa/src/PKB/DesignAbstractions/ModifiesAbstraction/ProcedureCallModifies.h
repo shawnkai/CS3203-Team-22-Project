@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class ProcedureCallModifies: public Modifies {
+class ProcedureCallModifies : public Modifies {
 public:
     explicit ProcedureCallModifies(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_PROCEDURECALLMODIFIES_H
+#endif//SPA_PROCEDURECALLMODIFIES_H

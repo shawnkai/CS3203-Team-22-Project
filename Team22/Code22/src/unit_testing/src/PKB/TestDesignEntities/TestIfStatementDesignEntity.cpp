@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/DesignEntitiesInterface.h"
+#include "catch.hpp"
 
 using namespace std;
 

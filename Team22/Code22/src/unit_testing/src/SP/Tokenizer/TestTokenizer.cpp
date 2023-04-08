@@ -2,19 +2,17 @@
 // Created by Yi Zhang on 14/2/23.
 //
 #include "SP/Tokenizer/Tokenizer.h"
-#include <stdexcept>
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
-#include <filesystem>
 #include "catch.hpp"
+#include <filesystem>
+#include <fstream>
+#include <iostream>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 
 using namespace std;
 
-//NOTE: This test cases' relative path is written for a MAC OS machine, it will break on a Windows Machine.
-//Windows developer, please fill in the relative path when you run the unit tests.
 TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
     std::vector<Token> tokenList;
@@ -29,7 +27,7 @@ TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     temp_file.close();
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -37,7 +35,7 @@ TEST_CASE("TestCase1_TokenizeSmallestProcedure_ShouldSuccess") {
     REQUIRE(tokenList[0].type == TokenType::PROCEDURE);
     REQUIRE(tokenList[1].type == TokenType::NAME_IDENTIFIER);
     REQUIRE(tokenList[6].type == TokenType::RIGHT_CURLY_BRACKET);
-    REQUIRE(filesystem::remove(relativePath)) ;
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
@@ -58,7 +56,7 @@ TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
     temp_file.close();
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -66,7 +64,7 @@ TEST_CASE("TestCase2_TokenizeWhileStatement_ShouldSuccess") {
     REQUIRE(tokenList[3].type == TokenType::WHILE);
     REQUIRE(tokenList[6].type == TokenType::OPERATOR);
     REQUIRE(tokenList[10].type == TokenType::NAME_IDENTIFIER);
-    REQUIRE(filesystem::remove(relativePath)) ;
+    REQUIRE(filesystem::remove(relativePath));
 }
 
 TEST_CASE("TestCase3_TokenizeIfStatement_ShouldSuccess") {
@@ -88,7 +86,7 @@ TEST_CASE("TestCase3_TokenizeIfStatement_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -121,7 +119,7 @@ TEST_CASE("TestCase4_TokenizeReadPrintStatement_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -152,7 +150,7 @@ TEST_CASE("TestCase5_TokenizeAssignStatement_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -210,7 +208,7 @@ TEST_CASE("TestCase6_TokenizeComplexSimpleSource_ShouldSuccess") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -269,7 +267,7 @@ TEST_CASE("TestCase7_TokenizeIllegalSimpleSource_ShouldThrowException") {
 
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         isExceptionThrown = true;
     }
     REQUIRE(isExceptionThrown);
@@ -290,7 +288,7 @@ TEST_CASE("TestCase8_TokenizeProcedureWithTab_ShouldSuccess") {
     temp_file.close();
     try {
         tokenList = tk.tokenize(relativePath);
-    } catch (std::invalid_argument& e) {
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -298,5 +296,5 @@ TEST_CASE("TestCase8_TokenizeProcedureWithTab_ShouldSuccess") {
     REQUIRE(tokenList[0].type == TokenType::PROCEDURE);
     REQUIRE(tokenList[1].type == TokenType::NAME_IDENTIFIER);
     REQUIRE(tokenList[6].type == TokenType::RIGHT_CURLY_BRACKET);
-    REQUIRE(filesystem::remove(relativePath)) ;
+    REQUIRE(filesystem::remove(relativePath));
 }

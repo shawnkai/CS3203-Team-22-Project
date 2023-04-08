@@ -54,7 +54,7 @@ TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
     child4.push_back(variable1);
     child4.push_back(variable2);
     operator3.children = child4;
-    
+
     TNode constant1 = TNode(TokenType::INTEGER, "5", 3, std::vector<TNode>(0));
 
     TNode operator2 = TNode(TokenType::OPERATOR, "*", 3, std::vector<TNode>(0));

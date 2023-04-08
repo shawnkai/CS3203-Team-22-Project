@@ -126,5 +126,4 @@ TEST_CASE("Testcase2_ExtractComplexStatement_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: x: 2, 3, 5, ");
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 5, 2, 3, ");
     REQUIRE(result3 == "USES:STATEMENT: x: 2, 3, ");*/
-
 }

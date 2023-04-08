@@ -13,7 +13,7 @@ StatementNumberToBlock::StatementNumberToBlock(unordered_map<int, int> statement
 }
 
 StatementNumberToBlock::StatementNumberToBlock() {
-    this->statementNumbersToBlockDatabase = unordered_map<int, int> {};
+    this->statementNumbersToBlockDatabase = unordered_map<int, int>{};
 }
 
 void StatementNumberToBlock::addToDatabase(int statementNumber, int block) {
@@ -29,5 +29,5 @@ void StatementNumberToBlock::copyStatementNumberToBlockDatabase(unordered_map<in
 }
 
 void StatementNumberToBlock::clearDatabase() {
-    this->statementNumbersToBlockDatabase = unordered_map<int, int> {};
+    this->statementNumbersToBlockDatabase = unordered_map<int, int>{};
 }

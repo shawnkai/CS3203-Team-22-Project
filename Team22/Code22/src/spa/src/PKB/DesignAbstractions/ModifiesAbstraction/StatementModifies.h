@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class StatementModifies: public Modifies {
+class StatementModifies : public Modifies {
 public:
     explicit StatementModifies(tuple<string, string, string> abstractionDetails);
 
@@ -21,4 +21,4 @@ public:
 };
 
 
-#endif //SPA_STATEMENTMODIFIES_H
+#endif//SPA_STATEMENTMODIFIES_H

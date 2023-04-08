@@ -1,13 +1,13 @@
 #pragma once
 
-#include<stdio.h>
 #include <iostream>
-#include <string>
-#include <vector>
-#include <tuple>
 #include <map>
-#include <set>
 #include <queue>
+#include <set>
+#include <stdio.h>
+#include <string>
+#include <tuple>
+#include <vector>
 
 #include "../../PKB/PKB.h"
 #include "AbstractionExtractor.h"
@@ -23,7 +23,7 @@ extern vector<int> callStmts;
 
 class ProgramExtractor {
 public:
-	ProgramExtractor() {};
-	void extractAbstraction(TNode root, PKB pkbinstance);
-	void extractCallAbstraction(PKB pkbinstance);
+    ProgramExtractor(){};
+    void extractAbstraction(TNode root, PKB pkbinstance);
+    void extractCallAbstraction(PKB pkbinstance);
 };

@@ -25,4 +25,4 @@ public:
     void clearDatabase();
 };
 
-#endif //SPA_STATEMENTNUMBERTOBLOCK_H
+#endif//SPA_STATEMENTNUMBERTOBLOCK_H

@@ -9,23 +9,23 @@
 
 #include <iostream>
 
-#include "PatternDatabase.h"
 #include "PKB/Pattern/IfPattern/IfPatternDatabase.h"
 #include "PKB/Pattern/WhilePattern/WhilePatternDatabase.h"
+#include "PatternDatabase.h"
 
 using namespace std;
 
 class PatternsDatabaseFactory {
-    static inline PatternDatabase* ifPatternDatabase = new IfPatternDatabase();
-    static inline PatternDatabase* whilePatternDatabase = new WhilePatternDatabase();
+    static inline PatternDatabase *ifPatternDatabase = new IfPatternDatabase();
+    static inline PatternDatabase *whilePatternDatabase = new WhilePatternDatabase();
 
     static void clearIfPatternFactory();
     static void clearWhilePatternFactory();
 
 public:
-    static PatternDatabase* getPatternDatabase(string patternType);
+    static PatternDatabase *getPatternDatabase(string patternType);
 
     static void clearDatabase();
 };
 
-#endif //SPA_PATTERNSDATABASEFACTORY_H
+#endif//SPA_PATTERNSDATABASEFACTORY_H

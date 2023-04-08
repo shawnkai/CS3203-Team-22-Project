@@ -9,8 +9,7 @@
 using namespace std;
 
 WhilePattern::WhilePattern(string lineNumber, string variableName)
-: Pattern(lineNumber, variableName) {
-
+    : Pattern(lineNumber, variableName) {
 }
 
 string WhilePattern::getTypeOfPattern() {

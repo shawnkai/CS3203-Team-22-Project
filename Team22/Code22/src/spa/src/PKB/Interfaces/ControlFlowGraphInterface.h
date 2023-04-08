@@ -9,8 +9,8 @@
 
 #include <iostream>
 #include <unordered_map>
-#include <vector>
 #include <unordered_set>
+#include <vector>
 
 using namespace std;
 
@@ -27,4 +27,4 @@ public:
     unordered_set<int> getBlocksWithBackPointersDatabase(string procedureName);
 };
 
-#endif //SPA_CONTROLFLOWGRAPHINTERFACE_H
+#endif//SPA_CONTROLFLOWGRAPHINTERFACE_H

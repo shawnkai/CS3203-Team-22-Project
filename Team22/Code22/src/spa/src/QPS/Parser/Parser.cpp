@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 
 #include "Parser.h"
 
@@ -6,9 +6,9 @@ using namespace std;
 
 QueryParser::QueryParser() {}
 
-SelectExpression* QueryParser::parse(string query) {
+SelectExpression *QueryParser::parse(string query) {
 
-    vector<Expression*> conditions;
+    vector<Expression *> conditions;
     query = sanitiseQuery(query);
     query = replaceAnd(query);
 
@@ -16,7 +16,7 @@ SelectExpression* QueryParser::parse(string query) {
         this->extractDeclarations(query);
         return NULL;
     } else if (this->isValidQuery(query)) {
-        pair<vector<DesignEntity*>, vector<string>> synonymsAndAttributes = SelectExpression::extractSynonymsAndAttributes(query, this->synonymTable);
+        pair<vector<DesignEntity *>, vector<string>> synonymsAndAttributes = SelectExpression::extractSynonymsAndAttributes(query, this->synonymTable);
 
         Utilities::concatenateVectors(conditions, ModifiesExpression::extractModifiesExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, UsesExpression::extractUsesExpression(query, synonymTable));
@@ -38,7 +38,7 @@ SelectExpression* QueryParser::parse(string query) {
     }
 }
 
-string QueryParser::sanitiseQuery(const string& query) {
+string QueryParser::sanitiseQuery(const string &query) {
     string result_query = regex_replace(query, std::regex("^ +| +$|( ) +"), "$1");
     result_query = regex_replace(result_query, std::regex(R"(\s+(?=(?:(?:[^"]*"){2})*[^"]*"[^"]*$))"), "$1");
     return result_query;
@@ -60,7 +60,7 @@ string QueryParser::replaceAnd(string query) {
 
     vector<string> split_tokens;
 
-    for ( ; split_iterator != end; ++split_iterator) {
+    for (; split_iterator != end; ++split_iterator) {
         split_tokens.push_back(split_iterator->str());
     }
 
@@ -87,11 +87,11 @@ string QueryParser::replaceAnd(string query) {
     return result_query;
 }
 
-bool QueryParser::isValidQuery(const string& query) {
+bool QueryParser::isValidQuery(const string &query) {
     return regex_match(query, Expression::QUERYVALIDATIONREGEX);
 }
 
-bool QueryParser::isDeclaration(const string& query) {
+bool QueryParser::isDeclaration(const string &query) {
     return regex_match(query, ISDECLARATIONREGEX);
 }
 
@@ -103,7 +103,7 @@ void QueryParser::extractDeclarations(string query) {
     for (sregex_iterator i = begin; i != end; ++i) {
         smatch match = *i;
         string type = match.str(2);
-        string name =  match.str(3);
+        string name = match.str(3);
         name = Utilities::removeAllOccurrences(name, ' ');
         unsigned long pos = 0;
         string delimiter = ",";
@@ -126,4 +126,3 @@ void QueryParser::extractDeclarations(string query) {
 SynonymTable QueryParser::getSynonymTable() {
     return this->synonymTable;
 }
-

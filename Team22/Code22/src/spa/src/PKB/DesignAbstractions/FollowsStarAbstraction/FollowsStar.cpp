@@ -9,8 +9,8 @@
 using namespace std;
 
 FollowsStar::FollowsStar(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails) {
 
+        : DesignAbstraction(abstractionDetails) {
 }
 
 string FollowsStar::getTypeOfAbstraction() {

@@ -1,12 +1,12 @@
 #include "catch.hpp"
 
-#include "SP/SPDriver.h"
-#include "QPS/Parser/Parser.h"
 #include "QPS/Evaluator/Evaluator.h"
 #include "QPS/Exceptions/Exceptions.h"
-#include <iostream>
+#include "QPS/Parser/Parser.h"
+#include "SP/SPDriver.h"
 #include <cstdint>
 #include <filesystem>
+#include <iostream>
 
 using namespace std;
 
@@ -44,7 +44,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
     PKB standardExampleSIMPLESourceChecker = PKB();
     Result pkbResult = standardExampleSIMPLESourceChecker.getDesignAbstraction("MODIFIES",
                                                                                make_tuple("ASSIGNMENT", "x"));
-    Result expectedResult("MODIFIES:ASSIGNMENT", "x", vector<string> {"1", "5"});
+    Result expectedResult("MODIFIES:ASSIGNMENT", "x", vector<string>{"1", "5"});
 
     REQUIRE(pkbResult.areEqual(expectedResult));
     Result pkbResult2 = standardExampleSIMPLESourceChecker.getDesignAbstraction("USES",
@@ -62,7 +62,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp1 = parser.parse(query1);
         vector<string> exp_res = evaluator.evaluate(exp1);
         string output1;
-        for (const string& r : exp_res) {
+        for (const string &r: exp_res) {
             output1 += r;
         }
         REQUIRE(output1.find('p') != std::string::npos);
@@ -81,7 +81,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp2 = parser.parse(query2);
         vector<string> res_2 = evaluator.evaluate(exp2);
         string output2;
-        for (const string& r : res_2) {
+        for (const string &r: res_2) {
             output2 += r;
         }
 
@@ -97,7 +97,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp3 = parser.parse(query3);
         vector<string> res_3 = evaluator.evaluate(exp3);
         string output3;
-        for (const string& r : res_3) {
+        for (const string &r: res_3) {
             output3 += r + " ";
         }
 
@@ -119,7 +119,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp4 = parser.parse(query4);
         vector<string> res_4 = evaluator.evaluate(exp4);
         string output4;
-        for (const string& r : res_4) {
+        for (const string &r: res_4) {
             output4 += r;
         }
 
@@ -135,7 +135,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp5 = parser.parse(query5);
         vector<string> res_5 = evaluator.evaluate(exp5);
         string output5;
-        for (const string& r : res_5) {
+        for (const string &r: res_5) {
             output5 += r;
         }
 
@@ -151,7 +151,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp6 = parser.parse(query6);
         vector<string> res_6 = evaluator.evaluate(exp6);
         string output6;
-        for (const string& r : res_6) {
+        for (const string &r: res_6) {
             output6 += r;
         }
 
@@ -169,7 +169,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp7 = parser.parse(query7);
         vector<string> res_7 = evaluator.evaluate(exp7);
         string output7;
-        for (const string& r : res_7) {
+        for (const string &r: res_7) {
             output7 += r;
         }
 
@@ -186,7 +186,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp8 = parser.parse(query8);
         vector<string> res_8 = evaluator.evaluate(exp8);
         string output8;
-        for (const string& r : res_8) {
+        for (const string &r: res_8) {
             output8 += r;
         }
 
@@ -200,7 +200,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output8.find("12") == std::string::npos);
     }
 
-    SECTION("TestCase1: Select a pattern a(\"x\", \"x - 1\")"){
+    SECTION("TestCase1: Select a pattern a(\"x\", \"x - 1\")") {
         string declaration9 = "assign a;";
         string query9 = "Select a pattern a(\"x\", \"x - 1\")";
         parser = QueryParser();
@@ -208,16 +208,15 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         auto exp9 = parser.parse(query9);
         vector<string> res_9 = evaluator.evaluate(exp9);
         string output9;
-        for (const string& r : res_9) {
+        for (const string &r: res_9) {
             output9 += r;
         }
 
         REQUIRE(output9.find('5') != std::string::npos);
         REQUIRE(output9.find('6') == std::string::npos);
-
     }
 
-    SECTION("TestCase1: Select a1 such that Follows(a1, a2)"){
+    SECTION("TestCase1: Select a1 such that Follows(a1, a2)") {
         string declaration10 = "assign a1, a2;";
         string query10 = "Select a1 such that Follows(a1, a2)";
         parser = QueryParser();
@@ -235,7 +234,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output10.find('5') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select a2 such that Follows(a1, a2)"){
+    SECTION("TestCase1: Select a2 such that Follows(a1, a2)") {
         string declaration11 = "assign a1, a2;";
         string query11 = "Select a2 such that Follows(a1, a2)";
         parser = QueryParser();
@@ -253,7 +252,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output11.find('5') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select s such that Follows(s, s)"){
+    SECTION("TestCase1: Select s such that Follows(s, s)") {
         string declaration12 = "stmt s;";
         string query12 = "Select s such that Follows(s, s)";
         parser = QueryParser();
@@ -263,7 +262,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(res_12.empty());
     }
 
-    SECTION("TestCase1: Select a such that Follows(_, a) and Parent(_, a)"){
+    SECTION("TestCase1: Select a such that Follows(_, a) and Parent(_, a)") {
         string declaration13 = "assign a;";
         string query13 = "Select a such that Follows(_, a) and Parent(_, a)";
         parser = QueryParser();
@@ -281,7 +280,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output13.find('7') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select a such that Follows(_, a) and Parent(_, a) pattern a(_, _\"i\"_) and a(_, _\"x\"_)"){
+    SECTION("TestCase1: Select a such that Follows(_, a) and Parent(_, a) pattern a(_, _\"i\"_) and a(_, _\"x\"_)") {
         string declaration14 = "assign a;";
         string query14 = "Select a such that Follows(_, a) and Parent(_, a) pattern a(_, _\"i\"_) and a(_, _\"x\"_)";
         parser = QueryParser();
@@ -299,7 +298,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output14.find('7') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select r.varName with r.varName = \"q\""){
+    SECTION("TestCase1: Select r.varName with r.varName = \"q\"") {
         string declaration15 = "read r;";
         string query15 = "Select r.varName with r.varName = \"q\"";
         parser = QueryParser();
@@ -317,7 +316,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output15.find('7') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select c such that Uses(a, c) with c.value = a.stmt#"){
+    SECTION("TestCase1: Select c such that Uses(a, c) with c.value = a.stmt#") {
         string declaration16 = "assign a; constant c;";
         string query16 = "Select c such that Uses(a, c) with c.value = a.stmt#";
         parser = QueryParser();
@@ -334,7 +333,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output16.find('3') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select a such that Next(w, a)"){
+    SECTION("TestCase1: Select a such that Next(w, a)") {
         string declaration17 = "assign a; while w;";
         string query17 = "Select a such that Next(w, a)";
         parser = QueryParser();
@@ -356,7 +355,7 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
 
 TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     PKB standardExampleSIMPLESourceChecker = PKB();
-    standardExampleSIMPLESourceChecker.clearAllDatabases();
+    standardExampleSIMPLESourceChecker.clearAllDatabases("CalledForTestingPurposes");
     SPDriver driver;
     std::string inputFilePath;
 
@@ -402,12 +401,12 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     //PKB standardExampleSIMPLESourceChecker = PKB();
     Result pkbResult = standardExampleSIMPLESourceChecker.getDesignAbstraction("MODIFIES",
                                                                                make_tuple("ASSIGNMENT", "x"));
-    Result expectedResult("MODIFIES:ASSIGNMENT", "x", vector<string> {"1", "9"});
+    Result expectedResult("MODIFIES:ASSIGNMENT", "x", vector<string>{"1", "9"});
     REQUIRE(pkbResult.areEqual(expectedResult));
 
     Result pkbResult2 = standardExampleSIMPLESourceChecker.getDesignAbstraction("USES",
                                                                                 make_tuple("ASSIGNMENT", "x"));
-    Result expectedResult2("USES:ASSIGNMENT", "x", vector<string>{ "4", "5", "7", "9"});
+    Result expectedResult2("USES:ASSIGNMENT", "x", vector<string>{"4", "5", "7", "9"});
     REQUIRE(pkbResult2.areEqual(expectedResult2));
 
     QueryParser parser;
@@ -419,7 +418,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp1 = parser.parse(query1);
     vector<string> exp_res = evaluator.evaluate(exp1);
     string output1;
-    for (const string& r : exp_res) {
+    for (const string &r: exp_res) {
         output1 += r;
     }
     REQUIRE(output1.find("anx") != std::string::npos);
@@ -436,7 +435,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp2 = parser.parse(query2);
     vector<string> res_2 = evaluator.evaluate(exp2);
     string output2;
-    for (const string& r : res_2) {
+    for (const string &r: res_2) {
         output2 += r;
     }
     REQUIRE(output2.find('4') != std::string::npos);
@@ -462,7 +461,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp3 = parser.parse(query3);
     vector<string> res_3 = evaluator.evaluate(exp3);
     string output3;
-    for (const string& r : res_3) {
+    for (const string &r: res_3) {
         output3 += r;
     }
 
@@ -479,7 +478,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp4 = parser.parse(query4);
     vector<string> res_4 = evaluator.evaluate(exp4);
     string output4;
-    for (const string& r : res_4) {
+    for (const string &r: res_4) {
         output4 += r;
     }
 
@@ -501,7 +500,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp5 = parser.parse(query5);
     vector<string> res_5 = evaluator.evaluate(exp5);
     string output5;
-    for (const string& r : res_5) {
+    for (const string &r: res_5) {
         output5 += r;
     }
 
@@ -516,7 +515,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp6 = parser.parse(query6);
     vector<string> res_6 = evaluator.evaluate(exp6);
     string output6;
-    for (const string& r : res_6) {
+    for (const string &r: res_6) {
         output6 += r;
     }
 
@@ -531,7 +530,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp7 = parser.parse(query7);
     vector<string> res_7 = evaluator.evaluate(exp7);
     string output7;
-    for (const string& r : res_7) {
+    for (const string &r: res_7) {
         output7 += r;
     }
 
@@ -546,7 +545,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp8 = parser.parse(query8);
     vector<string> res_8 = evaluator.evaluate(exp8);
     string output8;
-    for (const string& r : res_8) {
+    for (const string &r: res_8) {
         output8 += r;
     }
 
@@ -561,7 +560,7 @@ TEST_CASE("TestCase2_GrandSIMPLESource_ShouldSuccess") {
     auto exp9 = parser.parse(query9);
     vector<string> res_9 = evaluator.evaluate(exp9);
     string output9;
-    for (const string& r : res_9) {
+    for (const string &r: res_9) {
         output9 += r;
     }
     REQUIRE(output9.find("16") != std::string::npos);

@@ -11,9 +11,9 @@
 using namespace std;
 
 TEST_CASE("Test 1: Get Assign Pattern Database") {
-    AssignPatternDatabase* db = AssignPatternDatabaseManager::getAssignPatternDatabase();
+    AssignPatternDatabase *db = AssignPatternDatabaseManager::getAssignPatternDatabase();
 
-    AssignPatternDatabase* apdb = dynamic_cast<AssignPatternDatabase*>(db);
+    AssignPatternDatabase *apdb = dynamic_cast<AssignPatternDatabase *>(db);
 
-    REQUIRE (apdb != nullptr);
+    REQUIRE(apdb != nullptr);
 }

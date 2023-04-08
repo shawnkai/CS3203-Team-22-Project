@@ -1,11 +1,11 @@
 #pragma once
 
-#include <stdio.h>
 #include <iostream>
+#include <stdio.h>
 #include <string>
-#include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include <vector>
 
 #include "PKB/Interfaces/CacheInterface.h"
 #include "PKB/Interfaces/ControlFlowGraphInterface.h"
@@ -20,11 +20,11 @@
 using namespace std;
 
 class PKB {
-    CacheInterface* cacheInterface = new CacheInterface();
-    ControlFlowGraphInterface* controlFlowGraphInterface = new ControlFlowGraphInterface();
-    DesignAbstractionsInterface* designAbstractionsInterface = new DesignAbstractionsInterface();
-    DesignEntitiesInterface* designEntitiesInterface = new DesignEntitiesInterface();
-    PatternsInterface* patternsInterface = new PatternsInterface();
+    CacheInterface *cacheInterface = new CacheInterface();
+    ControlFlowGraphInterface *controlFlowGraphInterface = new ControlFlowGraphInterface();
+    DesignAbstractionsInterface *designAbstractionsInterface = new DesignAbstractionsInterface();
+    DesignEntitiesInterface *designEntitiesInterface = new DesignEntitiesInterface();
+    PatternsInterface *patternsInterface = new PatternsInterface();
 
     void clearDesignAbstractionDatabase();
     void clearDesignEntityDatabase();
@@ -76,9 +76,9 @@ public:
 
 
     // APIs Related To Cache
-    void addToCache(string accessKey, ResultTable* resultTable);
-    ResultTable* getResultTableFromCache(string accessKey);
-    unordered_map<string, ResultTable*> getCacheDatabase();
+    void addToCache(string accessKey, ResultTable *resultTable);
+    ResultTable *getResultTableFromCache(string accessKey);
+    unordered_map<string, ResultTable *> getCacheDatabase();
     void clearCache();
 
     // API For Clearing All Databases

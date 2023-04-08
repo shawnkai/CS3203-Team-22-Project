@@ -5,7 +5,7 @@
 #ifndef SPA_CFG_H
 #define SPA_CFG_H
 #include <utility>
-#include <map>
+#include <unordered_map>
 #include <unordered_set>
 #include "queue"
 #include <algorithm>
@@ -14,8 +14,7 @@
 #pragma once
 
 #include "../Parser/TNode.h"
-#include "../Parser/Parser.h"
-#include "../Tokenizer/Tokenizer.h"
+
 using namespace std;
 
 /**
@@ -26,13 +25,14 @@ public:
     vector<int> buildCfg(TNode root, int exitParent);
     std::string toString();
     std::vector<int> basicBlock;
-    std::map<int, std::vector<int> > blockToStatement;
-    std::map<int, int> statementNumberToBlock;
-    std::map<int, std::vector<int> > blockGraph;
+    std::unordered_map<int, std::vector<int> > blockToStatement;
+    std::unordered_map<int, int> statementNumberToBlock;
+    std::unordered_map<int, std::vector<int> > blockGraph;
     std::unordered_set<int> blockPointingBackward;
 
-    explicit Cfg(TNode root, vector<int> basicBlock = vector<int>(0), map<int, vector<int> > blkToStmt = map<int, vector<int> >(),
-                 map<int, int> stmtNumberToBlk = map<int, int >(), map<int, vector<int> > graph = map<int, vector<int> >(),
+
+    explicit Cfg(TNode root, vector<int> basicBlock = vector<int>(0), unordered_map<int, vector<int> > blkToStmt = unordered_map<int, vector<int> >(),
+                 unordered_map<int, int> stmtNumberToBlk = unordered_map<int, int >(), unordered_map<int, vector<int> > graph = unordered_map<int, vector<int> >(),
                          unordered_set<int> blks = unordered_set<int>())
                  : ast(std::move(root)), basicBlock(std::move(basicBlock)), blockToStatement(std::move(blkToStmt)),
                  statementNumberToBlock(std::move(stmtNumberToBlk)), blockGraph(std::move(graph)),

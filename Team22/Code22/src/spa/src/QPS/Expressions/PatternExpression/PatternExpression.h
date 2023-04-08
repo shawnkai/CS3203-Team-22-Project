@@ -23,11 +23,11 @@ public:
         return "";
     };
 
-    virtual ResultTable* evaluate(PKB pkb) {
+    virtual ResultTable *evaluate(PKB pkb) {
         return new BooleanFalseTable();
     };
 
-    static vector<PatternExpression*> extractPatternExpression(const string& query, SynonymTable synonymTable);
+    static vector<PatternExpression *> extractPatternExpression(const string &query, SynonymTable synonymTable);
 };
 
 class AssignPatternExpression : public PatternExpression {
@@ -36,26 +36,24 @@ class AssignPatternExpression : public PatternExpression {
      * the string match for RHS (either exact or with wildcards)
      */
 private:
-     string p2;
+    string p2;
+
 public:
     explicit AssignPatternExpression(DesignEntity *entity, NamedEntity *p1, string p2);
 
     string toString() override;
 
-    ResultTable* evaluate(PKB pkb) override;
-
+    ResultTable *evaluate(PKB pkb) override;
 };
 
 
 class IfWhilePatternExpression : public PatternExpression {
 public:
-
     IfWhilePatternExpression(DesignEntity *entity, NamedEntity *p1);
 
     string toString() override;
 
-    ResultTable* evaluate(PKB pkb) override;
-
+    ResultTable *evaluate(PKB pkb) override;
 };
 
-#endif //SPA_PATTERNEXPRESSION_H
+#endif//SPA_PATTERNEXPRESSION_H

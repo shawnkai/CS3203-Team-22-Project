@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class ProcedureUses: public Uses {
+class ProcedureUses : public Uses {
 public:
     explicit ProcedureUses(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_PROCEDUREUSES_H
+#endif//SPA_PROCEDUREUSES_H

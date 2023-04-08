@@ -4,9 +4,9 @@
 
 #include <iostream>
 
-#include "DesignEntity.h"
-#include "DesignEntitiesDatabase/DesignEntityDatabase.h"
 #include "DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
+#include "DesignEntitiesDatabase/DesignEntityDatabase.h"
+#include "DesignEntity.h"
 
 using namespace std;
 
@@ -21,8 +21,7 @@ DesignEntity::DesignEntity(tuple<string, string> entityDetails) {
 }
 
 bool DesignEntity::isOccurrencePresent(string occurrence) {
-    return (find(this->occurrenceOfEntity.begin(), this->occurrenceOfEntity.end(), occurrence))
-           != (this->occurrenceOfEntity.end());
+    return (find(this->occurrenceOfEntity.begin(), this->occurrenceOfEntity.end(), occurrence)) != (this->occurrenceOfEntity.end());
 }
 
 /**

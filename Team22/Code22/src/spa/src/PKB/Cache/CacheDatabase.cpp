@@ -23,11 +23,11 @@ ResultTable *CacheDatabase::getResultTableFromCache(string accessKey) {
     throw DataNotFoundInCacheException(("Result Table For" + accessKey + " Could Not Be Found in Cache").data());
 }
 
-unordered_map<string, ResultTable*> CacheDatabase::getCacheDatabase() {
+unordered_map<string, ResultTable *> CacheDatabase::getCacheDatabase() {
     return this->cacheDatabase;
 }
 
 void CacheDatabase::clearCache() {
-//    this->cacheDatabase = unordered_map<string, ResultTable*> {};
+    //    this->cacheDatabase = unordered_map<string, ResultTable*> {};
     this->cacheDatabase.clear();
 }

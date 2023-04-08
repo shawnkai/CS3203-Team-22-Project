@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class IfStatementUses: public StatementUses {
+class IfStatementUses : public StatementUses {
 public:
     explicit IfStatementUses(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_IFSTATEMENTUSES_H
+#endif//SPA_IFSTATEMENTUSES_H

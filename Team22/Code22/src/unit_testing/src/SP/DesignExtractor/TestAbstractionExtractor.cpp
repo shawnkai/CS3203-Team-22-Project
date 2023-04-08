@@ -100,5 +100,4 @@ TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: x: 1, 4, ");
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
     REQUIRE(result3 == "USES:STATEMENT: x: 4, 3, ");*/
-
 }

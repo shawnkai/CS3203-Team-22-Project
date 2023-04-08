@@ -5,10 +5,10 @@
 #include "Expressions.h"
 
 #include "PKB/PKB.h"
+#include "QPS/Exceptions/Exceptions.h"
+#include "Utilities.h"
 #include <algorithm>
 #include <regex>
-#include "Utilities.h"
-#include "QPS/Exceptions/Exceptions.h"
 
 string MODIFIES = R"lit(Modifies\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
 string USES = R"lit(Uses\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))lit";
@@ -22,7 +22,7 @@ string CALLS = R"(Calls\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string CALLSSTAR = R"(Calls\*\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string NEXT = R"(Next\s*\(\s*("?\w+"?)\s*,\s*("?\w+"?)\s*\))";
 string RETURNVALUE = R"lit(Select\s+(?:([\w]+(?:\.(?:(?:\w|#)+))?)|<\s*((?:([\w]+)(?:\.((?:\w|#)+))?)\s*(\s*,\s*([\w]+)(?:\.((?:\w|#)+))?)+)\s*>))lit";
-string Expression::QUERYVALIDATION = RETURNVALUE + R"lit((\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR  + "|" + CALLS + "|" + CALLSSTAR + "|" + NEXT + ")|\\s+" + PATTERN + "|\\s+" + ATTRCOND + ")*";
+string Expression::QUERYVALIDATION = RETURNVALUE + R"lit((\s+such\s+that\s+()lit" + MODIFIES + "|" + USES + "|" + FOLLOWS + "|" + FOLLOWSSTAR + "|" + PARENT + "|" + PARENTSTAR + "|" + CALLS + "|" + CALLSSTAR + "|" + NEXT + ")|\\s+" + PATTERN + "|\\s+" + ATTRCOND + ")*";
 
 // Regexes
 regex Expression::QUERYVALIDATIONREGEX = regex(QUERYVALIDATION);
@@ -40,10 +40,10 @@ regex Expression::NEXTREGEX = regex(NEXT);
 regex Expression::RETURNVALUEREGEX = regex(RETURNVALUE);
 
 // Function Definitions
-Expression::Expression(vector<DesignEntity*> entities) {
+Expression::Expression(vector<DesignEntity *> entities) {
     this->entities = std::move(entities);
 }
 
-vector<DesignEntity*> Expression::getAllEntities() {
+vector<DesignEntity *> Expression::getAllEntities() {
     return this->entities;
 }

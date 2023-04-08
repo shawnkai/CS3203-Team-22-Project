@@ -16,18 +16,17 @@
 using namespace std;
 
 class AssignPatternDatabase {
-    unordered_map<string, AssignPattern*> database;
+    unordered_map<string, AssignPattern *> database;
 
-    virtual bool isLeftHandVariablePresentInDatabase(AssignPattern* assignPatternToBeStored);
+    virtual bool isLeftHandVariablePresentInDatabase(AssignPattern *assignPatternToBeStored);
     virtual bool isLeftHandVariablePresentInDatabase(string leftHandVariableName);
-    virtual void addRightHandExpressionForAnExistingVariableInDatabase(AssignPattern* assignPatternToBeStored);
+    virtual void addRightHandExpressionForAnExistingVariableInDatabase(AssignPattern *assignPatternToBeStored);
 
 public:
-
-    virtual void addToDatabase(AssignPattern* assignPatternToBeStored);
+    virtual void addToDatabase(AssignPattern *assignPatternToBeStored);
     virtual string getRightHandExpressionOfAVariableOnAParticularLineNumberFromDatabase(string leftHandVariableName, string patternLineNumber);
     virtual unordered_map<string, string> getAllRightHandExpressionsOfAVariableFromDatabase(string leftHandVariableName);
     virtual unordered_map<string, unordered_map<string, string>> getAllRightHandExpressionsFromDatabase();
 };
 
-#endif //SPA_ASSIGNPATTERNDATABASE_H
+#endif//SPA_ASSIGNPATTERNDATABASE_H

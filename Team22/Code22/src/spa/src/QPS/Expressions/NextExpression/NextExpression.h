@@ -7,17 +7,17 @@
 class NextExpression : public Expression {
 
 public:
-    explicit NextExpression(StmtRef* s1, StmtRef* s2);
+    explicit NextExpression(StmtRef *s1, StmtRef *s2);
 
     string toString() override;
 
-    static tuple<StmtRef*, StmtRef*> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
+    static tuple<StmtRef *, StmtRef *> generateStmtEntityPair(string arg1, string arg2, SynonymTable synonymTable);
 
-    static vector<NextExpression*> extractNextExpression(const string& query, const SynonymTable& synonymTable);
+    static vector<NextExpression *> extractNextExpression(const string &query, const SynonymTable &synonymTable);
 
     static bool containsNextExpression(string query);
 
-    ResultTable* evaluate(PKB pkb) override;
+    ResultTable *evaluate(PKB pkb) override;
 };
 
 //class NextStarExpression : public Expression {
@@ -31,4 +31,4 @@ public:
 //    static bool containsNextStarExpression(string query);
 //};
 
-#endif //SPA_NEXTEXPRESSION_H
+#endif//SPA_NEXTEXPRESSION_H
