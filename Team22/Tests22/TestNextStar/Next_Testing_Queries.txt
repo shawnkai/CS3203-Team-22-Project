@@ -41,42 +41,42 @@ FALSE
 9 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next(v, a)
-SyntaxError
+SemanticError
 5000
 10 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next(v, _)
-SyntaxError
+SemanticError
 5000
 11 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next*(v, a)
-SyntaxError
+SemanticError
 5000
 12 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next*(v, _)
-SyntaxError
+SemanticError
 5000
 13 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next(a, v)
-SyntaxError
+SemanticError
 5000
 14 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next(_, v)
-SyntaxError
+SemanticError
 5000
 15 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next*(a, v)
-SyntaxError
+SemanticError
 5000
 16 - next testing
 assign a; variable v;  constant c; while w;
 Select BOOLEAN such that Next*(_, v)
-SyntaxError
+SemanticError
 5000
 17 - next testing
 assign a; variable v;  constant c; while w;
@@ -331,7 +331,7 @@ none
 67 - next testing
 assign a; variable v;  constant c; while w; stmt s;
 Select if such that Next(22,s_) and Next(s,15)
-SyntaxError
+SemanticError
 5000
 68 - next testing repeat same thing many times
 assign a; variable v;  constant c; while w; stmt s;
