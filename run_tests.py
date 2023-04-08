@@ -99,7 +99,7 @@ for source, query in source_query_pairs:
     queries = []
     correct = []
     command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
-               "./Team22/Tests22/Sample_out.xml"]
+               f"./Team22/Tests22/out/{query.split('/')[-1].replace('.txt', '')}_out.xml"]
 
     result = subprocess.run(command, stdout=subprocess.PIPE)
     result = result.stdout.decode()
@@ -134,7 +134,7 @@ for source, query in source_query_pairs:
                 [matchQuery.group(2) + "\n" + matchQuery.group(3), matchCorrect.group(0), matchActual.group(0),
                  matchMissing.group(0), matchAdditional.group(0)])
 
-    print(f"Test Stats for {source}:"
+    print(f"Test Stats for {query}:"
           f"\nCorrect Evaluations: {len(correct)}"
           f"\nIncorrect Evaluations: {len(wrong)}\n")
 
