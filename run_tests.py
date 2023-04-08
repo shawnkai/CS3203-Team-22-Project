@@ -109,6 +109,9 @@ success = True
 total_correct = 0
 total_incorrect = 0
 
+if not os.path.exists("./Team22/Tests22/out/"):
+    os.makedirs("./Team22/Tests22/out/")
+
 for source, query in source_query_pairs:
     wrong = []
     queries = []
