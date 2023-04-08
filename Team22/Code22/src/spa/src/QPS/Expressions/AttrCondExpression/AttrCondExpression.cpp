@@ -32,6 +32,9 @@ pair<DesignEntity *, pair<string, string>> AttrCondExpression::generateSynAndAtt
         DesignEntity *syn = new NamedEntity("ident", ref);
         return {syn, {"", "STRING"}};
     } else if (regex_match(ref, regex("\\d+"))) {
+        if (!Utilities::isNumber(ref)) {
+            throw SyntacticException();
+        }
         //integer
         DesignEntity *syn = new StmtEntity(stoi(ref), true);
         return {syn, {"", "INT"}};
