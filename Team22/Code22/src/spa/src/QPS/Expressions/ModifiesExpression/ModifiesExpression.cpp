@@ -55,8 +55,7 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
                 throw SyntacticException();
             } else {
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
-                if (a1->getType() == "PRINT" || a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                    throw SyntacticException();
+                    throw SemanticException();
                 }
             }
 
@@ -76,6 +75,9 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
                 throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
+                if (a2->getType() != "VARIABLE") {
+                    throw SemanticException();
+                }
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {

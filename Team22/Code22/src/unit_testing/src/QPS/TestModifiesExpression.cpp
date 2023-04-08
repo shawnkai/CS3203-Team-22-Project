@@ -33,6 +33,18 @@ TEST_CASE("TestCase12_ParseSelectWithSuchThatModifiesWithWildCard_ShouldSuccess"
     REQUIRE(actualResult->toString() == query);
 }
 
+TEST_CASE("TestCase15_ParseSelectWithSuchThatModifiesWithArg1Ident_ShouldSuccess") {
+    QueryParser queryParser;
+    string declaration = "variable v; procedure p;";
+    string query = "Select p such that Modifies(\"proc\", _)";
+
+    queryParser.parse(declaration);
+
+    SelectExpression *actualResult = queryParser.parse(query);
+
+    REQUIRE(actualResult->toString() == query);
+}
+
 TEST_CASE("TestCase35_UndeclaredVariableArg1ModifiesPExpression_SemanticError") {
     QueryParser queryParser;
 
@@ -83,7 +95,7 @@ TEST_CASE("TestCase39_UndeclaredNamedEntityArg2ModifiesPExpression_SemanticError
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException& e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
@@ -109,3 +121,59 @@ TEST_CASE("TestCase40_UndeclaredNamedEntitySelectExpression_SemanticError") {
     REQUIRE(throwsException);
 }
 
+TEST_CASE("TestCase58_ModifiesExpressionFirstArgPrint_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; print p;";
+    string query = "Select v such that Modifies(p, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase58_ModifiesExpressionSecondArgConstant_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r; constant c;";
+    string query = "Select v such that Modifies(r, c)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase58_ModifiesPExpressionSecondArgAssign_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r; assign a;";
+    string query = "Select v such that Modifies(r, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
