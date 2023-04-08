@@ -111,7 +111,7 @@ SemanticError
 23 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("A", "A")
-A,B,C,D,e,f,g,h
+none
 5000
 24 - Calls
 procedure p; variable v; stmt s; assign a;
@@ -121,7 +121,7 @@ none
 25 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("A", "C")
-none
+A,B,C,D,e,f,g,h
 5000
 26 - Calls
 procedure p; variable v; stmt s; assign a;
@@ -146,22 +146,22 @@ A,B,C,D,e,f,g,h
 30 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("h", "g")
-A,B,C,D,e,f,g,h
+none
 5000
 31 - Calls*
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("A", "A")
-A,B,C,D,e,f,g,h
+none
 5000
 32 - Calls*
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls*("D", "D")
-A,B,C,D,e,f,g,h
+Select BOOLEAN such that Calls*("D", "D")
+FALSE
 5000
 33 - Calls*
 procedure p; variable v; stmt s; assign a;
-Select p such that Calls*("A", "C")
-A,B,C,D,e,f,g,h
+Select BOOLEAN such that Calls*("A", "C")
+TRUE
 5000
 34 - Calls*
 procedure p; variable v; stmt s; assign a;
@@ -186,17 +186,17 @@ A,B,C,D,e,f,g,h
 38 - Calls*
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("h", "g")
-A,B,C,D,e,f,g,h
+none
 5000
 39 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("A", _)
-A,B,C,D,e,f,g,h
+B,C
 5000
 40 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("B", _)
-A,B,C,D,e,f,g,h
+C
 5000
 41 - Calls
 procedure p; variable v; stmt s; assign a;
@@ -206,32 +206,32 @@ none
 42 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("D", _)
-A,B,C,D,e,f,g,h
+e,f,g,h
 5000
 43 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("e", _)
-A,B,C,D,e,f,g,h
+f,g,h
 5000
 44 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("f", _)
-A,B,C,D,e,f,g,h
+g,h
 5000
 45 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("g", _)
-A,B,C,D,e,f,g,h
+h
 5000
 46 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("h", _)
-A,B,C,D,e,f,g,h
+none
 5000
 47 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls(_, "A")
-A,B,C,D,e,f,g,h
+none
 5000
 48 - Calls
 procedure p; variable v; stmt s; assign a;
@@ -246,7 +246,7 @@ A,B,C,D,e,f,g,h
 50 - Calls
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls(_, "D")
-A,B,C,D,e,f,g,h
+none
 5000
 51 - Calls
 procedure p; variable v; stmt s; assign a;
@@ -306,12 +306,12 @@ A,B,C,D,e,f,g,h
 62 - Calls*
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("h", _)
-A,B,C,D,e,f,g,h
+none
 5000
 63 - Calls*
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(_, "A")
-A,B,C,D,e,f,g,h
+none
 5000
 64 - Calls*
 procedure p; variable v; stmt s; assign a;
@@ -326,7 +326,7 @@ A,B,C,D,e,f,g,h
 66 - Calls*
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(_, "D")
-A,B,C,D,e,f,g,h
+none
 5000
 67 - Calls*
 procedure p; variable v; stmt s; assign a;
@@ -361,7 +361,7 @@ A,B,C,D,e,f,g,h
 73 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("A", p)
-A,B
+B
 5000
 74 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
@@ -386,22 +386,22 @@ f
 78 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("f", p)
-D
+g
 5000
 79 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("g", p)
-g,h
+h
 5000
 80 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls("h", p)
-g
+none
 5000
 81 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls(p, "A")
-A
+none
 5000
 82 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
@@ -416,7 +416,7 @@ B
 84 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls(p, "D")
-f
+none
 5000
 85 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
@@ -431,7 +431,7 @@ e
 87 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls(p, "g")
-g,h
+f
 5000
 88 - Calls and procedure synonym
 procedure p; variable v; stmt s; assign a;
@@ -441,7 +441,7 @@ g
 89 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("A", p)
-A,B,C
+B,C
 5000
 90 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
@@ -456,32 +456,32 @@ none
 92 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("D", p)
-D,e,f
+e,f,g,h
 5000
 93 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("e", p)
-D,e,f
+f,g,h
 5000
 94 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("f", p)
-D,e,f
+g,h
 5000
 95 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("g", p)
-g,h
+h
 5000
 96 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*("h", p)
-g,h
+none
 5000
 97 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, "A")
-A
+none
 5000
 98 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
@@ -496,45 +496,60 @@ A,B
 100 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, "D")
-D,e,f
+none
 5000
 101 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, "e")
-D,e,f
+D
 5000
 102 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, "f")
-D,e,f
+D,e
 5000
 103 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, "g")
-g,h
+D,e,f
 5000
 104 - Calls* and procedure synonym
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, "h")
-g,h
+D,e,f,g
 5000
 105 - Calls and procedure synonyms as both arguments
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls(p, p)
-A,g
+none
 5000
 106 - Calls and procedure synonyms as both arguments
 procedure p,proc; variable v; stmt s; assign a;
 Select p such that Calls(p, proc)
-A,B,D,e,f,g,h
+A,B,D,e,f,g
 5000
 107 - Calls* and procedure synonyms as both arguments
 procedure p; variable v; stmt s; assign a;
 Select p such that Calls*(p, p)
-A,D,e,f,g,h
+none
 5000
 108 - Calls* and procedure synonyms as both arguments
 procedure p,proc; variable v; stmt s; assign a;
 Select p such that Calls*(p, proc)
-A,B,D,e,f,g,h
+A,B,D,e,f,g
+5000
+109 - Calls* and procedure synonyms as both arguments return boolean
+procedure p,proc; variable v; stmt s; assign a;
+Select BOOLEAN such that Calls*(p, proc)
+TRUE
+5000
+110 - Calls* and procedure synonyms as both arguments return one element tuple
+procedure p,proc; variable v; stmt s; assign a;
+Select <p> such that Calls*(p, proc)
+A,B,D,e,f,g
+5000
+111 - Calls* and procedure synonyms as both arguments return one element tuple
+procedure p,proc; variable v; stmt s; assign a;
+Select <p,proc> such that Calls*(p, proc)
+A B, A C, B C, D e, D f, D g, D h, e f, e g, e h, f g, f h, g h
 5000
