@@ -16,8 +16,20 @@ private:
     PKB pkb;
 
 public:
+    /**
+     * Constructs a QueryEvaluator object.
+     *
+     * @param pkb The PKB object to be evaluated.
+     */
     QueryEvaluator(PKB pkb);
 
+    /**
+     * Evaluates an Expression and returns the corresponding results.
+     *
+     * @param expression The Expression to be evaluated.
+     *
+     * @return A vector of string values that represents the results of the Expression evaluation.
+     */
     vector<string> evaluate(Expression *expression);
 };
 

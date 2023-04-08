@@ -5,7 +5,7 @@
 #include "SP/SPDriver.h"
 #include <queue>
 #include "PKB/PKB.h"
-#include "QPS/Parser/Parser.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "QPS/Evaluator/Evaluator.h"
 #include "QPS/Exceptions/Exceptions.h"
 
