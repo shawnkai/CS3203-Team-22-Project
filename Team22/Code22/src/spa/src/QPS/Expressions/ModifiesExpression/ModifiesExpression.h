@@ -10,7 +10,7 @@
 using namespace std;
 
 /**
- * Class representing the Modifies desgin abstraction.
+ * Class representing the Modifies design abstraction.
  */
 class ModifiesExpression : public Expression {
 private:

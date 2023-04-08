@@ -9,7 +9,9 @@
 
 using namespace std;
 
-//Calls Expression Classes
+/**
+ * Class representing the Modifies design abstraction.
+ */
 class CallsExpression : public Expression {
 public:
     /**

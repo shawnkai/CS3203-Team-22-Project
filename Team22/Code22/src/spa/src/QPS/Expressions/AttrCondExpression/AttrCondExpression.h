@@ -11,6 +11,9 @@
 
 using namespace std;
 
+/**
+* Class representing an attribute comparison clause.
+*/
 class AttrCondExpression : public Expression {
 private:
     string syn1attr;
