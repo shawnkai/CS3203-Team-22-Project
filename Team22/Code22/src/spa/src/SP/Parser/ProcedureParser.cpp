@@ -4,6 +4,11 @@
 
 #include "ProcedureParser.h"
 
+/**
+ * Parse one single procedure of a SIMPLE Source.
+ *
+ * @return an AST representation of a procedure
+ */
 TNode ProcedureParser::parse() {
     Token currToken = tokenList[*pos];
     TNode node;

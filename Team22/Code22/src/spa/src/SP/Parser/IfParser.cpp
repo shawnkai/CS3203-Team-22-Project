@@ -3,6 +3,11 @@
 //
 #include "IfParser.h"
 
+/**
+ * Parse one single If statement, which has exactly three children of condition, then stmtList and else stmtList.
+ *
+ * @return an AST representation of one single If statement
+ */
 TNode IfParser::parse() {
     TNode ifNode;
     if (!(tokenList[*pos].type == TokenType::IF && tokenList[*pos].value == "if")) {

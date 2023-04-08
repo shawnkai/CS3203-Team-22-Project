@@ -4,6 +4,11 @@
 
 #include "ExpressionParser.h"
 
+/**
+ * Parse the 'expr' of SIMPLE Source.
+ *
+ * @return an AST representation of an expression
+ */
 TNode ExpressionParser::parse() {
     ParserFactory termParserFactory;
     auto termParser = termParserFactory.createParser(TERM, tokenList, pos);

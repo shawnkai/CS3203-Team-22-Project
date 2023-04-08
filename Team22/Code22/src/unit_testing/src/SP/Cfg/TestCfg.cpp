@@ -2,7 +2,7 @@
 // Created by Yi Zhang on 19/3/23.
 //
 #include "SP/Cfg/Cfg.h"
-#include "SP/Parser/Parser.h"
+#include "SP/Parser/ParserFactory.h"
 #include "SP/Tokenizer/Tokenizer.h"
 #include "catch.hpp"
 #include <filesystem>
@@ -55,23 +55,24 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
     TNode largest = result.children[0];
-    //    Cfg builder = Cfg(largest);
-    //    builder.buildCfg(largest, -1);
-    //
-    //    REQUIRE(builder.basicBlock.size() == 17);
-    //    REQUIRE(builder.blockPointingBackward.size() == 7);
-    //    REQUIRE(builder.blockGraph.size() == 17);
-    //    REQUIRE(builder.blockToStatement.size() == 17);
-    //    REQUIRE(builder.statementNumberToBlock.size() == 17);
+        Cfg builder = Cfg(largest);
+        builder.buildCfg(largest, -1);
+
+        REQUIRE(builder.basicBlock.size() == 17);
+        REQUIRE(builder.blockPointingBackward.size() == 4);
+        REQUIRE(builder.blockGraph.size() == 17);
+        REQUIRE(builder.blockToStatement.size() == 17);
+        REQUIRE(builder.statementNumberToBlock.size() == 17);
 }
 
 TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
@@ -146,25 +147,26 @@ TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    //    vector<Cfg> graphs;
-    //    Cfg cfg1 = Cfg(result.children[1]);
-    //    cout << ToString(result) << endl;
-    //    TNode proc1 = result.children[1];
-    //    REQUIRE(proc1.nodeType == TokenType::PROCEDURE);
-    //    cfg1.buildCfg(proc1, -1);
-    //    REQUIRE(cfg1.blockGraph.size() == 1);
-    //
-    //    map<int, vector<int> >::iterator itr;
-    //    auto simplestGraph = cfg1.blockGraph;
-    //    itr = simplestGraph.find(1);
-    //    REQUIRE(itr->second.size() == 1);
-    //    REQUIRE(itr->second[0] == 0);
+        vector<Cfg> graphs;
+        Cfg cfg1 = Cfg(result.children[1]);
+        cout << ToString(result) << endl;
+        TNode proc1 = result.children[1];
+        REQUIRE(proc1.nodeType == TokenType::PROCEDURE);
+        cfg1.buildCfg(proc1, -1);
+        REQUIRE(cfg1.blockGraph.size() == 1);
+
+        unordered_map<int, vector<int> >::iterator itr;
+        auto simplestGraph = cfg1.blockGraph;
+        itr = simplestGraph.find(1);
+        REQUIRE(itr->second.size() == 1);
+        REQUIRE(itr->second[0] == 0);
 }

@@ -1,6 +1,11 @@
 
 #include "ProgramParser.h"
 
+/**
+ * Entry point of parsing. Handles multiple procedures.
+ *
+ * @return an AST representation of the SIMPLE Source
+ */
 TNode ProgramParser::parse() {
     Token currToken = tokenList[*pos];
     if (currToken.type != TokenType::PROCEDURE) {

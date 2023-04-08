@@ -4,6 +4,11 @@
 
 #include "StatementListParser.h"
 
+/**
+ * Parse the 'stmtList', which is a block containing one or more statements.
+ *
+ * @return an AST representing a Statement List block
+ */
 TNode StatementListParser::parse() {
     if (*pos >= tokenList.size()) {
         std::cout << "SIMPLE source end unexpectedly after left curly bracket" << std::endl;

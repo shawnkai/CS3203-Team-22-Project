@@ -4,6 +4,11 @@
 
 #include "CallParser.h"
 
+/**
+ * Parse one single call statement. The string Id of the call node records the procedure being called.
+ *
+ * @return a AST node representing the call statement
+ */
 TNode CallParser::parse() {
     Token currToken = tokenList[*pos];
     ++*pos;

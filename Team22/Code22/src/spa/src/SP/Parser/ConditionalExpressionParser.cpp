@@ -4,6 +4,11 @@
 
 #include "ConditionalExpressionParser.h"
 
+/**
+ * Parse the 'cond_expr' of SIMPLE Source.
+ *
+ * @return an AST representation of a conditional expression
+ */
 TNode ConditionalExpressionParser::parse() {
     Token currToken = tokenList[*pos];
     TNode condNode;

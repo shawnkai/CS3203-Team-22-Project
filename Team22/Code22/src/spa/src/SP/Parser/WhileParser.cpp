@@ -1,6 +1,11 @@
 
 #include "WhileParser.h"
 
+/**
+ * Parse one single While statement, which has exactly two children of condition, and a stmtList.
+ *
+ * @return an AST representation of one single While statement
+ */
 TNode WhileParser::parse() {
     Token currToken = tokenList[*pos];
     TNode whileNode;
