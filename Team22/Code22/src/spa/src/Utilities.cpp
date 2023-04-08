@@ -35,7 +35,6 @@ bool Utilities::isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%');
 }
 
-// Returns true if s is a number else false
 bool Utilities::isNumber(string s)
 {
     if (s[0] == '0' && s.size() != 1) {
@@ -51,13 +50,6 @@ bool Utilities::isNumber(string s)
     return true;
 }
 
-/**
- * Checks if a String is valid variable variable name
- * i.e. alphanumberic characters which may/may not be followed by a number
- *
- * @param str input
- * @return true if String is alphanumeric else false
- */
 bool Utilities::isValidVariableName(string str) {
     static const std::regex pattern("[a-zA-Z_][a-zA-Z0-9_]*");
     bool temp = std::regex_match(str, pattern);
@@ -180,7 +172,6 @@ bool Utilities::checkInfixExpression(string str) {
     }
     return stk.empty();
 }
-
 
 bool Utilities::checkIfPresent(vector<string> list, string value) {
     for (string v : list) {
