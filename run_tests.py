@@ -75,8 +75,7 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                            "ComplexTestCases/FollowsQueriesOnMultipleProcedures.txt"),
                           ("ComplexTestCases/ComplexSource.txt",
                            "ComplexTestCases/ModifiesQueriesOnMultipleProcedures.txt"),
-                          (
-                              "ComplexTestCases/ComplexSource.txt",
+                          ("ComplexTestCases/ComplexSource.txt",
                               "ComplexTestCases/UsesQueriesOnMultipleProcedures.txt"),
                           ("ComplexTestCases/TestCallsAndCallsStarSourceProgram.txt",
                            "ComplexTestCases/TestCallsDesignAbstractionQueries.txt"),
@@ -85,7 +84,12 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                           ("ComplexTestCases/ComplexSource.txt",
                            "ComplexTestCases/FollowsStarQueriesOnMultipleProcedures.txt"),
                           ("ComplexTestCases/ComplexSource.txt",
-                           "ComplexTestCases/ParentStarQueriesOnMultipleProcedures.txt")]
+                           "ComplexTestCases/ParentStarQueriesOnMultipleProcedures.txt"),
+                      ("TestBoolean/Boolean_AllClause_Source.txt", "TestBoolean/Boolean_AllClause_Queries.txt"),
+                      ("TestBoolean/Boolean_Pattern_Source.txt", "TestBoolean/Boolean_Pattern_Queries.txt"),
+                      ("TestBoolean/Boolean_SuchThat_FAPS_Source.txt", "TestBoolean/Boolean_SuchThat_FAPS_Queries.txt"),
+                      ("TestBoolean/Boolean_SuchThat_MUP_Source.txt", "TestBoolean/Boolean_SuchThat_MUP_Queries.txt"),
+                      ("TestBoolean/Boolean_With_Source.txt", "TestBoolean/Boolean_With_Queries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")

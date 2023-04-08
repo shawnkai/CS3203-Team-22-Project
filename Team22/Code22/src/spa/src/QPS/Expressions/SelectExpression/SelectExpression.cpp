@@ -165,7 +165,6 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
             ::printf("\n");
         }
         ThreadSafeVector<ResultTable*> threadedResults;
-        std::mutex values_mutex;
         parallelFor(groups.size(), [groups, pkb, &threadedResults](unsigned int start, unsigned int end) {
             for (unsigned int i = start; i < end; i++) {
                 vector<ResultTable *> subResults;

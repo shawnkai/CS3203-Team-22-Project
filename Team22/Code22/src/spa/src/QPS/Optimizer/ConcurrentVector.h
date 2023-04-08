@@ -6,6 +6,8 @@
 #define SPA_CONCURRENTVECTOR_H
 
 #include "QPS/Expressions/Expressions.h"
+#include <mutex>
+
 
 template <typename T>
 class ThreadSafeVector {
