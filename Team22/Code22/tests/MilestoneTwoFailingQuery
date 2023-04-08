@@ -1,0 +1,5 @@
+1 - Select all stmts
+stmt s;
+Select s such that Follows (5, s)
+1, 2, 3, 4
+5000

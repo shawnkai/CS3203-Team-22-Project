@@ -1,6 +1,7 @@
 //
 // Created by Jai Lulla  on 2/2/23.
 //
+
 #pragma once
 
 #ifndef SPA_DESIGNENTITY_H
@@ -21,16 +22,13 @@ class DesignEntity {
     virtual bool isOccurrencePresent(string occurrence);
 
 public:
-
     explicit DesignEntity(tuple<string, string> entityDetails);
 
     virtual void addAdditionalOccurrence(string occurrence);
-//    virtual void addToDatabase(DesignEntity designEntityCreated);
-    virtual void addToDatabase();
     virtual string getNameOfEntity();
     virtual vector<string> getOccurrenceOfEntity();
 
     virtual string getTypeOfEntity() = 0;
 };
 
-#endif //SPA_DESIGNENTITY_H
+#endif//SPA_DESIGNENTITY_H

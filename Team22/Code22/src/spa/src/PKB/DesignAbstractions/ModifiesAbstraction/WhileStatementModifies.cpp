@@ -9,8 +9,7 @@
 using namespace std;
 
 WhileStatementModifies::WhileStatementModifies(tuple<string, string, string> abstractionDetails)
-: StatementModifies(abstractionDetails) {
-
+    : StatementModifies(abstractionDetails) {
 }
 
 string WhileStatementModifies::getTypeOfAbstraction() {

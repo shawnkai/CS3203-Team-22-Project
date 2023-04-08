@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class AssignmentStatement: public Statement {
+class AssignmentStatement : public Statement {
 public:
     explicit AssignmentStatement(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_ASSIGNMENTSTATEMENT_H
+#endif//SPA_ASSIGNMENTSTATEMENT_H

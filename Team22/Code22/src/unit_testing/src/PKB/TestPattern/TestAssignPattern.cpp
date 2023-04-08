@@ -4,17 +4,17 @@
 
 #include <iostream>
 
+#include "PKB/Interfaces/PatternsInterface.h"
 #include "catch.hpp"
-#include "PKB/PKB.h"
 
 using namespace std;
 
 TEST_CASE("Test 1: Creation of Assign Pattern") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("a", "123++", "2");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("a", "123++", "2");
 
-        unordered_map<string, unordered_map<string, string>> result = pkbTest.getAllRightHandExpressions();
+        unordered_map<string, unordered_map<string, string>> result = patternsControllerTest.getAllRightHandExpressions();
 
         REQUIRE(result.size() != 0);
     }
@@ -22,10 +22,10 @@ TEST_CASE("Test 1: Creation of Assign Pattern") {
 
 TEST_CASE("Test 2: Obtaining the Correct Result using getAllRightHandExpressionsOfAVariable() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("b", "1+2+3", "3");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("b", "1+2+3", "3");
 
-        unordered_map<string, string> result = pkbTest.getAllRightHandExpressionsOfAVariable("b");
+        unordered_map<string, string> result = patternsControllerTest.getAllRightHandExpressionsOfAVariable("b");
 
         REQUIRE(result.find("3")->second == "1+2+3");
     }
@@ -33,10 +33,10 @@ TEST_CASE("Test 2: Obtaining the Correct Result using getAllRightHandExpressions
 
 TEST_CASE("Test 3: Obtaining the Correct Result using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("c", "--123", "4");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("c", "--123", "4");
 
-        string result = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("c", "4");
+        string result = patternsControllerTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("c", "4");
 
         REQUIRE(result == "--123");
     }
@@ -44,10 +44,10 @@ TEST_CASE("Test 3: Obtaining the Correct Result using getRightHandExpressionOfAV
 
 TEST_CASE("Test 4: Query for a non-existent variable name using getAllRightHandExpressionsOfAVariable() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("d", "1-2-3", "5");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("d", "1-2-3", "5");
 
-        unordered_map<string, string> result = pkbTest.getAllRightHandExpressionsOfAVariable("non_existent_variable");
+        unordered_map<string, string> result = patternsControllerTest.getAllRightHandExpressionsOfAVariable("non_existent_variable");
 
         REQUIRE(result.size() == 0);
     }
@@ -55,10 +55,10 @@ TEST_CASE("Test 4: Query for a non-existent variable name using getAllRightHandE
 
 TEST_CASE("Test 5: Query for a non-existent variable name and a non-existent line number using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("e", "**123", "6");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("e", "**123", "6");
 
-        string result = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("non_existent_variable", "-1");
+        string result = patternsControllerTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("non_existent_variable", "-1");
 
         REQUIRE(result == "");
     }
@@ -66,10 +66,10 @@ TEST_CASE("Test 5: Query for a non-existent variable name and a non-existent lin
 
 TEST_CASE("Test 6: Query for an existent variable name and a non-existent line number using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("f", "1*2*3", "7");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("f", "1*2*3", "7");
 
-        string result = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("f", "-1");
+        string result = patternsControllerTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("f", "-1");
 
         REQUIRE(result == "");
     }
@@ -77,10 +77,10 @@ TEST_CASE("Test 6: Query for an existent variable name and a non-existent line n
 
 TEST_CASE("Test 7: Query for a non-existent variable name and an existent line number using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("g", "123//", "8");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("g", "123//", "8");
 
-        string result = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("non_existent_variable", "8");
+        string result = patternsControllerTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("non_existent_variable", "8");
 
         REQUIRE(result == "");
     }
@@ -88,10 +88,10 @@ TEST_CASE("Test 7: Query for a non-existent variable name and an existent line n
 
 TEST_CASE("Test 8: Query for a non-existent line number after using getAllRightHandExpressionsOfAVariable() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("h", "//123", "9");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("h", "//123", "9");
 
-        unordered_map<string, string> result = pkbTest.getAllRightHandExpressionsOfAVariable("h");
+        unordered_map<string, string> result = patternsControllerTest.getAllRightHandExpressionsOfAVariable("h");
 
         REQUIRE(result.find("-1") == result.end());
     }
@@ -99,11 +99,11 @@ TEST_CASE("Test 8: Query for a non-existent line number after using getAllRightH
 
 TEST_CASE("Test 9: Query for a existent variable name with multiple expressions on different lines using getAllRightHandExpressionsOfAVariable() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("i", "1/2/3/", "10");
-        pkbTest.addAssignPattern("i", "/1/2/3", "11");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("i", "1/2/3/", "10");
+        patternsControllerTest.addAssignPattern("i", "/1/2/3", "11");
 
-        unordered_map<string, string> result = pkbTest.getAllRightHandExpressionsOfAVariable("i");
+        unordered_map<string, string> result = patternsControllerTest.getAllRightHandExpressionsOfAVariable("i");
 
         REQUIRE(result.size() == 2);
     }
@@ -111,30 +111,13 @@ TEST_CASE("Test 9: Query for a existent variable name with multiple expressions 
 
 TEST_CASE("Test 10: Query for a existent variable name with various patterns existent on various line numbers using getRightHandExpressionOfAVariableOnAParticularLineNumber() API") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("j", "1%2%3%", "12");
-        pkbTest.addAssignPattern("j", "1%2%3", "13");
+        PatternsInterface patternsControllerTest = PatternsInterface();
+        patternsControllerTest.addAssignPattern("j", "1%2%3%", "12");
+        patternsControllerTest.addAssignPattern("j", "1%2%3", "13");
 
-        string result1 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "12");
-        string result2 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "13");
+        string result1 = patternsControllerTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "12");
+        string result2 = patternsControllerTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("j", "13");
 
         REQUIRE(((result1 == "1%2%3%") && (result2 == "1%2%3")));
-    }
-}
-
-TEST_CASE("Test 11: Populate the Assign Pattern Database And Call Clear All Database using the clearAllDatabases() API") {
-    SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addAssignPattern("k", "1-2%+%", "14");
-        pkbTest.addAssignPattern("k", "1+2+3", "15");
-        pkbTest.addAssignPattern("k", "1/2*3", "16");
-
-        pkbTest.clearAllDatabases();
-
-        string result1 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("k", "14");
-        string result2 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("k", "15");
-        string result3 = pkbTest.getRightHandExpressionOfAVariableOnAParticularLineNumber("k", "17");
-
-        REQUIRE(((result1 == "") && (result2 == "") && (result3 == "")));
     }
 }

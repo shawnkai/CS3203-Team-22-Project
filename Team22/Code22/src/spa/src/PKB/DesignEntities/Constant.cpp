@@ -9,8 +9,7 @@
 using namespace std;
 
 Constant::Constant(tuple<string, string> entityDetails)
-: DesignEntity(entityDetails) {
-
+    : DesignEntity(entityDetails) {
 }
 
 string Constant::getTypeOfEntity() {

@@ -4,9 +4,9 @@
 
 #include <iostream>
 
-#include "DesignEntity.h"
-#include "DesignEntitiesDatabase/DesignEntityDatabase.h"
 #include "DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
+#include "DesignEntitiesDatabase/DesignEntityDatabase.h"
+#include "DesignEntity.h"
 
 using namespace std;
 
@@ -21,8 +21,7 @@ DesignEntity::DesignEntity(tuple<string, string> entityDetails) {
 }
 
 bool DesignEntity::isOccurrencePresent(string occurrence) {
-    return (find(this->occurrenceOfEntity.begin(), this->occurrenceOfEntity.end(), occurrence))
-           != (this->occurrenceOfEntity.end());
+    return (find(this->occurrenceOfEntity.begin(), this->occurrenceOfEntity.end(), occurrence)) != (this->occurrenceOfEntity.end());
 }
 
 /**
@@ -35,19 +34,6 @@ void DesignEntity::addAdditionalOccurrence(string occurrence) {
     if (!this->isOccurrencePresent(occurrence)) {
         (this->occurrenceOfEntity).push_back(occurrence);
     }
-}
-
-/**
- * Adds the Design Entity to the Database. If the Design Entity is already
- * present in the Database, the Database manages it, and calls the
- * addAdditionalOccurrence(string occurrence) to append
- * additional occurrences.
- */
-void DesignEntity::addToDatabase() {
-    // call storage/database factory and add, let storage check if there,
-    // and update or add
-    DesignEntityDatabase* database = DesignEntitiesDatabaseFactory::getEntityDatabase(this);
-    database->addToDatabase(this);
 }
 
 /**

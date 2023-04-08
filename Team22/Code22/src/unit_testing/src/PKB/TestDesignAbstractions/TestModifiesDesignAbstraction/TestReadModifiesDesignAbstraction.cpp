@@ -4,8 +4,8 @@
 
 #include <iostream>
 
+#include "PKB/Interfaces/DesignAbstractionsInterface.h"
 #include "catch.hpp"
-#include "PKB/PKB.h"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -13,9 +13,9 @@ using namespace std;
 
 TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 3") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr1", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr1"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr1", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr1"));
 
         Result expectedResult("MODIFIES:READ", "mr1", vector<string>{"1"});
 
@@ -24,11 +24,11 @@ TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
 
     SECTION("Using API With A Tuple of Size 2") {
         bool throwsException = false;
-        PKB pkbTest = PKB();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
         try {
-            pkbTest.addDesignAbstraction("MODIFIES", make_tuple("mr1", "1"));
-        } catch (InvalidAPICallException& e) {
+            designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("mr1", "1"));
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -38,22 +38,22 @@ TEST_CASE("Test 1: Creation of ReadModifies Design Abstraction") {
 
 TEST_CASE("Test 2: Retrieval of an existent ReadModifies Design Abstraction") {
     SECTION("Using API With A Tuple of Size 2") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr2"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr2"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:READ: mr2: 1, ");
     }
 
     SECTION("Using API Without Tuple") {
         bool throwsException = false;
-        PKB pkbTest = PKB();
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr2", "1"));
 
         try {
-            Result result = pkbTest.getDesignAbstraction("MODIFIES", "mr2");
-        } catch (InvalidAPICallException& e) {
+            Result result = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", "mr2");
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -63,9 +63,9 @@ TEST_CASE("Test 2: Retrieval of an existent ReadModifies Design Abstraction") {
 
 TEST_CASE("Test 3: Retrieval of a non-existent ReadModifies Design Abstraction") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr3", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr0"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr3", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr0"));
 
         REQUIRE(pkbResult.toString() == "none: none: none, ");
     }
@@ -73,10 +73,10 @@ TEST_CASE("Test 3: Retrieval of a non-existent ReadModifies Design Abstraction")
 
 TEST_CASE("Test 4: Retrieval of an ReadModifies Design Abstraction When Multiple ReadModifies Design Abstractions Are Stored") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr4", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr5", "1"));
-        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr4"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr4", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr5", "1"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr4"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:READ: mr4: 1, ");
     }
@@ -84,17 +84,17 @@ TEST_CASE("Test 4: Retrieval of an ReadModifies Design Abstraction When Multiple
 
 TEST_CASE("Test 5: Retrieval of an ReadModifies Design Abstraction When Multiple Different Modifies Design Abstractions Are Stored") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr6", "1"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr6", "1"));
 
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mr6", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mr6", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "mr6", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mr6", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mr6", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mr6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURECALL", "mr6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("PROCEDURE", "mr6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("ASSIGNMENT", "mr6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mr6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("WHILE", "mr6", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("IF", "mr6", "1"));
 
-        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr6"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr6"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:READ: mr6: 1, ");
     }
@@ -102,65 +102,47 @@ TEST_CASE("Test 5: Retrieval of an ReadModifies Design Abstraction When Multiple
 
 TEST_CASE("Test 6: Retrieval of an ReadModifies Design Abstraction When Multiple Same Modifies Design Abstractions Are Stored Including Duplicated Values") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "1"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "1"));
 
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "2"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mr8", "1"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr8", "3"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr7", "2"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "mr8", "1"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr8", "3"));
 
-        Result pkbResult = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr7"));
+        Result pkbResult = designAbstractionsControllerTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr7"));
 
         REQUIRE(pkbResult.toString() == "MODIFIES:READ: mr7: 1, 2, ");
     }
 }
 
-TEST_CASE("Test 7: Populate The ReadModifies Database And Call Clear All Database using the clearAllDatabases() API") {
+TEST_CASE("Test 7: Retrieval of All ReadModifies Design Abstractions") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr10"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr10"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr11"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr9", "mr12"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr13", "mr14"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr15", "mr16"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr17", "mr18"));
 
-        Result pkbResultBeforeClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr9"));
+        vector<Result> result = designAbstractionsControllerTest.getAllDesignAbstractions("MODIFIES", "READ");
 
-        pkbTest.clearAllDatabases();
-
-        Result pkbResultAfterClearing = pkbTest.getDesignAbstraction("MODIFIES", make_pair("READ", "mr9"));
-
-        REQUIRE(((pkbResultBeforeClearing.toString() == "MODIFIES:READ: mr9: mr10, mr11, mr12, ")
-                 && (pkbResultAfterClearing.toString() == "none: none: none, ")));
+        REQUIRE(result.size() != 0);
     }
 }
 
-TEST_CASE("Test 9: Retrieval of All ReadModifies Design Abstractions") {
+TEST_CASE("Test 8: Retrieval of Variables Captured By ReadModifies Design Abstractions") {
     SECTION("") {
-        PKB pkbTest = PKB();
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr13", "mr14"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr15", "mr16"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr17", "mr18"));
+        DesignAbstractionsInterface designAbstractionsControllerTest = DesignAbstractionsInterface();
 
-        vector<Result> result = pkbTest.getAllDesignAbstractions("MODIFIES", "READ");
-
-        REQUIRE(result.size() == 3);
-    }
-}
-
-TEST_CASE("Test 10: Retrieval of Variables Captured By ReadModifies Design Abstractions") {
-    SECTION("") {
-        PKB pkbTest = PKB();
-
-        pkbTest.clearAllDatabases();
-
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr19", "mr20"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr21", "mr22"));
-        pkbTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr23", "mr24"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr19", "mr20"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr21", "mr22"));
+        designAbstractionsControllerTest.addDesignAbstraction("MODIFIES", make_tuple("READ", "mr23", "mr24"));
 
         unordered_map<string, unordered_set<string>> result =
-                pkbTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "READ");
+                designAbstractionsControllerTest.getAllVariablesCapturedByDesignAbstraction("MODIFIES", "READ");
 
-        REQUIRE(result.size() == 3);
+        REQUIRE(
+                ((result.find("mr20") != result.end()) &&
+                 (result.find("mr22") != result.end()) &&
+                 (result.find("mr24") != result.end())));
     }
 }

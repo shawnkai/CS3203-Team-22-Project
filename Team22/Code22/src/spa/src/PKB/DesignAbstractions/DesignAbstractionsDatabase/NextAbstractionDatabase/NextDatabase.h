@@ -13,9 +13,8 @@ using namespace std;
 
 #include "PKB/DesignAbstractions/DesignAbstractionsDatabase/DesignAbstractionDatabase.h"
 
-class NextDatabase: public DesignAbstractionDatabase {
+class NextDatabase : public DesignAbstractionDatabase {
 public:
-
 };
 
-#endif //SPA_NEXTDATABASE_H
+#endif//SPA_NEXTDATABASE_H

@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class ConstantDatabase: public DesignEntityDatabase {
+class ConstantDatabase : public DesignEntityDatabase {
 public:
-
 };
 
-#endif //SPA_CONSTANTDATABASE_H
+#endif//SPA_CONSTANTDATABASE_H

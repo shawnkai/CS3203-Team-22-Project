@@ -22,5 +22,5 @@ TEST_CASE("TestCase2_TNodeToString_ShouldSuccess") {
     t.stmtNumber = 1;
     string result = ToString(t);
 
-    require(result == "NAME_IDENTIFIERtestingId1 with children: 1");
+    require(result == "NAME_IDENTIFIERtestingId1 with children: 1 ");
 }

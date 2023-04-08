@@ -10,7 +10,7 @@ bool ModifiesExpression::containsModifiesExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), MODIFIESREGEX), std::sregex_iterator()) > 0;
 }
 
-vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const string& query, SynonymTable synonymTable) {
+vector<ModifiesExpression *> ModifiesExpression::extractModifiesExpression(const string &query, SynonymTable synonymTable) {
     if (!containsModifiesExpression(query)) {
         return {};
     }
@@ -19,7 +19,7 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
 
     string::const_iterator searchStart(query.begin());
 
-    vector<ModifiesExpression*> expressions;
+    vector<ModifiesExpression *> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, MODIFIESREGEX)) {
         string arg1 = sm.str(1);
@@ -40,7 +40,7 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             } else if (arg2.find('\"') != string::npos) {
                 a2 = new NamedEntity("ident", arg2);
             } else {
-                a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
+                a2 = dynamic_cast<NamedEntity *>(synonymTable.get(arg2, "named"));
             }
             expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
@@ -54,7 +54,7 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             } else if (!Utilities::isValidVariableName(arg1)) {
                 throw SyntacticException();
             } else {
-                a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
+                a1 = dynamic_cast<NamedEntity *>(synonymTable.get(arg1, "named"));
             }
 
             NamedEntity *a2;
@@ -72,14 +72,14 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             } else if (!Utilities::isValidVariableName(arg2)) {
                 throw SyntacticException();
             } else {
-                a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
+                a2 = dynamic_cast<NamedEntity *>(synonymTable.get(arg2, "named"));
             }
 
             if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
                 throw SemanticException();
             }
 
-            expressions.push_back(new ModifiesPExpression(a1,  a2));
+            expressions.push_back(new ModifiesPExpression(a1, a2));
         }
         searchStart = sm.suffix().first;
     }
@@ -100,26 +100,26 @@ string ModifiesSExpression::toString() {
     return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-ResultTable* ModifiesSExpression::evaluate(PKB pkb) {
+ResultTable *ModifiesSExpression::evaluate(PKB pkb) {
     vector<Result> vars;
     if (this->entities[0]->getType() == "WILDCARD") {
         auto varResult = pkb.getAllDesignEntity("VARIABLE");
         vars.insert(vars.end(), varResult.begin(), varResult.end());
     } else if (this->entities[0]->getType() == "ident") {
-        vars.push_back(pkb.getDesignEntity("VARIABLE", dynamic_cast<NamedEntity*>(this->entities[0])->getSynonym()));
+        vars.push_back(pkb.getDesignEntity("VARIABLE", dynamic_cast<NamedEntity *>(this->entities[0])->getSynonym()));
     } else {
         vars = pkb.getAllDesignEntity(this->entities[0]->getType());
     }
 
     vector<Result> results;
-    for (auto var : vars) {
+    for (auto var: vars) {
         results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("STATEMENT", var.getQueryEntityName())));
     }
     vector<string> result;
     for (auto res: results) {
         bool found = false;
-        for (const auto& s: res.getQueryResult()) {
-            if (s == to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine())) {
+        for (const auto &s: res.getQueryResult()) {
+            if (s == to_string(dynamic_cast<StmtEntity *>(this->entities[1])->getLine())) {
                 found = true;
                 break;
             }
@@ -146,7 +146,7 @@ string ModifiesPExpression::toString() {
     return "Modifies(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
+ResultTable *ModifiesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         string type = this->entities[1]->getType();
         if (type == "ident") {
@@ -158,7 +158,7 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
         if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty() && res.toString().find("none") == string::npos) {
             vector<string> ans = res.getQueryResult();
             sort(ans.begin(), ans.end());
-            if (this->entities[1]->getType() == "ident"){
+            if (this->entities[1]->getType() == "ident") {
                 if (Utilities::checkIfPresent(ans, Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"'))) {
                     return new BooleanTrueTable();
                 } else {
@@ -184,7 +184,7 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
         if (type == "CALL") {
             type = "PROCEDURECALL";
         }
-        for (auto var : vars) {
+        for (auto var: vars) {
             if (this->entities[1]->getType() == "ident") {
                 results.push_back(pkb.getDesignAbstraction("MODIFIES", make_pair("PROCEDURE", var.getQueryEntityName())));
             } else {
@@ -193,9 +193,9 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
         }
         map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         int ind = 0;
-        for (auto res : results) {
+        for (auto res: results) {
             if (res.getQueryEntityType() == "MODIFIES:" + type) {
-                for (const auto& x : res.getQueryResult()) {
+                for (const auto &x: res.getQueryResult()) {
                     result.find(this->entities[1]->toString())->second.push_back(x);
                     result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
                 }

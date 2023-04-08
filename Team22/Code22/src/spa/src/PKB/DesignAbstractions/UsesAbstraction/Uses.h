@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Uses: public DesignAbstraction {
+class Uses : public DesignAbstraction {
 public:
     explicit Uses(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_USES_H
+#endif//SPA_USES_H

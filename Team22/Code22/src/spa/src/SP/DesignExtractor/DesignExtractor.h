@@ -2,11 +2,11 @@
 #define SPA_DESIGNEXTRACTOR_H
 
 
-#include<stdio.h>
 #include <iostream>
+#include <stdio.h>
 #include <string>
-#include <vector>
 #include <tuple>
+#include <vector>
 
 #include "../../PKB/PKB.h"
 #include "ProgramExtractor.h"
@@ -16,7 +16,7 @@ using namespace std;
 
 class DesignExtractor {
 public:
-	DesignExtractor() {};
-	void extractAbstraction(TNode root, PKB pkbinstance);
+    DesignExtractor(){};
+    void extractAbstraction(TNode root, PKB pkbinstance);
 };
-#endif //SPA_DESIGNEXTRACTOR_H
+#endif//SPA_DESIGNEXTRACTOR_H

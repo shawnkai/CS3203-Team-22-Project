@@ -13,23 +13,21 @@
 using namespace std;
 
 class DesignAbstraction {
-    string entityTypeBeingAbstracted; // entityType that is being referred to
-    string entityName; // could be variable name (usually or stmt...)
-    vector<string> entityOccurrences; // value to push in (stmtNo or procName...)
+    string entityTypeBeingAbstracted;// entityType that is being referred to
+    string entityName;               // could be variable name (usually or stmt...)
+    vector<string> entityOccurrences;// value to push in (stmtNo or procName...)
 
     virtual bool isOccurrencePresent(string entityOccurrence);
 
 public:
     explicit DesignAbstraction(tuple<string, string, string> abstractionDetails);
 
-    virtual void addToDatabase();
     virtual void addAdditionalOccurrence(string entityOccurrence);
     virtual string getEntityTypeBeingAbstracted();
     virtual string getEntityName();
     virtual vector<string> getEntityOccurrence();
 
     virtual string getTypeOfAbstraction() = 0;
-
 };
 
-#endif //SPA_DESIGNABSTRACTION_H
+#endif//SPA_DESIGNABSTRACTION_H

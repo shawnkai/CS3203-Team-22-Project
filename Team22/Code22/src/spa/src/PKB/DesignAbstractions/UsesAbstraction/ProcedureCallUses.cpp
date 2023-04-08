@@ -9,8 +9,7 @@
 using namespace std;
 
 ProcedureCallUses::ProcedureCallUses(tuple<string, string, string> abstractionDetails)
-: Uses(abstractionDetails) {
-
+    : Uses(abstractionDetails) {
 }
 
 string ProcedureCallUses::getTypeOfAbstraction() {

@@ -6,11 +6,11 @@
 
 regex SelectExpression::SYNATTRREGEX = regex(R"(([\w]+)(?:\.((?:\w|#)+))?)");
 
-SelectExpression::SelectExpression(vector<DesignEntity*> entities, vector<string> attributes, vector<Expression*> conditions) : Expression(entities){
+SelectExpression::SelectExpression(vector<DesignEntity *> entities, vector<string> attributes, vector<Expression *> conditions) : Expression(entities) {
     this->conditions = std::move(conditions);
 
     for (int i = 0; i < entities.size(); ++i) {
-        DesignEntity* entity = entities[i];
+        DesignEntity *entity = entities[i];
         string attribute = attributes[i];
         if (!attribute.empty() && !entity->checkAttr(attribute)) {
             throw SemanticException();
@@ -32,13 +32,13 @@ string SelectExpression::toString() {
     } else {
         res += "<";
         for (int i = 0; i < entities.size(); ++i) {
-            DesignEntity* entity = entities[i];
+            DesignEntity *entity = entities[i];
             string synAttr = synAttrs[i];
             res += entity->toString();
             if (!synAttr.empty())
                 res += "." + synAttr;
             if (i < entities.size() - 1) {
-                res+=", ";
+                res += ", ";
             }
         }
         res += ">";
@@ -46,15 +46,15 @@ string SelectExpression::toString() {
 
     if (!conditions.empty()) {
         res += " such that";
-        for (Expression* e : this->conditions) {
+        for (Expression *e: this->conditions) {
             res += " " + e->toString();
         }
     }
     return res;
 }
 
-pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAndAttributes(string query, SynonymTable synonymTable) {
-    vector<DesignEntity*> entities = {};
+pair<vector<DesignEntity *>, vector<string>> SelectExpression::extractSynonymsAndAttributes(string query, SynonymTable synonymTable) {
+    vector<DesignEntity *> entities = {};
     vector<string> attrs = {};
 
     smatch sm;
@@ -65,7 +65,7 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
             return make_pair(entities, attrs);
         } else {
             //is a synonym(attr)
-            pair<DesignEntity*, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm.str(1), synonymTable);
+            pair<DesignEntity *, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm.str(1), synonymTable);
             entities.push_back(synonymAndAttribute.first);
             attrs.push_back(synonymAndAttribute.second);
         }
@@ -76,7 +76,7 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
         string::const_iterator searchStart(tuple_string.begin());
 
         while (regex_search(searchStart, tuple_string.cend(), sm2, SYNATTRREGEX)) {
-            pair<DesignEntity*, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm2.str(0), synonymTable);
+            pair<DesignEntity *, string> synonymAndAttribute = SelectExpression::extractSynonymAndAttribute(sm2.str(0), synonymTable);
             entities.push_back(synonymAndAttribute.first);
             attrs.push_back(synonymAndAttribute.second);
             searchStart = sm2.suffix().first;
@@ -89,10 +89,10 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
 }
 
 bool SelectExpression::isBooleanType(string synAttr, SynonymTable synonymTable) {
-    return synAttr=="BOOLEAN" && !synonymTable.exists("BOOLEAN");
+    return synAttr == "BOOLEAN" && !synonymTable.exists("BOOLEAN");
 }
 
-pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
+pair<DesignEntity *, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
     if (!regex_match(synAttr, SYNATTRREGEX)) {
         throw SyntacticException();
     }
@@ -110,20 +110,20 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string 
     return make_pair(entity, attr);
 }
 
-ResultTable* SelectExpression::evaluate(PKB pkb) {
+ResultTable *SelectExpression::evaluate(PKB pkb) {
     vector<string> columns;
-    vector<ResultTable*> selectEntityTables;
+    vector<ResultTable *> selectEntityTables;
     for (int i = 0; i < this->entities.size(); i++) {
         map<string, vector<string>> finalResults;
         DesignEntity *entity = this->entities[i];
         string synAttr = this->synAttrs[i];
         auto results = pkb.getAllDesignEntity(entity->getType());
         vector<string> answer;
-        for (auto res : results) {
+        for (auto res: results) {
             if (entity->getType() == "VARIABLE" || entity->getType() == "PROCEDURE" || entity->getType() == "CONSTANT") {
                 answer.push_back(res.getQueryEntityName());
             } else {
-                for (const string& a : res.getQueryResult()) {
+                for (const string &a: res.getQueryResult()) {
                     if (!Utilities::checkIfPresent(answer, a)) {
                         answer.push_back(a);
                     }
@@ -148,18 +148,18 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
     if (this->conditions.empty()) {
         return selectResult;
     } else {
-        vector<ResultTable*> allResults;
-        for (Expression *exp : this->conditions) {
-            ResultTable* temp = exp->evaluate(pkb);
+        vector<ResultTable *> allResults;
+        for (Expression *exp: this->conditions) {
+            ResultTable *temp = exp->evaluate(pkb);
             allResults.push_back(temp);
         }
         if (!this->entities.empty()) {
             allResults.push_back(selectResult);
-            ResultTable* t = ResultTable::intersection(allResults)->getColumns(columns);
+            ResultTable *t = ResultTable::intersection(allResults)->getColumns(columns);
             return t;
         }
 
-        ResultTable* finalTable = ResultTable::intersection(allResults);
+        ResultTable *finalTable = ResultTable::intersection(allResults);
         if (this->entities.empty()) {
             if (finalTable->getSize() > 0) {
                 return new BooleanTrueTable();

@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class AssignmentStatementDatabase: public StatementDatabase {
+class AssignmentStatementDatabase : public StatementDatabase {
 public:
-
 };
 
-#endif //SPA_ASSIGNMENTSTATEMENTDATABASE_H
+#endif//SPA_ASSIGNMENTSTATEMENTDATABASE_H

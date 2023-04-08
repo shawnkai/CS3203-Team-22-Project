@@ -10,16 +10,13 @@
 using namespace std;
 
 class ParseException : public exception {
-
 };
 
 class SyntacticException : public ParseException {
-
 };
 
 class SemanticException : public ParseException {
-
 };
 
 
-#endif //SPA_EXCEPTIONS_H
+#endif//SPA_EXCEPTIONS_H

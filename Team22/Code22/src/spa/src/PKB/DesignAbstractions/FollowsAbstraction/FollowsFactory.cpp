@@ -7,8 +7,6 @@
 #include "Follows.h"
 #include "FollowsFactory.h"
 
-using namespace std;
-
 /**
  * Returns a newly created Follows DesignAbstraction pointer, using the
  * passed in parameters.
@@ -19,3 +17,5 @@ using namespace std;
 DesignAbstraction *FollowsFactory::createFollowsAbstraction(tuple<string, string, string> abstractionDetails) {
     return new Follows(abstractionDetails);
 }
+
+using namespace std;

@@ -5,7 +5,7 @@
 #include <iostream>
 
 #include "AssignPattern.h"
-#include "AssignPatternDatabaseFactory.h"
+#include "AssignPatternDatabaseManager.h"
 
 using namespace std;
 
@@ -19,11 +19,6 @@ AssignPattern::AssignPattern(string leftHandVariableName, string prefixExpressio
 
 bool AssignPattern::isLineNumberPresent(string patternLineNumber) {
     return !(this->rightHandExpressionByLineNumber.find(patternLineNumber) == this->rightHandExpressionByLineNumber.end());
-}
-
-void AssignPattern::addToDatabase() {
-    AssignPatternDatabase* db = AssignPatternDatabaseFactory::getAssignPatternDatabase();
-    db->addToDatabase(this);
 }
 
 void AssignPattern::addAdditionalRightHandExpression(string patternLineNumber, string prefixExpression) {
@@ -41,4 +36,3 @@ string AssignPattern::getRightHandExpressionByLineNumber(string patternLineNumbe
 unordered_map<string, string> AssignPattern::getAllRightHandExpressions() {
     return this->rightHandExpressionByLineNumber;
 }
-

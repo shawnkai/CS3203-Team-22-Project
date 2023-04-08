@@ -14,8 +14,7 @@ using namespace std;
  * @param abstractionDetails The details of this Modifies type Abstraction.
  */
 Modifies::Modifies(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails){
-
+    : DesignAbstraction(abstractionDetails) {
 }
 
 /**

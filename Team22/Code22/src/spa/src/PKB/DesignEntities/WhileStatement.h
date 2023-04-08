@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class WhileStatement: public Statement {
+class WhileStatement : public Statement {
 public:
     explicit WhileStatement(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_WHILESTATEMENT_H
+#endif//SPA_WHILESTATEMENT_H

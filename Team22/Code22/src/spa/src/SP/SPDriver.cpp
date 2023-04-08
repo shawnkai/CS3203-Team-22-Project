@@ -13,7 +13,7 @@ SPDriver::SPDriver() {}
  *
  * @param filename The filename of the SIMPLE program.
  */
-void SPDriver::parseSimpleProgram(std::string filename) {
+void SPDriver::parseSimpleProgram(const std::string& filename) {
     Tokenizer tokenizer = Tokenizer();
     std::vector<Token> tokenList;
     try {
@@ -27,10 +27,11 @@ void SPDriver::parseSimpleProgram(std::string filename) {
     for (Token token : tokenList) {
         std::cout << "Token" << ToString(token) << std::endl;
     }
-    Parser testParser = Parser(tokenList);
+    ParserFactory factory;
+    auto parser = factory.createParser(TokenType::PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = testParser.Parse();
+        result = parser->parse();
     }
     catch (std::invalid_argument& e) {
         std::cerr << e.what() << endl;
@@ -41,38 +42,52 @@ void SPDriver::parseSimpleProgram(std::string filename) {
     }
     std::queue<TNode> pendingToString;
     pendingToString.push(result);
+
     while (!pendingToString.empty()) {
         auto toProcess = pendingToString.front();
         pendingToString.pop();
         cout << ToString(toProcess) << endl;
         if (!toProcess.children.empty()) {
             auto childrenArr = (toProcess).children;
-            for (TNode child : childrenArr) {
+            for (auto child : childrenArr) {
                 pendingToString.push(child);
             }
         }
     }
+
     PKB pkbinstance = PKB();
     DesignExtractor designExtractor;
+
     designExtractor.extractAbstraction(result, pkbinstance);
 
+    try {
+        designExtractor.extractAbstraction(result, pkbinstance);
+    }
+    catch (std::invalid_argument& theException) {
+        std::cerr << theException.what() << endl;
+        ::exit(1);
+    }
+
     vector<Cfg> controlFlowGraphs;
-    for (auto procedure: result.children) {
+    for (const auto& procedure: result.children) {
         Cfg controlFlowGraph = Cfg(procedure);
         controlFlowGraph.buildCfg(procedure, -1);
         controlFlowGraphs.push_back(controlFlowGraph);
-        pkbinstance.addControlFlowGraph(procedure.stringId,controlFlowGraph.basicBlock,
+        pkbinstance.addControlFlowGraph(procedure.stringId, controlFlowGraph.basicBlock,
                                         controlFlowGraph.blockToStatement,
                                         controlFlowGraph.statementNumberToBlock,
                                         controlFlowGraph.blockGraph,
                                         controlFlowGraph.blockPointingBackward);
         cout << controlFlowGraph.toString() << endl;
-        NextExtractor nextExtractor;
-        nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement, controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph, controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
 
+        NextExtractor nextExtractor;
+        nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement,
+                                         controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph,
+                                         controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
     }
+
     for (auto graph: controlFlowGraphs) {
         cout << graph.toString() << endl;
     }
-    
+
 }

@@ -6,12 +6,13 @@
 
 using namespace std;
 
-class DatabaseNotFoundException: public exception {
-    char* message;
-public:
-    explicit DatabaseNotFoundException(char* message) : message(message) {}
+class DatabaseNotFoundException : public exception {
+    char *message;
 
-    char * what () {
+public:
+    explicit DatabaseNotFoundException(char *message) : message(message) {}
+
+    char *what() {
         return this->message;
     }
 };

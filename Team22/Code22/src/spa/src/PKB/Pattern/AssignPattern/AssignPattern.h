@@ -21,11 +21,10 @@ class AssignPattern {
 public:
     explicit AssignPattern(string leftHandVariableName, string prefixExpression, string patternLineNumber);
 
-    virtual void addToDatabase();
     virtual void addAdditionalRightHandExpression(string patternLineNumber, string prefixExpression);
     virtual string getLeftHandVariableName();
     virtual string getRightHandExpressionByLineNumber(string patternLineNumber);
     virtual unordered_map<string, string> getAllRightHandExpressions();
 };
 
-#endif //SPA_ASSIGNPATTERN_H
+#endif//SPA_ASSIGNPATTERN_H

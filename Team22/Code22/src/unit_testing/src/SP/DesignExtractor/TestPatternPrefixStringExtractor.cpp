@@ -1,8 +1,8 @@
 //
 // Created by Yi Zhang on 18/2/23.
 //
-#include "catch.hpp"
 #include "SP/DesignExtractor/PatternPrefixStringExtractor.h"
+#include "catch.hpp"
 using namespace std;
 
 TEST_CASE("TestCase1_TestBaseCaseAssignmentToPrefix_ShouldSuccess") {
@@ -14,13 +14,13 @@ TEST_CASE("TestCase1_TestBaseCaseAssignmentToPrefix_ShouldSuccess") {
     TNode t4 = TNode(TokenType::NAME_IDENTIFIER, "x", 1, std::vector<TNode>(0));
     TNode t0 = TNode(TokenType::ASSIGN, "=", 1, {t4, t1});
     PatternPrefixStringExtractor extractor;
-    extractor.extractPrefixString(t0,PKB());
+    extractor.extractPrefixString(t0, PKB());
 
     PKB testPatternPrefixExtractorPkb = PKB();
     unordered_map<string, unordered_map<string, string>> result = testPatternPrefixExtractorPkb.getAllRightHandExpressions();
     unordered_map<string, string> result2 = testPatternPrefixExtractorPkb.getAllRightHandExpressionsOfAVariable("x");
     REQUIRE(result.size() > 0);
-    REQUIRE(result2.find("1")->second=="+22");
+    REQUIRE(result2.find("1")->second == "+22");
 }
 
 TEST_CASE("TestCase2_TestComplexCaseAssignmentToPrefix_ShouldSuccess") {
@@ -51,12 +51,12 @@ TEST_CASE("TestCase2_TestComplexCaseAssignmentToPrefix_ShouldSuccess") {
     t11.children.push_back(t6);
     TNode t0 = TNode(TokenType::ASSIGN, "=", 1, {t12, t11});
     PatternPrefixStringExtractor extractor;
-    extractor.extractPrefixString(t0,anotherInstance);
+    extractor.extractPrefixString(t0, anotherInstance);
 
     unordered_map<string, unordered_map<string, string>> result = anotherInstance.getAllRightHandExpressions();
     string result3 = anotherInstance.getRightHandExpressionOfAVariableOnAParticularLineNumber("x", "1");
     unordered_map<string, string> result2 = anotherInstance.getAllRightHandExpressionsOfAVariable("x");
     REQUIRE(result.size() > 0);
-    REQUIRE(result2.find("1")->second=="/%+*125-327");
+    REQUIRE(result2.find("1")->second == "/%+*125-327");
     REQUIRE(result3 == "/%+*125-327");
 }
