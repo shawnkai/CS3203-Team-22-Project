@@ -15,7 +15,7 @@
 #include "QPS/QueryParser/SynonymTable.h"
 
 /**
- * The UsesExpression class is responsible for evaluating and storing the Uses expression.
+ * The UsesExpression class is responsible for evaluating and storing the Uses design abstraction.
  *
  * It contains methods to check if a given query contains a Uses expression,
  * extract the Uses expressions from a given query, and evaluate the result of a Uses expression.

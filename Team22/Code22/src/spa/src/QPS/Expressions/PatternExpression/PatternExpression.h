@@ -11,7 +11,7 @@
 using namespace std;
 
 /**
- * Class representing a pattern expression.
+ * Class representing a pattern design abstraction.
  */
 class PatternExpression : public Expression {
 protected:
