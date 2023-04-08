@@ -211,7 +211,7 @@ a, b, c, d, x, y
 109 - Test With Read as Statement Input (Syntax Error)
 read r; variable v;
 Select v such that Uses (r, v)
-SyntaxError
+SemanticError
 5000
 110 - Test With Call as Statement Input
 call c; variable v;

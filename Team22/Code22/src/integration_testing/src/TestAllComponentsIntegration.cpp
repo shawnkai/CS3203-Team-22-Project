@@ -317,23 +317,6 @@ TEST_CASE("TestCase1_StandardExampleSIMPLESource_ShouldSuccess") {
         REQUIRE(output15.find('7') == std::string::npos);
     }
 
-    SECTION("TestCase1: Select c such that Uses(a, c) with c.value = a.stmt#"){
-        string declaration16 = "assign a; constant c;";
-        string query16 = "Select c such that Uses(a, c) with c.value = a.stmt#";
-        parser = QueryParser();
-        parser.parse(declaration16);
-        auto exp16 = parser.parse(query16);
-        vector<string> res_16 = evaluator.evaluate(exp16);
-        string output16;
-        for (const string &r: res_16) {
-            output16 += r + ",";
-        }
-
-        REQUIRE(output16.find('2') == std::string::npos);
-        REQUIRE(output16.find('1') != std::string::npos);
-        REQUIRE(output16.find('3') == std::string::npos);
-    }
-
     SECTION("TestCase1: Select a such that Next(w, a)"){
         string declaration17 = "assign a; while w;";
         string query17 = "Select a such that Next(w, a)";

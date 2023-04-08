@@ -51,7 +51,7 @@ SemanticError
 20 - variable synonym as argument 1 return semantic error <--- error not handled
 variable v;
 Select v such that Uses(v, _)
-SyntaxError
+SemanticError
 5000
 21 - undeclared synonym return semantic error
 variable s;
