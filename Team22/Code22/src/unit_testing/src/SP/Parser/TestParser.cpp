@@ -319,7 +319,7 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
 //        std::cerr << e.what() << std::endl;
 //        exit(1);
 //    }
-//    Parser ps = Parser(tokenList);
+//    QueryParser ps = QueryParser(tokenList);
 //    TNode result;
 //    try {
 //        result = ps.Parse();

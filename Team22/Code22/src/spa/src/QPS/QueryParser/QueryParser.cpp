@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "Parser.h"
+#include "QueryParser.h"
 
 using namespace std;
 
@@ -31,8 +31,13 @@ SelectExpression *QueryParser::parse(string query) {
         Utilities::concatenateVectors(conditions, CallsExpression::extractCallsExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, CallsStarExpression::extractCallsStarExpression(query, synonymTable));
         Utilities::concatenateVectors(conditions, NextExpression::extractNextExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, NextStarExpression::extractNextStarExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, AffectsExpression::extractAffectsExpression(query, synonymTable));
+        Utilities::concatenateVectors(conditions, AffectsStarExpression::extractAffectsStarExpression(query, synonymTable));
 
-        return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, conditions);
+        vector<Expression*> uniqueConditions = Utilities::getUniqueElements(conditions);
+
+        return new SelectExpression(synonymsAndAttributes.first, synonymsAndAttributes.second, uniqueConditions);
     } else {
         throw SyntacticException();
     }

@@ -6,17 +6,17 @@ SyntaxError
 2 - Invalid inputs
 stmt s;
 Select <BOOLEAN,BOOLEAN> with s.stmt# = 1
-SyntaxError
+SemanticError
 5000
 3 - Invalid inputs
 stmt s;
-Select BOOLEAN with s.stmt# = 0 with s.stmt# = max //change 
-SyntaxError
+Select BOOLEAN with s.stmt# = 0 with s.stmt# = 138
+SemanticError
 5000
 4 - Invalid inputs
 stmt s; read re;
 Select BOOLEAN with re.stmt# = 0
-SyntaxError
+SemanticError
 5000
 5 - Invalid inputs
 stmt s; read re;
@@ -91,31 +91,31 @@ SyntaxError
 19 - Invalid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
 Select BOOLEAN with re.varName = s.stmt#
-SyntaxError
+SemanticError
 5000
 20 - Invalid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
 Select BOOLEAN with proc.procName = c.value
-SyntaxError
+SemanticError
 5000
 21 - Invalid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
 Select BOOLEAN with proc.procName = s.stmt#
-SyntaxError
+SemanticError
 5000
 22 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with proc.procName = yes
+Select BOOLEAN with proc.procName = "yes"
 TRUE
 5000
 23 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with proc.procName = no
+Select BOOLEAN with proc.procName = "no"
 FALSE
 5000
 24 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc, proc1; call call; variable v;
-Select BOOLEAN with proc.procName = yes and proc1.procName = no
+Select BOOLEAN with proc.procName = "yes" and proc1.procName = "no"
 FALSE
 5000
 25 - valid inputs
@@ -125,52 +125,52 @@ FALSE
 5000
 26 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with call.procName = yes
+Select BOOLEAN with call.procName = "yes1"
 TRUE
 5000
 27 - invalid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with call.procName = "yes"
+Select BOOLEAN with call.procName = yes1
 SyntaxError
 5000
 28 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with call.procName = no
+Select BOOLEAN with call.procName = "no"
 FALSE
 5000
 29 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with v.varName = no
+Select BOOLEAN with v.varName = "no"
 FALSE
 5000
 30 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with v.varName = yes
+Select BOOLEAN with v.varName = "yes1"
 FALSE
 5000
 31 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with v.varName = x
+Select BOOLEAN with v.varName = "x"
 TRUE
 5000
 32 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with re.varName = y
+Select BOOLEAN with re.varName = "y"
 TRUE
 5000
 33 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v;
-Select BOOLEAN with re.varName = yes
+Select BOOLEAN with re.varName = "yes1"
 FALSE
 5000
 34 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v; print pn;
-Select BOOLEAN with pn.varName = y
+Select BOOLEAN with pn.varName = "y"
 TRUE
 5000
 35 - valid inputs
 stmt s; read re; while w; if if; constant c; procedure proc; call call; variable v; print pn;
-Select BOOLEAN with pn.varName = yes
+Select BOOLEAN with pn.varName = "yes1"
 FALSE
 5000
 36 - valid inputs
@@ -290,91 +290,116 @@ SyntaxError
 5000
 59 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = no and a.stmt# = 01
+Select BOOLEAN with proc.procName = "no" and a.stmt# = 01
 SyntaxError
 5000
 60 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = yes and a.stmt# = 01
+Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 01
 SyntaxError
 5000
 61 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = yes and a.stmt# = 1 and v.varName = 1x
-SyntaxError
+Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and v.varName = "1x"
+SemanticError
 5000
 62 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = yes and a.stmt# = 1 and pn.stmt# = TRUE123
-SyntaxError
+Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and pn.stmt# = TRUE123
+SemanticError
 5000
 63 - multiple with clause return syntax error
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = yes and a.stmt# = 1 and c.value = 00
-SyntaxError
+Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and c.value = 00
+SemanticError
 5000
 64 - multiple with clauses return true
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = yes and a.stmt# = 1 and c.value = 0
+Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and c.value = 0
 TRUE
 5000
 65 - multiple with clauses return false
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = Yes and a.stmt# = 1 and c.value = 0
+Select BOOLEAN with proc.procName = "NO" and call.procName = "Yes1" and a.stmt# = 1 and c.value = 0
 FALSE
 5000
 66 - multiple with clauses return false
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with procedure.procName = NO and call.procName = yes and a.stmt# = 1 and c.value = 999
+Select BOOLEAN with proc.procName = "NO" and call.procName = "yes1" and a.stmt# = 1 and c.value = 999
 FALSE
 5000
 67 - multiple with clauses return false
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with call.procName = yes and a.stmt# = 1 and a.stmt# = 2
+Select BOOLEAN with call.procName = "yes1" and a.stmt# = 1 and a.stmt# = 2
 FALSE
 5000
 68 - multiple with clauses for call.procName return false
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with call.procName = yes and call.procName = NO
+Select BOOLEAN with call.procName = "yes1" and call.procName = "NO"
 FALSE
 5000
-68 - multiple with clauses for call.procName return false
+69 - multiple with clauses for call.procName return false
 stmt s; read re; print pn; if if; constant c; procedure proc; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with call.procName = yes and call1.procName = NO and call2.procName = no
+Select BOOLEAN with call.procName = "yes1" and call1.procName = "NO" and call2.procName = "no"
 FALSE
 5000
-69 - multiple with clauses for call.procName return true
+70 - multiple with clauses for call.procName return true
 stmt s; read re; print pn; if if; constant c; procedure proc; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with call.procName = yes and call1.procName = NO and call2.procName = NO
+Select BOOLEAN with call.procName = "yes1" and call1.procName = "NO" and call2.procName = "NO"
 TRUE
 5000
-68 - multiple with clauses for proc.procName return false
+71 - multiple with clauses for proc.procName return false
 stmt s; read re; print pn; if if; constant c; procedure proc; call call; variable v; while w; assign a;
-Select BOOLEAN with proc.procName = yes and proc.procName = NO
+Select BOOLEAN with proc.procName = "yes" and proc.procName = "NO"
 FALSE
 5000
-68 - multiple with clauses for proc.procName return false
+72 - multiple with clauses for proc.procName return false
 stmt s; read re; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with proc.procName = yes and proc1.procName = NO and proc2.procName = no
+Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "no"
 FALSE
 5000
-69 - multiple with clauses for proc.procName return true
+73 - multiple with clauses for proc.procName return true
 stmt s; read re; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with proc.procName = yes and proc1.procName = NO and proc2.procName = NO
+Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO"
 TRUE
 5000
-70 - multiple with clauses for all attributes return true
+74 - multiple with clauses for all attributes return true
 stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with proc.procName = yes and proc1.procName = NO and proc2.procName = NO and call.procName = yes and call1.procName = NO with v.varName = x with re.varName = x and pn.varName = x with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re1.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 3 and if.stmt# = 31 and a.stmt# = 1
+Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO" and call.procName = "yes1" and call1.procName = "NO" with v.varName = "x" with re.varName = "x" and pn.varName = "x" with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re1.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 3 and if.stmt# = 31 and a.stmt# = 1
 TRUE
 5000
-71 - multiple with clauses for all attributes return false as a1 does not equal assign stmt
+75 - multiple with clauses for all attributes return false as a1 does not equal assign stmt
 stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with proc.procName = yes and proc1.procName = NO and proc2.procName = NO and call.procName = yes and call1.procName = NO with v.varName = x with re.varName = x and pn.varName = x with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re1.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 6 and if.stmt# = 31 and a.stmt# = 1
+Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO" and call.procName = "yes" and call1.procName = "NO" with v.varName = "x" with re.varName = "x" and pn.varName = "x" with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re1.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 6 and if.stmt# = 31 and a.stmt# = 1
 FALSE
 5000
-72 - multiple with clauses for all attributes return false as re refers to both lines 12 and 13
+76 - multiple with clauses for all attributes return false as re refers to both lines 12 and 13
 stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
-Select BOOLEAN with proc.procName = yes and proc1.procName = NO and proc2.procName = NO and call.procName = yes and call1.procName = NO with v.varName = x with re.varName = x and pn.varName = x with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 3 and if.stmt# = 31 and a.stmt# = 1
+Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO" and call.procName = "yes" and call1.procName = "NO" with v.varName = "x" with re.varName = "x" and pn.varName = "x" with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 3 and if.stmt# = 31 and a.stmt# = 1
 TRUE
+5000
+77 - exceed stmt number
+stmt s;
+Select BOOLEAN with s.stmt# = 138
+SemanticError
+5000
+78 - close to exceeding stmt number
+stmt s; assign a;
+Select BOOLEAN with a.stmt# = 137
+TRUE
+5000
+79 - exceed stmt number
+stmt s; assign a;
+Select BOOLEAN with a.stmt# = 138
+SemanticError
+5000
+80 - stmt number 0 returns semantic error
+stmt s; assign a; print pn;
+Select BOOLEAN with pn.stmt# = 0
+SemanticError
+5000
+81 - stmt number 0 returns semantic error
+stmt s; assign a; print pn; while w;
+Select BOOLEAN with w.stmt# = 0
+SemanticError
 5000

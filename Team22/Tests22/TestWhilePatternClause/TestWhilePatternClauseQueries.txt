@@ -8,37 +8,37 @@ while w; variable v;
 Select w pattern w (v, _)
 4, 7, 12, 17, 22, 26, 37, 41, 48, 50
 5000
-3 - Select all while statement numbers that use the variable "a"
+3 - Select all while statement numbers that use the variable a
 while w;
 Select w pattern w ("a", _)
 26, 37, 41, 50
 5000
-4 - Select all while statement numbers that use the variable "b"
+4 - Select all while statement numbers that use the variable b
 while w;
 Select w pattern w ("b", _)
 26, 37, 41, 50
 5000
-5 - Select all while statement numbers that use the variable "c"
+5 - Select all while statement numbers that use the variable c
 while w;
 Select w pattern w ("c", _)
 26
 5000
-6 - Select all while statement numbers that use the variable "x"
+6 - Select all while statement numbers that use the variable x
 while w;
 Select w pattern w ("x", _)
 4, 7, 12, 17, 22
 5000
-7 - Select all while statement numbers that use the variable "y"
+7 - Select all while statement numbers that use the variable y
 while w;
 Select w pattern w ("y", _)
 4, 7, 22, 26, 48
 5000
-8 - Select all while statement numbers that use the variable "z"
+8 - Select all while statement numbers that use the variable z
 while w;
 Select w pattern w ("z", _)
 4, 7, 26
 5000
-8 - Select all while statement numbers that use the variable "r"
+8 - Select all while statement numbers that use the variable r
 while w;
 Select w pattern w ("r", _)
 none

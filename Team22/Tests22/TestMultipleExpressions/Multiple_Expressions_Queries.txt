@@ -8,17 +8,17 @@ assign a;
 Select a such that Uses(a, _) such that Modifies(a, _ _)
 SyntaxError
 5000
-3 - empty " " in second such that clause return syntax error 
+3 - empty   in second such that clause return syntax error 
 assign a;
 Select a such that Uses(a, _) such that Modifies(a, "")
 SyntaxError
 5000
-4 - empty " " with whitespace in second such that clause return syntax error
+4 - empty   with whitespace in second such that clause return syntax error
 variable v;
 Select v such that Uses(v, _) such that Modifies(v, " ")
 SyntaxError
 5000
-5 - wildcard with " " in second such that clause return syntax error
+5 - wildcard with   in second such that clause return syntax error
 variable v;
 Select v such that Uses(v, _) such that Modifies(v, "_")
 SyntaxError
@@ -43,7 +43,7 @@ variable v;
 Select v such that Modifies(1, _) such that Modifies(_, v)
 SemanticError
 5000
-10 - "Select" with small "s" return syntax error
+10 - Select with small s return syntax error
 variable v;
 select v such that such that Modifies(1, _) such that Uses(v, _)
 SyntaxError
@@ -63,7 +63,7 @@ vaiable v;
 Select v such that Modifies(1, _) such that Uses(v, _)
 SyntaxError
 5000
-14 - declaration variable with capital "v" return syntax error
+14 - declaration variable with capital v return syntax error
 Variable v;
 Select v such that Modifies(1, _) such that Uses(v, _)
 SyntaxError

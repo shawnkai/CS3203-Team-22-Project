@@ -1,0 +1,225 @@
+1 - Get All Variables Modified In If Statement at Line 2
+variable v;
+Select v such that Modifies (2, v)
+x, a, b, c, d, y
+5000
+2 - Get All Variables Modified In Procedure One
+variable v;
+Select v such that Modifies ("One", v)
+x, a, b, c, d, y
+5000
+3 - Get All Variables Modified In Procedure Two
+variable v;
+Select v such that Modifies ("Two", v)
+x, a
+5000
+4 - Get All Variables Modified In Procedure Three
+variable v;
+Select v such that Modifies ("Three", v)
+a, b, c, d, x
+5000
+5 - Get All Variables Modified In Procedure Four
+variable v;
+Select v such that Modifies ("Four", v)
+a, b, c, d, x
+5000
+6 - Get All Variables Modified In Procedure Five
+variable v;
+Select v such that Modifies ("Five", v)
+a, x
+5000
+7 - Get All Variables Modified In Procedure Six
+variable v;
+Select v such that Modifies ("Six", v)
+a, b, c, d
+5000
+8 - Get All Variables Modified In Procedure Five and Procedure Six
+variable v;
+Select v such that Modifies ("Six", v) and Modifies ("Five", v)
+a
+5000
+9 - Get All Variables Modified In Container Statement on Line 22 While Loop
+variable v;
+Select v such that Modifies (22, v)
+none
+5000
+10 - Get All Variables Modified In Container Statement on Line 27 Assignment Statement
+variable v;
+Select v such that Modifies (27, v)
+y
+5000
+11 - Get All Variables Modified In Container Statement on Line 32 While Statement
+variable v;
+Select v such that Modifies (32, v)
+a, x, y
+5000
+12 - Get All Variables Modified In Container Statement on Line 34 Call Statement
+variable v;
+Select v such that Modifies (34, v)
+a, x
+5000
+13 - Get All Variables Modified In Container Statement on Line 35 Read Statement
+variable v;
+Select v such that Modifies (35, v)
+a
+5000
+14 - Get All Variables Modified In Container Statement on Line 36 Print Statement
+variable v;
+Select v such that Modifies (36, v)
+none
+5000
+15 - Get All Variables Modified In Container Statement on Line 42 While Statement
+variable v;
+Select v such that Modifies (42, v)
+a, x
+5000
+16 - Get All Variables Modified In Container Statement on Line 43 While Statement
+variable v;
+Select v such that Modifies (43, v)
+a, x
+5000
+17 - Get All Variables Modified In Container Statement on Line 46 Call Statement
+variable v;
+Select v such that Modifies (46, v)
+a, b, c, d, x
+5000
+18 - Get All Variables Modified In Container Statement on Line 49 If Statement
+variable v;
+Select v such that Modifies (49, v)
+a, b, c, d, x
+5000
+19 - Get All Variables Modified In Container Statement on Line 56 Assignment Statement
+variable v;
+Select v such that Modifies (56, v)
+x
+5000
+20 - Get All Variables Modified In Container Statement on Line 58 Read Statement
+variable v;
+Select v such that Modifies (58, v)
+a
+5000
+21 - Get All Variables Modified In Container Statement on Line 60 Assignment Statement
+variable v;
+Select v such that Modifies (60, v)
+x
+5000
+22 - Get All Variables Modified In Container Statement on Line 62 While Statement
+variable v;
+Select v such that Modifies (62, v)
+a, x
+5000
+23 - Get All Variables Modified In Container Statement on Line 69 Assignment Statement
+variable v;
+Select v such that Modifies (69, v)
+a
+5000
+24 - Get All Variables Modified In Container Statement on Line 71 Call Statement
+variable v;
+Select v such that Modifies (71, v)
+a, b, c, d, x
+5000
+25 - Get All Variables Modified In Container Statement on Line 72 Call Statement
+variable v;
+Select v such that Modifies (72, v)
+a, x
+5000
+26 - Get All Variables Modified In Container Statement on Line 73 Call Statement
+variable v;
+Select v such that Modifies (73, v)
+a, b, c, d
+5000
+27 - Get All Variables Modified In Container Statement on Line 77 While Statement
+variable v;
+Select v such that Modifies (77, v)
+a, x
+5000
+28 - Get All Variables Modified In Container Statement on Line 80 Print Statement
+variable v;
+Select v such that Modifies (80, v)
+none
+5000
+29 - Get All Variables Modified In Container Statement on Line 83 If Statement
+variable v;
+Select v such that Modifies (83, v)
+a, b, c, d
+5000
+30 - Get All Variables Modified In Container Statement on Line 84 While Statement
+variable v;
+Select v such that Modifies (84, v)
+a, b, c
+5000
+31 - Get All Variables Modified In Container Statement on Line 99 If Statement
+variable v;
+Select v such that Modifies (99, v)
+d
+5000
+31 - Get All Variables Modified In Container Statement on Line 103 While Statement
+variable v;
+Select v such that Modifies (103, v)
+none
+5000
+32 - Does Line Number 103 Modify Variable a
+variable v;
+Select BOOLEAN such that Modifies (103, "a")
+FALSE
+5000
+33 - Does Procedure One Modify Variable a
+variable v;
+Select BOOLEAN such that Modifies ("One", "a")
+TRUE
+5000
+34 - Does Procedure One Modify Variable z
+variable v;
+Select BOOLEAN such that Modifies ("One", "z")
+FALSE
+5000
+35 - Get Pairs of Variables Modified in Procedure Five and Six
+variable v, v1;
+Select <v, v1> such that Modifies ("Five", v) and Modifies("Six", v1)
+a a, a b, a c, a d, x a, x b, x c, x d
+5000
+36 - Return Variable b, if it has been Modified in Procedure One
+variable v;
+Select v such that Modifies ("One", v) with v.varName = "b"
+b
+5000
+37 - Return Variable d, if it has been Modified in Procedure Six
+variable v;
+Select v such that Modifies ("One", v) with v.varName = "d"
+d
+5000
+38 - Does Procedure One Modify Any Variable
+variable v;
+Select BOOLEAN such that Modifies ("One", _)
+TRUE
+5000
+101 - Test With Invalid Procedure Name
+variable v;
+Select v such that Modifies ("Invalid", v)
+none
+5000
+102 - Test With Invalid Procedure Name
+variable v;
+Select v such that Modifies ("Invalid", _)
+none
+5000
+103 - Wildcard as First Argument
+variable v;
+Select v such that Modifies (_, v)
+SemanticError
+5000
+104 - Wildcard as Both Arguments
+variable v;
+Select v such that Modifies (_, _)
+SemanticError
+5000
+105 - Second Argument as Non-Variable Synonym
+variable v; print p;
+Select p such that Modifies ("One", p)
+SemanticError
+5000
+106 - First Argument as Variable Synonym
+variable v;
+Select p such that Modifies (v, _)
+SemanticError
+5000

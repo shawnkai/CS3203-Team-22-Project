@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 7/3/23.
 //
 
-#include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/Parser.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "catch.hpp"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -93,7 +93,7 @@ TEST_CASE("TestCase33_UndeclaredStmtEntityArg1FollowsExpression_SemanticError") 
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
@@ -112,7 +112,7 @@ TEST_CASE("TestCase34_UndeclaredStmtEntityArg2FollowsExpression_SemanticError") 
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 

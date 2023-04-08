@@ -23,7 +23,7 @@ using namespace std;
 class Cfg {
 public:
     vector<int> buildCfg(TNode root, int exitParent);
-    std::string toString();
+    std::string toString() const;
     std::vector<int> basicBlock;
     std::unordered_map<int, std::vector<int> > blockToStatement;
     std::unordered_map<int, int> statementNumberToBlock;

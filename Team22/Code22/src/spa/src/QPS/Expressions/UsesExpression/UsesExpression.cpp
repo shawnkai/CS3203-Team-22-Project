@@ -8,7 +8,7 @@ bool UsesExpression::containsUsesExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), USESREGEX), std::sregex_iterator()) > 0;
 }
 
-vector<UsesExpression *> UsesExpression::extractUsesExpression(const string &query, SynonymTable synonymTable) {
+vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& query, SynonymTable synonymTable) {
     if (!containsUsesExpression(query)) {
         return {};
     }
@@ -17,7 +17,7 @@ vector<UsesExpression *> UsesExpression::extractUsesExpression(const string &que
 
     string::const_iterator searchStart(query.begin());
 
-    vector<UsesExpression *> expressions;
+    vector<UsesExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, USESREGEX)) {
         string arg1 = sm.str(1);
@@ -40,10 +40,17 @@ vector<UsesExpression *> UsesExpression::extractUsesExpression(const string &que
             } else if (!Utilities::isValidVariableName(arg2)) {
                 throw SyntacticException();
             } else {
-                a2 = dynamic_cast<NamedEntity *>(synonymTable.get(arg2, "named"));
+                a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
             }
             expressions.push_back(new UsesSExpression(a1, a2));
         } else {
+
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             NamedEntity *a1;
 
             if (arg1 == "_") {
@@ -53,13 +60,10 @@ vector<UsesExpression *> UsesExpression::extractUsesExpression(const string &que
             } else if (!Utilities::isValidVariableName(arg1)) {
                 throw SyntacticException();
             } else {
-                a1 = dynamic_cast<NamedEntity *>(synonymTable.get(arg1, "named"));
-            }
-
-            if (arg2.find('_') != string::npos && arg2 != "_") {
-                throw SyntacticException();
-            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
-                throw SyntacticException();
+                a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
+                if (a1->getType() == "READ" || a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
+                    throw SemanticException();
+                }
             }
 
             NamedEntity *a2;
@@ -70,14 +74,13 @@ vector<UsesExpression *> UsesExpression::extractUsesExpression(const string &que
             } else if (!Utilities::isValidVariableName(arg2)) {
                 throw SyntacticException();
             } else {
-                a2 = dynamic_cast<NamedEntity *>(synonymTable.get(arg2, "named"));
+                a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
+                if (a2->getType() != "VARIABLE") {
+                    throw SemanticException();
+                }
             }
 
-            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                throw SemanticException();
-            }
-
-            expressions.push_back(new UsesPExpression(a1, a2));
+            expressions.push_back(new UsesPExpression(a1,  a2));
         }
         searchStart = sm.suffix().first;
     }
@@ -85,26 +88,26 @@ vector<UsesExpression *> UsesExpression::extractUsesExpression(const string &que
     return expressions;
 }
 
-ResultTable *UsesSExpression::evaluate(PKB pkb) {
+ResultTable* UsesSExpression::evaluate(PKB pkb) {
     vector<Result> vars;
     if (this->entities[0]->getType() == "WILDCARD") {
         auto varResult = pkb.getAllDesignEntity("VARIABLE");
         vars.insert(vars.end(), varResult.begin(), varResult.end());
     } else if (this->entities[0]->getType() == "ident") {
-        vars.push_back(pkb.getDesignEntity("VARIABLE", dynamic_cast<NamedEntity *>(this->entities[0])->getSynonym()));
+        vars.push_back(pkb.getDesignEntity("VARIABLE", dynamic_cast<NamedEntity*>(this->entities[0])->getSynonym()));
     } else {
         vars = pkb.getAllDesignEntity(this->entities[0]->getType());
     }
 
     vector<Result> results;
-    for (auto var: vars) {
+    for (auto var : vars) {
         results.push_back(pkb.getDesignAbstraction("USES", make_pair("STATEMENT", var.getQueryEntityName())));
     }
     vector<string> result;
     for (auto res: results) {
         bool found = false;
-        for (const auto &s: res.getQueryResult()) {
-            if (s == to_string(dynamic_cast<StmtEntity *>(this->entities[1])->getLine())) {
+        for (const auto& s: res.getQueryResult()) {
+            if (s == to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine())) {
                 found = true;
                 break;
             }
@@ -123,7 +126,7 @@ ResultTable *UsesSExpression::evaluate(PKB pkb) {
     return new ResultTable({{this->entities[0]->toString(), result}});
 }
 
-ResultTable *UsesPExpression::evaluate(PKB pkb) {
+ResultTable* UsesPExpression::evaluate(PKB pkb) {
     if (this->entities[0]->getType() == "ident") {
         string type = this->entities[1]->getType();
         if (type == "ident") {
@@ -135,18 +138,32 @@ ResultTable *UsesPExpression::evaluate(PKB pkb) {
         if (res.getQueryEntityName() != "none" && !res.getQueryResult().empty() && res.toString().find("none") == string::npos) {
             vector<string> ans = res.getQueryResult();
             sort(ans.begin(), ans.end());
-            if (this->entities[1]->getType() == "ident") {
+            if (this->entities[1]->getType() == "ident"){
                 if (Utilities::checkIfPresent(ans, Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"'))) {
                     return new BooleanTrueTable();
                 } else {
                     return new BooleanFalseTable();
                 }
             }
-            return new ResultTable({{this->entities[1]->toString(), ans}});
-        } else {
+            ResultTable *temp = new ResultTable({{this->entities[1]->toString(), ans}});
+
+            if (this->entities[1]->getType() == "ident") {
+                if (temp->getSize() == 0) {
+                    return new BooleanFalseTable();
+                } else {
+                    return new BooleanTrueTable();
+                }
+            }
+            if (temp->getSize() == 0) {
+                return new BooleanFalseTable();
+            }
+            return temp;
+        }
+        else {
             return new BooleanFalseTable();
         }
-    } else {
+    }
+    else {
         vector<Result> vars;
 
         if (this->entities[0]->getType() == "WILDCARD") {
@@ -161,26 +178,44 @@ ResultTable *UsesPExpression::evaluate(PKB pkb) {
         if (type == "CALL") {
             type = "PROCEDURECALL";
         }
-        for (auto var: vars) {
+        for (auto var : vars) {
             if (this->entities[1]->getType() == "ident") {
                 results.push_back(pkb.getDesignAbstraction("USES", make_pair("PROCEDURE", var.getQueryEntityName())));
             } else {
                 results.push_back(pkb.getDesignAbstraction("USES", make_pair(type, var.getQueryEntityName())));
             }
         }
-        map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+       unordered_map<string, vector<string>> result = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
         int ind = 0;
-        for (auto res: results) {
+        string val;
+        if (type == "ident") {
+            type = "PROCEDURE";
+            val = Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"');
+        }
+        for (auto res : results) {
             if (res.getQueryEntityType() == "USES:" + type) {
-                for (const auto &x: res.getQueryResult()) {
-                    result.find(this->entities[1]->toString())->second.push_back(x);
-                    result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
+                for (const auto& x : res.getQueryResult()) {
+                    if (this->entities[1]->getType() == "ident" && x == val) {
+                        result.find(this->entities[1]->toString())->second.push_back(x);
+                        result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
+                    } else if (this->entities[1]->getType() != "ident")  {
+                        result.find(this->entities[1]->toString())->second.push_back(x);
+                        result.find(this->entities[0]->toString())->second.push_back(vars[ind].getQueryEntityName());
+                    }
+
                 }
             }
             ind += 1;
         }
 
-        return new ResultTable(result);
+        if (this->entities[1]->getType() == "ident") {
+            result.erase(this->entities[1]->toString());
+        }
+        ResultTable *temp = new ResultTable(result);
+        if (temp->getSize() == 0) {
+            return new BooleanFalseTable();
+        }
+        return temp;
     }
 }
 
@@ -190,18 +225,18 @@ UsesExpression::UsesExpression(DesignEntity *target) : Expression({target}) {
     }
 }
 
-UsesSExpression::UsesSExpression(StmtRef *user, DesignEntity *target) : UsesExpression(target) {
+UsesSExpression::UsesSExpression(StmtRef* user, DesignEntity* target) : UsesExpression(target) {
     this->entities.push_back(user);
 }
 
-string UsesSExpression::toString() {
+string UsesSExpression::toString() const {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }
 
-UsesPExpression::UsesPExpression(NamedEntity *user, DesignEntity *target) : UsesExpression(target) {
+UsesPExpression::UsesPExpression(NamedEntity* user, DesignEntity* target) : UsesExpression(target) {
     this->entities.push_back(user);
 }
 
-string UsesPExpression::toString() {
+string UsesPExpression::toString() const {
     return "Uses(" + this->entities[1]->toString() + ", " + this->entities[0]->toString() + ")";
 }

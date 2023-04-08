@@ -8,22 +8,22 @@ procedure p, q;
 Select BOOLEAN such that Calls (p, q)
 TRUE
 5000
-3 - Check if a procedure directly calls procedure "Third" and modify the variable "i"
+3 - Check if a procedure directly calls procedure Third and modify the variable i
 procedure p, q;
 Select BOOLEAN such that Calls (p, q) with q.procName = "Third" such that Modifies (p, "i")
 TRUE
 5000
-4 - Check if a procedure directly calls procedure "Third" and modify the variable "i"
+4 - Check if a procedure directly calls procedure Third and modify the variable i
 procedure p;
 Select BOOLEAN such that Calls (p, "Third") and Modifies (p, "i")
 TRUE
 5000
-5 - Check if a procedure calls procedure "Third" directly or indirectly
+5 - Check if a procedure calls procedure Third directly or indirectly
 procedure p;
 Select BOOLEAN such that Calls* (p, "Third")
 TRUE
 5000
-6 - Check if a procedure is called from "Second" in a while loop
+6 - Check if a procedure is called from Second in a while loop
 procedure p; call c; while w;
 Select BOOLEAN such that Calls ("Second", p) and Parent (w, c) with c.procName = p.procName
 TRUE

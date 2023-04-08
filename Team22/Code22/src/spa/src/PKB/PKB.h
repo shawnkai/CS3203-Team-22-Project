@@ -55,8 +55,7 @@ public:
                                                                     string patternLineNumber);
     unordered_map<string, string> getAllRightHandExpressionsOfAVariable(string leftHandVariableName);
     unordered_map<string, unordered_map<string, string>> getAllRightHandExpressions();
-
-
+    
     // APIs Related to If and While Patterns
     void addPattern(string patternType, string lineNumber, string variableName);
     bool isVariableUsedInPattern(string patternType, string lineNumber, string variableName);

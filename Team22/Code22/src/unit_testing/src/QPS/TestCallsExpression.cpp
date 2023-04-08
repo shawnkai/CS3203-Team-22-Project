@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 27/3/23.
 //
 
-#include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/Parser.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "catch.hpp"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -55,12 +55,50 @@ TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsStmtType_SemanticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
     REQUIRE(throwsException);
 }
+
+TEST_CASE("TestCase4_ParseSelectWithSuchThatWhileCalls_SemanticException") {
+    QueryParser queryParser;
+    string declaration = "while w;";
+    string query = "Select w such that Calls(w, _)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsFirstArgConst_SemanticException") {
+    QueryParser queryParser;
+    string declaration = "stmt s; constant c;";
+    string query = "Select s such that Calls(c, _)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
 
 TEST_CASE("TestCase5_ParseSelectWithSuchThatCallsProcedureNameWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
@@ -85,7 +123,7 @@ TEST_CASE("TestCase6_ParseCallsProcedureUnknownCharacters_SyntacticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 
