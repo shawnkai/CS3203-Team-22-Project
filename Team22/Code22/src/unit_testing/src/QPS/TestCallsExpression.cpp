@@ -62,6 +62,44 @@ TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsStmtType_SemanticException") {
     REQUIRE(throwsException);
 }
 
+TEST_CASE("TestCase4_ParseSelectWithSuchThatWhileCalls_SemanticException") {
+    QueryParser queryParser;
+    string declaration = "while w;";
+    string query = "Select w such that Calls(w, _)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
+TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsFirstArgConst_SemanticException") {
+    QueryParser queryParser;
+    string declaration = "stmt s; constant c;";
+    string query = "Select s such that Calls(c, _)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+
 TEST_CASE("TestCase5_ParseSelectWithSuchThatCallsProcedureNameWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "procedure p;";
