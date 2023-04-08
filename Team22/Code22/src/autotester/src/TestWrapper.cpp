@@ -1,9 +1,9 @@
 #include "TestWrapper.h"
 
 #include "PKB/PKB.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "QPS/Evaluator/Evaluator.h"
 #include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/Parser.h"
 #include "SP/Parser/TNode.h"
 #include "SP/SPDriver.h"
 #include <queue>

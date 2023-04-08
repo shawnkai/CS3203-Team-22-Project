@@ -5,7 +5,7 @@
 #include "SynonymTable.h"
 #include <stdexcept>
 
-void SynonymTable::add(string type, const string &name) {
+void SynonymTable::add(string type, const string& name) {
     if (this->table.count(name)) {
         throw SyntacticException();
     }
@@ -32,7 +32,7 @@ void SynonymTable::add(string type, const string &name) {
     }
 }
 
-DesignEntity *SynonymTable::get(const string &name, const string &desiredType) {
+DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
     if (!exists(name)) {
         throw SemanticException();
     }
@@ -43,11 +43,12 @@ DesignEntity *SynonymTable::get(const string &name, const string &desiredType) {
         return new SynonymStmtEntity(name);
     } else if (desiredType == "named") {
         return new NamedEntity(entity->getType(), name);
-    } else if (desiredType == "select") {
+    } else if (desiredType == "select"){
         return entity;
     } else {
         string errorMsg = "unknown type: " + desiredType;
-        throw std::runtime_error(errorMsg);
+        ::printf("%s", errorMsg.c_str());
+        throw SemanticException();
     }
 }
 
@@ -57,16 +58,16 @@ bool SynonymTable::exists(string name) {
 
 vector<tuple<string, string>> SynonymTable::getSimpleSynonymTable() {
     vector<tuple<string, string>> result;
-    for (tuple<string, DesignEntity *> t: this->table) {
+    for (tuple<string, DesignEntity*> t : this->table) {
         result.emplace_back(std::get<0>(t), std::get<1>(t)->getType());
     }
     return result;
 }
 
-bool SynonymTable::isEquivalentTo(const map<string, string> &expectedTable) {
+bool SynonymTable::isEquivalentTo(const unordered_map<string, string>& expectedTable) {
     vector<tuple<string, string>> result = this->getSimpleSynonymTable();
-    map<string, string> actualTable;
-    for (auto &i: result) {
+   unordered_map<string, string> actualTable;
+    for (auto & i : result) {
         actualTable[std::get<0>(i)] = std::get<1>(i);
     }
 

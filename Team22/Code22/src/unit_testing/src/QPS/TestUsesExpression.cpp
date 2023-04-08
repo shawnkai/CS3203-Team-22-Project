@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 7/3/23.
 //
 
-#include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/Parser.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "catch.hpp"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -42,42 +42,54 @@ TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithWildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase36_UndeclaredNamedEntityArg2UsesSExpression_SemanticError") {
+TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithArg1Ident_ShouldSuccess") {
     QueryParser queryParser;
-
-    string declaration = "variable v; read r;";
-    string query = "Select v such that Uses(r, a)";
+    string declaration = "variable v; procedure p;";
+    string query = "Select p such that Uses(\"proc\", _)";
 
     queryParser.parse(declaration);
 
-    bool throwsException = false;
+    SelectExpression *actualResult = queryParser.parse(query);
 
-    try {
-        Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
-        throwsException = true;
-    }
+    REQUIRE(actualResult->toString() == query);
+}
 
-    REQUIRE(throwsException);
+TEST_CASE("TestCase36_UndeclaredNamedEntityArg2UsesSExpression_SemanticError") {
+QueryParser queryParser;
+
+string declaration = "variable v; print p;";
+string query = "Select v such that Uses(p, a)";
+
+queryParser.parse(declaration);
+
+bool throwsException = false;
+
+try {
+Expression *exp1 = queryParser.parse(query);
+} catch (SemanticException& e) {
+throwsException = true;
+}
+
+REQUIRE(throwsException);
 }
 
 TEST_CASE("TestCase37_UndeclaredNamedEntityArg2UsesPExpression_SemanticError") {
-    QueryParser queryParser;
+QueryParser queryParser;
 
-    string declaration = "variable v; read r;";
-    string query = "Select v such that Uses(v, a)";
+string declaration = "variable v; read r;";
+string query = "Select v such that Uses(v, a)";
 
-    queryParser.parse(declaration);
+queryParser.parse(declaration);
 
-    bool throwsException = false;
+bool throwsException = false;
 
-    try {
-        Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
-        throwsException = true;
-    }
+try {
+Expression *exp1 = queryParser.parse(query);
+} catch (SemanticException& e) {
+throwsException = true;
+}
 
-    REQUIRE(throwsException);
+REQUIRE(throwsException);
 }
 
 
@@ -95,7 +107,7 @@ TEST_CASE("TestCase57_ModifiesExpressionFirstArgWildcard_SemanticError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
@@ -114,9 +126,67 @@ TEST_CASE("TestCase58_UsesExpressionFirstArgWildcard_SemanticError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
     REQUIRE(throwsException);
 }
+
+TEST_CASE("TestCase58_UsesExpressionFirstArgRead_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r;";
+    string query = "Select v such that Uses(r, v)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase58_UsesSExpressionSecondArgConstant_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; print p; constant c;";
+    string query = "Select v such that Uses(p, c)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
+TEST_CASE("TestCase58_UsesPExpressionSecondArgAssign_SemanticError") {
+    QueryParser queryParser;
+
+    string declaration = "variable v; read r; assign a;";
+    string query = "Select v such that Uses(p, a)";
+
+    queryParser.parse(declaration);
+
+    bool throwsException = false;
+
+    try {
+        Expression *exp1 = queryParser.parse(query);
+    } catch (SemanticException& e) {
+        throwsException = true;
+    }
+
+    REQUIRE(throwsException);
+}
+
