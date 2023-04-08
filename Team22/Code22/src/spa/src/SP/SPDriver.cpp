@@ -79,9 +79,4 @@ void SPDriver::parseSimpleProgram(const std::string& filename) {
                                          controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph,
                                          controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
     }
-
-    for (auto graph: controlFlowGraphs) {
-        cout << graph.toString() << endl;
-    }
-
 }
