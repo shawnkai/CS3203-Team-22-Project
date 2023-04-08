@@ -111,10 +111,10 @@ ResultTable* ResultTable::crossProduct(ResultTable* table2, const unordered_set<
     for(int i = 0; i < this->getSize(); i++) {
         for (int j = 0; j < table2->getSize(); j++) {
             for (const auto& kv1 : this->table) {
-                result.find(kv1.first)->second.push_back(kv1.second[i]);
+                result.at(kv1.first).push_back(kv1.second[i]);
             }
             for (const auto& kv2 : table2->table) {
-                result.find(kv2.first)->second.push_back(kv2.second[j]);
+                result.at(kv2.first).push_back(kv2.second[j]);
             }
         }
     }
@@ -122,14 +122,12 @@ ResultTable* ResultTable::crossProduct(ResultTable* table2, const unordered_set<
 }
 
 ResultTable* ResultTable::naturalJoin(ResultTable* table2, const unordered_set<string>& all_keys, unordered_set<string> common_keys) {
-    vector<int> target_indexes;
-   unordered_map<int, vector<int>> index_map;
+   unordered_map<int, vector<int>> indexMap;
     for (int i = 0; i < table2->getSize(); i ++) {
-        target_indexes.push_back(i);
-        index_map.insert({i, {}});
+        indexMap.insert({i, {}});
     }
 
-   unordered_map<int, vector<int>> index_mapping;
+   unordered_map<int, vector<int>> indexMapping;
 
 
     for (int i = 0; i < table2->getSize(); i++) {
@@ -141,14 +139,14 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const unordered_set<s
         for (const string& t : targets) {
             if (t == target_v) {
                 bool matched = true;
-                for (auto kv : this->table) {
-                    if (common_keys.find(kv.first) != common_keys.end() && kv.second[ind] != table2->table.find(kv.first)->second[i]) {
+                for (const string& ck : common_keys) {
+                    if (this->table.at(ck)[ind] != table2->table.at(ck)[i]) {
                         matched = false;
                         break;
                     }
                 }
                 if (matched) {
-                    index_map.find(i)->second.push_back(ind);
+                    indexMap.find(i)->second.push_back(ind);
                 }
             }
             ind += 1;
@@ -163,12 +161,12 @@ ResultTable* ResultTable::naturalJoin(ResultTable* table2, const unordered_set<s
     vector<int> indices;
     vector<vector<int>> target_indices;
 
-    for (const auto& ind_pair : index_map) {
+    for (const auto& ind_pair : indexMap) {
         indices.push_back(ind_pair.first);
         target_indices.push_back(ind_pair.second);
     }
 
-    for (const auto& ind_pair : index_map) {
+    for (const auto& ind_pair : indexMap) {
         for (int i: ind_pair.second) {
             for (auto kv : table2->table) {
                 result.find(kv.first)->second.push_back(kv.second[ind_pair.first]);
