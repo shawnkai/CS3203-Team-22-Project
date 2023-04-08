@@ -127,6 +127,24 @@ inline int ToIntegral(TokenType t) {
     }
 }
 
+inline TokenType getTypeFromKeywordToken(const std::string& candidate) {
+    if (candidate == "procedure") {
+        return PROCEDURE;
+    } else if (candidate == "read") {
+        return READ;
+    } else if (candidate == "print") {
+        return PRINT;
+    } else if (candidate == "while") {
+        return WHILE;
+    } else if (candidate == "if" || candidate == "then" || candidate == "else") {
+        return IF;
+    } else if (candidate == "call") {
+        return CALL;
+    } else {
+        throw std::invalid_argument("not a keyword for SIMPLE source");
+    }
+}
+
 struct Token {
     TokenType type;
     std::string value;

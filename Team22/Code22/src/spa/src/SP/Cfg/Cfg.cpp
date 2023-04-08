@@ -102,8 +102,8 @@ vector<int> Cfg::buildCfg(TNode root, int exitParent) {
 /**
  * Link the outermost exiting blocks to basic block 0 to indicate program termination.
  *
- * @param pendingToTerminate
- * @return
+ * @param pendingToTerminate blocks which should exit
+ * @return the exiting block, which is represented by number 0
  */
 vector<int> Cfg::handleTerminalBlocks(const vector<int>& pendingToTerminate) {
     vector<int> end;

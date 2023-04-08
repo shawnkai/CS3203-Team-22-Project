@@ -1,7 +1,7 @@
 //
 // Created by Yi Zhang on 30/1/23.
 //
-#include "SP/Parser/Parser.h"
+#include "SP/Parser/ParserFactory.h"
 #include "SP/Parser/TNode.h"
 #include "SP/Tokenizer/Tokenizer.h"
 #include "catch.hpp"
@@ -23,10 +23,11 @@ TEST_CASE("TestCase1_ParseTokenListBasicSource_ShouldSuccess") {
     tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
 
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -56,10 +57,11 @@ TEST_CASE("TestCase2_ParseTokenListAssignStatement_ShouldSuccess") {
     tokens.push_back(Token(TokenType::INTEGER, "1", 1));
     tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 1));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -114,10 +116,11 @@ TEST_CASE("TestCase3_ParseTokenListWhileStatement_ShouldSuccess") {
     tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -171,10 +174,11 @@ TEST_CASE("TestCase4_ParseTokenListWhileStatementExpr2_ShouldSuccess") {
     tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -223,10 +227,11 @@ TEST_CASE("TestCase5_ParseTokenListWhileStatementExpr3_ShouldSuccess") {
     tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 2));
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -272,10 +277,11 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
 
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (invalid_argument &e) {
         cerr << e.what() << endl;
         exit(1);
@@ -301,38 +307,39 @@ TEST_CASE("TestCase6_ParseTokenListIfStatement_ShouldSuccess") {
     REQUIRE(greaterThanNode.stringId == ">");
 }
 
-//TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
-//    Tokenizer tk = Tokenizer();
-//    std::vector<Token> tokenList;
-//    const char *relativePath;
-//    relativePath = "SP_ut1.txt";
-//    string code = "procedure main {\n"
-//                  "    read x;\n"
-//                  "}";
-//    ofstream temp_file;
-//    temp_file.open(relativePath);
-//    temp_file << code;
-//    temp_file.close();
-//    try {
-//        tokenList = tk.tokenize(relativePath);
-//    } catch (std::invalid_argument& e) {
-//        std::cerr << e.what() << std::endl;
-//        exit(1);
-//    }
-//    Parser ps = Parser(tokenList);
-//    TNode result;
-//    try {
-//        result = ps.Parse();
-//    } catch (std::invalid_argument& e) {
-//        std::cerr << e.what() << std::endl;
-//        exit(1);
-//    }
-//    TNode result1 = result.children[0];
-//    REQUIRE(result.nodeType == TokenType::PROCEDURE);
-//    REQUIRE(result.children.size() == 1);
-//    REQUIRE(result.children[0].children.size() == 1);
-//    REQUIRE(filesystem::remove(relativePath));
-//}
+TEST_CASE("TestCase7_ParseBasicSimpleSource_ShouldSuccess") {
+    Tokenizer tk = Tokenizer();
+    std::vector<Token> tokenList;
+    const char *relativePath;
+    relativePath = "SP_ut1.txt";
+    string code = "procedure main {\n"
+                  "    read x;\n"
+                  "}";
+    ofstream temp_file;
+    temp_file.open(relativePath);
+    temp_file << code;
+    temp_file.close();
+    try {
+        tokenList = tk.tokenize(relativePath);
+    } catch (std::invalid_argument& e) {
+        std::cerr << e.what() << std::endl;
+        exit(1);
+    }
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
+    TNode result;
+    try {
+        result = ps->parse();
+    } catch (std::invalid_argument& e) {
+        std::cerr << e.what() << std::endl;
+        exit(1);
+    }
+    TNode result1 = result.children[0];
+    REQUIRE(result1.nodeType == TokenType::PROCEDURE);
+    REQUIRE(result1.children.size() == 1);
+    REQUIRE(result1.children[0].children.size() == 1);
+    REQUIRE(filesystem::remove(relativePath));
+}
 
 TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
@@ -357,10 +364,11 @@ TEST_CASE("TestCase8_ParseWhileStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -398,10 +406,11 @@ TEST_CASE("TestCase9_ParseIfStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -444,10 +453,11 @@ TEST_CASE("TestCase10_ParseReadPrintStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -486,10 +496,11 @@ TEST_CASE("TestCase11_ParseAssignStmtSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -537,10 +548,11 @@ TEST_CASE("TestCase12_ParseIfWhileCombinedMix1_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -593,10 +605,11 @@ TEST_CASE("TestCase13_ParseIfWhileCombinedMix2_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -646,10 +659,11 @@ TEST_CASE("TestCase14_ParseIfWhileCombinedMix3_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -710,10 +724,11 @@ TEST_CASE("TestCase15_ParseDeepNestingSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -759,10 +774,11 @@ TEST_CASE("TestCase16_ParseComplexConditionalStmt_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -801,10 +817,11 @@ TEST_CASE("TestCase17_ParseComplexConditionalStmtVariation2_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -870,10 +887,11 @@ TEST_CASE("TestCase18_ParseGrandSimpleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -922,11 +940,12 @@ TEST_CASE("TestCase19_ParseIllegalToken_ShouldThrowException") {
     tokens.push_back(Token(TokenType::STATEMENT_TERMINAL, ";", 3));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
     tokens.push_back(Token(TokenType::RIGHT_CURLY_BRACKET, "}", 3));
-    Parser ps = Parser(tokens);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokens, make_shared<int>(0));
     TNode result;
     bool isThrownException = false;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         isThrownException = true;
@@ -983,11 +1002,12 @@ TEST_CASE("TestCase20_ParseIllegalGrammar_ShouldThrowException") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     bool isThrownException = false;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         isThrownException = true;
@@ -1043,10 +1063,11 @@ TEST_CASE("TestCase21_ParseTanglingTokenOutsideProcedure_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
@@ -1128,10 +1149,11 @@ TEST_CASE("TestCase22_ParseLongProcedure_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
+        result = ps->parse();
     } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
