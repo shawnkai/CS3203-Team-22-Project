@@ -3,15 +3,8 @@ import os
 import re
 from multiprocessing import Pool
 
-if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
-    start = './Team22/Code22/cmake-build-debug/src'
-elif os.path.isdir('./Team22/Code22/build/src'):
-    start = './Team22/Code22/build/src'
-else:
-    start = './Team22/Code22/out/build/x64-Debug/src'
-
 def process_file(file_pair):
-    source, query = file_pair
+    start, source, query = file_pair
     testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
     correctAnswerRegex = re.compile("(Correct answer: (.)*)")
     actualAnswerRegex = re.compile("(Your answer: (.)*)")
@@ -76,6 +69,12 @@ def process_file(file_pair):
 
 
 if __name__ == "__main__":
+    if os.path.isdir('./Team22/Code22/cmake-build-debug/src'):
+        start = './Team22/Code22/cmake-build-debug/src'
+    elif os.path.isdir('./Team22/Code22/build/src'):
+        start = './Team22/Code22/build/src'
+    else:
+        start = './Team22/Code22/out/build/x64-Debug/src'
     # Unit Testing
     print("Running Unit Tests...")
     result = subprocess.run([start + '/unit_testing/unit_testing'], stdout=subprocess.PIPE)
@@ -95,6 +94,7 @@ if __name__ == "__main__":
     result = result.stdout.decode()
 
     if "All tests passed" not in result:
+        print(result)
         exit(1)
 
     print("Integration Tests Passed")
@@ -154,7 +154,7 @@ if __name__ == "__main__":
                           ("ComplexTestCases/ComplexSource.txt",
                            "ComplexTestCases/ParentStarQueriesOnMultipleProcedures.txt"),]
     with Pool() as pool:
-        for correct in pool.map(process_file, source_query_pairs):
+        for correct in pool.map(process_file, [(start, ) + p for p in source_query_pairs]):
             if not correct:
                 print("System Tests Failed")
                 exit(1)
