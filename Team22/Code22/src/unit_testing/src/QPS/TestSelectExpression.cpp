@@ -105,7 +105,7 @@ throwsException = true;
 REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_SyntaxError") {
+TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "stmt s; variable v;";
     string query = "Select <s> such that Uses(s, v)";
