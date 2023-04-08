@@ -6,12 +6,13 @@
 
 using namespace std;
 
-class InvalidEntityTypeException: public exception {
-    char* message;
-public:
-    explicit InvalidEntityTypeException(char* message) : message(message) {}
+class InvalidEntityTypeException : public exception {
+    char *message;
 
-    char * what () {
+public:
+    explicit InvalidEntityTypeException(char *message) : message(message) {}
+
+    char *what() {
         return this->message;
     }
 };

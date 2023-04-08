@@ -90,6 +90,13 @@ public:
         * @return A string representation of the expression
         */
         virtual string toString() const = 0;
+
+        /***
+         * Get the Synonym Entities used in the Expression
+         *
+         * @return a vector of synonym entity strings
+         */
+        vector<string> getSynEntities();
 };
 
 #endif //SPA_EXPRESSIONS_H

@@ -1,20 +1,20 @@
 #pragma once
 
-#include<stdio.h>
 #include <iostream>
+#include <stdio.h>
 #include <string>
-#include <vector>
 #include <tuple>
+#include <vector>
 
-#include "SP/Parser/TNode.h"
 #include "../../PKB/PKB.h"
-#include "StmtlstExtractor.h"
 #include "ConditionExtractor.h"
+#include "SP/Parser/TNode.h"
+#include "StmtlstExtractor.h"
 
 using namespace std;
 
 class WhileExtractor {
 public:
-	WhileExtractor() {};
-	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
+    WhileExtractor(){};
+    void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

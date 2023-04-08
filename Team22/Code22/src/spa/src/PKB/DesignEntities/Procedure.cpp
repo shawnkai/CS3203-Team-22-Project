@@ -14,8 +14,7 @@ using namespace std;
  * @param entityDetails This encompasses the details of the Procedure Entity to be created.
  */
 Procedure::Procedure(tuple<string, string> entityDetails)
-: DesignEntity(entityDetails) {
-
+    : DesignEntity(entityDetails) {
 }
 
 /**

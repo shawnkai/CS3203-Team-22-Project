@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/DesignAbstractionsInterface.h"
+#include "catch.hpp"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -28,7 +28,7 @@ TEST_CASE("Test 1: Creation of WhileStatementUses Design Abstraction") {
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("uws1", "1"));
-        } catch (InvalidAPICallException& e) {
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -53,7 +53,7 @@ TEST_CASE("Test 2: Retrieval of an existent WhileStatementUses Design Abstractio
 
         try {
             Result result = designAbstractionsControllerTest.getDesignAbstraction("USES", "uws2");
-        } catch (InvalidAPICallException& e) {
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -143,7 +143,6 @@ TEST_CASE("Test 10: Retrieval of Variables Captured By WhileStatementUses Design
         REQUIRE(
                 ((result.find("uws20") != result.end()) &&
                  (result.find("uws22") != result.end()) &&
-                 (result.find("uws24") != result.end()))
-        );
+                 (result.find("uws24") != result.end())));
     }
 }

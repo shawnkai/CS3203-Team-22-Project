@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class ProcedureDatabase: public DesignEntityDatabase {
+class ProcedureDatabase : public DesignEntityDatabase {
 public:
-
 };
 
-#endif //SPA_PROCEDUREDATABASE_H
+#endif//SPA_PROCEDUREDATABASE_H

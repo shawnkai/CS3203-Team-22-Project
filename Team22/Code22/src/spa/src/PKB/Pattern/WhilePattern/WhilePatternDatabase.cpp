@@ -11,7 +11,7 @@
 using namespace std;
 
 bool WhilePatternDatabase::isValidPatternType(Pattern *patternToBeStored) {
-    WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
+    WhilePattern *whilePatternToBeStored = dynamic_cast<WhilePattern *>(patternToBeStored);
 
     if (whilePatternToBeStored == nullptr) {
         return false;
@@ -31,7 +31,7 @@ void WhilePatternDatabase::updatePatternInDatabase(Pattern *patternToBeStored) {
                 ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: WhilePattern Type Here").data());
     }
 
-    WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
+    WhilePattern *whilePatternToBeStored = dynamic_cast<WhilePattern *>(patternToBeStored);
 
     auto elementToAdd = *(whilePatternToBeStored->getVariableNamesUsed().begin());
 
@@ -45,7 +45,7 @@ void WhilePatternDatabase::addToDatabase(Pattern *patternToBeStored) {
                 ("Got: " + patternToBeStored->getTypeOfPattern() + ". Expected: WhilePattern Type Here").data());
     }
 
-    WhilePattern* whilePatternToBeStored = dynamic_cast<WhilePattern*>(patternToBeStored);
+    WhilePattern *whilePatternToBeStored = dynamic_cast<WhilePattern *>(patternToBeStored);
 
     if (this->isLineNumberPresent(whilePatternToBeStored->getLineNumber())) {
         this->updatePatternInDatabase(patternToBeStored);
@@ -59,7 +59,7 @@ unordered_set<string> WhilePatternDatabase::getAllVariablesBeingUsed(string line
         return this->database.find(lineNumber)->second->getVariableNamesUsed();
     }
 
-    return unordered_set<string> {};
+    return unordered_set<string>{};
 }
 
 bool WhilePatternDatabase::isVariableNamePresentOnLineNumber(string lineNumber, string variableName) {

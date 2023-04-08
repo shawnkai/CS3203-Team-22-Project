@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class ProcedureUsesDatabase: public UsesDatabase {
+class ProcedureUsesDatabase : public UsesDatabase {
 public:
-
 };
 
-#endif //SPA_PROCEDUREUSESDATABASE_H
+#endif//SPA_PROCEDUREUSESDATABASE_H

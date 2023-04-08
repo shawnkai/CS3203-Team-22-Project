@@ -14,11 +14,11 @@
 
 using namespace std;
 
-class IfPattern: public Pattern {
+class IfPattern : public Pattern {
 public:
     explicit IfPattern(string lineNumber, string variableName);
 
     string getTypeOfPattern() override;
 };
 
-#endif //SPA_IFPATTERN_H
+#endif//SPA_IFPATTERN_H

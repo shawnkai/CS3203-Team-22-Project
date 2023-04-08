@@ -6,13 +6,13 @@
 
 #include "Follows.h"
 
+
 using namespace std;
 
 Follows::Follows(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails) {
+        : DesignAbstraction(abstractionDetails) {
 
 }
-
 string Follows::getTypeOfAbstraction() {
     return "FOLLOWS";
 }

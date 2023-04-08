@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class CallsStarDatabase: public DesignAbstractionDatabase {
+class CallsStarDatabase : public DesignAbstractionDatabase {
 public:
-
 };
 
-#endif //SPA_CALLSSTARDATABASE_H
+#endif//SPA_CALLSSTARDATABASE_H

@@ -6,9 +6,9 @@
 
 #include "DesignEntitiesInterface.h"
 
-#include "PKB/DesignEntities/DesignEntitiesFactory.h"
-#include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
 #include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntitiesDatabaseFactory.h"
+#include "PKB/DesignEntities/DesignEntitiesDatabase/DesignEntityDatabase.h"
+#include "PKB/DesignEntities/DesignEntitiesFactory.h"
 
 using namespace std;
 
@@ -19,8 +19,8 @@ using namespace std;
  * @param entityDetails A tuple, which takes in 2 strings, which contains the details about the Design Entity.
  */
 void DesignEntitiesInterface::addDesignEntity(string designEntity, tuple<string, string> entityDetails) {
-    DesignEntity* de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
-    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(de);
+    DesignEntity *de = DesignEntitiesFactory::createDesignEntity(designEntity, entityDetails);
+    DesignEntityDatabase *db = DesignEntitiesDatabaseFactory::getEntityDatabase(de);
 
     db->addToDatabase(de);
 }
@@ -34,7 +34,7 @@ void DesignEntitiesInterface::addDesignEntity(string designEntity, tuple<string,
  * @return Result object with the result or "None" if the result does not exist.
  */
 Result DesignEntitiesInterface::getDesignEntity(string entityType, string entityName) {
-    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
+    DesignEntityDatabase *db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
     Result queryResult = db->getFromDatabase(entityName);
 
     return queryResult;
@@ -50,7 +50,7 @@ Result DesignEntitiesInterface::getDesignEntity(string entityType, string entity
 vector<Result> DesignEntitiesInterface::getAllDesignEntity(string entityType) {
     vector<Result> queryResult;
 
-    DesignEntityDatabase* db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
+    DesignEntityDatabase *db = DesignEntitiesDatabaseFactory::getEntityDatabase(entityType);
     queryResult = db->getAllFromDatabase();
 
     return queryResult;

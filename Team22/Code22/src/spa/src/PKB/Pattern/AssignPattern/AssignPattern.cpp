@@ -36,4 +36,3 @@ string AssignPattern::getRightHandExpressionByLineNumber(string patternLineNumbe
 unordered_map<string, string> AssignPattern::getAllRightHandExpressions() {
     return this->rightHandExpressionByLineNumber;
 }
-

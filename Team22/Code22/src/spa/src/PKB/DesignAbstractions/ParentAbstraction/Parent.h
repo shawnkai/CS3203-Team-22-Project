@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Parent: public DesignAbstraction {
+class Parent : public DesignAbstraction {
 public:
     explicit Parent(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_PARENT_H
+#endif//SPA_PARENT_H

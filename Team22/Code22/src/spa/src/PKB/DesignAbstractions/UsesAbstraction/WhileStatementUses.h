@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class WhileStatementUses: public StatementUses {
+class WhileStatementUses : public StatementUses {
 public:
     explicit WhileStatementUses(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_WHILESTATEMENTUSES_H
+#endif//SPA_WHILESTATEMENTUSES_H

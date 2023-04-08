@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class IfStatement: public Statement {
+class IfStatement : public Statement {
 public:
     explicit IfStatement(tuple<string, string> entityDetails);
 
     string getTypeOfEntity() override;
 };
 
-#endif //SPA_IFSTATEMENT_H
+#endif//SPA_IFSTATEMENT_H

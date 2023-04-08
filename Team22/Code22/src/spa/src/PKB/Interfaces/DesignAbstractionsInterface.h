@@ -27,4 +27,4 @@ public:
             string designAbstractionType, string entityTypeBeingAbstracted);
 };
 
-#endif //SPA_DESIGNABSTRACTIONSINTERFACE_H
+#endif//SPA_DESIGNABSTRACTIONSINTERFACE_H

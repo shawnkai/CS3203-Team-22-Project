@@ -13,9 +13,8 @@
 
 using namespace std;
 
-class StatementModifiesDatabase: public ModifiesDatabase {
+class StatementModifiesDatabase : public ModifiesDatabase {
 public:
-
 };
 
-#endif //SPA_STATEMENTMODIFIESDATABASE_H
+#endif//SPA_STATEMENTMODIFIESDATABASE_H

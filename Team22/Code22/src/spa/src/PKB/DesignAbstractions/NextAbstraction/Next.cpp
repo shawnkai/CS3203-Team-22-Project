@@ -9,8 +9,7 @@
 using namespace std;
 
 Next::Next(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails) {
-
+    : DesignAbstraction(abstractionDetails) {
 }
 
 string Next::getTypeOfAbstraction() {

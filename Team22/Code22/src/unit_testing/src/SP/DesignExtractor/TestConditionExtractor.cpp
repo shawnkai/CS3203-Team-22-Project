@@ -133,5 +133,4 @@ TEST_CASE("Testcase2_ExtractComplexCondition_ShouldSuccess") {
     REQUIRE(result3 == "USES:STATEMENT: z: 3, 1, 2, ");
     REQUIRE(result4 == "USES:STATEMENT: x: 3, 1, 2, ");
     REQUIRE(result5);*/
-
 }

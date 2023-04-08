@@ -86,8 +86,8 @@ bool AffectsStarExpression::containsAffectsStarExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), AFFECTSSTARREGEX), std::sregex_iterator()) > 0;
 }
 
-void AffectsExpression::traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                                      unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
+void AffectsExpression::traversal(int current, unordered_map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
+                                      unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
                                       vector<string> prevs, unordered_map<int, vector<string>> validModifies) {
     //end of graph
     if (current == 0) {
@@ -276,8 +276,8 @@ ResultTable* AffectsExpression::evaluate(PKB pkb) {
 
 }
 
-void AffectsStarExpression::traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                                      unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
+void AffectsStarExpression::traversal(int current, unordered_map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
+                                      unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
                                       vector<string> prevs, unordered_map<int, vector<string>> validModifies) {
     //end of graph
     if (current == 0) {

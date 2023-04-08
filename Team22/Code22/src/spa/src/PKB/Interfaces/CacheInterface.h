@@ -16,10 +16,10 @@ using namespace std;
 
 class CacheInterface {
 public:
-    void addToCache(string accessKey, ResultTable* resultTable);
-    ResultTable* getResultTableFromCache(string accessKey);
-    unordered_map<string, ResultTable*> getCacheDatabase();
+    void addToCache(string accessKey, ResultTable *resultTable);
+    ResultTable *getResultTableFromCache(string accessKey);
+    unordered_map<string, ResultTable *> getCacheDatabase();
     void clearCache();
 };
 
-#endif //SPA_CACHEINTERFACE_H
+#endif//SPA_CACHEINTERFACE_H

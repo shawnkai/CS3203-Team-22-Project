@@ -26,4 +26,4 @@ public:
     unordered_set<string> getAllVariablesUsedInPattern(string patternType, string lineNumber);
 };
 
-#endif //SPA_PATTERNSINTERFACE_H
+#endif//SPA_PATTERNSINTERFACE_H

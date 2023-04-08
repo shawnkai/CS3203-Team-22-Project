@@ -6,12 +6,13 @@
 
 using namespace std;
 
-class InvalidAPICallException: public exception {
-    char* message;
-public:
-    InvalidAPICallException(char* message) : message(message) {}
+class InvalidAPICallException : public exception {
+    char *message;
 
-    char * what () {
+public:
+    InvalidAPICallException(char *message) : message(message) {}
+
+    char *what() {
         return this->message;
     }
 };

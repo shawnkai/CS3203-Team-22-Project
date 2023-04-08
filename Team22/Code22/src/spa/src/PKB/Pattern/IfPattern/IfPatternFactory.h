@@ -15,7 +15,7 @@ using namespace std;
 
 class IfPatternFactory {
 public:
-    static IfPattern* createIfPattern(string lineNumber, string variableName);
+    static IfPattern *createIfPattern(string lineNumber, string variableName);
 };
 
-#endif //SPA_IFPATTERNFACTORY_H
+#endif//SPA_IFPATTERNFACTORY_H

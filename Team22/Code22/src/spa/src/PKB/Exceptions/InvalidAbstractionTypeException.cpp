@@ -6,12 +6,13 @@
 
 using namespace std;
 
-class InvalidAbstractionTypeException: public exception {
-    char* message;
-public:
-    explicit InvalidAbstractionTypeException(char* message) : message(message) {}
+class InvalidAbstractionTypeException : public exception {
+    char *message;
 
-    char * what () {
+public:
+    explicit InvalidAbstractionTypeException(char *message) : message(message) {}
+
+    char *what() {
         return this->message;
     }
 };

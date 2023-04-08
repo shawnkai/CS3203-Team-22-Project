@@ -15,7 +15,7 @@ using namespace std;
 
 class WhilePatternFactory {
 public:
-    static WhilePattern* createWhilePattern(string lineNumber, string variableName);
+    static WhilePattern *createWhilePattern(string lineNumber, string variableName);
 };
 
-#endif //SPA_WHILEPATTERNFACTORY_H
+#endif//SPA_WHILEPATTERNFACTORY_H

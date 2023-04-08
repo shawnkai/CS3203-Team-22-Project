@@ -4,8 +4,8 @@
 
 #include <iostream>
 
-#include "catch.hpp"
 #include "PKB/Interfaces/DesignAbstractionsInterface.h"
+#include "catch.hpp"
 
 #include "PKB/Exceptions/InvalidAPICallException.cpp"
 
@@ -28,7 +28,7 @@ TEST_CASE("Test 1: Creation of StatementUses Design Abstraction") {
 
         try {
             designAbstractionsControllerTest.addDesignAbstraction("USES", make_tuple("us1", "1"));
-        } catch (InvalidAPICallException& e) {
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -53,7 +53,7 @@ TEST_CASE("Test 2: Retrieval of an existent StatementUses Design Abstraction") {
 
         try {
             Result result = designAbstractionsControllerTest.getDesignAbstraction("USES", "us2");
-        } catch (InvalidAPICallException& e) {
+        } catch (InvalidAPICallException &e) {
             throwsException = true;
         }
 
@@ -143,7 +143,6 @@ TEST_CASE("Test 8: Retrieval of Variables Captured By StatementUses Design Abstr
         REQUIRE(
                 ((result.find("us20") != result.end()) &&
                  (result.find("us22") != result.end()) &&
-                 (result.find("us24") != result.end()))
-        );
+                 (result.find("us24") != result.end())));
     }
 }

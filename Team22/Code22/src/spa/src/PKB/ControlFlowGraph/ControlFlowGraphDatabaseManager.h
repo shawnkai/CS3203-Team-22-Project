@@ -14,12 +14,12 @@
 using namespace std;
 
 class ControlFlowGraphDatabaseManager {
-    static inline ControlFlowGraphDatabase* controlFlowGraphDatabase = new ControlFlowGraphDatabase();
+    static inline ControlFlowGraphDatabase *controlFlowGraphDatabase = new ControlFlowGraphDatabase();
 
 public:
-    static ControlFlowGraphDatabase* getControlFlowGraphDatabase();
+    static ControlFlowGraphDatabase *getControlFlowGraphDatabase();
 
     static void clearDatabase();
 };
 
-#endif //SPA_CONTROLFLOWGRAPHDATABASEMANAGER_H
+#endif//SPA_CONTROLFLOWGRAPHDATABASEMANAGER_H

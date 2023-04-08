@@ -2,11 +2,10 @@
 // Created by Tanishq Sharma on 15/3/23.
 //
 
-#include "catch.hpp"
 #include "Utilities.h"
+#include "catch.hpp"
 
 using namespace std;
-
 
 
 TEST_CASE("TestCase1_checkInfixExpression") {
@@ -17,4 +16,3 @@ TEST_CASE("TestCase1_checkInfixExpression") {
     REQUIRE_FALSE(Utilities::checkInfixExpression("temp + (2 % (y -- z) * 2"));
     REQUIRE_FALSE(Utilities::checkInfixExpression("temp + (2& % (y - z) * 2"));
 }
-

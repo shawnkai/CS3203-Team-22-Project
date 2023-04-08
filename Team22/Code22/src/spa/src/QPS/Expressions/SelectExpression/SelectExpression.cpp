@@ -4,6 +4,11 @@
 
 #include "SelectExpression.h"
 #include <chrono>
+#include <queue>
+#include "QPS/Optimizer/Optimizer.h"
+#include "QPS/Optimizer/parallel.h"
+#include "QPS/Optimizer/ConcurrentVector.h"
+
 using namespace std::chrono;
 
 regex SelectExpression::SYNATTRREGEX = regex(R"(([\w]+)(?:\.((?:\w|#)+))?)");
@@ -55,7 +60,7 @@ string SelectExpression::toString() const {
     return res;
 }
 
-pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAndAttributes(string query, SynonymTable synonymTable) {
+pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAndAttributes(const string& query, const SynonymTable& synonymTable) {
     vector<DesignEntity*> entities = {};
     vector<string> attrs = {};
 
@@ -90,11 +95,11 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
     return make_pair(entities, attrs);
 }
 
-bool SelectExpression::isBooleanType(string synAttr, SynonymTable synonymTable) {
+bool SelectExpression::isBooleanType(const string& synAttr, SynonymTable synonymTable) {
     return synAttr=="BOOLEAN" && !synonymTable.exists("BOOLEAN");
 }
 
-pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
+pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(const string& synAttr, SynonymTable synonymTable) {
     if (!regex_match(synAttr, SYNATTRREGEX)) {
         throw SyntacticException();
     }
@@ -115,8 +120,9 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string 
 ResultTable* SelectExpression::evaluate(PKB pkb) {
     vector<string> columns;
     vector<ResultTable*> selectEntityTables;
+    unordered_map<string, int> columnMap;
     for (int i = 0; i < this->entities.size(); i++) {
-       unordered_map<string, vector<string>> finalResults;
+        unordered_map<string, vector<string>> finalResults;
         DesignEntity *entity = this->entities[i];
         string synAttr = this->synAttrs[i];
         auto results = pkb.getAllDesignEntity(entity->getType());
@@ -138,30 +144,76 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
         if (!synAttr.empty()) {
             finalResults.insert({entity->toString() + "." + synAttr, entity->getAttrVal(synAttr, pkb)->getValues("withCond")});
             columns.push_back(entity->toString() + "." + synAttr);
+            columnMap.insert({entity->toString(), i});
+            columnMap.insert({entity->toString() + "." + synAttr, i});
         } else {
             columns.push_back(entity->toString());
+            columnMap.insert({entity->toString(), i});
         }
         selectEntityTables.push_back(new ResultTable(finalResults));
     }
     auto *selectResult = new ResultTable({});
-    if (!selectEntityTables.empty()) {
-        selectResult = ResultTable::intersection(selectEntityTables);
-    }
     if (this->conditions.empty()) {
-        return selectResult;
+        return ResultTable::intersection(selectEntityTables);
     } else {
+        vector<vector<Expression*>> groups = QueryOptimizer::createGroups(this->conditions);
+        for (int i = 0; i < groups.size(); i++) {
+            ::printf("Group %d: ", i + 1);
+            for (Expression * exp : groups[i]) {
+                ::printf("%s, ", exp->toString().c_str());
+            }
+            ::printf("\n");
+        }
+        ThreadSafeVector<ResultTable*> threadedResults;
+        std::mutex values_mutex;
+        parallelFor(groups.size(), [groups, pkb, &threadedResults](unsigned int start, unsigned int end) {
+            for (unsigned int i = start; i < end; i++) {
+                vector<ResultTable *> subResults;
+                for (Expression *exp: groups[i]) {
+                    subResults.push_back(exp->evaluate(pkb));
+                }
+                ResultTable *temp = ResultTable::intersection(subResults);
+                ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
+                threadedResults.push_back(temp);
+            }
+        });
         vector<ResultTable*> allResults;
-        for (Expression *exp : this->conditions) {
-            ResultTable* temp = exp->evaluate(pkb);
-            allResults.push_back(temp);
+
+        for (ResultTable *exp : threadedResults) {
+            allResults.push_back(exp);
         }
         if (!this->entities.empty()) {
-            allResults.push_back(selectResult);
+            //allResults.push_back(selectResult);
             auto startTime = high_resolution_clock::now();
-            ResultTable* t = ResultTable::intersection(allResults)->getColumns(columns);
+            ResultTable* t = ResultTable::intersection(allResults);
+            vector<vector<string>> temp = {t->getColumnNames(), columns};
+            vector<string> resultColumns = Utilities::findIntersection(temp);
+            if (resultColumns.empty()) {
+                if (t->getSize() == 0) {
+                    return new ResultTable({});
+                } else {
+                    return ResultTable::intersection(selectEntityTables)->getColumns(columns);
+                }
+            }
+            t = t->getColumns(columns);
+            vector<string> selectColumns = columns;
+            sort(selectColumns.begin(), selectColumns.end());
+            sort(resultColumns.begin(), resultColumns.end());
+
+            vector<string> missingColumns;
+            set_difference(begin(selectColumns), end(selectColumns), begin(resultColumns), end(resultColumns), inserter(missingColumns, missingColumns.begin()));
+
+            if (!missingColumns.empty()) {
+                vector<ResultTable*> required;
+                for (const string& col : missingColumns) {
+                    required.push_back(selectEntityTables[columnMap.at(col)]);
+                }
+                t = ResultTable::intersection(required)->intersection(t)->getColumns(columns);
+            }
+
             auto stopTime = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stopTime - startTime);
-            ::printf("Intersection Time: %f ms\n", duration.count() * 0.001);
+            ::printf("Intersection Time: %Lf ms\n", duration.count() * 0.001l);
             return t;
         }
 

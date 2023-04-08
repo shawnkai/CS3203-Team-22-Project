@@ -16,6 +16,6 @@ using namespace std;
  * @param abstractionDetails The abstraction details to be captured.
  * @return A Parent DesignAbstraction pointer.
  */
-DesignAbstraction* ParentFactory::createParentAbstraction(tuple<string, string, string> abstractionDetails) {
+DesignAbstraction *ParentFactory::createParentAbstraction(tuple<string, string, string> abstractionDetails) {
     return new Parent(abstractionDetails);
 }

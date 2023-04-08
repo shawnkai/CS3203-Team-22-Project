@@ -15,7 +15,7 @@ using namespace std;
 
 class DesignAbstractionsFactory {
 public:
-    static DesignAbstraction* createDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
+    static DesignAbstraction *createDesignAbstraction(string designAbstraction, tuple<string, string, string> abstractionDetails);
 };
 
-#endif //SPA_DESIGNABSTRACTIONSFACTORY_H
+#endif//SPA_DESIGNABSTRACTIONSFACTORY_H

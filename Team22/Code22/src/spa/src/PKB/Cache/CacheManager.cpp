@@ -8,7 +8,7 @@
 
 using namespace std;
 
-CacheDatabase* CacheManager::getCacheDatabase() {
+CacheDatabase *CacheManager::getCacheDatabase() {
     return cacheDatabase;
 }
 

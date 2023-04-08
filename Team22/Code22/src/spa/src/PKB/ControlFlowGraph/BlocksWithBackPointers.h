@@ -25,4 +25,4 @@ public:
     void clearDatabase();
 };
 
-#endif //SPA_BLOCKSWITHBACKPOINTERS_H
+#endif//SPA_BLOCKSWITHBACKPOINTERS_H

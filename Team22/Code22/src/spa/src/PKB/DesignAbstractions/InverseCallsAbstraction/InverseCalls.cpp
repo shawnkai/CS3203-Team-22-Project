@@ -9,8 +9,8 @@
 using namespace std;
 
 InverseCalls::InverseCalls(tuple<string, string, string> abstractionDetails)
-: DesignAbstraction(abstractionDetails) {
 
+        : DesignAbstraction(abstractionDetails) {
 }
 
 string InverseCalls::getTypeOfAbstraction() {
