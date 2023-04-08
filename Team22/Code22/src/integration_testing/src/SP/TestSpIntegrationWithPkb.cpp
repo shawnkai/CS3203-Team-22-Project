@@ -9,7 +9,7 @@
 
 TEST_CASE("TestCase1_TestSPPKBIntegration_ShouldSuccess") {
     PKB standardExampleSIMPLESourceChecker = PKB();
-    standardExampleSIMPLESourceChecker.clearAllDatabases();
+    standardExampleSIMPLESourceChecker.clearAllDatabases("CalledForTestingPurposes");
     SPDriver driver;
     std::string inputFilePath;
 
