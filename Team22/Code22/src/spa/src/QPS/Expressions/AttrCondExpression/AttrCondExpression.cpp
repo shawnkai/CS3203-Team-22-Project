@@ -68,6 +68,41 @@ vector<AttrCondExpression *> AttrCondExpression::extractAttrCondExpression(const
 }
 
 ResultTable *AttrCondExpression::evaluate(PKB pkb) {
+    if (dynamic_cast<StmtEntity*>(this->entities[0])) {
+        if (syn2attr == "stmt#") {
+            if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() <= 0) {
+                throw SemanticException();
+            }
+            vector<Result> lineResults = pkb.getAllDesignEntity("STATEMENT");
+            vector<int> lines;
+            for (Result res : lineResults) {
+                for (const string& line: res.getQueryResult()) {
+                    lines.push_back(stoi(line));
+                }
+            }
+            int maxLine = *max_element(lines.begin(), lines.end());
+            if (dynamic_cast<StmtEntity*>(this->entities[0])->getLine() > maxLine) {
+                throw SemanticException();
+            }
+        }
+    } else if (dynamic_cast<StmtEntity*>(this->entities[1])) {
+        if (syn1attr == "stmt#") {
+            if (dynamic_cast<StmtEntity*>(this->entities[1])->getLine() <= 0) {
+                throw SemanticException();
+            }
+            vector<Result> lineResults = pkb.getAllDesignEntity("STATEMENT");
+            vector<int> lines;
+            for (Result res : lineResults) {
+                for (const string& line: res.getQueryResult()) {
+                    lines.push_back(stoi(line));
+                }
+            }
+            int maxLine = *max_element(lines.begin(), lines.end());
+            if (dynamic_cast<StmtEntity*>(this->entities[1])->getLine() > maxLine) {
+                throw SemanticException();
+            }
+        }
+    }
     // Syn1
     ResultTable *syn1Table = this->entities[0]->getAttrVal(syn1attr, pkb);
     // Syn2

@@ -154,6 +154,9 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
         if (type == "ident") {
             type = "PROCEDURE";
         }
+        if (type == "CALL") {
+            type = "PROCEDURECALL";
+        }
         string varName = this->entities[0]->toString();
         varName = Utilities::removeAllOccurrences(varName, '\"');
         Result res = pkb.getDesignAbstraction("MODIFIES", make_pair(type, varName));
