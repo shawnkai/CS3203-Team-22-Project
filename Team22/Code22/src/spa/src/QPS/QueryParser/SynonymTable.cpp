@@ -47,7 +47,8 @@ DesignEntity *SynonymTable::get(const string& name, const string& desiredType) {
         return entity;
     } else {
         string errorMsg = "unknown type: " + desiredType;
-        throw std::runtime_error(errorMsg);
+        ::printf("%s", errorMsg.c_str());
+        throw SemanticException();
     }
 }
 
