@@ -6,8 +6,8 @@
 #define SPA_SYNONYMTABLE_H
 
 #include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Entities/Entities.h"
-
+#include "QPS/Entities/StmtRef/StmtRef.h"
+#include "QPS/Entities/NamedEntity/NamedEntity.h"
 #include <map>
 #include <vector>
 

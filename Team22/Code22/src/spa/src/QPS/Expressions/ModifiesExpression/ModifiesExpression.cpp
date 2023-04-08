@@ -45,6 +45,12 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             expressions.push_back(new ModifiesSExpression(a1, a2));
         } else {
 
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             NamedEntity *a1;
 
             if (arg1 == "_") {
@@ -56,17 +62,11 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
             } else {
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
                 if (a1->getType() == "PRINT" || a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                    throw SyntacticException();
+                    throw SemanticException();
                 }
             }
 
             NamedEntity *a2;
-
-            if (arg2.find('_') != string::npos && arg2 != "_") {
-                throw SyntacticException();
-            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
-                throw SyntacticException();
-            }
 
             if (arg2 == "_") {
                 a2 = new WildcardNamedEntity();
@@ -76,10 +76,9 @@ vector<ModifiesExpression*> ModifiesExpression::extractModifiesExpression(const 
                 throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
-            }
-
-            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                throw SemanticException();
+                if (a2->getType() != "VARIABLE") {
+                    throw SemanticException();
+                }
             }
 
             expressions.push_back(new ModifiesPExpression(a1,  a2));

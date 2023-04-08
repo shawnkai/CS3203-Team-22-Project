@@ -81,7 +81,7 @@ SyntaxError
 19 - variable synonym as argument 1 in second such that clause return semantic error
 variable v;
 Select v such that Modifies(1, _) such that Uses(v, _)
-SyntaxError
+SemanticError
 5000
 20 - undeclared synonym return semantic error
 variable s;

@@ -44,6 +44,13 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             }
             expressions.push_back(new UsesSExpression(a1, a2));
         } else {
+
+            if (arg2.find('_') != string::npos && arg2 != "_") {
+                throw SyntacticException();
+            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
+                throw SyntacticException();
+            }
+
             NamedEntity *a1;
 
             if (arg1 == "_") {
@@ -55,14 +62,8 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
             } else {
                 a1 = dynamic_cast<NamedEntity*>(synonymTable.get(arg1, "named"));
                 if (a1->getType() == "READ" || a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                    throw SyntacticException();
+                    throw SemanticException();
                 }
-            }
-
-            if (arg2.find('_') != string::npos && arg2 != "_") {
-                throw SyntacticException();
-            } else if ((arg2[0] == '\"' && arg2[arg2.size() - 1] != '\"') || (arg2[0] != '\"' && arg2[arg2.size() - 1] == '\"')) {
-                throw SyntacticException();
             }
 
             NamedEntity *a2;
@@ -74,10 +75,9 @@ vector<UsesExpression*> UsesExpression::extractUsesExpression(const string& quer
                 throw SyntacticException();
             } else {
                 a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
-            }
-
-            if (a1->getType() == "VARIABLE" || a1->getType() == "CONSTANT") {
-                throw SemanticException();
+                if (a2->getType() != "VARIABLE") {
+                    throw SemanticException();
+                }
             }
 
             expressions.push_back(new UsesPExpression(a1,  a2));
