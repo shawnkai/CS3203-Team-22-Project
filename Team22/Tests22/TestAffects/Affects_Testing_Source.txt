@@ -6,8 +6,8 @@ procedure One {
 
 
     if (x == 1) then {
-        x = 3;
         call Two;
+        x = 3;
         while (x != x) {
             print x;
             x = x + 1;

@@ -53,9 +53,6 @@ bool Utilities::isNumber(string s)
 bool Utilities::isValidVariableName(string str) {
     static const std::regex pattern("[a-zA-Z_][a-zA-Z0-9_]*");
     bool temp = std::regex_match(str, pattern);
-    if (!temp) {
-        ::printf("WRONG: %s\n", str.c_str());
-    }
     return temp;
 }
 

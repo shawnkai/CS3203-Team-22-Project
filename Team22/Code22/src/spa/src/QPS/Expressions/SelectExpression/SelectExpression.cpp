@@ -165,7 +165,7 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
             ::printf("\n");
         }
         ThreadSafeVector<ResultTable*> threadedResults;
-        parallelFor(groups.size(), [groups, pkb, &threadedResults](unsigned int start, unsigned int end) {
+        parallelFor(groups.size(), [&groups, &pkb, &threadedResults](unsigned int start, unsigned int end) {
             for (unsigned int i = start; i < end; i++) {
                 vector<ResultTable *> subResults;
                 for (Expression *exp: groups[i]) {
