@@ -100,7 +100,7 @@ Select a such that Next*(_, a) with a.stmt# = 12
 5000
 21 - next testing
 assign a; variable v;  constant c; while w; if if,if1;
-Select if such that Next(if, a) such that Next(a, if) 
+Select if such that Next(if, a) such that Next(a, if)
 none
 5000
 22 - next testing
@@ -355,12 +355,12 @@ Select s such that Next*(5,s) such that Next*(s,23) such that Next*(_,23) such t
 5000
 72 - next testing
 assign a; variable v;  constant c; while w,w1;stmt s;
-Select w such that Next*(w,5) 
+Select w such that Next*(w,5)
 5,14,22
 5000
 73 - next testing
 assign a; variable v;  constant c; while w,w1;stmt s;
-Select s such that Next*(s,5) 
+Select s such that Next*(s,5)
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 5000
 74 - next testing
