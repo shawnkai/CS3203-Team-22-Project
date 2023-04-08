@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 27/3/23.
 //
 
+#include "QPS/Exceptions/Exceptions.h"
 #include "QPS/Parser/Parser.h"
 #include "catch.hpp"
-#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -55,7 +55,7 @@ TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsStmtType_SemanticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException& e) {
+    } catch (SemanticException &e) {
         throwsException = true;
     }
 
@@ -123,7 +123,7 @@ TEST_CASE("TestCase6_ParseCallsProcedureUnknownCharacters_SyntacticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException& e) {
+    } catch (SyntacticException &e) {
         throwsException = true;
     }
 

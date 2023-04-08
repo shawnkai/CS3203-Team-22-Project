@@ -14,8 +14,8 @@ private:
     unordered_map<int, vector<string>> UsedVars;
     vector<string> assignLines;
 
-    void traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                   unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
+    void traversal(int current, unordered_map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
+                   unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
                    vector<string> prevs, unordered_map<int, vector<string>> validModifies);
 
 public:
@@ -36,8 +36,8 @@ private:
     unordered_map<int, vector<string>> UsedVars;
     vector<string> assignLines;
 
-    void traversal(int current, map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                   unordered_map<int, set<int>> &results, map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
+    void traversal(int current, unordered_map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
+                   unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen,
                    vector<string> prevs, unordered_map<int, vector<string>> validModifies);
 
 public:

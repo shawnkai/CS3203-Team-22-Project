@@ -14,8 +14,7 @@ using namespace std;
  * @param entityDetails This encompasses the details of the Statement Entity to be created.
  */
 Statement::Statement(tuple<string, string> entityDetails)
-: DesignEntity(entityDetails) {
-
+    : DesignEntity(entityDetails) {
 }
 
 /**

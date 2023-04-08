@@ -9,8 +9,7 @@
 using namespace std;
 
 WhileStatement::WhileStatement(tuple<string, string> entityDetails)
-: Statement((entityDetails)) {
-
+    : Statement((entityDetails)) {
 }
 
 string WhileStatement::getTypeOfEntity() {

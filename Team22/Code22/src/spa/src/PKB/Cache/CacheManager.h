@@ -14,12 +14,12 @@
 using namespace std;
 
 class CacheManager {
-    static inline CacheDatabase* cacheDatabase = new CacheDatabase;
+    static inline CacheDatabase *cacheDatabase = new CacheDatabase;
 
 public:
-    static CacheDatabase* getCacheDatabase();
+    static CacheDatabase *getCacheDatabase();
 
     static void clearCache();
 };
 
-#endif //SPA_CACHEMANAGER_H
+#endif//SPA_CACHEMANAGER_H

@@ -25,4 +25,4 @@ public:
     void clearDatabase();
 };
 
-#endif //SPA_TOPOLOGICALLYSORTEDBLOCKNUMBERS_H
+#endif//SPA_TOPOLOGICALLYSORTEDBLOCKNUMBERS_H

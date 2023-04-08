@@ -8,7 +8,6 @@
 #define SPA_CONTROLFLOWGRAPHDATABASE_H
 
 #include <iostream>
-#include <map>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -17,19 +16,19 @@
 using namespace std;
 
 class ControlFlowGraphDatabase {
-    unordered_map<string, ControlFlowGraph*> controlFlowGraphDatabase;
+    unordered_map<string, ControlFlowGraph *> controlFlowGraphDatabase;
 
     bool isPresentInDatabase(string procedureName);
-    void updateControlFlowGraphInDatabase(ControlFlowGraph* controlFlowGraphToBeStored);
+    void updateControlFlowGraphInDatabase(ControlFlowGraph *controlFlowGraphToBeStored);
 
 public:
-    void addToDatabase(ControlFlowGraph* controlFlowGraphToBeStored);
+    void addToDatabase(ControlFlowGraph *controlFlowGraphToBeStored);
 
     vector<int> getTopologicallySortedBlockNumbersDatabaseFromDatabase(string procedureName);
-    map<int, vector<int>> getBlockToStatementNumberDatabaseFromDatabase(string procedureName);
-    map<int, int> getStatementNumberToBlockDatabaseFromDatabase(string procedureName);
-    map<int, vector<int>> getBlockToBlockDatabaseFromDatabase(string procedureName);
+    unordered_map<int, vector<int>> getBlockToStatementNumberDatabaseFromDatabase(string procedureName);
+    unordered_map<int, int> getStatementNumberToBlockDatabaseFromDatabase(string procedureName);
+    unordered_map<int, vector<int>> getBlockToBlockDatabaseFromDatabase(string procedureName);
     unordered_set<int> getBlocksWithBackPointersDatabaseFromDatabase(string procedureName);
 };
 
-#endif //SPA_CONTROLFLOWGRAPHDATABASE_H
+#endif//SPA_CONTROLFLOWGRAPHDATABASE_H

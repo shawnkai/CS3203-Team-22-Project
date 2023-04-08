@@ -14,13 +14,12 @@
 using namespace std;
 
 class AssignPatternDatabaseManager {
-    static inline AssignPatternDatabase* assignPatternDatabase = new AssignPatternDatabase();
+    static inline AssignPatternDatabase *assignPatternDatabase = new AssignPatternDatabase();
 
 public:
-
-    static AssignPatternDatabase* getAssignPatternDatabase();
+    static AssignPatternDatabase *getAssignPatternDatabase();
 
     static void clearDatabase();
 };
 
-#endif //SPA_ASSIGNPATTERNDATABASEMANAGER_H
+#endif//SPA_ASSIGNPATTERNDATABASEMANAGER_H

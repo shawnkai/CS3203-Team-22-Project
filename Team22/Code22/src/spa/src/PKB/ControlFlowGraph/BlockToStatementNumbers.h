@@ -8,22 +8,22 @@
 #define SPA_BLOCKTOSTATEMENTNUMBERS_H
 
 #include <iostream>
+#include <unordered_map>
 #include <vector>
-#include <map>
 
 using namespace std;
 
 class BlockToStatementNumbers {
-    map<int, vector<int>> blockToStatementNumbersDatabase;
+    unordered_map<int, vector<int>> blockToStatementNumbersDatabase;
 
 public:
-    explicit BlockToStatementNumbers(map<int, vector<int>> blockToStatementNumbersDatabase);
+    explicit BlockToStatementNumbers(unordered_map<int, vector<int>> blockToStatementNumbersDatabase);
     explicit BlockToStatementNumbers();
 
     void addToDatabase(int blockNumber, vector<int> statementNumbers);
-    map<int, vector<int>> getBlockToStatementNumbersDatabase();
-    void copyBlockToStatementNumbersDatabase(map<int, vector<int>> blockToStatementNumbers);
+    unordered_map<int, vector<int>> getBlockToStatementNumbersDatabase();
+    void copyBlockToStatementNumbersDatabase(unordered_map<int, vector<int>> blockToStatementNumbers);
     void clearDatabase();
 };
 
-#endif //SPA_BLOCKTOSTATEMENTNUMBERS_H
+#endif//SPA_BLOCKTOSTATEMENTNUMBERS_H

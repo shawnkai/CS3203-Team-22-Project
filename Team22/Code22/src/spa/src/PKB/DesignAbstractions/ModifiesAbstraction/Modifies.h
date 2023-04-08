@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class Modifies: public DesignAbstraction {
+class Modifies : public DesignAbstraction {
 public:
     explicit Modifies(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_MODIFIES_H
+#endif//SPA_MODIFIES_H

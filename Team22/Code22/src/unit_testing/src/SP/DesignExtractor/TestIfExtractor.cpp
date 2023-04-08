@@ -143,4 +143,3 @@ TEST_CASE("Testcase2_ExtractNestedIfStatement_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: x: 2, 3, ");
     REQUIRE(result2 == "USES:STATEMENT: y: 1, 3, 2, 4, ");*/
 }
-

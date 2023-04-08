@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class IfStatementModifies: public StatementModifies {
+class IfStatementModifies : public StatementModifies {
 public:
     explicit IfStatementModifies(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_IFSTATEMENTMODIFIES_H
+#endif//SPA_IFSTATEMENTMODIFIES_H

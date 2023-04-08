@@ -9,8 +9,7 @@
 using namespace std;
 
 AssignmentModifies::AssignmentModifies(tuple<string, string, string> abstractionDetails)
-: Modifies(abstractionDetails) {
-
+    : Modifies(abstractionDetails) {
 }
 
 string AssignmentModifies::getTypeOfAbstraction() {

@@ -12,31 +12,31 @@ using namespace std;
 //Calls Expression Classes
 class CallsExpression : public Expression {
 public:
-    explicit CallsExpression(NamedEntity* caller, NamedEntity* callee);
+    explicit CallsExpression(NamedEntity *caller, NamedEntity *callee);
 
     static bool containsCallsExpression(string query);
 
-    static vector<CallsExpression*> extractCallsExpression(const string& query, SynonymTable synonymTable);
+    static vector<CallsExpression *> extractCallsExpression(const string &query, SynonymTable synonymTable);
 
     string toString() const override;
 
-    ResultTable* evaluate(PKB pkb) override;
+    ResultTable *evaluate(PKB pkb) override;
 
-    static NamedEntity* generateNamedEntity(string s, SynonymTable synonymTable);
+    static NamedEntity *generateNamedEntity(string s, SynonymTable synonymTable);
 };
 
 class CallsStarExpression : public Expression {
 public:
-    explicit CallsStarExpression(NamedEntity* caller, NamedEntity* callee);
+    explicit CallsStarExpression(NamedEntity *caller, NamedEntity *callee);
 
     static bool containsCallsStarExpression(string query);
 
-    static vector<CallsStarExpression*> extractCallsStarExpression(const string& query, SynonymTable synonymTable);
+    static vector<CallsStarExpression *> extractCallsStarExpression(const string &query, SynonymTable synonymTable);
 
     string toString() const override;
 
-    ResultTable* evaluate(PKB pkb) override;
+    ResultTable *evaluate(PKB pkb) override;
 };
 
 
-#endif //SPA_CALLSEXPRESSION_H
+#endif//SPA_CALLSEXPRESSION_H

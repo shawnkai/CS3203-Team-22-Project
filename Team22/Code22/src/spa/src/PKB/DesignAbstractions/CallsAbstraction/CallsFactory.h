@@ -15,7 +15,7 @@ using namespace std;
 
 class CallsFactory {
 public:
-    static DesignAbstraction* createCallsAbstraction(tuple<string, string, string> abstractionDetails);
+    static DesignAbstraction *createCallsAbstraction(tuple<string, string, string> abstractionDetails);
 };
 
-#endif //SPA_CALLSFACTORY_H
+#endif//SPA_CALLSFACTORY_H

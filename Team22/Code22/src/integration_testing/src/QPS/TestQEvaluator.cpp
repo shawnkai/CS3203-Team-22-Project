@@ -3,11 +3,11 @@
 //
 
 
+#include "PKB/PKB.h"
 #include "QPS/Evaluator/Evaluator.h"
 #include "QPS/Parser/Parser.h"
-#include "PKB/PKB.h"
-#include "catch.hpp"
 #include "Utilities.h"
+#include "catch.hpp"
 
 using namespace std;
 

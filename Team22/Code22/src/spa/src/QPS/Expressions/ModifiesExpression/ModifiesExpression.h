@@ -15,28 +15,28 @@ private:
     static bool containsModifiesExpression(string query);
 
 public:
-    explicit ModifiesExpression(NamedEntity* target);
+    explicit ModifiesExpression(NamedEntity *target);
 
-    static vector<ModifiesExpression*> extractModifiesExpression(const string& query, SynonymTable synonymTable);
+    static vector<ModifiesExpression *> extractModifiesExpression(const string &query, SynonymTable synonymTable);
 };
 
 class ModifiesSExpression : public ModifiesExpression {
 public:
-    explicit ModifiesSExpression(StmtRef* modifier, NamedEntity* target);
+    explicit ModifiesSExpression(StmtRef *modifier, NamedEntity *target);
 
     string toString() const override;
 
-    ResultTable* evaluate(PKB pkb) override;
+    ResultTable *evaluate(PKB pkb) override;
 };
 
 class ModifiesPExpression : public ModifiesExpression {
 public:
-    explicit ModifiesPExpression(NamedEntity* modifier, NamedEntity* target);
+    explicit ModifiesPExpression(NamedEntity *modifier, NamedEntity *target);
 
     string toString() const override;
 
-    ResultTable* evaluate(PKB pkb) override;
+    ResultTable *evaluate(PKB pkb) override;
 };
 
 
-#endif //SPA_MODIFIESEXPRESSION_H
+#endif//SPA_MODIFIESEXPRESSION_H

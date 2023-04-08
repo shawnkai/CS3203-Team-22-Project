@@ -8,7 +8,7 @@
 
 using namespace std;
 
-ControlFlowGraphDatabase* ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase() {
+ControlFlowGraphDatabase *ControlFlowGraphDatabaseManager::getControlFlowGraphDatabase() {
     return controlFlowGraphDatabase;
 }
 

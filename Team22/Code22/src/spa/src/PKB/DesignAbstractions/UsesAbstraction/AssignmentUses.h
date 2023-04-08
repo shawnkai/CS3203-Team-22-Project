@@ -13,11 +13,11 @@
 
 using namespace std;
 
-class AssignmentUses: public Uses {
+class AssignmentUses : public Uses {
 public:
     explicit AssignmentUses(tuple<string, string, string> abstractionDetails);
 
     string getTypeOfAbstraction() override;
 };
 
-#endif //SPA_ASSIGNMENTUSES_H
+#endif//SPA_ASSIGNMENTUSES_H

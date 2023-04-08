@@ -1,17 +1,17 @@
 #pragma once
 
-#include<stdio.h>
 #include <iostream>
+#include <stdio.h>
 #include <string>
-#include <vector>
 #include <tuple>
+#include <vector>
 
-#include "SP/Parser/TNode.h"
 #include "../../PKB/PKB.h"
-#include "ReadPrintExtractor.h"
-#include "WhileExtractor.h"
-#include "IfExtractor.h"
 #include "AssignExtractor.h"
+#include "IfExtractor.h"
+#include "ReadPrintExtractor.h"
+#include "SP/Parser/TNode.h"
+#include "WhileExtractor.h"
 
 using namespace std;
 
@@ -21,6 +21,6 @@ extern vector<int> callStmts;
 
 class StmtlstExtractor {
 public:
-	StmtlstExtractor() {};
-	void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName);
+    StmtlstExtractor(){};
+    void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName);
 };

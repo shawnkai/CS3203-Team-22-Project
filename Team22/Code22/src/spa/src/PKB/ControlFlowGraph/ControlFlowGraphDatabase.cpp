@@ -28,7 +28,7 @@ bool ControlFlowGraphDatabase::isPresentInDatabase(string procedureName) {
 void ControlFlowGraphDatabase::updateControlFlowGraphInDatabase(ControlFlowGraph *controlFlowGraphToBeStored) {
     auto iterator = this->controlFlowGraphDatabase.find(controlFlowGraphToBeStored->getProcedureName());
 
-    ControlFlowGraph* existingControlFlowGraph = iterator->second;
+    ControlFlowGraph *existingControlFlowGraph = iterator->second;
 
     existingControlFlowGraph->updateTopologicallySortedBlockNumbersDatabase(
             controlFlowGraphToBeStored->getTopologicallySortedBlockNumbersDatabase());
@@ -44,38 +44,38 @@ void ControlFlowGraphDatabase::updateControlFlowGraphInDatabase(ControlFlowGraph
 
 vector<int> ControlFlowGraphDatabase::getTopologicallySortedBlockNumbersDatabaseFromDatabase(string procedureName) {
     if (this->isPresentInDatabase(procedureName)) {
-        auto iterator =  this->controlFlowGraphDatabase.find(procedureName);
+        auto iterator = this->controlFlowGraphDatabase.find(procedureName);
 
         return iterator->second->getTopologicallySortedBlockNumbersDatabase();
     }
 
     // Empty Vector
-    return vector<int> {};
+    return vector<int>{};
 }
 
-map<int, vector<int>> ControlFlowGraphDatabase::getBlockToStatementNumberDatabaseFromDatabase(string procedureName) {
+unordered_map<int, vector<int>> ControlFlowGraphDatabase::getBlockToStatementNumberDatabaseFromDatabase(string procedureName) {
     if (this->isPresentInDatabase(procedureName)) {
-        auto iterator =  this->controlFlowGraphDatabase.find(procedureName);
+        auto iterator = this->controlFlowGraphDatabase.find(procedureName);
 
         return iterator->second->getBlockToStatementNumbersDatabase();
     }
 
     // Empty Map
-    return map<int, vector<int>> {};
+    return unordered_map<int, vector<int>>{};
 }
 
-map<int, int> ControlFlowGraphDatabase::getStatementNumberToBlockDatabaseFromDatabase(string procedureName) {
+unordered_map<int, int> ControlFlowGraphDatabase::getStatementNumberToBlockDatabaseFromDatabase(string procedureName) {
     if (this->isPresentInDatabase(procedureName)) {
-        auto iterator =  this->controlFlowGraphDatabase.find(procedureName);
+        auto iterator = this->controlFlowGraphDatabase.find(procedureName);
 
         return iterator->second->getStatementNumberToBlockDatabase();
     }
 
     // Empty Map
-    return map<int, int> {};
+    return unordered_map<int, int>{};
 }
 
-map<int, vector<int>> ControlFlowGraphDatabase::getBlockToBlockDatabaseFromDatabase(string procedureName) {
+unordered_map<int, vector<int>> ControlFlowGraphDatabase::getBlockToBlockDatabaseFromDatabase(string procedureName) {
     if (this->isPresentInDatabase(procedureName)) {
         auto iterator = this->controlFlowGraphDatabase.find(procedureName);
 
@@ -83,7 +83,7 @@ map<int, vector<int>> ControlFlowGraphDatabase::getBlockToBlockDatabaseFromDatab
     }
 
     // Empty Map
-    return map<int, vector<int>> {};
+    return unordered_map<int, vector<int>>{};
 }
 
 unordered_set<int> ControlFlowGraphDatabase::getBlocksWithBackPointersDatabaseFromDatabase(string procedureName) {
@@ -94,5 +94,5 @@ unordered_set<int> ControlFlowGraphDatabase::getBlocksWithBackPointersDatabaseFr
     }
 
     // Empty Set
-    return unordered_set<int> {};
+    return unordered_set<int>{};
 }

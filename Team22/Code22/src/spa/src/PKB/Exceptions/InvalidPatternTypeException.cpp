@@ -6,12 +6,13 @@
 
 using namespace std;
 
-class InvalidPatternTypeException: public exception {
-    char* message;
-public:
-    explicit InvalidPatternTypeException(char* message) : message(message) {}
+class InvalidPatternTypeException : public exception {
+    char *message;
 
-    char * what () {
+public:
+    explicit InvalidPatternTypeException(char *message) : message(message) {}
+
+    char *what() {
         return this->message;
     }
 };

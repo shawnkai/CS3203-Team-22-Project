@@ -21,4 +21,4 @@ public:
     int getNumberOfDesignEntity(string entityType);
 };
 
-#endif //SPA_DESIGNENTITIESINTERFACE_H
+#endif//SPA_DESIGNENTITIESINTERFACE_H
