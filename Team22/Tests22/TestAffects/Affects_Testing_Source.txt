@@ -1,0 +1,115 @@
+procedure One {
+    x = 1;
+    b = 2;
+    y = 5;
+    a = x + 0 * y + a - b + c + f;
+
+
+    if (x == 1) then {
+        x = 3;
+        call Two;
+        while (x != x) {
+            print x;
+            x = x + 1;
+            if (x > 5) then {
+                call Three;
+            } else {
+                read a;
+                c = a + b;
+                print c;
+                while (a != b) {
+                    c = c % a + b;
+                    if (c == 1) then {
+                        call Two;
+                    } else {
+                        print c;
+                        c = c - 1;
+                        while (c == 0) {
+                            print c;
+                        }
+                    }
+                x = y + a;
+                }
+            }
+            while (a == 2) {
+                i = 3 % 0;
+                i = 3 + e;
+            }
+            a = 2 + c;
+        }
+    } else {
+        read y;
+        if (y == 2) then {
+            while (y != x) {
+                y = y - x + 1 * 0;
+                if (y == 0) then {
+                    y = y + 1;
+                    call Two;
+                } else {
+                    call Three;
+                    while (y != 0) {
+                        print y;
+                        y = y - a + x;
+                    }
+                }
+            }
+        } else {
+            call Two;
+            if (1 == 1) then {
+                if (2 == 2) then {
+                    while (3 == 3) {
+                        while (1 != 2) {
+                            print a;
+                            call Two;
+                        }
+                    }
+                } else {
+                    print a;
+                    call Two;
+                    if (a % 2 == 0) then {
+                        call Three;
+                    } else {
+                        read b;
+                    }
+                }
+            } else {
+                while (x != 2) {
+                    call Two;
+                    x = x/2 % x + x - x * x;
+                    print x;
+                }
+            }
+        }
+    }
+}
+
+procedure Two {
+    read a;
+    if (x == 2) then {
+        x = y - 2;
+    } else {
+        while (a != 1) {
+            print x;
+            x = x - a % 2;
+            a = a % 3 % x;
+            if (a == 1) then {
+                print a;
+            } else {
+                y = x + a;
+            }
+        }
+        if (a == 1) then {
+            print a;
+            x = x;
+        } else {
+            y = x + a;
+            z = x;
+        }   
+    }
+    a = a - x;
+    print a;
+}
+
+procedure Three {
+    z = x;
+}
