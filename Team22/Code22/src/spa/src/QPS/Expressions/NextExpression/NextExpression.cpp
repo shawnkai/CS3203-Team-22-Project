@@ -65,7 +65,7 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
 }
 
 void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                             unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> &seen, vector<string> prevs) {
+                             unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> seen, vector<string> prevs) {
     //end of graph
     if (current == 0) {
         return;
@@ -74,6 +74,7 @@ void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> 
     //process any statements at most twice
     if (seen.find(current) != seen.end()) {
         if (seen.find(current)->second == 2) {
+            seen.erase(current);
             return;
         } else {
             seen.find(current)->second += 1;
