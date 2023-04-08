@@ -10,15 +10,23 @@
 using namespace std;
 
 class ParseException : public exception {
-
+    /**
+     * Exception class for parse errors.
+     */
 };
 
 class SyntacticException : public ParseException {
-
+    /**
+     * Exception class for syntactic errors during parsing.
+     * Inherits from ParseException.
+     */
 };
 
 class SemanticException : public ParseException {
-
+    /**
+     * Exception class for semantic errors during parsing.
+     * Inherits from ParseException.
+     */
 };
 
 
