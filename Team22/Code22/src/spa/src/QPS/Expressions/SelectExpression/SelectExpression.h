@@ -6,6 +6,8 @@
 #define SPA_SELECTEXPRESSION_H
 
 #include "QPS/Expressions/Expressions.h"
+#include "QPS/Optimizer/Optimizer.h"
+#include "QPS/Optimizer/parallel.h"
 
 class SelectExpression : public Expression {
     /**
@@ -23,6 +25,7 @@ public:
     static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(string query, SynonymTable synonymTable);
     string toString() const override;
     static bool isBooleanType(string synAttr, SynonymTable synonymTable);
+    vector<Expression*> getConditions();
 
     ResultTable* evaluate(PKB pkb) override;
 

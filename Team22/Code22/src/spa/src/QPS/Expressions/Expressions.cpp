@@ -90,3 +90,13 @@ pair<StmtRef*, StmtRef*> Expression::generateStmtEntityPair(string arg1, string 
 
     return {a1, a2};
 }
+
+vector<string> Expression::getSynEntities() {
+    vector<string> synEntities;
+    for (DesignEntity* entity : this->entities) {
+        if (entity->getType() != "ident" && entity->toString() != "_" && !dynamic_cast<StmtEntity*>(entity)) {
+            synEntities.push_back(entity->toString());
+        }
+    }
+    return synEntities;
+}

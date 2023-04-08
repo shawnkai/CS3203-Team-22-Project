@@ -3,3 +3,8 @@ stmt s1, s2, s3; variable v;
 Select <s1, s3> such that Next*(s1, s2) and Next*(s2, s3)
 none
 5000
+2 - Insane Select
+stmt s1, s2, s3, s4, s5; variable v; assign a1, a2;
+Select <s1, s2, s3, s4, s5, v> such that Modifies(s3, "x") and Parent(s3, s1) and Uses(s1, v) and Next*(s3, s2) and Parent*(s3, s2) and Next*(s4, 18) and Parent*(s5, s4) and Next*(s5, 22) and Affects*(a1, a2) such that Modifies(a1, "x")
+none
+50000

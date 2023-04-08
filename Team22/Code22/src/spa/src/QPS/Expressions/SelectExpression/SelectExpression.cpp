@@ -4,6 +4,9 @@
 
 #include "SelectExpression.h"
 #include <chrono>
+#include <queue>
+#include "QPS/Optimizer/ConcurrentVector.h"
+
 using namespace std::chrono;
 
 regex SelectExpression::SYNATTRREGEX = regex(R"(([\w]+)(?:\.((?:\w|#)+))?)");
@@ -151,11 +154,31 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
     if (this->conditions.empty()) {
         return ResultTable::intersection(selectEntityTables);
     } else {
+        vector<vector<Expression*>> groups = QueryOptimizer::createGroups(this->conditions);
+        for (int i = 0; i < groups.size(); i++) {
+            ::printf("Group %d: ", i + 1);
+            for (Expression * exp : groups[i]) {
+                ::printf("%s, ", exp->toString().c_str());
+            }
+            ::printf("\n");
+        }
+        ThreadSafeVector<ResultTable*> threadedResults;
+        std::mutex values_mutex;
+        parallel_for(groups.size(), [groups, pkb, &threadedResults](int start, int end){
+           for (int i = start; i < end; i++) {
+               vector<ResultTable*> subResults;
+               for (Expression *exp : groups[i]) {
+                   subResults.push_back(exp->evaluate(pkb));
+               }
+               ResultTable *temp = ResultTable::intersection(subResults);
+               ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
+               threadedResults.push_back(temp);
+           }
+        });
         vector<ResultTable*> allResults;
-        for (Expression *exp : this->conditions) {
-            ResultTable* temp = exp->evaluate(pkb);
-            allResults.push_back(temp);
-//            ::printf("Query: %s\n%s", exp->toString().c_str(), temp->toString().c_str());
+
+        for (ResultTable *exp : threadedResults) {
+            allResults.push_back(exp);
         }
         if (!this->entities.empty()) {
             //allResults.push_back(selectResult);
@@ -203,4 +226,8 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
             return finalTable;
         }
     }
+}
+
+vector<Expression *> SelectExpression::getConditions() {
+    return this->conditions;
 }

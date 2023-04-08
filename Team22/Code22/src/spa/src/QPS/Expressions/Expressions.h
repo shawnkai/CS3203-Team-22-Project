@@ -60,6 +60,8 @@ public:
 
         virtual string toString() const = 0;
 
+        vector<string> getSynEntities();
+
         bool operator==(Expression const& expression) const;
 
         bool operator<(const Expression& t) const;
