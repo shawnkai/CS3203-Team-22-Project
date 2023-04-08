@@ -1,47 +1,11 @@
 //
-// Created by Atin Sakkeer Hussain on 31/01/2023.
+// Created by Tanishq Sharma on 8/4/23.
 //
 
-#ifndef INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
-#define INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
+#ifndef SPA_STMTREF_H
+#define SPA_STMTREF_H
 
-#include <string>
-#include <Utilities.h>
-#include <list>
-#include <utility>
-#include "QPS/Evaluator/ResultTable.h"
-#include "PKB/PKB.h"
-
-using namespace std;
-
-class DesignEntity {
-
-private:
-    static vector<string> validAttrs;
-
-protected:
-    string entityType;
-
-public:
-    explicit DesignEntity(string entityType);
-
-    DesignEntity();
-
-    string getType() const;
-
-    virtual string toString() const {
-        return "";
-    }
-
-    virtual ResultTable* getAttrVal(string attr, PKB pkb) {
-        return new ResultTable({});
-    };
-
-    virtual bool checkAttr(string attr) {
-        return false;
-    }
-};
-
+#include "QPS/Entities/DesignEntities.h"
 
 class StmtRef : public DesignEntity {
 
@@ -145,64 +109,4 @@ public:
     bool checkAttr(string attr) override;
 };
 
-
-class NamedEntity : public DesignEntity {
-    /**
-     * NamedEntity class is the super class for ProcedureEntity, VariableEntity, ConstantEntity and WildcardNamedEntity
-     * This class stores the specific type of the NamedEntity and also its synonym
-     */
-private:
-    static vector<string> validAttrs;
-
-protected:
-    string synonym;
-public:
-    NamedEntity(const string& type, string synonym);
-
-    string getSynonym() const;
-
-    string toString() const override;
-
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
-    bool checkAttr(string attr) override;
-};
-
-class ProcedureEntity : public NamedEntity {
-private:
-    static vector<string> validAttrs;
-
-public:
-    explicit ProcedureEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
-    bool checkAttr(string attr) override;
-};
-
-class VariableEntity : public NamedEntity {
-private:
-    static vector<string> validAttrs;
-
-public:
-    explicit VariableEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
-    bool checkAttr(string attr) override;
-};
-
-class ConstantEntity : public NamedEntity {
-private:
-    static vector<string> validAttrs;
-
-public:
-    explicit ConstantEntity(string synonym);
-    ResultTable* getAttrVal(string attr, PKB pkb) override;
-    bool checkAttr(string attr) override;
-};
-
-class WildcardNamedEntity : public NamedEntity {
-private:
-    static vector<string> validAttrs;
-public:
-    explicit WildcardNamedEntity();
-    bool checkAttr(string attr) override;
-};
-
-#endif //INC_22S2_CP_SPA_TEAM_22_ENTITIES_H
+#endif //SPA_STMTREF_H

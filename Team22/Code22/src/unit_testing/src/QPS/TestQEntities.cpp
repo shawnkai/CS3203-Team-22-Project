@@ -1,8 +1,8 @@
 //
 // Created by Tanishq Sharma on 20/2/23.
 //
-
-#include "QPS/Entities/Entities.h"
+#include "QPS/Entities/StmtRef/StmtRef.h"
+#include "QPS/Entities/NamedEntity/NamedEntity.h"
 #include "catch.hpp"
 #include "QPS/Exceptions/Exceptions.h"
 
