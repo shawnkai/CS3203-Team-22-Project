@@ -58,7 +58,7 @@ string SelectExpression::toString() const {
     return res;
 }
 
-pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAndAttributes(string query, SynonymTable synonymTable) {
+pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAndAttributes(const string& query, const SynonymTable& synonymTable) {
     vector<DesignEntity*> entities = {};
     vector<string> attrs = {};
 
@@ -93,11 +93,11 @@ pair<vector<DesignEntity*>, vector<string>> SelectExpression::extractSynonymsAnd
     return make_pair(entities, attrs);
 }
 
-bool SelectExpression::isBooleanType(string synAttr, SynonymTable synonymTable) {
+bool SelectExpression::isBooleanType(const string& synAttr, SynonymTable synonymTable) {
     return synAttr=="BOOLEAN" && !synonymTable.exists("BOOLEAN");
 }
 
-pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable) {
+pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(const string& synAttr, SynonymTable synonymTable) {
     if (!regex_match(synAttr, SYNATTRREGEX)) {
         throw SyntacticException();
     }
@@ -164,16 +164,16 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
         }
         ThreadSafeVector<ResultTable*> threadedResults;
         std::mutex values_mutex;
-        parallel_for(groups.size(), [groups, pkb, &threadedResults](int start, int end){
-           for (int i = start; i < end; i++) {
-               vector<ResultTable*> subResults;
-               for (Expression *exp : groups[i]) {
-                   subResults.push_back(exp->evaluate(pkb));
-               }
-               ResultTable *temp = ResultTable::intersection(subResults);
-               ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
-               threadedResults.push_back(temp);
-           }
+        parallelFor(groups.size(), [groups, pkb, &threadedResults](unsigned int start, unsigned int end) {
+            for (unsigned int i = start; i < end; i++) {
+                vector<ResultTable *> subResults;
+                for (Expression *exp: groups[i]) {
+                    subResults.push_back(exp->evaluate(pkb));
+                }
+                ResultTable *temp = ResultTable::intersection(subResults);
+                ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
+                threadedResults.push_back(temp);
+            }
         });
         vector<ResultTable*> allResults;
 
@@ -211,7 +211,7 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
 
             auto stopTime = high_resolution_clock::now();
             auto duration = duration_cast<microseconds>(stopTime - startTime);
-            ::printf("Intersection Time: %f ms\n", duration.count() * 0.001);
+            ::printf("Intersection Time: %Lf ms\n", duration.count() * 0.001l);
             return t;
         }
 

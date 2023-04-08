@@ -18,13 +18,13 @@ private:
     vector<Expression*> conditions;
     vector<string> synAttrs;
     static regex SYNATTRREGEX;
-    static pair<DesignEntity*, string> extractSynonymAndAttribute(string synAttr, SynonymTable synonymTable);
+    static pair<DesignEntity*, string> extractSynonymAndAttribute(const string& synAttr, SynonymTable synonymTable);
 
 public:
     explicit SelectExpression(vector<DesignEntity*> entity, vector<string> attributes, vector<Expression*> conditions);
-    static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(string query, SynonymTable synonymTable);
+    static pair<vector<DesignEntity*>, vector<string>> extractSynonymsAndAttributes(const string& query, const SynonymTable& synonymTable);
     string toString() const override;
-    static bool isBooleanType(string synAttr, SynonymTable synonymTable);
+    static bool isBooleanType(const string& synAttr, SynonymTable synonymTable);
     vector<Expression*> getConditions();
 
     ResultTable* evaluate(PKB pkb) override;
