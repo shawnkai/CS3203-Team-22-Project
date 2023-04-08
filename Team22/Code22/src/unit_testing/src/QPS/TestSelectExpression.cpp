@@ -51,7 +51,7 @@ TEST_CASE("TestCase3_ParseSelectSelectAtt_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase12_ParseSelectAttWrongAttrType_SemanticException") {
+TEST_CASE("TestCase4_ParseSelectAttWrongAttrType_SemanticException") {
 QueryParser queryParser;
 string declaration = "variable v; assign a1;";
 string query = "Select v.stmt# such that Uses(a1, v)";
@@ -69,7 +69,7 @@ throwsException = true;
 REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase12_ParseSelectAttrInvaidAttr_SemanticException") {
+TEST_CASE("TestCase5_ParseSelectAttrInvaidAttr_SemanticException") {
     QueryParser queryParser;
     string declaration = "variable v; assign a1;";
     string query = "Select v.someAttr such that Uses(a1, v)";
@@ -87,7 +87,7 @@ TEST_CASE("TestCase12_ParseSelectAttrInvaidAttr_SemanticException") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase14_ParseSelectAttrPeriodInAttr_SyntacticException") {
+TEST_CASE("TestCase6_ParseSelectAttrPeriodInAttr_SyntacticException") {
 QueryParser queryParser;
 string declaration = "variable v; assign a1;";
 string query = "Select v.varName.varName such that Uses(a1, v)";
@@ -105,7 +105,7 @@ throwsException = true;
 REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
+TEST_CASE("TestCase7_ParseSelectTupleSingleSynonym_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "stmt s; variable v;";
     string query = "Select <s> such that Uses(s, v)";
@@ -123,7 +123,7 @@ TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectMultipleSynonyms_ShouldSuccess") {
+TEST_CASE("TestCase8_ParseSelectMultipleSynonyms_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select <s, s1, v> such that Uses(s, v)";
@@ -135,7 +135,7 @@ TEST_CASE("TestCase3_ParseSelectMultipleSynonyms_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrs_ShouldSuccess") {
+TEST_CASE("TestCase9_ParseSelectTupleMultipleSynonymsWithAttrs_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select <s.stmt#, s1, v, v.varName, s1.stmt#> such that Uses(s, v)";
@@ -149,7 +149,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrs_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrsWhitespaces_ShouldSuccess") {
+TEST_CASE("TestCase10_ParseSelectTupleMultipleSynonymsWithAttrsWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select  <  s.stmt#  ,  s1  ,  v  ,  v.varName  ,  s1.stmt#  >   such that Uses(s, v)";
@@ -163,7 +163,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithAttrsWhitespaces_Should
     REQUIRE(actualResult->toString() == expected);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithWhitespaces_SyntaxError") {
+TEST_CASE("TestCase11_ParseSelectTupleMultipleSynonymsWithWhitespaces_SyntaxError") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select  <  s. stmt#  ,  s1  ,  v  ,  v.varName  ,  s1.stmt#  >   such that Uses(s, v)";
@@ -181,7 +181,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithWhitespaces_SyntaxError
 }
 
 
-TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithInvalidAttrs_SemanticError") {
+TEST_CASE("TestCase12_ParseSelectTupleMultipleSynonymsWithInvalidAttrs_SemanticError") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select <s.stmt#, s1, v, v.stmt#, s1.varName> such that Uses(s, v)";
@@ -199,7 +199,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithInvalidAttrs_SemanticEr
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleNoSynonyms_SyntaxError") {
+TEST_CASE("TestCase13_ParseSelectTupleNoSynonyms_SyntaxError") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select < > such that Uses(s, v)";
@@ -217,7 +217,7 @@ TEST_CASE("TestCase3_ParseSelectTupleNoSynonyms_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleNoSynonymsWithComma_SyntaxError") {
+TEST_CASE("TestCase14_ParseSelectTupleNoSynonymsWithComma_SyntaxError") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select < , , > such that Uses(s, v)";
@@ -235,7 +235,7 @@ TEST_CASE("TestCase3_ParseSelectTupleNoSynonymsWithComma_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectTupleInvalidSynonym_SyntaxError") {
+TEST_CASE("TestCase15_ParseSelectTupleInvalidSynonym_SyntaxError") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select < 1.varName > such that Uses(s, v)";
@@ -253,7 +253,7 @@ TEST_CASE("TestCase3_ParseSelectTupleInvalidSynonym_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectBOOLEANValid_Success") {
+TEST_CASE("TestCase16_ParseSelectBOOLEANValid_Success") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select BOOLEAN such that Follows(1, 2)";
@@ -267,7 +267,7 @@ TEST_CASE("TestCase3_ParseSelectBOOLEANValid_Success") {
     REQUIRE(actualResult->toString() == expected);
 }
 
-TEST_CASE("TestCase3_ParseSelectReturnBOOLEANInTuple_SemanticException") {
+TEST_CASE("TestCase17_ParseSelectReturnBOOLEANInTuple_SemanticException") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select <s, BOOLEAN> such that Follows(s, 2)";
@@ -285,7 +285,7 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANInTuple_SemanticException") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseSelectReturnBOOLEANWhitespaces_Success") {
+TEST_CASE("TestCase18_ParseSelectReturnBOOLEANWhitespaces_Success") {
     QueryParser queryParser;
     string declaration = "stmt s, s1; variable v;";
     string query = "Select    BOOLEAN   such that Follows(1, 2)";
@@ -299,7 +299,7 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANWhitespaces_Success") {
     REQUIRE(actualResult->toString() == expected);
 }
 
-TEST_CASE("TestCase3_ParseSelectReturnBOOLEANDeclaredAsStmt_Success") {
+TEST_CASE("TestCase19_ParseSelectReturnBOOLEANDeclaredAsStmt_Success") {
     QueryParser queryParser;
     string declaration = "stmt BOOLEAN; assign a1;";
 
@@ -321,7 +321,7 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANDeclaredAsStmt_Success") {
 
 }
 
-TEST_CASE("TestCase3_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
+TEST_CASE("TestCase20_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
     QueryParser queryParser;
     string declaration = "assign a1;";
 
@@ -340,7 +340,7 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase3_ParseInvalidInteger") {
+TEST_CASE("TestCase21_ParseInvalidInteger") {
     QueryParser queryParser;
     string declaration = "stmt s; assign a;";
 
@@ -384,7 +384,7 @@ TEST_CASE("TestCase3_ParseInvalidInteger") {
 
 }
 
-TEST_CASE("TestCase3_DuplicateClauseElimination") {
+TEST_CASE("TestCase22_DuplicateClauseElimination") {
     QueryParser queryParser;
     string declaration = "stmt s; assign a;";
 

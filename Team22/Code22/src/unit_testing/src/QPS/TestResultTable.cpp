@@ -169,7 +169,7 @@ TEST_CASE("TestCase10_MatchingColumnsBothTablesEmpty") {
 
 
 //test cases for getColumn
-TEST_CASE("TestCase10_GetSingleColumnExists_Success") {
+TEST_CASE("TestCase11_GetSingleColumnExists_Success") {
     auto* table = new ResultTable({
                                            make_pair<string, vector<string>>("s1", {}),
                                            make_pair<string, vector<string>>("s2", {})});
@@ -181,7 +181,7 @@ TEST_CASE("TestCase10_GetSingleColumnExists_Success") {
     REQUIRE(table->getColumns({"s1"})->equals(expectedTable));
 }
 
-TEST_CASE("TestCase10_GetSingleColumnWhichDoesNotExist_EmptyTable") {
+TEST_CASE("TestCase12_GetSingleColumnWhichDoesNotExist_EmptyTable") {
     auto* table = new ResultTable({
                                           make_pair<string, vector<string>>("a", {}),
                                           make_pair<string, vector<string>>("b", {})});

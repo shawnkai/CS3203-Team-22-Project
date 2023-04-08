@@ -111,7 +111,7 @@ TEST_CASE("TestCase6_ParsingDeclarationSynonymEndingWithUnderscore_Success") {
     REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
 
-TEST_CASE("TestCase6_ParsingDeclarationSynonymWith*InMiddle_SyntaxError") {
+TEST_CASE("TestCase7_ParsingDeclarationSynonymWith*InMiddle_SyntaxError") {
     QueryParser queryParser;
 
     string declaration = "stmt s; assign a*b;";
@@ -129,7 +129,7 @@ TEST_CASE("TestCase6_ParsingDeclarationSynonymWith*InMiddle_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase7_ParsingDeclarationStatementSynonymNameSameAsType_Success") {
+TEST_CASE("TestCase8_ParsingDeclarationStatementSynonymNameSameAsType_Success") {
     QueryParser queryParser;
 
     string declaration = "stmt stmt, s1; assign assign, a1; while while; if if; variable variable, v1; procedure procedure, q; constant constant; read read; print print; call call;";
@@ -146,7 +146,7 @@ TEST_CASE("TestCase7_ParsingDeclarationStatementSynonymNameSameAsType_Success") 
     REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
 
-TEST_CASE("TestCase8_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Success") {
+TEST_CASE("TestCase9_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a; assign a1; stmt s1; while w; if ifs; variable v, v1; stmt s; procedure p, q; constant c; read re; print pn; call cl;";
@@ -164,7 +164,7 @@ TEST_CASE("TestCase8_ParsingDeclarationStatementSameTypeSeperatelyDeclared_Succe
 
 }
 
-TEST_CASE("TestCase9_ParseSelectStatement_ShouldSuccess") {
+TEST_CASE("TestCase10_ParseSelectStatement_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "variable v;";
     string query = "Select v";
@@ -176,26 +176,7 @@ TEST_CASE("TestCase9_ParseSelectStatement_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-//TEST_CASE("TestCase11_ParseSelectWithSuchThatModifiesWithIdent_ShouldSuccess") {
-//    QueryParser queryParser;
-//    string declaration = "variable v; procedure p;";
-//    string query = "Select p such that Modifies(p, \"x\")";
-//
-//    queryParser.parse(declaration);
-//
-//    bool throwsException = false;
-//
-//    try {
-//        Expression *exp1 = queryParser.parse(query);
-//    } catch (SyntacticException& e) {
-//        throwsException = true;
-//    }
-//
-//    REQUIRE(throwsException);
-//
-//}
-
-TEST_CASE("TestCase10_InvalidSelectKeyword_SyntaxError") {
+TEST_CASE("TestCase11_InvalidSelectKeyword_SyntaxError") {
     QueryParser queryParser;
 
     string query1 = "Sel v";
@@ -212,7 +193,7 @@ TEST_CASE("TestCase10_InvalidSelectKeyword_SyntaxError") {
 
 }
 
-TEST_CASE("TestCase11_MultipleSelectOccurrence_SyntaxError") {
+TEST_CASE("TestCase12_MultipleSelectOccurrence_SyntaxError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -233,7 +214,7 @@ TEST_CASE("TestCase11_MultipleSelectOccurrence_SyntaxError") {
 }
 
 
-TEST_CASE("TestCase12_OneInvalidDesignAbstraction_SyntaxError") {
+TEST_CASE("TestCase13_OneInvalidDesignAbstraction_SyntaxError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -255,27 +236,27 @@ TEST_CASE("TestCase12_OneInvalidDesignAbstraction_SyntaxError") {
 
 //undeclared synonyms
 
-TEST_CASE("TestCase13_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
-    QueryParser queryParser;
-
-    string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
-    queryParser.parse(declaration);
-
-    SynonymTable resultTable = queryParser.getSynonymTable();
-
-    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
-                                         {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
-                                         {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
-                                         {"pn", "PRINT"}, {"cl", "CALL"}};
-
-    REQUIRE(resultTable.isEquivalentTo(expectedTable));
-
-}
-
 TEST_CASE("TestCase14_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
+    queryParser.parse(declaration);
+
+    SynonymTable resultTable = queryParser.getSynonymTable();
+
+    unordered_map<string, string> expectedTable = {{"s", "STATEMENT"}, {"s1", "STATEMENT"}, {"a", "ASSIGNMENT"}, {"a1", "ASSIGNMENT"},
+                                         {"w", "WHILE"}, {"ifs", "IF"}, {"v", "VARIABLE"}, {"v1", "VARIABLE"},
+                                         {"p", "PROCEDURE"}, {"q", "PROCEDURE"}, {"c", "CONSTANT"}, {"re", "READ"},
+                                         {"pn", "PRINT"}, {"cl", "CALL"}};
+
+    REQUIRE(resultTable.isEquivalentTo(expectedTable));
+
+}
+
+TEST_CASE("TestCase15_ParsingDeclarationStatementMoreWhitespacesInserted_Success") {
+    QueryParser queryParser;
+
+    string declaration = "assign a;   assign  a1; stmt   s1;  while w; if ifs;variable v, v1;stmt s;procedure p, q; constant c; read re; print pn; call cl;";
 
     queryParser.parse(declaration);
 
@@ -291,7 +272,7 @@ TEST_CASE("TestCase14_ParsingDeclarationStatementMoreWhitespacesInserted_Success
 }
 
 
-TEST_CASE("TestCase15_andClauseAfterSuchThat_Success") {
+TEST_CASE("TestCase16_andClauseAfterSuchThat_Success") {
     string query = "Select v such that Uses(3, v) and Uses(4, v)";
 
     string actualResult = QueryParser::replaceAnd(query);
@@ -300,7 +281,7 @@ TEST_CASE("TestCase15_andClauseAfterSuchThat_Success") {
     REQUIRE(actualResult == expected);
 }
 
-TEST_CASE("TestCase16_andClauseRightAfterSuchThat_FailsValidation") {
+TEST_CASE("TestCase17_andClauseRightAfterSuchThat_FailsValidation") {
     QueryParser queryParser;
     string query = "Select v such that and Uses(3, v)";
 
@@ -314,7 +295,7 @@ TEST_CASE("TestCase16_andClauseRightAfterSuchThat_FailsValidation") {
 }
 
 
-TEST_CASE("TestCase17_andAsFirstConnective_SyntaxError") {
+TEST_CASE("TestCase18_andAsFirstConnective_SyntaxError") {
     QueryParser queryParser;
     string query = "Select v and Uses(3, v) such that Uses(4, v)";
     bool throwsException = false;
@@ -329,7 +310,7 @@ TEST_CASE("TestCase17_andAsFirstConnective_SyntaxError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase18_andClauseAfterWith_Success") {
+TEST_CASE("TestCase19_andClauseAfterWith_Success") {
 
     string query = "Select <s1, s2> with s1.stmt# = 3 and s2.stmt# = 4";
 
@@ -339,7 +320,7 @@ TEST_CASE("TestCase18_andClauseAfterWith_Success") {
     REQUIRE(actualResult == expected);
 }
 
-TEST_CASE("TestCase19_andClauseAfterPattern_Success") {
+TEST_CASE("TestCase20_andClauseAfterPattern_Success") {
     string query = "Select a pattern a(x, _) and a(x, _\"x\"_) ";
 
     string actualResult = QueryParser::replaceAnd(query);
@@ -348,7 +329,7 @@ TEST_CASE("TestCase19_andClauseAfterPattern_Success") {
     REQUIRE(actualResult == expected);
 }
 
-TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace_Success") {
+TEST_CASE("TestCase21_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a; variable v,v1;";
@@ -362,7 +343,7 @@ TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace_Succe
     REQUIRE(resultTable.isEquivalentTo(expectedTable));
 }
 
-TEST_CASE("TestCase62_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace2_Success") {
+TEST_CASE("TestCase22_ParseDeclarationOfMultipleSynsOfSameTypeWithoutSpace2_Success") {
     QueryParser queryParser;
 
     string declaration = "assign a,a1; variable v;";
