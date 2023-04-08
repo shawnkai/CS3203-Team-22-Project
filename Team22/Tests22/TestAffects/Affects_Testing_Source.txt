@@ -25,7 +25,7 @@ procedure One {
                         print c;
                         c = c - 1;
                         while (c == 0) {
-                            print c;
+                            read c;
                         }
                     }
                 x = y + a;
@@ -59,7 +59,7 @@ procedure One {
                 if (2 == 2) then {
                     while (3 == 3) {
                         while (1 != 2) {
-                            print a;
+                            read a;
                             call Two;
                         }
                     }
@@ -106,8 +106,8 @@ procedure Two {
             z = x;
         }   
     }
+    read a;
     a = a - x;
-    print a;
 }
 
 procedure Three {
