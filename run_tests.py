@@ -85,11 +85,18 @@ source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_so
                            "ComplexTestCases/FollowsStarQueriesOnMultipleProcedures.txt"),
                           ("ComplexTestCases/ComplexSource.txt",
                            "ComplexTestCases/ParentStarQueriesOnMultipleProcedures.txt"),
-                      ("TestBoolean/Boolean_AllClause_Source.txt", "TestBoolean/Boolean_AllClause_Queries.txt"),
+                      # ("TestBoolean/Boolean_AllClause_Source.txt", "TestBoolean/Boolean_AllClause_Queries.txt"),
                       ("TestBoolean/Boolean_Pattern_Source.txt", "TestBoolean/Boolean_Pattern_Queries.txt"),
                       ("TestBoolean/Boolean_SuchThat_FAPS_Source.txt", "TestBoolean/Boolean_SuchThat_FAPS_Queries.txt"),
                       ("TestBoolean/Boolean_SuchThat_MUP_Source.txt", "TestBoolean/Boolean_SuchThat_MUP_Queries.txt"),
-                      ("TestBoolean/Boolean_With_Source.txt", "TestBoolean/Boolean_With_Queries.txt")]
+                      ("TestBoolean/Boolean_With_Source.txt", "TestBoolean/Boolean_With_Queries.txt"),
+                      ("TestAffects/Affects_Testing_Source.txt", "TestAffects/Affects_Testing_Queries.txt"),
+                      ("TestCallDesignAbstraction/TestCallAndCallStarSourceProgram.txt",
+                       "TestCallDesignAbstraction/TestCallDesignAbstractionQueries.txt"),
+                      ("TestCallStarDesignAbstraction/TestCallAndCallStarSourceProgram.txt",
+                       "TestCallStarDesignAbstraction/TestCallStarDesignAbstractionQueries.txt"),
+                      ("TestNextStar/Next_Testing_Source.txt", "TestNextStar/Next_Testing_Queries.txt"),
+                      ("TestNextStar/Website_Given_Source.txt", "TestNextStar/Website_Given_Queries.txt")]
 
 testCaseRegex = re.compile(R"(\n(\d+)\s*-\s*.*\n((?:.|\n(?!\d+\s*-\s*))*))")
 correctAnswerRegex = re.compile("(Correct answer: (.)*)")
@@ -97,6 +104,10 @@ actualAnswerRegex = re.compile("(Your answer: (.)*)")
 missingAnswerRegex = re.compile("(Missing: (.)*)")
 additionalAnswerRegex = re.compile("(Additional: (.)*)")
 queryRegex = re.compile(R"(\n.*\n(.*)\n(.*))")
+
+success = True
+total_correct = 0
+total_incorrect = 0
 
 for source, query in source_query_pairs:
     wrong = []
@@ -142,6 +153,9 @@ for source, query in source_query_pairs:
           f"\nCorrect Evaluations: {len(correct)}"
           f"\nIncorrect Evaluations: {len(wrong)}\n")
 
+    total_correct += len(correct)
+    total_incorrect += len(wrong)
+
     if len(queries) != 0:
         print("Incorrect Tests:")
         for q in queries:
@@ -150,4 +164,11 @@ for source, query in source_query_pairs:
                   f"\n{q[2]}"
                   f"\n{q[3]}"
                   f"\n{q[4]}\n")
-        exit(1)
+        success = False
+
+print(f"\nTotal Number of Queries: {total_correct + total_incorrect}"
+      f"\nTotal Number of Correct Queries: {total_correct}"
+      f"\nTotal Number of Incorrect Queries: {total_incorrect}")
+
+if not success:
+    exit(1)

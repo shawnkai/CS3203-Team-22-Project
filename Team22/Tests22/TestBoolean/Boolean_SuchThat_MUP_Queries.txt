@@ -3,7 +3,6 @@ if if; while w; assign a; stmt s;
 Select BOOLEAN such that Modifies(3,"a") such that Uses(3, "1050")
 SyntaxError
 5000
-
 1 - double connected wildcard in second such that clause return syntax error
 assign a;
 Select BOOLEAN such that Modifies(a, _) such that Uses(a, __)
