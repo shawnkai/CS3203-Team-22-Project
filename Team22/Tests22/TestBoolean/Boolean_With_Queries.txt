@@ -364,17 +364,17 @@ Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.pr
 TRUE
 5000
 74 - multiple with clauses for all attributes return true
-stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
+stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a, a1;
 Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO" and call.procName = "yes1" and call1.procName = "NO" with v.varName = "x" with re.varName = "x" and pn.varName = "x" with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re1.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 3 and if.stmt# = 31 and a.stmt# = 1
 TRUE
 5000
 75 - multiple with clauses for all attributes return false as a1 does not equal assign stmt
-stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
+stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a, a1;
 Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO" and call.procName = "yes" and call1.procName = "NO" with v.varName = "x" with re.varName = "x" and pn.varName = "x" with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re1.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 6 and if.stmt# = 31 and a.stmt# = 1
 FALSE
 5000
 76 - multiple with clauses for all attributes return false as re refers to both lines 12 and 13
-stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a;
+stmt s; read re, re1; print pn; if if; constant c; procedure proc, proc1, proc2; call call,call1,call2; variable v; while w; assign a, a1;
 Select BOOLEAN with proc.procName = "yes" and proc1.procName = "NO" and proc2.procName = "NO" and call.procName = "yes" and call1.procName = "NO" with v.varName = "x" with re.varName = "x" and pn.varName = "x" with c.value = 0 and s.stmt# = 11 and re.stmt# = 12 and re.stmt# = 13 with pn.stmt# = 14 with call.stmt# = 26 with w.stmt# = 27 and  call1.stmt# = 34 with a1.stmt# = 3 and if.stmt# = 31 and a.stmt# = 1
 TRUE
 5000
