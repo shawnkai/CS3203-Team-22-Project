@@ -127,6 +127,15 @@ public:
      * @param lineNumber The line number of the statement.
      */
     explicit StmtEntity(int lineNumber);
+
+
+    /**
+     * Constructs a StmtEntity object, while ignoring line check.
+     *
+     * @param lineNumber The line number of the statement.
+     * @param lineNumber The line number of the statement.
+     */
+    explicit StmtEntity(int lineNumber, bool ignoreLineCheck);
 };
 
 /**

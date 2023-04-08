@@ -19,6 +19,13 @@ StmtEntity::StmtEntity(int lineNumber) : StmtRef("STMTENTITY") {
     this->lineNumber = lineNumber;
 }
 
+StmtEntity::StmtEntity(int lineNumber, bool ignoreLineCheck) : StmtRef("STMTENTITY") {
+    if (!ignoreLineCheck and lineNumber <= 0) {
+        throw SemanticException();
+    }
+    this->lineNumber = lineNumber;
+}
+
 int StmtEntity::getLine() const {
     return this->lineNumber;
 }
