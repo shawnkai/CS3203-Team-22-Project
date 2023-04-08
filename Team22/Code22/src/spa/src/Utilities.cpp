@@ -5,6 +5,7 @@
 #include "Utilities.h"
 #include <algorithm>
 #include <regex>
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -15,7 +16,7 @@ vector<string> Utilities::findIntersection(vector<vector<string>> &all_vectors) 
     }
 
     sort(all_vectors.begin(), all_vectors.end());
-    for (const string &str: all_vectors[0]) {
+    for (const string& str : all_vectors[0]) {
         bool present = true;
         for (int i = 1; i < all_vectors.size(); i++) {
             if (find(all_vectors[i].begin(), all_vectors[i].end(), str) == all_vectors[i].end()) {
@@ -34,22 +35,21 @@ bool Utilities::isOperator(char c) {
     return (c == '+' || c == '-' || c == '*' || c == '/' || c == '%');
 }
 
-// Returns true if s is a number else false
-bool Utilities::isNumber(string s) {
-    for (int i = 0; i < s.length(); i++)
-        if (isdigit(s[i]) == false)
+bool Utilities::isNumber(string s)
+{
+    if (s[0] == '0' && s.size() != 1) {
+        throw SyntacticException();
+    }
+
+    for (char i : s) {
+        if (isdigit(i) == false) {
             return false;
+        }
+    }
 
     return true;
 }
 
-/**
- * Checks if a String is valid variable variable name
- * i.e. alphanumberic characters which may/may not be followed by a number
- *
- * @param str input
- * @return true if String is alphanumeric else false
- */
 bool Utilities::isValidVariableName(string str) {
     static const std::regex pattern("[a-zA-Z_][a-zA-Z0-9_]*");
     bool temp = std::regex_match(str, pattern);
@@ -91,7 +91,7 @@ string Utilities::infixToPrefix(string exp) {
 
     reverse(exp.begin(), exp.end());
 
-    for (char c: exp) {
+    for (char c : exp) {
         int currentPrecedence = getPrecedence(c);
         if (Utilities::isOperator(c)) {
             while (!operatorStack.empty() && Utilities::getPrecedence(operatorStack.top()) > currentPrecedence) {
@@ -132,18 +132,18 @@ string Utilities::infixToPrefix(string exp) {
 
 bool Utilities::checkInfixExpression(string str) {
     std::stack<char> stk;
-    bool prevIsOperand = false;// to check if the previous character was an operand
+    bool prevIsOperand = false; // to check if the previous character was an operand
     str = Utilities::removeAllOccurrences(str, ' ');
     str = regex_replace(str, regex("(\\w){2,}"), "$1");
-    for (char c: str) {
+    for (char c : str) {
         if (isalpha(c)) {
             if (prevIsOperand) {
-                return false;// two operands in a row
+                return false; // two operands in a row
             }
             prevIsOperand = true;
         } else if (isdigit(c)) {
             if (prevIsOperand) {
-                return false;// two operands in a row
+                return false; // two operands in a row
             }
             prevIsOperand = true;
         } else if (c == '(' || c == '[' || c == '{') {
@@ -163,19 +163,18 @@ bool Utilities::checkInfixExpression(string str) {
             prevIsOperand = true;
         } else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '%') {
             if (!prevIsOperand) {
-                return false;// an operator must be preceded by an operand
+                return false; // an operator must be preceded by an operand
             }
             prevIsOperand = false;
         } else {
-            return false;// invalid character
+            return false; // invalid character
         }
     }
     return stk.empty();
 }
 
-
 bool Utilities::checkIfPresent(vector<string> list, string value) {
-    for (string v: list) {
+    for (string v : list) {
         if (v == value) {
             return true;
         }

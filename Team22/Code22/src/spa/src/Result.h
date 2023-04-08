@@ -21,7 +21,7 @@ class Result {
 public:
     explicit Result(string entityType, string entityName, vector<string> result);// inline giving error
 
-    string toString();
+    string toString() const;
     string getQueryEntityName();
     string getQueryEntityType();
     vector<string> getQueryResult();

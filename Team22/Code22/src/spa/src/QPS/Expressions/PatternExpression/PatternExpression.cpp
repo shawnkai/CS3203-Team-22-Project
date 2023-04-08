@@ -6,7 +6,7 @@
 
 #include <utility>
 
-PatternExpression::PatternExpression(DesignEntity *entity, NamedEntity *p1) : Expression({entity}) {
+PatternExpression::PatternExpression(DesignEntity *entity, NamedEntity* p1) : Expression({entity}) {
     this->p1 = p1;
 }
 
@@ -20,12 +20,12 @@ bool PatternExpression::containsPatternExpression(string query) {
 
 IfWhilePatternExpression::IfWhilePatternExpression(DesignEntity *entity, NamedEntity *p1) : PatternExpression(entity, p1) {}
 
-vector<PatternExpression *> PatternExpression::extractPatternExpression(const string &query, SynonymTable synonymTable) {
+vector<PatternExpression*> PatternExpression::extractPatternExpression(const string& query, SynonymTable synonymTable) {
     smatch sm;
 
     string::const_iterator searchStart(query.begin());
 
-    vector<PatternExpression *> expressions;
+    vector<PatternExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, PATTERNREGEX)) {
 
@@ -36,7 +36,7 @@ vector<PatternExpression *> PatternExpression::extractPatternExpression(const st
         arg3 = Utilities::removeAllOccurrences(arg3, ' ');
 
         string arg1 = sm.str(1);
-        auto *a1 = dynamic_cast<StmtRef *>(synonymTable.get(arg1, "select"));
+        auto *a1 = dynamic_cast<StmtRef*>(synonymTable.get(arg1, "select"));
 
         //check for if
         if (!arg4.empty() && (arg4 != "_" || arg3 != "_")) {
@@ -74,14 +74,14 @@ vector<PatternExpression *> PatternExpression::extractPatternExpression(const st
         }
 
         string arg2 = sm.str(2);
-        NamedEntity *a2;
+        NamedEntity* a2;
 
         if (arg2.find('\"') != string::npos) {
             a2 = new NamedEntity("ident", arg2);
         } else if (arg2 == "_") {
             a2 = new WildcardNamedEntity();
         } else {
-            a2 = dynamic_cast<NamedEntity *>(synonymTable.get(arg2, "named"));
+            a2 = dynamic_cast<NamedEntity*>(synonymTable.get(arg2, "named"));
             if (a2->getType() != "VARIABLE") {
                 throw SemanticException();
             }
@@ -97,7 +97,7 @@ vector<PatternExpression *> PatternExpression::extractPatternExpression(const st
                 throw SyntacticException();
             }
             string prefixPattern = Utilities::infixToPrefix(infixPattern);
-            expressions.push_back(new AssignPatternExpression(a1, a2, prefixPattern));
+            expressions.push_back(new AssignPatternExpression(a1,  a2, prefixPattern));
         } else {
             throw SemanticException();
         }
@@ -109,21 +109,21 @@ vector<PatternExpression *> PatternExpression::extractPatternExpression(const st
     return expressions;
 }
 
-ResultTable *AssignPatternExpression::evaluate(PKB pkb) {
+ResultTable* AssignPatternExpression::evaluate(PKB pkb) {
     string prefix_expr = p2;
     prefix_expr = Utilities::removeAllOccurrences(prefix_expr, '\"');
     prefix_expr = regex_replace(prefix_expr, regex("\\-"), "\\-");
     prefix_expr = regex_replace(prefix_expr, regex("\\+"), "\\+");
     prefix_expr = regex_replace(prefix_expr, regex("\\*"), "\\*");
     prefix_expr = regex_replace(prefix_expr, regex("_"), R"([\w\+\-\*/%]*)");
-    regex right_expr(prefix_expr);
+    regex right_expr (prefix_expr);
 
     if (p1->getSynonym() == "_" || p1->getType() == "VARIABLE") {
         auto key_values = pkb.getAllRightHandExpressions();
         vector<string> results;
-        map<string, vector<string>> altResults = {{this->entities[0]->toString(), {}}, {p1->getSynonym(), {}}};
-        for (const auto &pattern: key_values) {
-            for (const auto &line_exp: pattern.second) {
+       unordered_map<string, vector<string>> altResults = {{this->entities[0]->toString(), {}}, {p1->getSynonym(), {}}};
+        for (const auto& pattern : key_values) {
+            for (const auto& line_exp: pattern.second) {
                 if (regex_match(line_exp.second, right_expr)) {
                     altResults.find(this->entities[0]->toString())->second.push_back(line_exp.first);
                     altResults.find(p1->getSynonym())->second.push_back(pattern.first);
@@ -137,7 +137,7 @@ ResultTable *AssignPatternExpression::evaluate(PKB pkb) {
     } else {
         auto key_values = pkb.getAllRightHandExpressionsOfAVariable(p1->getSynonym());
         vector<string> result;
-        for (const auto &pair: key_values) {
+        for (const auto& pair : key_values) {
             if (regex_match(pair.second, right_expr)) {
                 result.push_back(pair.first);
             }
@@ -146,16 +146,16 @@ ResultTable *AssignPatternExpression::evaluate(PKB pkb) {
     }
 }
 
-ResultTable *IfWhilePatternExpression::evaluate(PKB pkb) {
+ResultTable* IfWhilePatternExpression::evaluate(PKB pkb) {
     vector<Result> all_entities = pkb.getAllDesignEntity(this->entities[0]->getType());
     string col1 = this->entities[0]->toString();
     string col2 = this->p1->toString();
 
     if (this->p1->getType() == "ident") {
-        map<string, vector<string>> results = {{col1, {}}};
+       unordered_map<string, vector<string>> results = {{col1, {}}};
         string var = Utilities::removeAllOccurrences(col2, '\"');
-        for (Result entity: all_entities) {
-            for (const string &line: entity.getQueryResult()) {
+        for (Result entity : all_entities) {
+            for (const string& line : entity.getQueryResult()) {
                 if (pkb.isVariableUsedInPattern(this->entities[0]->getType(), line, var)) {
                     results[col1].push_back(line);
                 }
@@ -163,12 +163,12 @@ ResultTable *IfWhilePatternExpression::evaluate(PKB pkb) {
         }
         return new ResultTable(results);
     } else {
-        map<string, vector<string>> results = {{col1, {}}, {col2, {}}};
+       unordered_map<string, vector<string>> results = {{col1, {}}, {col2, {}}};
         vector<string> matches;
-        for (Result entity: all_entities) {
-            for (const string &line: entity.getQueryResult()) {
+        for (Result entity : all_entities) {
+            for (const string& line : entity.getQueryResult()) {
                 unordered_set<string> sub_res = pkb.getAllVariablesUsedInPattern(this->entities[0]->getType(), line);
-                for (const string &var: sub_res) {
+                for(const string& var : sub_res) {
                     results[col1].push_back(line);
                     results[col2].push_back(var);
                 }
@@ -181,13 +181,14 @@ ResultTable *IfWhilePatternExpression::evaluate(PKB pkb) {
     }
 }
 
-string AssignPatternExpression::toString() {
+string AssignPatternExpression::toString() const {
     return "pattern " + this->entities[0]->toString() + "(" + this->p1->getSynonym() + ", " + this->p2 + ")";
 }
 
-string IfWhilePatternExpression::toString() {
+string IfWhilePatternExpression::toString() const {
     if (this->entities[0]->getType() == "IF") {
         return "pattern " + this->entities[0]->toString() + "(" + this->p1->getSynonym() + ", _, _)";
     }
     return "pattern " + this->entities[0]->toString() + "(" + this->p1->getSynonym() + ", _)";
 }
+

@@ -250,7 +250,7 @@ vector<int> Cfg::buildIfNode(vector<int> currentStmts, TNode statementListToProc
  *
  * @return a string representation of the CFG graph
  */
-string Cfg::toString() {
+string Cfg::toString() const {
     std::string result;
     result += "BasicBlock List: ";
     for (int basicBlk: basicBlock) {

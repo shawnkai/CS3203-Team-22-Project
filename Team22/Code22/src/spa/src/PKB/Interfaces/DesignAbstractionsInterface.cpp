@@ -33,9 +33,9 @@ void DesignAbstractionsInterface::addDesignAbstraction(string designAbstraction,
     if (designAbstraction == "USES" || designAbstraction == "MODIFIES") {
         throw InvalidAPICallException((designAbstraction + " Cannot Be Accessed Via This API").data());
     }
-
+    string underscore = "_";
     this->addDesignAbstraction(designAbstraction,
-                               make_tuple("_", get<0>(abstractionDetails), get<1>(abstractionDetails)));
+                               make_tuple(underscore, get<0>(abstractionDetails), get<1>(abstractionDetails)));
 }
 
 /**

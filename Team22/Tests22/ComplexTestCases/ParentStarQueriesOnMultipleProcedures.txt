@@ -1,0 +1,335 @@
+1 - Is Line 2 Directly or Indirectly Nested Inside Line 1
+
+Select BOOLEAN such that Parent* (1, 2)
+FALSE
+5000
+2 - Is Line 3 Directly or Indirectly Nested Inside Line 2
+
+Select BOOLEAN such that Parent* (2, 3)
+TRUE
+5000
+3 - Is Line 5 Directly or Indirectly Nested Inside Line 2
+
+Select BOOLEAN such that Parent* (2, 5)
+TRUE
+5000
+4 - Is Line 8 Directly or Indirectly Nested Inside Line 2
+
+Select BOOLEAN such that Parent* (2, 8)
+TRUE
+5000
+5 - Is Line 4 Directly or Indirectly Nested Inside Line 2
+
+Select BOOLEAN such that Parent* (2, 4)
+TRUE
+5000
+6 - Is Line 7 Directly or Indirectly Nested Inside Line 5
+
+Select BOOLEAN such that Parent* (5, 7)
+TRUE
+5000
+7 - Is Line 9 Directly or Indirectly Nested Inside Line 8
+
+Select BOOLEAN such that Parent* (8, 9)
+TRUE
+5000
+8 - Is Line 10 Directly or Indirectly Nested Inside Line 8
+
+Select BOOLEAN such that Parent* (8, 10)
+TRUE
+5000
+9 - Is Line 11 Directly or Indirectly Nested Inside Line 8
+
+Select BOOLEAN such that Parent* (8, 11)
+TRUE
+5000
+10 - Is Line 24 Directly or Indirectly Nested Inside Line 2
+
+Select BOOLEAN such that Parent* (2, 24)
+TRUE
+5000
+11 - Is Line 25 Directly or Indirectly Nested Inside Line 2
+
+Select BOOLEAN such that Parent* (2, 25)
+TRUE
+5000
+12 - Is Line 26 Directly or Indirectly Nested Inside Line 25
+
+Select BOOLEAN such that Parent* (25, 26)
+TRUE
+5000
+13 - Is Line 33 Directly or Indirectly Nested Inside Line 32
+
+Select BOOLEAN such that Parent* (32, 33)
+TRUE
+5000
+14 - Is Line 34 Directly or Indirectly Nested Inside Line 33
+
+Select BOOLEAN such that Parent* (33, 34)
+FALSE
+5000
+15 - Is Line 34 Directly or Indirectly Nested Inside Line 34
+
+Select BOOLEAN such that Parent* (34, 34)
+FALSE
+5000
+16 - Is Line 34 Directly or Indirectly Nested Inside Line 25
+
+Select BOOLEAN such that Parent* (25, 34)
+TRUE
+5000
+17 - Is Line 44 Directly or Indirectly Nested Inside Line 43
+
+Select BOOLEAN such that Parent* (43, 44)
+TRUE
+5000
+17(a) - Is Line 44 Directly or Indirectly Nested Inside Line 40
+
+Select BOOLEAN such that Parent* (40, 44)
+TRUE
+5000
+17(b) - Is Line 44 Directly or Indirectly Nested Inside Line 41
+
+Select BOOLEAN such that Parent* (41, 44)
+TRUE
+5000
+17(c) - Is Line 44 Directly or Indirectly Nested Inside Line 42
+
+Select BOOLEAN such that Parent* (42, 44)
+TRUE
+5000
+18 - Is Line 69 Directly or Indirectly Nested Inside Line 59
+
+Select BOOLEAN such that Parent* (59, 69)
+FALSE
+5000
+19 - Is Line 76 Directly or Indirectly Nested Inside Line 75
+
+Select BOOLEAN such that Parent* (75, 76)
+TRUE
+5000
+20 - Is Line 84 Directly or Indirectly Nested Inside Line 83
+
+Select BOOLEAN such that Parent* (83, 84)
+TRUE
+5000
+20(a) - Is Line 86 Directly or Indirectly Nested Inside Line 83
+
+Select BOOLEAN such that Parent* (83, 86)
+TRUE
+5000
+20(b) - Is Line 100 Directly or Indirectly Nested Inside Line 83
+
+Select BOOLEAN such that Parent* (83, 100)
+TRUE
+5000
+20(b) - Is Line 103 Directly or Indirectly Nested Inside Line 83
+
+Select BOOLEAN such that Parent* (83, 103)
+TRUE
+5000
+21 - Is Line 91 Directly or Indirectly Nested Inside Line 83
+
+Select BOOLEAN such that Parent* (83, 91)
+TRUE
+5000
+22 - Is Line 103 Directly or Indirectly Nested Inside Line 98
+
+Select BOOLEAN such that Parent* (98, 103)
+TRUE
+5000
+22(a) - Is Line 103 Directly or Indirectly Nested Inside Line 99
+
+Select BOOLEAN such that Parent* (99, 103)
+FALSE
+5000
+23 - Get Parent* of Line 1
+stmt s;
+Select s such that Parent* (s, 1)
+none
+5000
+23 - Get Parent* of Line 3
+stmt s;
+Select s such that Parent* (s, 3)
+2
+5000
+24 - Get Parent* of Line 24
+stmt s;
+Select s such that Parent* (s, 24)
+2
+5000
+25 - Get Parent* of Line 26
+stmt s;
+Select s such that Parent* (s, 26)
+2, 25
+5000
+26 - Get Parent* of Line 23
+stmt s;
+Select s such that Parent* (s, 23)
+2, 5, 8, 14, 17, 22
+5000
+27 - Get Parent* of Line 44
+stmt s;
+Select s such that Parent* (s, 44)
+2, 25, 40, 41, 42, 43
+5000
+28 - Get Parent* of Line 43
+stmt s;
+Select s such that Parent* (s, 43)
+2, 25, 40, 41, 42
+5000
+29 - Get Parent* of Line 69
+stmt s;
+Select s such that Parent* (s, 69)
+none
+5000
+30 - Get Parent* of Line 77
+stmt s;
+Select s such that Parent* (s, 77)
+75, 76
+5000
+31 - Get Parent* of Line 100
+stmt s;
+Select s such that Parent* (s, 100)
+83, 97, 98, 99
+5000
+32 - Get Children of Line 100
+stmt s;
+Select s such that Parent* (100, s)
+none
+5000
+33 - Get Children of Line 99
+stmt s;
+Select s such that Parent* (99, s)
+100, 101, 102
+5000
+34 - Get Children of Line 1
+stmt s;
+Select s such that Parent* (1, s)
+none
+5000
+35 - Get Children of Line 22
+stmt s;
+Select s such that Parent* (22, s)
+23
+5000
+36 - Get Children of Line 40
+stmt s;
+Select s such that Parent* (40, s)
+41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57
+5000
+37 - Get Children of Line 42
+stmt s;
+Select s such that Parent* (42, s)
+43, 44, 45
+5000
+38 - Get Children of Line 43
+stmt s;
+Select s such that Parent* (43, s)
+44, 45
+5000
+39 - Get Children of Line 49
+stmt s;
+Select s such that Parent* (49, s)
+50, 51, 52, 53
+5000
+40 - Get Children of Line 54
+stmt s;
+Select s such that Parent* (54, s)
+55, 56, 57
+5000
+41 - Get Children of Line 69
+stmt s;
+Select s such that Parent* (69, s)
+none
+5000
+42 - Get Children of Line 73
+stmt s;
+Select s such that Parent* (73, s)
+none
+5000
+43 - Get Children of Line 93
+stmt s;
+Select s such that Parent* (93, s)
+none
+5000
+43 - Get Children of Line 98
+stmt s;
+Select s such that Parent* (98, s)
+99, 100, 101, 102, 103, 104
+5000
+44 - Get Children of Line 103
+stmt s;
+Select s such that Parent* (103, s)
+104
+5000
+45 - Get Children of Line 98
+stmt s, s1;
+Select s such that Parent* (s1, s) with s1.stmt# = 98
+99, 100, 101, 102, 103, 104
+5000
+46 - Get Children of Line 69
+stmt s, s1;
+Select s such that Parent* (s1, s) with s1.stmt# = 69
+none
+5000
+47 - Get Pairs of Parent*-Children
+stmt s, s1;
+Select <s, s1> such that Parent* (s, s1)
+2 3, 2 4, 2 5, 2 6, 2 7, 2 8, 2 9, 2 10, 2 11, 2 12, 2 13, 2 14, 2 15, 2 16, 2 17, 2 18, 2 19, 2 20, 2 21, 2 22, 2 23, 2 24, 2 25, 2 26, 2 27, 2 28, 2 29, 2 30, 2 31, 2 32, 2 33, 2 34, 2 35, 2 36, 2 37, 2 38, 2 39, 2 40, 2 41, 2 42, 2 43, 2 44, 2 45, 2 46, 2 47, 2 48, 2 49, 2 50, 2 51, 2 52, 2 53, 2 54, 2 55, 2 56, 2 57, 5 6, 5 7, 5 8, 5 9, 5 10, 5 11, 5 12, 5 13, 5 14, 5 15, 5 16, 5 17, 5 18, 5 19, 5 20, 5 21, 5 22, 5 23, 8 9, 8 10, 8 11, 8 12, 8 13, 8 14, 8 15, 8 16, 8 17, 8 18, 8 19, 8 20, 8 21, 8 22, 8 23, 14 15, 14 16, 14 17, 14 18, 14 19, 14 20, 14 21, 14 22, 14 23, 17 18, 17 19, 17 20, 17 21, 17 22, 17 23, 22 23, 25 26, 25 27, 25 28, 25 29, 25 30, 25 31, 25 32, 25 33, 25 34, 25 35, 25 36, 25 37, 25 38, 25 39, 25 40, 25 41, 25 42, 25 43, 25 44, 25 45, 25 46, 25 47, 25 48, 25 49, 25 50, 25 51, 25 52, 25 53, 25 54, 25 55, 25 56, 25 57, 26 27, 26 28, 26 29, 26 30, 26 31, 26 32, 26 33, 26 34, 26 35, 26 36, 26 37, 28 29, 28 30, 28 31, 28 32, 28 33, 28 34, 28 35, 28 36, 28 37, 32 33, 32 34, 32 35, 32 36, 32 37, 40 41, 40 42, 40 43, 40 44, 40 45, 40 46, 40 47, 40 48, 40 49, 40 50, 40 51, 40 52, 40 53, 40 54, 40 55, 40 56, 40 57, 41 42, 41 43, 41 44, 41 45, 41 46, 41 47, 41 48, 41 49, 41 50, 41 51, 41 52, 41 53, 42 43, 42 44, 42 45, 43 44, 43 45, 49 50, 49 51, 49 52, 49 53, 54 55, 54 56, 54 57, 59 60, 59 61, 59 62, 59 63, 59 64, 59 65, 59 66, 59 67, 59 68, 62 63, 62 64, 62 65, 62 66, 62 67, 62 68, 66 67, 66 68, 75 76, 75 77, 75 78, 75 79, 75 80, 76 77, 76 78, 76 79, 77 78, 77 79, 76 80, 83 84, 83 85, 83 86, 83 87, 83 88, 83 89, 83 90, 84 85, 84 86, 84 87, 84 88, 84 89, 84 90, 83 91, 83 92, 83 93, 83 94, 83 95, 83 96, 83 97, 83 98, 83 99, 83 100, 83 101, 83 102, 83 103, 83 104, 97 98, 97 99, 97 100, 97 101, 97 102, 97 103, 97 104, 98 99, 98 100, 98 101, 98 102, 98 103, 98 104, 99 100, 99 101, 99 102, 103 104
+5000
+48 - Get All Statements That Are Children Of Some Parent
+stmt s;
+Select s such that Parent* (_, s)
+3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 60, 61, 62, 63, 64, 65, 66, 67, 68, 76, 77, 78, 79, 80, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104
+5000
+49 - Get All Statements That Are Parents Of Some Children
+stmt s;
+Select s such that Parent* (s, _)
+2, 5, 8, 14, 17, 22, 25, 26, 28, 32, 40, 41, 42, 43, 49, 54, 59, 62, 66, 75, 76, 77, 83, 84, 97, 98, 99, 103
+5000
+101 - Test With If Synonym Type
+if s;
+Select s such that Parent* (s, _)
+2, 8, 17, 25, 28, 40, 41, 49, 59, 66, 76, 83, 98, 99
+5000
+102 - Test With While Synonym Type
+while s;
+Select s such that Parent* (s, _)
+5, 14, 22, 26, 32, 42, 43, 54, 62, 75, 77, 84, 97, 103
+5000
+103 - Test With Assign Synonym Type
+assign s;
+Select s such that Parent* (s, _)
+none
+5000
+104 - Test With Read Synonym Type
+read s;
+Select s such that Parent* (s, _)
+none
+5000
+105 - Test With Print Synonym Type
+print s;
+Select s such that Parent* (s, _)
+none
+5000
+106 - Test With Call Synonym Type
+call s;
+Select s such that Parent* (s, _)
+none
+5000
+107 - Test With Procedure Synonym Type
+procedure s;
+Select s such that Parent* (s, _)
+SemanticError
+5000
+108 - Test With Variable Synonym Type
+variable s;
+Select s such that Parent* (s, _)
+SemanticError
+5000
+109 - Test With Constant Synonym Type
+constant s;
+Select s such that Parent* (s, _)
+SemanticError
+5000

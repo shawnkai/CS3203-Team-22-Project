@@ -18,7 +18,7 @@ bool CallsStarExpression::containsCallsStarExpression(string query) {
     return distance(sregex_iterator(query.begin(), query.end(), CALLSSTARREGEX), std::sregex_iterator()) > 0;
 }
 
-vector<CallsExpression *> CallsExpression::extractCallsExpression(const string &query, SynonymTable synonymTable) {
+vector<CallsExpression*> CallsExpression::extractCallsExpression(const string& query, SynonymTable synonymTable) {
     if (!containsCallsExpression(query)) {
         return {};
     }
@@ -27,14 +27,14 @@ vector<CallsExpression *> CallsExpression::extractCallsExpression(const string &
 
     string::const_iterator searchStart(query.begin());
 
-    vector<CallsExpression *> expressions;
+    vector<CallsExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, CALLSREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
 
-        NamedEntity *a1 = CallsExpression::generateNamedEntity(arg1, synonymTable);
-        NamedEntity *a2 = CallsExpression::generateNamedEntity(arg2, synonymTable);
+        NamedEntity* a1 = CallsExpression::generateNamedEntity(arg1, synonymTable);
+        NamedEntity* a2 = CallsExpression::generateNamedEntity(arg2, synonymTable);
 
         expressions.push_back(new CallsExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -42,7 +42,7 @@ vector<CallsExpression *> CallsExpression::extractCallsExpression(const string &
     return expressions;
 }
 
-vector<CallsStarExpression *> CallsStarExpression::extractCallsStarExpression(const string &query, SynonymTable synonymTable) {
+vector<CallsStarExpression*> CallsStarExpression::extractCallsStarExpression(const string& query, SynonymTable synonymTable) {
     if (!containsCallsStarExpression(query)) {
         return {};
     }
@@ -51,14 +51,14 @@ vector<CallsStarExpression *> CallsStarExpression::extractCallsStarExpression(co
 
     string::const_iterator searchStart(query.begin());
 
-    vector<CallsStarExpression *> expressions;
+    vector<CallsStarExpression*> expressions;
 
     while (regex_search(searchStart, query.cend(), sm, CALLSSTARREGEX)) {
         string arg1 = sm.str(1);
         string arg2 = sm.str(2);
 
-        NamedEntity *a1 = CallsExpression::generateNamedEntity(arg1, synonymTable);
-        NamedEntity *a2 = CallsExpression::generateNamedEntity(arg2, synonymTable);
+        NamedEntity* a1 = CallsExpression::generateNamedEntity(arg1, synonymTable);
+        NamedEntity* a2 = CallsExpression::generateNamedEntity(arg2, synonymTable);
 
         expressions.push_back(new CallsStarExpression(a1, a2));
         searchStart = sm.suffix().first;
@@ -66,8 +66,8 @@ vector<CallsStarExpression *> CallsStarExpression::extractCallsStarExpression(co
     return expressions;
 }
 
-NamedEntity *CallsExpression::generateNamedEntity(string s, SynonymTable synonymTable) {
-    NamedEntity *a;
+NamedEntity* CallsExpression::generateNamedEntity(string s, SynonymTable synonymTable) {
+    NamedEntity* a;
 
     if (s == "_") {
         a = new WildcardNamedEntity();
@@ -76,7 +76,7 @@ NamedEntity *CallsExpression::generateNamedEntity(string s, SynonymTable synonym
     } else if (!Utilities::isValidVariableName(s)) {
         throw SyntacticException();
     } else {
-        a = dynamic_cast<NamedEntity *>(synonymTable.get(s, "named"));
+        a = dynamic_cast<NamedEntity*>(synonymTable.get(s, "named"));
         if (a->getType() != "PROCEDURE") {
             throw SemanticException();
         }
@@ -85,22 +85,22 @@ NamedEntity *CallsExpression::generateNamedEntity(string s, SynonymTable synonym
     return a;
 }
 
-string CallsExpression::toString() {
+string CallsExpression::toString() const {
     return "Calls(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-string CallsStarExpression::toString() {
+string CallsStarExpression::toString() const {
     return "Calls*(" + this->entities[0]->toString() + ", " + this->entities[1]->toString() + ")";
 }
 
-ResultTable *CallsExpression::evaluate(PKB pkb) {
+ResultTable* CallsExpression::evaluate(PKB pkb) {
     vector<string> possibleCallers;
     vector<string> possibleTargets;
     vector<Result> procs = pkb.getAllDesignEntity("PROCEDURE");
     if (this->entities[0]->getType() == "ident") {
         possibleCallers.push_back(Utilities::removeAllOccurrences(this->entities[0]->toString(), '\"'));
     } else {
-        for (Result r: procs) {
+        for (Result r : procs) {
             possibleCallers.push_back(r.getQueryEntityName());
         }
     }
@@ -108,27 +108,29 @@ ResultTable *CallsExpression::evaluate(PKB pkb) {
     if (this->entities[1]->getType() == "ident") {
         possibleTargets.push_back(Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"'));
     } else {
-        for (Result r: procs) {
+        for (Result r : procs) {
             possibleTargets.push_back(r.getQueryEntityName());
         }
     }
 
     vector<string> callers;
     vector<string> targets;
-    map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
-    for (const string &p1: possibleCallers) {
+   unordered_map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+    for (const string& p1 : possibleCallers) {
         Result res = pkb.getDesignAbstraction("CALLS", make_pair("_", p1));
         if (res.getQueryEntityName() == "none") {
             continue;
         }
         vector<string> called;
-        for (const string &c: res.getQueryResult()) {
+        for (const string& c : res.getQueryResult()) {
             called.push_back(c);
         }
         vector<vector<string>> temp = {{called, possibleTargets}};
         vector<string> result = Utilities::findIntersection(temp);
-        for (const string &r: result) {
-            if (!((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident")) && this->entities[0]->toString() == this->entities[1]->toString()) {
+        for (const string& r : result) {
+            if (!((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident")
+                  && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident"))
+                && this->entities[0]->toString() == this->entities[1]->toString()) {
                 if (p1 == r) {
                     resultMap.at(this->entities[0]->toString()).push_back(p1);
                 } else {
@@ -161,14 +163,14 @@ ResultTable *CallsExpression::evaluate(PKB pkb) {
     return new ResultTable(resultMap);
 }
 
-ResultTable *CallsStarExpression::evaluate(PKB pkb) {
+ResultTable* CallsStarExpression::evaluate(PKB pkb) {
     vector<string> possibleCallers;
     vector<string> possibleTargets;
     vector<Result> procs = pkb.getAllDesignEntity("PROCEDURE");
     if (this->entities[0]->getType() == "ident") {
         possibleCallers.push_back(Utilities::removeAllOccurrences(this->entities[0]->toString(), '\"'));
     } else {
-        for (Result r: procs) {
+        for (Result r : procs) {
             possibleCallers.push_back(r.getQueryEntityName());
         }
     }
@@ -176,27 +178,29 @@ ResultTable *CallsStarExpression::evaluate(PKB pkb) {
     if (this->entities[1]->getType() == "ident") {
         possibleTargets.push_back(Utilities::removeAllOccurrences(this->entities[1]->toString(), '\"'));
     } else {
-        for (Result r: procs) {
+        for (Result r : procs) {
             possibleTargets.push_back(r.getQueryEntityName());
         }
     }
 
     vector<string> callers;
     vector<string> targets;
-    map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
-    for (const string &p1: possibleCallers) {
+   unordered_map<string, vector<string>> resultMap = {{this->entities[0]->toString(), {}}, {this->entities[1]->toString(), {}}};
+    for (const string& p1 : possibleCallers) {
         Result res = pkb.getDesignAbstraction("CALLSSTAR", make_pair("_", p1));
         if (res.getQueryEntityName() == "none") {
             continue;
         }
         vector<string> called;
-        for (const string &c: res.getQueryResult()) {
+        for (const string& c : res.getQueryResult()) {
             called.push_back(c);
         }
         vector<vector<string>> temp = {{called, possibleTargets}};
         vector<string> result = Utilities::findIntersection(temp);
-        for (const string &r: result) {
-            if (!((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident") && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident")) && this->entities[0]->toString() == this->entities[1]->toString()) {
+        for (const string& r : result) {
+            if (!((this->entities[0]->toString() == "_" || this->entities[0]->getType() == "ident")
+                  && (this->entities[1]->toString() == "_" || this->entities[1]->getType() == "ident"))
+                  && this->entities[0]->toString() == this->entities[1]->toString()) {
                 if (p1 == r) {
                     ::printf("HERE\n");
                     resultMap.at(this->entities[0]->toString()).push_back(p1);

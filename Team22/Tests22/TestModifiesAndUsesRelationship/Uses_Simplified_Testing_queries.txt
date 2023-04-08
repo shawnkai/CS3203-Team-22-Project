@@ -8,17 +8,17 @@ variable v;
 Select v such that Uses(v, _ _)
 SyntaxError
 5000
-3 - empty " " return syntax error
+3 - empty   return syntax error
 variable v;
 Select v such that Uses(v, "")
 SyntaxError
 5000
-4 - empty " " with whitespace return syntax error
+4 - empty   with whitespace return syntax error
 variable v;
 Select v such that Uses(v, " ")
 SyntaxError
 5000
-5 - wildcard with " " return syntax error
+5 - wildcard with   return syntax error
 variable v;
 Select v such that Uses(v, "_")
 SyntaxError
@@ -38,7 +38,7 @@ variable v;
 Select v such that Uses(7, null)
 SemanticError
 5000
-9 - empty " " with multiple whitespace return syntax error
+9 - empty   with multiple whitespace return syntax error
 variable v;
 Select v such that Uses ( v , " " ) 
 SyntaxError
@@ -182,4 +182,9 @@ Select w such that Uses(w, "b")
 variable v;
 Select v such that Uses(7, v)
 x
+5000
+52 - All variables used in procedure
+variable v;
+Select v such that Uses("Example", v)
+x, z, a, b, i
 5000

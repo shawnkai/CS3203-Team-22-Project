@@ -23,17 +23,17 @@ procedure p, q;
 Select <p, q> such that Calls(p, q)
 Example test1, Example Shift, Example test2, test2 test1
 5000
-6 - Select Multiple Calls Clauses Using "and"
+6 - Select Multiple Calls Clauses Using and
 procedure p;
 Select p such that Calls(p, "test1") and Calls(p, "test2")
 Example
 5000
-7 - Select Multiple Uses Clauses Using "and"
+7 - Select Multiple Uses Clauses Using and
 variable v;
 Select v such that Uses("Example", v) and Uses("test1", v)
 none
 5000
-8 - Select Multiple Pattern Clauses Using "and"
+8 - Select Multiple Pattern Clauses Using and
 assign a;
 Select a pattern a ("x", _) and a (_, _"x"_)
 5
@@ -63,15 +63,15 @@ if i; assign a;
 Select <i, a> such that Next(i, a)
 7 8, 7 9
 5000
-13 - Select All Variables Used and Modified in Procedure "Example"
+13 - Select All Variables Used and Modified in Procedure Example
 variable v;
 Select v such that Uses("Procedure", v) and Modifies("Procedure", v)
 none
 5000
-14 - Select All Variables Used and Modified in Procedure "Shift"
+14 - Select All Variables Used and Modified in Procedure Shift
 variable v;
 Select v such that Uses("Shift", v) and Modifies("Shift", v)
-none
+b, c
 5000
 15 - Select All Statements Who Are Parents of Line 6
 stmt s;

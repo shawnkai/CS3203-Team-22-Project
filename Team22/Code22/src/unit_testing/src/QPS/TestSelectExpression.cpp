@@ -2,9 +2,9 @@
 // Created by Tanishq Sharma on 13/3/23.
 //
 
-#include "QPS/Exceptions/Exceptions.h"
-#include "QPS/Parser/Parser.h"
+#include "QPS/QueryParser/QueryParser.h"
 #include "catch.hpp"
+#include "QPS/Exceptions/Exceptions.h"
 
 using namespace std;
 
@@ -52,21 +52,21 @@ TEST_CASE("TestCase3_ParseSelectSelectAtt_ShouldSuccess") {
 }
 
 TEST_CASE("TestCase12_ParseSelectAttWrongAttrType_SemanticException") {
-    QueryParser queryParser;
-    string declaration = "variable v; assign a1;";
-    string query = "Select v.stmt# such that Uses(a1, v)";
+QueryParser queryParser;
+string declaration = "variable v; assign a1;";
+string query = "Select v.stmt# such that Uses(a1, v)";
 
-    queryParser.parse(declaration);
+queryParser.parse(declaration);
 
-    bool throwsException = false;
+bool throwsException = false;
 
-    try {
-        Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
-        throwsException = true;
-    }
+try {
+Expression *exp1 = queryParser.parse(query);
+} catch (SemanticException& e) {
+throwsException = true;
+}
 
-    REQUIRE(throwsException);
+REQUIRE(throwsException);
 }
 
 TEST_CASE("TestCase12_ParseSelectAttrInvaidAttr_SemanticException") {
@@ -80,7 +80,7 @@ TEST_CASE("TestCase12_ParseSelectAttrInvaidAttr_SemanticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
@@ -88,21 +88,21 @@ TEST_CASE("TestCase12_ParseSelectAttrInvaidAttr_SemanticException") {
 }
 
 TEST_CASE("TestCase14_ParseSelectAttrPeriodInAttr_SyntacticException") {
-    QueryParser queryParser;
-    string declaration = "variable v; assign a1;";
-    string query = "Select v.varName.varName such that Uses(a1, v)";
+QueryParser queryParser;
+string declaration = "variable v; assign a1;";
+string query = "Select v.varName.varName such that Uses(a1, v)";
 
-    queryParser.parse(declaration);
+queryParser.parse(declaration);
 
-    bool throwsException = false;
+bool throwsException = false;
 
-    try {
-        Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
-        throwsException = true;
-    }
+try {
+Expression *exp1 = queryParser.parse(query);
+} catch (SyntacticException& e) {
+throwsException = true;
+}
 
-    REQUIRE(throwsException);
+REQUIRE(throwsException);
 }
 
 TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
@@ -116,7 +116,7 @@ TEST_CASE("TestCase3_ParseSelectTupleSingleSynonym_ShouldSuccess") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 
@@ -174,7 +174,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithWhitespaces_SyntaxError
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
     REQUIRE(throwsException);
@@ -192,7 +192,7 @@ TEST_CASE("TestCase3_ParseSelectTupleMultipleSynonymsWithInvalidAttrs_SemanticEr
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
@@ -210,7 +210,7 @@ TEST_CASE("TestCase3_ParseSelectTupleNoSynonyms_SyntaxError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 
@@ -228,7 +228,7 @@ TEST_CASE("TestCase3_ParseSelectTupleNoSynonymsWithComma_SyntaxError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 
@@ -246,7 +246,7 @@ TEST_CASE("TestCase3_ParseSelectTupleInvalidSynonym_SyntaxError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SyntacticException &e) {
+    } catch (SyntacticException& e) {
         throwsException = true;
     }
 
@@ -278,7 +278,7 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANInTuple_SemanticException") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
@@ -318,6 +318,7 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANDeclaredAsStmt_Success") {
         SelectExpression *actualResult = queryParser.parse(query);
         REQUIRE(actualResult->toString() == expected);
     }
+
 }
 
 TEST_CASE("TestCase3_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
@@ -332,9 +333,72 @@ TEST_CASE("TestCase3_ParseSelectReturnBOOLEANNotDeclaredAsStmt_SemanticError") {
 
     try {
         Expression *exp1 = queryParser.parse(query);
-    } catch (SemanticException &e) {
+    } catch (SemanticException& e) {
         throwsException = true;
     }
 
     REQUIRE(throwsException);
 }
+
+TEST_CASE("TestCase3_ParseInvalidInteger") {
+    QueryParser queryParser;
+    string declaration = "stmt s; assign a;";
+
+    queryParser.parse(declaration);
+
+    SECTION ("InvalidIntInDesignEntity_SyntaxError") {
+        string query = "Select s such that Follows(s, 06)";
+
+        bool throwsException = false;
+
+        try {
+            Expression *exp1 = queryParser.parse(query);
+        } catch (SyntacticException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
+
+    SECTION ("InvalidIntInAttrCond_SyntaxError") {
+        string query = "Select s such that s.stmt# = 06";
+
+        bool throwsException = false;
+
+        try {
+            Expression *exp1 = queryParser.parse(query);
+        } catch (SyntacticException& e) {
+            throwsException = true;
+        }
+
+        REQUIRE(throwsException);
+    }
+
+    SECTION ("InvalidIntInIdent_Success") {
+        string query = R"(Select s pattern a(_,_"x + 01"_))";
+        string expected = R"(Select s such that pattern a(_, _+x01_))";
+
+        SelectExpression *actualResult = queryParser.parse(query);
+        REQUIRE(actualResult->toString() == expected);
+    }
+
+}
+
+TEST_CASE("TestCase3_DuplicateClauseElimination") {
+    QueryParser queryParser;
+    string declaration = "stmt s; assign a;";
+
+    queryParser.parse(declaration);
+
+    SECTION ("RepeatedPatters_Success") {
+        string query = R"(Select s pattern a(_,_"x + 01"_) pattern a(_,_"x + 01"_) pattern a(_,_"x + 01"_))";
+        string expected = R"(Select s such that pattern a(_, _+x01_))";
+
+        SelectExpression *actualResult = queryParser.parse(query);
+        REQUIRE(actualResult->toString() == expected);
+    }
+
+}
+
+
+
