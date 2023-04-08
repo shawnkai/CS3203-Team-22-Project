@@ -91,6 +91,10 @@ ResultTable* StmtRef::getAttrVal(string attr, PKB pkb) {
     }
 }
 
+ResultTable* StmtEntity::getAttrVal(string attr, PKB pkb) {
+    return new ResultTable({{"withCond", {to_string(this->lineNumber)}}});
+}
+
 ResultTable* CallEntity::getAttrVal(string attr, PKB pkb) {
     if (attr == "procName") {
         vector<Result> results = pkb.getAllDesignEntity(this->getType());
@@ -173,6 +177,10 @@ bool StmtRef::checkAttr(string attr) {
 
 bool SynonymStmtEntity::checkAttr(string attr) {
     return Utilities::checkIfPresent(SynonymStmtEntity::validAttrs, attr);
+}
+
+bool StmtEntity::checkAttr(string attr) {
+    return attr == "";
 }
 
 bool AssignEntity::checkAttr(string attr) {

@@ -117,6 +117,9 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
         }
     }
 
+    set<string> s1(firstLine.begin(), firstLine.end());
+    firstLine.assign( s1.begin(), s1.end());
+
     if (dynamic_cast<StmtEntity*>(this->entities[1])) {
         secondLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()));
     } else {
@@ -127,6 +130,9 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
             }
         }
     }
+
+    set<string> s2(secondLine.begin(), secondLine.end());
+    secondLine.assign( s2.begin(), s2.end());
 
     vector<Result> procResults = pkb.getAllDesignEntity("PROCEDURE");
     vector<string> procs;
