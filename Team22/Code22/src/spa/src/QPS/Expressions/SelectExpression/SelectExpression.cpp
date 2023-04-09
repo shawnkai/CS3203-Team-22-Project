@@ -165,17 +165,35 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
             ::printf("\n");
         }
         ThreadSafeVector<ResultTable*> threadedResults;
-        parallelFor(groups.size(), [groups, pkb, &threadedResults](unsigned int start, unsigned int end) {
+        ThreadSafeVector<exception*> exceptions;
+        parallelFor(groups.size(), [&groups, &pkb, &threadedResults, &exceptions](unsigned int start, unsigned int end) {
             for (unsigned int i = start; i < end; i++) {
-                vector<ResultTable *> subResults;
-                for (Expression *exp: groups[i]) {
-                    subResults.push_back(exp->evaluate(pkb));
+                try {
+                    vector<ResultTable *> subResults;
+                    for (Expression *exp: groups[i]) {
+                        subResults.push_back(exp->evaluate(pkb));
+                    }
+                    ResultTable *temp = ResultTable::intersection(subResults);
+                    ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
+                    threadedResults.push_back(temp);
+                } catch (SemanticException &e) {
+                    exceptions.push_back(new SemanticException());
+                } catch (SyntacticException &e) {
+                    exceptions.push_back(new SyntacticException());
+                } catch (exception &e) {
+                    exceptions.push_back(new exception);
                 }
-                ResultTable *temp = ResultTable::intersection(subResults);
-                ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
-                threadedResults.push_back(temp);
             }
         });
+        for (auto e : exceptions) {
+            if (dynamic_cast<SemanticException*>(e)) {
+                throw SemanticException();
+            } else if (dynamic_cast<SyntacticException*>(e)) {
+                throw SyntacticException();
+            } else {
+                throw *e;
+            }
+        }
         vector<ResultTable*> allResults;
 
         for (ResultTable *exp : threadedResults) {

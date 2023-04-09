@@ -1,0 +1,5 @@
+1 - 6 features
+read W; print TTT; variable vvv; procedure p1, p2; while w; if iiii; assign a;
+Select w such that Parent (w, TTT) and Parent (w, W) and Calls (p1, p2) pattern w ("j", _) and if ("x", _, _) such that Affects (a, 55)
+
+5000

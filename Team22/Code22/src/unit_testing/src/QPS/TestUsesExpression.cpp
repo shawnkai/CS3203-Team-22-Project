@@ -8,7 +8,7 @@
 
 using namespace std;
 
-TEST_CASE("TestCase13_ParseSelectWithSuchThatUses_ShouldSuccess") {
+TEST_CASE("TestCase1_ParseSelectWithSuchThatUses_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "variable v;";
     string query = "Select v such that Uses(1, v)";
@@ -20,7 +20,7 @@ TEST_CASE("TestCase13_ParseSelectWithSuchThatUses_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase14_ParseSelectWithSuchThatUsesWithIdent_ShouldSuccess") {
+TEST_CASE("TestCase2_ParseSelectWithSuchThatUsesWithIdent_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "variable v; procedure p;";
     string query = "Select p such that Uses(p, \"x\")";
@@ -30,7 +30,7 @@ TEST_CASE("TestCase14_ParseSelectWithSuchThatUsesWithIdent_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithWildCard_ShouldSuccess") {
+TEST_CASE("TestCase3_ParseSelectWithSuchThatUsesWithWildCard_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "variable v; procedure p;";
     string query = "Select p such that Uses(p, _)";
@@ -42,7 +42,7 @@ TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithWildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithArg1Ident_ShouldSuccess") {
+TEST_CASE("TestCase4_ParseSelectWithSuchThatUsesWithArg1Ident_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "variable v; procedure p;";
     string query = "Select p such that Uses(\"proc\", _)";
@@ -54,7 +54,7 @@ TEST_CASE("TestCase15_ParseSelectWithSuchThatUsesWithArg1Ident_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase36_UndeclaredNamedEntityArg2UsesSExpression_SemanticError") {
+TEST_CASE("TestCase5_UndeclaredNamedEntityArg2UsesSExpression_SemanticError") {
 QueryParser queryParser;
 
 string declaration = "variable v; print p;";
@@ -73,7 +73,7 @@ throwsException = true;
 REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase37_UndeclaredNamedEntityArg2UsesPExpression_SemanticError") {
+TEST_CASE("TestCase6_UndeclaredNamedEntityArg2UsesPExpression_SemanticError") {
 QueryParser queryParser;
 
 string declaration = "variable v; read r;";
@@ -95,7 +95,7 @@ REQUIRE(throwsException);
 
 //first arg for uses/modifies cannot be wildcard
 
-TEST_CASE("TestCase57_ModifiesExpressionFirstArgWildcard_SemanticError") {
+TEST_CASE("TestCase7_ModifiesExpressionFirstArgWildcard_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -114,7 +114,7 @@ TEST_CASE("TestCase57_ModifiesExpressionFirstArgWildcard_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase58_UsesExpressionFirstArgWildcard_SemanticError") {
+TEST_CASE("TestCase8_UsesExpressionFirstArgWildcard_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -133,7 +133,7 @@ TEST_CASE("TestCase58_UsesExpressionFirstArgWildcard_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase58_UsesExpressionFirstArgRead_SemanticError") {
+TEST_CASE("TestCase9_UsesExpressionFirstArgRead_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r;";
@@ -152,7 +152,7 @@ TEST_CASE("TestCase58_UsesExpressionFirstArgRead_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase58_UsesSExpressionSecondArgConstant_SemanticError") {
+TEST_CASE("TestCase10_UsesSExpressionSecondArgConstant_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; print p; constant c;";
@@ -171,7 +171,7 @@ TEST_CASE("TestCase58_UsesSExpressionSecondArgConstant_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase58_UsesPExpressionSecondArgAssign_SemanticError") {
+TEST_CASE("TestCase11_UsesPExpressionSecondArgAssign_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; read r; assign a;";

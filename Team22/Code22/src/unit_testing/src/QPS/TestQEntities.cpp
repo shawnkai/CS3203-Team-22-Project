@@ -108,7 +108,7 @@ TEST_CASE("TestCase8_IdentNamedEntityMissingClosingQuote_SyntaxError") {
 }
 
 
-TEST_CASE("TestCase4_SynonymStmtEntitySynonymNumber_SyntaxError") {
+TEST_CASE("TestCase9_SynonymStmtEntitySynonymNumber_SyntaxError") {
     bool throwsException = false;
 
     try {
@@ -122,7 +122,7 @@ TEST_CASE("TestCase4_SynonymStmtEntitySynonymNumber_SyntaxError") {
 
 
 
-TEST_CASE("TestCase4_SynonymStmtEntitySynonymStartsWithNumber_SyntaxError") {
+TEST_CASE("TestCase10_SynonymStmtEntitySynonymStartsWithNumber_SyntaxError") {
     bool throwsException = false;
 
     try {

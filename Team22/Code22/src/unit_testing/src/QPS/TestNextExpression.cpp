@@ -8,7 +8,7 @@
 
 using namespace std;
 
-TEST_CASE("TestCase11_ParseSelectWithSuchThatNext_ShouldSuccess") {
+TEST_CASE("TestCase1_ParseSelectWithSuchThatNext_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Next(12, a)";
@@ -20,7 +20,7 @@ TEST_CASE("TestCase11_ParseSelectWithSuchThatNext_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase19_ParseSelectWithSuchThatNextWildCard_ShouldSuccess") {
+TEST_CASE("TestCase2_ParseSelectWithSuchThatNextWildCard_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Next(a, _)";
@@ -32,7 +32,7 @@ TEST_CASE("TestCase19_ParseSelectWithSuchThatNextWildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase20_ParseSelectWithSuchThatNextSynonyms_ShouldSuccess") {
+TEST_CASE("TestCase3_ParseSelectWithSuchThatNextSynonyms_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a; while w;";
     string query = "Select a such that Next(a, w)";
@@ -44,7 +44,7 @@ TEST_CASE("TestCase20_ParseSelectWithSuchThatNextSynonyms_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase21_ParseSelectWithSuchThatNext*_ShouldSuccess") {
+TEST_CASE("TestCase4_ParseSelectWithSuchThatNext*_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "while w;";
     string query = "Select w such that Next*(w, 12)";
@@ -56,7 +56,7 @@ TEST_CASE("TestCase21_ParseSelectWithSuchThatNext*_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase22_ParseSelectWithSuchThatNext*WildCard_ShouldSuccess") {
+TEST_CASE("TestCase5_ParseSelectWithSuchThatNext*WildCard_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Next*(_, a)";
@@ -68,7 +68,7 @@ TEST_CASE("TestCase22_ParseSelectWithSuchThatNext*WildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase23_ParseSelectWithSuchThatNext*Synonyms_ShouldSuccess") {
+TEST_CASE("TestCase6_ParseSelectWithSuchThatNext*Synonyms_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a; while w;";
     string query = "Select a such that Next*(w, a)";
@@ -80,7 +80,7 @@ TEST_CASE("TestCase23_ParseSelectWithSuchThatNext*Synonyms_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase23_ParseSelectWithSuchThatNext*SynonymsWhitespaces_ShouldSuccess") {
+TEST_CASE("TestCase7_ParseSelectWithSuchThatNext*SynonymsWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a; while w;";
     string query = "Select a such that   Next*  (  w  ,   a  )  ";
@@ -94,7 +94,7 @@ TEST_CASE("TestCase23_ParseSelectWithSuchThatNext*SynonymsWhitespaces_ShouldSucc
 }
 
 //undeclared synonyms
-TEST_CASE("TestCase33_UndeclaredStmtEntityArg1NextExpression_SemanticError") {
+TEST_CASE("TestCase8_UndeclaredStmtEntityArg1NextExpression_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v;";
@@ -113,7 +113,7 @@ TEST_CASE("TestCase33_UndeclaredStmtEntityArg1NextExpression_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase34_UndeclaredStmtEntityArg2Next*Expression_SemanticError") {
+TEST_CASE("TestCase9_UndeclaredStmtEntityArg2Next*Expression_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v;";

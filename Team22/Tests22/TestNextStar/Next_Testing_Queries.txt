@@ -331,7 +331,7 @@ none
 67 - next testing
 assign a; variable v; constant c; while w; stmt s;
 Select if such that Next(22,s_) and Next(s,15)
-SyntaxError
+SemanticError
 5000
 68 - next testing repeat same thing many times
 assign a; variable v; constant c; while w; stmt s;
