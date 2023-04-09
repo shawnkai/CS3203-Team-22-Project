@@ -39,4 +39,12 @@ private:
                                                             std::string currLine, int currLineNum, int charPos);
     std::pair<int, std::vector<Token>> handleAssignmentChar(std::vector<Token> currentTokens, std::string candidateToken,
                                                             std::string currLine, int currLineNum, int charPos);
+    std::pair<int, std::vector<Token>> handleLegalChar(std::vector<Token> currentTokens, std::string candidateToken,
+                                                       std::string currLine, int currLineNum, int charPos);
+    std::pair<int, std::vector<Token> > handleDigits(std::vector<Token> currentTokens, std::string candidateToken,
+                                                    std::string currLine, int currLineNum, int charPos);
+    std::pair<int, std::vector<Token> > handleCurlyBracket(std::vector<Token> currentTokens, std::string currLine,
+                                                          int currLineNum, int charPos);
+    std::pair<int, std::vector<Token> > handleRoundBracket(std::vector<Token> currentTokens, std::string currLine,
+                                                          int currLineNum, int charPos);
 };

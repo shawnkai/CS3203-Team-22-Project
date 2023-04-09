@@ -4,6 +4,11 @@
 
 #include "TermParser.h"
 
+/**
+ * Parse the 'term' of SIMPLE Source.
+ *
+ * @return an AST representation of a term
+ */
 TNode TermParser::parse() {
     ParserFactory factorParserFactory;
     auto factorParser = factorParserFactory.createParser(FACTOR, tokenList, pos);

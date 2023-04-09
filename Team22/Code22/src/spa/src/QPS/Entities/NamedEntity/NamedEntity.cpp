@@ -6,7 +6,8 @@
 
 NamedEntity::NamedEntity(const string& type, string synonym) : DesignEntity(type) {
     string synonym_removed = Utilities::removeAllOccurrences(synonym, '\"');
-    if (!Utilities::isValidVariableName(synonym_removed) && synonym != "_" && !Utilities::isNumber(synonym_removed)) {
+
+    if (!Utilities::isValidVariableName(synonym_removed) && synonym != "_") {
         throw SyntacticException();
     }
     if (type == "ident" && (synonym[0] != '\"' || synonym[synonym.size() - 1] != '\"')) {

@@ -27,7 +27,6 @@ procedure A {
     i = i + 13;}
   print b;
   if (x<0) then {
-    call A;
     while (i>0) {
       a = z * 14 + 16 * y;
       while (i>1) {
@@ -210,14 +209,14 @@ procedure f {
   b = 0;
   i = 5;
   while (i!=0) {
-    call D;
     x = x - 1;
     if (x==1) then {
       z = x + 1;
       if (x==1) then {
         z = x + 1;
         if (x==1) then {
-          read b; }
+          read b; 
+          call g;}
         else {
           x = x + 1; }}
       else {
@@ -243,7 +242,6 @@ procedure g {
        while (c > 3) {
          if (d > a) then {
            z = 1;
-           call g;
          } else {
            print z;
            read b;
@@ -305,7 +303,6 @@ procedure h {
    y = a - 1;
  }
   if (z > 1) then {
-    call g;
     read k;
   } else {
     while (x > 2) {

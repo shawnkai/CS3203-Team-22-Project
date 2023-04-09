@@ -19,6 +19,13 @@ StmtEntity::StmtEntity(int lineNumber) : StmtRef("STMTENTITY") {
     this->lineNumber = lineNumber;
 }
 
+StmtEntity::StmtEntity(int lineNumber, bool ignoreLineCheck) : StmtRef("STMTENTITY") {
+    if (!ignoreLineCheck and lineNumber <= 0) {
+        throw SemanticException();
+    }
+    this->lineNumber = lineNumber;
+}
+
 int StmtEntity::getLine() const {
     return this->lineNumber;
 }
@@ -82,6 +89,10 @@ ResultTable* StmtRef::getAttrVal(string attr, PKB pkb) {
         ::printf("invalid attr : %s", attr.c_str());
         throw SyntacticException();
     }
+}
+
+ResultTable* StmtEntity::getAttrVal(string attr, PKB pkb) {
+    return new ResultTable({{"withCond", {to_string(this->lineNumber)}}});
 }
 
 ResultTable* CallEntity::getAttrVal(string attr, PKB pkb) {
@@ -166,6 +177,10 @@ bool StmtRef::checkAttr(string attr) {
 
 bool SynonymStmtEntity::checkAttr(string attr) {
     return Utilities::checkIfPresent(SynonymStmtEntity::validAttrs, attr);
+}
+
+bool StmtEntity::checkAttr(string attr) {
+    return attr == "";
 }
 
 bool AssignEntity::checkAttr(string attr) {

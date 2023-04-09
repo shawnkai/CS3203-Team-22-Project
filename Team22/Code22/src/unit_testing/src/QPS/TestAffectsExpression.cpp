@@ -8,7 +8,7 @@
 
 using namespace std;
 
-TEST_CASE("TestCase11_ParseSelectWithSuchThatAffects_ShouldSuccess") {
+TEST_CASE("TestCase1_ParseSelectWithSuchThatAffects_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Affects(12, a)";
@@ -20,7 +20,7 @@ TEST_CASE("TestCase11_ParseSelectWithSuchThatAffects_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase19_ParseSelectWithSuchThatAffectsWildCard_ShouldSuccess") {
+TEST_CASE("TestCase2_ParseSelectWithSuchThatAffectsWildCard_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Affects(a, _)";
@@ -32,7 +32,7 @@ TEST_CASE("TestCase19_ParseSelectWithSuchThatAffectsWildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase20_ParseSelectWithSuchThatAffectsSynonyms_SemanticError") {
+TEST_CASE("TestCase3_ParseSelectWithSuchThatAffectsSynonyms_SemanticError") {
     QueryParser queryParser;
     string declaration = "assign a; while w;";
     string query = "Select a such that Affects(a, w)";
@@ -50,7 +50,7 @@ TEST_CASE("TestCase20_ParseSelectWithSuchThatAffectsSynonyms_SemanticError") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase21_ParseSelectWithSuchThatAffects*_ShouldSuccess") {
+TEST_CASE("TestCase4_ParseSelectWithSuchThatAffects*_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Affects*(a, 12)";
@@ -62,7 +62,7 @@ TEST_CASE("TestCase21_ParseSelectWithSuchThatAffects*_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase22_ParseSelectWithSuchThatAffects*WildCard_ShouldSuccess") {
+TEST_CASE("TestCase5_ParseSelectWithSuchThatAffects*WildCard_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a;";
     string query = "Select a such that Affects*(_, a)";
@@ -74,7 +74,7 @@ TEST_CASE("TestCase22_ParseSelectWithSuchThatAffects*WildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase23_ParseSelectWithSuchThatAffects*Arg2If_ShouldSuccess") {
+TEST_CASE("TestCase6_ParseSelectWithSuchThatAffects*Arg2If_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a; if i;";
     string query = "Select a such that Affects*(w, i)";
@@ -92,7 +92,7 @@ TEST_CASE("TestCase23_ParseSelectWithSuchThatAffects*Arg2If_ShouldSuccess") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase23_ParseSelectWithSuchThatAffects*SynonymsWhitespaces_ShouldSuccess") {
+TEST_CASE("TestCase7_ParseSelectWithSuchThatAffects*SynonymsWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "assign a1, a2; while w;";
     string query = "Select <a1, a2> such that   Affects*  (  a1  ,   a2  )  ";
@@ -106,7 +106,7 @@ TEST_CASE("TestCase23_ParseSelectWithSuchThatAffects*SynonymsWhitespaces_ShouldS
 }
 
 //undeclared synonyms
-TEST_CASE("TestCase33_UndeclaredStmtEntityArg1AffectsExpression_SemanticError") {
+TEST_CASE("TestCase8_UndeclaredStmtEntityArg1AffectsExpression_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v;";
@@ -125,7 +125,7 @@ TEST_CASE("TestCase33_UndeclaredStmtEntityArg1AffectsExpression_SemanticError") 
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase34_UndeclaredStmtEntityArg2Affects*Expression_SemanticError") {
+TEST_CASE("TestCase9_UndeclaredStmtEntityArg2Affects*Expression_SemanticError") {
     QueryParser queryParser;
 
     string declaration = "variable v; assign a;";

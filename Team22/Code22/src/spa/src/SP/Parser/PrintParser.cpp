@@ -4,6 +4,11 @@
 
 #include "PrintParser.h"
 
+/**
+ * Parse one single print statement, which has exactly one child.
+ *
+ * @return an AST representation of the print statement
+ */
 TNode PrintParser::parse() {
     Token currToken = tokenList[*pos];
     TNode node;

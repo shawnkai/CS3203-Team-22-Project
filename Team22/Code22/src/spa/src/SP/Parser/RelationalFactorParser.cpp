@@ -4,6 +4,11 @@
 
 #include "RelationalFactorParser.h"
 
+/**
+ * Parse the 'rel_factor' of SIMPLE Source.
+ *
+ * @return an AST representation of a relational factor
+ */
 TNode RelationalFactorParser::parse() {
     TNode node;
     Token currToken = tokenList[*pos];

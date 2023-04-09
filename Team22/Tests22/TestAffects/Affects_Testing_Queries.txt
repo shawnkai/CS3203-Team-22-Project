@@ -1,0 +1,150 @@
+1 - affects testing
+assign a; variable v;  constant c; while w;
+Select BOOLEAN such that Affects(_,_)
+TRUE
+5000
+2 - affects testing
+assign a; variable v;  constant c; while w;
+Select BOOLEAN such that Affects(_,a)
+TRUE
+5000
+3 - affects testing
+assign a; variable v;  constant c; while w;
+Select BOOLEAN such that Affects(_,7)
+FALSE
+5000
+4 - affects testing
+assign a; variable v;  constant c; while w;
+Select BOOLEAN such that Affects(7,_)
+TRUE
+5000
+5 - affects testing
+assign a; variable v;  constant c; while w;
+Select BOOLEAN such that Affects(7,a)
+TRUE
+5000
+6 - affects testing
+assign a; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(7,s) with s.stmt# = 10
+TRUE
+5000
+7 - affects testing
+assign a; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(7,10)
+TRUE
+5000
+8 - affects testing
+assign a; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(a,10)
+TRUE
+5000
+9 - affects testing
+assign a; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(a,_)
+TRUE
+5000
+10 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(a,a1)
+TRUE
+5000
+11 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(a,s) with s.stmt# = 10 and a.stmt# = 7
+TRUE
+5000
+11 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(a,s) with s.stmt# = 10 and a.stmt# = 7
+TRUE
+5000
+12 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(58,65)
+FALSE
+5000
+13 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(58,68)
+FALSE
+5000
+15 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select <s, a> such that Affects(s,68) with s.stmt# = 61 with a.stmt# = 1
+61 1
+5000
+16 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(21,14)
+FALSE
+5000
+17 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(14,21)
+FALSE
+5000
+18 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select a such that Affects(a,21) with a.stmt# = 14
+none
+5000
+19 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects*(14,21)
+FALSE
+5000
+20 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select a such that Affects*(a,21) with a.stmt# = 14
+none
+5000
+21 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(62,72)
+FALSE
+5000
+22 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects*(62,72)
+FALSE
+5000
+23 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select s such that Affects(62,s)
+61,62,65,69
+5000
+24 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects*(62,72)
+FALSE
+5000
+25 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(10,24)
+FALSE
+5000
+26 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select s such that Affects(24,s)
+none
+5000
+27 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select s such that Affects*(24,s)
+none
+5000
+28 - affects testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects(68,73)
+FALSE
+5000
+29 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select BOOLEAN such that Affects*(68, 73)
+FALSE
+5000
+30 - affects* testing
+assign a,a1; variable v;  constant c; while w; stmt s;
+Select <s,s,s,s,s> such that Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61) and Affects*(s, 61)
+61 61 61 61 61, 62 62 62 62 62
+5000

@@ -4,6 +4,11 @@
 
 #include "AssignParser.h"
 
+/**
+ * Parse one single assignment statement with exactly two children, left-hand side and right-hand side.
+ *
+ * @return an AST representation of one single assignment statement
+ */
 TNode AssignParser::parse() {
     Token currToken = tokenList[*pos];
     TNode assignNode;

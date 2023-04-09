@@ -12,6 +12,9 @@
 #include <utility>
 #include <vector>
 
+/**
+ * MainParser is the parent or super class for all solid parsers in the Factory Method creation pattern.
+ */
 class MainParser {
 public:
     MainParser(const std::vector<Token> &tokenList, std::shared_ptr<int> pos) : tokenList(tokenList), pos(std::move(pos)) {}
