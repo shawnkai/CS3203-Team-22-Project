@@ -158,6 +158,8 @@ if __name__ == "__main__":
                            "ComplexTestCases/FollowsStarQueriesOnMultipleProcedures.txt"),
                           ("ComplexTestCases/ComplexSource.txt",
                            "ComplexTestCases/ParentStarQueriesOnMultipleProcedures.txt"),
+                          ("ComplexTestCases/ComplexSource.txt",
+                           "ComplexTestCases/ComplexQueries.txt"),
                       ("TestBoolean/Boolean_AllClause_Source.txt", "TestBoolean/Boolean_AllClause_Queries.txt"),
                       ("TestBoolean/Boolean_Pattern_Source.txt", "TestBoolean/Boolean_Pattern_Queries.txt"),
                       ("TestBoolean/Boolean_SuchThat_FAPS_Source.txt", "TestBoolean/Boolean_SuchThat_FAPS_Queries.txt"),

@@ -1,345 +1,345 @@
 1 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(6,4)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next (6, 4)
 FALSE
 5000
 2 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(6,4)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(6, 4)
 FALSE
 5000
 3 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(44,38)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next (44, 38)
 FALSE
 5000
 4 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(44,38)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next* (44, 38)
 FALSE
 5000
 5 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(54,44)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(54, 44)
 FALSE
 5000
 6 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(54,44)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(54, 44)
 FALSE
 5000
 7 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(44,54)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(44, 54)
 FALSE
 5000
 8 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(44,54)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(44, 54)
 FALSE
 5000
 9 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next(v, a)
 SemanticError
 5000
 10 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next(v, _)
 SemanticError
 5000
 11 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(v, a)
 SemanticError
 5000
 12 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(v, _)
 SemanticError
 5000
 13 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next(a, v)
 SemanticError
 5000
 14 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next(_, v)
 SemanticError
 5000
 15 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(a, v)
 SemanticError
 5000
 16 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(_, v)
 SemanticError
 5000
 17 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next(_, _)
 TRUE
 5000
 18 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(_, _)
 TRUE
 5000
 19 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select a such that Next*(_, a) with a.stmt# = 9
 none
 5000
 20 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select a such that Next*(_, a) with a.stmt# = 12
 12
 5000
 21 - next testing
-assign a; variable v;  constant c; while w; if if,if1;
-Select if such that Next(if, a) such that Next(a, if)
+assign a; variable v; constant c; while w; if if,if1;
+Select if such that Next(if, a) such that Next(a, if) 
 none
 5000
 22 - next testing
-assign a,a1; variable v;  constant c; while w; if if,if1;
+assign a, a1; variable v; constant c; while w; if if, if1;
 Select if such that Next*(if, a) such that Next*(a1, if) with if.stmt# = 28
 28
 5000
 23 - next testing
-assign a,a1; variable v;  constant c; while w; if if,if1;
+assign a, a1; variable v; constant c; while w; if if, if1;
 Select if such that Next*(if, w) with w.stmt# = 42 such that Next*(if1, if) with if1.stmt# = 40
 41
 5000
 24 - next testing
-assign a,a1; variable v;  constant c; while w; if if,if1;
+assign a,a1; variable v; constant c; while w; if if,if1;
 Select if such that Next(if, w) with w.stmt# = 42 such that Next(if1, if) with if1.stmt# = 40
 41
 5000
 25 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next(5,24)
 FALSE
 5000
 26 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(5,24)
 FALSE
 5000
 27 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(5,27)
 FALSE
 5000
 28 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(5,27)
 FALSE
 5000
 29 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(9,10)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(9, 10)
 TRUE
 5000
 30 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(10,9)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(10, 9)
 TRUE
 5000
 31 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(9,10)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(9, 10)
 FALSE
 5000
 32 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(10,9)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(10, 9)
 FALSE
 5000
 33 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(23,18)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(23, 18)
 TRUE
 5000
 34 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(18,23)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(18, 23)
 TRUE
 5000
 35 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(23,9)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(23, 9)
 TRUE
 5000
 36 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(9,23)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(9, 23)
 TRUE
 5000
 37 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(3,24)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(3, 24)
 FALSE
 5000
 38 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(24,3)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(24, 3)
 FALSE
 5000
 39 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(22,14)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(22, 14)
 TRUE
 5000
 40 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(14,22)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(14, 22)
 FALSE
 5000
 41 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(14,5)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(14, 5)
 TRUE
 5000
 42 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(5,14)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(5, 14)
 FALSE
 5000
 43 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(32,26)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(32, 26)
 TRUE
 5000
 44 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(26,32)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(26, 32)
 FALSE
 5000
 45 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(37,30)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(37, 30)
 TRUE
 5000
 46 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(30,37)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(30, 37)
 TRUE
 5000
 47 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(57,58)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(57, 58)
 FALSE
 5000
 48 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(57,58)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(57, 58)
 FALSE
 5000
 49 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(1,57)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(1, 57)
 TRUE
 5000
 50 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(57,1)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(57, 1)
 FALSE
 5000
 51 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(2,24)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(2, 24)
 TRUE
 5000
 52 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(2,24)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(2, 24)
 TRUE
 5000
 53 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(2,57)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(2, 57)
 FALSE
 5000
 54 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(2,57)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(2, 57)
 TRUE
 5000
 55 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next(13,13)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next(13, 13)
 FALSE
 5000
 56 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(13,13)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(13, 13)
 TRUE
 5000
 57 - next testing
-assign a; variable v;  constant c; while w;
-Select BOOLEAN such that Next*(8,8)
+assign a; variable v; constant c; while w;
+Select BOOLEAN such that Next*(8, 8)
 TRUE
 5000
 58 - next testing
-assign a; variable v;  constant c; while w;stmt s;
-Select s such that Next(22,s)
+assign a; variable v; constant c; while w;stmt s;
+Select s such that Next(22, s)
 14,23
 5000
 59 - next testing
-assign a; variable v;  constant c; while w;stmt s;
-Select s such that Next(2,s)
+assign a; variable v; constant c; while w;stmt s;
+Select s such that Next(2, s)
 3,24
 5000
 60 - next testing
-assign a; variable v;  constant c; while w;stmt s;
-Select s such that Next(57,s)
+assign a; variable v; constant c; while w;stmt s;
+Select s such that Next(57, s)
 54
 5000
 61 - next testing
-assign a; variable v;  constant c; while w; stmt s;
-Select s such that Next(52,s)
+assign a; variable v; constant c; while w; stmt s;
+Select s such that Next(52, s)
 53
 5000
 62 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(45,42)
 TRUE
 5000
 63 - next testing
-assign a; variable v;  constant c; while w;
+assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(45,41)
 FALSE
 5000
 64 - next testing
-assign a; variable v;  constant c; while w; stmt s;
+assign a; variable v; constant c; while w; stmt s;
 Select s such that Next(22,s) and Next(s,15)
 14
 5000
 65 - next testing
-assign a; variable v;  constant c; while w; stmt s;
+assign a; variable v; constant c; while w; stmt s;
 Select w such that Next(22,w) and Next(w,15)
 14
 5000
 66 - next testing
-assign a; variable v;  constant c; while w; stmt s; if if;
+assign a; variable v; constant c; while w; stmt s; if if;
 Select if such that Next(22,if) and Next(if,15)
 none
 5000
 67 - next testing
-assign a; variable v;  constant c; while w; stmt s;
+assign a; variable v; constant c; while w; stmt s;
 Select if such that Next(22,s_) and Next(s,15)
 SemanticError
 5000
 68 - next testing repeat same thing many times
-assign a; variable v;  constant c; while w; stmt s;
+assign a; variable v; constant c; while w; stmt s;
 Select s such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15) such that Next(22,s) and Next(s,15)
 14
 5000
 69 - next testing
-assign a; variable v;  constant c; while w;stmt s;
+assign a; variable v; constant c; while w;stmt s;
 Select s such that Next(70,s)
 none
 5000
@@ -354,27 +354,27 @@ Select s such that Next*(5,s) such that Next*(s,23) such that Next*(_,23) such t
 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 5000
 72 - next testing
-assign a; variable v;  constant c; while w,w1;stmt s;
-Select w such that Next*(w,5)
+assign a; variable v; constant c; while w,w1;stmt s;
+Select w such that Next*(w,5) 
 5,14,22
 5000
 73 - next testing
-assign a; variable v;  constant c; while w,w1;stmt s;
-Select s such that Next*(s,5)
+assign a; variable v; constant c; while w,w1;stmt s;
+Select s such that Next*(s,5) 
 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 5000
 74 - next testing
-assign a; variable v;  constant c; while w;stmt s;
+assign a; variable v; constant c; while w;stmt s;
 Select s such that Next*(s,5) such that Next*(23,s) such that Next*(23,_)
 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 5000
 75 - next testing
-assign a; variable v;  constant c; while w;stmt s;
+assign a; variable v; constant c; while w;stmt s;
 Select s such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_) such that Next*(s,5) such that Next*(23,s) such that Next*(23,_)
 5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23
 5000
 76 - next testing
-assign a; variable v;  constant c; while w,w1;stmt s;
+assign a; variable v; constant c; while w, w1; stmt s;
 Select <w,w1> such that Next*(w,w1)
 5 5, 5 14, 5 22, 14 5, 14 14, 14 22, 22 5, 22 14, 22 22, 26 26, 26 32, 32 26, 32 32, 42 42, 42 43, 43 42, 43 43, 54 54, 62 62
 5000
