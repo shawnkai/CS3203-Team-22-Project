@@ -41,10 +41,10 @@ void StmtlstExtractor::extractAbstraction() {
 			int currentLineNo = currentStmt.stmtNumber;
 			std::string showFollows = "follows" + std::to_string(currentLineNo) + " " + std::to_string(nextStmt.stmtNumber);
 			cout << showFollows << endl;
-			pkbinstance.addDesignAbstraction("FOLLOWS", make_tuple(underlineStr, std::to_string(currentLineNo), std::to_string(nextStmt.stmtNumber)));
+            pkbinstance.addDesignAbstraction(followsStr, make_tuple(underlineStr, std::to_string(currentLineNo), std::to_string(nextStmt.stmtNumber)));
 			for (int j = i + 1; j < childstmts.size(); j++) {
 				TNode stmt2 = childstmts[j];
-				pkbinstance.addDesignAbstraction("FOLLOWSSTAR", make_tuple(underlineStr, std::to_string(currentLineNo), std::to_string(stmt2.stmtNumber)));
+                pkbinstance.addDesignAbstraction(followsStarStr, make_tuple(underlineStr, std::to_string(currentLineNo), std::to_string(stmt2.stmtNumber)));
 				std::string showFollowsStar = "followsstar" + std::to_string(currentLineNo) + " " + std::to_string(stmt2.stmtNumber);
 				cout << showFollowsStar << endl;
 			}
@@ -58,19 +58,19 @@ void StmtlstExtractor::extractAbstraction() {
 				TNode currentStmt = childstmts[i];
 				std::string showParent = "parent" + currentParent + " " + std::to_string(currentStmt.stmtNumber);
 				cout << showParent << endl;
-				pkbinstance.addDesignAbstraction("PARENT", make_tuple(underlineStr, currentParent, std::to_string(currentStmt.stmtNumber)));
+                pkbinstance.addDesignAbstraction(parentStr, make_tuple(underlineStr, currentParent, std::to_string(currentStmt.stmtNumber)));
 				if (whileContainers.size() != 0) {
 					for (int j = 0; j < whileContainers.size(); j++) {
 						std::string showParentWhileStar = "parentsstar" + whileContainers[j] + " " + std::to_string(currentStmt.stmtNumber);
 						cout << showParentWhileStar << endl;
-						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, whileContainers[j], std::to_string(currentStmt.stmtNumber)));
+                        pkbinstance.addDesignAbstraction(parentStarStr, make_tuple(underlineStr, whileContainers[j], std::to_string(currentStmt.stmtNumber)));
 					}
 				}
 				if (ifContainers.size() != 0) {
 					for (int j = 0; j < ifContainers.size(); j++) {
 						std::string showParentIfStar = "parentstar" + ifContainers[j] + " " + std::to_string(currentStmt.stmtNumber);
 						cout << showParentIfStar << endl;
-						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, ifContainers[j], std::to_string(currentStmt.stmtNumber)));
+                        pkbinstance.addDesignAbstraction(parentStarStr, make_tuple(underlineStr, ifContainers[j], std::to_string(currentStmt.stmtNumber)));
 					}
 				}
 			}

@@ -33,6 +33,9 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 	std::string procedurecallStr = "PROCEDURECALL";
 	std::string ifStr = "IF";
 	std::string whileStr = "WHILE";
+    std::string usesStr = "USES";
+    std::string variableStr = "VARIABLE";
+    std::string constantStr = "CONSTANT";
 	while (queue1.size() != 0) {
 		TNode currentNode1 = queue1.front();
 		TokenType tokenType1 = currentNode1.nodeType;
@@ -40,18 +43,18 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 			std::string nameOfVariable = currentNode1.stringId;
 			int lineNumOfVariable = currentNode1.stmtNumber;
 			cout << currentNode1.stringId << endl;
-			pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignAbstraction(usesStr, make_tuple(statementStr, nameOfVariable, std::to_string(lineNumOfVariable)));
             RelationshipExtractor relationshipExtractor;
-            relationshipExtractor.extractModifiesorUsesAbstraction("USES", pkbinstance, procedureName, nameOfVariable, lineNumOfVariable);
-            relationshipExtractor.extractContainerUsesOrModifiesAbstraction("USES", ifContainers, whileContainers, pkbinstance, nameOfVariable);
-            pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
+            relationshipExtractor.extractModifiesorUsesAbstraction(usesStr, pkbinstance, procedureName, nameOfVariable, lineNumOfVariable);
+            relationshipExtractor.extractContainerUsesOrModifiesAbstraction(usesStr, ifContainers, whileContainers, pkbinstance, nameOfVariable);
+            pkbinstance.addDesignEntity(variableStr, make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 
 			if (prevNode.nodeType == TokenType::IF) {
-				pkbinstance.addPattern("IF", std::to_string(lineNumOfVariable), nameOfVariable);
+                pkbinstance.addPattern(ifStr, std::to_string(lineNumOfVariable), nameOfVariable);
 				cout << std::to_string(lineNumOfVariable) + " pattern ifs " + nameOfVariable << endl;
 			}
 			else if (prevNode.nodeType == TokenType::WHILE) {
-				pkbinstance.addPattern("WHILE", std::to_string(lineNumOfVariable), nameOfVariable);
+                pkbinstance.addPattern(whileStr, std::to_string(lineNumOfVariable), nameOfVariable);
 				cout << std::to_string(lineNumOfVariable) + " pattern w " + nameOfVariable << endl;
 			}
 			else {
@@ -67,7 +70,7 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 		}
 		else if (tokenType1 == TokenType::INTEGER) {
 			std::string stringOfConstant = currentNode1.stringId;
-			pkbinstance.addDesignEntity("CONSTANT", make_tuple(stringOfConstant, std::to_string(currentNode1.stmtNumber)));
+            pkbinstance.addDesignEntity(constantStr, make_tuple(stringOfConstant, std::to_string(currentNode1.stmtNumber)));
 
 		}
 		else {}

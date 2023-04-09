@@ -10,13 +10,15 @@ using namespace std;
 #include "RelationshipExtractor.h"
 
 void RelationshipExtractor::extractModifiesorUsesAbstraction(string type1, PKB pkbinstance, string procedureName, string variableName, int lineNumOfVariable) {
-    
+    std::string inverseCallsStr = "INVERSECALLS";
+    std::string callStr = "CALL";
+
     pkbinstance.addDesignAbstraction(type1, make_tuple(procedureStr, procedureName, std::to_string(lineNumOfVariable)));
     pkbinstance.addDesignAbstraction(type1, make_tuple(procedureStr, variableName, procedureName));
     cout << std::to_string(lineNumOfVariable) + " " + type1 + " procedure " + procedureName << endl;
     cout << variableName + " " + type1 + " procedure " + procedureName << endl;
 
-    Result result1 = pkbinstance.getDesignAbstraction("INVERSECALLS", make_pair("_", procedureName));
+    Result result1 = pkbinstance.getDesignAbstraction(inverseCallsStr, make_pair("_", procedureName));
     std::vector<std::string> vector1 = result1.getQueryResult();
     for (int i = 0; i < vector1.size(); i++) {
         if (vector1[i] != "none") {
@@ -25,7 +27,7 @@ void RelationshipExtractor::extractModifiesorUsesAbstraction(string type1, PKB p
             cout << std::to_string(lineNumOfVariable) + " " + type1 + " procedure " + vector1[i] << endl;
             cout << variableName + " " + type1 + " procedure " + vector1[i] << endl;
         }
-        Result result3 = pkbinstance.getDesignEntity("CALL", vector1[i]);
+        Result result3 = pkbinstance.getDesignEntity(callStr, vector1[i]);
         std::vector<std::string> vector3 = result3.getQueryResult();
         for (int j = 0; j < vector3.size(); j++) {
             if (vector3[j] != "none") {
@@ -38,7 +40,7 @@ void RelationshipExtractor::extractModifiesorUsesAbstraction(string type1, PKB p
         }
     }
 
-    Result result2 = pkbinstance.getDesignEntity("CALL", procedureName);
+    Result result2 = pkbinstance.getDesignEntity(callStr, procedureName);
     std::vector<std::string> vector2 = result2.getQueryResult();
     for (int i = 0; i < vector2.size(); i++) {
         if (vector2[i] != "none") {

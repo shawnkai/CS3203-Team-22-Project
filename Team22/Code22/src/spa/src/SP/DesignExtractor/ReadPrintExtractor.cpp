@@ -37,25 +37,25 @@ void ReadPrintExtractor::extractAbstraction() {
 		cout << variableName << endl;
 
 		if (tokenType1 == TokenType::READ) {
-			pkbinstance.addDesignEntity("READ", make_tuple(variableName, std::to_string(currentNode.stmtNumber)));
-            pkbinstance.addDesignEntity("STATEMENT", make_tuple(variableName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(readStr, variableName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignEntity(readStr, make_tuple(variableName, std::to_string(currentNode.stmtNumber)));
+            pkbinstance.addDesignEntity(statementStr, make_tuple(variableName, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignAbstraction(modifiesStr, make_tuple(readStr, variableName, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignAbstraction(modifiesStr, make_tuple(statementStr, variableName, std::to_string(lineNumOfVariable)));
             RelationshipExtractor relationshipExtractor;
-            relationshipExtractor.extractModifiesorUsesAbstraction("MODIFIES", pkbinstance, procedureName, variableName, lineNumOfVariable);
-            relationshipExtractor.extractContainerUsesOrModifiesAbstraction("MODIFIES", ifContainers, whileContainers, pkbinstance, variableName);
-			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
+            relationshipExtractor.extractModifiesorUsesAbstraction(modifiesStr, pkbinstance, procedureName, variableName, lineNumOfVariable);
+            relationshipExtractor.extractContainerUsesOrModifiesAbstraction(modifiesStr, ifContainers, whileContainers, pkbinstance, variableName);
+            pkbinstance.addDesignEntity(variableStr, make_tuple(variableName, std::to_string(lineNumOfVariable)));
 		}
 		else if (tokenType1 == TokenType::PRINT) {
-			pkbinstance.addDesignEntity("PRINT", make_tuple(variableName, std::to_string(currentNode.stmtNumber)));
-            pkbinstance.addDesignEntity("STATEMENT", make_tuple(variableName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("USES", make_tuple(printStr, variableName, std::to_string(lineNumOfVariable)));
-			pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignEntity(printStr, make_tuple(variableName, std::to_string(currentNode.stmtNumber)));
+            pkbinstance.addDesignEntity(statementStr, make_tuple(variableName, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignAbstraction(usesStr, make_tuple(printStr, variableName, std::to_string(lineNumOfVariable)));
+            pkbinstance.addDesignAbstraction(usesStr, make_tuple(statementStr, variableName, std::to_string(lineNumOfVariable)));
             RelationshipExtractor relationshipExtractor;
-            relationshipExtractor.extractModifiesorUsesAbstraction("USES", pkbinstance, procedureName, variableName, lineNumOfVariable);
-            relationshipExtractor.extractContainerUsesOrModifiesAbstraction("USES", ifContainers, whileContainers, pkbinstance, variableName);
+            relationshipExtractor.extractModifiesorUsesAbstraction(usesStr, pkbinstance, procedureName, variableName, lineNumOfVariable);
+            relationshipExtractor.extractContainerUsesOrModifiesAbstraction(usesStr, ifContainers, whileContainers, pkbinstance, variableName);
 			
-			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
+			pkbinstance.addDesignEntity(variableStr, make_tuple(variableName, std::to_string(lineNumOfVariable)));
 			
 
 		}

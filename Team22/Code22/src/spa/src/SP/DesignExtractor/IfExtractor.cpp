@@ -28,8 +28,8 @@ void IfExtractor::extractAbstraction() {
         cout << "something went wrong" << endl;
     } else {
         int ifLineNo = currentNode.stmtNumber;
-        pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(ifLineNo)));
-        pkbinstance.addDesignEntity("IF", make_tuple(currentNode.stringId, std::to_string(ifLineNo)));
+        pkbinstance.addDesignEntity(statementStr, make_tuple(statementStr, std::to_string(ifLineNo)));
+        pkbinstance.addDesignEntity(ifStr, make_tuple(currentNode.stringId, std::to_string(ifLineNo)));
         ifContainers.push_back(std::to_string(ifLineNo));
         std::vector<TNode> childNodes = currentNode.children;
         TNode conditionNode = childNodes[0];
