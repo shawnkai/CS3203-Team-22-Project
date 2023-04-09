@@ -58,15 +58,13 @@ void SPDriver::parseSimpleProgram(const std::string& filename) {
     PKB pkbinstance = PKB();
     DesignExtractor designExtractor;
 
-    designExtractor.extractAbstraction(result, pkbinstance);
-
-    /* try {
+    try {
         designExtractor.extractAbstraction(result, pkbinstance);
     }
     catch (std::invalid_argument& theException) {
         std::cerr << theException.what() << endl;
         ::exit(1);
-    }*/
+    }
 
     vector<Cfg> controlFlowGraphs;
     for (const auto& procedure: result.children) {

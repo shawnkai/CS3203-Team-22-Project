@@ -23,6 +23,7 @@ void ProgramExtractor::extractAbstraction() {
     std::map<std::string, std::vector<string>> mapOfCalls;
     std::vector<string> vectorOfProcedureNames;
     std::string underlineStr = "_";
+    int flag = 0;
 
     if (root.nodeType != TokenType::PROGRAM) {
         cout << "something went wrong" << endl;
@@ -56,6 +57,9 @@ void ProgramExtractor::extractAbstraction() {
                         }
                         pkbinstance.addDesignAbstraction("CALLS", make_tuple(underlineStr, procedureName, procedureCalled));
                         cout << procedureName + " calls " + procedureCalled << endl;
+                        if (procedureName == procedureCalled) {
+                            flag = 1;
+                        }
                         pkbinstance.addDesignEntity("CALL", make_tuple(procedureCalled, std::to_string(callLineNo)));
                         pkbinstance.addDesignEntity("STATEMENT", make_tuple(procedureCalled, std::to_string(callLineNo)));
                     } else {
@@ -69,8 +73,8 @@ void ProgramExtractor::extractAbstraction() {
                     queueOfNodes.pop();
                 }
             }
-
-            extractCallStarAbstractions(noOfProcedures, vectorOfProcedureNames, mapOfCalls, pkbinstance);
+            
+            extractCallStarAbstractions(flag, noOfProcedures, vectorOfProcedureNames, mapOfCalls, pkbinstance);
             
             for (int i = 0; i < noOfProcedures; i++) {
                 std::vector<TNode> childNodes = root.children;
@@ -87,7 +91,7 @@ void ProgramExtractor::extractAbstraction() {
     }
 };
 
-void ProgramExtractor::extractCallStarAbstractions(int noOfProcedures, std::vector<string> vectorOfProcedureNames, std::map<std::string, std::vector<string>> mapOfCalls, PKB pkbinstance) {
+void ProgramExtractor::extractCallStarAbstractions(int flag, int noOfProcedures, std::vector<string> vectorOfProcedureNames, std::map<std::string, std::vector<string>> mapOfCalls, PKB pkbinstance) {
     if (noOfProcedures == 1) {
 
     } else {
@@ -128,13 +132,16 @@ void ProgramExtractor::extractCallStarAbstractions(int noOfProcedures, std::vect
                 }
             }
             for (int j = 0; j < vectorOfCallsSTAR.size(); j++) {
-                /* if (procedureName == vectorOfCallsSTAR[j]) {
-                    throw std::invalid_argument("SIMPLE source is invalid because procedure calls itself");
-                }*/
+                if (procedureName == vectorOfCallsSTAR[j]) {
+                    flag = 1;
+                }
                 std::string underlineStr = "_";
                 pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple(underlineStr, procedureName, vectorOfCallsSTAR[j]));
                 pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple(underlineStr, vectorOfCallsSTAR[j], procedureName));
                 cout << procedureName + " callsStar " + vectorOfCallsSTAR[j] << endl;
+            }
+            if (flag == 1) {
+                throw std::invalid_argument("SIMPLE source is invalid because procedure calls itself");
             }
         }
     }

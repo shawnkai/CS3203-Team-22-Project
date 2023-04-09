@@ -23,7 +23,7 @@ procedure p1 {
  while (f < 2) {
  while (q < 2) {
  while (g < 2) {
-  call p2;
+  call p3;
  }
  }
  }

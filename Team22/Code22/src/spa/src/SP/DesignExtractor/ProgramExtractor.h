@@ -28,7 +28,7 @@ public:
         pkbinstance = pkbinstance1;
     };
     void extractAbstraction();
-    void extractCallStarAbstractions(int noOfProcedures, std::vector<string> vectorOfProcedureNames, std::map<std::string, std::vector<string>> mapOfCalls, PKB pkbinstance);
+    void extractCallStarAbstractions(int flag, int noOfProcedures, std::vector<string> vectorOfProcedureNames, std::map<std::string, std::vector<string>> mapOfCalls, PKB pkbinstance);
     void extractCallAbstraction(PKB pkbinstance);
     vector<string> getAllCallStmts(vector<Result> callStmts1);
 };
