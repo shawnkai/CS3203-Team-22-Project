@@ -1,0 +1,60 @@
+1 - Select All Variables That Are Used In All The Procedures
+variable v;
+Select v such that Uses ("One", v) and Uses ("Two", v) and Uses ("Three", v) and Uses ("Four", v) and Uses ("Five", v) and Uses("Six", v)
+a
+5000
+2 - Select All Variables That Are Modified In All The Procedures
+variable v;
+Select v such that Modifies ("One", v) and Modifies ("Two", v) and Modifies ("Three", v) and Modifies ("Four", v) and Modifies ("Five", v) and Modifies ("Six", v)
+a
+5000
+3 - Select All Variables That Are Used and Modified In All The Procedures
+variable v;
+Select v such that Modifies ("One", v) and Modifies ("Two", v) and Modifies ("Three", v) and Modifies ("Four", v) and Modifies ("Five", v) and Modifies ("Six", v) and Uses ("One", v) and Uses ("Two", v) and Uses ("Three", v) and Uses ("Four", v) and Uses ("Five", v) and Uses("Six", v)
+a
+5000
+4 - Does Procedure One Have A Variable That Has Been Modified, and Has Been Used in any If And While Conditional Statements
+variable v; procedure p; if i; while w;
+Select v such that Modifies ("One", v) pattern w (v, _) and i (v, _, _)
+a, b, c, x, y
+5000
+5 - Get The Procedure That Calls Another Procedure Indirectly, Levels Deep
+procedure p, p1, p2, p3, p4, p5;
+Select <p, p5> such that Calls (p, p1) and Calls (p1, p2) and Calls (p2, p3) and Calls (p3, p4) and Calls (p4, p5)
+none
+5000
+6 - Get The Procedure That Calls Another Procedure Indirectly, Levels Deep
+procedure p, p1, p2, p3;
+Select <p, p3> such that Calls (p, p1) and Calls (p1, p2) and Calls (p2, p3)
+One Five, One Six
+5000
+7 - Get All the Procedures Called By Procedure One
+procedure p, p1;
+Select <p, p1> such that Calls (p, p1) with p.procName = "One"
+One Two, One Three
+5000
+8 - Get All Assignment Statements in a While Loop
+assign a; while w;
+Select a such that Parent* (w, a) pattern a (_, _)
+7, 12, 15, 21, 27, 29, 37, 56, 64, 65, 68, 79, 89, 102
+5000
+9 - Get If Statements that are Called Directly After While Statements
+if i; while w;
+Select i such that Next(w, i)
+76, 98
+5000
+10 - Get Assignment Statements that are Called Directly After If Statements that are Called Directly After While Statements
+if i; while w; assign a;
+Select a such that Next(w, i) and Next(i, a)
+none
+5000
+11 - Get All While Loop Statements Who Make a Procedure Call in them
+while w; call c;
+Select w such that Next* (w, c) and Parent* (w, c)
+5, 14, 26, 32, 42, 43, 54
+5000
+12 - Get All While Loop Statements Who Make a Procedure Call in them and the While Loop Uses Variable a
+while w; call c;
+Select w such that Next* (w, c) and Parent* (w, c) and Uses(w, "a")
+5, 14, 26, 32, 42, 43, 54
+5000

@@ -221,7 +221,7 @@ FALSE
 45 - next testing
 assign a; variable v; constant c; while w;
 Select BOOLEAN such that Next*(37, 30)
-FALSE
+TRUE
 5000
 46 - next testing
 assign a; variable v; constant c; while w;
