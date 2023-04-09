@@ -20,7 +20,7 @@ Select <r, t> such that Uses(t, _) and Modifies (r, _) and Parent (_, r) and Par
 5000
 5 - multiple features, tuple case 2
 read r; print t; variable v; stmt s; procedure p, BOOLEAN; while w, boolean; if i; assign a;
-Select <w, if> such that Parent (w, _) and Parent (if, _) and Follows(_, w) and Follows (_, i) and Affects(a, 55)
+Select <w, if> such that Parent (w, _) and Parent (i, _) and Follows(_, w) and Follows (_, i) and Affects(a, 55)
 17 10, 17 28, 17 60, 56 10, 56 28, 56 60, 65 10, 65 28, 65 60
 5000
 6- multiple features, tuple case 3
@@ -41,7 +41,7 @@ Select <a, a2> such that Affects(a, a2)
 9 - multiple features tuple case 5
 read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a, a2;
 Select <a, a2> such that Affects*(a, a2)
-16 19, 27 28, 33 63, 67 70, 62 70, 55 59, 65 70, 19 50, 24 50, 19 55, 24 55, 16 50, 16 55, 19 70, 24 70, 16 70
+16 19, 27 28, 33 63, 67 70, 62 70, 55 59, 65 70, 19 50, 24 50, 19 55, 24 55, 16 50, 16 55, 19 70, 24 70, 16 70, 16 59, 24 59, 49 49, 50 70
 5000
 10 - multiple features, tuple, affect only deal with assign statement
 read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a, a2;
