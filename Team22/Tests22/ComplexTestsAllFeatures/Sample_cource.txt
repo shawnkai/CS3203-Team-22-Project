@@ -1,11 +1,11 @@
 procedure that {
  print he;
  print ye;
- ix = 123;
- izy = 456;
- read hello;
- print bye;
- read bye;
+ ix = 1234;
+ izy = 456478;
+ read Hello;
+ print Bye;
+ read Bye;
  read hello;
  call test4;
  if (x == 1) then {
@@ -17,17 +17,18 @@ procedure that {
   }
   j = r;
   while ((j < g) || (h > k)) {
-     read roiknv;
+     read knv;
      g = s - w * f - (j / v % m);
      print b;
      call that2;
     }
  } else {
   while ((j < g) || (h > k)) {
-   read roiknv;
+   read roi;
    g = s - w * f - (j / v % m);
    print b;
    call that2;
+   d = 0;
   }
   w = d - u;
  }
@@ -35,7 +36,7 @@ procedure that {
   if (y != t) then {
    if (r1 == q1) then {
     while (g == f) {
-     y = s - x * h - (d / e % j);
+     y = s2 - x * h3 - (d4 / e5 % j6);
      read q;
      print u;
      call that2;
@@ -50,10 +51,9 @@ procedure that {
     print bye;
     read test;
     a = 1;
-    myVAR = 3;
-    print test;
-    read ttt;
-    read hh;
+    myVAR = 39;
+    read          ttt;
+    print hh;
     call test4;
    } else {
     while (x>=(0+0)) {
@@ -96,16 +96,21 @@ procedure that {
 
 procedure that2 {
  call test4;
+ abAS = 1 + 1 + 1 + 1 + 1 + 1 + 1;
 }
 
 procedure this3 {
  c = o + c;
  print THIHISISGOINGGOOD;
+ read ZZZwrgwer;
+    print vwinvQQQ;
 }
 
 procedure test4 {
  d = c;
  call this3;
+ read ZZZwrgwer;
+
 }
 procedure MY5 {
   a= 1;
