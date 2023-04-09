@@ -13,7 +13,7 @@ using namespace std;
 
 TEST_CASE("TestCase1_EvaluateSelectStatement_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("PROCEDURE", make_tuple("main", "1"));
     pkb.addDesignEntity("VARIABLE", make_tuple("v1", "2"));
@@ -42,7 +42,7 @@ TEST_CASE("TestCase1_EvaluateSelectStatement_ShouldSuccess") {
 
 TEST_CASE("TestCase2_EvaluateSelectLineStatement_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("READ", make_tuple("v1", "1"));
     pkb.addDesignEntity("READ", make_tuple("v2", "2"));
@@ -67,7 +67,7 @@ TEST_CASE("TestCase2_EvaluateSelectLineStatement_ShouldSuccess") {
 
 TEST_CASE("TestCase3_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v3", "1"));
     pkb.addDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "v3", "1"));
@@ -89,7 +89,7 @@ TEST_CASE("TestCase3_EvaluateSelectStatementWithSuchThatModifies_ShouldSuccess")
 
 TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatModifiesSynonyms_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
     pkb.addDesignEntity("READ", make_tuple("x1", "1"));
@@ -112,7 +112,7 @@ TEST_CASE("TestCase4_EvaluateSelectStatementWithSuchThatModifiesSynonyms_ShouldS
 
 TEST_CASE("TestCase5_EvaluateSelectStatementWithSuchThatModifiesIdent_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
     pkb.addDesignEntity("READ", make_tuple("x1", "1"));
@@ -135,7 +135,7 @@ TEST_CASE("TestCase5_EvaluateSelectStatementWithSuchThatModifiesIdent_ShouldSucc
 
 TEST_CASE("TestCase6_EvaluateSelectLineWithSuchThatModifiesSynonyms_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("x1", "1"));
     pkb.addDesignEntity("READ", make_tuple("x1", "1"));
@@ -158,7 +158,7 @@ TEST_CASE("TestCase6_EvaluateSelectLineWithSuchThatModifiesSynonyms_ShouldSucces
 
 TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v4", "1"));
     pkb.addDesignAbstraction("USES", make_tuple("STATEMENT", "v4", "1"));
@@ -180,7 +180,7 @@ TEST_CASE("TestCase7_EvaluateSelectStatementWithSuchThatUses_ShouldSuccess") {
 
 TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatUsesSynonym_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("x4", "1"));
     pkb.addDesignEntity("PRINT", make_tuple("x4", "1"));
@@ -203,7 +203,7 @@ TEST_CASE("TestCase8_EvaluateSelectStatementWithSuchThatUsesSynonym_ShouldSucces
 
 TEST_CASE("TestCase9_EvaluateSelectLineWithSuchThatUsesSynonym_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("x4", "1"));
     pkb.addDesignEntity("PRINT", make_tuple("x4", "1"));
@@ -226,7 +226,7 @@ TEST_CASE("TestCase9_EvaluateSelectLineWithSuchThatUsesSynonym_ShouldSuccess") {
 
 TEST_CASE("TestCase10_EvaluateSelectStatementWithPatternExactMatching_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v6", "8"));
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "8"));
@@ -252,7 +252,7 @@ TEST_CASE("TestCase10_EvaluateSelectStatementWithPatternExactMatching_ShouldSucc
 
 TEST_CASE("TestCase11_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("VARIABLE", make_tuple("v6", "9"));
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "9"));
@@ -288,7 +288,7 @@ TEST_CASE("TestCase11_EvaluateSelectStatementWithPatternWildCard_ShouldSuccess")
 
 TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "10"));
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "11"));
@@ -315,7 +315,7 @@ TEST_CASE("TestCase12_EvaluateSelectStatementWithSuchThatFollows_ShouldSuccess")
 
 TEST_CASE("TestCase13_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "12"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "13"));
@@ -342,7 +342,7 @@ TEST_CASE("TestCase13_EvaluateSelectStatementWithSuchThatFollowsSynonyms_ShouldS
 
 TEST_CASE("TestCase14_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "15"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "14"));
@@ -369,7 +369,7 @@ TEST_CASE("TestCase14_EvaluateSelectStatementWithSuchThatParent_ShouldSuccess") 
 
 TEST_CASE("TestCase15_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "17"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "16"));
@@ -396,7 +396,7 @@ TEST_CASE("TestCase15_EvaluateSelectStatementWithSuchThatParentSynonyms_ShouldSu
 
 TEST_CASE("TestCase16_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "18"));
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "20"));
@@ -423,7 +423,7 @@ TEST_CASE("TestCase16_EvaluateSelectStatementWithSuchThatFollowsStar_ShouldSucce
 
 TEST_CASE("TestCase17_EvaluateSelectStatementWithSuchThatParentStar_ShouldSuccess") {
     PKB pkb;
-    pkb.clearAllDatabases();
+    pkb.clearAllDatabases("CalledForTestingPurposes");
 
     pkb.addDesignEntity("ASSIGNMENT", make_tuple("ASSIGNMENT", "26"));
     pkb.addDesignEntity("WHILE", make_tuple("WHILE", "24"));

@@ -25,7 +25,7 @@ TEST_CASE("TestCase1_TestBaseCaseAssignmentToPrefix_ShouldSuccess") {
 
 TEST_CASE("TestCase2_TestComplexCaseAssignmentToPrefix_ShouldSuccess") {
     PKB anotherInstance = PKB();
-    anotherInstance.clearAllDatabases();
+    anotherInstance.clearAllDatabases("CalledForTestingPurposes");
 
     TNode t1 = TNode(TokenType::INTEGER, "1", 1, std::vector<TNode>(0));
     TNode t2 = TNode(TokenType::INTEGER, "2", 1, std::vector<TNode>(0));
