@@ -13,6 +13,6 @@ using namespace std;
 
 class RelationshipExtractor {
 public:
-    AbstractionExtractor(){};
+    RelationshipExtractor(){};
     void extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
 };

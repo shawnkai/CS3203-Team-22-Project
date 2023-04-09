@@ -8,8 +8,8 @@
 
 #include "../../PKB/PKB.h"
 #include "AbstractionExtractor.h"
+#include "ReadPrintExtractor.h"
 #include "AssignExtractor.h"
-#include "ConditionExtractor.h"
 #include "Extractor.h"
 #include "IfExtractor.h"
 #include "ProgramExtractor.h"

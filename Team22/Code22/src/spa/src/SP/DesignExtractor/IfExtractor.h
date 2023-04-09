@@ -10,6 +10,7 @@
 #include "SP/Parser/TNode.h"
 #include "ExtractorFactory.h"
 #include "Extractor.h"
+#include "ConditionExtractor.h"
 
 using namespace std;
 

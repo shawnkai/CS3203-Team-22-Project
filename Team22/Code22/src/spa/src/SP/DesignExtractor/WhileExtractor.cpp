@@ -38,7 +38,6 @@ void WhileExtractor::extractAbstraction() {
 		conditionExtractor.extractConditionAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance, procedureName, currentNode);
 		TNode stmtlstNode = childNodes[1];
         std::map<string, vector<string>> information2 = constructMap(ifContainers, whileContainers, procedureName, std::to_string(whileLineNo));
-        TNode stmtlstNode = childNodes[1];
         ExtractorFactory factory1;
         auto stmtlstExtractor = factory1.createExtractor(stmtlstNode, information2, pkbinstance);
         stmtlstExtractor->extractAbstraction();
