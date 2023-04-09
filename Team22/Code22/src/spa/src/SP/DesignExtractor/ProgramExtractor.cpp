@@ -11,11 +11,11 @@ using namespace std;
 
 #include "ProgramExtractor.h"
 
-std::map<int, vector<int>> mapOfWhileForCallStmts;
-std::map<int, vector<int>> mapOfIfForCallStmts;
+std::map<string, vector<string>> mapOfWhileForCallStmts;
+std::map<string, vector<string>> mapOfIfForCallStmts;
 std::map<string, vector<string>> mapOfModifiedVarforCalls;
 std::map<string, vector<string>> mapOfUsedVarforCalls;
-vector<int> callStmts;
+vector<string> callStmts;
 
 /**
  * Extracts the procedures from the Abstract Syntax Tree and call Abstraction
@@ -25,7 +25,7 @@ vector<int> callStmts;
  * @param root The root node of the Abstract Syntax Tree, of type TNode.
  * @param pkbinstance An instance of Program Knowledge Base.
  */
-void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
+void ProgramExtractor::extractAbstraction() {
     std::map<std::string, std::vector<string>> mapOfCalls;
     std::vector<string> vectorOfProcedureNames;
     std::string underlineStr = "_";
@@ -75,67 +75,78 @@ void ProgramExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
                     queueOfNodes.pop();
                 }
             }
-            if (noOfProcedures == 1) {
 
-            } else {
-                for (int i = 0; i < noOfProcedures; i++) {
-                    std::string procedureName = vectorOfProcedureNames[i];
-                    queue<std::string> queueOfCalls;
-                    vector<std::string> vectorOfCallsSTAR;
-                    std::vector<string> vector1;
-                    if (mapOfCalls.count(procedureName) > 0) {
-                        vector1 = mapOfCalls.at(procedureName);
-                    } else {
-                    }
-
-                    set<std::string> setOfCalls;
-                    if (vector1.size() == 0) {
-
-                    } else {
-                        for (int j = 0; j < vector1.size(); j++) {
-                            queueOfCalls.push(vector1[j]);
-                            setOfCalls.insert(vector1[j]);
-                            vectorOfCallsSTAR.push_back(vector1[j]);
-                        }
-                        while (queueOfCalls.size() > 0) {
-                            std::string proceduareCalled = queueOfCalls.front();
-                            std::vector<string> vector2;
-                            if (mapOfCalls.count(proceduareCalled) > 0) {
-                                vector2 = mapOfCalls.at(proceduareCalled);
-                            } else {
-                            }
-                            for (int k = 0; k < vector2.size(); k++) {
-                                if (setOfCalls.count(vector2[k]) == 1) {
-
-                                } else {
-                                    queueOfCalls.push(vector2[k]);
-                                    setOfCalls.insert(vector2[k]);
-                                    vectorOfCallsSTAR.push_back(vector2[k]);
-                                }
-                            }
-                            queueOfCalls.pop();
-                        }
-                    }
-                    for (int j = 0; j < vectorOfCallsSTAR.size(); j++) {
-                        if (procedureName == vectorOfCallsSTAR[j]) {
-                            throw std::invalid_argument("SIMPLE source is invalid because procedure calls itself");
-                        }
-                        pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple(underlineStr, procedureName, vectorOfCallsSTAR[j]));
-                        pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple(underlineStr, vectorOfCallsSTAR[j], procedureName));
-                        cout << procedureName + " callsStar " + vectorOfCallsSTAR[j] << endl;
-                    }
-                }
-            }
+            extractCallStarAbstractions(noOfProcedures, vectorOfProcedureNames, mapOfCalls, pkbinstance);
+            
             for (int i = 0; i < noOfProcedures; i++) {
                 std::vector<TNode> childNodes = root.children;
                 TNode currentNode = childNodes[i];
                 std::string procedureName = currentNode.stringId;
-                AbstractionExtractor abstractionExtractor;
-                abstractionExtractor.extractAbstraction(currentNode, pkbinstance, procedureName);
+                ExtractorFactory factory1;                
+                std::vector<string> ifContainer = std::vector<string>(0);
+                std::vector<string> whileContainer = std::vector<string>(0);
+                std::map<string, vector<string>> information = constructMap(ifContainer, whileContainer, procedureName, std::to_string(0));
+                auto abstractionExtractor = factory1.createExtractor(currentNode, information, pkbinstance);
+                abstractionExtractor->extractAbstraction();
+                //AbstractionExtractor abstractionExtractor;
+                //abstractionExtractor.extractAbstraction(currentNode, pkbinstance, procedureName);
             }
         }
     }
 };
+
+void ProgramExtractor::extractCallStarAbstractions(int noOfProcedures, std::vector<string> vectorOfProcedureNames, std::map<std::string, std::vector<string>> mapOfCalls, PKB pkbinstance) {
+    if (noOfProcedures == 1) {
+
+    } else {
+        for (int i = 0; i < noOfProcedures; i++) {
+            std::string procedureName = vectorOfProcedureNames[i];
+            queue<std::string> queueOfCalls;
+            vector<std::string> vectorOfCallsSTAR;
+            std::vector<string> vector1;
+            if (mapOfCalls.count(procedureName) > 0) {
+                vector1 = mapOfCalls.at(procedureName);
+            } else {
+            }
+            set<std::string> setOfCalls;
+            if (vector1.size() == 0) {
+            } else {
+                for (int j = 0; j < vector1.size(); j++) {
+                    queueOfCalls.push(vector1[j]);
+                    setOfCalls.insert(vector1[j]);
+                    vectorOfCallsSTAR.push_back(vector1[j]);
+                }
+                while (queueOfCalls.size() > 0) {
+                    std::string proceduareCalled = queueOfCalls.front();
+                    std::vector<string> vector2;
+                    if (mapOfCalls.count(proceduareCalled) > 0) {
+                        vector2 = mapOfCalls.at(proceduareCalled);
+                    } else {
+                    }
+                    for (int k = 0; k < vector2.size(); k++) {
+                        if (setOfCalls.count(vector2[k]) == 1) {
+
+                        } else {
+                            queueOfCalls.push(vector2[k]);
+                            setOfCalls.insert(vector2[k]);
+                            vectorOfCallsSTAR.push_back(vector2[k]);
+                        }
+                    }
+                    queueOfCalls.pop();
+                }
+            }
+            for (int j = 0; j < vectorOfCallsSTAR.size(); j++) {
+                if (procedureName == vectorOfCallsSTAR[j]) {
+                    throw std::invalid_argument("SIMPLE source is invalid because procedure calls itself");
+                }
+                std::string underlineStr = "_";
+                pkbinstance.addDesignAbstraction("CALLSSTAR", make_tuple(underlineStr, procedureName, vectorOfCallsSTAR[j]));
+                pkbinstance.addDesignAbstraction("INVERSECALLS", make_tuple(underlineStr, vectorOfCallsSTAR[j], procedureName));
+                cout << procedureName + " callsStar " + vectorOfCallsSTAR[j] << endl;
+            }
+        }
+    }
+}
 
 void ProgramExtractor::extractCallAbstraction(PKB pkbinstance) {
     std::string statementStr = "STATEMENT";
@@ -149,28 +160,29 @@ void ProgramExtractor::extractCallAbstraction(PKB pkbinstance) {
     } else {
 
         for (int i = 0; i < noOfcalls; i++) {
-            int callstmt = callStmts[i];
-            string callStmtStr = std::to_string(callstmt);
+            //int callstmt = callStmts[i];
+            //string callStmtStr = std::to_string(callstmt);
+            string callStmtStr = callStmts[i];
             if (mapOfModifiedVarforCalls.count(callStmtStr) > 0) {
                 vector<string> modifiedVars = mapOfModifiedVarforCalls.at(callStmtStr);
                 for (int j = 0; j < modifiedVars.size(); j++) {
-                    if (mapOfWhileForCallStmts.count(callstmt) > 0) {
-                        vector<int> whileContainers1 = mapOfWhileForCallStmts.at(callstmt);
+                    if (mapOfWhileForCallStmts.count(callStmtStr) > 0) {                   //callstmt
+                        vector<string> whileContainers1 = mapOfWhileForCallStmts.at(callStmtStr);//callstmt
                         if (whileContainers1.size() > 0) {
                             for (int k = 0; k < whileContainers1.size(); k++) {
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(whileStr, modifiedVars[j], std::to_string(whileContainers1[k])));
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, modifiedVars[j], std::to_string(whileContainers1[k])));
-                                cout << modifiedVars[j] + "modifies while" + std::to_string(whileContainers1[k]) << endl;
+                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(whileStr, modifiedVars[j], whileContainers1[k]));
+                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, modifiedVars[j], whileContainers1[k]));
+                                cout << modifiedVars[j] + "modifies while" + whileContainers1[k] << endl;
                             }
                         }
                     }
-                    if (mapOfIfForCallStmts.count(callstmt) > 0) {
-                        vector<int> ifContainers1 = mapOfIfForCallStmts.at(callstmt);
+                    if (mapOfIfForCallStmts.count(callStmtStr) > 0) {
+                        vector<string> ifContainers1 = mapOfIfForCallStmts.at(callStmtStr);//callstmt
                         if (ifContainers1.size() > 0) {
                             for (int k = 0; k < ifContainers1.size(); k++) {
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(ifStr, modifiedVars[j], std::to_string(ifContainers1[k])));
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, modifiedVars[j], std::to_string(ifContainers1[k])));
-                                cout << modifiedVars[j] + "modifies if" + std::to_string(ifContainers1[k]) << endl;
+                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(ifStr, modifiedVars[j], ifContainers1[k]));
+                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, modifiedVars[j], ifContainers1[k]));
+                                cout << modifiedVars[j] + "modifies if" + ifContainers1[k] << endl;
                             }
                         }
                     }
@@ -180,23 +192,23 @@ void ProgramExtractor::extractCallAbstraction(PKB pkbinstance) {
             if (mapOfUsedVarforCalls.count(callStmtStr) > 0) {
                 vector<string> usedVars = mapOfUsedVarforCalls.at(callStmtStr);
                 for (int j = 0; j < usedVars.size(); j++) {
-                    if (mapOfWhileForCallStmts.count(callstmt) > 0) {
-                        vector<int> whileContainers1 = mapOfWhileForCallStmts.at(callstmt);
+                    if (mapOfWhileForCallStmts.count(callStmtStr) > 0) {                   //callstmt
+                        vector<string> whileContainers1 = mapOfWhileForCallStmts.at(callStmtStr);//callstmt
                         if (whileContainers1.size() > 0) {
                             for (int k = 0; k < whileContainers1.size(); k++) {
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, usedVars[j], std::to_string(whileContainers1[k])));
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, usedVars[j], std::to_string(whileContainers1[k])));
-                                cout << usedVars[j] + "uses while" + std::to_string(whileContainers1[k]) << endl;
+                                pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, usedVars[j], whileContainers1[k]));
+                                pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, usedVars[j], whileContainers1[k]));
+                                cout << usedVars[j] + "uses while" + whileContainers1[k] << endl;
                             }
                         }
                     }
-                    if (mapOfIfForCallStmts.count(callstmt) > 0) {
-                        vector<int> ifContainers1 = mapOfIfForCallStmts.at(callstmt);
+                    if (mapOfIfForCallStmts.count(callStmtStr) > 0) {                //callstmt
+                        vector<string> ifContainers1 = mapOfIfForCallStmts.at(callStmtStr);//callstmt
                         if (ifContainers1.size() > 0) {
                             for (int k = 0; k < ifContainers1.size(); k++) {
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, usedVars[j], std::to_string(ifContainers1[k])));
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, usedVars[j], std::to_string(ifContainers1[k])));
-                                cout << usedVars[j] + "uses if" + std::to_string(ifContainers1[k]) << endl;
+                                pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, usedVars[j], ifContainers1[k]));
+                                pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, usedVars[j], ifContainers1[k]));
+                                cout << usedVars[j] + "uses if" + ifContainers1[k] << endl;
                             }
                         }
                     }
@@ -206,3 +218,33 @@ void ProgramExtractor::extractCallAbstraction(PKB pkbinstance) {
         }
     }
 };
+
+/*
+void ProgramExtractor::extractCALLInContainers(string type1, int callstmt, string callStmtStr, std::map<string, vector<string>> mapOfModifiedVarforCalls, std::map<string, vector<string>> mapOfUsedVarforCalls, std::map<int, vector<int>> mapOfWhileForCallStmts, PKB pkbinstance) {
+    if (mapOfModifiedVarforCalls.count(callStmtStr) > 0) {
+        vector<string> modifiedVars = mapOfModifiedVarforCalls.at(callStmtStr);
+        for (int j = 0; j < modifiedVars.size(); j++) {
+            if (mapOfWhileForCallStmts.count(callstmt) > 0) {
+                vector<int> whileContainers1 = mapOfWhileForCallStmts.at(callstmt);
+                if (whileContainers1.size() > 0) {
+                    for (int k = 0; k < whileContainers1.size(); k++) {
+                        pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(whileStr, modifiedVars[j], std::to_string(whileContainers1[k])));
+                        pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, modifiedVars[j], std::to_string(whileContainers1[k])));
+                        cout << modifiedVars[j] + "modifies while" + std::to_string(whileContainers1[k]) << endl;
+                    }
+                }
+            }
+            if (mapOfIfForCallStmts.count(callstmt) > 0) {
+                vector<int> ifContainers1 = mapOfIfForCallStmts.at(callstmt);
+                if (ifContainers1.size() > 0) {
+                    for (int k = 0; k < ifContainers1.size(); k++) {
+                        pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(ifStr, modifiedVars[j], std::to_string(ifContainers1[k])));
+                        pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, modifiedVars[j], std::to_string(ifContainers1[k])));
+                        cout << modifiedVars[j] + "modifies if" + std::to_string(ifContainers1[k]) << endl;
+                    }
+                }
+            }
+        }
+    } else {
+    }
+};*/

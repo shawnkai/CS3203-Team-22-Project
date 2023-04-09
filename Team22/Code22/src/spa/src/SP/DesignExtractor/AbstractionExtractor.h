@@ -8,12 +8,23 @@
 
 #include "../../PKB/PKB.h"
 #include "SP/Parser/TNode.h"
-#include "StmtlstExtractor.h"
+#include "ExtractorFactory.h"
+#include "Extractor.h"
 
 using namespace std;
 
-class AbstractionExtractor {
+class AbstractionExtractor : public Extractor {
 public:
-    AbstractionExtractor(){};
-    void extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
+    TNode root;
+    std::string procedureName;
+    PKB pkbinstance;
+
+
+    AbstractionExtractor(TNode theNode, std::map<string, vector<string>> information, PKB pkbinstance1) {
+        root = theNode;
+        vector<string> vector1 = information[procedureNameStr];
+        procedureName = vector1[0];
+        pkbinstance = pkbinstance1;
+    };
+    void extractAbstraction();
 };

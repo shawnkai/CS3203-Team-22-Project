@@ -22,7 +22,7 @@ using namespace std;
  * @param pkbinstance An instance of Program Knowledge Base.
  * @param procedureName The name of the procedure.
  */
-void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
+void IfExtractor::extractAbstraction() {
 
     if (currentNode.nodeType != TokenType::IF) {
         cout << "something went wrong" << endl;
@@ -30,16 +30,25 @@ void IfExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifConta
         int ifLineNo = currentNode.stmtNumber;
         pkbinstance.addDesignEntity("STATEMENT", make_tuple("STATEMENT", std::to_string(ifLineNo)));
         pkbinstance.addDesignEntity("IF", make_tuple(currentNode.stringId, std::to_string(ifLineNo)));
-        ifContainers.push_back(ifLineNo);
+        ifContainers.push_back(std::to_string(ifLineNo));
         std::vector<TNode> childNodes = currentNode.children;
         TNode conditionNode = childNodes[0];
         ConditionExtractor conditionExtractor;
-        conditionExtractor.extractAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance, procedureName, currentNode);
+        conditionExtractor.extractConditionAbstraction(conditionNode, ifContainers, whileContainers, pkbinstance, procedureName, currentNode);
         TNode ifstmtlstNode = childNodes[1];
-        StmtlstExtractor stmtlstExtractor;
-        stmtlstExtractor.extractAbstraction(ifstmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo, procedureName);
+        ExtractorFactory factory1;
+        std::map<string, vector<string>> information1 = constructMap(ifContainers, whileContainers, procedureName, std::to_string(ifLineNo));
+        auto stmtlstExtractor1 = factory1.createExtractor(ifstmtlstNode, information1, pkbinstance);
+        stmtlstExtractor1->extractAbstraction();
+        //StmtlstExtractor stmtlstExtractor;
+        //stmtlstExtractor.extractAbstraction(ifstmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo, procedureName);
+        
         TNode elsestmtlstNode = childNodes[2];
-        StmtlstExtractor stmtlstExtractor2;
-        stmtlstExtractor2.extractAbstraction(elsestmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo, procedureName);
+        ExtractorFactory factory2;
+        std::map<string, vector<string>> information2 = constructMap(ifContainers, whileContainers, procedureName, std::to_string(ifLineNo));
+        auto stmtlstExtractor2 = factory2.createExtractor(elsestmtlstNode, information2, pkbinstance);
+        stmtlstExtractor2->extractAbstraction();
+        //StmtlstExtractor stmtlstExtractor2;
+        //stmtlstExtractor2.extractAbstraction(elsestmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo, procedureName);
     }
 };

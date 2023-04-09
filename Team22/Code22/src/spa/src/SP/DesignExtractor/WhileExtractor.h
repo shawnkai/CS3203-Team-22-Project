@@ -7,14 +7,30 @@
 #include <vector>
 
 #include "../../PKB/PKB.h"
-#include "ConditionExtractor.h"
 #include "SP/Parser/TNode.h"
-#include "StmtlstExtractor.h"
+#include "ExtractorFactory.h"
+#include "Extractor.h"
 
 using namespace std;
 
-class WhileExtractor {
+class WhileExtractor : public Extractor {
 public:
-    WhileExtractor(){};
-    void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
+    TNode currentNode;
+    std::vector<string> ifContainers;
+    std::vector<string> whileContainers;
+    std::string procedureName;
+    PKB pkbinstance;
+
+    WhileExtractor(TNode theNode, std::map<string, vector<string>> information, PKB pkbinstance1) {
+        currentNode = theNode;
+        ifContainers = information[ifContainerStr];
+        whileContainers = information[whileContainerStr];
+        vector<string> vector1 = information[procedureNameStr];
+        procedureName = vector1[0];
+        pkbinstance = pkbinstance1;
+    }
+
+    void extractAbstraction();
+    //WhileExtractor(){};
+    //void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

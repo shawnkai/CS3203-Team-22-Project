@@ -24,7 +24,7 @@ using namespace std;
  * @param procedureName The name of the procedure.
  * @param prevNode The parent node of the current node.
  */
-void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName, TNode prevNode) {
+void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vector<string> ifContainers, std::vector<string> whileContainers, PKB pkbinstance, std::string procedureName, TNode prevNode) {
 	std::string nodeType1 = ToString(currentNode.nodeType);
 	queue<TNode> queue1;
 	queue1.push(currentNode);
@@ -118,16 +118,16 @@ void ConditionExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {
-					cout << std::to_string(whileContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, nameOfVariable, std::to_string(whileContainers[i])));
-					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(whileContainers[i])));
+					cout << whileContainers[i] << endl;
+					pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, nameOfVariable, whileContainers[i]));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, whileContainers[i]));
 				}
 			}
 			if (ifContainers.size() != 0) {
 				for (int i = 0; i < ifContainers.size(); i++) {
-					cout << std::to_string(ifContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, nameOfVariable, std::to_string(ifContainers[i])));
-					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(ifContainers[i])));
+					cout << ifContainers[i] << endl;
+					pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, nameOfVariable, ifContainers[i]));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, ifContainers[i]));
 				}
 			}
 

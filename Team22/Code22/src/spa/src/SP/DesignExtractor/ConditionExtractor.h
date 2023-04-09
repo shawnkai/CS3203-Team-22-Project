@@ -16,5 +16,5 @@ extern std::map<string, vector<string>> mapOfUsedVarforCalls;
 class ConditionExtractor {
 public:
     ConditionExtractor(){};
-    void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName, TNode prevNode);
+    void extractConditionAbstraction(TNode currentNode, std::vector<string> ifContainers, std::vector<string> whileContainers, PKB pkbinstance, std::string procedureName, TNode prevNode);
 };

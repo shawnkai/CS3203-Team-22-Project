@@ -20,7 +20,7 @@ StmtEntity::StmtEntity(int lineNumber) : StmtRef("STMTENTITY") {
 }
 
 StmtEntity::StmtEntity(int lineNumber, bool ignoreLineCheck) : StmtRef("STMTENTITY") {
-    if (!ignoreLineCheck and lineNumber <= 0) {
+    if (!ignoreLineCheck && lineNumber <= 0) {
         throw SemanticException();
     }
     this->lineNumber = lineNumber;

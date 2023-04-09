@@ -23,14 +23,14 @@ using namespace std;
  * @param pkbinstance An instance of Program Knowledge Base.
  * @param procedureName The name of the procedure.
  */
-void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName) {
-	std::string readStr = "READ";
+void ReadPrintExtractor::extractAbstraction() {
+    /* std::string readStr = "READ";
 	std::string printStr = "PRINT";
 	std::string statementStr = "STATEMENT";
 	std::string procedureStr = "PROCEDURE";
 	std::string procedurecallStr = "PROCEDURECALL";
 	std::string ifStr = "IF";
-	std::string whileStr = "WHILE";
+	std::string whileStr = "WHILE";*/
 
 	if (currentNode.nodeType == TokenType::UNKNOWN) {
 		cout << "something went wrong" << endl;
@@ -112,16 +112,16 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {
-					cout << std::to_string(whileContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(whileStr, variableName, std::to_string(whileContainers[i])));
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, std::to_string(whileContainers[i])));
+					cout << whileContainers[i] << endl;
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(whileStr, variableName, whileContainers[i]));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, whileContainers[i]));
 				}
 			}
 			if (ifContainers.size() != 0) {
 				for (int i = 0; i < ifContainers.size(); i++) {
-					cout << std::to_string(ifContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(ifStr, variableName, std::to_string(ifContainers[i])));
-					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, std::to_string(ifContainers[i])));
+					cout << ifContainers[i] << endl;
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(ifStr, variableName, ifContainers[i]));
+					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, ifContainers[i]));
 
 				}
 			}
@@ -195,17 +195,17 @@ void ReadPrintExtractor::extractAbstraction(TNode currentNode, std::vector<int> 
 			pkbinstance.addDesignEntity("VARIABLE", make_tuple(variableName, std::to_string(lineNumOfVariable)));
 			if (whileContainers.size() != 0) {
 				for (int i = 0; i < whileContainers.size(); i++) {
-					cout << std::to_string(whileContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, variableName, std::to_string(whileContainers[i])));
-					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, std::to_string(whileContainers[i])));
+					cout << whileContainers[i] << endl;
+					pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, variableName, whileContainers[i]));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, whileContainers[i]));
 
 				}
 			}
 			if (ifContainers.size() != 0) {
 				for (int i = 0; i < ifContainers.size(); i++) {
-					cout << std::to_string(ifContainers[i]) << endl;
-					pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, variableName, std::to_string(ifContainers[i])));
-					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, std::to_string(ifContainers[i])));
+					cout << ifContainers[i] << endl;
+					pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, variableName, ifContainers[i]));
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, ifContainers[i]));
 
 				}
 			}

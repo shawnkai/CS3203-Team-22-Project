@@ -19,8 +19,14 @@ using namespace std;
  * @param pkbinstance An instance of Program Knowledge Base.
  */
 void DesignExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
-	ProgramExtractor programExtractor;
-	programExtractor.extractAbstraction(root, pkbinstance);
-	programExtractor.extractCallAbstraction(pkbinstance);
+    std::map<string, vector<string>> information;
+    ExtractorFactory factory1;
+    auto stmtlstExtractor = factory1.createExtractor(root, information, pkbinstance);
+    stmtlstExtractor->extractAbstraction();
+    stmtlstExtractor->extractCallAbstraction(pkbinstance);
+
+	//ProgramExtractor programExtractor;
+	//programExtractor.extractAbstraction(root, pkbinstance);
+	//programExtractor.extractCallAbstraction(pkbinstance);
 };
 

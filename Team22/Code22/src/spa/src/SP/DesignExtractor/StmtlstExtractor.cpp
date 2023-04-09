@@ -24,8 +24,7 @@ using namespace std;
  * @param currentParent The current parent statement of this list of statement, if there is no parent the value is 0.
  * @param procedureName The name of the procedure.
  */
-void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName) {
-	std::string underlineStr = "_";
+void StmtlstExtractor::extractAbstraction() {
 
 	if (currentNode.nodeType != TokenType::STATEMENT_LIST) {
 		cout << "something went wrong" << endl;
@@ -51,35 +50,55 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 			}
 		}
 
-		if (currentParent == 0) {
+		if (currentParent == std::to_string(0)) {
 
 		}
 		else {
 			for (int i = 0; i < childstmts.size(); i++) {
 				TNode currentStmt = childstmts[i];
-				std::string showParent = "parent" + std::to_string(currentParent) + " " + std::to_string(currentStmt.stmtNumber);
+				std::string showParent = "parent" + currentParent + " " + std::to_string(currentStmt.stmtNumber);
 				cout << showParent << endl;
-				pkbinstance.addDesignAbstraction("PARENT", make_tuple(underlineStr, std::to_string(currentParent), std::to_string(currentStmt.stmtNumber)));
+				pkbinstance.addDesignAbstraction("PARENT", make_tuple(underlineStr, currentParent, std::to_string(currentStmt.stmtNumber)));
 				if (whileContainers.size() != 0) {
 					for (int j = 0; j < whileContainers.size(); j++) {
-						std::string showParentWhileStar = "parentsstar" + std::to_string(whileContainers[j]) + " " + std::to_string(currentStmt.stmtNumber);
+						std::string showParentWhileStar = "parentsstar" + whileContainers[j] + " " + std::to_string(currentStmt.stmtNumber);
 						cout << showParentWhileStar << endl;
-						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, std::to_string(whileContainers[j]), std::to_string(currentStmt.stmtNumber)));
+						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, whileContainers[j], std::to_string(currentStmt.stmtNumber)));
 					}
 				}
 				if (ifContainers.size() != 0) {
 					for (int j = 0; j < ifContainers.size(); j++) {
-						std::string showParentIfStar = "parentstar" + std::to_string(ifContainers[j]) + " " + std::to_string(currentStmt.stmtNumber);
+						std::string showParentIfStar = "parentstar" + ifContainers[j] + " " + std::to_string(currentStmt.stmtNumber);
 						cout << showParentIfStar << endl;
-						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, std::to_string(ifContainers[j]), std::to_string(currentStmt.stmtNumber)));
+						pkbinstance.addDesignAbstraction("PARENTSTAR", make_tuple(underlineStr, ifContainers[j], std::to_string(currentStmt.stmtNumber)));
 					}
 				}
 			}
 		}
 
+		ExtractorFactory factory1;
+        std::map<string, vector<string>> information = constructMap(ifContainers, whileContainers, procedureName, currentParent);
+
 		for (int i = 0; i < childstmts.size(); i++) {
 			TNode childstmt = childstmts[i];
 			TokenType tokenType1 = childstmt.nodeType;
+			if (tokenType1 == TokenType::CALL) {
+                int callStmtNo = childstmt.stmtNumber;
+                string callStmtNoStr = std::to_string(callStmtNo);
+
+                if (mapOfWhileForCallStmts.count(callStmtNoStr) > 0) {
+
+                } else {
+                    callStmts.push_back(callStmtNoStr);
+                    mapOfWhileForCallStmts[callStmtNoStr] = whileContainers;
+                    mapOfIfForCallStmts[callStmtNoStr] = ifContainers;
+                }
+            } else {
+                auto theExtractor = factory1.createExtractor(childstmt, information, pkbinstance);
+                theExtractor->extractAbstraction();
+			}
+
+			/*
 			if ((tokenType1 == TokenType::READ) || (tokenType1 == TokenType::PRINT)) {
 				ReadPrintExtractor readPrintExtractor;
 				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
@@ -99,6 +118,7 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 			}
 			else if (tokenType1 == TokenType::CALL) {
 				int callStmtNo = childstmt.stmtNumber;
+
 				if (mapOfWhileForCallStmts.count(callStmtNo) > 0) {
 
 				}
@@ -108,7 +128,7 @@ void StmtlstExtractor::extractAbstraction(TNode currentNode, std::vector<int> if
 					mapOfIfForCallStmts[callStmtNo] = ifContainers;
 				}
 			}
-			else {}
+			else {}*/
 		}
 
 	}
