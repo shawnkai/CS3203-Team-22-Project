@@ -24,9 +24,5 @@ void DesignExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
     auto programExtractor = factory1.createExtractor(root, information, pkbinstance);
     programExtractor->extractAbstraction();
     programExtractor->extractCallAbstraction(pkbinstance);
-
-	//ProgramExtractor programExtractor;
-	//programExtractor.extractAbstraction(root, pkbinstance);
-	//programExtractor.extractCallAbstraction(pkbinstance);
 };
 

@@ -10,7 +10,6 @@
 #include "ExtractorFactory.h"
 #include "Extractor.h"
 #include "SP/Parser/TNode.h"
-#include "UtilityExtractor.h"
 
 using namespace std;
 
@@ -40,6 +39,4 @@ public:
 
     void extractAbstraction();
 
-    //StmtlstExtractor(){};
-    //void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, int currentParent, std::string procedureName);
 };

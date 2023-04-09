@@ -32,6 +32,4 @@ public:
     }
 
     void extractAbstraction();
-    //WhileExtractor(){};
-    //void extractAbstraction(TNode root, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

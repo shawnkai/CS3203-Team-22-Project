@@ -24,13 +24,6 @@ using namespace std;
  * @param procedureName The name of the procedure.
  */
 void ReadPrintExtractor::extractAbstraction() {
-    /* std::string readStr = "READ";
-	std::string printStr = "PRINT";
-	std::string statementStr = "STATEMENT";
-	std::string procedureStr = "PROCEDURE";
-	std::string procedurecallStr = "PROCEDURECALL";
-	std::string ifStr = "IF";
-	std::string whileStr = "WHILE";*/
 
 	if (currentNode.nodeType == TokenType::UNKNOWN) {
 		cout << "something went wrong" << endl;
@@ -69,19 +62,7 @@ void ReadPrintExtractor::extractAbstraction() {
 						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, vector3[j], std::to_string(lineNumOfVariable)));
 						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, variableName, vector3[j]));
 						pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, vector3[j]));
-
-						/*
-						if (mapOfModifiedVarforCalls.count(vector3[j]) > 0) {
-							vector<string> modifiedVars = mapOfModifiedVarforCalls.at(vector3[j]);
-							modifiedVars.push_back(variableName);
-							mapOfModifiedVarforCalls[vector3[j]] = modifiedVars;
-						}
-						else {
-							vector<string> modifiedVars;
-							modifiedVars.push_back(variableName);
-							mapOfModifiedVarforCalls[vector3[j]] = modifiedVars;
-						}*/
-
+				
 						cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector3[j] << endl;
 					}
 				}
@@ -94,19 +75,7 @@ void ReadPrintExtractor::extractAbstraction() {
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, vector2[i], std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, variableName, vector2[i]));
 					pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, variableName, vector2[i]));
-
-					/*
-					if (mapOfModifiedVarforCalls.count(vector2[i]) > 0) {
-						vector<string> modifiedVars = mapOfModifiedVarforCalls.at(vector2[i]);
-						modifiedVars.push_back(variableName);
-						mapOfModifiedVarforCalls[vector2[i]] = modifiedVars;
-					}
-					else {
-						vector<string> modifiedVars;
-						modifiedVars.push_back(variableName);
-						mapOfModifiedVarforCalls[vector2[i]] = modifiedVars;
-					}*/
-
+					
 					cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector2[i] << endl;
 				}
 			}
@@ -153,19 +122,7 @@ void ReadPrintExtractor::extractAbstraction() {
 					if (vector3[j] != "none") {
 						pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, vector3[j], std::to_string(lineNumOfVariable)));
 						pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, variableName, vector3[j]));
-						pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, vector3[j]));
-
-						/*
-						if (mapOfUsedVarforCalls.count(vector3[j]) > 0) {
-							vector<string> usedVars = mapOfUsedVarforCalls.at(vector3[j]);
-							usedVars.push_back(variableName);
-							mapOfUsedVarforCalls[vector3[j]] = usedVars;
-						}
-						else {
-							vector<string> usedVars;
-							usedVars.push_back(variableName);
-							mapOfUsedVarforCalls[vector3[j]] = usedVars;
-						}*/
+						pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, vector3[j]));				
 
 						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
 					}
@@ -178,19 +135,7 @@ void ReadPrintExtractor::extractAbstraction() {
 				if (vector2[i] != "none") {
 					pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, vector2[i], std::to_string(lineNumOfVariable)));
 					pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, variableName, vector2[i]));
-					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, vector2[i]));
-
-					/*
-					if (mapOfUsedVarforCalls.count(vector2[i]) > 0) {
-						vector<string> usedVars = mapOfUsedVarforCalls.at(vector2[i]);
-						usedVars.push_back(variableName);
-						mapOfUsedVarforCalls[vector2[i]] = usedVars;
-					}
-					else {
-						vector<string> usedVars;
-						usedVars.push_back(variableName);
-						mapOfUsedVarforCalls[vector2[i]] = usedVars;
-					}*/
+					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, variableName, vector2[i]));					
 
 					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
 				}

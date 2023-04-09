@@ -11,8 +11,6 @@
 
 using namespace std;
 
-//extern std::map<string, vector<string>> mapOfUsedVarforCalls;
-
 class ConditionExtractor {
 public:
     ConditionExtractor(){};

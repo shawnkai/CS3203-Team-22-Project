@@ -15,9 +15,6 @@
 
 using namespace std;
 
-/* extern std::map<string, vector<string>> mapOfModifiedVarforCalls;
-extern std::map<string, vector<string>> mapOfUsedVarforCalls;*/
-
 class AssignExtractor : public Extractor {
 public:
     TNode currentNode;
@@ -37,6 +34,4 @@ public:
 
     void extractAbstraction();
 
-    //AssignExtractor(){};
-    //void extractAbstraction(TNode currentNode, std::vector<int> ifContainers, std::vector<int> whileContainers, PKB pkbinstance, std::string procedureName);
 };

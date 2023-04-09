@@ -102,37 +102,6 @@ void StmtlstExtractor::extractAbstraction() {
                 theExtractor->extractAbstraction();
 			}
 
-			/*
-			if ((tokenType1 == TokenType::READ) || (tokenType1 == TokenType::PRINT)) {
-				ReadPrintExtractor readPrintExtractor;
-				readPrintExtractor.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
-			}
-			else if (tokenType1 == TokenType::WHILE) {
-				WhileExtractor whileExtractor1;
-				whileExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
-			}
-			else if (tokenType1 == TokenType::IF) {
-				IfExtractor ifExtractor1;
-				ifExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
-
-			}
-			else if (tokenType1 == TokenType::ASSIGN) {
-				AssignExtractor assignExtractor1;
-				assignExtractor1.extractAbstraction(childstmt, ifContainers, whileContainers, pkbinstance, procedureName);
-			}
-			else if (tokenType1 == TokenType::CALL) {
-				int callStmtNo = childstmt.stmtNumber;
-
-				if (mapOfWhileForCallStmts.count(callStmtNo) > 0) {
-
-				}
-				else {
-					callStmts.push_back(callStmtNo);
-					mapOfWhileForCallStmts[callStmtNo] = whileContainers;
-					mapOfIfForCallStmts[callStmtNo] = ifContainers;
-				}
-			}
-			else {}*/
 		}
 
 	}

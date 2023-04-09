@@ -9,8 +9,8 @@
 #include <vector>
 
 #include "../../PKB/PKB.h"
-#include "ProgramExtractor.h"
 #include "SP/Parser/TNode.h"
+#include "ExtractorFactory.h"
 
 using namespace std;
 

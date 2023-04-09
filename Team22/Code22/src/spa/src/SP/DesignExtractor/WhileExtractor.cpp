@@ -41,8 +41,6 @@ void WhileExtractor::extractAbstraction() {
         ExtractorFactory factory1;
         auto stmtlstExtractor = factory1.createExtractor(stmtlstNode, information2, pkbinstance);
         stmtlstExtractor->extractAbstraction();
-		//StmtlstExtractor stmtlstExtractor;
-		//stmtlstExtractor.extractAbstraction(stmtlstNode, ifContainers, whileContainers, pkbinstance, whileLineNo, procedureName);
 	}
 		
 };

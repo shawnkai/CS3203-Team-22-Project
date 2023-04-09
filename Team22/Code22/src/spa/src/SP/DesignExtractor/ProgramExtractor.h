@@ -17,12 +17,6 @@
 using namespace std;
 
 
-/*extern std::map<string, vector<string>> mapOfWhileForCallStmts;
-extern std::map<string, vector<string>> mapOfIfForCallStmts;
-extern std::map<string, vector<string>> mapOfModifiedVarforCalls;
-extern std::map<string, vector<string>> mapOfUsedVarforCalls;
-extern vector<string> callStmts;*/
-
 class ProgramExtractor : public Extractor {
 public:
 

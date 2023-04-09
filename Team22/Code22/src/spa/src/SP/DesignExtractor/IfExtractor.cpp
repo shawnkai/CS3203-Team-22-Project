@@ -40,15 +40,11 @@ void IfExtractor::extractAbstraction() {
         std::map<string, vector<string>> information1 = constructMap(ifContainers, whileContainers, procedureName, std::to_string(ifLineNo));
         auto stmtlstExtractor1 = factory1.createExtractor(ifstmtlstNode, information1, pkbinstance);
         stmtlstExtractor1->extractAbstraction();
-        //StmtlstExtractor stmtlstExtractor;
-        //stmtlstExtractor.extractAbstraction(ifstmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo, procedureName);
         
         TNode elsestmtlstNode = childNodes[2];
         ExtractorFactory factory2;
         std::map<string, vector<string>> information2 = constructMap(ifContainers, whileContainers, procedureName, std::to_string(ifLineNo));
         auto stmtlstExtractor2 = factory2.createExtractor(elsestmtlstNode, information2, pkbinstance);
         stmtlstExtractor2->extractAbstraction();
-        //StmtlstExtractor stmtlstExtractor2;
-        //stmtlstExtractor2.extractAbstraction(elsestmtlstNode, ifContainers, whileContainers, pkbinstance, ifLineNo, procedureName);
     }
 };

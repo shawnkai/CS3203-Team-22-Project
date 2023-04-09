@@ -38,18 +38,13 @@ void AbstractionExtractor::extractAbstraction() {
 				std::vector<TNode> childNodes = root.children;
 				TNode currentNode = childNodes[j];
 				if (currentNode.nodeType == STATEMENT_LIST) {
-					//StmtlstExtractor stmtlstExtractor;
-                    /* std::vector<int> ifContainer = std::vector<int>(0);
-					std::vector<int> whileContainer = std::vector<int>(0);
-					int currentParent = 0;*/
-                    
+
                     ExtractorFactory factory1;
                     std::vector<string> ifContainer = std::vector<string>(0);
                     std::vector<string> whileContainer = std::vector<string>(0);
                     std::map<string, vector<string>> information = constructMap(ifContainer, whileContainer, procedureName, std::to_string(0));
                     auto stmtlstExtractor = factory1.createExtractor(currentNode, information, pkbinstance);
                     stmtlstExtractor->extractAbstraction();
-					//stmtlstExtractor.extractAbstraction(currentNode, ifContainer, whileContainer, pkbinstance, currentParent, procedureName);
 				}
 
 			}

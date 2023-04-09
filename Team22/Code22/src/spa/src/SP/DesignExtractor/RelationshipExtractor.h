@@ -14,5 +14,5 @@ using namespace std;
 class RelationshipExtractor {
 public:
     RelationshipExtractor(){};
-    void extractAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
+    void extractRelationshipAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
 };
