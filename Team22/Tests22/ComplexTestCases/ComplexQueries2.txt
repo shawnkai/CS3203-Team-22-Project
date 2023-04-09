@@ -1,0 +1,52 @@
+1 - Get procedures in which the called procedure is called by another procedure that modifies a variable
+procedure p1, p2, p3;
+Select <p1, p2> such that Calls* (p1, p2) and Calls (p3, p2) and Modifies (p3, "j")
+p1 p2, p1 p3, p1 p4, p1 p5, p2 p5, p3 p4, p3 p5, p4 p5
+5000
+2 - Get statement tuple that have follows* and affect relationship between them and one statememt modifies a
+stmt s1, s2; call c;
+Select <s1, s2> such that Follows* (s1, s2) and Modifies (s1, "a") and Affects (s1, s2)
+20 21
+5000
+3 - Get variable that is used in assignment and in condition of if and another variable that modifies a while that is parent of that assignment
+variable v1, v2; if ifs; while w; assign a;
+Select <v1, v2> such that Uses (a, v1) and Modifies (w, v2) such that Parent (w, a) pattern ifs(v1, _, _) with v1.varName = "a"
+a a, a r
+5000
+4 - Get variables that one is modified in a read, used in a assignment and another is used in an assignment with affect relationship between them 
+variable v1, v2; read r; assign a1, a2;
+Select <v1, v2> such that Modifies (r, v1) and Uses (a1, v1) and Uses (a2, v2) and Follows* (r, a1) and Next* (a1, a2)
+none
+5000
+5 - Get variable that is used in one assignment and another variable modified in another assignment such that one assignment is next of the other
+variable v1, v2; while w; assign a1, a2; 
+Select <v1, v2> such that Uses (a1, v1) and Modifies (a2, v2) and Follows* (a1, a2) such that Next* (a1, a2) pattern w(v1, _)
+e varA, q varA
+5000
+6 - Get assignment that has parent of while and if and has affect relationship with another assignment that follows that while container
+variable v1; if i; while w, w1; assign a1, a2;
+Select a2 such that Parent* (i, a2) and Parent (w, a2) and Modifies (a2, v1) and Follows* (a1, w) such that Next*(a1, a2)
+41, 46, 56
+5000
+7 - Get procedure that calls p5 directly or indirectly and modifies a variable used in p5 and this variable is inside an if statement and a while statement with p2.procName = "p5"
+procedure p1, p2; variable v1; if i; while w;
+Select p1 such that Modifies (p1, v1) such that Uses (p2, v1) such that Parent* (i, w) such that Calls* (p1, p2) with p2.procName = "p5"
+p1, p2, p3, p4
+5000
+8 - Get print statement that uses a variable and has a while container, the variable used in print is also used in an if condition
+variable v1, v2; if ifs; while w; assign a; print p;
+Select p such that Uses (p, v1) and Uses (a, v2) and Uses (w, v2) and Parent* (w, p) pattern ifs(v1, _, _)
+none
+5000
+9 - Get variable that is used by assignment and a while contaning this assignment modifies this variable, this variable is also used in if statement
+variable v1, v2; if ifs, i; while w; assign a;
+Select v1 such that Uses (a, v1) and Modifies (w, v1) such that Parent (w, a) such that Uses (i, v1) such that Next*(i, w) pattern ifs(v1, _, _)
+a
+5000
+10 - Get variable that is used by assignment and a while contaning this assignment modifies this variable, this variable is also used in if statement
+variable v1, v2; if i; while w1, w2; assign a;
+Select v1 such that Uses (w1, v1) and Modifies (w2, v1) such that Parent (w1, a) such that Uses (i, v1) pattern w1(v1, _)
+a, g, q, y
+5000
+
+

@@ -119,6 +119,7 @@ pair<DesignEntity*, string> SelectExpression::extractSynonymAndAttribute(const s
 
 ResultTable* SelectExpression::evaluate(PKB pkb) {
     vector<string> columns;
+    vector<string> allColumns;
     vector<ResultTable*> selectEntityTables;
     unordered_map<string, int> columnMap;
     for (int i = 0; i < this->entities.size(); i++) {
@@ -144,10 +145,13 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
         if (!synAttr.empty()) {
             finalResults.insert({entity->toString() + "." + synAttr, entity->getAttrVal(synAttr, pkb)->getValues("withCond")});
             columns.push_back(entity->toString() + "." + synAttr);
+            allColumns.push_back(entity->toString() + "." + synAttr);
+            allColumns.push_back(entity->toString());
             columnMap.insert({entity->toString(), i});
             columnMap.insert({entity->toString() + "." + synAttr, i});
         } else {
             columns.push_back(entity->toString());
+            allColumns.push_back(entity->toString());
             columnMap.insert({entity->toString(), i});
         }
         selectEntityTables.push_back(new ResultTable(finalResults));
@@ -171,7 +175,7 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
                 try {
                     vector<ResultTable *> subResults;
                     for (Expression *exp: groups[i]) {
-                        subResults.push_back(exp->evaluate(pkb));
+                        subResults.push_back(exp->evaluate(pkb)->removeColumn("_"));
                     }
                     ResultTable *temp = ResultTable::intersection(subResults);
                     ::printf("Group %d with Result Size = %zu\n", i + 1, temp->getSize());
@@ -212,8 +216,8 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
                     return ResultTable::intersection(selectEntityTables)->getColumns(columns);
                 }
             }
-            t = t->getColumns(columns);
-            vector<string> selectColumns = columns;
+            t = t->getColumns(allColumns);
+            vector<string> selectColumns = allColumns;
             sort(selectColumns.begin(), selectColumns.end());
             sort(resultColumns.begin(), resultColumns.end());
 
@@ -222,6 +226,7 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
 
             if (!missingColumns.empty()) {
                 vector<ResultTable*> required;
+                required.reserve(missingColumns.size());
                 for (const string& col : missingColumns) {
                     required.push_back(selectEntityTables[columnMap.at(col)]);
                 }

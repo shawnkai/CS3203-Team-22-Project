@@ -91,7 +91,7 @@ procedure that {
   call that2;
  }
  call MY5;
- t = o + q / f;
+ t = o + q / f + 3;
 }
 
 procedure that2 {

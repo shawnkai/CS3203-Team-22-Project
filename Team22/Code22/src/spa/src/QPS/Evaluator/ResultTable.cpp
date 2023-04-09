@@ -216,7 +216,7 @@ ResultTable* ResultTable::intersection(vector<ResultTable*> tables) {
         if (dynamic_cast<BooleanTrueTable*>(resultTables[i])) {
             continue;
         } else if (dynamic_cast<BooleanFalseTable*>(resultTables[i])) {
-            return new BooleanFalseTable();
+            return new BooleanFalseTable;
         }
         finalResult = finalResult->intersection(resultTables[i]);
     }
@@ -282,13 +282,13 @@ void ResultTable::renameColumn(const string& oldName, const string& newName) {
     this->table.erase(this->table.find(oldName));
 }
 
-BooleanTrueTable::BooleanTrueTable() : ResultTable({{"_", {"-"}}}) {}
+BooleanTrueTable::BooleanTrueTable() : ResultTable({{"TRUE", {"-"}}}) {}
 
 vector<string> BooleanTrueTable::getValues() {
     return {"TRUE"};
 }
 
-BooleanFalseTable::BooleanFalseTable() : ResultTable({{"_", {}}}) {}
+BooleanFalseTable::BooleanFalseTable() : ResultTable({{"FALSE", {}}}) {}
 
 vector<string> BooleanFalseTable::getValues() {
     return {"FALSE"};
