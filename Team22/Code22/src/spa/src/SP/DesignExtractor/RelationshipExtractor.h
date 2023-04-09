@@ -13,6 +13,13 @@ using namespace std;
 
 class RelationshipExtractor {
 public:
+    std::string procedureStr = "PROCEDURE";
+    std::string procedurecallStr = "PROCEDURECALL";
+    std::string statementStr = "STATEMENT";
+    std::string ifStr = "IF";
+    std::string whileStr = "WHILE";
+
     RelationshipExtractor(){};
-    void extractRelationshipAbstraction(TNode root, PKB pkbinstance, std::string procedureName);
+    void extractModifiesorUsesAbstraction(string type1, PKB pkbinstance, string procedureName, string variableName, int lineNumOfVariable);
+    void extractContainerUsesOrModifiesAbstraction(string type1, vector<string> ifContainers, vector<string> whileContainers, PKB pkbinstance, string variableName);
 };

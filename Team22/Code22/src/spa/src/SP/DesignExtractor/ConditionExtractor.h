@@ -8,6 +8,7 @@
 
 #include "../../PKB/PKB.h"
 #include "SP/Parser/TNode.h"
+#include "RelationshipExtractor.h"
 
 using namespace std;
 

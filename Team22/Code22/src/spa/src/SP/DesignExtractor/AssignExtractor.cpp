@@ -48,118 +48,19 @@ void AssignExtractor::extractAbstraction() {
                     firstTime = 1;
                     pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(assignmentStr, nameOfVariable, std::to_string(lineNumOfVariable)));
                     pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, nameOfVariable, std::to_string(lineNumOfVariable)));
-                    pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedureStr, procedureName, std::to_string(lineNumOfVariable)));
-                    pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedureStr, nameOfVariable, procedureName));
-                    cout << std::to_string(lineNumOfVariable) + " modifies procedure " + procedureName << endl;
-                    cout << nameOfVariable + " modifies procedure " + procedureName << endl;
-
-                    Result result1 = pkbinstance.getDesignAbstraction("INVERSECALLS", make_pair("_", procedureName));
-                    std::vector<std::string> vector1 = result1.getQueryResult();
-                    for (int i = 0; i < vector1.size(); i++) {
-                        if (vector1[i] != "none") {
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedureStr, vector1[i], std::to_string(lineNumOfVariable)));
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedureStr, nameOfVariable, vector1[i]));
-                            cout << std::to_string(lineNumOfVariable) + " modifies procedure " + vector1[i] << endl;
-                            cout << nameOfVariable + " modifies procedure " + vector1[i] << endl;
-                        }
-                        Result result3 = pkbinstance.getDesignEntity("CALL", vector1[i]);
-                        std::vector<std::string> vector3 = result3.getQueryResult();
-                        for (int j = 0; j < vector3.size(); j++) {
-                            if (vector3[j] != "none") {
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, vector3[j], std::to_string(lineNumOfVariable)));
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, nameOfVariable, vector3[j]));
-                                pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, nameOfVariable, vector3[j]));
-
-                                cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector3[j] << endl;
-                            }
-                        }
-                    }
-
-                    Result result2 = pkbinstance.getDesignEntity("CALL", procedureName);
-                    std::vector<std::string> vector2 = result2.getQueryResult();
-                    for (int i = 0; i < vector2.size(); i++) {
-                        if (vector2[i] != "none") {
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, vector2[i], std::to_string(lineNumOfVariable)));
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(procedurecallStr, nameOfVariable, vector2[i]));
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, nameOfVariable, vector2[i]));
-
-                            cout << std::to_string(lineNumOfVariable) + " modifies procedureCall " + vector2[i] << endl;
-                        }
-                    }
-
+                    RelationshipExtractor relationshipExtractor;
+                    relationshipExtractor.extractModifiesorUsesAbstraction("MODIFIES", pkbinstance, procedureName, nameOfVariable, lineNumOfVariable);
+                    relationshipExtractor.extractContainerUsesOrModifiesAbstraction("MODIFIES", ifContainers, whileContainers, pkbinstance, nameOfVariable);
                     pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
-                    if (whileContainers.size() != 0) {
-                        for (int i = 0; i < whileContainers.size(); i++) {
-                            cout << whileContainers[i] << endl;
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(whileStr, nameOfVariable, whileContainers[i]));
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, nameOfVariable, whileContainers[i]));
-                        }
-                    }
-                    if (ifContainers.size() != 0) {
-                        for (int i = 0; i < ifContainers.size(); i++) {
-                            cout << ifContainers[i] << endl;
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(ifStr, nameOfVariable, ifContainers[i]));
-                            pkbinstance.addDesignAbstraction("MODIFIES", make_tuple(statementStr, nameOfVariable, ifContainers[i]));
-                        }
-                    }
 
                 } else {
                     pkbinstance.addDesignAbstraction("USES", make_tuple(assignmentStr, nameOfVariable, std::to_string(lineNumOfVariable)));
                     pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, std::to_string(lineNumOfVariable)));
-                    pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, procedureName, std::to_string(lineNumOfVariable)));
-                    pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, nameOfVariable, procedureName));
-                    cout << std::to_string(lineNumOfVariable) + " uses procedure " + procedureName << endl;
-                    cout << nameOfVariable + " uses procedure " + procedureName << endl;
-
-                    Result result1 = pkbinstance.getDesignAbstraction("INVERSECALLS", make_pair("_", procedureName));
-                    std::vector<std::string> vector1 = result1.getQueryResult();
-                    for (int i = 0; i < vector1.size(); i++) {
-                        if (vector1[i] != "none") {
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, vector1[i], std::to_string(lineNumOfVariable)));
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(procedureStr, nameOfVariable, vector1[i]));
-                            cout << std::to_string(lineNumOfVariable) + " uses procedure " + vector1[i] << endl;
-                            cout << nameOfVariable + " uses procedure " + vector1[i] << endl;
-                        }
-                        Result result3 = pkbinstance.getDesignEntity("CALL", vector1[i]);
-                        std::vector<std::string> vector3 = result3.getQueryResult();
-                        for (int j = 0; j < vector3.size(); j++) {
-                            if (vector3[j] != "none") {
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, vector3[j], std::to_string(lineNumOfVariable)));
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, nameOfVariable, vector3[j]));
-                                pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, vector3[j]));
-
-                                cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
-                            }
-                        }
-                    }
-
-                    Result result2 = pkbinstance.getDesignEntity("CALL", procedureName);
-                    std::vector<std::string> vector2 = result2.getQueryResult();
-                    for (int i = 0; i < vector2.size(); i++) {
-                        if (vector2[i] != "none") {
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, vector2[i], std::to_string(lineNumOfVariable)));
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(procedurecallStr, nameOfVariable, vector2[i]));
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, vector2[i]));
-                           
-                            cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
-                        }
-                    }
-
+                    RelationshipExtractor relationshipExtractor;
+                    relationshipExtractor.extractModifiesorUsesAbstraction("USES", pkbinstance, procedureName, nameOfVariable, lineNumOfVariable);
+                    relationshipExtractor.extractContainerUsesOrModifiesAbstraction("USES", ifContainers, whileContainers, pkbinstance, nameOfVariable);
                     pkbinstance.addDesignEntity("VARIABLE", make_tuple(nameOfVariable, std::to_string(lineNumOfVariable)));
-                    if (whileContainers.size() != 0) {
-                        for (int i = 0; i < whileContainers.size(); i++) {
-                            cout << whileContainers[i] << endl;
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(whileStr, nameOfVariable, whileContainers[i]));
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, whileContainers[i]));
-                        }
-                    }
-                    if (ifContainers.size() != 0) {
-                        for (int i = 0; i < ifContainers.size(); i++) {
-                            cout << ifContainers[i] << endl;
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(ifStr, nameOfVariable, ifContainers[i]));
-                            pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, ifContainers[i]));
-                        }
-                    }
+                    
                 }
 
             } else if (tokenType1 == TokenType::OPERATOR) {

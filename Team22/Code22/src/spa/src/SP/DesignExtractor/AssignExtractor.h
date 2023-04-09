@@ -12,6 +12,7 @@
 #include "SP/Parser/TNode.h"
 #include "ExtractorFactory.h"
 #include "Extractor.h"
+#include "RelationshipExtractor.h"
 
 using namespace std;
 
