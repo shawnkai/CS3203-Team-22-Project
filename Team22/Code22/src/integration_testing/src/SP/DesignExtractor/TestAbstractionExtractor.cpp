@@ -18,7 +18,7 @@ TEST_CASE("Testcase1_ExtractOneStatement_ShouldSuccess") {
     child.push_back(stmtlist1);
     root.children = child;
 
-    /*PKB pkbinstance = PKB();
+    /* PKB pkbinstance = PKB();
     pkbinstance.clearAllDatabases();
     AbstractionExtractor abstractionExtractor;
 
