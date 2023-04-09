@@ -127,6 +127,34 @@ public:
      * @param lineNumber The line number of the statement.
      */
     explicit StmtEntity(int lineNumber);
+
+    /**
+     * Constructs a StmtEntity object, while ignoring line check.
+     *
+     * @param lineNumber The line number of the statement.
+     * @param lineNumber The line number of the statement.
+     */
+    explicit StmtEntity(int lineNumber, bool ignoreLineCheck);
+
+    /**
+     * Returns the attribute value of the given attribute for this StmtEntity object.
+     *
+     * @param attr A string indicating the attribute to be retrieved.
+     * @param pkb A PKB object to be used for attribute retrieval.
+     *
+     * @return ResultTable* A pointer to the ResultTable containing the requested attribute value(s).
+     */
+    ResultTable* getAttrVal(string attr, PKB pkb) override;
+
+    /**
+     * Checks if the given attribute is valid for this StmtEntity object.
+     *
+     * @param attr A string indicating the attribute to be checked.
+     *
+     * @return true If the attribute is valid.
+     * @return false If the attribute is not valid.
+     */
+    bool checkAttr(string attr) override;
 };
 
 /**

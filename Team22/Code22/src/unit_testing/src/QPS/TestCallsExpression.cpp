@@ -62,7 +62,7 @@ TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsStmtType_SemanticException") {
     REQUIRE(throwsException);
 }
 
-TEST_CASE("TestCase4_ParseSelectWithSuchThatWhileCalls_SemanticException") {
+TEST_CASE("TestCase5_ParseSelectWithSuchThatWhileCalls_SemanticException") {
     QueryParser queryParser;
     string declaration = "while w;";
     string query = "Select w such that Calls(w, _)";
@@ -81,7 +81,7 @@ TEST_CASE("TestCase4_ParseSelectWithSuchThatWhileCalls_SemanticException") {
 }
 
 
-TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsFirstArgConst_SemanticException") {
+TEST_CASE("TestCase6_ParseSelectWithSuchThatCallsFirstArgConst_SemanticException") {
     QueryParser queryParser;
     string declaration = "stmt s; constant c;";
     string query = "Select s such that Calls(c, _)";
@@ -100,7 +100,7 @@ TEST_CASE("TestCase4_ParseSelectWithSuchThatCallsFirstArgConst_SemanticException
 }
 
 
-TEST_CASE("TestCase5_ParseSelectWithSuchThatCallsProcedureNameWhitespaces_ShouldSuccess") {
+TEST_CASE("TestCase7_ParseSelectWithSuchThatCallsProcedureNameWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "procedure p;";
     string query = "Select p such that Calls  (  p ,  \"  Example \"  )";
@@ -112,7 +112,7 @@ TEST_CASE("TestCase5_ParseSelectWithSuchThatCallsProcedureNameWhitespaces_Should
     REQUIRE(actualResult->toString() == "Select p such that Calls(p, \"Example\")");
 }
 
-TEST_CASE("TestCase6_ParseCallsProcedureUnknownCharacters_SyntacticException") {
+TEST_CASE("TestCase8_ParseCallsProcedureUnknownCharacters_SyntacticException") {
     QueryParser queryParser;
     string declaration = "procedure p;";
     string query = "Select p such that Calls  (  p ,  \"  Example* \"  )";
@@ -131,7 +131,7 @@ TEST_CASE("TestCase6_ParseCallsProcedureUnknownCharacters_SyntacticException") {
 }
 
 
-TEST_CASE("TestCase7_ParseSelectWithSuchThatCallsStarProcedures_ShouldSuccess") {
+TEST_CASE("TestCase9_ParseSelectWithSuchThatCallsStarProcedures_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "procedure p1, p2;";
     string query = "Select p1 such that Calls*(p1, p2)";
@@ -143,7 +143,7 @@ TEST_CASE("TestCase7_ParseSelectWithSuchThatCallsStarProcedures_ShouldSuccess") 
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase8_ParseSelectWithSuchThatCallsStarWildCard_ShouldSuccess") {
+TEST_CASE("TestCase10_ParseSelectWithSuchThatCallsStarWildCard_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "procedure p;";
     string query = "Select p such that Calls*(p, _)";
@@ -155,7 +155,7 @@ TEST_CASE("TestCase8_ParseSelectWithSuchThatCallsStarWildCard_ShouldSuccess") {
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase9_ParseSelectWithSuchThatCallsStarProcedureName_ShouldSuccess") {
+TEST_CASE("TestCase11_ParseSelectWithSuchThatCallsStarProcedureName_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "procedure p;";
     string query = "Select p such that Calls*(\"Example\", p)";
@@ -167,7 +167,7 @@ TEST_CASE("TestCase9_ParseSelectWithSuchThatCallsStarProcedureName_ShouldSuccess
     REQUIRE(actualResult->toString() == query);
 }
 
-TEST_CASE("TestCase10_ParseCallsStarProcedureNameWhitespaces_ShouldSuccess") {
+TEST_CASE("TestCase12_ParseCallsStarProcedureNameWhitespaces_ShouldSuccess") {
     QueryParser queryParser;
     string declaration = "procedure p;";
     string query = "Select p such that Calls*  ( \"  Example \",  p)";
