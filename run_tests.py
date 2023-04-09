@@ -172,7 +172,8 @@ if __name__ == "__main__":
                        "TestCallStarDesignAbstraction/TestCallStarDesignAbstractionQueries.txt"),
                       ("TestNextStar/Next_Testing_Source.txt", "TestNextStar/Next_Testing_Queries.txt"),
                       ("TestNextStar/Website_Given_Source.txt", "TestNextStar/Website_Given_Queries.txt"),
-                          ("ComplexTestsAllFeatures/Sample_source.txt", "ComplexTestsAllFeatures/Sample_queries.txt")]
+                          ("ComplexTestsAllFeatures/Sample_source.txt", "ComplexTestsAllFeatures/Sample_queries.txt"),
+                          ("ComplexTestCases/ComplexSource2.txt", "ComplexTestCases/ComplexQueries2.txt")]
     with Pool() as pool:
         total_correct = 0
         total_failed = 0
