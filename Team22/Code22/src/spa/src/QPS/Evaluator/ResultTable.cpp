@@ -213,6 +213,11 @@ ResultTable* ResultTable::intersection(vector<ResultTable*> tables) {
     ResultTable* finalResult = resultTables[0];
 
     for (int i = 1; i < resultTables.size(); i++) {
+        if (dynamic_cast<BooleanTrueTable*>(resultTables[i])) {
+            continue;
+        } else if (dynamic_cast<BooleanFalseTable*>(resultTables[i])) {
+            return new BooleanFalseTable();
+        }
         finalResult = finalResult->intersection(resultTables[i]);
     }
     return finalResult;

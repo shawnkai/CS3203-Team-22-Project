@@ -174,7 +174,7 @@ ResultTable* SelectExpression::evaluate(PKB pkb) {
                         subResults.push_back(exp->evaluate(pkb));
                     }
                     ResultTable *temp = ResultTable::intersection(subResults);
-                    ::printf("Group %d with Result Size = %zu\n", i, temp->getSize());
+                    ::printf("Group %d with Result Size = %zu\n", i + 1, temp->getSize());
                     threadedResults.push_back(temp);
                 } catch (SemanticException &e) {
                     exceptions.push_back(new SemanticException());
