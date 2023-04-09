@@ -1,6 +1,6 @@
 1 - 6 features
 read W; print TTT; variable vvv; procedure p1, p2; while w; if iiii; assign a;
-Select w such that Parent (w, TTT) and Parent (w, W) and Calls (p1, p2) pattern w ("j", _) and if ("x", _, _) such that Affects (a, 27)
+Select w such that Parent (w, TTT) and Parent (w, W) and Calls (p1, p2) pattern w ("j", _) and iiii ("x", _, _) such that Affects (a, 27)
 17, 22
 5000
 2 - 6 features, case 2
@@ -10,7 +10,7 @@ none
 5000
 3 - multiple features
 read r; print t; variable v; stmt s; procedure p, BOOLEAN; while w, boolean; if i; assign a;
-Select r such that Parent (if, s) and Follows(a, _) and Parent*(w, _) such that Modifies (r, "knv") with r.stmt# = 18 such that Calls(p, BOOLEAN) with p.procName = "that" and BOOLEAN.procName = "that2"
+Select r such that Parent (i, s) and Follows(a, _) and Parent*(w, _) such that Modifies (r, "knv") with r.stmt# = 18 such that Calls(p, BOOLEAN) with p.procName = "that" and BOOLEAN.procName = "that2"
 18
 5000
 4 - multiple features, tuple
