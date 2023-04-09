@@ -14,8 +14,12 @@ def process_file(file_pair):
     wrong = []
     queries = []
     correct = []
+    out_folder = f"./Team22/Tests22/out/{query.replace('.txt', '')}_out.xml"
+    out_folder = "/".join(out_folder.split("/")[:-1])
+    if not os.path.exists(out_folder):
+        os.makedirs(out_folder)
     command = [start + "/autotester/autotester", "./Team22/Tests22/" + source, "./Team22/Tests22/" + query,
-               f"./Team22/Tests22/out/{query.split('/')[-1].replace('.txt', '')}_out.xml"]
+               f"./Team22/Tests22/out/{query.replace('.txt', '')}_out.xml"]
 
     result = subprocess.run(command, stdout=subprocess.PIPE)
     result = result.stdout.decode()
@@ -101,6 +105,8 @@ if __name__ == "__main__":
 
     # System Testing
     print("Running System Tests...")
+    if not os.path.exists("./Team22/Tests22/out/"):
+        os.makedirs("./Team22/Tests22/out/")
     source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_source2.txt",
                            "TestBasicQueriesInitialSubmissionForMilestone1/Sample_queries2.txt"),
                           ("TestAssignmentPatternClause/TestAssignmentPatternSourceProgram.txt",
