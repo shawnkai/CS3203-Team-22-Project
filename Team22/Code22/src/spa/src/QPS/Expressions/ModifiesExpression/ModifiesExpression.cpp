@@ -232,13 +232,22 @@ ResultTable* ModifiesPExpression::evaluate(PKB pkb) {
             ind += 1;
         }
 
-        if (this->entities[1]->getType() == "ident") {
+        auto *temp = new ResultTable(result);
+
+        if (this->entities[1]->getType() == "ident" && (this->entities[0]->getType() == "ident" || this->entities[0]->toString() == "_")) {
+            if (temp->getSize() > 0) {
+                return new BooleanTrueTable();
+            } else {
+                return new BooleanFalseTable();
+            }
+        } else if (this->entities[1]->getType() == "ident") {
             result.erase(this->entities[1]->toString());
+            return new ResultTable(result);
+        } else if (this->entities[0]->getType() == "ident") {
+            result.erase(this->entities[0]->toString());
+            return new ResultTable(result);
+        } else {
+            return temp;
         }
-        ResultTable *temp = new ResultTable(result);
-        if (temp->getSize() == 0) {
-            return new BooleanFalseTable();
-        }
-        return temp;
     }
 }
