@@ -16,7 +16,7 @@ Select r such that Parent (i, s) and Follows(a, _) and Parent*(w, _) such that M
 4 - multiple features, tuple
 read r; print t; variable v; stmt s; procedure p, BOOLEAN; while w, boolean; if i; assign a;
 Select <r, t> such that Uses(t, _) and Modifies (r, _) and Parent (_, r) and Parent (_, t) and Next*(17, 29)
-12 13, 12 20, 12 25, 12 34, 12 40, 12 45, 12 51, 18 13, 18 20, 18 25, 18 34, 18 40, 18 45, 18 51, 23 13, 23 20, 23 25, 33 34, 33 40, 33 45, 33 51, 41 13, 41 20, 41 25, 41 34, 41 40, 41 45, 41 51, 44 13, 44 20, 44 25, 44 34, 44 40, 44 45, 50 13, 50 20, 50 25, 50 34, 50 40, 50 45, 50 51
+12 13, 12 20, 12 25, 12 35, 12 41, 12 46, 12 52, 18 13, 18 20, 18 25, 18 35, 18 41, 18 46, 18 52, 23 13, 23 20, 23 25, 23 35, 23 41, 23 46, 23 52, 34 13, 34 20, 34 25, 34 35, 33 41, 33 46, 33 52, 42 13, 42 20, 42 25, 42 35, 42 41, 42 46, 42 52, 45 13, 45 20, 45 25, 45 35, 45 41, 45 46, 51 13, 51 20, 51 25, 51 35, 51 41, 51 46, 51 52
 5000
 5 - multiple features, tuple case 2
 read r; print t; variable v; stmt s; procedure p, BOOLEAN; while w, boolean; if i; assign a;
