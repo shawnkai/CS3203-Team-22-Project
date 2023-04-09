@@ -101,7 +101,6 @@ if __name__ == "__main__":
 
     # System Testing
     print("Running System Tests...")
-    exit(1)
     source_query_pairs = [("TestBasicQueriesInitialSubmissionForMilestone1/Sample_source2.txt",
                            "TestBasicQueriesInitialSubmissionForMilestone1/Sample_queries2.txt"),
                           ("TestAssignmentPatternClause/TestAssignmentPatternSourceProgram.txt",
