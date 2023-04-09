@@ -21,3 +21,22 @@ std::map<string, vector<string>> Extractor::constructMap(std::vector<string> ifC
     newmap[containerLineNoStr] = vector3;
     return newmap;
 };
+
+std::map<string, vector<string>> Extractor::mapOfWhileForCallStmts;
+std::map<string, vector<string>> Extractor::mapOfIfForCallStmts;
+
+std::map<string, vector<string>> Extractor::getmapOfWhileForCallStmts() {
+    return Extractor::mapOfWhileForCallStmts;
+}
+
+std::map<string, vector<string>> Extractor::getmapOfIfForCallStmts() {
+    return Extractor::mapOfIfForCallStmts;
+}
+
+void Extractor::setmapOfWhileForCallStmts(std::map<string, vector<string>> mapOfWhileForCallStmts1) {
+    Extractor::mapOfWhileForCallStmts = mapOfWhileForCallStmts1;
+}
+
+void Extractor::setmapOfIfForCallStmts(std::map<string, vector<string>> mapOfIfForCallStmts1) {
+    Extractor::mapOfIfForCallStmts = mapOfIfForCallStmts1;
+}

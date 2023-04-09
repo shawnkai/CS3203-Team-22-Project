@@ -64,6 +64,7 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 						pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, vector3[j]));
 						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
 
+						/*
 						if (mapOfUsedVarforCalls.count(vector3[j]) > 0) {
 							vector<string> usedVars = mapOfUsedVarforCalls.at(vector3[j]);
 							usedVars.push_back(nameOfVariable);
@@ -73,7 +74,7 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 							vector<string> usedVars;
 							usedVars.push_back(nameOfVariable);
 							mapOfUsedVarforCalls[vector3[j]] = usedVars;
-						}
+						}*/
 
 						cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector3[j] << endl;
 					}
@@ -89,6 +90,7 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 					pkbinstance.addDesignAbstraction("USES", make_tuple(statementStr, nameOfVariable, vector2[i]));
 					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
 
+					/*
 					if (mapOfUsedVarforCalls.count(vector2[i]) > 0) {
 						vector<string> usedVars = mapOfUsedVarforCalls.at(vector2[i]);
 						usedVars.push_back(nameOfVariable);
@@ -98,7 +100,7 @@ void ConditionExtractor::extractConditionAbstraction(TNode currentNode, std::vec
 						vector<string> usedVars;
 						usedVars.push_back(nameOfVariable);
 						mapOfUsedVarforCalls[vector2[i]] = usedVars;
-					}
+					}*/
 
 					cout << std::to_string(lineNumOfVariable) + " uses procedureCall " + vector2[i] << endl;
 				}

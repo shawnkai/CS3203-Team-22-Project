@@ -86,12 +86,16 @@ void StmtlstExtractor::extractAbstraction() {
                 int callStmtNo = childstmt.stmtNumber;
                 string callStmtNoStr = std::to_string(callStmtNo);
 
+				std::map<string, vector<string>> mapOfWhileForCallStmts = Extractor::getmapOfWhileForCallStmts();
+                std::map<string, vector<string>> mapOfIfForCallStmts = Extractor::getmapOfIfForCallStmts();
+
                 if (mapOfWhileForCallStmts.count(callStmtNoStr) > 0) {
 
                 } else {
-                    callStmts.push_back(callStmtNoStr);
                     mapOfWhileForCallStmts[callStmtNoStr] = whileContainers;
                     mapOfIfForCallStmts[callStmtNoStr] = ifContainers;
+                    Extractor::setmapOfWhileForCallStmts(mapOfWhileForCallStmts);
+                    Extractor::setmapOfIfForCallStmts(mapOfIfForCallStmts);
                 }
             } else {
                 auto theExtractor = factory1.createExtractor(childstmt, information, pkbinstance);

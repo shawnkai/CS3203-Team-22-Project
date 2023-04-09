@@ -21,9 +21,9 @@ using namespace std;
 void DesignExtractor::extractAbstraction(TNode root, PKB pkbinstance) {
     std::map<string, vector<string>> information;
     ExtractorFactory factory1;
-    auto stmtlstExtractor = factory1.createExtractor(root, information, pkbinstance);
-    stmtlstExtractor->extractAbstraction();
-    stmtlstExtractor->extractCallAbstraction(pkbinstance);
+    auto programExtractor = factory1.createExtractor(root, information, pkbinstance);
+    programExtractor->extractAbstraction();
+    programExtractor->extractCallAbstraction(pkbinstance);
 
 	//ProgramExtractor programExtractor;
 	//programExtractor.extractAbstraction(root, pkbinstance);

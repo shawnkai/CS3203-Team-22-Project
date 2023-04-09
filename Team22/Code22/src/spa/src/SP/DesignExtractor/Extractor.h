@@ -15,6 +15,10 @@
 using namespace std;
 
 class Extractor {
+private:
+    static std::map<string, vector<string>> mapOfWhileForCallStmts;
+    static std::map<string, vector<string>> mapOfIfForCallStmts;
+
 public:
     std::string procedureStr = "PROCEDURE";
     std::string followsStr = "FOLLOWS";
@@ -51,4 +55,9 @@ public:
     virtual void extractCallAbstraction(PKB pkbinstance) {}
 
     std::map<string, vector<string>> constructMap(std::vector<string> ifContainer, std::vector<string> whileContainer, std::string procedureName, std::string containerLineNo);
+
+    static std::map<string, vector<string>> getmapOfWhileForCallStmts();
+    static std::map<string, vector<string>> getmapOfIfForCallStmts();
+    static void setmapOfWhileForCallStmts(std::map<string, vector<string>> mapOfWhileForCallStmts1);
+    static void setmapOfIfForCallStmts(std::map<string, vector<string>> mapOfIfForCallStmts1);
 };

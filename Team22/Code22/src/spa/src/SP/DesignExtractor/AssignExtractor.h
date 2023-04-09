@@ -15,8 +15,8 @@
 
 using namespace std;
 
-extern std::map<string, vector<string>> mapOfModifiedVarforCalls;
-extern std::map<string, vector<string>> mapOfUsedVarforCalls;
+/* extern std::map<string, vector<string>> mapOfModifiedVarforCalls;
+extern std::map<string, vector<string>> mapOfUsedVarforCalls;*/
 
 class AssignExtractor : public Extractor {
 public:
