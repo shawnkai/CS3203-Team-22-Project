@@ -24,8 +24,8 @@ Select <w, if> such that Parent (w, _) and Parent (i, _) and Follows(_, w) and F
 17 10, 17 28, 17 60, 56 10, 56 28, 56 60, 65 10, 65 28, 65 60
 5000
 6- multiple features, tuple case 3
-read r1, r2; assign a, a2; print p; stmt s; while w; if if; variable v;
-Select <v.varName, a> such that Modifies(_, v) and Modifies("this3", v) pattern a (_, _"x"_) such that Calls*("that", "this3") and Next(1, 2)
+read r1, r2; assign a, a2; print p; stmt s; while w; if if; variable v; call c;
+Select <v.varName, a> such that Modifies(c, v) and Modifies("this3", v) pattern a (_, _"x"_) such that Calls*("that", "this3") and Next(1, 2)
 c 33, ZZZwrgwer 33
 5000
 7- multiple features, tuple case 3
