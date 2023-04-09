@@ -31,7 +31,7 @@ c 33, ZZZwrgwer 33
 7- multiple features, tuple case 3
 read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a;
 Select <s, a, p> such that Affects(a, 28) and Modifies(s, "a") and Follows(s, _) and Parent (_, s) and Parent*(_, a) and Modifies(p, "ZZZwrgwer")
-43 27 this3
+43 27 this3, 43 27 that2, 43 27 test4, 43 27 MY5, 43 27 that, 39 27 this3, 39 27 that2, 39 27 test4, 39 27 MY5, 39 27 that
 5000
 8 - multiple features, tuple case 4
 read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a, a2;
