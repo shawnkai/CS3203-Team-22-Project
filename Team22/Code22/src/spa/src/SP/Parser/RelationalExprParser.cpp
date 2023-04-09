@@ -1,6 +1,11 @@
 
 #include "RelationalExprParser.h"
 
+/**
+ * Parse the 'rel_expr' of SIMPLE Source.
+ *
+ * @return an AST representation of a relational expression
+ */
 TNode RelationalExprParser::parse() {
     ParserFactory factory;
     auto node = factory.createParser(RELATIONAL_FACTOR, tokenList, pos)->parse();

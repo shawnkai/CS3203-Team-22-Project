@@ -4,6 +4,11 @@
 
 #include "FactorParser.h"
 
+/**
+ * Parse the 'factor' of SIMPLE Source.
+ *
+ * @return an AST representation of a factor
+ */
 TNode FactorParser::parse() {
     TNode node;
     Token currToken = tokenList[*pos];

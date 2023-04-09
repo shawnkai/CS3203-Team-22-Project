@@ -16,30 +16,24 @@ SPDriver::SPDriver() {}
 void SPDriver::parseSimpleProgram(const std::string& filename) {
     Tokenizer tokenizer = Tokenizer();
     std::vector<Token> tokenList;
+    ParserFactory factory;
+    TNode result;
+
     try {
         tokenList = tokenizer.tokenize(filename.c_str());
-    }
-    catch (std::invalid_argument& e) {
-        std::cerr << e.what() << endl;
-        ::exit(1);
-    }
-    std::cout << "execution of tokenizer done" << std::endl;
-    for (Token token : tokenList) {
-        std::cout << "Token" << ToString(token) << std::endl;
-    }
-    ParserFactory factory;
-    auto parser = factory.createParser(TokenType::PROGRAM, tokenList, make_shared<int>(0));
-    TNode result;
-    try {
+        auto parser = factory.createParser(TokenType::PROGRAM, tokenList, make_shared<int>(0));
         result = parser->parse();
     }
     catch (std::invalid_argument& e) {
         std::cerr << e.what() << endl;
         ::exit(1);
     }
-    if (result.children.empty()) {
-        cout << "Null pointer returned, use debug mode to find out why" << endl;
+
+    std::cout << "execution of tokenizer and parser done, logging tokens and ast" << std::endl;
+    for (const Token& token : tokenList) {
+        std::cout << "Token" << ToString(token) << std::endl;
     }
+
     std::queue<TNode> pendingToString;
     pendingToString.push(result);
 
@@ -49,7 +43,7 @@ void SPDriver::parseSimpleProgram(const std::string& filename) {
         cout << ToString(toProcess) << endl;
         if (!toProcess.children.empty()) {
             auto childrenArr = (toProcess).children;
-            for (auto child : childrenArr) {
+            for (const auto& child : childrenArr) {
                 pendingToString.push(child);
             }
         }
@@ -76,16 +70,11 @@ void SPDriver::parseSimpleProgram(const std::string& filename) {
                                         controlFlowGraph.statementNumberToBlock,
                                         controlFlowGraph.blockGraph,
                                         controlFlowGraph.blockPointingBackward);
-        cout << controlFlowGraph.toString() << endl;
+        std::cout << controlFlowGraph.toString() << std::endl;
 
         NextExtractor nextExtractor;
         nextExtractor.extractAbstraction(controlFlowGraph.basicBlock, controlFlowGraph.blockToStatement,
                                          controlFlowGraph.statementNumberToBlock, controlFlowGraph.blockGraph,
                                          controlFlowGraph.blockPointingBackward, pkbinstance, procedure.stringId);
     }
-
-    for (auto graph: controlFlowGraphs) {
-        cout << graph.toString() << endl;
-    }
-
 }

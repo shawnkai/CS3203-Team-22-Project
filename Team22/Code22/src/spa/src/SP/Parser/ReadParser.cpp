@@ -4,6 +4,11 @@
 
 #include "ReadParser.h"
 
+/**
+ * Parse one single read statement, which has exactly one child.
+ *
+ * @return an AST representation of the print statement
+ */
 TNode ReadParser::parse() {
     Token currToken = tokenList[*pos];
     TNode node;

@@ -1,11 +1,11 @@
 //
 // Created by Yi Zhang on 19/3/23.
 //
+#include "SP/Cfg/Cfg.h"
+#include "SP/Parser/ParserFactory.h"
+#include "SP/Tokenizer/Tokenizer.h"
 #include "catch.hpp"
 #include <filesystem>
-#include "SP/Parser/Parser.h"
-#include "SP/Tokenizer/Tokenizer.h"
-#include "SP/Cfg/Cfg.h"
 
 TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
     Tokenizer tk = Tokenizer();
@@ -55,11 +55,13 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+        result = ps->parse();
+    } catch (std::invalid_argument &e) {
+
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -72,6 +74,7 @@ TEST_CASE("TestCase1_TestCfgComplexSingleSource_ShouldSuccess") {
     REQUIRE(builder.blockGraph.size() == 17);
     REQUIRE(builder.blockToStatement.size() == 17);
     REQUIRE(builder.statementNumberToBlock.size() == 17);
+
 }
 
 TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
@@ -146,11 +149,12 @@ TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
-    Parser ps = Parser(tokenList);
+    ParserFactory factory;
+    auto ps = factory.createParser(PROGRAM, tokenList, make_shared<int>(0));
     TNode result;
     try {
-        result = ps.Parse();
-    } catch (std::invalid_argument& e) {
+        result = ps->parse();
+    } catch (std::invalid_argument &e) {
         std::cerr << e.what() << std::endl;
         exit(1);
     }
@@ -167,4 +171,5 @@ TEST_CASE("TestCase2_TestCfgMultipleProcedures_ShouldSuccess") {
     itr = simplestGraph.find(1);
     REQUIRE(itr->second.size() == 1);
     REQUIRE(itr->second[0] == 0);
+
 }

@@ -1,6 +1,11 @@
 
 #include "ProgramParser.h"
 
+/**
+ * Entry point of parsing. Handles multiple procedures.
+ *
+ * @return an AST representation of the SIMPLE Source
+ */
 TNode ProgramParser::parse() {
     Token currToken = tokenList[*pos];
     if (currToken.type != TokenType::PROCEDURE) {
@@ -19,6 +24,10 @@ TNode ProgramParser::parse() {
     }
     if (*pos != tokenList.size()) {
         std::cout << "Tangling tokens outside the last procedure are ignored" << std::endl;
+    }
+    if (programNode.children.empty()) {
+        std::cout << "Empty program with zero procedure is not allowed" << std::endl;
+        throw std::invalid_argument("Illegal SIMPLE Source Programme: Empty Program Syntax error");
     }
     return programNode;
 }

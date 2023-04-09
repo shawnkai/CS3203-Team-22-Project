@@ -3,6 +3,14 @@
 //
 #include "ParserFactory.h"
 
+/**
+ * Factory class implements the createParser method in charge of creating all types of parsers depending on the Token Type.
+ *
+ * @param type TokenType defined in the Enum TokenType class
+ * @param tokenList the full list of tokens returned from Tokenizer component
+ * @param pos the current position of processing, points to one token in the tokenList
+ * @return a solid parser
+ */
 std::shared_ptr<MainParser> ParserFactory::createParser(TokenType type, const std::vector<Token> &tokenList,
                                                         std::shared_ptr<int> pos) {
     switch (ToIntegral(type)) {
