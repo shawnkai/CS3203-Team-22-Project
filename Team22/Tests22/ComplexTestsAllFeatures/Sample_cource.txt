@@ -1,0 +1,113 @@
+procedure that {
+ print he;
+ print ye;
+ ix = 123;
+ izy = 456;
+ read hello;
+ print bye;
+ read bye;
+ read hello;
+ call test4;
+ if (x == 1) then {
+  while (y != x) {
+   read f;
+   print h;
+   z = g - 123 * f - (h / 56 % d);
+   call that2;
+  }
+  j = r;
+  while ((j < g) || (h > k)) {
+     read roiknv;
+     g = s - w * f - (j / v % m);
+     print b;
+     call that2;
+    }
+ } else {
+  while ((j < g) || (h > k)) {
+   read roiknv;
+   g = s - w * f - (j / v % m);
+   print b;
+   call that2;
+  }
+  w = d - u;
+ }
+ if ((w + v < t) || (y % z >= l)) then {
+  if (y != t) then {
+   if (r1 == q1) then {
+    while (g == f) {
+     y = s - x * h - (d / e % j);
+     read q;
+     print u;
+     call that2;
+    }
+    g = jh;
+   } else {
+    c = h - 123;
+   }
+  } else {
+   if (c < k) then {
+    call test3;
+    print bye;
+    read test;
+    a = 1;
+    myVAR = 3;
+    print test;
+    read ttt;
+    read hh;
+    call test4;
+   } else {
+    while (x>=(0+0)) {
+     l = (l) - 3 + (v - n) / o;
+    }
+   }
+   o = 2 + g;
+   read ZZZwrgwer;
+   print vwinvQQQ;
+   call test3;
+  }
+ } else {
+  if (1>= 1%((1))   ) then {
+   t    =  g   ;
+  } else {
+   call test4;
+  }
+ }
+ while (t == 3) {
+  if ( 1>= 1%((0-1)) ) then {
+   h    =  t;
+  } else {
+   call test4;
+  }
+ }
+ if (y == 5) then {
+  q = 1;
+ } else {
+  m = q - y - 1;
+ }
+ call that2;
+ f = 2345 + 2353;
+ while (fwe == (1234+21345)) {
+  o = i;
+  call that2;
+ }
+ call MY5;
+ t = o + q / f;
+}
+
+procedure that2 {
+ call test4;
+}
+
+procedure this3 {
+ c = o + c;
+ print THIHISISGOINGGOOD;
+}
+
+procedure test4 {
+ d = c;
+ call this3;
+}
+procedure MY5 {
+  a= 1;
+  call this3;
+}
