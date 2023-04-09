@@ -25,7 +25,7 @@ public:
     std::map<string, vector<string>> getmapOfIfForCallStmts();
     std::map<string, vector<string>> getmapOfModifiedVarforCalls();
     std::map<string, vector<string>> getmapOfUsedVarforCalls(); 
-    vector<string> UtilityExtractor::getcallStmts();
+    vector<string> getcallStmts();
     void setmapOfWhileForCallStmts(std::map<string, vector<string>> mapOfWhileForCallStmts1);
     void setmapOfIfForCallStmts(std::map<string, vector<string>> mapOfIfForCallStmts1);
     void setmapOfModifiedVarforCalls(std::map<string, vector<string>> mapOfModifiedVarforCalls1);
