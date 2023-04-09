@@ -18,16 +18,28 @@ TEST_CASE("Testcase1_ExtractOneStatement_ShouldSuccess") {
     child.push_back(stmtlist1);
     root.children = child;
 
-    /* PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    AbstractionExtractor abstractionExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    abstractionExtractor.extractAbstraction(root, pkbinstance, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto abstractionExtractor = factory1.createExtractor(root, newmap, pkbinstance);
+    abstractionExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
     REQUIRE(result1 == "VARIABLE: x: 1, ");
-    REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");*/
+    REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
@@ -87,11 +99,23 @@ TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
     child.push_back(stmtlist1);
     root.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    AbstractionExtractor abstractionExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    abstractionExtractor.extractAbstraction(root, pkbinstance, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto abstractionExtractor = factory1.createExtractor(root, newmap, pkbinstance);
+    abstractionExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
@@ -99,5 +123,5 @@ TEST_CASE("Testcase2_ExtractFiveStatement_ShouldSuccess") {
 
     REQUIRE(result1 == "VARIABLE: x: 1, 4, ");
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
-    REQUIRE(result3 == "USES:STATEMENT: x: 4, 3, ");*/
+    REQUIRE(result3 == "USES:STATEMENT: x: 4, 3, ");
 }

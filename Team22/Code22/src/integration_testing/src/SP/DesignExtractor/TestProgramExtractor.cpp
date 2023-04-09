@@ -23,16 +23,20 @@ TEST_CASE("Testcase1_ExtractSimpleProgram_ShouldSuccess") {
     child.push_back(procedure1);
     root.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    ProgramExtractor programExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    programExtractor.extractAbstraction(root, pkbinstance);
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    auto programExtractor = factory1.createExtractor(root, newmap, pkbinstance);
+    programExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
     REQUIRE(result1 == "VARIABLE: x: 1, ");
-    REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");*/
+    REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractProgramWithMultipleProcedures_ShouldSuccess") {
@@ -83,11 +87,15 @@ TEST_CASE("Testcase2_ExtractProgramWithMultipleProcedures_ShouldSuccess") {
     child.push_back(procedure3);
     root.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    ProgramExtractor programExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    programExtractor.extractAbstraction(root, pkbinstance);
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    auto programExtractor = factory1.createExtractor(root, newmap, pkbinstance);
+    programExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignEntity("CALL", "p3").toString();
@@ -103,5 +111,5 @@ TEST_CASE("Testcase2_ExtractProgramWithMultipleProcedures_ShouldSuccess") {
     REQUIRE(result4 == "CALLSSTAR: p1: p2, p3, ");
     REQUIRE(result5 == "INVERSECALLS: p3: p1, p2, ");
     REQUIRE(result6 == "MODIFIES:PROCEDURE: p1: 3, ");
-    REQUIRE(result7 == "MODIFIES:PROCEDURECALL: 1: 3, ");*/
+    REQUIRE(result7 == "MODIFIES:PROCEDURECALL: 1: 3, ");
 }

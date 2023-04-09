@@ -28,15 +28,15 @@ TEST_CASE("Testcase1_ExtractSimpleCondition_ShouldSuccess") {
     child.push_back(stmtlist1);
     whileNode.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
     ConditionExtractor conditionExtractor;
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    ifContainers.push_back(1);
-    std::vector<int> whileContainers = std::vector<int>(0);
+    std::vector<string> ifContainers = std::vector<string>(0);
+    ifContainers.push_back(std::to_string(1));
+    std::vector<string> whileContainers = std::vector<string>(0);
 
-    conditionExtractor.extractAbstraction(operator1, ifContainers, whileContainers, pkbinstance, "procedure1", whileNode);
+    conditionExtractor.extractConditionAbstraction(operator1, ifContainers, whileContainers, pkbinstance, "procedure1", whileNode);
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "x")).toString();
@@ -45,7 +45,7 @@ TEST_CASE("Testcase1_ExtractSimpleCondition_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: x: 1, ");
     REQUIRE(result2 == "USES:STATEMENT: x: 1, ");
     REQUIRE(result3 == "USES:STATEMENT: z: 1, ");
-    REQUIRE(result4);*/
+    REQUIRE(result4);
 }
 
 TEST_CASE("Testcase2_ExtractComplexCondition_ShouldSuccess") {
@@ -111,17 +111,19 @@ TEST_CASE("Testcase2_ExtractComplexCondition_ShouldSuccess") {
     child8.push_back(stmtlist2);
     ifNode.children = child8;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
     ConditionExtractor conditionExtractor;
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    ifContainers.push_back(2);
-    ifContainers.push_back(3);
-    std::vector<int> whileContainers = std::vector<int>(0);
-    whileContainers.push_back(1);
+    std::vector<string> ifContainers = std::vector<string>(0);
+    ifContainers.push_back(std::to_string(2));
+    ifContainers.push_back(std::to_string(3));
 
-    conditionExtractor.extractAbstraction(operator1, ifContainers, whileContainers, pkbinstance, "procedure1", ifNode);
+    std::vector<string> whileContainers = std::vector<string>(0);
+    whileContainers.push_back(std::to_string(1));
+
+    conditionExtractor.extractConditionAbstraction(operator1, ifContainers, whileContainers, pkbinstance, "procedure1", ifNode);
+
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
@@ -132,5 +134,5 @@ TEST_CASE("Testcase2_ExtractComplexCondition_ShouldSuccess") {
     REQUIRE(result2 == "USES:STATEMENT: y: 3, 1, 2, ");
     REQUIRE(result3 == "USES:STATEMENT: z: 3, 1, 2, ");
     REQUIRE(result4 == "USES:STATEMENT: x: 3, 1, 2, ");
-    REQUIRE(result5);*/
+    REQUIRE(result5);
 }

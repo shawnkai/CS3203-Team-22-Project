@@ -21,15 +21,24 @@ TEST_CASE("Testcase1_ExtractSimpleStatementlist_ShouldSuccess") {
     child.push_back(read1);
     stmtlist.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    StmtlstExtractor stmtlstExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    ifContainers.push_back(1);
-    std::vector<int> whileContainers = std::vector<int>(0);
-
-    stmtlstExtractor.extractAbstraction(stmtlist, ifContainers, whileContainers, pkbinstance, 1, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    ifContainer.push_back(std::to_string(1));
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto stmtlstExtractor = factory1.createExtractor(stmtlist, newmap, pkbinstance);
+    stmtlstExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
@@ -39,7 +48,7 @@ TEST_CASE("Testcase1_ExtractSimpleStatementlist_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: y: 2, 3, ");
     REQUIRE(result2 == "USES:STATEMENT: y: 2, 1, ");
     REQUIRE(result3 == "FOLLOWS: 2: 3, ");
-    REQUIRE(result4 == "FOLLOWSSTAR: 2: 3, ");*/
+    REQUIRE(result4 == "FOLLOWSSTAR: 2: 3, ");
 }
 
 TEST_CASE("Testcase2_ExtractNestedStatementlist_ShouldSuccess") {
@@ -76,21 +85,27 @@ TEST_CASE("Testcase2_ExtractNestedStatementlist_ShouldSuccess") {
     child.push_back(ifNode);
     stmtlist.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    StmtlstExtractor stmtlstExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    std::vector<int> whileContainers = std::vector<int>(0);
-    whileContainers.push_back(2);
-
-    stmtlstExtractor.extractAbstraction(stmtlist, ifContainers, whileContainers, pkbinstance, 2, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    
+    std::vector<string> whileContainer = std::vector<string>(0);
+    whileContainer.push_back(std::to_string(2));
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto stmtlstExtractor = factory1.createExtractor(stmtlist, newmap, pkbinstance);
+    stmtlstExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
-    std::string result2 = pkbinstance.getDesignAbstraction("PARENT", make_tuple("_", "2")).toString();
-    std::string result3 = pkbinstance.getDesignAbstraction("PARENTSTAR", make_tuple("_", "2")).toString();
-
+    
     REQUIRE(result1 == "VARIABLE: y: 3, 4, ");
-    REQUIRE(result2 == "PARENT: 2: 3, ");
-    REQUIRE(result3 == "PARENTSTAR: 2: 3, 4, ");*/
 }

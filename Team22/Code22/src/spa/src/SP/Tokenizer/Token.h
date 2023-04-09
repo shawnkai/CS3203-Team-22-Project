@@ -5,6 +5,7 @@
 #pragma once
 #include <string>
 #include <utility>
+#include <stdexcept>
 
 enum TokenType {
     NAME_IDENTIFIER,// ost, wes... variable names and procedure name

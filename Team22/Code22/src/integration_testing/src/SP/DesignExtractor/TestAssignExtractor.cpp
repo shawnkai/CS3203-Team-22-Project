@@ -19,21 +19,30 @@ TEST_CASE("Testcase1_ExtractSimpleAssignment_ShouldSuccess") {
     child.push_back(operator1);
     assignNode.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    AssignExtractor assignExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    std::vector<int> whileContainers = std::vector<int>(0);
-
-    assignExtractor.extractAbstraction(assignNode, ifContainers, whileContainers, pkbinstance, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto assignExtractor = factory1.createExtractor(assignNode, newmap, pkbinstance);
+    assignExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "x").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "x")).toString();
     std::string result3 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
     REQUIRE(result1 == "VARIABLE: x: 1, ");
     REQUIRE(result2 == "MODIFIES:STATEMENT: x: 1, ");
-    REQUIRE(result3 == "USES:STATEMENT: y: 1, ");*/
+    REQUIRE(result3 == "USES:STATEMENT: y: 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
@@ -77,16 +86,25 @@ TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
     child.push_back(operator1);
     assignNode.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    AssignExtractor assignExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    ifContainers.push_back(2);
-    std::vector<int> whileContainers = std::vector<int>(0);
-    whileContainers.push_back(1);
-
-    assignExtractor.extractAbstraction(assignNode, ifContainers, whileContainers, pkbinstance, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    std::vector<string> whileContainer = std::vector<string>(0);
+    ifContainer.push_back(std::to_string(2));
+    whileContainer.push_back(std::to_string(1));
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto assignExtractor = factory1.createExtractor(assignNode, newmap, pkbinstance);
+    assignExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignEntity("CONSTANT", "3").toString();
@@ -95,5 +113,5 @@ TEST_CASE("Testcase2_ExtractComplexAssignment_ShouldSuccess") {
     REQUIRE(result1 == "VARIABLE: y: 3, ");
     REQUIRE(result2 == "CONSTANT: 3: 3, ");
     REQUIRE(result3 == "MODIFIES:STATEMENT: x: 3, 1, 2, ");
-    REQUIRE(result4 == "USES:STATEMENT: z: 3, 1, 2, ");*/
+    REQUIRE(result4 == "USES:STATEMENT: z: 3, 1, 2, ");
 }

@@ -1,4 +1,5 @@
 #include "SP/DesignExtractor/ReadPrintExtractor.h"
+#include "SP/DesignExtractor/ExtractorFactory.h"
 #include "catch.hpp"
 using namespace std;
 TEST_CASE("Testcase1_ExtractPrintStatement_ShouldSuccess") {
@@ -9,20 +10,29 @@ TEST_CASE("Testcase1_ExtractPrintStatement_ShouldSuccess") {
     child.push_back(variable);
     print1.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    ReadPrintExtractor readPrintExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    ifContainers.push_back(1);
-    std::vector<int> whileContainers = std::vector<int>(0);
-
-    readPrintExtractor.extractAbstraction(print1, ifContainers, whileContainers, pkbinstance, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    ifContainer.push_back(std::to_string(1));
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto readPrintExtractor = factory1.createExtractor(print1, newmap, pkbinstance);
+    readPrintExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("USES", make_tuple("STATEMENT", "y")).toString();
     REQUIRE(result1 == "VARIABLE: y: 2, ");
-    REQUIRE(result2 == "USES:STATEMENT: y: 2, 1, ");*/
+    REQUIRE(result2 == "USES:STATEMENT: y: 2, 1, ");
 }
 
 TEST_CASE("Testcase2_ExtractReadStatement_ShouldSuccess") {
@@ -33,18 +43,27 @@ TEST_CASE("Testcase2_ExtractReadStatement_ShouldSuccess") {
     child.push_back(variable);
     read1.children = child;
 
-    /*PKB pkbinstance = PKB();
-    pkbinstance.clearAllDatabases();
-    ReadPrintExtractor readPrintExtractor;
+    PKB pkbinstance = PKB();
+    pkbinstance.clearAllDatabases("CalledForTestingPurposes");
 
-    std::vector<int> ifContainers = std::vector<int>(0);
-    ifContainers.push_back(1);
-    std::vector<int> whileContainers = std::vector<int>(0);
-
-    readPrintExtractor.extractAbstraction(read1, ifContainers, whileContainers, pkbinstance, "procedure1");
+    ExtractorFactory factory1;
+    std::vector<string> ifContainer = std::vector<string>(0);
+    ifContainer.push_back(std::to_string(1));
+    std::vector<string> whileContainer = std::vector<string>(0);
+    std::map<string, vector<string>> newmap;
+    newmap["IfContainer"] = ifContainer;
+    newmap["whileContainer"] = whileContainer;
+    vector<string> vector1;
+    vector1.push_back("procedure1");
+    newmap["procedureName"] = vector1;
+    vector<string> vector3;
+    vector3.push_back(std::to_string(0));
+    newmap["containerLineNo"] = vector3;
+    auto readPrintExtractor = factory1.createExtractor(read1, newmap, pkbinstance);
+    readPrintExtractor->extractAbstraction();
 
     std::string result1 = pkbinstance.getDesignEntity("VARIABLE", "y").toString();
     std::string result2 = pkbinstance.getDesignAbstraction("MODIFIES", make_tuple("STATEMENT", "y")).toString();
     REQUIRE(result1 == "VARIABLE: y: 2, ");
-    REQUIRE(result2 == "MODIFIES:STATEMENT: y: 2, 1, ");*/
+    REQUIRE(result2 == "MODIFIES:STATEMENT: y: 2, 1, ");
 }
