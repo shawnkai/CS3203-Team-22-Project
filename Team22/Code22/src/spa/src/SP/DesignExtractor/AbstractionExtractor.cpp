@@ -28,7 +28,7 @@ void AbstractionExtractor::extractAbstraction() {
 	else {
 		std::string procedureName;
 		procedureName = root.stringId;
-		pkbinstance.addDesignEntity("PROCEDURE", make_tuple(procedureName, std::to_string(root.stmtNumber)));
+        pkbinstance.addDesignEntity(procedureStr, make_tuple(procedureName, std::to_string(root.stmtNumber)));
 		int noOfChildren = (root.children).size();
 		if (noOfChildren == 0) {
 
