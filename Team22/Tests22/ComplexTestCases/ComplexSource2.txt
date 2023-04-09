@@ -1,0 +1,116 @@
+procedure p1 {
+	read x;
+	y = 1;
+	if (z > 2) then {
+		while (a1 <= 5) {
+			a = b - 3;
+			print y;
+			if (a > 4) then {
+				if (varA > 0) then {
+					x = x + 1;
+					if (varB > 1) then {
+						read y;
+					} else {
+						c = (c * 6) % y;
+						call p3;
+					}
+				} else {
+					while (e < 1) {
+					   call p2;
+					   read q;
+					   while (q < 1) {
+						 a = 1;
+					   }
+					}
+				}
+			} else {
+				call p4;
+
+			}
+		}
+	} else {
+		a = (10 * x) * 30 + 6;
+		p = a;
+	}
+}
+
+procedure p2 {
+	while (v < 5) {
+		t = r * e % (q - 7);
+		while (u > 0) {
+			if (e < 3) then {
+				u = u * (y + z * 9) - u;
+			} else {
+				r = u + 3;
+				call p5;
+			}
+
+		}
+		read a;
+		print k;
+		varA = varB + 5;
+	}
+}
+
+procedure p3 {
+	call p4;
+	if (f > 10) then {
+		a = 3;
+		read k;
+		print i;
+		read g;
+		r = r + 10 - x;
+	} else {
+		e = e + 1;
+		while (y > 1) {
+			q = r + y;
+			read y;
+			read r;
+			print n;
+			while (a > 2) {
+				d = e * f;
+			}
+		}
+	}
+}
+
+procedure p4 {
+	read y;
+	read a;
+	x = x + 5;
+	if (f > 2) then {
+		read j;
+	} else {
+		while (a < 5) {
+			y = f - 6;
+			z = 6 * (7 * ( 8 * y));
+			while (g != 9) {
+				j = n + k % 3;
+				call p5;
+			}
+
+		}
+	}
+	if (b > 3) then {
+		c = d - 1;
+	} else {
+		d = 1;
+	}
+}
+
+procedure p5 {
+	read z;
+	if (a < 5) then {
+		c = 1;
+	} else {
+		y = 3;
+	}
+	while (a < 1) {
+		r = 5 + a;
+		read a;
+		print r;
+
+	}
+
+}
+
