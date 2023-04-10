@@ -15,10 +15,36 @@ Select r such that Parent (i, s) and Follows(a, _) and Parent*(w, _) such that M
 5000
 4 - multiple features, tuple
 read r; print t; variable v; stmt s; procedure p, BOOLEAN; while w, boolean; if i; assign a;
-Select <r, t> such that Uses(t, _) and Modifies (r, _) and Parent (_, r) and Parent (_, t) and Next*(17, 25)
-12 13, 12 20, 12 25, 12 34, 12 40, 12 45, 12 51, 18 13, 18 20, 18 25, 18 34, 18 40, 18 45, 18 51, 23 13, 23 20, 23 25, 33 34, 33 40, 33 45, 33 51, 41 13, 41 20, 41 25, 41 34, 41 40, 41 45, 41 51, 44 13, 44 20, 44 25, 44 34, 44 40, 44 45, 50 13, 50 20, 50 25, 50 34, 50 40, 50 45, 50 51
+Select <r, t> such that Uses(t, _) and Modifies (r, _) and Parent (_, r) and Parent (_, t) and Next*(17, 29)
+12 13,12 20,12 25,12 35,12 41,12 46,12 52,18 13,18 20,18 25,18 35,18 41,18 46,18 52,23 13,23 20,23 25,23 35,23 41,23 46,23 52,34 13,34 20,34 25,34 35,34 41,34 46,34 52,42 13,42 20,42 25,42 35,42 41,42 46,42 52,45 13,45 20,45 25,45 35,45 41,45 46,45 52,51 13,51 20,51 25,51 35,51 41,51 46,51 52
 5000
 5 - multiple features, tuple case 2
 read r; print t; variable v; stmt s; procedure p, BOOLEAN; while w, boolean; if i; assign a;
-Select <w, if> such that Parent (w, _) and Parent (if, _) and Follows(_, w) and Follows (_, if) and Affects(a, 55)
-17 10, 17 28, 17 60, 56 10, 56 28, 56 60, 65 10, 65 28, 65 60
+Select <w, i> such that Parent (w, _) and Parent (i, _) and Follows(_, w) and Follows (_, i) and Affects(a, 55)
+17 10, 17 29, 17 61, 57 10, 57 29, 57 61, 66 10, 66 29, 66 61
+5000
+6- multiple features, tuple case 3
+read r1, r2; assign a, a2; print p; stmt s; while w; if if; variable v; call c;
+Select <v.varName, a> such that Modifies(c, v) and Modifies("this3", v) pattern a (_, _"x"_) such that Calls*("that", "this3") and Next(1, 2)
+c 33, ZZZwrgwer 33
+5000
+7- multiple features, tuple case 3
+read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a;
+Select <s, a, p> such that Affects(a, 28) and Modifies(s, "a") and Follows(s, _) and Parent (_, s) and Parent*(_, a) and Modifies(p, "ZZZwrgwer")
+43 27 this3, 43 27 that2, 43 27 test4, 43 27 MY5, 43 27 that, 39 27 this3, 39 27 that2, 39 27 test4, 39 27 MY5, 39 27 that
+5000
+8 - multiple features, tuple case 4
+read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a, a2;
+Select <a, a2> such that Affects(a, a2)
+16 19, 27 28, 33 63, 67 70, 62 70, 55 59, 65 70, 19 50, 24 50, 19 55, 24 55, 49 49, 50 70
+5000
+9 - multiple features tuple case 5
+read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a, a2;
+Select <a, a2> such that Affects*(a, a2)
+16 19, 27 28, 33 63, 67 70, 62 70, 55 59, 65 70, 19 50, 24 50, 19 55, 19 59, 24 55, 16 50, 16 55, 19 70, 24 70, 16 70, 16 59, 24 59, 49 49, 50 70
+5000
+10 - multiple features, tuple, affect only deal with assign statement
+read r; print t; variable v; stmt s; procedure p; while w, boolean; if i; assign a, a2;
+Select <a, a2> such that Affects*(a, 10) and Affects(a, a2)
+none
+5000
