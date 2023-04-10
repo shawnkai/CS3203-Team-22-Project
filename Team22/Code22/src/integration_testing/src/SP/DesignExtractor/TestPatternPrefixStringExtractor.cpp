@@ -6,6 +6,9 @@
 using namespace std;
 
 TEST_CASE("TestCase1_TestBaseCaseAssignmentToPrefix_ShouldSuccess") {
+    PKB testPatternPrefixExtractorPkb = PKB();
+    testPatternPrefixExtractorPkb.clearAllDatabases("CalledForTestingPurposes");
+
     TNode t1 = TNode(TokenType::OPERATOR, "+", 1, std::vector<TNode>(0));
     TNode t2 = TNode(TokenType::INTEGER, "2", 1, std::vector<TNode>(0));
     TNode t3 = TNode(TokenType::INTEGER, "2", 1, std::vector<TNode>(0));
@@ -14,12 +17,10 @@ TEST_CASE("TestCase1_TestBaseCaseAssignmentToPrefix_ShouldSuccess") {
     TNode t4 = TNode(TokenType::NAME_IDENTIFIER, "x", 1, std::vector<TNode>(0));
     TNode t0 = TNode(TokenType::ASSIGN, "=", 1, {t4, t1});
     PatternPrefixStringExtractor extractor;
-    extractor.extractPrefixString(t0, PKB());
-
-    PKB testPatternPrefixExtractorPkb = PKB();
+    extractor.extractPrefixString(t0, testPatternPrefixExtractorPkb);
     unordered_map<string, unordered_map<string, string>> result = testPatternPrefixExtractorPkb.getAllRightHandExpressions();
     unordered_map<string, string> result2 = testPatternPrefixExtractorPkb.getAllRightHandExpressionsOfAVariable("x");
-    REQUIRE(result.size() > 0);
+    REQUIRE(!result.empty());
     REQUIRE(result2.find("1")->second == "+22");
 }
 
