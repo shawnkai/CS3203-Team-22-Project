@@ -84,14 +84,14 @@ void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> 
     }
 
     for (int stmt : stmtsInBlock.find(current)->second) {
-        if (end.find(to_string(stmt)) == end.end()) {
+        if (end.find(to_string(stmt)) != end.end()) {
             for (const auto& kv : results) {
-                if (prevs.find(to_string(kv.first)) == prevs.end()) {
+                if (prevs.find(to_string(kv.first)) != prevs.end()) {
                     results[kv.first].insert(stmt);
                 }
             }
         }
-        if (first.find(to_string(stmt)) == first.end() && results.find(stmt) == results.end()) {
+        if (first.find(to_string(stmt)) != first.end() && results.find(stmt) == results.end()) {
             results.insert({stmt, {}});
         }
         prevs.insert(to_string(stmt));
@@ -103,29 +103,27 @@ void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> 
 }
 
 ResultTable* NextStarExpression::evaluate(PKB pkb) {
-    vector<string> firstLine;
-    vector<string> secondLine;
+    unordered_set<string> firstLine;
+    unordered_set<string> secondLine;
 
     if (dynamic_cast<StmtEntity*>(this->entities[0])) {
-        firstLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[0])->getLine()));
+        firstLine.insert(to_string(dynamic_cast<StmtEntity*>(this->entities[0])->getLine()));
     } else {
         auto vars1 = pkb.getAllDesignEntity(this->entities[0]->getType());
         for (Result res : vars1) {
             for (const string& line : res.getQueryResult()) {
-                firstLine.push_back(line);
+                firstLine.insert(line);
             }
         }
     }
 
-    unordered_set<string> s1(firstLine.begin(), firstLine.end());
-
     if (dynamic_cast<StmtEntity*>(this->entities[1])) {
-        secondLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()));
+        secondLine.insert(to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()));
     } else {
         auto vars2 = pkb.getAllDesignEntity(this->entities[1]->getType());
         for (Result res : vars2) {
             for (const string& line : res.getQueryResult()) {
-                secondLine.push_back(line);
+                secondLine.insert(line);
             }
         }
     }
@@ -134,6 +132,7 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
 
     vector<Result> procResults = pkb.getAllDesignEntity("PROCEDURE");
     vector<string> procs;
+    procs.reserve(procResults.size());
     for (auto res : procResults) {
         procs.push_back(res.getQueryEntityName());
     }
@@ -155,7 +154,7 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
         int start = *min_element(blocks.begin(), blocks.end());
        unordered_map<int, set<int>> results = {};
        unordered_map<int, int> seen;
-        traversal(start, graph, s1, s2, results, blockStatements, seen, {});
+        traversal(start, graph, firstLine, secondLine, results, blockStatements, seen, {});
         for (const auto& kv : results) {
             for (int v : kv.second) {
                 finalResult.at(this->entities[0]->toString()).push_back(to_string(kv.first));
