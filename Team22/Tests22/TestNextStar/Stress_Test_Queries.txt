@@ -3,3 +3,38 @@ assign a; variable v; constant c; while w; stmt n1,n2;
 Select n2 such that Next* (151, n2)
 1,2
 5000
+2 - next testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select n2 such that Next* (n2, n2)
+1,2
+10000
+3 - next testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select n2 such that Next* (n1, n2)
+1,2
+10000
+4 - next testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select n2 such that Next* (3, n2)
+1,2
+10000
+5 - next testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select n2 such that Next* (n1, 3)
+1,2
+10000
+6 - affects testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select BOOLEAN such that Affects* (6, 9)
+1,2
+10000
+7 - affects testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select BOOLEAN such that Affects* (9, 6)
+1,2
+10000
+8 - affects testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select n2 such that Affects* (6, n2)
+1,2
+10000
