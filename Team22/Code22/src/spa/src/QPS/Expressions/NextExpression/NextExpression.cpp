@@ -64,8 +64,8 @@ ResultTable* NextExpression::evaluate(PKB pkb) {
 
 }
 
-void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> &graph, vector<string> &first, vector<string> &end,
-                             unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> seen, vector<string> prevs) {
+void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> &graph, unordered_set<string> &first, unordered_set<string> &end,
+                             unordered_map<int, set<int>> &results, unordered_map<int, vector<int>> &stmtsInBlock, unordered_map<int, int> seen, unordered_set<string> prevs) {
     //end of graph
     if (current == 0) {
         return;
@@ -84,17 +84,17 @@ void NextStarExpression::traversal(int current, unordered_map<int, vector<int>> 
     }
 
     for (int stmt : stmtsInBlock.find(current)->second) {
-        if (Utilities::checkIfPresent(end, to_string(stmt))) {
+        if (end.find(to_string(stmt)) == end.end()) {
             for (const auto& kv : results) {
-                if (Utilities::checkIfPresent(prevs, to_string(kv.first))) {
+                if (prevs.find(to_string(kv.first)) == prevs.end()) {
                     results[kv.first].insert(stmt);
                 }
             }
         }
-        if (Utilities::checkIfPresent(first, to_string(stmt)) && results.find(stmt) == results.end()) {
+        if (first.find(to_string(stmt)) == first.end() && results.find(stmt) == results.end()) {
             results.insert({stmt, {}});
         }
-        prevs.push_back(to_string(stmt));
+        prevs.insert(to_string(stmt));
     }
 
     for (int block : graph.find(current)->second) {
@@ -117,8 +117,7 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
         }
     }
 
-    set<string> s1(firstLine.begin(), firstLine.end());
-    firstLine.assign( s1.begin(), s1.end());
+    unordered_set<string> s1(firstLine.begin(), firstLine.end());
 
     if (dynamic_cast<StmtEntity*>(this->entities[1])) {
         secondLine.push_back(to_string(dynamic_cast<StmtEntity*>(this->entities[1])->getLine()));
@@ -131,8 +130,7 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
         }
     }
 
-    set<string> s2(secondLine.begin(), secondLine.end());
-    secondLine.assign( s2.begin(), s2.end());
+    unordered_set<string> s2(secondLine.begin(), secondLine.end());
 
     vector<Result> procResults = pkb.getAllDesignEntity("PROCEDURE");
     vector<string> procs;
@@ -157,7 +155,7 @@ ResultTable* NextStarExpression::evaluate(PKB pkb) {
         int start = *min_element(blocks.begin(), blocks.end());
        unordered_map<int, set<int>> results = {};
        unordered_map<int, int> seen;
-        traversal(start, graph, firstLine, secondLine, results, blockStatements, seen, {});
+        traversal(start, graph, s1, s2, results, blockStatements, seen, {});
         for (const auto& kv : results) {
             for (int v : kv.second) {
                 finalResult.at(this->entities[0]->toString()).push_back(to_string(kv.first));
