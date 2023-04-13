@@ -1,0 +1,5 @@
+1 - next testing
+assign a; variable v; constant c; while w; stmt n1,n2;
+Select n2 such that Next* (151, n2)
+1,2
+5000
